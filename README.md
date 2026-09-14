@@ -62,4 +62,4 @@ node src/cli.js apply --review data/review.json
 
 若要同时加入审阅文件夹，可提供一个只包含 Eagle 文件夹 ID 的映射，例如 `{"selected":"FOLDER_ID"}`，再加 `--folder-map data/folder-map.json`；系统会合并既有文件夹，不替换用户已有归档。
 
-当前已完成 JPG 子集 2,655/2,655 张分析：1,916 个 pHash 组，423 张检测到人脸，55 张出现闭眼候选，0 个 worker 错误。Eagle 中另有 ARW、3FR、HEIC、DNG 等 4,723 个照片项目，尚需按 [预处理与照片留存决策方案](docs/preprocessing-and-retention.md) 生成代理图后纳入全库流程。Eagle 必须正在运行，且当前打开的库应为 `D:\Photography\EagleLibraries\Culling.library` 才能执行 `doctor`、`inventory` 或实际回写；文件分析本身可离线运行。全量回写前仍应先使用资源库副本和 500–1000 张标注基准集进行人工验证。
+当前已完成 JPG 子集 2,655/2,655 张分析：1,916 个 pHash 组，423 张检测到人脸，55 张出现闭眼候选，0 个 worker 错误。按项目名统计，库内有 2,036 个 `JPG+ARW`、547 个 `JPG+DNG` 和 998 个 `3FR+HEIC` 配对；Eagle 中另有 ARW、3FR、HEIC、DNG 等 4,723 个照片项目，尚需按 [预处理与照片留存决策方案](docs/preprocessing-and-retention.md) 生成代理图并建立 capture unit 后纳入全库流程。Eagle 必须正在运行，且当前打开的库应为 `D:\Photography\EagleLibraries\Culling.library` 才能执行 `doctor`、`inventory` 或实际回写；文件分析本身可离线运行。全量回写前仍应先使用资源库副本和 500–1000 张标注基准集进行人工验证。

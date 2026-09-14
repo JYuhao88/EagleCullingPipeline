@@ -4,7 +4,7 @@
 
 这套工作流不应直接对 410GB 原片逐张“看图后删除”，而应把每个 Eagle 项目拆成四层数据：原始文件、Eagle 缩略图、分析代理图、可审阅决策。原片和 Eagle 资源库只读，所有代理图与中间结果放在项目缓存目录；AI 只负责排序、分组和给出原因，最终留存由人工在 Eagle 中确认。
 
-当前 `Culling.library` 有 7,386 个项目：2,655 JPG、2,180 ARW、998 3FR、998 HEIC、547 DNG，以及 4 个 MP4 和 4 个 SRT。现有分析结果的 2,655 张是 JPG 子集，不代表所有照片格式都已覆盖。因此 RAW/HEIC 代理化是进入全库分拣前的首要工作。
+当前 `Culling.library` 有 7,386 个项目：2,655 JPG、2,180 ARW、998 3FR、998 HEIC、547 DNG，以及 4 个 MP4 和 4 个 SRT。按 Eagle 项目名统计，发现 2,036 个 `JPG+ARW` 配对、547 个 `JPG+DNG` 配对，以及 998 个 `3FR+HEIC` 配对；另有 129 个名称出现三项以上，不能仅靠文件名一对一配对。现有分析结果的 2,655 张是 JPG 子集，不代表所有照片格式都已覆盖。因此 RAW/HEIC 代理化和配对建模是进入全库分拣前的首要工作。
 
 ## 1. 预处理数据模型
 
@@ -36,6 +36,18 @@ asset_record
 4. **HEIC fallback**：先使用 Eagle 缩略图；如果不可用，再调用本机已验证的 HEIC 解码器生成代理。解码失败的项目进入 `needs-review/unsupported-format`，不能自动判为低质量。
 
 预处理永远写到 `data/previews/<proxy_sha256>.jpg`，不覆盖、移动或替换原片。RAW 原片与同组 JPEG 不应互相判为重复：它们通常是同一次拍摄的不同载体，应先建立 `raw_jpeg_pair_id`，在组内只选择留存策略，不删除 RAW 母片。
+
+### 2.3 配对规则（针对当前库）
+
+配对必须是“拍摄单元（capture unit）”而不是简单的扩展名替换：
+
+1. 先按清理后的 basename、拍摄时间、相机序列号/EXIF 和文件夹邻近性生成候选；
+2. 再用缩略图 pHash（建议 ≤ 8）确认 JPG 与 RAW/HEIC 画面确实相同；
+3. 同名多张时按时间差、尺寸和 Eagle 导入顺序做一对一匹配，无法唯一匹配就进入 `needs-review/pair-uncertain`；
+4. 一个 capture unit 可以包含 RAW、机内 JPG、3FR 和 HEIC 多个载体；它们共享一个 `capture_unit_id`，不能互相产生“删除”建议；
+5. 组内代表图按 capture unit 排名，而不是逐文件排名。胜出单元默认保留 RAW 为 `original`、JPG/HEIC 为 `selected`；落选单元的所有载体只标记 `rejected` 待审，绝不自动删除 RAW。
+
+这条规则正是当前库需要补上的部分：现有 JPG 分析已经验证了图像指标，但还没有把 ARW/3FR/DNG/HEIC 作为同一拍摄单元建模。
 
 ### 2.2 代理图规范
 
@@ -141,6 +153,7 @@ Eagle 内建议建立四个审阅文件夹：`AI / Original`、`AI / Candidates`
 - 扩展 Eagle `.info` 发现器，允许 ARW/3FR/DNG/HEIC 记录；
 - 建立 RAW+JPEG 配对和代理缓存；
 - 对 20 个 ARW、10 个 3FR、10 个 DNG、10 个 HEIC 做解码验收；
+- 对 20 组 `JPG+ARW`、10 组 `JPG+DNG`、10 组 `3FR+HEIC` 做配对验收，包含同名多张和无法唯一配对的负例；
 - 所有错误进入 `needs-review`，不做自动回写。
 
 ### P1：全库预筛
@@ -169,6 +182,20 @@ Eagle 内建议建立四个审阅文件夹：`AI / Original`、`AI / Candidates`
 - 新导入照片只处理新增或变化组；
 - 每月抽样复核模型漂移和误报。
 
+## 9. Eagle 开发者模式安装与调试
+
+可以。当前 `src/plugin/manifest.json` 已设置 `devTools: true`，适合窗口插件开发。Eagle 官方流程是在工具栏打开“插件 → 开发者选项 → 创建插件”，选择 Window Plugin 并指定插件目录；官方示例说明可以在外部编辑器中直接修改整个插件目录。[创建第一个插件](https://developer.eagle.cool/plugin-api/get-started/creating-your-first-plugin)
+
+推荐的本项目调试流程：
+
+1. 在 Eagle 中先确认打开的是 `Culling.library`，并启动本地服务：`npm run serve`；
+2. 选择“插件 → 开发者选项 → 创建插件 → Window Plugin”，将开发目录指定为项目的 `src/plugin`（如果当前版本不允许选择已有目录，则先创建临时 Window Plugin，再将本目录的 `manifest.json`、`index.html`、`plugin.js`、`style.css` 复制覆盖）；
+3. 在插件列表打开 `Eagle Culling Pipeline`，先点击“检查当前所选照片”，再点击“分析当前所选照片”；
+4. 插件窗口获得焦点时按 `F12` 打开 DevTools，可查看 console、网络请求、断点和内存/性能信息。Eagle 官方调试文档明确支持 Window Plugin 按 F12 调出 DevTools。[Debug Plugin](https://developer.eagle.cool/plugin-api/get-started/debugging)
+5. 开发阶段只使用 `/analyze` 和 dry-run；真实 `save()`、文件夹移动和 `moveToTrash()` 需等人工验收后再启用。Eagle 官方也建议通过 API 的 `save()`/`moveToTrash()`，不要直接改资源库文件。[Item API](https://developer.eagle.cool/plugin-api/api/item)
+
+调试时的验收顺序：先用 5–20 张选择集确认路径和中文文件名，再用一组 `JPG+ARW`/`3FR+HEIC` 确认配对展示，最后才测试批量 100–500 张。插件窗口只负责交互和审阅，RAW 解码、DINO 和人脸推理继续放在本地 worker，避免阻塞 Eagle UI。
+
 ## 8. 风险与不可自动化事项
 
 - RAW 内嵌预览可能与最终显影结果不同，曝光和颜色指标必须标记“基于代理图”；
@@ -186,3 +213,5 @@ Eagle 内建议建立四个审阅文件夹：`AI / Original`、`AI / Candidates`
 4. Oquab et al. [DINOv2 official repository](https://github.com/facebookresearch/dinov2).
 5. Google AI Edge. [MediaPipe Face Landmarker](https://developers.google.com/mediapipe/solutions/vision/face_landmarker).
 6. Eagle. [Plugin API — Item](https://developer.eagle.cool/plugin-api/api/item).
+7. Eagle. [Your First Plugin](https://developer.eagle.cool/plugin-api/get-started/creating-your-first-plugin).
+8. Eagle. [Debug Plugin](https://developer.eagle.cool/plugin-api/get-started/debugging).
