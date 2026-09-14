@@ -13,6 +13,7 @@
     "recommend": "node src/cli.js recommend",
     "benchmark": "node src/cli.js benchmark",
     "apply": "node src/cli.js apply",
+    "pairs": "node src/cli.js pairs",
     "test": "node --test"
   },
   "engines": {

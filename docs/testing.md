@@ -77,3 +77,32 @@ Python ONNX worker smoke test 已使用 Eagle 实际缩略图完成，返回 384
 2. 复核计划后才允许 `--apply --confirm APPLY_REVIEW`。
 
 首轮只允许写入 `ai:*` 标签、星级和备注，不允许自动调用删除或移入回收桶接口。
+
+### 首次真实标签回写结果
+
+2026-09-15 使用 `--tags-only --apply --confirm APPLY_REVIEW` 对当前仍存在的 JPG 项目执行了受控回写。写入前 Eagle API 清单包含 7,362 个项目，分析结果中有 2,643 个 ID 仍存在，12 个过期 ID 被自动跳过。
+
+- `ai:selected`：325；
+- `ai:candidate`：1,585；
+- `ai:rejected`：733；
+- `ai:eyes-closed`：55；
+- `ai:overexposed`：436；
+- `ai:underexposed`：100；
+- `ai:possibly-blurry`：329；
+- 非 JPG 获得 AI 标签：0；
+- 回写前后已有星级项目均为 111，证明 `--tags-only` 未覆盖人工星级。
+
+这些标签是 AI 审阅提示，不是删除指令；`ai:rejected` 项目仍留在 Eagle 中。RAW/3FR/HEIC/DNG 当前只写配对角色标签，质量与留存状态要等代理图分析完成后再标记。
+
+### 首次配对标签回写结果
+
+同日运行 `npm run pairs -- --apply --confirm APPLY_PAIRS`，重新读取 Eagle 后验证：
+
+- 确定配对文件 `ai:paired`：6,880；
+- RAW 母片 `ai:original`：3,440；
+- 同名多份、不能安全一对一匹配的 `ai:pair-uncertain`：464；
+- JPG 的 `selected/candidate/rejected` 标签保持不变；
+- 已有星级项目仍为 111；
+- MP4/SRT 未写入任何 AI 标签。
+
+配对标签回写只合并标签，不修改星级、文件夹和文件。重复运行会先移除旧的配对标签再按当前清单重建，因此结果是幂等的。

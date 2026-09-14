@@ -3,8 +3,13 @@ import test from "node:test";
 import { applyReview, buildUpdate } from "../src/review.js";
 
 test("builds a non-destructive tag update while preserving user tags", () => {
-  const update = buildUpdate({ id: "A", action: "selected", star: 5 }, { tags: ["travel", "ai:candidate"], folders: ["original"] }, { selected: "selected-folder" });
-  assert.deepEqual(update, { id: "A", tags: ["travel", "ai:selected"], folders: ["original", "selected-folder"], star: 5 });
+  const update = buildUpdate({ id: "A", action: "selected", star: 5, flags: ["possibly-blurry"] }, { tags: ["travel", "ai:candidate"], folders: ["original"] }, { selected: "selected-folder" });
+  assert.deepEqual(update, { id: "A", tags: ["travel", "ai:selected", "ai:possibly-blurry"], folders: ["original", "selected-folder"], star: 5 });
+});
+
+test("tags-only mode preserves the existing star", () => {
+  const update = buildUpdate({ id: "A", action: "candidate", star: 3 }, { tags: ["ai:overexposed"], star: 5 }, {}, { includeStar: false });
+  assert.deepEqual(update, { id: "A", tags: ["ai:candidate"] });
 });
 
 test("review application is dry-run by default and writes only when enabled", async () => {

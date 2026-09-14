@@ -5,6 +5,7 @@ data/inventory.json.tmp
 data/analysis*.json
 data/review*.json
 data/benchmark*.json
+data/pairs*.json
 data/cache/
 data/previews/
 node_modules/

@@ -11,6 +11,7 @@ export async function buildRecommendations(analysis) {
         id: item.id,
         action,
         star: action === "selected" ? 5 : action === "candidate" ? 3 : 1,
+        flags: item.qualityFlags || [],
         reason: `${group.size > 1 ? `phash group ${group.groupId}; rank ${index + 1}/${group.size}` : "singleton; needs review"}${item.qualityFlags?.length ? `; flags: ${item.qualityFlags.join(",")}` : ""}`,
       });
     });

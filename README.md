@@ -41,6 +41,7 @@ npm run analyze -- --limit 100 --embeddings
 npm run analyze -- --limit 100 --faces
 npm run models
 npm run recommend
+npm run pairs
 node src/cli.js apply --review data/review.json
 ```
 
@@ -59,6 +60,16 @@ node src/cli.js apply --review data/review.json
 ```
 
 先运行 `node src/cli.js apply --review data/review.json` 查看 dry-run 计划；只有明确传入 `--apply --confirm APPLY_REVIEW` 才会通过 Eagle Web API 写入 `ai:*` 标签、星级和备注。
+
+仅写 AI 标签、不修改人工星级时使用：
+
+```powershell
+npm run apply -- --review data/review.json --tags-only --apply --confirm APPLY_REVIEW
+```
+
+该模式会在写入前重新读取当前 Eagle 清单，只处理仍存在的项目，并合并用户标签。2026-09-15 的首次受控写入已验证：2,643 个 JPG 获得标签，非 JPG 项目 0 个，原有 111 个星级保持不变。
+
+`npm run pairs` 根据当前 Eagle 清单生成 RAW/JPG/HEIC capture unit 的 dry-run；只有添加 `--apply --confirm APPLY_PAIRS` 才会写 `ai:paired`、`ai:original` 和 `ai:pair-uncertain`。首次配对回写已验证 6,880 个确定配对文件、3,440 个 RAW 母片和 464 个歧义项目，未修改星级、文件夹或文件。
 
 若要同时加入审阅文件夹，可提供一个只包含 Eagle 文件夹 ID 的映射，例如 `{"selected":"FOLDER_ID"}`，再加 `--folder-map data/folder-map.json`；系统会合并既有文件夹，不替换用户已有归档。
 

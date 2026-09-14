@@ -12,6 +12,7 @@ import { writeBenchmark } from "./benchmark.js";
 import { embedImage, createEmbeddingExtractor, clusterByEmbedding } from "./embedding.js";
 import { verifyModels } from "./models.js";
 import { runFaceWorker } from "./face-worker-client.js";
+import { buildPairPlan, buildPairUpdate } from "./pairing.js";
 
 const api = new EagleApi();
 
@@ -130,13 +131,17 @@ async function apply() {
       for (const item of cached.items || []) lookup.set(item.id, item);
     } catch { /* dry-run can still show a valid plan without a snapshot */ }
   }
-  const result = await applyReview(api, review, { apply: shouldApply, lookup, folderMap });
+  const eligibleDecisions = review.decisions.filter((decision) => lookup.has(decision.id));
+  const skippedCount = review.decisions.length - eligibleDecisions.length;
+  const eligibleReview = { ...review, decisions: eligibleDecisions };
+  const tagsOnly = process.argv.includes("--tags-only");
+  const result = await applyReview(api, eligibleReview, { apply: shouldApply, lookup, folderMap, includeStar: !tagsOnly });
   if (!shouldApply) {
-    console.log(JSON.stringify({ mode: "dry-run", decisionCount: result.plan.length, plan: result.plan }, null, 2));
+    console.log(JSON.stringify({ mode: "dry-run", tagsOnly, decisionCount: result.plan.length, skippedCount, plan: result.plan }, null, 2));
     console.log("No Eagle changes made. To apply, pass --apply --confirm APPLY_REVIEW.");
     return;
   }
-  console.log(`Applied ${result.plan.length} reviewed updates to Eagle.`);
+  console.log(`Applied ${result.plan.length} reviewed updates to Eagle; skipped ${skippedCount} IDs no longer present in the current inventory.`);
 }
 
 async function serve() {
@@ -168,7 +173,30 @@ async function models() {
   if (results.some((result) => !result.ok)) process.exitCode = 1;
 }
 
-const commands = { doctor, inventory, analyze, apply, serve, recommend, benchmark, models };
+async function pairs() {
+  const current = [];
+  for await (const item of api.items({ limit: 500 })) current.push(item);
+  const plan = buildPairPlan(current);
+  const outputPath = option("--output", "data/pairs.json");
+  await writeInventoryAtomic({ schemaVersion: 1, generatedAt: new Date().toISOString(), ...plan }, outputPath);
+  const shouldApply = process.argv.includes("--apply") && option("--confirm", "") === "APPLY_PAIRS";
+  if (!shouldApply) {
+    console.log(`Planned ${plan.pairedUnits} certain and ${plan.uncertainUnits} uncertain capture units; no Eagle changes made.`);
+    return;
+  }
+  const byId = new Map(current.map((item) => [item.id, item]));
+  let applied = 0;
+  for (const planned of plan.updates) {
+    const item = byId.get(planned.id);
+    if (!item) continue;
+    await api.updateItem(buildPairUpdate(item, planned));
+    applied += 1;
+    if (applied % 500 === 0) console.log(`Pair tag progress ${applied}/${plan.updates.length}`);
+  }
+  console.log(`Applied pair tags to ${applied} Eagle items; no stars, folders, or files were changed.`);
+}
+
+const commands = { doctor, inventory, analyze, apply, serve, recommend, benchmark, models, pairs };
 const command = process.argv[2];
 
 if (!commands[command]) {
