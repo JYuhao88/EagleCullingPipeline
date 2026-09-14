@@ -1,0 +1,18 @@
+{
+  "models": [
+    {
+      "name": "dinov2-small",
+      "path": "models/dinov2-small/model.onnx",
+      "source": "https://huggingface.co/Xenova/dinov2-small/resolve/main/onnx/model.onnx",
+      "sha256": "83141175ec78b4ff9a2bb58a4c7c264ba0054d1c2e122e5a8114b79a8d4179ea",
+      "sizeBytes": 88459888
+    },
+    {
+      "name": "face-landmarker",
+      "path": "models/mediapipe/face_landmarker.task",
+      "source": "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+      "sha256": "64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff",
+      "sizeBytes": 3758596
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+# Lightweight Windows worker (no PyTorch required)
+pillow>=10
+numpy>=1.26
+onnxruntime-directml>=1.24

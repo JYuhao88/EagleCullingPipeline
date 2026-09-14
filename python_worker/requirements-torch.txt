@@ -1,0 +1,4 @@
+# Optional TorchScript worker dependencies. Install torch/torchvision from the
+# CUDA-specific PyTorch index before installing this file.
+torch>=2.4,<3
+torchvision>=0.19,<1

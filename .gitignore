@@ -1,0 +1,15 @@
+data/*.sqlite
+data/*.db
+data/inventory.json
+data/inventory.json.tmp
+data/analysis*.json
+data/review*.json
+data/benchmark*.json
+data/cache/
+data/previews/
+node_modules/
+models/
+__pycache__/
+.venv/
+*.pyc
+.env

@@ -1,0 +1,6 @@
+# Default Windows worker dependencies.
+pillow>=10
+numpy>=1.26
+# Windows GPU default; reports DmlExecutionProvider when available.
+onnxruntime-directml>=1.24
+mediapipe>=0.10

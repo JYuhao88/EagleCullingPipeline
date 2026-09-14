@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Eagle Culling Pipeline</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="plugin.js"></script>
+  </head>
+  <body>
+    <main>
+      <h1>Eagle Culling Pipeline</h1>
+      <p class="muted">读取所选项目并交给本机分析服务；当前版本不会修改标签、评分或文件。</p>
+      <button id="inspect" type="button">检查当前所选照片</button>
+      <button id="analyze" type="button">分析当前所选照片</button>
+      <p id="status" role="status">等待操作</p>
+      <pre id="result"></pre>
+    </main>
+  </body>
+</html>

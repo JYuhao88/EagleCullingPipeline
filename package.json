@@ -1,0 +1,26 @@
+{
+  "name": "eagle-culling-pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-first, reviewable photo culling workflow for Eagle",
+  "type": "module",
+  "scripts": {
+    "doctor": "node src/cli.js doctor",
+    "inventory": "node src/cli.js inventory",
+    "analyze": "node src/cli.js analyze",
+    "serve": "node src/cli.js serve",
+    "models": "node src/cli.js models",
+    "recommend": "node src/cli.js recommend",
+    "benchmark": "node src/cli.js benchmark",
+    "apply": "node src/cli.js apply",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^4.2.0",
+    "@mediapipe/tasks-vision": "^0.10.35",
+    "sharp": "^0.33.5"
+  }
+}
