@@ -30,7 +30,7 @@ npm run analyze -- --library D:\Photography\EagleLibraries\Culling.library --lim
 - 至少检查一个真实重复组；
 - Eagle 中没有标签、评分、文件夹或文件删除变化。
 
-已完成的一次样本运行结果：20/20 成功，19 个相似组，其中 1 个组包含 2 个精确重复项目。
+已完成的一次 JPG 样本运行结果：20/20 成功，19 个相似组，其中 1 个组包含 2 个精确重复项目。该结果不代表 ARW/3FR/HEIC/DNG 已覆盖；这些格式需先经过代理图预处理验收。
 
 本地 DINOv2 ONNX smoke test：
 

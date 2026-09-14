@@ -35,6 +35,12 @@ def preprocess(path):
 
 
 def main():
+    # Node/PowerShell pipes carry UTF-8 JSON even when the Windows locale does
+    # not. Configure the streams explicitly so Eagle paths may contain CJK.
+    if hasattr(sys.stdin, "reconfigure"):
+        sys.stdin.reconfigure(encoding="utf-8", errors="strict")
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
     model_path = os.environ.get("EAGLE_DINO_ONNX", "models/dinov2-small/model.onnx")
     if not os.path.exists(model_path):
         emit({"error": {"code": "model_unavailable", "message": f"Missing local model: {model_path}"}})
