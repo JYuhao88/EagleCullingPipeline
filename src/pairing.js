@@ -4,7 +4,8 @@ const PAIR_DEFINITIONS = [
   { original: "3fr", rendition: "heic" },
 ];
 
-const PAIR_TAGS = new Set(["ai:paired", "ai:pair-uncertain", "ai:original"]);
+const PAIR_TAGS = new Set(["ai:paired", "ai:pair-uncertain", "ai:original", "ai:unpaired-original"]);
+const ORIGINAL_EXTENSIONS = new Set(PAIR_DEFINITIONS.map((definition) => definition.original));
 
 function normalizedName(item) {
   return String(item.name || "").trim().toLocaleLowerCase();
@@ -48,11 +49,26 @@ export function buildPairPlan(items) {
       updates.push({ id: item.id, additions, captureUnitId: unit.captureUnitId });
     }
   }
+  const plannedIds = new Set(updates.map((update) => update.id));
+  for (const item of items) {
+    if (!plannedIds.has(item.id) && ORIGINAL_EXTENSIONS.has(item.ext?.toLowerCase())) {
+      units.push({
+        captureUnitId: `unpaired:${item.id}`,
+        name: item.name,
+        formats: [item.ext.toLowerCase()],
+        confidence: 1,
+        status: "unpaired-original",
+        itemIds: [item.id],
+      });
+      updates.push({ id: item.id, additions: ["ai:original", "ai:unpaired-original"], captureUnitId: `unpaired:${item.id}` });
+    }
+  }
   return {
     units,
     updates,
     pairedUnits: units.filter((unit) => unit.status === "paired").length,
     uncertainUnits: units.filter((unit) => unit.status === "pair-uncertain").length,
+    unpairedOriginals: units.filter((unit) => unit.status === "unpaired-original").length,
   };
 }
 

@@ -2,7 +2,7 @@
 
 ## 自动化测试
 
-运行 `npm test`，当前覆盖 9 项：
+运行 `npm test`，当前覆盖：
 
 - Eagle Web API 分页与错误处理；
 - Eagle `.info` 目录发现和图片元数据解析；
@@ -11,6 +11,9 @@
 - 精确重复图片聚类；
 - 单组代表图与 singleton 候选建议；
 - dry-run 回写计划与显式写入门；
+- `--tags-only` 保留人工星级并清理过期质量标签；
+- JPG/ARW、JPG/DNG、3FR/HEIC 一对一配对；
+- 同名多项不确定配对和孤立 RAW 保护；
 - 本地分析服务 `/health` 和 `/analyze`。
 
 测试图片在临时目录中生成，不修改 Eagle 资源库。
@@ -101,8 +104,11 @@ Python ONNX worker smoke test 已使用 Eagle 实际缩略图完成，返回 384
 - 确定配对文件 `ai:paired`：6,880；
 - RAW 母片 `ai:original`：3,440；
 - 同名多份、不能安全一对一匹配的 `ai:pair-uncertain`：464；
+- 没有配对对象的 `ai:unpaired-original`：3；
 - JPG 的 `selected/candidate/rejected` 标签保持不变；
 - 已有星级项目仍为 111；
 - MP4/SRT 未写入任何 AI 标签。
+
+最终重新导出验证：Eagle API 可见 7,362 个项目，其中 7,354 个为照片格式，7,354/7,354 均至少有一个 AI 标签；剩余 8 个 MP4/SRT 没有 AI 标签。
 
 配对标签回写只合并标签，不修改星级、文件夹和文件。重复运行会先移除旧的配对标签再按当前清单重建，因此结果是幂等的。

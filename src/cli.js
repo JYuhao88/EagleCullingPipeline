@@ -181,19 +181,25 @@ async function pairs() {
   await writeInventoryAtomic({ schemaVersion: 1, generatedAt: new Date().toISOString(), ...plan }, outputPath);
   const shouldApply = process.argv.includes("--apply") && option("--confirm", "") === "APPLY_PAIRS";
   if (!shouldApply) {
-    console.log(`Planned ${plan.pairedUnits} certain and ${plan.uncertainUnits} uncertain capture units; no Eagle changes made.`);
+    console.log(`Planned ${plan.pairedUnits} certain, ${plan.uncertainUnits} uncertain capture units, and ${plan.unpairedOriginals} unpaired originals; no Eagle changes made.`);
     return;
   }
   const byId = new Map(current.map((item) => [item.id, item]));
   let applied = 0;
+  let unchanged = 0;
   for (const planned of plan.updates) {
     const item = byId.get(planned.id);
     if (!item) continue;
-    await api.updateItem(buildPairUpdate(item, planned));
+    const update = buildPairUpdate(item, planned);
+    if (JSON.stringify(update.tags) === JSON.stringify(item.tags || [])) {
+      unchanged += 1;
+      continue;
+    }
+    await api.updateItem(update);
     applied += 1;
     if (applied % 500 === 0) console.log(`Pair tag progress ${applied}/${plan.updates.length}`);
   }
-  console.log(`Applied pair tags to ${applied} Eagle items; no stars, folders, or files were changed.`);
+  console.log(`Applied pair tags to ${applied} Eagle items; ${unchanged} were already current. No stars, folders, or files were changed.`);
 }
 
 const commands = { doctor, inventory, analyze, apply, serve, recommend, benchmark, models, pairs };

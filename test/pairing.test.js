@@ -22,6 +22,12 @@ test("marks duplicate basenames as uncertain instead of guessing pairs", () => {
   assert.ok(plan.updates.every((item) => item.additions.includes("ai:pair-uncertain")));
 });
 
+test("preserves an unpaired RAW as an original needing pair review", () => {
+  const plan = buildPairPlan([{ id: "raw", name: "DSC0002", ext: "arw" }]);
+  assert.equal(plan.unpairedOriginals, 1);
+  assert.deepEqual(plan.updates[0].additions, ["ai:original", "ai:unpaired-original"]);
+});
+
 test("pair tags merge without changing review tags or stars", () => {
   const update = buildPairUpdate({ id: "raw", tags: ["travel", "ai:candidate", "ai:pair-uncertain"], star: 5 }, { additions: ["ai:paired", "ai:original"] });
   assert.deepEqual(update, { id: "raw", tags: ["travel", "ai:candidate", "ai:paired", "ai:original"] });
