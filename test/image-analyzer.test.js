@@ -31,6 +31,19 @@ test("lists Eagle .info image records and analyzes a local sample", async () => 
   assert.ok(result.metrics.sharpness >= 0);
 });
 
+test("analyzes an Eagle proxy while preserving the original item dimensions", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "eagle-proxy-"));
+  const originalPath = path.join(root, "capture.3fr");
+  const proxyPath = path.join(root, "capture_thumbnail.png");
+  await writeFile(originalPath, "not decoded in the interactive plugin");
+  await sharp({ create: { width: 64, height: 48, channels: 3, background: { r: 80, g: 100, b: 120 } } }).png().toFile(proxyPath);
+  const result = await analyzeImage({ id: "raw", name: "capture", filePath: originalPath, analysisPath: proxyPath, width: 11656, height: 8742 });
+  assert.equal(result.analysisSource, "proxy");
+  assert.equal(result.width, 11656);
+  assert.equal(result.height, 8742);
+  assert.equal(result.filePath, originalPath);
+});
+
 test("clusters exact duplicates and reports a zero hash distance", async () => {
   const root = await fixtureLibrary();
   const records = await listEagleImages(root);

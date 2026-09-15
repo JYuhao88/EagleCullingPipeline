@@ -14,6 +14,7 @@
 - [研究报告](docs/research.md)
 - [SOTA 模型评估与本地部署](docs/model-research.md)
 - [预处理与照片留存决策方案](docs/preprocessing-and-retention.md)
+- [Eagle 中文审阅插件](docs/plugin-review.md)
 - [测试集合与验收标准](docs/testing.md)
 - [技术架构与数据流](docs/architecture.md)
 - [可选 GPU 模型 worker](python_worker/README.md)
@@ -47,7 +48,7 @@ node src/cli.js apply --review data/review.json
 
 - `doctor` 检查 Eagle Web API 和当前资源库。
 - `inventory` 分页导出只读元数据到 `data/inventory.json`。
-- `src/plugin` 是只读取当前所选项目、调用本地分析服务的 Eagle Window Plugin。
+- `src/plugin` 是可直接在 Eagle 开发者模式加载的中文审阅插件：自动读取当前选择、展示中文质量与配对原因、按相似组排序，并允许逐张写入 `ai:selected`、`ai:candidate`、`ai:rejected`。每次写入前都会重新读取该项目，只替换三种 AI 审阅状态标签，不修改人工标签、配对标签、星级、文件夹或原片，也不提供自动删除动作。详见 [Eagle 中文审阅插件](docs/plugin-review.md)。
 
 `analyze` 会读取 Eagle library 的 `.info` 目录，计算 SHA-256、pHash、清晰度/曝光/构图/主体代理指标和可解释质量分，并输出 `data/analysis.json`。它不会修改 Eagle。加入 `--faces` 时，会用本地 MediaPipe worker 检测人脸和闭眼；加入 `--embeddings` 时，会用本地量化 DINOv2 提取 384 维语义向量。
 

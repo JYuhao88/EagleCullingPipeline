@@ -105,7 +105,8 @@ export function scoreQuality({ sharpness, clippedHigh, clippedLow, width, height
 }
 
 export async function analyzeImage(record) {
-  const image = sharp(record.filePath, { failOn: "none" });
+  const analysisPath = record.analysisPath || record.filePath;
+  const image = sharp(analysisPath, { failOn: "none" });
   const metadata = await image.metadata();
   const hashBuffer = await image.clone().resize({ width: 32, height: 32, fit: "fill" }).greyscale().raw().toBuffer({ resolveWithObject: true });
   const gray = Array.from(hashBuffer.data);
@@ -125,7 +126,10 @@ export async function analyzeImage(record) {
   const sharpness = gradient / Math.max(1, luma.length);
   const clippedHigh = luma.filter((value) => value >= 250).length / luma.length;
   const clippedLow = luma.filter((value) => value <= 5).length / luma.length;
-  const dimensions = { width: metadata.width || record.width || 0, height: metadata.height || record.height || 0 };
+  const dimensions = {
+    width: record.analysisPath ? (record.width || metadata.width || 0) : (metadata.width || record.width || 0),
+    height: record.analysisPath ? (record.height || metadata.height || 0) : (metadata.height || record.height || 0),
+  };
   const qualityFlags = [];
   if (sharpness < 3) qualityFlags.push("possibly-blurry");
   if (clippedHigh >= 0.05) qualityFlags.push("overexposed");
@@ -146,7 +150,8 @@ export async function analyzeImage(record) {
     ...record,
     width: dimensions.width,
     height: dimensions.height,
-    sha256: (await hashFile(record.filePath)).sha256,
+    sha256: (await hashFile(analysisPath)).sha256,
+    analysisSource: analysisPath === record.filePath ? "original" : "proxy",
     phash,
     metrics: {
       meanLuma: Math.round(avg * 100) / 100,

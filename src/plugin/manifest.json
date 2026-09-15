@@ -1,17 +1,17 @@
 {
   "id": "EAGLECULLING001",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "platform": "win",
   "arch": "x64",
-  "name": "Eagle Culling Pipeline",
+  "name": "摄影筛选助手",
   "keywords": ["photography", "culling", "duplicate", "quality"],
   "devTools": true,
   "main": {
     "url": "index.html",
-    "width": 760,
-    "height": 560,
-    "minWidth": 640,
-    "minHeight": 480,
+    "width": 980,
+    "height": 720,
+    "minWidth": 680,
+    "minHeight": 560,
     "resizable": true,
     "backgroundColor": "#111111"
   }

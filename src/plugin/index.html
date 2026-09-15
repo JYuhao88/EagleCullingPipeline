@@ -3,18 +3,64 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Eagle Culling Pipeline</title>
+    <title>摄影筛选助手</title>
     <link rel="stylesheet" href="style.css">
-    <script defer src="plugin.js"></script>
+    <script type="module" src="plugin.js"></script>
   </head>
   <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">EAGLE 本地工作流</p>
+        <h1>摄影筛选助手</h1>
+      </div>
+      <div id="service-state" class="service-state" data-state="checking">
+        <span class="service-dot" aria-hidden="true"></span>
+        <span>正在检查分析服务</span>
+      </div>
+    </header>
+
     <main>
-      <h1>Eagle Culling Pipeline</h1>
-      <p class="muted">读取所选项目并交给本机分析服务；当前版本不会修改标签、评分或文件。</p>
-      <button id="inspect" type="button">检查当前所选照片</button>
-      <button id="analyze" type="button">分析当前所选照片</button>
-      <p id="status" role="status">等待操作</p>
-      <pre id="result"></pre>
+      <section class="toolbar" aria-label="筛选操作">
+        <div class="toolbar-actions">
+          <button id="inspect" class="button button-secondary" type="button">刷新当前选择</button>
+          <button id="analyze" class="button button-primary" type="button">AI 分析所选照片</button>
+        </div>
+        <label class="search-field">
+          <span>搜索</span>
+          <input id="search" type="search" placeholder="文件名或标签" autocomplete="off">
+        </label>
+      </section>
+
+      <p id="status" class="status-line" role="status">打开插件后会自动读取 Eagle 当前选择。</p>
+
+      <section class="summary" aria-label="审阅统计">
+        <div><span id="summary-total" class="summary-value">0</span><span>当前照片</span></div>
+        <div><span id="summary-selected" class="summary-value">0</span><span>精选保留</span></div>
+        <div><span id="summary-candidate" class="summary-value">0</span><span>候选</span></div>
+        <div><span id="summary-rejected" class="summary-value">0</span><span>待删除复核</span></div>
+        <div><span id="summary-issues" class="summary-value">0</span><span>需重点检查</span></div>
+      </section>
+
+      <nav id="filters" class="filters" aria-label="照片状态筛选">
+        <button class="filter-button is-active" type="button" data-filter="all">全部</button>
+        <button class="filter-button" type="button" data-filter="selected">精选保留</button>
+        <button class="filter-button" type="button" data-filter="candidate">候选</button>
+        <button class="filter-button" type="button" data-filter="rejected">待删除复核</button>
+        <button class="filter-button" type="button" data-filter="issues">需重点检查</button>
+      </nav>
+
+      <section class="workspace" aria-label="照片审阅区">
+        <div id="empty-state" class="empty-state">
+          <h2>请先在 Eagle 中选择照片</h2>
+          <p>建议一次选择同一次拍摄或同一组连拍，单批不超过 500 张。</p>
+        </div>
+        <div id="review-list" class="review-list" hidden></div>
+      </section>
     </main>
+
+    <footer>
+      <span>只修改 AI 审阅状态标签，不改星级、文件夹和原片，也不会自动删除。</span>
+      <span class="shortcut-help">快捷键：J/K 切换，1 保留，2 候选，3 待删除复核，Enter 在 Eagle 中定位</span>
+    </footer>
   </body>
 </html>

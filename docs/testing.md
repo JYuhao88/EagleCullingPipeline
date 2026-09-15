@@ -15,8 +15,13 @@
 - JPG/ARW、JPG/DNG、3FR/HEIC 一对一配对；
 - 同名多项不确定配对和孤立 RAW 保护；
 - 本地分析服务 `/health` 和 `/analyze`。
+- 中文审阅原因、状态筛选、相似组推荐和 AI 标签合并；
+- Microsoft Edge 中的插件实际渲染、中文搜索/筛选和模拟 `Item.save()` 写入；
+- RAW/3FR/HEIC 使用 Eagle 代理图分析时保留原始尺寸和路径。
 
 测试图片在临时目录中生成，不修改 Eagle 资源库。
+
+Windows UI smoke test 会临时启动无界面的 Microsoft Edge，加载 `src/plugin/index.html?demo=1`，验证 4 张演示照片的渲染、状态筛选和中文搜索；随后注入一个模拟 Eagle API，确认把“候选”改为“精选保留”时，人工标签、`ai:paired`、星级和文件夹保持不变。测试结束会关闭整个 Edge 进程树并清理临时 profile。
 
 ## Eagle 实际样本测试
 

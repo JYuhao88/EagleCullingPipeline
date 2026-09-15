@@ -189,12 +189,12 @@ Eagle 内建议建立四个审阅文件夹：`AI / Original`、`AI / Candidates`
 推荐的本项目调试流程：
 
 1. 在 Eagle 中先确认打开的是 `Culling.library`，并启动本地服务：`npm run serve`；
-2. 选择“插件 → 开发者选项 → 创建插件 → Window Plugin”，将开发目录指定为项目的 `src/plugin`（如果当前版本不允许选择已有目录，则先创建临时 Window Plugin，再将本目录的 `manifest.json`、`index.html`、`plugin.js`、`style.css` 复制覆盖）；
-3. 在插件列表打开 `Eagle Culling Pipeline`，先点击“检查当前所选照片”，再点击“分析当前所选照片”；
+2. 选择“插件 → 开发者选项 → 创建插件 → Window Plugin”，将开发目录指定为项目的 `src/plugin`（如果当前版本不允许选择已有目录，则先创建临时 Window Plugin，再用整个 `src/plugin` 目录覆盖生成目录，确保包含 `review-model.js`）；
+3. 在插件列表打开“摄影筛选助手”。插件会自动读取当前选择；点击“AI 分析所选照片”后，会按相似组展示中文原因、质量分和 RAW/JPG 配对提示；
 4. 插件窗口获得焦点时按 `F12` 打开 DevTools，可查看 console、网络请求、断点和内存/性能信息。Eagle 官方调试文档明确支持 Window Plugin 按 F12 调出 DevTools。[Debug Plugin](https://developer.eagle.cool/plugin-api/get-started/debugging)
-5. 开发阶段只使用 `/analyze` 和 dry-run；真实 `save()`、文件夹移动和 `moveToTrash()` 需等人工验收后再启用。Eagle 官方也建议通过 API 的 `save()`/`moveToTrash()`，不要直接改资源库文件。[Item API](https://developer.eagle.cool/plugin-api/api/item)
+5. 插件中的“保留 / 候选 / 待删复核”会通过官方 `Item.save()` 立即保存单张照片的 AI 状态标签；代码没有调用 `moveToTrash()`，也不会改星级、文件夹和原片。Eagle 官方建议通过 API 的 `save()` 修改项目，不要直接改资源库文件。[Item API](https://developer.eagle.cool/plugin-api/api/item)
 
-调试时的验收顺序：先用 5–20 张选择集确认路径和中文文件名，再用一组 `JPG+ARW`/`3FR+HEIC` 确认配对展示，最后才测试批量 100–500 张。插件窗口只负责交互和审阅，RAW 解码、DINO 和人脸推理继续放在本地 worker，避免阻塞 Eagle UI。
+调试时的验收顺序：先用 5–20 张选择集确认路径和中文文件名，再用一组 `JPG+ARW`/`3FR+HEIC` 确认配对展示，最后才测试批量 100–500 张。交互分析优先读取 Eagle 的 `thumbnailPath`，所以 RAW/3FR/HEIC 不会在插件操作期间整张解码；DINO 和人脸推理继续放在本地 worker，避免阻塞 Eagle UI。详细操作和安全边界见 [Eagle 中文审阅插件](plugin-review.md)。
 
 ## 8. 风险与不可自动化事项
 
