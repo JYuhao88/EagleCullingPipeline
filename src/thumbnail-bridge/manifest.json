@@ -1,0 +1,18 @@
+{
+  "id": "EAGLETHUMBNAILBRIDGE001",
+  "version": "0.1.0",
+  "platform": "win",
+  "arch": "x64",
+  "name": "缩略图角标桥接",
+  "keywords": ["thumbnail", "badge", "photo"],
+  "devTools": true,
+  "main": {
+    "url": "index.html",
+    "width": 520,
+    "height": 260,
+    "minWidth": 460,
+    "minHeight": 220,
+    "resizable": false,
+    "backgroundColor": "#111111"
+  }
+}

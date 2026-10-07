@@ -1,5 +1,6 @@
 import http from "node:http";
 import path from "node:path";
+import { readFile } from "node:fs/promises";
 import { analyzeImage, applyFaceQuality, clusterByPhash } from "./image-analyzer.js";
 import { runFaceWorker } from "./face-worker-client.js";
 import { createBadgeThumbnail } from "./badge-thumbnail.js";
@@ -12,6 +13,14 @@ function json(res, status, body) {
 export function createAnalysisServer({ host = "127.0.0.1", port = 43125 } = {}) {
   const server = http.createServer(async (req, res) => {
     if (req.method === "GET" && req.url === "/health") return json(res, 200, { ok: true, service: "eagle-culling" });
+    if (req.method === "GET" && req.url === "/badge-manifest") {
+      try {
+        const manifestPath = path.resolve("data", "thumbnail-badges.json");
+        return json(res, 200, JSON.parse(await readFile(manifestPath, "utf8")));
+      } catch (error) {
+        return json(res, 404, { error: `badge manifest unavailable: ${error.message}` });
+      }
+    }
     if (req.method !== "POST" || !["/analyze", "/badge-thumbnail"].includes(req.url)) return json(res, 404, { error: "Not found" });
     try {
       const chunks = [];

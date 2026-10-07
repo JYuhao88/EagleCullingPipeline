@@ -53,6 +53,16 @@ JPG/HEIC 与同名 RAW/3FR 被识别为确定的一对一拍摄单元时，批�
 
 要撤销角标，选择相同照片后点击“恢复原缩略图”，插件会调用 `Item.refreshThumbnail()` 让 Eagle 重新生成原生缩略图。普通批处理限制当前选择最多 500 张，另有“全库生成角标”会调用官方 `item.getAll()` 后逐项处理图片格式；全库模式会跳过视频、字幕、XML 等非图片项目，并逐张更新进度。双击进入 Eagle 原图预览时仍显示原始照片，而不是烧录了文字的图片。[Eagle Item API](https://developer.eagle.cool/plugin-api/api/item)
 
+如果不希望打开审阅面板，可先在项目目录运行独立批处理：
+
+```powershell
+npm run badges -- --library D:/Photography/EagleLibraries/Culling.library --concurrency 2
+```
+
+该命令只扫描 Eagle `.info` 目录中的照片/预览，生成 `data/thumbnail-badges/` 和 `data/thumbnail-badges.json`，不写 Eagle 数据库。之后仍需要一个极小的 Eagle API 写入桥接调用 `setCustomThumbnail()`；直接改 Eagle 的 `metadata.json` 或缩略图库不受官方支持，也不安全。
+
+这个桥接已经单独放在 `src/thumbnail-bridge`。在 Eagle 开发者模式把该目录作为另一个 Window Plugin 加载后，窗口只有“写入全部已生成角标”和“恢复全部原缩略图”两个动作；原来的 `src/plugin` 审阅面板可以不打开。
+
 ## 安全写入设计
 
 保存状态时，插件不会直接使用分析开始时的旧对象。它先调用 `eagle.item.getById(id)` 获取最新项目，再移除三种旧 AI 审阅状态，合并新状态，最后调用该 Item 实例的 `save()`：

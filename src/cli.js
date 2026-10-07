@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import path from "node:path";
 import process from "node:process";
-import { readFile } from "node:fs/promises";
+import { readFile, mkdir } from "node:fs/promises";
 import { EagleApi } from "./eagle-api.js";
 import { collectInventory, writeInventoryAtomic } from "./inventory.js";
 import { analyzeImage, applyFaceQuality, clusterByPhash, listEagleImages } from "./image-analyzer.js";
@@ -13,6 +13,7 @@ import { embedImage, createEmbeddingExtractor, clusterByEmbedding } from "./embe
 import { verifyModels } from "./models.js";
 import { runFaceWorker } from "./face-worker-client.js";
 import { buildPairPlan, buildPairUpdate, buildPairedReviewUpdates } from "./pairing.js";
+import { createBadgeThumbnail } from "./badge-thumbnail.js";
 
 const api = new EagleApi();
 
@@ -157,6 +158,34 @@ async function serve() {
   await new Promise(() => {});
 }
 
+async function generateBadges() {
+  const libraryPath = option("--library", process.env.EAGLE_LIBRARY_PATH || "D:/Photography/EagleLibraries/Culling.library");
+  const outputDir = path.resolve(option("--output-dir", "data/thumbnail-badges"));
+  const manifestPath = path.resolve(option("--manifest", "data/thumbnail-badges.json"));
+  const concurrency = Math.max(1, Math.min(6, Number(option("--concurrency", "2")) || 2));
+  const records = await listEagleImages(libraryPath);
+  await mkdir(outputDir, { recursive: true });
+  const manifest = [];
+  let cursor = 0;
+  let completed = 0;
+  async function worker() {
+    while (true) {
+      const index = cursor;
+      cursor += 1;
+      if (index >= records.length) return;
+      const record = records[index];
+      const outputPath = path.join(outputDir, `${record.id}.png`);
+      const result = await createBadgeThumbnail({ sourcePath: record.thumbnailPath || record.filePath, outputPath, tags: record.tags || [] });
+      manifest[index] = { id: record.id, name: record.name, ext: record.ext, tags: record.tags || [], outputPath: result.outputPath, skipped: result.skipped };
+      completed += 1;
+      if (completed % 100 === 0 || completed === records.length) console.log(`Badge progress ${completed}/${records.length}`);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(concurrency, records.length) }, worker));
+  await writeInventoryAtomic({ schemaVersion: 1, generatedAt: new Date().toISOString(), libraryPath, itemCount: manifest.length, items: manifest }, manifestPath);
+  console.log(`Generated ${manifest.filter((item) => !item.skipped).length}/${manifest.length} badge thumbnails; manifest: ${manifestPath}`);
+}
+
 async function recommend() {
   const analysisPath = option("--analysis", "data/analysis.json");
   const outputPath = option("--output", "data/review.json");
@@ -225,11 +254,11 @@ async function syncPairedTags() {
   console.log(`Synchronized ${applied} exact JPG/RAW pairs. No stars, folders, or files were changed.`);
 }
 
-const commands = { doctor, inventory, analyze, apply, serve, recommend, benchmark, models, pairs, "sync-paired-tags": syncPairedTags };
+const commands = { doctor, inventory, analyze, apply, serve, badges: generateBadges, recommend, benchmark, models, pairs, "sync-paired-tags": syncPairedTags };
 const command = process.argv[2];
 
 if (!commands[command]) {
-  console.error("Usage: node src/cli.js <doctor|inventory|analyze|apply> [options]");
+  console.error("Usage: node src/cli.js <doctor|inventory|analyze|apply|badges> [options]");
   process.exitCode = 2;
 } else {
   commands[command]().catch((error) => {

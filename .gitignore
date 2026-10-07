@@ -8,6 +8,7 @@ data/benchmark*.json
 data/pairs*.json
 data/cache/
 data/thumbnail-badges/
+data/thumbnail-badges.json
 data/previews/
 node_modules/
 models/

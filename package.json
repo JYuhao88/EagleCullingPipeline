@@ -9,6 +9,7 @@
     "inventory": "node src/cli.js inventory",
     "analyze": "node src/cli.js analyze",
     "serve": "node src/cli.js serve",
+    "badges": "node src/cli.js badges",
     "models": "node src/cli.js models",
     "recommend": "node src/cli.js recommend",
     "benchmark": "node src/cli.js benchmark",
