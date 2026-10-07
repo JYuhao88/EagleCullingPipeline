@@ -10,6 +10,8 @@ data/cache/
 data/previews/
 node_modules/
 models/
+.window-state.json
+src/plugin/window-state.json
 __pycache__/
 .venv/
 *.pyc
