@@ -84,11 +84,11 @@ Python ONNX worker smoke test 已使用 Eagle 实际缩略图完成，返回 384
 1. `node src/cli.js apply --review data/review.json` 只打印计划；
 2. 复核计划后才允许 `--apply --confirm APPLY_REVIEW`。
 
-首轮只允许写入 `ai:*` 标签、星级和备注，不允许自动调用删除或移入回收桶接口。
+首轮只允许写入审阅标签、星级和备注，不允许自动调用删除或移入回收桶接口。
 
 ### 首次真实标签回写结果
 
-2026-09-15 使用 `--tags-only --apply --confirm APPLY_REVIEW` 对当前仍存在的 JPG 项目执行了受控回写。写入前 Eagle API 清单包含 7,362 个项目，分析结果中有 2,643 个 ID 仍存在，12 个过期 ID 被自动跳过。
+2026-09-15 使用 `--tags-only --apply --confirm APPLY_REVIEW` 对当前仍存在的 JPG 项目执行了受控回写。写入前 Eagle API 清单包含 7,362 个项目，分析结果中有 2,643 个 ID 仍存在，12 个过期 ID 被自动跳过。以下为中文标签迁移前的历史记录。
 
 - `ai:selected`：325；
 - `ai:candidate`：1,585；
@@ -100,7 +100,7 @@ Python ONNX worker smoke test 已使用 Eagle 实际缩略图完成，返回 384
 - 非 JPG 获得 AI 标签：0；
 - 回写前后已有星级项目均为 111，证明 `--tags-only` 未覆盖人工星级。
 
-这些标签是 AI 审阅提示，不是删除指令；`ai:rejected` 项目仍留在 Eagle 中。RAW/3FR/HEIC/DNG 当前只写配对角色标签，质量与留存状态要等代理图分析完成后再标记。
+这些标签是 AI 审阅提示，不是删除指令；当时的 `ai:rejected` 项目仍留在 Eagle 中。2026-10-07 已将当前资源库中的 2,633 个旧状态标签统一迁移为 `AI精选` 324 个、`AI候选` 1,578 个、`待复核` 731 个，旧标签回读为 0。RAW/3FR/HEIC/DNG 当前只写配对角色标签，质量与留存状态要等代理图分析完成后再标记。
 
 ### 首次配对标签回写结果
 

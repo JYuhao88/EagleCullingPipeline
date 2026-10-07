@@ -2,10 +2,11 @@ import { readFile } from "node:fs/promises";
 
 const ACTION_TAGS = {
   original: "ai:original",
-  candidate: "ai:candidate",
-  selected: "ai:selected",
-  rejected: "ai:rejected",
+  candidate: "AI候选",
+  selected: "AI精选",
+  rejected: "待复核",
 };
+const LEGACY_REVIEW_TAGS = new Set(["ai:candidate", "ai:selected", "ai:rejected"]);
 const QUALITY_TAGS = new Set([
   "ai:eyes-closed",
   "ai:possibly-blurry",
@@ -24,7 +25,7 @@ export function buildUpdate(decision, current = {}, folderMap = {}, { includeSta
   const action = decision.action;
   if (!ACTION_TAGS[action]) throw new Error(`Unsupported review action: ${action}`);
   const existing = Array.isArray(current.tags) ? current.tags : [];
-  const tags = existing.filter((tag) => !Object.values(ACTION_TAGS).includes(tag) && !QUALITY_TAGS.has(tag));
+  const tags = existing.filter((tag) => !Object.values(ACTION_TAGS).includes(tag) && !LEGACY_REVIEW_TAGS.has(tag) && !QUALITY_TAGS.has(tag));
   tags.push(ACTION_TAGS[action]);
   for (const flag of Array.isArray(decision.flags) ? decision.flags : []) {
     if (/^[a-z0-9-]+$/i.test(flag)) tags.push(`ai:${flag}`);
