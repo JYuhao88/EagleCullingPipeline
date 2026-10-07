@@ -1,18 +1,18 @@
 import { readFile } from "node:fs/promises";
 
 const ACTION_TAGS = {
-  original: "ai:original",
+  original: "AI原片",
   candidate: "AI候选",
   selected: "AI精选",
   rejected: "待复核",
 };
-const LEGACY_REVIEW_TAGS = new Set(["ai:candidate", "ai:selected", "ai:rejected"]);
+const LEGACY_REVIEW_TAGS = new Set([
+  "ai:candidate", "ai:selected", "ai:rejected", "ai:original",
+  "ai:eyes-closed", "ai:possibly-blurry", "ai:overexposed", "ai:underexposed",
+]);
 const QUALITY_TAGS = new Set([
-  "ai:eyes-closed",
-  "ai:possibly-blurry",
-  "ai:overexposed",
-  "ai:underexposed",
-  "ai:low-resolution",
+  "AI闭眼", "AI可能模糊", "AI过曝", "AI欠曝", "AI低分辨率",
+  "ai:eyes-closed", "ai:possibly-blurry", "ai:overexposed", "ai:underexposed", "ai:low-resolution",
 ]);
 
 export async function loadReview(filePath) {
@@ -28,7 +28,10 @@ export function buildUpdate(decision, current = {}, folderMap = {}, { includeSta
   const tags = existing.filter((tag) => !Object.values(ACTION_TAGS).includes(tag) && !LEGACY_REVIEW_TAGS.has(tag) && !QUALITY_TAGS.has(tag));
   tags.push(ACTION_TAGS[action]);
   for (const flag of Array.isArray(decision.flags) ? decision.flags : []) {
-    if (/^[a-z0-9-]+$/i.test(flag)) tags.push(`ai:${flag}`);
+    if (/^[a-z0-9-]+$/i.test(flag)) {
+      const qualityTags = { "eyes-closed": "AI闭眼", "possibly-blurry": "AI可能模糊", overexposed: "AI过曝", underexposed: "AI欠曝", "low-resolution": "AI低分辨率" };
+      tags.push(qualityTags[flag] || `AI${flag}`);
+    }
   }
   const uniqueTags = [...new Set(tags)];
   const update = { id: decision.id, tags: uniqueTags };

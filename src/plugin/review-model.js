@@ -15,6 +15,14 @@ const FLAG_LABELS = {
   underexposed: "暗部压黑较多，可能欠曝",
   "low-resolution": "分辨率偏低，不建议作为大尺寸输出首选",
 };
+const FLAG_TAGS = {
+  "possibly-blurry": ["AI可能模糊", "ai:possibly-blurry"],
+  "eyes-closed": ["AI闭眼", "ai:eyes-closed"],
+  overexposed: ["AI过曝", "ai:overexposed"],
+  underexposed: ["AI欠曝", "ai:underexposed"],
+  "low-resolution": ["AI低分辨率", "ai:low-resolution"],
+};
+const hasTag = (tags, names) => names.some((name) => tags.includes(name));
 
 export function reviewStateFromTags(tags = []) {
   for (const key of ["selected", "candidate", "rejected"]) {
@@ -30,7 +38,7 @@ export function mergeReviewStateTags(tags = [], state) {
 
 export function qualityFlagsFor(item) {
   const fromAnalysis = Array.isArray(item.qualityFlags) ? item.qualityFlags : [];
-  const fromTags = Object.keys(FLAG_LABELS).filter((flag) => (item.tags || []).includes(`ai:${flag}`));
+  const fromTags = Object.keys(FLAG_LABELS).filter((flag) => hasTag(item.tags || [], FLAG_TAGS[flag] || [`ai:${flag}`]));
   return [...new Set([...fromAnalysis, ...fromTags])];
 }
 
@@ -56,10 +64,10 @@ export function chineseReasons(item, group) {
       ? `同组共 ${group.size} 张相似照片，本张综合质量分最高`
       : `同组共 ${group.size} 张相似照片，建议与组内首选并排比较`);
   }
-  if ((item.tags || []).includes("ai:original")) reasons.push("RAW/原始格式已作为母片保护，不建议仅因 JPEG 更好看而删除");
-  if ((item.tags || []).includes("ai:paired")) reasons.push("已找到对应 RAW/JPEG 或 3FR/HEIC 拍摄配对");
-  if ((item.tags || []).includes("ai:pair-uncertain")) reasons.push("同名文件超过一组，配对关系不唯一，需要人工确认");
-  if ((item.tags || []).includes("ai:unpaired-original")) reasons.push("未找到对应预览成片，原始母片应优先保留并复核");
+  if (hasTag(item.tags || [], ["AI原片", "ai:original"])) reasons.push("RAW/原始格式已作为母片保护，不建议仅因 JPEG 更好看而删除");
+  if (hasTag(item.tags || [], ["AI已配对", "ai:paired"])) reasons.push("已找到对应 RAW/JPEG 或 3FR/HEIC 拍摄配对");
+  if (hasTag(item.tags || [], ["AI配对待确认", "ai:pair-uncertain"])) reasons.push("同名文件超过一组，配对关系不唯一，需要人工确认");
+  if (hasTag(item.tags || [], ["AI未配对原片", "ai:unpaired-original"])) reasons.push("未找到对应预览成片，原始母片应优先保留并复核");
   if (item.analysisSource === "proxy") reasons.push("本次使用 Eagle 预览图分析，未解码或修改原片");
   if (reasons.length === 0 && Number.isFinite(item.qualityScore)) reasons.push("未发现明显技术问题，仍需人工判断瞬间、内容和审美价值");
   if (reasons.length === 0) reasons.push("尚未执行本次质量分析；当前只展示 Eagle 已有标签和配对信息");
@@ -108,7 +116,7 @@ export function summarize(records = []) {
     selected: records.filter((item) => item.state === "selected").length,
     candidate: records.filter((item) => item.state === "candidate").length,
     rejected: records.filter((item) => item.state === "rejected").length,
-    issues: records.filter((item) => item.qualityFlags.length > 0 || (item.tags || []).some((tag) => ["ai:pair-uncertain", "ai:unpaired-original"].includes(tag))).length,
+    issues: records.filter((item) => item.qualityFlags.length > 0 || hasTag(item.tags || [], ["AI配对待确认", "AI未配对原片", "ai:pair-uncertain", "ai:unpaired-original"])).length,
   };
 }
 
@@ -117,6 +125,6 @@ export function matchesReviewFilter(record, filter, query = "") {
   const haystack = [record.name, record.ext, ...(record.tags || []), ...record.reasons].join(" ").toLocaleLowerCase("zh-CN");
   if (normalized && !haystack.includes(normalized)) return false;
   if (filter === "all") return true;
-  if (filter === "issues") return record.qualityFlags.length > 0 || (record.tags || []).some((tag) => ["ai:pair-uncertain", "ai:unpaired-original"].includes(tag));
+  if (filter === "issues") return record.qualityFlags.length > 0 || hasTag(record.tags || [], ["AI配对待确认", "AI未配对原片", "ai:pair-uncertain", "ai:unpaired-original"]);
   return record.state === filter;
 }

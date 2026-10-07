@@ -21,7 +21,7 @@
 
 测试图片在临时目录中生成，不修改 Eagle 资源库。
 
-Windows UI smoke test 会临时启动无界面的 Microsoft Edge，加载 `src/plugin/index.html?demo=1`，验证 4 张演示照片的渲染、状态筛选和中文搜索；随后注入一个模拟 Eagle API，确认把“候选”改为“精选保留”时，人工标签、`ai:paired`、星级和文件夹保持不变。测试结束会关闭整个 Edge 进程树并清理临时 profile。
+Windows UI smoke test 会临时启动无界面的 Microsoft Edge，加载 `src/plugin/index.html?demo=1`，验证 4 张演示照片的渲染、状态筛选和中文搜索；随后注入一个模拟 Eagle API，确认把“候选”改为“精选”时，人工标签、`AI已配对`、星级和文件夹保持不变。测试结束会关闭整个 Edge 进程树并清理临时 profile。
 
 ## Eagle 实际样本测试
 

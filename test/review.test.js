@@ -4,7 +4,7 @@ import { applyReview, buildUpdate } from "../src/review.js";
 
 test("builds a non-destructive tag update while preserving user tags", () => {
   const update = buildUpdate({ id: "A", action: "selected", star: 5, flags: ["possibly-blurry"] }, { tags: ["travel", "ai:candidate"], folders: ["original"] }, { selected: "selected-folder" });
-  assert.deepEqual(update, { id: "A", tags: ["travel", "AI精选", "ai:possibly-blurry"], folders: ["original", "selected-folder"], star: 5 });
+  assert.deepEqual(update, { id: "A", tags: ["travel", "AI精选", "AI可能模糊"], folders: ["original", "selected-folder"], star: 5 });
 });
 
 test("tags-only mode preserves the existing star", () => {

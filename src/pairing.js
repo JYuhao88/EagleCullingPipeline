@@ -4,7 +4,16 @@ const PAIR_DEFINITIONS = [
   { original: "3fr", rendition: "heic" },
 ];
 
-const PAIR_TAGS = new Set(["ai:paired", "ai:pair-uncertain", "ai:original", "ai:unpaired-original"]);
+const PAIR_TAGS = new Set([
+  "AI已配对", "AI配对待确认", "AI原片", "AI未配对原片",
+  "ai:paired", "ai:pair-uncertain", "ai:original", "ai:unpaired-original",
+]);
+const LEGACY_PAIR_TAGS = {
+  "ai:paired": "AI已配对",
+  "ai:pair-uncertain": "AI配对待确认",
+  "ai:original": "AI原片",
+  "ai:unpaired-original": "AI未配对原片",
+};
 const ORIGINAL_EXTENSIONS = new Set(PAIR_DEFINITIONS.map((definition) => definition.original));
 
 function normalizedName(item) {
@@ -44,8 +53,8 @@ export function buildPairPlan(items) {
 
     for (const item of members) {
       const additions = exact
-        ? ["ai:paired", ...(item.ext?.toLowerCase() === definition.original ? ["ai:original"] : [])]
-        : ["ai:pair-uncertain"];
+        ? ["AI已配对", ...(item.ext?.toLowerCase() === definition.original ? ["AI原片"] : [])]
+        : ["AI配对待确认"];
       updates.push({ id: item.id, additions, captureUnitId: unit.captureUnitId });
     }
   }
@@ -60,7 +69,7 @@ export function buildPairPlan(items) {
         status: "unpaired-original",
         itemIds: [item.id],
       });
-      updates.push({ id: item.id, additions: ["ai:original", "ai:unpaired-original"], captureUnitId: `unpaired:${item.id}` });
+      updates.push({ id: item.id, additions: ["AI原片", "AI未配对原片"], captureUnitId: `unpaired:${item.id}` });
     }
   }
   return {
@@ -74,7 +83,7 @@ export function buildPairPlan(items) {
 
 export function buildPairUpdate(current, planned) {
   const tags = (current.tags || []).filter((tag) => !PAIR_TAGS.has(tag));
-  for (const tag of planned.additions) tags.push(tag);
+  for (const tag of planned.additions) tags.push(LEGACY_PAIR_TAGS[tag] || tag);
   return { id: current.id, tags: [...new Set(tags)] };
 }
 
