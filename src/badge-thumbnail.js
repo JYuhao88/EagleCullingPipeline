@@ -54,7 +54,7 @@ export async function createBadgeThumbnail({ sourcePath, outputPath, tags }) {
     : Buffer.from(overlay);
   await source
     .resize({ width: 1200, height: 1200, fit: "inside", withoutEnlargement: true })
-    .composite([{ input: overlayBuffer, top: 14, left: 14 }])
+    .composite([{ input: overlayBuffer, gravity: "southwest" }])
     .png()
     .toFile(outputPath);
   return { outputPath, skipped: false };

@@ -249,22 +249,30 @@ async function generateAllBadges() {
     if (!items.length) throw new Error("当前资源库没有可处理的图片");
     let completed = 0;
     let skipped = 0;
-    for (const item of items) {
-      const response = await fetch(`${SERVICE_URL}/badge-thumbnail`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ badgeKey: item.id, sourcePath: item.thumbnailPath || item.filePath, tags: item.tags || [] }),
-      });
-      const payload = await response.json();
-      if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
-      if (payload.outputPath && !payload.skipped) {
-        await item.setCustomThumbnail(payload.outputPath);
-        completed += 1;
-      } else skipped += 1;
-      if ((completed + skipped) % 25 === 0 || completed + skipped === items.length) {
-        setStatus(`正在为全库生成角标：${completed + skipped}/${items.length}（已写入 ${completed}）…`);
+    let cursor = 0;
+    async function worker() {
+      while (true) {
+        const index = cursor;
+        cursor += 1;
+        if (index >= items.length) return;
+        const item = items[index];
+        const response = await fetch(`${SERVICE_URL}/badge-thumbnail`, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ badgeKey: item.id, sourcePath: item.thumbnailPath || item.filePath, tags: item.tags || [] }),
+        });
+        const payload = await response.json();
+        if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+        if (payload.outputPath && !payload.skipped) {
+          await item.setCustomThumbnail(payload.outputPath);
+          completed += 1;
+        } else skipped += 1;
+        if ((completed + skipped) % 25 === 0 || completed + skipped === items.length) {
+          setStatus(`正在为全库生成角标：${completed + skipped}/${items.length}（已写入 ${completed}）…`);
+        }
       }
     }
+    await Promise.all(Array.from({ length: 4 }, worker));
     setStatus(`全库角标完成：处理 ${items.length} 张，写入 ${completed} 张，无标签跳过 ${skipped} 张。`, "success");
   } catch (error) {
     setStatus(`全库角标失败：${error.message}`, "error");
