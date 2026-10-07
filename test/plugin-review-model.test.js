@@ -11,7 +11,7 @@ import {
 
 test("merges only the AI review state and preserves human, pair, and quality tags", () => {
   const tags = mergeReviewStateTags(["旅行", "ai:candidate", "ai:paired", "ai:possibly-blurry"], "selected");
-  assert.deepEqual(tags, ["旅行", "ai:paired", "ai:possibly-blurry", "ai:selected"]);
+  assert.deepEqual(tags, ["旅行", "ai:paired", "ai:possibly-blurry", "AI精选"]);
   assert.equal(reviewStateFromTags(tags), "selected");
 });
 

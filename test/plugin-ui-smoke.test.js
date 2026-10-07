@@ -153,7 +153,7 @@ test("rendered plugin demo supports Chinese review filtering without browser err
   await waitFor(async () => await evaluate("document.querySelectorAll('.item-row').length") === 1);
   await evaluate("document.querySelector('.decision-button[data-action=selected]').click()");
   const saved = await waitFor(async () => await evaluate("globalThis.__savedItem"));
-  assert.deepEqual(saved.tags, ["人工标签", "ai:paired", "ai:selected"]);
+  assert.deepEqual(saved.tags, ["人工标签", "ai:paired", "AI精选"]);
   assert.deepEqual(saved.folders, ["user-folder"]);
   assert.equal(saved.star, 4);
   assert.deepEqual(exceptions, []);

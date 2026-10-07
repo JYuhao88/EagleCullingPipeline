@@ -1,11 +1,13 @@
 export const REVIEW_STATES = {
-  selected: { tag: "ai:selected", label: "精选保留" },
-  candidate: { tag: "ai:candidate", label: "候选" },
-  rejected: { tag: "ai:rejected", label: "待删除复核" },
+  selected: { tag: "AI精选", legacyTag: "ai:selected", label: "精选" },
+  candidate: { tag: "AI候选", legacyTag: "ai:candidate", label: "候选" },
+  rejected: { tag: "待复核", legacyTag: "ai:rejected", label: "待复核" },
   unreviewed: { tag: null, label: "未标记" },
 };
 
-const REVIEW_TAGS = new Set(Object.values(REVIEW_STATES).map((entry) => entry.tag).filter(Boolean));
+const REVIEW_TAGS = new Set(Object.values(REVIEW_STATES)
+  .flatMap((entry) => [entry.tag, entry.legacyTag])
+  .filter(Boolean));
 const FLAG_LABELS = {
   "possibly-blurry": "清晰度偏低，可能失焦或存在运动模糊",
   "eyes-closed": "检测到闭眼，请重点复核人物表情",
@@ -16,7 +18,7 @@ const FLAG_LABELS = {
 
 export function reviewStateFromTags(tags = []) {
   for (const key of ["selected", "candidate", "rejected"]) {
-    if (tags.includes(REVIEW_STATES[key].tag)) return key;
+    if (tags.includes(REVIEW_STATES[key].tag) || tags.includes(REVIEW_STATES[key].legacyTag)) return key;
   }
   return "unreviewed";
 }

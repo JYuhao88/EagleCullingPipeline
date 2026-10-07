@@ -87,7 +87,7 @@ function renderRecord(record) {
   const thumbnailMarkup = thumbnail
     ? `<img src="${escapeHtml(thumbnail)}" alt="${escapeHtml(record.name)} 的缩略图" loading="lazy">`
     : `<span class="format-badge">${escapeHtml((record.ext || "文件").toUpperCase())}</span>`;
-  const actionLabels = { selected: "保留", candidate: "候选", rejected: "待删复核" };
+  const actionLabels = { selected: "精选", candidate: "候选", rejected: "待复核" };
   const decisionButtons = ["selected", "candidate", "rejected"].map((key) => (
     `<button class="decision-button${record.state === key ? " is-current" : ""}" type="button" data-action="${key}" data-id="${escapeHtml(record.id)}"${demoMode ? " disabled" : ""}>${actionLabels[key]}</button>`
   )).join("");
@@ -285,10 +285,10 @@ function svgThumbnail(label, colors) {
 
 function loadDemo() {
   const base = [
-    { id: "demo-1", name: "DSC08421", ext: "JPG", qualityScore: 91, width: 7728, height: 5152, tags: ["旅行", "ai:selected", "ai:paired"], qualityFlags: [], thumbnailURL: svgThumbnail("DSC08421", ["#997053", "#263f4b"]) },
-    { id: "demo-2", name: "DSC08422", ext: "ARW", qualityScore: 82, width: 7728, height: 5152, tags: ["ai:original", "ai:paired", "ai:candidate"], qualityFlags: ["possibly-blurry"], analysisSource: "proxy", thumbnailURL: svgThumbnail("DSC08422", ["#6d544a", "#1c3038"]) },
+    { id: "demo-1", name: "DSC08421", ext: "JPG", qualityScore: 91, width: 7728, height: 5152, tags: ["旅行", "AI精选", "ai:paired"], qualityFlags: [], thumbnailURL: svgThumbnail("DSC08421", ["#997053", "#263f4b"]) },
+    { id: "demo-2", name: "DSC08422", ext: "ARW", qualityScore: 82, width: 7728, height: 5152, tags: ["ai:original", "ai:paired", "AI候选"], qualityFlags: ["possibly-blurry"], analysisSource: "proxy", thumbnailURL: svgThumbnail("DSC08422", ["#6d544a", "#1c3038"]) },
     { id: "demo-3", name: "B0001731", ext: "3FR", qualityScore: 76, width: 11656, height: 8742, tags: ["ai:original", "ai:pair-uncertain"], qualityFlags: ["eyes-closed"], analysisSource: "proxy", thumbnailURL: svgThumbnail("B0001731", ["#5c665e", "#23262c"]) },
-    { id: "demo-4", name: "B0001731", ext: "HEIC", qualityScore: 79, width: 4096, height: 3072, tags: ["ai:rejected", "ai:pair-uncertain"], qualityFlags: ["overexposed"], metrics: { clippedHigh: .083 }, thumbnailURL: svgThumbnail("B0001731 HEIC", ["#b99b74", "#4a5964"]) },
+    { id: "demo-4", name: "B0001731", ext: "HEIC", qualityScore: 79, width: 4096, height: 3072, tags: ["待复核", "ai:pair-uncertain"], qualityFlags: ["overexposed"], metrics: { clippedHigh: .083 }, thumbnailURL: svgThumbnail("B0001731 HEIC", ["#b99b74", "#4a5964"]) },
   ];
   state.items = base;
   state.groups = [{ groupId: "phash-0001", size: 2, representativeId: "demo-1", items: base.slice(0, 2) }];
