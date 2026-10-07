@@ -4,6 +4,7 @@
   "platform": "win",
   "arch": "x64",
   "name": "摄影筛选助手",
+  "logo": "/logo.png",
   "keywords": ["photography", "culling", "duplicate", "quality"],
   "devTools": true,
   "main": {

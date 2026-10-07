@@ -4,6 +4,7 @@
   "platform": "win",
   "arch": "x64",
   "name": "缩略图角标桥接",
+  "logo": "/logo.png",
   "keywords": ["thumbnail", "badge", "photo"],
   "devTools": true,
   "main": {
