@@ -1,6 +1,8 @@
 import http from "node:http";
+import path from "node:path";
 import { analyzeImage, applyFaceQuality, clusterByPhash } from "./image-analyzer.js";
 import { runFaceWorker } from "./face-worker-client.js";
+import { createBadgeThumbnail } from "./badge-thumbnail.js";
 
 function json(res, status, body) {
   res.writeHead(status, { "content-type": "application/json; charset=utf-8", "access-control-allow-origin": "*" });
@@ -10,7 +12,7 @@ function json(res, status, body) {
 export function createAnalysisServer({ host = "127.0.0.1", port = 43125 } = {}) {
   const server = http.createServer(async (req, res) => {
     if (req.method === "GET" && req.url === "/health") return json(res, 200, { ok: true, service: "eagle-culling" });
-    if (req.method !== "POST" || req.url !== "/analyze") return json(res, 404, { error: "Not found" });
+    if (req.method !== "POST" || !["/analyze", "/badge-thumbnail"].includes(req.url)) return json(res, 404, { error: "Not found" });
     try {
       const chunks = [];
       let bodyBytes = 0;
@@ -20,6 +22,11 @@ export function createAnalysisServer({ host = "127.0.0.1", port = 43125 } = {}) 
         chunks.push(chunk);
       }
       const body = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+      if (req.url === "/badge-thumbnail") {
+        if (!body.outputPath && body.badgeKey) body.outputPath = path.resolve("data", "thumbnail-badges", `${String(body.badgeKey).replace(/[^a-zA-Z0-9_-]/g, "_")}.png`);
+        const result = await createBadgeThumbnail(body);
+        return json(res, 200, result);
+      }
       if (!Array.isArray(body.items) || body.items.length > 500) return json(res, 400, { error: "items must be an array of at most 500 records" });
       const items = [];
       for (const item of body.items) items.push(await analyzeImage(item));

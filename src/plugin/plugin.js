@@ -16,6 +16,8 @@ const elements = {
   service: document.querySelector("#service-state"),
   inspect: document.querySelector("#inspect"),
   analyze: document.querySelector("#analyze"),
+  badges: document.querySelector("#badges"),
+  restoreBadges: document.querySelector("#restore-badges"),
   search: document.querySelector("#search"),
   filters: document.querySelector("#filters"),
   empty: document.querySelector("#empty-state"),
@@ -66,6 +68,8 @@ function setServiceState(serviceState, text) {
 function setBusy(isBusy) {
   elements.inspect.disabled = isBusy;
   elements.analyze.disabled = isBusy;
+  elements.badges.disabled = isBusy || demoMode;
+  elements.restoreBadges.disabled = isBusy || demoMode;
 }
 
 function allRecords() {
@@ -201,6 +205,57 @@ async function analyzeSelection() {
   }
 }
 
+async function generateBadges() {
+  if (!eagleApi) return;
+  setBusy(true);
+  try {
+    const selected = await eagleApi.item.getSelected();
+    if (selected.length === 0) throw new Error("请先在 Eagle 中选择照片");
+    if (selected.length > MAX_BATCH_SIZE) throw new Error(`一次最多处理 ${MAX_BATCH_SIZE} 张，当前选择了 ${selected.length} 张`);
+    let completed = 0;
+    for (const item of selected) {
+      const sourcePath = item.thumbnailPath || item.filePath;
+      if (!sourcePath) continue;
+      const response = await fetch(`${SERVICE_URL}/badge-thumbnail`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ badgeKey: item.id, sourcePath, tags: item.tags || [] }),
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+      if (payload.outputPath && !payload.skipped) {
+        await item.setCustomThumbnail(payload.outputPath);
+        completed += 1;
+      }
+      if (completed % 20 === 0 || completed === selected.length) setStatus(`正在生成缩略图角标：${completed}/${selected.length}…`);
+    }
+    setStatus(`已为 ${completed} 张照片生成缩略图角标。原图和 RAW 文件未修改。`, "success");
+  } catch (error) {
+    setStatus(`角标生成失败：${error.message}`, "error");
+  } finally {
+    setBusy(false);
+  }
+}
+
+async function restoreBadges() {
+  if (!eagleApi) return;
+  setBusy(true);
+  try {
+    const selected = await eagleApi.item.getSelected();
+    if (selected.length === 0) throw new Error("请先在 Eagle 中选择照片");
+    if (selected.length > MAX_BATCH_SIZE) throw new Error(`一次最多处理 ${MAX_BATCH_SIZE} 张，当前选择了 ${selected.length} 张`);
+    for (let index = 0; index < selected.length; index += 1) {
+      await selected[index].refreshThumbnail();
+      if ((index + 1) % 20 === 0 || index + 1 === selected.length) setStatus(`正在恢复原缩略图：${index + 1}/${selected.length}…`);
+    }
+    setStatus(`已恢复 ${selected.length} 张照片的 Eagle 原缩略图。`, "success");
+  } catch (error) {
+    setStatus(`恢复失败：${error.message}`, "error");
+  } finally {
+    setBusy(false);
+  }
+}
+
 async function locateItem(id) {
   if (demoMode) {
     setStatus("当前是界面演示模式；在 Eagle 插件中会定位到对应照片。", "neutral");
@@ -254,6 +309,8 @@ function moveFocus(delta) {
 function bindEvents() {
   elements.inspect.addEventListener("click", loadSelection);
   elements.analyze.addEventListener("click", analyzeSelection);
+  elements.badges.addEventListener("click", generateBadges);
+  elements.restoreBadges.addEventListener("click", restoreBadges);
   elements.search.addEventListener("input", render);
   elements.filters.addEventListener("click", (event) => {
     const button = event.target.closest("[data-filter]");

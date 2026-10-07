@@ -48,7 +48,7 @@ node src/cli.js apply --review data/review.json
 
 - `doctor` 检查 Eagle Web API 和当前资源库。
 - `inventory` 分页导出只读元数据到 `data/inventory.json`。
-- `src/plugin` 是可直接在 Eagle 开发者模式加载的中文审阅插件：自动读取当前选择、展示中文质量与配对原因、按相似组排序，并允许逐张写入 `AI精选`、`AI候选`、`待复核`。插件仍兼容旧的 `ai:selected`、`ai:candidate`、`ai:rejected` 标签，用户下一次操作该照片时会自动转换为中文标签。每次写入前都会重新读取该项目，只替换审阅状态标签，不修改人工标签、配对标签、星级、文件夹或原片，也不提供自动删除动作。详见 [Eagle 中文审阅插件](docs/plugin-review.md)。
+- `src/plugin` 是可直接在 Eagle 开发者模式加载的中文审阅插件：自动读取当前选择、展示中文质量与配对原因、按相似组排序，并允许逐张写入 `AI精选`、`AI候选`、`待复核`。插件仍兼容旧的 `ai:selected`、`ai:candidate`、`ai:rejected` 标签，用户下一次操作该照片时会自动转换为中文标签。每次写入前都会重新读取该项目，只替换审阅状态标签，不修改人工标签、配对标签、星级、文件夹或原片，也不提供自动删除动作。插件还可按当前选择生成可撤销的原生网格缩略图角标，或恢复 Eagle 原缩略图；角标只写入 Eagle 的 custom thumbnail，不烧录原图。详见 [Eagle 中文审阅插件](docs/plugin-review.md)。
 
 - `npm run pairs -- --apply --confirm APPLY_PAIRS` 写入配对关系；`node src/cli.js sync-paired-tags --apply --confirm APPLY_PAIR_REVIEW` 将 JPG 的审阅与质量标签同步到同名、确定的一对一 RAW，保留 RAW 的 `AI原片` / `AI已配对` 标签以及人工标签、星级和文件夹。相同场景的近重复照片按 pHash 相似组排序，组内首选写入 `AI精选`，其余只进入 `待复核`，不会自动删除。
 
