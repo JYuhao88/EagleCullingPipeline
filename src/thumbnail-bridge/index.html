@@ -3,5 +3,5 @@
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>缩略图角标桥接</title><style>
 :root{color-scheme:dark;font-family:"Microsoft YaHei",sans-serif}body{margin:0;padding:24px;background:#111;color:#eee}h1{font-size:20px;margin:0 0 10px}p{color:#aeb5bf;font-size:13px;line-height:1.6}button{width:100%;margin-top:10px;padding:12px;border:1px solid #4e5968;border-radius:7px;background:#20252c;color:#fff;font-size:15px;cursor:pointer}button:hover{background:#2a323c}button:disabled{opacity:.55;cursor:wait}#status{min-height:22px;margin-top:14px;color:#8fd3a9}
 </style></head>
-<body><h1>缩略图角标桥接</h1><p>批处理程序已在本地生成角标。此窗口只负责通过 Eagle 官方 API 写入或恢复自定义缩略图，不显示照片审阅面板。若单张预览清晰度异常，请点击“恢复全部原缩略图”。</p><button id="apply">写入全部已生成角标</button><button id="restore">恢复全部原缩略图</button><div id="status"></div><script type="module" src="bridge.js"></script></body>
+<body><h1>缩略图角标桥接</h1><p>批处理程序已在本地生成角标。写入采用限并发、自动重试和断点续跑，避免一次性压垮 Eagle。若单张预览清晰度异常，请点击“恢复全部原缩略图”。</p><label>写入并发：<select id="concurrency"><option value="1">1（最稳）</option><option value="2" selected>2（推荐）</option><option value="4">4（较快）</option></select></label><button id="apply">继续写入全部已生成角标</button><button id="restore">恢复全部原缩略图</button><div id="status"></div><script type="module" src="bridge.js"></script></body>
 </html>
