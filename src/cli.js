@@ -12,7 +12,7 @@ import { writeBenchmark } from "./benchmark.js";
 import { embedImage, createEmbeddingExtractor, clusterByEmbedding } from "./embedding.js";
 import { verifyModels } from "./models.js";
 import { runFaceWorker } from "./face-worker-client.js";
-import { buildPairPlan, buildPairUpdate } from "./pairing.js";
+import { buildPairPlan, buildPairUpdate, buildPairedReviewUpdates } from "./pairing.js";
 
 const api = new EagleApi();
 
@@ -202,7 +202,25 @@ async function pairs() {
   console.log(`Applied pair tags to ${applied} Eagle items; ${unchanged} were already current. No stars, folders, or files were changed.`);
 }
 
-const commands = { doctor, inventory, analyze, apply, serve, recommend, benchmark, models, pairs };
+async function syncPairedTags() {
+  const current = [];
+  for await (const item of api.items({ limit: 500 })) current.push(item);
+  const updates = buildPairedReviewUpdates(current);
+  const shouldApply = process.argv.includes("--apply") && option("--confirm", "") === "APPLY_PAIR_REVIEW";
+  if (!shouldApply) {
+    console.log(`Planned ${updates.length} JPG→RAW review synchronizations; no Eagle changes made.`);
+    return;
+  }
+  let applied = 0;
+  for (const update of updates) {
+    await api.updateItem({ id: update.id, tags: update.tags });
+    applied += 1;
+    if (applied % 500 === 0) console.log(`JPG→RAW sync progress ${applied}/${updates.length}`);
+  }
+  console.log(`Synchronized ${applied} exact JPG/RAW pairs. No stars, folders, or files were changed.`);
+}
+
+const commands = { doctor, inventory, analyze, apply, serve, recommend, benchmark, models, pairs, "sync-paired-tags": syncPairedTags };
 const command = process.argv[2];
 
 if (!commands[command]) {

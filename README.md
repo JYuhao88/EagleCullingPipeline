@@ -50,6 +50,8 @@ node src/cli.js apply --review data/review.json
 - `inventory` 分页导出只读元数据到 `data/inventory.json`。
 - `src/plugin` 是可直接在 Eagle 开发者模式加载的中文审阅插件：自动读取当前选择、展示中文质量与配对原因、按相似组排序，并允许逐张写入 `AI精选`、`AI候选`、`待复核`。插件仍兼容旧的 `ai:selected`、`ai:candidate`、`ai:rejected` 标签，用户下一次操作该照片时会自动转换为中文标签。每次写入前都会重新读取该项目，只替换审阅状态标签，不修改人工标签、配对标签、星级、文件夹或原片，也不提供自动删除动作。详见 [Eagle 中文审阅插件](docs/plugin-review.md)。
 
+- `npm run pairs -- --apply --confirm APPLY_PAIRS` 写入配对关系；`node src/cli.js sync-paired-tags --apply --confirm APPLY_PAIR_REVIEW` 将 JPG 的审阅与质量标签同步到同名、确定的一对一 RAW，保留 RAW 的 `AI原片` / `AI已配对` 标签以及人工标签、星级和文件夹。相同场景的近重复照片按 pHash 相似组排序，组内首选写入 `AI精选`，其余只进入 `待复核`，不会自动删除。
+
 `analyze` 会读取 Eagle library 的 `.info` 目录，计算 SHA-256、pHash、清晰度/曝光/构图/主体代理指标和可解释质量分，并输出 `data/analysis.json`。它不会修改 Eagle。加入 `--faces` 时，会用本地 MediaPipe worker 检测人脸和闭眼；加入 `--embeddings` 时，会用本地量化 DINOv2 提取 384 维语义向量。
 
 增加 `--embeddings` 会在本地加载 `Xenova/dinov2-small` 的 ONNX 权重（首次运行下载，之后使用本地缓存），生成 384 维归一化向量并以余弦相似度聚类；不加该参数不会触发模型下载。`src/face.js` 对 MediaPipe Face Landmarker 提供显式可用性检测：Eagle 插件/浏览器环境可使用它，纯 Node 环境遇到 DOM 限制时会安全回退并标记为未检测。

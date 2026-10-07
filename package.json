@@ -14,6 +14,7 @@
     "benchmark": "node src/cli.js benchmark",
     "apply": "node src/cli.js apply",
     "pairs": "node src/cli.js pairs",
+    "sync-paired-tags": "node src/cli.js sync-paired-tags",
     "test": "node --test"
   },
   "engines": {

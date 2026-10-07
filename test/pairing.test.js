@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { buildPairPlan, buildPairUpdate } from "../src/pairing.js";
+import { buildPairPlan, buildPairUpdate, buildPairedReviewUpdates } from "../src/pairing.js";
 
 test("creates a capture unit for a one-to-one JPG and RAW pair", () => {
   const plan = buildPairPlan([
@@ -31,4 +31,18 @@ test("preserves an unpaired RAW as an original needing pair review", () => {
 test("pair tags merge without changing review tags or stars", () => {
   const update = buildPairUpdate({ id: "raw", tags: ["travel", "ai:candidate", "ai:pair-uncertain"], star: 5 }, { additions: ["ai:paired", "ai:original"] });
   assert.deepEqual(update, { id: "raw", tags: ["travel", "ai:candidate", "AI已配对", "AI原片"] });
+});
+
+test("copies JPG review and quality tags to its exact RAW pair", () => {
+  const updates = buildPairedReviewUpdates([
+    { id: "jpg", name: "DSC0003", ext: "jpg", tags: ["旅行", "AI精选", "AI过曝"] },
+    { id: "raw", name: "DSC0003", ext: "arw", tags: ["AI原片", "AI已配对", "人工标签", "AI候选"] },
+  ]);
+  assert.deepEqual(updates[0], {
+    id: "raw",
+    tags: ["AI原片", "AI已配对", "人工标签", "AI精选", "AI过曝"],
+    sourceId: "jpg",
+    captureUnitId: "pair:dsc0003",
+    syncTags: ["AI精选", "AI过曝"],
+  });
 });

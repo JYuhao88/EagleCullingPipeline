@@ -14,6 +14,14 @@ const LEGACY_PAIR_TAGS = {
   "ai:original": "AI原片",
   "ai:unpaired-original": "AI未配对原片",
 };
+const REVIEW_SYNC_TAGS = new Set([
+  "AI精选", "AI候选", "待复核",
+  "ai:selected", "ai:candidate", "ai:rejected",
+]);
+const QUALITY_SYNC_TAGS = new Set([
+  "AI闭眼", "AI过曝", "AI欠曝", "AI可能模糊", "AI低分辨率",
+  "ai:eyes-closed", "ai:overexposed", "ai:underexposed", "ai:possibly-blurry", "ai:low-resolution",
+]);
 const ORIGINAL_EXTENSIONS = new Set(PAIR_DEFINITIONS.map((definition) => definition.original));
 
 function normalizedName(item) {
@@ -85,6 +93,31 @@ export function buildPairUpdate(current, planned) {
   const tags = (current.tags || []).filter((tag) => !PAIR_TAGS.has(tag));
   for (const tag of planned.additions) tags.push(LEGACY_PAIR_TAGS[tag] || tag);
   return { id: current.id, tags: [...new Set(tags)] };
+}
+
+// Copy the JPG's review and quality decision to its exact one-to-one RAW pair.
+// Pair-specific tags such as AI原片 remain owned by the RAW item itself.
+export function buildPairedReviewUpdates(items) {
+  const plan = buildPairPlan(items);
+  const byId = new Map(items.map((item) => [item.id, item]));
+  const updates = [];
+  for (const unit of plan.units.filter((entry) => entry.status === "paired")) {
+    const jpg = unit.itemIds.map((id) => byId.get(id)).find((item) => item?.ext?.toLowerCase() === "jpg");
+    const raw = unit.itemIds.map((id) => byId.get(id)).find((item) => ["arw", "dng"].includes(item?.ext?.toLowerCase()));
+    if (!jpg || !raw) continue;
+    const sourceTags = (jpg.tags || []).filter((tag) => REVIEW_SYNC_TAGS.has(tag) || QUALITY_SYNC_TAGS.has(tag));
+    if (sourceTags.length === 0) continue;
+    const targetTags = (raw.tags || []).filter((tag) => !REVIEW_SYNC_TAGS.has(tag) && !QUALITY_SYNC_TAGS.has(tag));
+    const nextTags = [...new Set([...targetTags, ...sourceTags.map((tag) => ({
+      "ai:selected": "AI精选", "ai:candidate": "AI候选", "ai:rejected": "待复核",
+      "ai:eyes-closed": "AI闭眼", "ai:overexposed": "AI过曝", "ai:underexposed": "AI欠曝",
+      "ai:possibly-blurry": "AI可能模糊", "ai:low-resolution": "AI低分辨率",
+    }[tag] || tag))])];
+    if (JSON.stringify(nextTags) !== JSON.stringify(raw.tags || [])) {
+      updates.push({ id: raw.id, tags: nextTags, sourceId: jpg.id, captureUnitId: unit.captureUnitId, syncTags: sourceTags });
+    }
+  }
+  return updates;
 }
 
 export { PAIR_DEFINITIONS };

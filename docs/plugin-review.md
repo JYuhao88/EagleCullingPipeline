@@ -14,6 +14,8 @@
 
 插件同时兼容旧版本的 `ai:selected`、`ai:candidate`、`ai:rejected` 标签；当你对旧标签照片再次点选状态时，会自动换成上面的中文标签。
 
+JPG 与同名 RAW 被识别为确定的一对一拍摄单元时，批处理命令会把 JPG 的审阅状态和质量提示同步到 RAW；RAW 自己的 `AI原片`、`AI已配对` 等配对标签会保留。命令需要显式确认：`node src/cli.js sync-paired-tags --apply --confirm APPLY_PAIR_REVIEW`。
+
 没有“直接删除”按钮。插件代码不会调用 `moveToTrash()`，也不会修改星级、文件夹或原始文件。
 
 ## 中文审阅内容
