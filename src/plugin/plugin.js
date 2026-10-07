@@ -410,6 +410,7 @@ bindEvents();
 
 if (eagleApi) {
   checkService();
+  setInterval(checkService, 5000);
   eagleApi.onPluginCreate(loadSelection);
 } else if (demoMode) loadDemo();
 else {
