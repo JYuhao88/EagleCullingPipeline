@@ -102,10 +102,13 @@ export function buildPairedReviewUpdates(items) {
   const byId = new Map(items.map((item) => [item.id, item]));
   const updates = [];
   for (const unit of plan.units.filter((entry) => entry.status === "paired")) {
-    const jpg = unit.itemIds.map((id) => byId.get(id)).find((item) => item?.ext?.toLowerCase() === "jpg");
-    const raw = unit.itemIds.map((id) => byId.get(id)).find((item) => ["arw", "dng"].includes(item?.ext?.toLowerCase()));
-    if (!jpg || !raw) continue;
-    const sourceTags = (jpg.tags || []).filter((tag) => REVIEW_SYNC_TAGS.has(tag) || QUALITY_SYNC_TAGS.has(tag));
+    const rendition = unit.itemIds.map((id) => byId.get(id)).find((item) => ["jpg", "heic"].includes(item?.ext?.toLowerCase()));
+    const raw = unit.itemIds.map((id) => byId.get(id)).find((item) => {
+      const ext = item?.ext?.toLowerCase();
+      return rendition?.ext?.toLowerCase() === "heic" ? ext === "3fr" : ["arw", "dng"].includes(ext);
+    });
+    if (!rendition || !raw) continue;
+    const sourceTags = (rendition.tags || []).filter((tag) => REVIEW_SYNC_TAGS.has(tag) || QUALITY_SYNC_TAGS.has(tag));
     if (sourceTags.length === 0) continue;
     const targetTags = (raw.tags || []).filter((tag) => !REVIEW_SYNC_TAGS.has(tag) && !QUALITY_SYNC_TAGS.has(tag));
     const nextTags = [...new Set([...targetTags, ...sourceTags.map((tag) => ({
@@ -114,7 +117,7 @@ export function buildPairedReviewUpdates(items) {
       "ai:possibly-blurry": "AI可能模糊", "ai:low-resolution": "AI低分辨率",
     }[tag] || tag))])];
     if (JSON.stringify(nextTags) !== JSON.stringify(raw.tags || [])) {
-      updates.push({ id: raw.id, tags: nextTags, sourceId: jpg.id, captureUnitId: unit.captureUnitId, syncTags: sourceTags });
+      updates.push({ id: raw.id, tags: nextTags, sourceId: rendition.id, captureUnitId: unit.captureUnitId, syncTags: sourceTags });
     }
   }
   return updates;

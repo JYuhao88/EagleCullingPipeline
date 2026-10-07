@@ -59,7 +59,12 @@ async function analyze() {
   const concurrency = Math.max(1, Math.min(16, Number(option("--concurrency", "4")) || 4));
   const useEmbeddings = process.argv.includes("--embeddings");
   const useFaces = process.argv.includes("--faces");
-  const records = await listEagleImages(libraryPath, { limit });
+  const allRecords = await listEagleImages(libraryPath, { limit });
+  // Rate one rendition per capture unit by default. RAW files inherit the
+  // result through sync-paired-tags; --include-raw is available for diagnostics.
+  const records = process.argv.includes("--include-raw")
+    ? allRecords
+    : allRecords.filter((item) => ["jpg", "jpeg", "heic"].includes(item.ext?.toLowerCase()));
   const analyzed = new Array(records.length);
   let cursor = 0;
   let completed = 0;
@@ -215,7 +220,7 @@ async function syncPairedTags() {
   for (const update of updates) {
     await api.updateItem({ id: update.id, tags: update.tags });
     applied += 1;
-    if (applied % 500 === 0) console.log(`JPG→RAW sync progress ${applied}/${updates.length}`);
+    if (applied % 500 === 0) console.log(`成片→RAW sync progress ${applied}/${updates.length}`);
   }
   console.log(`Synchronized ${applied} exact JPG/RAW pairs. No stars, folders, or files were changed.`);
 }

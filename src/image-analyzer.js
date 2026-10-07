@@ -5,6 +5,7 @@ import path from "node:path";
 import sharp from "sharp";
 
 const IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "webp", "tif", "tiff", "bmp"]);
+const PROXY_EXTENSIONS = new Set(["arw", "dng", "3fr", "heic", "cr2", "nef", "raf", "rw2", "orf", "srw"]);
 // Keep libvips from competing with the Eagle UI or exhausting RAM during a
 // large-library scan. Override per machine when a dedicated worker is used.
 const sharpConcurrency = Math.max(1, Math.min(8, Number(process.env.EAGLE_SHARP_CONCURRENCY || 2)));
@@ -33,18 +34,19 @@ export async function listEagleImages(libraryPath, { limit } = {}) {
       continue;
     }
     const files = await readdir(infoPath, { withFileTypes: true });
-    const image = files.find((file) => {
-      if (!file.isFile() || file.name === "metadata.json" || file.name.toLowerCase().includes("thumbnail")) return false;
-      return IMAGE_EXTENSIONS.has(path.extname(file.name).slice(1).toLowerCase());
-    });
+    const original = files.find((file) => file.isFile() && file.name !== "metadata.json" && !file.name.toLowerCase().includes("thumbnail"));
+    const image = original && IMAGE_EXTENSIONS.has(path.extname(original.name).slice(1).toLowerCase()) ? original : undefined;
     const thumbnail = files.find((file) => file.isFile() && file.name.toLowerCase().includes("thumbnail") && IMAGE_EXTENSIONS.has(path.extname(file.name).slice(1).toLowerCase()));
-    if (!image) continue;
+    const ext = (metadata.ext || path.extname(original?.name || "").slice(1)).toLowerCase();
+    const proxyOnly = !image && PROXY_EXTENSIONS.has(ext) && thumbnail;
+    if (!image && !proxyOnly) continue;
     records.push({
       id: metadata.id || entry.name.replace(/\.info$/, ""),
       name: metadata.name || image.name,
-      filePath: path.join(infoPath, image.name),
+      filePath: path.join(infoPath, original?.name || image.name),
       thumbnailPath: thumbnail ? path.join(infoPath, thumbnail.name) : undefined,
-      ext: metadata.ext || path.extname(image.name).slice(1).toLowerCase(),
+      analysisPath: proxyOnly ? path.join(infoPath, thumbnail.name) : undefined,
+      ext: metadata.ext || ext,
       width: metadata.width,
       height: metadata.height,
       size: metadata.size,

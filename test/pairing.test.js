@@ -46,3 +46,12 @@ test("copies JPG review and quality tags to its exact RAW pair", () => {
     syncTags: ["AI精选", "AI过曝"],
   });
 });
+
+test("copies HEIC review tags to its exact 3FR pair", () => {
+  const updates = buildPairedReviewUpdates([
+    { id: "heic", name: "B0004", ext: "heic", tags: ["AI候选", "AI过曝"] },
+    { id: "3fr", name: "B0004", ext: "3fr", tags: ["AI原片", "AI已配对"] },
+  ]);
+  assert.equal(updates[0].sourceId, "heic");
+  assert.deepEqual(updates[0].tags, ["AI原片", "AI已配对", "AI候选", "AI过曝"]);
+});
