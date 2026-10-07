@@ -83,6 +83,11 @@ function renderRecord(record) {
   const score = Number.isFinite(record.qualityScore) ? `${Math.round(record.qualityScore)} 分` : "未评分";
   const dimensions = record.width && record.height ? `${record.width}×${record.height}` : "尺寸未知";
   const reasons = record.reasons.slice(0, 4).map((reason) => `<li>${escapeHtml(reason)}</li>`).join("");
+  const visibleTags = (record.tags || [])
+    .filter((tag) => tag.startsWith("AI") || tag === "待复核")
+    .slice(0, 8)
+    .map((tag) => `<span class="tag-chip">${escapeHtml(tag)}</span>`)
+    .join("");
   const thumbnail = record.thumbnailURL || record.fileURL || "";
   const thumbnailMarkup = thumbnail
     ? `<img src="${escapeHtml(thumbnail)}" alt="${escapeHtml(record.name)} 的缩略图" loading="lazy">`
@@ -101,6 +106,7 @@ function renderRecord(record) {
           <span class="state-badge" data-state="${record.state}">${escapeHtml(record.stateLabel)}</span>
         </div>
         <p class="item-meta">${score} · ${dimensions}${record.star ? ` · Eagle ${record.star} 星` : ""}</p>
+        ${visibleTags ? `<div class="tag-list" aria-label="照片标签">${visibleTags}</div>` : ""}
         <ul class="reason-list">${reasons}</ul>
       </div>
       <div class="item-review">

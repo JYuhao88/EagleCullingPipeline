@@ -122,6 +122,7 @@ test("rendered plugin demo supports Chinese review filtering without browser err
   assert.equal(await evaluate("document.querySelector('#service-state').textContent.trim()"), "界面演示数据");
   assert.equal(await evaluate("document.querySelector('.decision-button').disabled"), true);
   assert.equal(await evaluate("document.body.innerText.includes('RAW/原始格式已作为母片保护')"), true);
+  assert.equal(await evaluate("document.body.innerText.includes('AI精选')"), true);
 
   await evaluate("document.querySelector('[data-filter=selected]').click()" );
   assert.equal(await evaluate("document.querySelectorAll('.item-row').length"), 1);

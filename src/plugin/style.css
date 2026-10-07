@@ -107,6 +107,8 @@ main { padding: 20px 28px 88px; }
 .state-badge[data-state="rejected"] { color: #f1aaaa; background: #401f22; }
 .state-badge[data-state="unreviewed"] { color: #c4c9cf; background: #30343a; }
 .item-meta { margin: 6px 0 8px; color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.tag-list { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 8px; }
+.tag-chip { display: inline-flex; align-items: center; min-height: 22px; padding: 1px 7px; border: 1px solid #3f4a55; border-radius: 999px; color: #d8e8f3; background: #202b35; font-size: 12px; line-height: 1.2; }
 .reason-list { margin: 0; padding-left: 19px; color: #d9dde2; font-size: 14px; }
 .reason-list li + li { margin-top: 3px; }
 .item-review { display: grid; align-content: center; gap: 9px; padding: 14px 14px 14px 0; }
