@@ -17,6 +17,7 @@ const elements = {
   inspect: document.querySelector("#inspect"),
   analyze: document.querySelector("#analyze"),
   badges: document.querySelector("#badges"),
+  allBadges: document.querySelector("#all-badges"),
   restoreBadges: document.querySelector("#restore-badges"),
   search: document.querySelector("#search"),
   filters: document.querySelector("#filters"),
@@ -69,6 +70,7 @@ function setBusy(isBusy) {
   elements.inspect.disabled = isBusy;
   elements.analyze.disabled = isBusy;
   elements.badges.disabled = isBusy || demoMode;
+  elements.allBadges.disabled = isBusy || demoMode;
   elements.restoreBadges.disabled = isBusy || demoMode;
 }
 
@@ -237,6 +239,40 @@ async function generateBadges() {
   }
 }
 
+async function generateAllBadges() {
+  if (!eagleApi) return;
+  setBusy(true);
+  try {
+    const allItems = await eagleApi.item.getAll();
+    const imageExtensions = new Set(["jpg", "jpeg", "png", "webp", "gif", "heic", "3fr", "arw", "dng", "cr2", "cr3", "nef", "raf", "orf", "rw2", "tif", "tiff"]);
+    const items = allItems.filter((item) => imageExtensions.has(String(item.ext || "").toLowerCase()) && (item.thumbnailPath || item.filePath));
+    if (!items.length) throw new Error("当前资源库没有可处理的图片");
+    let completed = 0;
+    let skipped = 0;
+    for (const item of items) {
+      const response = await fetch(`${SERVICE_URL}/badge-thumbnail`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ badgeKey: item.id, sourcePath: item.thumbnailPath || item.filePath, tags: item.tags || [] }),
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+      if (payload.outputPath && !payload.skipped) {
+        await item.setCustomThumbnail(payload.outputPath);
+        completed += 1;
+      } else skipped += 1;
+      if ((completed + skipped) % 25 === 0 || completed + skipped === items.length) {
+        setStatus(`正在为全库生成角标：${completed + skipped}/${items.length}（已写入 ${completed}）…`);
+      }
+    }
+    setStatus(`全库角标完成：处理 ${items.length} 张，写入 ${completed} 张，无标签跳过 ${skipped} 张。`, "success");
+  } catch (error) {
+    setStatus(`全库角标失败：${error.message}`, "error");
+  } finally {
+    setBusy(false);
+  }
+}
+
 async function restoreBadges() {
   if (!eagleApi) return;
   setBusy(true);
@@ -310,6 +346,7 @@ function bindEvents() {
   elements.inspect.addEventListener("click", loadSelection);
   elements.analyze.addEventListener("click", analyzeSelection);
   elements.badges.addEventListener("click", generateBadges);
+  elements.allBadges.addEventListener("click", generateAllBadges);
   elements.restoreBadges.addEventListener("click", restoreBadges);
   elements.search.addEventListener("input", render);
   elements.filters.addEventListener("click", (event) => {

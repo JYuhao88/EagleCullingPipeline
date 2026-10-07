@@ -51,7 +51,7 @@ JPG/HEIC 与同名 RAW/3FR 被识别为确定的一对一拍摄单元时，批�
 
 如果希望在 Eagle 普通网格缩略图上也能快速识别状态，可在插件工具栏使用“生成缩略图角标”。它会根据当前标签生成一张临时 PNG 缩略图，并通过 Eagle 官方 `Item.setCustomThumbnail()` 设置为该项目的自定义缩略图，因此原始 JPG、HEIC、3FR、ARW、DNG 和 RAW 文件不会被改写。角标包括“精选”“候选”“待复核”，以及“闭眼”“模糊”“过曝”“欠曝”等问题提示。重新分析或改标签后重新生成即可刷新角标。
 
-要撤销角标，选择相同照片后点击“恢复原缩略图”，插件会调用 `Item.refreshThumbnail()` 让 Eagle 重新生成原生缩略图。两项操作均限制当前选择最多 500 张，适合按文件夹或拍摄批次分段处理；双击进入 Eagle 原图预览时仍显示原始照片，而不是烧录了文字的图片。[Eagle Item API](https://developer.eagle.cool/plugin-api/api/item)
+要撤销角标，选择相同照片后点击“恢复原缩略图”，插件会调用 `Item.refreshThumbnail()` 让 Eagle 重新生成原生缩略图。普通批处理限制当前选择最多 500 张，另有“全库生成角标”会调用官方 `item.getAll()` 后逐项处理图片格式；全库模式会跳过视频、字幕、XML 等非图片项目，并逐张更新进度。双击进入 Eagle 原图预览时仍显示原始照片，而不是烧录了文字的图片。[Eagle Item API](https://developer.eagle.cool/plugin-api/api/item)
 
 ## 安全写入设计
 
