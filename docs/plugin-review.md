@@ -1,106 +1,92 @@
-# Eagle 中文审阅插件
+# Eagle 摄影筛选助手（统一插件）
 
-## 目标
+## 固定入口
 
-`src/plugin` 已从原始 JSON 调试页升级为面向摄影分拣的中文审阅界面。用户在 Eagle 里选择一组照片后，可以直接看到缩略图、当前留存状态、AI 建议、中文原因、质量分、相似组和 RAW/JPG 配对提示。
-
-插件只提供三种非破坏性审阅动作：
-
-| 界面动作 | Eagle 标签 | 含义 |
-| --- | --- | --- |
-| 精选 | `AI精选` | 组内首选或人工明确保留 |
-| 候选 | `AI候选` | 需要继续比较，默认安全状态 |
-| 待复核 | `待复核` | 只进入人工复核队列，不删除文件 |
-
-插件同时兼容旧版本的 `ai:selected`、`ai:candidate`、`ai:rejected` 标签；当你对旧标签照片再次点选状态时，会自动换成上面的中文标签。
-
-JPG/HEIC 与同名 RAW/3FR 被识别为确定的一对一拍摄单元时，批处理命令会把成片代理的审阅状态和质量提示同步到 RAW；RAW 自己的 `AI原片`、`AI已配对` 等配对标签会保留。命令需要显式确认：`node src/cli.js sync-paired-tags --apply --confirm APPLY_PAIR_REVIEW`。
-
-没有“直接删除”按钮。插件代码不会调用 `moveToTrash()`，也不会修改星级、文件夹或原始文件。
-
-## 中文审阅内容
-
-界面将模型输出和现有标签转换为可读原因，而不是显示原始 JSON：
-
-- `possibly-blurry`：清晰度偏低，可能失焦或存在运动模糊；
-- `eyes-closed`：检测到闭眼，请重点复核人物表情；
-- `overexposed` / `underexposed`：显示曝光风险，分析结果可用时同时显示溢出像素比例；
-- 相似组：说明组内张数，并指出本张是否为当前综合质量首选；
-- `AI原片`：明确提示 RAW/3FR/DNG 是受保护母片；
-- `AI已配对`：说明已找到 RAW/JPEG 或 3FR/HEIC 拍摄配对；
-- `AI配对待确认` / `AI未配对原片`：要求人工确认，不给出自动删除建议；
-- `analysisSource=proxy`：明确说明本次基于 Eagle 预览图，未解码或修改原片。
-
-单张照片即使存在模糊、曝光或闭眼提示，也默认进入“候选”，不会仅凭一个技术指标自动判为待复核。只有相似组中非首选照片会显示“待复核”建议，用户仍需点击后才写标签。
-
-## 使用流程
-
-1. 在项目目录启动本地分析服务：
-
-   ```powershell
-   npm run serve
-   ```
-
-2. 在 Eagle 里选择同一次拍摄、同一连拍或希望比较的一批照片。建议 5–100 张，硬上限 500 张。
-3. 打开“摄影筛选助手”。插件会自动读取选择和现有 AI 标签，不运行模型也能开始复核。
-4. 点击“AI 分析所选照片”，本地服务计算 pHash、清晰度、曝光、构图/主体代理分和闭眼提示，并按相似组排序。
-5. 使用状态筛选或搜索缩小范围。点击缩略图/“在 Eagle 中定位”回到 Eagle 原图；使用“保留 / 候选 / 待删复核”保存单张决定。
-6. 键盘高效分拣：`J/K` 或方向键移动，`1` 精选，`2` 候选，`3` 待复核，`Enter` 在 Eagle 中定位。
-
-每张审阅卡片会在缩略图旁显示当前状态和 AI 标签（例如 `AI精选`、`AI原片`、`AI过曝`、`AI已配对`）。这是插件审阅预览中的叠加显示，不会把文字烧录进照片，也不会修改原始文件；Eagle 原生大图预览仍由 Eagle 自己控制。
-
-如果希望在 Eagle 普通网格缩略图上也能快速识别状态，可在插件工具栏使用“生成缩略图角标”。它会根据当前标签生成一张临时 PNG 缩略图，并通过 Eagle 官方 `Item.setCustomThumbnail()` 设置为该项目的自定义缩略图，因此原始 JPG、HEIC、3FR、ARW、DNG 和 RAW 文件不会被改写。角标包括“精选”“候选”“待复核”，以及“闭眼”“模糊”“过曝”“欠曝”等问题提示。重新分析或改标签后重新生成即可刷新角标。
-
-要撤销角标，选择相同照片后点击“恢复原缩略图”，插件会调用 `Item.refreshThumbnail()` 让 Eagle 重新生成原生缩略图。普通批处理限制当前选择最多 500 张，另有“全库生成角标”会调用官方 `item.getAll()` 后逐项处理图片格式；全库模式会跳过视频、字幕、XML 等非图片项目，并逐张更新进度。角标不是烧录到原图，但部分 Eagle 版本的快速预览可能复用自定义缩略图；如果单张预览出现缩放或清晰度下降，先恢复原缩略图即可回到 Eagle 原生预览。[Eagle Item API](https://developer.eagle.cool/plugin-api/api/item)
-
-如果不希望打开审阅面板，可先在项目目录运行独立批处理：
-
-```powershell
-npm run badges -- --library D:/Photography/EagleLibraries/Culling.library --concurrency 2
-```
-
-该命令只扫描 Eagle `.info` 目录中的照片/预览，生成 `data/thumbnail-badges/` 和 `data/thumbnail-badges.json`，不写 Eagle 数据库。之后仍需要一个极小的 Eagle API 写入桥接调用 `setCustomThumbnail()`；直接改 Eagle 的 `metadata.json` 或缩略图库不受官方支持，也不安全。
-
-这个桥接已经单独放在 `src/thumbnail-bridge`。在 Eagle 开发者模式把该目录作为另一个 Window Plugin 加载后，窗口只有“写入全部已生成角标”和“恢复全部原缩略图”两个动作；原来的 `src/plugin` 审阅面板可以不打开。
-
-## 安全写入设计
-
-保存状态时，插件不会直接使用分析开始时的旧对象。它先调用 `eagle.item.getById(id)` 获取最新项目，再移除三种旧 AI 审阅状态，合并新状态，最后调用该 Item 实例的 `save()`：
+用户只需要在 Eagle 开发者模式加载：
 
 ```text
-重新读取当前项目
-  → 保留人工标签、质量标签、配对标签
-  → 只替换 AI精选 / AI候选 / 待复核
-  → Item.save()
+D:/Photography/PhotographyOperations/EagleCullingPipeline/src/plugin
 ```
 
-这符合 Eagle 官方建议：通过 `Item` 实例修改属性并调用 `save()`，不要编辑资源库内部的 `metadata.json`。官方也提供 `getSelected()`、`getById()`、`select()`、`open()` 和 `thumbnailURL`，分别用于读取当前选择、刷新单项、定位照片及在 HTML 中安全显示缩略图。[Eagle Item API](https://developer.eagle.cool/plugin-api/api/item) [Modify Data](https://developer.eagle.cool/plugin-api/tutorial/modify-eagle-data)
+插件名称和 ID 固定为“摄影筛选助手 / EAGLECULLING001”。旧的 `src/thumbnail-bridge` 保留兼容周期，但不再需要单独加载。以后更新只替换 `src/plugin` 内容，在插件的“设置 / 诊断”点击“重载当前插件”即可，不需要重新创建窗口插件。
 
-## RAW/JPEG 与内存策略
+## 四个区域
 
-交互分析请求会设置 `analysisPath = thumbnailPath || filePath`。只要 Eagle 有缩略图，RAW、3FR、DNG、HEIC 和 JPEG 都分析缩略图；原始文件路径和相机分辨率仅作为元数据保留。这样避免在用户使用 Eagle 时读取并解码 40–100MP 原片，也让不同格式使用同一视觉代理参与相似性比较。
+- **概览**：当前选择、审阅统计、本地服务状态、旧角标清单迁移提示。
+- **审阅**：精选、候选、待复核、问题标签、相似组、JPG/RAW/HEIC/3FR 配对和中文原因。
+- **任务**：AI 分析、当前选择/全库角标、恢复登记过的原缩略图、暂停、继续、仅重试失败。
+- **设置 / 诊断**：原生/角标双模式、并发 1/2/4、请求间隔、服务版本、诊断报告。
 
-限制也必须明确：预览图适合初筛和排序，不适合判断 RAW 最终显影后的精确色彩、暗部恢复或高光余量。因此界面会标出“基于预览图”，RAW 母片仍按 `AI原片` 保护。
+## 任务队列
 
-## 开发者模式安装
+插件不再由按钮直接启动不可恢复的全库循环，而是先把任务写入本地服务的 `data/tasks.json`。任务记录包含：
 
-Eagle 官方支持 Window Plugin：工具栏选择“插件 → 开发者选项 → 创建插件 → Window Plugin”，把插件目录设为项目中的 `src/plugin`。如果 Eagle 先生成了一个新目录，用整个 `src/plugin` 覆盖该目录，不能漏掉 `review-model.js`。[Your First Plugin](https://developer.eagle.cool/plugin-api/get-started/creating-your-first-plugin)
+```text
+taskId taskType createdAt updatedAt libraryPath manifestVersion
+itemId modifiedAt status attempts outputPath error
+```
 
-`manifest.json` 已设置 `devTools: true`。打开插件窗口后按 `F12` 可查看 console、网络、内存和性能。官方调试文档明确支持该流程。[Debug Plugin](https://developer.eagle.cool/plugin-api/get-started/debugging)
+状态为 `pending/running/succeeded/skipped/failed/paused/cancelled`。默认并发 2、请求间隔 120ms、单项最多重试 3 次，每完成 25 项持久化断点。Eagle 或插件重启后，已完成项目自动跳过，未完成项目继续；失败项可单独重试。
 
-推荐按以下顺序验收：
+服务接口：
 
-1. 5–20 张 JPG，确认中文名、缩略图、定位和单张标签保存；
-2. 一组 JPG+ARW 和一组 3FR+HEIC，确认配对与母片保护文案；
-3. 一组真实连拍，确认相似分组和首选排序；
-4. 100–500 张混合格式，观察 Eagle UI、Node 内存、CPU 和 RTX 显存；
-5. 重新打开插件和 Eagle，确认状态标签持久化且人工星级/文件夹未变化。
+```text
+GET  /health                 GET  /version
+GET  /tasks                  POST /tasks
+GET  /tasks/:id              POST /tasks/:id/pause|resume|cancel|retry
+POST /tasks/:id/progress     POST /tasks/:id/checkpoint
+POST /tasks/:id/complete|fail
+POST /analyze                POST /badge-thumbnail
+GET  /badge-manifest
+```
 
-## 已完成测试
+固定启动入口：
 
-- 纯函数测试覆盖中文原因、状态汇总、搜索/筛选、相似组建议和标签合并；
-- RAW 代理测试使用不可解码的假 `.3fr` 原片和 PNG 缩略图，证明分析只读取代理，同时保留 11656×8742 原始尺寸；
-- Windows Edge smoke test 加载完整插件 DOM，验证 4 张演示数据、中文搜索和状态筛选；
-- 同一 smoke test 注入模拟 Eagle API，执行一次 `Item.save()`，确认人工标签、`AI已配对`、4 星和用户文件夹不变。
+```powershell
+D:/Photography/PhotographyOperations/EagleCullingPipeline/scripts/start-service.ps1
+```
 
-这些测试证明插件逻辑和浏览器运行时可用；仍需在 Eagle 开发者模式里完成上述 5–20 张真实选择集验收，才能称为完整的 Eagle 集成测试。
+脚本先探测 `127.0.0.1:43125`，服务已运行时不会重复启动；服务未运行时以隐藏后台进程启动 `npm run serve`。
+
+## 两种预览模式
+
+Eagle 官方 API 没有独立的网格角标层和原生大图预览层，因此统一插件明确提供两种模式：
+
+1. **原生预览模式（默认）**：不写自定义缩略图，Eagle 使用原生缩略图，单张预览清晰度最高。AI 标签仍显示在插件审阅卡片和 Eagle 标签中。
+2. **角标分拣模式**：任务服务生成左下角中文角标 PNG，插件通过 `Item.setCustomThumbnail()` 写回，适合网格快速分拣。完成后可恢复原生缩略图。
+
+恢复时插件先读取本工具登记的 `data/thumbnail-badges.json`，只对登记过的 ID 调用 `Item.refreshThumbnail()`，不会清除未知的人工自定义缩略图。角标不会写入 JPG、RAW、HEIC 或 3FR 原片。
+
+## 中文审阅与配对
+
+审阅卡片将原因码转换为中文：清晰度偏低、闭眼、过曝、欠曝、相似组首选、RAW/原始格式母片保护、已配对、配对待确认和基于预览图。标签写回只替换 AI 审阅状态，保留人工标签、质量标签、配对标签、星级和文件夹。
+
+JPG/HEIC 与同名 RAW/3FR 一对一匹配时，成片审阅状态可通过显式命令同步到 RAW；不确定的重复基名不会猜测配对。RAW 默认作为母片保护，不会因为 JPG 更好看而建议删除。
+
+## 启动与使用
+
+```powershell
+cd D:/Photography/PhotographyOperations/EagleCullingPipeline
+npm install
+npm run start-service
+```
+
+在 Eagle 中选择照片后打开插件，先点“AI 分析所选照片”，再在“审阅”中人工确认。需要全库角标时进入“任务”创建任务，不要直接修改 Eagle 资源库内部文件。没有自动删除按钮；删除或回收由用户在 Eagle 中完成。
+
+## 旧数据迁移
+
+第一次连接服务时，插件检查旧版 `data/thumbnail-badges.json`：显示已有清单数量、导入登记信息并保留现状。迁移不会自动恢复、删除、覆盖人工标签或修改星级/文件夹。用户可以选择继续使用旧角标、切换新版左下角角标，或恢复已登记项目。
+
+## 开发者模式与验收
+
+Eagle：插件 → 开发者选项 → 创建 Window Plugin → 选择上述固定 `src/plugin` 目录。`manifest.json` 已固定 `devTools: true`，打开窗口后按 F12 查看 console、网络、内存和性能。
+
+验收顺序：20 张混合 JPG/RAW/HEIC/3FR → 500 张混合项目 → 全库约 8,000 项。需要验证任务暂停/继续、Eagle 重启后断点、失败重试、`modifiedAt` 变化跳过、原片 SHA-256 不变、人工标签/星级/文件夹不变，以及原生模式清晰度和角标模式左下角位置。
+
+自动测试覆盖：33 项 Node/Edge 测试，包括服务健康与版本、任务 API 生命周期、任务文件原子持久化、8,000 项队列、并发与瞬时失败重试、暂停后继续、中文审阅筛选和 Eagle `Item.save()` 非破坏性写回。
+
+## 官方 API 依据
+
+- [Eagle Item API](https://developer.eagle.cool/plugin-api/api/item)：`getSelected()`、`getAll()`、`getById()`、`setCustomThumbnail()`、`refreshThumbnail()`、`select()`、`open()`。
+- [Eagle Modify Data](https://developer.eagle.cool/plugin-api/tutorial/modify-eagle-data)：通过 Item 实例修改并 `save()`，不编辑资源库内部 `metadata.json`。
+- [Eagle Plugin Anatomy](https://developer.eagle.cool/plugin-api/get-started/anatomy-of-an-extension)：固定 manifest、logo 和 Window Plugin 结构。

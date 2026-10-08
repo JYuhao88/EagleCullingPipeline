@@ -1,6 +1,6 @@
 {
   "name": "eagle-culling-pipeline",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Local-first, reviewable photo culling workflow for Eagle",
   "type": "module",
@@ -9,6 +9,7 @@
     "inventory": "node src/cli.js inventory",
     "analyze": "node src/cli.js analyze",
     "serve": "node src/cli.js serve",
+    "start-service": "powershell -ExecutionPolicy Bypass -File scripts/start-service.ps1",
     "badges": "node src/cli.js badges",
     "models": "node src/cli.js models",
     "recommend": "node src/cli.js recommend",

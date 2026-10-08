@@ -9,6 +9,8 @@ data/pairs*.json
 data/cache/
 data/thumbnail-badges/
 data/thumbnail-badges.json
+data/tasks.json
+data/tasks.json.tmp
 data/previews/
 node_modules/
 models/

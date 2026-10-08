@@ -3,50 +3,64 @@
 ## 数据流
 
 ```text
-Eagle Plugin
-  ├─ 选择扫描范围
-  ├─ 读取 item.id / filePath / tags / folders / star / modifiedAt
-  ├─ 启动本地 worker
-  ├─ 展示结果和原因码
-  └─ 人工确认后 save() / moveToTrash()
+Eagle Window Plugin（src/plugin）
+  ├─ 概览 / 审阅 / 任务 / 设置四区
+  ├─ 读取 Eagle Item 元数据和预览图路径
+  ├─ 创建任务、显示进度、暂停/继续/重试
+  ├─ 通过官方 Item API 写回标签或登记过的自定义缩略图
+  └─ 不直接写资源库内部文件、不自动删除
 
-本地 Worker
-  ├─ 当前可运行：Node.js + sharp 读取 Eagle .info 图片
-  ├─ SHA-256 / pHash / 梯度清晰度 / 直方图曝光
-  ├─ 本地 HTTP 服务：127.0.0.1:43125
-  ├─ 可插拔：Python/ONNX MediaPipe、DINO、TOPIQ/LIQE、Q-Align
-  └─ SQLite/JSON 结果缓存
+本地服务（127.0.0.1:43125）
+  ├─ pHash / 相似聚类 / 清晰度 / 曝光 / 构图代理评分
+  ├─ 本地人脸与闭眼 worker
+  ├─ PNG 角标生成（左下角）
+  ├─ data/tasks.json 任务队列（原子替换）
+  ├─ data/thumbnail-badges.json 清单
+  └─ 结果和模型缓存
 ```
 
-## 结果记录
+插件只负责 Eagle API 和审阅交互；所有长任务由任务服务登记、持久化和恢复。这样 Eagle 重启、插件关闭或单项失败都不会丢失整个全库进度。
+
+## 任务记录
 
 ```text
-item_id, file_path, file_sha256, phash,
-embedding_model, embedding_version,
-sharpness_score, face_count, face_sharpness_score,
-eyes_closed_probability, exposure_score,
-composition_score, subject_score, aesthetic_score,
-overall_score, confidence, duplicate_cluster_id,
-review_status, analyzed_at
+taskId, taskType, createdAt, updatedAt,
+libraryPath, manifestVersion, status, attempts, outputPath, error,
+items[]: { id, modifiedAt, status, attempts, outputPath, error }
 ```
 
-使用 `item_id + modifiedAt + model_version` 做增量分析键。写回前重新读取 `modifiedAt`，发现用户已修改则跳过并提示。
+结果的增量键为 `item.id + modifiedAt + manifestVersion`。写回前应重新获取当前 Item；若 `modifiedAt` 已变化，任务实现应标记为 `skipped` 并留在失败/跳过清单中供人工复核。
 
 ## 目录约定
 
-- `src/plugin/`：Eagle Window/Background Plugin。
-- `src/image-analyzer.js`：当前 Node.js 基线分析器和 pHash 聚类。
-- `src/server.js`：供 Eagle 插件调用的本地分析服务。
-- `python_worker/worker.py`：可选 GPU TorchScript worker；必须显式提供本地 checkpoint，不隐式联网下载。
-- `data/results.sqlite`：本地结果数据库，不提交 Git。
-- `data/cache/`：代理图和模型缓存，不提交 Git。
-- `docs/`：研究和设计文档。
+- `src/plugin/`：唯一推荐加载的 Eagle Window Plugin，包含审阅、任务、角标和诊断。
+- `src/thumbnail-bridge/`：旧版兼容目录，保留一段迁移周期，不再作为新入口。
+- `src/server.js`：本地 HTTP 服务和任务 API。
+- `src/task-store.js`：JSON 任务存储，临时文件 + rename 原子写入。
+- `src/task-queue.js`：Node 端可测试的有界并发、限速、重试队列。
+- `src/plugin/task-queue.js`：插件浏览器端同构队列。
+- `src/image-analyzer.js`：Node 基线分析器和 pHash 聚类。
+- `data/results.sqlite`、`data/cache/`：结果、代理图和模型缓存，不提交 Git。
+- `scripts/start-service.ps1`：固定服务启动入口。
 
-## 实现原则
+任务进度通过 `/tasks/:id/checkpoint` 每 25 项批量写入，失败项立即写入；避免 8,000 项任务产生 8,000 次磁盘重写。
 
-1. 默认只读分析。
-2. 标签采用 `ai/` 前缀，并合并而不是替换用户标签。
-3. 默认不覆盖人工评分。
-4. 删除只调用 Eagle 回收桶能力，不直接删除文件。
-5. 所有模型、阈值和结果可版本化、可重算。
-6. 使用 Eagle 官方 API，不直接写 `metadata.json`。
+## 资源策略
+
+默认并发 2，可选 1/2/4；请求间隔 120ms；单项最多重试 3 次；每 25 项保存断点。Eagle 预览图优先于 RAW 原片，避免在 410GB、约 8,000 项资源库上同时解码多个 40–100MP 原片。GPU 模型通过独立 worker 执行，主服务不保存整库像素数据。
+
+## 写回安全
+
+1. 只使用 Eagle 官方 Item API，不编辑 `metadata.json`、缩略图库或其他私有文件。
+2. 标签写回只替换 AI 状态标签，保留人工标签、配对标签、星级和文件夹。
+3. 原生预览模式不调用 `setCustomThumbnail()`；角标模式只写任务生成且清单登记的 PNG。
+4. 恢复只对本工具清单登记的项目调用 `refreshThumbnail()`，不覆盖未知人工缩略图。
+5. 本版本没有自动删除能力；“待复核”必须由用户在 Eagle 中最终决定。
+
+## 可验证目标
+
+- 8,000 项队列：并发 1/2/4、失败重试、暂停后继续、重复执行自动跳过。
+- Eagle 重启后任务不丢，失败项可以单独重试。
+- JPG/RAW/HEIC/3FR 配对结果可审阅，人工元数据不变。
+- 原生模式清晰度恢复，角标模式显示左下角中文角标。
+- 原片 SHA-256 不变，任务清单和诊断报告可导出。

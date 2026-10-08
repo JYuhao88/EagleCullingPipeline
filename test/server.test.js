@@ -43,3 +43,25 @@ test("local service creates a labeled custom thumbnail without changing the sour
   assert.equal(sourceMetadata.width, 120);
   assert.equal(sourceMetadata.height, 80);
 });
+
+test("task API persists queue lifecycle and item progress", async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "eagle-tasks-"));
+  const service = createAnalysisServer({ port: 0, taskStorePath: path.join(root, "tasks.json") });
+  await service.listen();
+  t.after(() => service.server.close());
+  const port = service.server.address().port;
+  const base = `http://127.0.0.1:${port}`;
+  const version = await (await fetch(`${base}/version`)).json();
+  assert.equal(version.version, "0.3.0");
+  const createdResponse = await fetch(`${base}/tasks`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ taskType: "badge-thumbnails-selection", items: [{ id: "one" }, { id: "two" }] }) });
+  assert.equal(createdResponse.status, 201);
+  const created = await createdResponse.json();
+  const progressed = await fetch(`${base}/tasks/${created.taskId}/progress`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ itemId: "one", status: "succeeded", attempts: 1, outputPath: "one.png" }) });
+  assert.equal((await progressed.json()).summary.succeeded, 1);
+  const paused = await (await fetch(`${base}/tasks/${created.taskId}/pause`, { method: "POST" })).json();
+  assert.equal(paused.status, "paused");
+  const resumed = await (await fetch(`${base}/tasks/${created.taskId}/resume`, { method: "POST" })).json();
+  assert.equal(resumed.status, "running");
+  const retried = await (await fetch(`${base}/tasks/${created.taskId}/retry`, { method: "POST" })).json();
+  assert.equal(retried.items.find((item) => item.id === "one").status, "succeeded");
+});

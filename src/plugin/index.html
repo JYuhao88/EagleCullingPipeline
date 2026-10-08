@@ -9,61 +9,33 @@
   </head>
   <body>
     <header class="app-header">
-      <div>
-        <p class="eyebrow">EAGLE 本地工作流</p>
-        <h1>摄影筛选助手</h1>
-      </div>
-      <div id="service-state" class="service-state" data-state="checking">
-        <span class="service-dot" aria-hidden="true"></span>
-        <span>正在检查分析服务</span>
-      </div>
+      <div><p class="eyebrow">EAGLE 本地工作流 · V1</p><h1>摄影筛选助手</h1></div>
+      <div id="service-state" class="service-state" data-state="checking"><span class="service-dot" aria-hidden="true"></span><span>正在检查分析服务</span></div>
     </header>
-
     <main>
-      <section class="toolbar" aria-label="筛选操作">
-        <div class="toolbar-actions">
-          <button id="inspect" class="button button-secondary" type="button">刷新当前选择</button>
-          <button id="analyze" class="button button-primary" type="button">AI 分析所选照片</button>
-          <button id="badges" class="button button-secondary" type="button">生成缩略图角标</button>
-          <button id="all-badges" class="button button-secondary" type="button">全库生成角标</button>
-          <button id="restore-badges" class="button button-secondary" type="button">恢复原缩略图</button>
-        </div>
-        <label class="search-field">
-          <span>搜索</span>
-          <input id="search" type="search" placeholder="文件名或标签" autocomplete="off">
-        </label>
-      </section>
-
-      <p id="status" class="status-line" role="status">打开插件后会自动读取 Eagle 当前选择。</p>
-
-      <section class="summary" aria-label="审阅统计">
-        <div><span id="summary-total" class="summary-value">0</span><span>当前照片</span></div>
-        <div><span id="summary-selected" class="summary-value">0</span><span>精选</span></div>
-        <div><span id="summary-candidate" class="summary-value">0</span><span>候选</span></div>
-        <div><span id="summary-rejected" class="summary-value">0</span><span>待复核</span></div>
-        <div><span id="summary-issues" class="summary-value">0</span><span>需重点检查</span></div>
-      </section>
-
-      <nav id="filters" class="filters" aria-label="照片状态筛选">
-        <button class="filter-button is-active" type="button" data-filter="all">全部</button>
-        <button class="filter-button" type="button" data-filter="selected">精选</button>
-        <button class="filter-button" type="button" data-filter="candidate">候选</button>
-        <button class="filter-button" type="button" data-filter="rejected">待复核</button>
-        <button class="filter-button" type="button" data-filter="issues">需重点检查</button>
+      <nav id="views" class="view-tabs" aria-label="工作区">
+        <button class="view-tab is-active" data-view="overview" type="button">概览</button><button class="view-tab" data-view="review" type="button">审阅</button><button class="view-tab" data-view="tasks" type="button">任务</button><button class="view-tab" data-view="settings" type="button">设置 / 诊断</button>
       </nav>
-
-      <section class="workspace" aria-label="照片审阅区">
-        <div id="empty-state" class="empty-state">
-          <h2>请先在 Eagle 中选择照片</h2>
-          <p>建议一次选择同一次拍摄或同一组连拍，单批不超过 500 张。</p>
-        </div>
-        <div id="review-list" class="review-list" hidden></div>
+      <section class="toolbar" aria-label="筛选操作">
+        <div class="toolbar-actions"><button id="inspect" class="button button-secondary" type="button">刷新当前选择</button><button id="analyze" class="button button-primary" type="button">AI 分析所选照片</button></div>
+        <label class="search-field"><span>搜索</span><input id="search" type="search" placeholder="文件名或标签" autocomplete="off"></label>
+      </section>
+      <p id="status" class="status-line" role="status">打开插件后会自动读取 Eagle 当前选择。</p>
+      <section class="summary" aria-label="审阅统计"><div><span id="summary-total" class="summary-value">0</span><span>当前照片</span></div><div><span id="summary-selected" class="summary-value">0</span><span>精选</span></div><div><span id="summary-candidate" class="summary-value">0</span><span>候选</span></div><div><span id="summary-rejected" class="summary-value">0</span><span>待复核</span></div><div><span id="summary-issues" class="summary-value">0</span><span>需重点检查</span></div></section>
+      <section id="view-overview" class="view-panel"><div class="panel-grid"><article class="info-card"><h2>当前工作流</h2><p>默认使用 Eagle 原生预览。需要网格快速分拣时，在“任务”中开启角标模式；完成审阅后可安全恢复原生缩略图。</p><p id="migration-note" class="muted">正在检查旧版角标清单…</p></article><article class="info-card"><h2>安全边界</h2><p>只写入 AI 审阅标签和本工具登记的自定义缩略图，不修改原片、RAW、星级、文件夹，也不会自动删除。</p></article></div></section>
+      <section id="view-review" class="view-panel" hidden>
+        <nav id="filters" class="filters" aria-label="照片状态筛选"><button class="filter-button is-active" type="button" data-filter="all">全部</button><button class="filter-button" type="button" data-filter="selected">精选</button><button class="filter-button" type="button" data-filter="candidate">候选</button><button class="filter-button" type="button" data-filter="rejected">待复核</button><button class="filter-button" type="button" data-filter="issues">需重点检查</button></nav>
+        <section class="workspace" aria-label="照片审阅区"><div id="empty-state" class="empty-state"><h2>请先在 Eagle 中选择照片</h2><p>建议一次选择同一次拍摄或同一组连拍，单批不超过 500 张。</p></div><div id="review-list" class="review-list" hidden></div></section>
+      </section>
+      <section id="view-tasks" class="view-panel" hidden>
+        <div class="task-toolbar"><button id="badges" class="button button-primary" type="button">为当前选择生成角标任务</button><button id="all-badges" class="button button-secondary" type="button">全库生成角标任务</button><button id="restore-badges" class="button button-secondary" type="button">恢复登记过的原缩略图</button><button id="task-pause" class="button button-secondary" type="button">暂停</button><button id="task-resume" class="button button-secondary" type="button">继续</button><button id="task-retry" class="button button-secondary" type="button">仅重试失败</button></div>
+        <div class="task-status-card"><div class="task-status-heading"><h2>任务队列</h2><span id="task-current">暂无运行中的任务</span></div><div class="task-progress"><span id="task-progress-bar"></span></div><div class="task-metrics"><span id="task-completed">0 / 0</span><span id="task-success">成功 0</span><span id="task-skipped">跳过 0</span><span id="task-failed">失败 0</span><span id="task-speed">—</span><span id="task-eta">—</span></div><p id="task-error" class="status-line">任务状态会在这里显示，插件关闭后仍可继续。</p></div>
+        <div id="task-history" class="task-history"></div>
+      </section>
+      <section id="view-settings" class="view-panel" hidden>
+        <div class="settings-grid"><article class="info-card"><h2>预览模式</h2><p>原生模式清晰度最高；角标模式适合网格分拣。</p><div class="choice-row"><button id="mode-native" class="choice-button" type="button">原生预览</button><button id="mode-badge" class="choice-button" type="button">角标分拣</button></div><p id="mode-state" class="muted">当前模式：原生预览</p></article><article class="info-card"><h2>队列资源</h2><label class="setting-line">并发数<select id="concurrency"><option value="1">1（最稳）</option><option value="2" selected>2（推荐）</option><option value="4">4（高性能）</option></select></label><label class="setting-line">请求间隔<select id="delay"><option value="0">0 ms</option><option value="120" selected>120 ms（推荐）</option><option value="250">250 ms</option></select></label><p class="muted">每项最多重试 3 次，每完成 25 项保存断点。</p></article><article class="info-card"><h2>服务与版本</h2><p>插件 <span id="plugin-version">0.3.0</span> · 服务 <span id="service-version">检查中</span></p><p id="service-error" class="muted">服务启动入口：scripts/start-service.ps1</p><div class="choice-row"><button id="reload" class="button button-secondary" type="button">重载当前插件</button><button id="diagnostics" class="button button-secondary" type="button">导出诊断</button></div></article></div>
       </section>
     </main>
-
-    <footer>
-      <span>只修改 AI 审阅状态标签，不改星级、文件夹和原片，也不会自动删除。</span>
-      <span class="shortcut-help">快捷键：J/K 切换，1 精选，2 候选，3 待复核，Enter 在 Eagle 中定位</span>
-    </footer>
+    <footer><span>统一入口：任务可暂停、继续、重试和断点恢复。</span><span class="shortcut-help">快捷键：J/K 切换，1 精选，2 候选，3 待复核，Enter 在 Eagle 中定位</span></footer>
   </body>
 </html>
