@@ -4,16 +4,16 @@ import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
 const libraryPath = process.env.EAGLE_LIBRARY_PATH || "D:/Photography/EagleLibraries/Culling.library";
-const outputPath = path.resolve(root, "exports/mac-fixture-v2");
+const outputPath = path.resolve(root, process.env.MAC_FIXTURE_OUTPUT || "exports/mac-fixture-v3");
 const selectedNames = new Set([
   ...Array.from({ length: 34 }, (_, index) => `R001${1300 + index}`),
-  "B0006942", "B0006943", "B0006944", "B0006945",
+  "B0006942", "B0006943", "B0006944", "B0006945", "B0006937", "B0006936", "B0006935", "B0006934", "B0006933", "B0006932", "B0006931", "B0006929",
 ]);
 const imageExtensions = new Set(["jpg", "dng", "heic", "3fr"]);
 const hash = async (file) => { const h = createHash("sha256"); h.update(await readFile(file)); return h.digest("hex"); };
 const inventory = JSON.parse(await readFile(path.join(root, "data/inventory.json"), "utf8"));
 const records = inventory.items.filter((x) => selectedNames.has(x.name) && imageExtensions.has(String(x.ext).toLowerCase()));
-if (records.length !== 76) throw new Error(`Expected 76 items, found ${records.length}`);
+if (records.length !== 92) throw new Error(`Expected 92 items, found ${records.length}`);
 await mkdir(path.join(outputPath, "photos"), { recursive: true });
 await mkdir(path.join(outputPath, "thumbnails"), { recursive: true });
 const items = [];
@@ -35,9 +35,9 @@ for (const item of records.sort((a, b) => `${a.name}.${a.ext}`.localeCompare(`${
   items.push({ id: item.id, name: item.name, ext, width: item.width, height: item.height, tags: item.tags || [], folders: item.folders || [], modificationTime: item.modificationTime, sourceRelativePath: path.relative(outputPath, target).replaceAll("\\", "/"), thumbnailRelativePath, size: (await stat(target)).size, sha256: await hash(target) });
 }
 const readme = [
-  "# Mac 开发照片压测集", "", "共 38 个拍摄单元、76 个原始文件：",
+  "# Mac 开发照片压测集", "", "共 46 个拍摄单元、92 个原始文件：",
   "- R0011300–R0011333：34 组连续 JPG/DNG，适合并发、相似组和重复筛选压测；",
-  "- B0006942–B0006945：4 组 HEIC/3FR，验证哈苏 RAW/JPEG 配对；",
+  "- B0006929–B0006945：12 组 HEIC/3FR，覆盖 Windows 解码失败的 HEIC，验证 Mac 原生解码和哈苏 RAW/JPEG 配对；",
   "- thumbnails/保留 Eagle 当前缩略图，可验证历史左上角角标恢复；",
   "- manifest.json 含 ID、格式、标签、尺寸和 SHA-256。", "", "此目录是副本，不包含 Eagle 数据库，不会修改原资源库。"
 ].join("\n");

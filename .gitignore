@@ -16,6 +16,8 @@ exports/
 D:/Photography/EagleThumbnailBackups/
 data/native-refresh-*.json
 data/offline-native-refresh-*.json
+data/clean-thumbnail-*.json
+data/clean-thumbnails/
 node_modules/
 models/
 .window-state.json
