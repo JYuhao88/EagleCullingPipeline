@@ -12,11 +12,13 @@ data/thumbnail-badges.json
 data/tasks.json
 data/tasks.json.tmp
 data/previews/
+exports/
 node_modules/
 models/
 .window-state.json
 src/plugin/window-state.json
 __pycache__/
 .venv/
+.venv-iqa/
 *.pyc
 .env

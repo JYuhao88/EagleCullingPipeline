@@ -1,0 +1,30 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { mkdtemp } from "node:fs/promises";
+import path from "node:path";
+import os from "node:os";
+import sharp from "sharp";
+import { ModelPreviewCache } from "../src/model-preview.js";
+import { hashFile } from "../src/image-analyzer.js";
+
+test("model JPEG previews are bounded, cached, invalidated and never alter source or Eagle thumbnail", async()=>{
+  const root=await mkdtemp(path.join(os.tmpdir(),"eagle-model-preview-"));
+  const filePath=path.join(root,"original.jpg"),thumbnailPath=path.join(root,"eagle.png");
+  await sharp({create:{width:2400,height:1800,channels:3,background:"#345678"}}).jpeg().toFile(filePath);
+  await sharp({create:{width:320,height:240,channels:3,background:"#112233"}}).png().toFile(thumbnailPath);
+  const before=await hashFile(filePath),thumbBefore=await hashFile(thumbnailPath);
+  const cache=new ModelPreviewCache(path.join(root,"cache"));
+  const item={ext:"jpg",filePath,thumbnailPath};
+  const outputs=await Promise.all(Array.from({length:8},()=>cache.prepare(item)));
+  assert.ok(outputs.every(output=>output.path===outputs[0].path));
+  assert.equal(outputs[0].width,1600);assert.equal(outputs[0].height,1200);
+  assert.equal((await cache.prepare(item)).cached,true);
+  assert.equal((await hashFile(filePath)).sha256,before.sha256);
+  assert.equal((await hashFile(thumbnailPath)).sha256,thumbBefore.sha256);
+  await sharp({create:{width:800,height:600,channels:3,background:"#111111"}}).jpeg().toFile(filePath);
+  const changed=await cache.prepare(item);assert.notEqual(changed.path,outputs[0].path);assert.equal(changed.width,800);
+  const raw=await cache.prepare({...item,ext:"3fr",filePath:"missing.3fr"});
+  assert.equal(raw.path,thumbnailPath);assert.equal(raw.source,"existing-preview");
+  const missing=await cache.prepare({...item,filePath:path.join(root,"missing.jpg")});
+  assert.equal(missing.path,thumbnailPath);assert.match(missing.reason,/不可用/);
+});

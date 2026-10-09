@@ -14,7 +14,7 @@ Eagle Window Plugin（src/plugin）
   ├─ pHash / 相似聚类 / 清晰度 / 曝光 / 构图代理评分
   ├─ 本地人脸与闭眼 worker
   ├─ PNG 角标生成（左下角）
-  ├─ data/tasks.json 任务队列（原子替换）
+  ├─ data/tasks.json 旧基线 + data/tasks.json.journal 增量任务日志
   ├─ data/thumbnail-badges.json 清单
   └─ 结果和模型缓存
 ```
@@ -36,24 +36,24 @@ items[]: { id, modifiedAt, status, attempts, outputPath, error }
 - `src/plugin/`：唯一推荐加载的 Eagle Window Plugin，包含审阅、任务、角标和诊断。
 - `src/thumbnail-bridge/`：旧版兼容目录，保留一段迁移周期，不再作为新入口。
 - `src/server.js`：本地 HTTP 服务和任务 API。
-- `src/task-store.js`：JSON 任务存储，临时文件 + rename 原子写入。
+- `src/task-store.js`：串行化的增量任务日志，记录校验与同步落盘；旧快照不覆盖。
 - `src/task-queue.js`：Node 端可测试的有界并发、限速、重试队列。
 - `src/plugin/task-queue.js`：插件浏览器端同构队列。
 - `src/image-analyzer.js`：Node 基线分析器和 pHash 聚类。
 - `data/results.sqlite`、`data/cache/`：结果、代理图和模型缓存，不提交 Git。
 - `scripts/start-service.ps1`：固定服务启动入口。
 
-任务进度通过 `/tasks/:id/checkpoint` 每 25 项批量写入，失败项立即写入；避免 8,000 项任务产生 8,000 次磁盘重写。
+任务进度通过 `/tasks/:id/checkpoint` 每 25 项增量写入，失败项立即写入；响应默认仅含摘要，不再每次重写并传输所有历史任务。
 
 ## 资源策略
 
-默认并发 2，可选 1/2/4；请求间隔 120ms；单项最多重试 3 次；每 25 项保存断点。Eagle 预览图优先于 RAW 原片，避免在 410GB、约 8,000 项资源库上同时解码多个 40–100MP 原片。GPU 模型通过独立 worker 执行，主服务不保存整库像素数据。
+任务总张数不限；默认并发 8、间隔 0ms，可输入其他正整数并发；单项最多重试 3 次；每 25 项保存断点。每项分析独立发送，服务分析请求上限是协议批次限制而非任务总数限制；完成后聚类从持久化任务中读取结果，不传输整个结果集。Eagle 预览图优先于 RAW 原片。高并发会提高 CPU、内存及 Eagle API 压力，模拟调度测试不代表真实资源峰值或吞吐量。
 
 ## 写回安全
 
 1. 只使用 Eagle 官方 Item API，不编辑 `metadata.json`、缩略图库或其他私有文件。
 2. 标签写回只替换 AI 状态标签，保留人工标签、配对标签、星级和文件夹。
-3. 原生预览模式不调用 `setCustomThumbnail()`；角标模式只写任务生成且清单登记的 PNG。
+3. 日常角标通过插件 CSS 显示层即时切换，不调用缩略图 API；兼容维护中的网格角标写入需明确确认，且只写任务生成并登记的 PNG。旧缩略图恢复与显示开关是独立操作。
 4. 恢复只对本工具清单登记的项目调用 `refreshThumbnail()`，不覆盖未知人工缩略图。
 5. 本版本没有自动删除能力；“待复核”必须由用户在 Eagle 中最终决定。
 

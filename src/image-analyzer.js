@@ -3,6 +3,7 @@ import { createReadStream } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
+import { SCORING_VERSION } from "./plugin/analysis-version.js";
 
 const IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "webp", "tif", "tiff", "bmp"]);
 const PROXY_EXTENSIONS = new Set(["arw", "dng", "3fr", "heic", "cr2", "nef", "raf", "rw2", "orf", "srw"]);
@@ -99,22 +100,24 @@ export function hammingDistance(left, right) {
   return distance;
 }
 
-export function scoreQuality({ sharpness, clippedHigh, clippedLow, width, height, compositionScore = 50, subjectScore = 50 }) {
+export function scoreQuality({ sharpness, clippedHigh, clippedLow, width, height, resolutionVerified = true }) {
   const sharpnessScore = Math.max(0, Math.min(100, 35 + 18 * Math.log10(1 + sharpness)));
   const exposurePenalty = Math.min(60, (clippedHigh + clippedLow) * 180);
-  const resolutionScore = Math.max(0, Math.min(100, Math.log10(Math.max(1, width * height)) * 11));
-  return Math.round(Math.max(0, Math.min(100, sharpnessScore * 0.45 + (100 - exposurePenalty) * 0.2 + resolutionScore * 0.15 + compositionScore * 0.1 + subjectScore * 0.1)) * 100) / 100;
+  const resolutionScore = resolutionVerified ? Math.max(0, Math.min(100, Math.log10(Math.max(1, width * height)) * 11)) : 0;
+  const weighted = sharpnessScore * 0.45 + (100 - exposurePenalty) * 0.2 + resolutionScore * 0.15;
+  return Math.round(Math.max(0, Math.min(100, weighted / (resolutionVerified ? 0.8 : 0.65))) * 100) / 100;
 }
 
 export async function analyzeImage(record) {
   const analysisPath = record.analysisPath || record.filePath;
+  const resolutionVerified = analysisPath === record.filePath;
   const image = sharp(analysisPath, { failOn: "none" });
   const metadata = await image.metadata();
   const hashBuffer = await image.clone().resize({ width: 32, height: 32, fit: "fill" }).greyscale().raw().toBuffer({ resolveWithObject: true });
   const gray = Array.from(hashBuffer.data);
   const phash = dctHash(gray, hashBuffer.info.width, hashBuffer.info.height);
 
-  const sample = await image.clone().resize({ width: 96, height: 96, fit: "inside" }).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const sample = await image.clone().resize({ width: 96, height: 96, fit: "inside" }).removeAlpha().toColourspace("srgb").raw().toBuffer({ resolveWithObject: true });
   const luma = [];
   for (let i = 0; i < sample.data.length; i += sample.info.channels) {
     luma.push(grayscaleLuma(sample.data[i], sample.data[i + 1], sample.data[i + 2]));
@@ -129,31 +132,22 @@ export async function analyzeImage(record) {
   const clippedHigh = luma.filter((value) => value >= 250).length / luma.length;
   const clippedLow = luma.filter((value) => value <= 5).length / luma.length;
   const dimensions = {
-    width: record.analysisPath ? (record.width || metadata.width || 0) : (metadata.width || record.width || 0),
-    height: record.analysisPath ? (record.height || metadata.height || 0) : (metadata.height || record.height || 0),
+    width: resolutionVerified ? (metadata.width || record.width || 0) : (record.width || metadata.width || 0),
+    height: resolutionVerified ? (metadata.height || record.height || 0) : (record.height || metadata.height || 0),
   };
   const qualityFlags = [];
   if (sharpness < 3) qualityFlags.push("possibly-blurry");
   if (clippedHigh >= 0.05) qualityFlags.push("overexposed");
   if (clippedLow >= 0.05) qualityFlags.push("underexposed");
-  if (Math.min(dimensions.width, dimensions.height) < 800) qualityFlags.push("low-resolution");
-  const grid = [];
-  for (let gy = 0; gy < 3; gy += 1) for (let gx = 0; gx < 3; gx += 1) {
-    const values = [];
-    const x0 = Math.floor(gx * sw / 3); const x1 = Math.floor((gx + 1) * sw / 3);
-    const y0 = Math.floor(gy * sample.info.height / 3); const y1 = Math.floor((gy + 1) * sample.info.height / 3);
-    for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) values.push(luma[y * sw + x]);
-    grid.push({ gx, gy, variance: variance(values) });
-  }
-  const strongestCell = [...grid].sort((a, b) => b.variance - a.variance)[0];
-  const compositionScore = Math.round(Math.max(0, Math.min(100, 45 + (strongestCell.variance / Math.max(1, variance(luma))) * 20)) * 100) / 100;
-  const subjectScore = Math.round(Math.max(0, Math.min(100, 35 + Math.sqrt(Math.max(0, strongestCell.variance)) * 4)) * 100) / 100;
+  if (resolutionVerified && Math.min(dimensions.width, dimensions.height) < 800) qualityFlags.push("low-resolution");
   return {
     ...record,
     width: dimensions.width,
     height: dimensions.height,
     sha256: (await hashFile(analysisPath)).sha256,
     analysisSource: analysisPath === record.filePath ? "original" : "proxy",
+    resolutionVerified,
+    scoringVersion: SCORING_VERSION,
     phash,
     metrics: {
       meanLuma: Math.round(avg * 100) / 100,
@@ -161,12 +155,16 @@ export async function analyzeImage(record) {
       sharpness: Math.round(sharpness * 1000) / 1000,
       clippedHigh: Math.round(clippedHigh * 10000) / 10000,
       clippedLow: Math.round(clippedLow * 10000) / 10000,
-      compositionScore,
-      subjectScore,
+      compositionScore: null,
+      subjectScore: null,
     },
-    qualityScore: scoreQuality({ sharpness, clippedHigh, clippedLow, compositionScore, subjectScore, ...dimensions }),
+    qualityScore: scoreQuality({ sharpness, clippedHigh, clippedLow, resolutionVerified, ...dimensions }),
     qualityFlags,
-    confidence: qualityFlags.length === 0 ? 0.78 : Math.max(0.35, 0.78 - qualityFlags.length * 0.12),
+    qualityMethod: "heuristic-preview",
+    // No labelled accuracy/calibration set exists yet. A fixed 0.78 is not a
+    // probability, and edge/contrast proxies are not aesthetic/subject models.
+    confidence: null,
+    confidenceCalibrated: false,
     analyzedAt: new Date().toISOString(),
   };
 }
@@ -179,7 +177,11 @@ export async function hashFile(filePath) {
 
 /** Merge face/eye findings into the explainable quality fields. */
 export function applyFaceQuality(item, face) {
+  if (!face || face.available === false || face.error) return { ...item, face: {...face,available:false,eyeAssessment:"unavailable"} };
+  const count = Number.isSafeInteger(face.faceCount) ? face.faceCount : (face.faces || []).length;
   const closedEyes = (face?.faces || []).some((entry) => entry.eyesClosed);
+  const eyeAssessment = closedEyes ? "possible-closed" : !count ? "not-detected" : (face.faces || []).length < count || (face.faces || []).some(entry=>entry.eyesAssessed === false) ? "incomplete" : "no-closed-signal";
+  face = {...face,eyeAssessment};
   if (!closedEyes) return { ...item, face };
   const qualityFlags = [...new Set([...(item.qualityFlags || []), "eyes-closed"])];
   return {
@@ -187,38 +189,44 @@ export function applyFaceQuality(item, face) {
     face,
     qualityFlags,
     qualityScore: Math.round(Math.max(0, (item.qualityScore || 0) - 25) * 100) / 100,
-    confidence: Math.max(0.25, (item.confidence ?? 0.78) - 0.15),
+    confidence: null,
+    confidenceCalibrated: false,
   };
 }
 
 export function clusterByPhash(items, threshold = 8) {
-  const parent = items.map((_, index) => index);
-  const find = (index) => {
-    while (parent[index] !== index) {
-      parent[index] = parent[parent[index]];
-      index = parent[index];
-    }
-    return index;
+  if (!Number.isInteger(threshold) || threshold < 0 || threshold > 64) throw new Error("pHash threshold must be an integer from 0 to 64");
+  const popcount = (value) => {
+    value -= (value >>> 1) & 0x55555555;
+    value = (value & 0x33333333) + ((value >>> 2) & 0x33333333);
+    return (((value + (value >>> 4)) & 0x0f0f0f0f) * 0x01010101) >>> 24;
   };
-  const union = (left, right) => {
-    const a = find(left); const b = find(right);
-    if (a !== b) parent[b] = a;
-  };
-  for (let i = 0; i < items.length; i += 1) {
-    for (let j = i + 1; j < items.length; j += 1) {
-      if (items[i].sha256 === items[j].sha256 || hammingDistance(items[i].phash, items[j].phash) <= threshold) union(i, j);
+  const prepared = items.map((item) => {
+    const valid = typeof item.phash === "string" && /^[01]{1,64}$/.test(item.phash);
+    return { item, length:valid ? item.phash.length : 0, high:valid ? parseInt(item.phash.slice(0,32),2) : 0,
+      low:valid && item.phash.length > 32 ? parseInt(item.phash.slice(32),2) : 0,
+      sha:typeof item.sha256 === "string" && /^[a-f\d]{64}$/i.test(item.sha256) ? item.sha256.toLowerCase() : null };
+  }).sort((a,b) => (Number.isFinite(b.item.qualityScore) ? b.item.qualityScore : 0) - (Number.isFinite(a.item.qualityScore) ? a.item.qualityScore : 0) || String(a.item.id).localeCompare(String(b.item.id)));
+  const distance = (a,b) => a.sha && a.sha === b.sha ? 0 : a.length && a.length === b.length
+    ? popcount(a.high ^ b.high) + popcount(a.low ^ b.low) : Infinity;
+  // Quality-first deterministic complete-link partition: every pair in a group
+  // must satisfy the threshold, not merely be connected by an intermediate shot.
+  const groups = [];
+  for (const candidate of prepared) {
+    let group = null;
+    for (const existing of groups) {
+      if (distance(candidate,existing.members[0]) > threshold) continue;
+      if (existing.members.every(member=>distance(candidate,member)<=threshold)) {group=existing;break;}
     }
+    if (group) group.members.push(candidate);
+    else groups.push({members:[candidate]});
   }
-  const groups = new Map();
-  items.forEach((item, index) => {
-    const root = find(index);
-    if (!groups.has(root)) groups.set(root, []);
-    groups.get(root).push({ ...item, phashDistance: 0 });
-  });
-  return [...groups.values()].map((members, index) => ({
+  return groups.map(({members}, index) => ({
     groupId: `phash-${String(index + 1).padStart(4, "0")}`,
     size: members.length,
-    representativeId: [...members].sort((a, b) => b.qualityScore - a.qualityScore)[0].id,
-    items: members,
+    representativeId: members[0].item.id,
+    similarityMethod: "phash-pairwise-v2",
+    phashThreshold: threshold,
+    items: members.map(member=>({...member.item,phashDistance:distance(member,members[0])})),
   }));
 }

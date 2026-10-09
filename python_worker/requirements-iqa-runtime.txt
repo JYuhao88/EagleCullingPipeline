@@ -1,0 +1,5 @@
+# Isolated optional IQA runtime, NOT the existing face/DirectML environment.
+# Official Windows CUDA 12.6 wheels; no IQA model is enabled by installing this.
+--index-url https://download.pytorch.org/whl/cu126
+torch==2.9.1
+torchvision==0.24.1

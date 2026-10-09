@@ -40,6 +40,7 @@ h1 { margin: 0; font-size: 25px; line-height: 1.2; }
 .service-dot { width: 9px; height: 9px; border-radius: 50%; background: #707782; }
 .service-state[data-state="ready"] .service-dot { background: var(--selected); }
 .service-state[data-state="offline"] .service-dot { background: var(--rejected); }
+.service-state[data-state="outdated"] .service-dot { background: var(--candidate); }
 
 main { padding: 20px 28px 88px; }
 .view-tabs { display: flex; gap: 6px; margin-bottom: 18px; border-bottom: 1px solid var(--line); }
@@ -56,6 +57,7 @@ main { padding: 20px 28px 88px; }
 .choice-button.is-active { border-color: var(--accent); color: var(--text); background: #21364c; }
 .setting-line { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 10px 0; color: var(--muted); font-size: 14px; }
 .setting-line select { min-height: 32px; border: 1px solid var(--line-strong); border-radius: 5px; color: var(--text); background: var(--surface-raised); }
+.setting-line input { width: 100px; min-height: 32px; border: 1px solid var(--line-strong); border-radius: 5px; padding: 0 8px; color: var(--text); background: var(--surface-raised); }
 .toolbar { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
 .toolbar-actions { display: flex; gap: 10px; }
 .button, .filter-button, .decision-button, .locate-button {
@@ -116,6 +118,8 @@ main { padding: 20px 28px 88px; }
 .item-row:hover, .item-row.is-focused { border-color: #5b6470; background: #1a1e23; }
 .thumbnail-button { position: relative; width: 136px; min-height: 142px; margin: 0; border: 0; padding: 0; overflow: hidden; background: #090a0c; }
 .thumbnail-button img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.review-overlay { position: absolute; left: 8px; bottom: 8px; pointer-events: none; }
+.hide-review-overlays .review-overlay { display: none; }
 .thumbnail-button:hover::after { content: "在 Eagle 中定位"; position: absolute; inset: auto 8px 8px; padding: 5px 7px; border-radius: 4px; color: white; background: rgba(0, 0, 0, .72); font-size: 12px; }
 .item-content { min-width: 0; padding: 15px 18px; }
 .item-title-line { display: flex; align-items: center; gap: 8px; min-width: 0; }
@@ -143,6 +147,16 @@ main { padding: 20px 28px 88px; }
 .decision-button.is-current[data-action="rejected"] { border-color: var(--rejected); color: #f1aaaa; }
 .locate-button { min-height: 34px; border-color: transparent; color: var(--accent); background: transparent; font-size: 13px; }
 .locate-button:hover { background: #202b36; }
+
+#compare-dialog { width: min(1120px, 92vw); max-height: 90vh; overflow: auto; border: 1px solid var(--line-strong); border-radius: 10px; padding: 20px; color: var(--text); background: var(--surface); }
+#compare-dialog::backdrop { background: rgba(0, 0, 0, .7); }
+.compare-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.compare-panel { min-width: 0; }
+.compare-panel label { display: grid; gap: 6px; }
+.compare-panel select { width: 100%; min-height: 36px; margin-bottom: 10px; color: var(--text); background: var(--surface-raised); border: 1px solid var(--line); }
+.compare-image { position: relative; display: grid; place-items: center; height: min(54vh, 500px); background: #090a0c; }
+.compare-image img { width: 100%; height: 100%; object-fit: contain; }
+.compare-panel > p { overflow-wrap: anywhere; }
 
 footer { position: fixed; inset: auto 0 0; display: flex; justify-content: space-between; gap: 24px; min-height: 52px; padding: 14px 28px; border-top: 1px solid var(--line); color: var(--muted); background: rgba(19, 22, 26, .97); font-size: 13px; }
 .shortcut-help { text-align: right; }

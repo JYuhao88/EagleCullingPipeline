@@ -1,0 +1,104 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { mkdtemp, readdir, writeFile, mkdir, copyFile, appendFile } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import sharp from "sharp";
+import { SemanticWorkerPool, EMBEDDING_VERSION } from "../src/semantic-worker-client.js";
+import { createAnalysisServer } from "../src/server.js";
+
+test("semantic CPU pool reuses one real model, rejects unbounded sources and drains cancelled jobs", async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(),"eagle-semantic-pool-"));
+  const thumbnailPath = path.join(root,"preview.png");
+  await sharp({create:{width:64,height:64,channels:3,background:"#568291"}}).png().toFile(thumbnailPath);
+  const pool = new SemanticWorkerPool({provider:"cpu",cacheRoot:path.join(root,"cache")}); t.after(()=>pool.close());
+  const first = await pool.run([{id:"one",thumbnailPath},{id:"raw",filePath:"huge.3fr"}]);
+  assert.equal(first[0].available,true); assert.equal(first[0].embeddingVersion,EMBEDDING_VERSION);
+  assert.equal(first[1].available,false); assert.match(first[1].error,/bounded preview/);
+  const controller = new AbortController();
+  const cancelled = pool.run(Array.from({length:128},(_,id)=>({id:String(id),thumbnailPath})),{signal:controller.signal});
+  controller.abort(new Error("paused")); await assert.rejects(cancelled,/paused/);
+  const next = await pool.run([{id:"next",thumbnailPath}]);
+  assert.equal(next[0].available,true);
+  assert.equal(pool.diagnostics().processStarts,1); assert.equal(pool.diagnostics().concurrency,1);
+  assert.equal(pool.diagnostics().pending,0);
+  assert.deepEqual(pool.diagnostics().models[0].providers,["CPUExecutionProvider"]);
+});
+
+test("analysis HTTP path runs real DirectML vectors only when requested and reuses its session", async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(),"eagle-semantic-http-"));
+  const thumbnailPath = path.join(root,"preview.png");
+  await sharp({create:{width:64,height:64,channels:3,background:"#568291"}}).png().toFile(thumbnailPath);
+  const service = createAnalysisServer({port:0,taskStorePath:path.join(root,"tasks.json"),semanticWorkerOptions:{provider:"dml",cacheRoot:path.join(root,"cache")}});
+  await service.listen();t.after(()=>service.server.close());
+  const base = `http://127.0.0.1:${service.server.address().port}`;
+  const analyze = async includeEmbeddings => {
+    const response = await fetch(base+"/analyze",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({items:[{id:"one",name:"preview",ext:"png",filePath:thumbnailPath,thumbnailPath}],includeEmbeddings})});
+    const result = await response.json();assert.equal(response.status,200,JSON.stringify(result));return result;
+  };
+  const normal = await analyze(false); assert.equal(normal.items[0].embedding,undefined);
+  assert.equal((await (await fetch(base+"/diagnostics")).json()).semantic.processStarts,0);
+  const first = await analyze(true), second = await analyze(true);
+  assert.equal(first.items[0].semantic.available,true); assert.equal(first.items[0].embedding.length,384);
+  assert.deepEqual(first.items[0].embedding,second.items[0].embedding);
+  assert.equal(first.items[0].qualityScore,normal.items[0].qualityScore,"scene vectors must not change quality scores");
+  const diagnostics = await (await fetch(base+"/diagnostics")).json();
+  assert.equal(diagnostics.semantic.processStarts,1);assert.equal(diagnostics.semantic.modelProcesses,1);
+  assert.equal(diagnostics.semantic.models[0].requestedProvider,"DmlExecutionProvider");
+  const vectors = [first.items[0], {...second.items[0],id:"two"}, {id:"legacy",phash:first.items[0].phash,embeddingVersion:"unknown",semantic:{available:true},embedding:first.items[0].embedding}];
+  const clustered = await (await fetch(base+"/cluster",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({items:vectors,includeEmbeddings:true})})).json();
+  assert.equal(clustered.semantic.available,2);assert.equal(clustered.semantic.total,3);
+  assert.ok(clustered.groups.some(group=>group.size===2 && group.similarityMethod==="embedding-pairwise-v2"));
+  assert.ok(clustered.groups.some(group=>group.items.some(item=>item.id==="legacy") && group.similarityMethod!=="embedding-pairwise-v2"));
+});
+
+test("persistent semantic cache avoids real inference across pool restarts, invalidates content and repairs corrupt vectors", async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(),"eagle-semantic-cache-"));
+  const thumbnailPath = path.join(root,"preview.png"), cacheRoot = path.join(root,"cache");
+  await sharp({create:{width:64,height:64,channels:3,background:"#345678"}}).png().toFile(thumbnailPath);
+  const pool = new SemanticWorkerPool({provider:"cpu",cacheRoot});t.after(()=>pool.close());
+  const first = await pool.run([{id:"first",thumbnailPath},{id:"same-content",thumbnailPath}]);
+  assert.equal(pool.diagnostics().cache.inferenceItems,1);
+  assert.deepEqual(first[0].embedding,first[1].embedding);
+  pool.close();
+  const restarted = new SemanticWorkerPool({provider:"cpu",cacheRoot});t.after(()=>restarted.close());
+  const hit = await restarted.run([{id:"new-id",thumbnailPath}]);
+  assert.equal(hit[0].id,"new-id");assert.equal(hit[0].cacheHit,true);
+  assert.deepEqual(hit[0].embedding,first[0].embedding);
+  assert.equal(restarted.diagnostics().processStarts,0,"a cache hit must not launch Python/model inference");
+  const [file] = await readdir(cacheRoot);
+  await writeFile(path.join(cacheRoot,file),JSON.stringify({key:file.slice(0,-5),result:{available:true,embeddingVersion:EMBEDDING_VERSION,embedding:Array(384).fill(0)}}));
+  const repaired = await restarted.run([{id:"repair",thumbnailPath}]);
+  assert.equal(repaired[0].available,true);assert.equal(repaired[0].cacheHit,false);
+  assert.equal(restarted.diagnostics().cache.invalid,1);
+  await sharp({create:{width:64,height:64,channels:3,background:"#abcdef"}}).png().toFile(thumbnailPath);
+  const changed = await restarted.run([{id:"changed",thumbnailPath}]);
+  assert.equal(changed[0].available,true);assert.equal(changed[0].cacheHit,false);
+  assert.notDeepEqual(changed[0].embedding,first[0].embedding);
+  assert.equal(restarted.diagnostics().cache.inferenceItems,2);
+});
+
+test("semantic cache rejects changed configuration and bad model checksums before returning cached vectors", async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(),"eagle-semantic-identity-"));
+  for (const folder of ["python_worker","models/dinov2-small"]) await mkdir(path.join(root,folder),{recursive:true});
+  for (const file of ["python_worker/model-manifest.json","python_worker/dinov2-preprocessor.json","python_worker/embedding_worker.py","models/dinov2-small/model.onnx"]) await copyFile(file,path.join(root,file));
+  const thumbnailPath = path.join(root,"preview.png"),cacheRoot=path.join(root,"cache");
+  await sharp({create:{width:64,height:64,channels:3,background:"#345678"}}).png().toFile(thumbnailPath);
+  const python=path.resolve(".venv/Scripts/python.exe");
+  const pool = new SemanticWorkerPool({provider:"cpu",cwd:root,python,cacheRoot});t.after(()=>pool.close());
+  assert.equal((await pool.run([{id:"first",thumbnailPath}]))[0].available,true);
+  await appendFile(path.join(root,"python_worker/dinov2-preprocessor.json"),"\n");
+  const stale=await pool.run([{id:"stale",thumbnailPath}]);
+  assert.equal(stale[0].available,false);assert.match(stale[0].error,/configuration changed/);
+  pool.close();
+  const updated = new SemanticWorkerPool({provider:"cpu",cwd:root,python,cacheRoot});t.after(()=>updated.close());
+  const recomputed=await updated.run([{id:"updated",thumbnailPath}]);
+  assert.equal(recomputed[0].available,true);assert.equal(recomputed[0].cacheHit,false);
+  assert.equal(updated.diagnostics().cache.inferenceItems,1);
+  updated.close();
+  await writeFile(path.join(root,"models/dinov2-small/model.onnx"),"corrupt isolated test model");
+  const broken = new SemanticWorkerPool({provider:"cpu",cwd:root,python,cacheRoot});t.after(()=>broken.close());
+  const refused=await broken.run([{id:"bad-model",thumbnailPath}]);
+  assert.equal(refused[0].available,false);assert.match(refused[0].error,/checksum mismatch/);
+  assert.equal(broken.diagnostics().processStarts,0);assert.equal(broken.diagnostics().cache.hits,0);
+});

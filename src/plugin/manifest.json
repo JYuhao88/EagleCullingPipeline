@@ -1,12 +1,12 @@
 {
   "id": "EAGLECULLING001",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "platform": "win",
   "arch": "x64",
   "name": "摄影筛选助手",
   "logo": "/logo.png",
   "keywords": ["photography", "culling", "duplicate", "quality"],
-  "devTools": true,
+  "devTools": false,
   "main": {
     "url": "index.html",
     "width": 980,

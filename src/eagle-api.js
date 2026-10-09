@@ -73,6 +73,24 @@ export class EagleApi {
     return this.post("item/update", item);
   }
 
+  // Official V2 endpoint: itemId, NOT the V1 endpoint's id field.
+  // Success is only an API acknowledgement. Callers must verify original
+  // hashes, human metadata and derived previews before declaring restoration.
+  // Do not automatically retry a lost acknowledgement: Eagle may still be
+  // rebuilding the thumbnail after this HTTP client stops observing it.
+  async refreshThumbnail(itemId) {
+    if (typeof itemId !== "string" || !itemId.trim()) throw new Error("A non-empty Eagle itemId is required");
+    try {
+      const acknowledgement = await this.post("item/refreshThumbnail", {itemId});
+      if (acknowledgement === false) throw new Error("Eagle thumbnail refresh was not acknowledged");
+      return acknowledgement;
+    } catch (error) {
+      error.refreshOutcome = "unknown";
+      error.fatal = true;
+      throw error;
+    }
+  }
+
   async *items({ fields, limit = 500 } = {}) {
     let offset = 0;
     while (true) {

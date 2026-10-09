@@ -33,19 +33,41 @@ export async function embedImage(filePath, options = {}) {
 }
 
 export function cosineSimilarity(a, b) {
+  if (!a?.length || a.length !== b?.length) return 0;
   let dot = 0; let aa = 0; let bb = 0;
-  for (let i = 0; i < Math.min(a.length, b.length); i += 1) { dot += a[i] * b[i]; aa += a[i] ** 2; bb += b[i] ** 2; }
+  for (let i = 0; i < a.length; i += 1) {
+    if (!Number.isFinite(a[i]) || !Number.isFinite(b[i])) return 0;
+    dot += a[i] * b[i]; aa += a[i] ** 2; bb += b[i] ** 2;
+  }
   return dot / Math.sqrt(Math.max(1e-12, aa * bb));
 }
 
 export function clusterByEmbedding(items, threshold = 0.82) {
-  const parent = items.map((_, i) => i);
-  const find = (i) => { while (parent[i] !== i) { parent[i] = parent[parent[i]]; i = parent[i]; } return i; };
-  const union = (a, b) => { const x = find(a); const y = find(b); if (x !== y) parent[y] = x; };
-  for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
-    if (items[i].embedding && items[j].embedding && cosineSimilarity(items[i].embedding, items[j].embedding) >= threshold) union(i, j);
+  if (!Number.isFinite(threshold) || threshold < -1 || threshold > 1) throw new Error("Cosine threshold must be from -1 to 1");
+  const prepared = items.map(item => {
+    const values = item.embedding;
+    const norm = values?.length && Array.from(values).every(Number.isFinite) ? Math.sqrt(values.reduce((sum,value)=>sum+value*value,0)) : 0;
+    return {item,vector:norm > 0 && Number.isFinite(norm) ? Array.from(values,value=>value/norm) : null};
+  }).sort((a,b)=>(Number.isFinite(b.item.qualityScore) ? b.item.qualityScore : 0)-(Number.isFinite(a.item.qualityScore) ? a.item.qualityScore : 0)||String(a.item.id).localeCompare(String(b.item.id)));
+  const similar = (a,b) => {
+    if (!a.vector || !b.vector || a.vector.length !== b.vector.length) return false;
+    let dot=0, distanceSquared=0;
+    // For unit vectors, ||a-b||² = 2(1-cosine). A partial squared
+    // distance can only increase, so reject dissimilar candidates early
+    // without approximating their final threshold decision.
+    const distanceLimit=2*(1-threshold);
+    for (let index=0;index<a.vector.length;index++) {
+      const difference=a.vector[index]-b.vector[index];distanceSquared+=difference*difference;
+      if(distanceSquared>distanceLimit+1e-12) return false;
+      dot+=a.vector[index]*b.vector[index];
+    }
+    return dot>=threshold;
+  };
+  const groups=[];
+  for (const candidate of prepared) {
+    const group=groups.find(members=>members.every(member=>similar(candidate,member)));
+    if (group) group.push(candidate);
+    else groups.push([candidate]);
   }
-  const groups = new Map();
-  items.forEach((item, i) => { const root = find(i); if (!groups.has(root)) groups.set(root, []); groups.get(root).push(item); });
-  return [...groups.values()].map((members, index) => ({ groupId: `embedding-${String(index + 1).padStart(4, "0")}`, size: members.length, representativeId: [...members].sort((a, b) => (b.qualityScore ?? 0) - (a.qualityScore ?? 0))[0].id, items: members }));
+  return groups.map((members,index)=>({groupId:`embedding-${String(index+1).padStart(4,"0")}`,size:members.length,representativeId:members[0].item.id,similarityMethod:"embedding-pairwise-v2",cosineThreshold:threshold,items:members.map(member=>member.item)}));
 }
