@@ -7,6 +7,7 @@ import path from "node:path";
 const root = path.resolve(import.meta.dirname, "..");
 const libraryPath = process.env.EAGLE_LIBRARY_PATH || "D:/Photography/EagleLibraries/Culling.library";
 const backupRoot = process.env.EAGLE_THUMBNAIL_BACKUP || "D:/Photography/EagleThumbnailBackups/pre-native-refresh";
+if (process.env.RESTORE_OFFLINE_CONFIRM !== "I_UNDERSTAND") throw new Error("Offline thumbnail removal is disabled by default; set RESTORE_OFFLINE_CONFIRM=I_UNDERSTAND only after a tested backup");
 const inventory = JSON.parse(await readFile(path.join(root, "data/thumbnail-badges.json"), "utf8"));
 const entries = inventory.items || inventory.entries || inventory;
 const registered = (Array.isArray(entries) ? entries : Object.values(entries)).filter((x) => x && !x.skipped && x.outputPath);
