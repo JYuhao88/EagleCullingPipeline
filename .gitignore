@@ -13,6 +13,9 @@ data/tasks.json
 data/tasks.json.tmp
 data/previews/
 exports/
+D:/Photography/EagleThumbnailBackups/
+data/native-refresh-*.json
+data/offline-native-refresh-*.json
 node_modules/
 models/
 .window-state.json
