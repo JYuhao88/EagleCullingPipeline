@@ -18,6 +18,9 @@ data/native-refresh-*.json
 data/offline-native-refresh-*.json
 data/clean-thumbnail-*.json
 data/clean-thumbnails/
+data/native-migration.json
+data/heic-decoded/
+data/reimport-canary-*
 node_modules/
 models/
 .window-state.json

@@ -15,6 +15,8 @@ const request = async (endpoint, options = {}) => { const r = await fetch(`${api
 const filesFor = async (id) => readdir(path.join(libraryPath, "images", `${id}.info`));
 const sourceFor = async (item, allItems) => {
   const dir = path.join(libraryPath, "images", `${item.id}.info`); const names = await filesFor(item.id); const ext = String(item.ext).toLowerCase();
+  const decoded = path.join(root, "data", "heic-decoded", `${item.id}.png`);
+  if (ext === "heic" && await stat(decoded).then(() => true).catch(() => false)) return decoded;
   let source = ["jpg", "jpeg", "heic", "png", "webp"].includes(ext) ? names.find((n) => n.toLowerCase().endsWith(`.${ext}`)) : null;
   if (!source && ["3fr", "dng", "arw", "nef", "cr3"].includes(ext)) {
     const pair = allItems.find((candidate) => candidate.name === item.name && ["jpg", "jpeg", "heic"].includes(String(candidate.ext).toLowerCase()));
