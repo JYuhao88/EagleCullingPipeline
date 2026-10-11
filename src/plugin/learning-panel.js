@@ -20,15 +20,15 @@ export function learningStatus(response) {
   const report = response.report;
   const pct = value => Number.isFinite(value) ? `${(value * 100).toFixed(1)}%` : '不足以判断';
   const interval = value => value?.n ? `${pct(value.estimate)} [${pct(value.lower)}, ${pct(value.upper)}]，${value.n} 组` : '数据不足';
-  const lines = [`Profile：${response.profileId || 'default'}；L1 ${response.config?.enabled ? '已启用' : '关闭'}`,
-    `留出验证：${report?.ready ? '稳定优于 L0，可以应用' : '数据不足或尚未稳定优于 L0，保持原排序'}`];
+  const lines = [`偏好方案：${response.profileId || 'default'}；个性化${response.config?.enabled ? '已启用' : '已关闭'}`,
+    `效果验证：${report?.ready ? '稳定优于原排序，可以应用' : '选择记录不足或改善尚不稳定，继续使用原排序'}`];
   if (report) {
-    lines.push(`L0：${interval(report.before)}；L1：${interval(report.after)}`,
+    lines.push(`原排序：${interval(report.before)}；个性化排序：${interval(report.after)}`,
       `提升（95% 区间）：${interval(report.improvement)}`);
     for (const point of report.learningCurve || []) lines.push(`${point.groups} 组学习曲线：${interval(point.after)}`);
   }
   if (response.drift?.detected) lines.push('最近选择一致率下降：偏好可能变化，建议复核后手动重训。');
-  lines.push(`像素保留：档 ${response.config?.pixelTier ?? 0}；只有设置档 1 后的淘汰操作会保留原生局部。`);
+  lines.push(`额外保存细节图：${response.config?.pixelTier === 1 ? '开启；仅对之后的淘汰选择生效' : '关闭'}`);
   return lines.join('\n');
 }
 
@@ -75,7 +75,7 @@ export function createLearningPanel({ root, api, state, setState, render }) {
     setState({ ...state(), data }); display(response);
   }
   function bind(id, fn) { q(id).addEventListener('click', () => fn().catch(error => {
-    q('Status').textContent = `失败：${error.message}`;
+    q('Status').textContent = `操作未完成：${error.message}。请检查服务连接后重试；可继续按原排序审阅。`;
   })); }
   bind('Load', load);
   bind('Save', async () => { const response = await post('config', { config: {
@@ -88,10 +88,13 @@ export function createLearningPanel({ root, api, state, setState, render }) {
   });
   bind('Train', async () => { display(await post('train')); });
   bind('Rollback', async () => { display(await post('rollback', { version: q('Snapshots').value })); });
-  bind('Backfill', async () => { const result = await post('backfill'); q('Status').textContent = `回填 ${result.events} 条事件；历史展示情况未知。`; });
+  bind('Backfill', async () => {
+    const result = await post('backfill');
+    q('Status').textContent = `已导入 ${result.events} 条选择记录；过去的照片展示顺序未知。`;
+  });
   bind('Scan', async () => {
     const result = await post('scan-deletions');
-    q('Status').textContent = `只读检查完成：新增 ${result.tombstones} 条删除墓碑。`;
+    q('Status').textContent = `检查完成：记录了 ${result.tombstones} 张已从 Eagle 删除的照片。`;
   });
   bind('Apply', async () => {
     const report = await post('apply');

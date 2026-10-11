@@ -1,3 +1,4 @@
+import { localSetting } from './local-config.js';
 import sharp from "sharp";
 import { completeEyeRois } from "./eye-roi.js";
 import { execFile } from "node:child_process";
@@ -83,8 +84,9 @@ export function parseMakerFocus(metadata = {}) {
 export async function readMakerFocus(filePath) {
   if (!filePath) return { point: null, coordinateSize: null, frameSize: null, mode: null, source: null, naReason: "no-source" };
   try {
-    const args = ["-j", "-n", "-FocusLocation", "-FocusFrameSize", "-AFAreaMode", "-AFAreas", filePath];
-    const { stdout } = await execFileAsync("exiftool", args, { maxBuffer: 1024 * 1024 });
+    const args = [...(process.platform === "win32" ? ["-charset", "filename=UTF8"] : []),
+      "-j", "-n", "-FocusLocation", "-FocusFrameSize", "-AFAreaMode", "-AFAreas", filePath];
+    const { stdout } = await execFileAsync(localSetting("EAGLE_EXIFTOOL", "exiftool"), args, { maxBuffer: 1024 * 1024 });
     const metadata = JSON.parse(stdout)?.[0] || {};
     const parsed = parseMakerFocus(metadata);
     return parsed.point ? parsed : { ...parsed, naReason: "maker-focus-unavailable" };

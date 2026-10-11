@@ -1,0 +1,296 @@
+{
+  "library": "library-1",
+  "requestedLimit": 500,
+  "items": 500,
+  "units": 291,
+  "groups": 109,
+  "folderHashes": [],
+  "inventory": {
+    "scannedMetadata": 12177,
+    "excludedProtected": 0,
+    "excludedDeleted": 4177,
+    "comments": 0,
+    "tagged": 7978,
+    "selectionLikeTags": 879,
+    "aiSelectedTags": 879,
+    "nonAiSelectionLikeTags": 0,
+    "selectionLikeFolders": 4,
+    "ratingCounts": {
+      "0": 7885,
+      "3": 80,
+      "5": 35
+    },
+    "extensionCounts": {
+      "jpg": 2844,
+      "heic": 1114,
+      "3fr": 1112,
+      "arw": 2374,
+      "dng": 534,
+      "mp4": 11,
+      "srt": 4,
+      "xml": 7
+    },
+    "supportedItems": 7978,
+    "folders": [
+      {
+        "hash": "9b81b7e2fa3f1ed4feb93e5b3e1b9f8b77c155a6d9e2c426520d8445e2de8307",
+        "count": 1,
+        "selectionLike": false
+      },
+      {
+        "hash": "a766079707fcc91430f63cdf407d512269d287baf05092175c1e593cc347651b",
+        "count": 0,
+        "selectionLike": false
+      },
+      {
+        "hash": "fb339e165cb0b5a222bdbc0cee2d18960eccc9b3e070b45332ee42b72e790e71",
+        "count": 0,
+        "selectionLike": false
+      },
+      {
+        "hash": "cfc3bd1012051ea443799927a69fd1a6400a68026ff32c9b4c0be29ee4957553",
+        "count": 90,
+        "selectionLike": false
+      },
+      {
+        "hash": "d49ba1c674d672cdb32b6ccbbc857829fee549dec100a7dd4b610708482fd949",
+        "count": 0,
+        "selectionLike": false
+      },
+      {
+        "hash": "d114c6c62b76f035011e845b2322b984ce256b7cdafd400e1822a99f7d927c65",
+        "count": 14,
+        "selectionLike": false
+      },
+      {
+        "hash": "d250cc55d618970ae3e67a53f7610ea192f3ee71021b5373c41ad9de5a514aa1",
+        "count": 670,
+        "selectionLike": false
+      },
+      {
+        "hash": "2cf9272e0447b40a95d921f52d7c654ab32f844029b1bc63e23c7b07e780c9b2",
+        "count": 399,
+        "selectionLike": false
+      },
+      {
+        "hash": "d6049d9c95792f0444d2dd13d0c95e7382919b4d12e00cf3c6dbad725dee2b03",
+        "count": 649,
+        "selectionLike": false
+      },
+      {
+        "hash": "e730207a215e45585e19705253206ea51fc77db2f52b9248b714344ab01cba11",
+        "count": 206,
+        "selectionLike": false
+      },
+      {
+        "hash": "f8c0937a5ba93b3e4a4f931a622af5a0c0b70517f98c32e61657e5b494cd13bc",
+        "count": 590,
+        "selectionLike": false
+      },
+      {
+        "hash": "76d436eca5091249b6fe9c3ab763d89f402fe48299ba5c164a2068e0a8198f51",
+        "count": 0,
+        "selectionLike": false
+      },
+      {
+        "hash": "d1e75b0c81f8625e150ccc93b42a6067eb5913d6629144d5522d92caa9e43cbd",
+        "count": 127,
+        "selectionLike": false
+      },
+      {
+        "hash": "81c609bc95d0583252e7393e1d5e4a767ea234446924f9a5ed9bb4e39cc3c716",
+        "count": 0,
+        "selectionLike": false
+      },
+      {
+        "hash": "d49194425fb6cd6d237ada55426d3f6df227a4a6cd066138796e72e4c8c4d4a9",
+        "count": 101,
+        "selectionLike": false
+      },
+      {
+        "hash": "ed91dc09777cda0a4c74ee75ecd81df568d4415cf5a3faea3a3e707d12f041a3",
+        "count": 24,
+        "selectionLike": false
+      },
+      {
+        "hash": "46c1e5082e11e2f56737c10cdf428d5f8297dddb1e7c77ff73b6d0c11bfde4ed",
+        "count": 18,
+        "selectionLike": false
+      },
+      {
+        "hash": "0d76603bbc3bf56f1f4346801c7f56b923c989f575490fc10eee25bd1ec68af6",
+        "count": 0,
+        "selectionLike": false
+      },
+      {
+        "hash": "abb0d55b3aaaf6c4e09581af9658b204e6640470588145aeff20de34c987f652",
+        "count": 600,
+        "selectionLike": false
+      },
+      {
+        "hash": "468cfd684867f95159e6a082c7d1a8dd5d19e815499eb58c5e57d284c4619f0e",
+        "count": 64,
+        "selectionLike": true
+      },
+      {
+        "hash": "f67cf324cdc9bbfdd88f7e98e0f618d71a5b0a0e91849ad1d860721bbb6daf7a",
+        "count": 612,
+        "selectionLike": false
+      },
+      {
+        "hash": "f9ed151d42e268e52e27172b0cddc2d8d15aa42f9095e18bc02d49109823f49f",
+        "count": 0,
+        "selectionLike": false
+      },
+      {
+        "hash": "34b6bbf1c24a36372a4a35501570d6fb391e1717784c470c1f0bf7d0635174a9",
+        "count": 0,
+        "selectionLike": false
+      },
+      {
+        "hash": "a375fec7d598ff40d04157f06dd234e3784a9d3c26ca0e39d3281c2bf41235be",
+        "count": 0,
+        "selectionLike": false
+      },
+      {
+        "hash": "c3bbfa6e779648450f55bcbcaa0f7252c882963643700a6bc844b657b62f62b9",
+        "count": 484,
+        "selectionLike": false
+      },
+      {
+        "hash": "0d26108a5bc18ed803081d02f445553b607ff6d4ade9839aa6a4df0ab0b13dfd",
+        "count": 80,
+        "selectionLike": true
+      },
+      {
+        "hash": "0f550cb1b178d9b0d54bba9fde19478f83e3cadf12c51dbb847c747963a68093",
+        "count": 34,
+        "selectionLike": false
+      },
+      {
+        "hash": "39274f9b458eb2563f364eb4e17a48ca229f88ede744a4155be059ed84c85182",
+        "count": 0,
+        "selectionLike": false
+      },
+      {
+        "hash": "720bcad1964700b82150e72b764a0b899d0c8b34a81af6b84cc854b8143ad54c",
+        "count": 148,
+        "selectionLike": false
+      },
+      {
+        "hash": "d376446baafc4893ecf7af883f36708a361cd9faf334710d5653e86ca9b812a3",
+        "count": 0,
+        "selectionLike": false
+      },
+      {
+        "hash": "de6499c44f8e41bc8144c3b44b37c3644ddc43c4766c3acd82e88a0fd6048830",
+        "count": 330,
+        "selectionLike": false
+      },
+      {
+        "hash": "330b8f2cce047800f3c574ebd19035b4b4bcfe6e68bcfcca40a97f4566a8db79",
+        "count": 76,
+        "selectionLike": false
+      },
+      {
+        "hash": "c3c769c208d8db473b1c86f91ab687bc4470a726ab2ea320c7904038d3a7c81e",
+        "count": 432,
+        "selectionLike": false
+      },
+      {
+        "hash": "895c6746da799f7281e760195d631a0cbf80685b37071dca9bf5078e862b3230",
+        "count": 130,
+        "selectionLike": false
+      },
+      {
+        "hash": "89a92365dafa595988c10995bc8c4fe1ad9d0470d12328c73c5ba42d704026ee",
+        "count": 0,
+        "selectionLike": false
+      },
+      {
+        "hash": "b192de31f454088cdaf2d7ae8e1dcb2f37316c1c33f0aaeab24c21dccaff9184",
+        "count": 61,
+        "selectionLike": true
+      },
+      {
+        "hash": "0c95d5f3556ed5a178f368ebec22b013e3f0b01cafb1d6f07746b516274f08bf",
+        "count": 146,
+        "selectionLike": false
+      },
+      {
+        "hash": "e84e378a4b53895e0b942aef813858096f8437f97e19462e0cfa8f049bd43fb9",
+        "count": 0,
+        "selectionLike": false
+      },
+      {
+        "hash": "69cd3d7f5c9565d23dcaad7b5bae0604e62af07b914637018caa27b8985aa751",
+        "count": 1348,
+        "selectionLike": false
+      },
+      {
+        "hash": "49821bae02b808e2fb6611356b10561418be7d40ec0c53eaf9fb5df6cee95eb2",
+        "count": 542,
+        "selectionLike": false
+      },
+      {
+        "hash": "7230da9ec6d6cec7a48feffe16e709a0d53d41e08c3feec1467149c1372a1ecd",
+        "count": 24,
+        "selectionLike": true
+      }
+    ]
+  },
+  "analysisSeconds": 570.376,
+  "cachedUnits": 0,
+  "stagesMilliseconds": {
+    "scanning": 10735,
+    "metrics": 209596,
+    "embedding": 21757,
+    "faces": 19182,
+    "pose": 33364,
+    "focus": 275742
+  },
+  "integrity": {
+    "originalsChecked": 500,
+    "mismatches": 0
+  },
+  "reportRows": 500,
+  "proxyRequests": {
+    "GET /api/v2/library/info": 17
+  },
+  "deniedRequests": 0,
+  "writeRequests": 0,
+  "ratings": {
+    "labels": 71,
+    "informativeGroups": 1,
+    "conflictingRatedUnits": 0,
+    "cohort": "all explicit rated items plus paired formats and folder neighbours",
+    "withinGroupFiveVsThreePairs": 1,
+    "withinGroupFiveVsThreeAgreement": 1,
+    "ratingProvenanceConfirmed": false,
+    "fiveVsThreeOrdinalAuc": 0.5726744186046512,
+    "keepVsDropAuc": null,
+    "top1WithinRatedAgreement": 1,
+    "highStarVsLowStarAuc": null,
+    "high": 28,
+    "low": 0,
+    "unlabeledZeroStar": 385,
+    "limitation": "Ratings provenance unconfirmed; score AUC ignores safety strata; zero stars unlabeled; no keep/drop truth."
+  },
+  "missing": {
+    "quality": 0,
+    "faces": 0,
+    "pose": 0
+  },
+  "focusAvailability": {
+    "ok": 269,
+    "unavailable": 22
+  },
+  "sourceKinds": {
+    "unavailable": 275,
+    "jpeg": 13,
+    "embedded-jpeg": 3
+  },
+  "poseProviders": [
+    "DmlExecutionProvider"
+  ]
+}

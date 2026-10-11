@@ -7,7 +7,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES = False
 
 register_heif_opener()
 root = Path(__file__).resolve().parents[1]
-library = Path(os.environ.get('EAGLE_LIBRARY_PATH', r'D:/Photography/EagleLibraries/Culling.library'))
+library = Path(os.environ['EAGLE_LIBRARY_PATH'])
 report = Path(os.environ.get('HEIC_REPORT', str(root / 'data/clean-thumbnail-1791510830038.json')))
 out = root / 'data' / 'heic-decoded'; out.mkdir(parents=True, exist_ok=True)
 data = json.loads(report.read_text(encoding='utf-8'))

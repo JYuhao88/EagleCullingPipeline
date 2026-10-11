@@ -107,12 +107,33 @@ export function createRunsRouter({
   pipeline,
   store,
   active = { run: null },
+  scanItems = listEagleImages,
   progressIntervalMs = 250,
+  isUpdating = () => false,
 } = {}) {
   return async function handleRunsRoute(req, res, url) {
+    if (req.method === 'GET' && url.pathname === '/runs/status') {
+      const current = activeRun(active);
+      const recent = store.recentRuns ? await store.recentRuns() : [];
+      return json(res, 200, { active: current ? runSummary(current) : null,
+        recent: recent.map(run => ({ ...runSummary(run),
+          ...(current?.id !== run.id && run.status === 'running' ? { status: 'interrupted' } : {}) })) });
+    }
+    if (req.method === "GET" && url.pathname === "/runs") {
+      const limit = Number(url.searchParams.get('limit') || 20);
+      const cursor = Number(url.searchParams.get('cursor') || 0);
+      if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100 || !Number.isSafeInteger(cursor) || cursor < 0) {
+        return json(res, 400, { error: '分页参数无效：limit 为 1–100，cursor 为非负整数' });
+      }
+      const result = await store.list({ limit, cursor });
+      result.runs = result.runs.map(run => ({ ...run,
+        ...(run.status === 'running' && activeRun(active)?.id !== run.id ? { status: 'interrupted' } : {}) }));
+      return json(res, 200, result);
+    }
     if (req.method === "POST" && url.pathname === "/runs") {
+      if (isUpdating()) return json(res, 409, { error: "正在更新，请稍后开始分析" });
       if (activeRun(active)) {
-        return json(res, 409, { error: "已有分析任务运行中" });
+        return json(res, 409, { error: "已有分析任务运行中", run: runSummary(activeRun(active)) });
       }
       const body = await parseBody(req);
       const resumeId = body.resumeRunId;
@@ -138,6 +159,10 @@ export function createRunsRouter({
           stage: "scanning",
         },
         libraryPath: request.libraryPath || null,
+        ...(request.scope && ['selection', 'folder', 'library'].includes(request.scope.type) ? { scope: {
+          type: request.scope.type, label: String(request.scope.label || '').slice(0, 200),
+          ...(typeof request.scope.folderId === 'string' ? { folderId: request.scope.folderId.slice(0, 200) } : {}),
+        } } : {}),
         itemCount: 0,
         unitCount: 0,
         groupCount: 0,
@@ -145,18 +170,31 @@ export function createRunsRouter({
       const data = { units: [], items: [], results: [], groups: [] };
       const controller = new AbortController();
       run.controller = controller;
+      if (isUpdating()) return json(res, 409, { error: "正在更新，请稍后开始分析" });
       active.run = run;
       if (store.saveProgress) await store.saveProgress(run);
       else await store.save(run, { run });
       let lastProgressAt = 0;
       let lastProgressStage;
       const progressWrites = new Set();
+      const onProgress = progress => {
+        run.progress = progress;
+        const now = performance.now();
+        if (progress.stage !== lastProgressStage || now - lastProgressAt >= progressIntervalMs) {
+          lastProgressAt = now;
+          lastProgressStage = progress.stage;
+          const pending = (store.saveProgress ? store.saveProgress(run) : store.save(run, { run })).catch(error => {
+            run.progressWarning = error.message;
+          }).finally(() => progressWrites.delete(pending));
+          progressWrites.add(pending);
+        }
+      };
       const execute = async () => {
         controller.signal.throwIfAborted();
         let scan = checkpoint ? await checkpoint.get('scanning') : null;
         if (!scan) {
           let items = Array.isArray(request.items) ? request.items : request.libraryPath
-            ? await listEagleImages(request.libraryPath, { signal: controller.signal, checkpoint }) : [];
+            ? await scanItems(request.libraryPath, { signal: controller.signal, checkpoint, onProgress, itemIds: request.itemIds }) : [];
           if (Array.isArray(request.itemIds)) {
             const selected = new Set(request.itemIds);
             items = items.filter(item => selected.has(item.id));
@@ -176,20 +214,7 @@ export function createRunsRouter({
           id,
           signal: controller.signal,
           checkpoint,
-          onProgress: (progress) => {
-            run.progress = progress;
-            const now = performance.now();
-            if (progress.stage !== lastProgressStage || now - lastProgressAt >= progressIntervalMs) {
-              lastProgressAt = now;
-              lastProgressStage = progress.stage;
-              const pending = (store.saveProgress
-                ? store.saveProgress(run)
-                : store.save(run, { run })).catch(error => {
-                  run.progressWarning = error.message;
-                }).finally(() => progressWrites.delete(pending));
-              progressWrites.add(pending);
-            }
-          },
+          onProgress,
         });
       };
       execute()
@@ -229,7 +254,10 @@ export function createRunsRouter({
     if (req.method === "GET" && !sub) {
       const run = active.run?.id === id ? runSummary(active.run)
         : store.getRun ? await store.getRun(id) : runFromState(await store.get(id));
-      if (run) delete run.controller;
+      if (run) {
+        delete run.controller;
+        if (run.status === 'running' && activeRun(active)?.id !== id) run.status = 'interrupted';
+      }
       return run
         ? json(res, 200, run)
         : json(res, 404, { error: "run not found" });

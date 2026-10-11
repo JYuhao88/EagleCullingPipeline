@@ -1,0 +1,25 @@
+#start { max-width: 960px; margin: 0 auto; padding: 28px 20px; }
+.start-heading, .context-grid { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.status-card, .welcome-card, .recent-run { border: 1px solid #494949; border-radius: 12px; padding: 18px; margin: 16px 0; }
+.context-grid { margin-top: 14px; color: #bbb; font-size: 14px; }
+.context-grid b { color: #eee; margin-left: 8px; }
+.welcome-card { background: #26343d; }
+#closeWelcome { float: right; }
+.start-steps { display: flex; padding: 0; gap: 28px; margin: 28px 0; list-style-position: inside; }
+.start-steps li { flex: 1; }
+.start-steps span { display: block; margin-top: 8px; color: #bbb; font-size: 14px; line-height: 1.6; }
+.analysis-actions { padding: 12px 0; }
+#start .primary { background: #80bfcb; color: #152429; font-size: 17px; padding: 14px 26px; font-weight: bold; }
+#start button:disabled { opacity: .45; cursor: default; }
+#selectionHint, #allHint, #recentStatus { color: #bbb; line-height: 1.6; }
+.recent-run p { color: #bbb; margin: 8px 0; }
+.recent-run button { margin-top: 8px; }
+#advancedSettings { border-top: 1px solid #494949; margin-top: 30px; padding-top: 16px; }
+#advancedSettings label { display: block; margin-top: 14px; }
+#advancedSettings input { max-width: 100%; }
+#serviceCommand { white-space: pre-wrap; overflow-wrap: anywhere; }
+.progress-stages { display: flex; gap: 10px; list-style: none; padding: 0; flex-wrap: wrap; color: #999; }
+.progress-stages .current { color: #9bd2de; font-weight: bold; }
+.progress-stages .complete { color: #a8cba9; }
+#progress progress { width: 100%; }
+@media (max-width: 680px) { .start-steps { flex-direction: column; gap: 18px; } }

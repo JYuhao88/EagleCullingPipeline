@@ -1,0 +1,66 @@
+{
+  "samples": {
+    "bench-cpu": {
+      "samples": 478,
+      "peaks": {
+        "gpuUsedMiB": 2777,
+        "gpuUtilization": 8,
+        "nodeWorkingSetMiB": 752.09
+      }
+    },
+    "bench-dml": {
+      "samples": 243,
+      "peaks": {
+        "gpuUsedMiB": 3493,
+        "gpuUtilization": 88,
+        "nodeWorkingSetMiB": 1168.57
+      }
+    },
+    "ui": {
+      "samples": 109,
+      "peaks": {
+        "gpuUsedMiB": 2734,
+        "gpuUtilization": 25,
+        "serviceMiB": 1425.48,
+        "treeMiB": 1445.82
+      }
+    },
+    "python-scorer": {
+      "samples": 51,
+      "peaks": {
+        "gpuUsedMiB": 3368,
+        "gpuUtilization": 40,
+        "nodeWorkingSetMiB": 4.07,
+        "treeWorkingSetMiB": 528.06
+      }
+    },
+    "real-scale": {
+      "samples": 1514,
+      "peaks": {
+        "gpuUsedMiB": 10103,
+        "gpuUtilization": 100,
+        "nodeWorkingSetMiB": 381.05,
+        "treeWorkingSetMiB": 2797.03
+      }
+    },
+    "real-ratings": {
+      "samples": 307,
+      "peaks": {
+        "gpuUsedMiB": 4703,
+        "gpuUtilization": 46,
+        "nodeWorkingSetMiB": 283.26,
+        "treeWorkingSetMiB": 2482.44
+      }
+    },
+    "release-bench": {
+      "samples": 71,
+      "peaks": {
+        "gpuUsedMiB": 4718,
+        "gpuUtilization": 47,
+        "nodeWorkingSetMiB": 1169.68,
+        "treeWorkingSetMiB": 1533.89
+      }
+    }
+  },
+  "limitation": "GPU memory is whole-device usage, including desktop and other applications; sampled peaks can miss transients."
+}

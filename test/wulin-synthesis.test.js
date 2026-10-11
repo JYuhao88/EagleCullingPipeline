@@ -4,8 +4,9 @@ import { readFile, mkdtemp, mkdir, writeFile, copyFile, rm } from 'node:fs/promi
 import { execFileSync } from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createRulesRouter } from '../src/server/rules-routes.js';
-const root = new URL('../', import.meta.url).pathname;
+const root = fileURLToPath(new URL('../', import.meta.url));
 const read = async (file) => JSON.parse(await readFile(new URL(`../src/rules/candidates/${file}`, import.meta.url), 'utf8'));
 const validate = (e) => {
   assert.ok([...e.paraphrase].length <= 40);
@@ -63,7 +64,8 @@ test('wulin generator deduplicates support, rejects unknown text and invalid tim
     t:12}],praises:[]};
   const dir=path.join(tmp,'extracted','BVTEST1');await mkdir(dir,{recursive:true});
   const put=async(row)=>writeFile(path.join(dir,'1.json'),JSON.stringify(row));await put(fixture);
-  const run=()=>execFileSync('python3',[path.join(root,'src/rules/candidates/synthesize-landscape-street.py'),
+  const run=()=>execFileSync(process.env.EAGLE_PYTHON || 'python3',
+    [path.join(root,'src/rules/candidates/synthesize-landscape-street.py'),
     '--data-root',tmp,'--output-dir',out],{encoding:'utf8',stdio:'pipe'});
 
   const stats=JSON.parse(run());assert.equal(stats.commentaryItems,

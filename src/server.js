@@ -1,4 +1,6 @@
 import http from "node:http";
+import { Updater } from "./core/updater.js";
+import { createUpdateRouter } from "./server/update-routes.js";
 import { AnalysisPipeline } from "./core/pipeline.js";
 import { EagleApi } from "./core/eagle-api.js";
 import { ResultsStore } from "./core/results-store.js";
@@ -14,22 +16,30 @@ export function createAnalysisServer({
   pipeline = new AnalysisPipeline({ store: new ResultsStore() }),
   runStore = new RunStore(),
   api = new EagleApi(),
+  scanItems,
   // Optional test clock; production preserves the existing Decision timestamp contract.
   clock,
+  updater,
+  restart,
 } = {}) {
   const active = { run: null };
-  const runs = createRunsRouter({ pipeline, store: runStore, active });
+  updater ||= new Updater({ isBusy: () => Boolean(active.run &&
+    (active.run.controller || ["queued", "running"].includes(active.run.status))), restart });
+  const updates = createUpdateRouter(updater);
+  const runs = createRunsRouter({ pipeline, store: runStore, active, scanItems, isUpdating: () => updater.isUpdating() });
   const ctx = { runStore, api, json, readBody: parseBody, clock };
   const rules = createRulesRouter();
   const server = http.createServer(async (req, res) => {
     try {
       const url = new URL(req.url, `http://${host}:${port}`);
+      if (await updates(req, res, url)) return;
       if (req.method === "OPTIONS") return json(res, 204, {});
       if (req.method === "GET" && url.pathname === "/health") {
         return json(res, 200, {
           ok: true,
           service: "eagle-culling",
           contractVersion: 1,
+          updateToken: process.env.EAGLE_UPDATE_CANDIDATE || null,
         });
       }
       if (await runs(req, res, url)) return;
@@ -42,7 +52,14 @@ export function createAnalysisServer({
   });
   return {
     server,
-    listen: () => new Promise((resolve) => server.listen(port, host, resolve)),
+    updater,
+    listen: () => new Promise((resolve, reject) => {
+      const failed = error => { server.off('listening', ready); reject(error); };
+      const ready = () => { server.off('error', failed); resolve(); };
+      server.once('error', failed);
+      server.once('listening', ready);
+      server.listen(port, host);
+    }),
     close: () =>
       new Promise((resolve) => {
         server.close(resolve);

@@ -4,7 +4,7 @@ import { spawnSync } from "node:child_process";
 
 test("critique extraction validates schema, evidence timestamps, batching and resume cache", () => {
   const result = spawnSync(
-    "python3",
+    (process.env.EAGLE_PYTHON || "python3"),
     [
       "-c",
       String.raw`
@@ -80,7 +80,7 @@ unittest.main(argv=['extraction'],exit=True)
 
 test("genre manifests, Wulin parameters, lecture topics and checked text transfer", () => {
   const result = spawnSync(
-    "python3",
+    (process.env.EAGLE_PYTHON || "python3"),
     ["-m", "unittest", "discover", "-s", "ml/references", "-p", "test_*.py"],
     { encoding: "utf8" },
   );

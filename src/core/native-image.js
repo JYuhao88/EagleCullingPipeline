@@ -1,10 +1,11 @@
+import { replaceFile } from './atomic-file.js';
 import { localSetting } from './local-config.js';
 import path from 'node:path';
 import os from 'node:os';
 import crypto from 'node:crypto';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { mkdir, mkdtemp, rm, stat, readFile, writeFile, readdir, utimes, rename } from 'node:fs/promises';
+import { mkdir, mkdtemp, rm, stat, readFile, writeFile, readdir, utimes } from 'node:fs/promises';
 import sharp from 'sharp';
 
 const RAW = new Set(['arw', 'dng', '3fr', 'cr2', 'cr3', 'nef', 'raf', 'orf', 'rw2']);
@@ -22,8 +23,18 @@ async function serial(fn) {
 }
 
 function command(program, args, { binary = false, timeoutMs = 60000 } = {}) {
+  if (program === 'exiftool') {
+    program = localSetting('EAGLE_EXIFTOOL', 'exiftool');
+    if (process.platform === 'win32') args = ['-charset', 'filename=UTF8', ...args];
+  }
   return new Promise((resolve, reject) => {
-    const child = spawn('nice', ['-n', '10', program, ...args]);
+    const child = process.platform === 'win32'
+      ? spawn(program, args, { windowsHide: true })
+      : spawn('nice', ['-n', '10', program, ...args]);
+    if (process.platform === 'win32') child.once('spawn', () => {
+      try { os.setPriority(child.pid, os.constants.priority.PRIORITY_BELOW_NORMAL); }
+      catch (error) { child.kill(); child.emit('error', error); }
+    });
     const chunks = []; let bytes = 0; let stderr = '';
     const timer = setTimeout(() => child.kill('SIGKILL'), timeoutMs);
     child.stdout.on('data', chunk => {
@@ -92,7 +103,9 @@ async function openNative(record, options, callback) {
     if (rawSource) {
       try {
         const decoded = path.join(temporary, 'decoded.jpg');
-        await command(options.python || localSetting("EAGLE_PYTHON") || 'python3', [decoder, rawSource, decoded]);
+        const python = options.python || localSetting("EAGLE_PYTHON") ||
+          (process.platform === 'win32' ? 'python_worker/.venv/Scripts/python.exe' : 'python3');
+        await command(python, [decoder, rawSource, decoded]);
         return await consume(decoded, 'decoded-raw', rawMeta?.Orientation || 1);
       } catch (error) { warnings.push(`rawpy unavailable or decode failed: ${error.message}`); }
     }
@@ -149,7 +162,8 @@ async function trimCache(dir, maxBytes, maxEntries) {
 export async function nativeCrop(record, box, options = {}) {
   if (!normalizedRect(box, 1, 1)) return { available: false, naReason: 'invalid-crop' };
   const paired = options.pairedItems || record.pairedItems || [];
-  const key = crypto.createHash('sha256').update(JSON.stringify(['native-v1', await fingerprint(record, paired), box])).digest('hex');
+  const key = crypto.createHash('sha256').update(JSON.stringify(['native-v1', await fingerprint(record, paired), box,
+    ...(process.platform === 'win32' ? [localSetting('EAGLE_EXIFTOOL')] : [])])).digest('hex');
   const dir = path.resolve(options.cacheDir || 'data/cache/focus-crops');
   const file = path.join(dir, `${key}.jpg`);
   return serial(async () => {
@@ -163,7 +177,7 @@ export async function nativeCrop(record, box, options = {}) {
       const rect = normalizedRect(box, source.width, source.height);
       const temporary = `${file}.tmp`;
       await image().extract(rect).jpeg({ quality: 96, chromaSubsampling: '4:4:4' }).toFile(temporary);
-      await rename(temporary, file);
+      await replaceFile(temporary, file);
       const result = { available: true, source, rect };
       await writeFile(`${file}.json`, JSON.stringify(result));
       return { ...result, path: file, cached: false };

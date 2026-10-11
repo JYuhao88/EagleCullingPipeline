@@ -1,4 +1,5 @@
-import { mkdir, readFile, writeFile, rename, readdir } from "node:fs/promises";
+import { replaceFile } from './atomic-file.js';
+import { mkdir, readFile, writeFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import { fitPreferenceHead, evaluatePreferenceHead, learningCurve, driftReport } from "./preference-head.js";
@@ -22,7 +23,7 @@ export class PreferenceStore {
     await mkdir(path.dirname(file), { recursive: true });
     const temporary = `${file}.${randomUUID()}.tmp`;
     await writeFile(temporary, `${JSON.stringify(value, null, 2)}\n`);
-    await rename(temporary, file);
+    await replaceFile(temporary, file);
   }
   mutate(callback) {
     const job = this.pending.then(callback);

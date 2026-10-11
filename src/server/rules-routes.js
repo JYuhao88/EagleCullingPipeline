@@ -1,6 +1,7 @@
+import { replaceFile } from '../core/atomic-file.js';
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { readFile, writeFile, mkdir, rename, realpath } from "node:fs/promises";
+import { readFile, writeFile, mkdir, realpath } from "node:fs/promises";
 import { json, parseBody, CORS_HEADERS } from "./http.js";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
@@ -22,7 +23,7 @@ async function saveJson(file, value) {
   await mkdir(path.dirname(file), { recursive: true });
   const temporary = `${file}.tmp`;
   await writeFile(temporary, `${JSON.stringify(value, null, 2)}\n`);
-  await rename(temporary, file);
+  await replaceFile(temporary, file);
 }
 export function validateRulePatch(patch) {
   assert(patch && typeof patch === "object" && !Array.isArray(patch), "patch must be an object");

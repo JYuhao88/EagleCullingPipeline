@@ -1,8 +1,8 @@
+import { replaceFile } from './atomic-file.js';
 import path from "node:path";
 import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import sharp from "sharp";
 import crypto from "node:crypto";
-import { rename } from "node:fs/promises";
 import { withNativeImage } from "./native-image.js";
 
 const rawExtensions = new Set([
@@ -72,7 +72,7 @@ export async function choosePreview(
       .resize({ width: 1024, height: 1024, fit: "inside", withoutEnlargement: true })
       .jpeg({ quality: 88 })
       .toFile(temporary);
-    await rename(temporary, output);
+    await replaceFile(temporary, output);
     return output;
   }
   try {

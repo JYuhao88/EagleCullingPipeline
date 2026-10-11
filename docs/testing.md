@@ -787,3 +787,43 @@ Mac 历史运行环境未重建；本次证明上述差异在没有 w10 的旧�
 完整 Node 369/369 为上一阶段实跑记录，本轮仅文档/证据变化，未重复运行模型或完整 Node suite。
 未完成：历史 Mac 环境重建、跨平台底层数值差异唯一归因、T-triage 真实审美验证。
 同平台对照与本清单质量验收已完成；未提交、未 push。
+
+
+## W15：v1.2.0 候选 Ray 同平台质量门槛（2026-10-12）
+
+候选提交 `73e401e6ff3db4bbc25517013e0d7273d16fae6c` 的作业
+`w11-raybench-907408355f00` SUCCEEDED，733.899 秒，2 CPU、0 GPU。
+复用 w11 终态资源包前重新核对完整 tar SHA-256；五个模型、24 项锁定 Python 依赖、
+Node/npm 版本及 EGL/GLES 哈希一致，执行节点与 runtime_env 环境变量相同。
+388 张合成图在 Ray 真实冷算，传输及逐条 SHA-256 验证后导入 388 条缓存。
+签名由当前原函数生成，没有改签名或复用旧分析输出；本机 cache-only 实测 0/388 uncached，
+正常退出并生成 `data/cache/bench/reports/2026-10-11T18-14-12-528Z/report.json`。
+与 [w11 同平台证据](testing-data/w11-ray-same-platform.json)及其对应 Ray 报告对照：
+偏好准确率 354/368、严重 gate 101/112、源图误淘汰 1/20，**三项 delta=0**；
+368 行完整报告（含判定与分数）逐行相同，unchangedRows=true，388 条完整缓存内容相同。
+**本清单同平台质量门槛通过**；没有变化行需要定位代码。
+[公开快照](testing-data/w15-raybench.json)保存代码/模型/报告哈希、版本及全部逐行核对证据。
+仅新增该快照并追加本节，未修改 src、阈值、规则或签名；未访问/写回 Eagle 或修改原片。
+结论限本合成清单与受控 CPU 环境；常规 bench 不执行 DINO embedding/原生裁切，
+这些路径及其它 provider、真实摄影师偏好未完成验证，T-triage 仍 unavailable。
+
+实际命令（采集日志及独立逐行/缓存比较程序位于不入库的临时目录）：
+
+```sh
+source ~/.config/eagle-culling/env.sh
+nice -n 15 python3 scripts/bench-ray.py submit --reuse-assets w11-raybench-ddcc847bce36
+nice -n 15 python3 scripts/bench-ray.py status --id w11-raybench-907408355f00
+nice -n 15 python3 scripts/bench-ray.py collect --id w11-raybench-907408355f00
+unset PYTHONPATH EAGLE_POSE_MODE EAGLE_POSE_MODEL EAGLE_POSE_DETECTOR EAGLE_SCORER_PROVIDER EAGLE_DINO_PROVIDER
+EAGLE_PYTHON=python_worker/.venv/bin/python EAGLE_POSE_PROVIDER=CPUExecutionProvider EAGLE_BENCH_CACHE_ONLY=1 nice -n 15 node --max-old-space-size=2048 scripts/bench.mjs --compare data/cache/bench/reports/2026-10-11T14-39-30-841Z/report.json
+nice -n 15 node --max-old-space-size=2048 --test --test-concurrency=1 --test-skip-pattern='fixture face detection recall|fixture grouping reaches'
+nice -n 15 python3 -m unittest scripts/test_bench_ray.py
+nice -n 15 python3 scripts/bench-ray.py audit
+nice -n 15 node scripts/check-public-release.mjs
+nice -n 15 git diff --check
+```
+
+Node 412/412 通过、0 失败/跳过，242.948 秒；Python 4/4 通过。
+公开检查 0 命中，diff check 通过；最终 audit 该前缀 RUNNING/PENDING=0，
+本轮只操作上述新作业，未操作其它线作业。所有本机命令请求 nice 15，沙箱拒绝调整，实测继承 nice 20；
+Node heap 上限 2048 MiB，本机串行执行且没有整批模型冷算。未提交、未 push。

@@ -1,0 +1,327 @@
+{
+  "contractVersion": 1,
+  "createdAt": "2026-10-11T17:37:44.142Z",
+  "branch": "w12-win",
+  "commit": "ab41663d617fda8119c9b8fb83443bc97892f8a2",
+  "analysisSignature": "4e9a275e6421975228cf64ed6b22c7f95542a65f8313a86c30cd20fa637ef397",
+  "manifestSha256": "64fae9780400401ccfac34051101cdac4b0514aa69c5da919f2f9d1246828c48",
+  "synthetic": {
+    "status": "completed",
+    "pairs": 368,
+    "accuracy": 0.9619565217391305,
+    "tieAdjustedAccuracy": 0.9619565217391305,
+    "ties": 0,
+    "ci": {
+      "low": 0.9392265193370166,
+      "high": 0.9835164835164835,
+      "samples": 1000
+    },
+    "gate": {
+      "hits": 101,
+      "total": 112,
+      "rate": 0.9017857142857143
+    },
+    "sourceCount": 20,
+    "sourceFalseReject": {
+      "assumption": "All technically screened sources are retained controls; no independent aesthetic labels",
+      "hits": 1,
+      "total": 20,
+      "rate": 0.05,
+      "ci": {
+        "low": 0,
+        "high": 0.15,
+        "samples": 1000
+      }
+    },
+    "byDegradation": {
+      "defocus-blur": {
+        "pairs": 60,
+        "accuracy": 1,
+        "tieAdjustedAccuracy": 1,
+        "ties": 0,
+        "ci": {
+          "low": 1,
+          "high": 1,
+          "samples": 1000
+        },
+        "gate": {
+          "hits": 19,
+          "total": 20,
+          "rate": 0.95
+        }
+      },
+      "motion-blur": {
+        "pairs": 60,
+        "accuracy": 1,
+        "tieAdjustedAccuracy": 1,
+        "ties": 0,
+        "ci": {
+          "low": 1,
+          "high": 1,
+          "samples": 1000
+        },
+        "gate": {
+          "hits": 19,
+          "total": 20,
+          "rate": 0.95
+        }
+      },
+      "underexposure": {
+        "pairs": 40,
+        "accuracy": 1,
+        "tieAdjustedAccuracy": 1,
+        "ties": 0,
+        "ci": {
+          "low": 1,
+          "high": 1,
+          "samples": 1000
+        },
+        "gate": {
+          "hits": 13,
+          "total": 20,
+          "rate": 0.65
+        }
+      },
+      "overexposure": {
+        "pairs": 40,
+        "accuracy": 0.925,
+        "tieAdjustedAccuracy": 0.925,
+        "ties": 0,
+        "ci": {
+          "low": 0.825,
+          "high": 1,
+          "samples": 1000
+        },
+        "gate": {
+          "hits": 19,
+          "total": 20,
+          "rate": 0.95
+        }
+      },
+      "noise": {
+        "pairs": 40,
+        "accuracy": 0.975,
+        "tieAdjustedAccuracy": 0.975,
+        "ties": 0,
+        "ci": {
+          "low": 0.925,
+          "high": 1,
+          "samples": 1000
+        },
+        "gate": {
+          "hits": 19,
+          "total": 20,
+          "rate": 0.95
+        }
+      },
+      "horizon-tilt": {
+        "pairs": 40,
+        "accuracy": 0.95,
+        "tieAdjustedAccuracy": 0.95,
+        "ties": 0,
+        "ci": {
+          "low": 0.85,
+          "high": 1,
+          "samples": 1000
+        },
+        "gate": {
+          "hits": 0,
+          "total": 0,
+          "rate": null
+        }
+      },
+      "excess-headroom": {
+        "pairs": 20,
+        "accuracy": 1,
+        "tieAdjustedAccuracy": 1,
+        "ties": 0,
+        "ci": {
+          "low": 1,
+          "high": 1,
+          "samples": 1000
+        },
+        "gate": {
+          "hits": 0,
+          "total": 0,
+          "rate": null
+        }
+      },
+      "joint-crop-wrist": {
+        "pairs": 16,
+        "accuracy": 0.9375,
+        "tieAdjustedAccuracy": 0.9375,
+        "ties": 0,
+        "ci": {
+          "low": 0.8125,
+          "high": 1,
+          "samples": 1000
+        },
+        "gate": {
+          "hits": 0,
+          "total": 0,
+          "rate": null
+        }
+      },
+      "joint-crop-knee": {
+        "pairs": 7,
+        "accuracy": 0.5714285714285714,
+        "tieAdjustedAccuracy": 0.5714285714285714,
+        "ties": 0,
+        "ci": {
+          "low": 0.14285714285714285,
+          "high": 0.8571428571428571,
+          "samples": 1000
+        },
+        "gate": {
+          "hits": 0,
+          "total": 0,
+          "rate": null
+        }
+      },
+      "joint-crop-ankle": {
+        "pairs": 3,
+        "accuracy": 0.6666666666666666,
+        "tieAdjustedAccuracy": 0.6666666666666666,
+        "ties": 0,
+        "ci": {
+          "low": 0,
+          "high": 1,
+          "samples": 1000
+        },
+        "gate": {
+          "hits": 0,
+          "total": 0,
+          "rate": null
+        }
+      },
+      "head-top-crop": {
+        "pairs": 13,
+        "accuracy": 0.8461538461538461,
+        "tieAdjustedAccuracy": 0.8461538461538461,
+        "ties": 0,
+        "ci": {
+          "low": 0.6153846153846154,
+          "high": 1,
+          "samples": 1000
+        },
+        "gate": {
+          "hits": 0,
+          "total": 0,
+          "rate": null
+        }
+      },
+      "face-highlight-clipping": {
+        "pairs": 13,
+        "accuracy": 1,
+        "tieAdjustedAccuracy": 1,
+        "ties": 0,
+        "ci": {
+          "low": 1,
+          "high": 1,
+          "samples": 1000
+        },
+        "gate": {
+          "hits": 12,
+          "total": 12,
+          "rate": 1
+        }
+      },
+      "joint-crop-neck": {
+        "pairs": 16,
+        "accuracy": 0.9375,
+        "tieAdjustedAccuracy": 0.9375,
+        "ties": 0,
+        "ci": {
+          "low": 0.8125,
+          "high": 1,
+          "samples": 1000
+        },
+        "gate": {
+          "hits": 0,
+          "total": 0,
+          "rate": null
+        }
+      }
+    }
+  },
+  "triage": {
+    "status": "unavailable",
+    "reason": "Official dataset licensing and downloads could not be verified (HTTP/HTTPS homepage and download.html all 503 through the requested Ray proxy). Actual released splits and current test-label availability are unverified.",
+    "groups": 0,
+    "top1": null,
+    "pairwise": null,
+    "random": null,
+    "chronological": null
+  },
+  "warnings": [],
+  "methodology": "existing scoring functions; fixed benchmark groups; no Eagle I/O",
+  "comparison": {
+    "matchedPairs": 368,
+    "additionalPairs": 0,
+    "syntheticAccuracyDelta": 0,
+    "severeGateDelta": 0,
+    "sourceFalseRejectDelta": 0,
+    "byDegradation": {
+      "defocus-blur": {
+        "pairs": 60,
+        "accuracyDelta": 0
+      },
+      "motion-blur": {
+        "pairs": 60,
+        "accuracyDelta": 0
+      },
+      "underexposure": {
+        "pairs": 40,
+        "accuracyDelta": 0
+      },
+      "overexposure": {
+        "pairs": 40,
+        "accuracyDelta": 0
+      },
+      "noise": {
+        "pairs": 40,
+        "accuracyDelta": 0
+      },
+      "horizon-tilt": {
+        "pairs": 40,
+        "accuracyDelta": 0
+      },
+      "excess-headroom": {
+        "pairs": 20,
+        "accuracyDelta": 0
+      },
+      "joint-crop-wrist": {
+        "pairs": 16,
+        "accuracyDelta": 0
+      },
+      "joint-crop-knee": {
+        "pairs": 7,
+        "accuracyDelta": 0
+      },
+      "joint-crop-ankle": {
+        "pairs": 3,
+        "accuracyDelta": 0
+      },
+      "head-top-crop": {
+        "pairs": 13,
+        "accuracyDelta": 0
+      },
+      "face-highlight-clipping": {
+        "pairs": 13,
+        "accuracyDelta": 0
+      },
+      "joint-crop-neck": {
+        "pairs": 16,
+        "accuracyDelta": 0
+      }
+    },
+    "unchangedRows": true,
+    "triageTop1Delta": null
+  },
+  "artifact": "Full synthetic rows remain in <validation-root>/repo/data/cache/bench/reports/2026-10-11T17-37-44-142Z/report.json",
+  "baseline": {
+    "createdAt": "2026-10-11T14:39:30.841Z",
+    "branch": "w11-raybench",
+    "commit": "ab41663d617fda8119c9b8fb83443bc97892f8a2"
+  }
+}

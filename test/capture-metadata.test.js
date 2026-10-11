@@ -82,3 +82,16 @@ test('Eagle scan reads original stat and batched EXIF without altering original'
     assert.ok(records[0].sessionId);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
+
+
+test('capture enrichment reports progress, normalizes source paths and keeps batch sessions together', async () => {
+  const records = ['a', 'b'].map(id => ({ id, filePath: path.join(os.tmpdir(), `${id}.jpg`) }));
+  const progress = [];
+  await enrichCaptureMetadata(records, { batchSize: 1, onProgress: value => progress.push(value),
+    reader: async files => files.map(file => ({ SourceFile: file.replaceAll('\\', '/'),
+      DateTimeOriginal: '2026:01:01 12:00:00', Model: 'synthetic-device' })) });
+  assert.deepEqual(progress.map(value => value.completed), [0, 1, 2]);
+  assert.ok(progress.every(value => value.total === 2 && value.phase === 'capture-metadata'));
+  assert.equal(records[0].captureTime, '2026-01-01T12:00:00.000Z');
+  assert.equal(records[0].sessionId, records[1].sessionId);
+});

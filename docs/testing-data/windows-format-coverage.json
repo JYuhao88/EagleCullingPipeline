@@ -1,0 +1,126 @@
+[
+  {
+    "label": "library-1-1500",
+    "formats": {
+      "heic": {
+        "units": 146,
+        "faceUnits": 141,
+        "focusOk": 141,
+        "focusNa": 0,
+        "focusAbsent": 5,
+        "sourceKinds": {
+          "not-recorded": 146
+        }
+      },
+      "jpg": {
+        "units": 616,
+        "faceUnits": 438,
+        "focusOk": 438,
+        "focusNa": 0,
+        "focusAbsent": 178,
+        "sourceKinds": {
+          "not-recorded": 438,
+          "jpeg": 178
+        }
+      },
+      "arw": {
+        "units": 9,
+        "faceUnits": 7,
+        "focusOk": 7,
+        "focusNa": 0,
+        "focusAbsent": 2,
+        "sourceKinds": {
+          "not-recorded": 7,
+          "decoded-raw": 2
+        }
+      },
+      "dng": {
+        "units": 3,
+        "faceUnits": 2,
+        "focusOk": 2,
+        "focusNa": 0,
+        "focusAbsent": 1,
+        "sourceKinds": {
+          "not-recorded": 2,
+          "decoded-raw": 1
+        }
+      }
+    },
+    "limitation": "No-face units may skip focus; missing source kind is not decode failure; paired RAW may supply native pixels."
+  },
+  {
+    "label": "library-2-1500",
+    "formats": {
+      "jpg": {
+        "units": 753,
+        "faceUnits": 194,
+        "focusOk": 194,
+        "focusNa": 0,
+        "focusAbsent": 559,
+        "sourceKinds": {
+          "jpeg": 559,
+          "not-recorded": 194
+        }
+      },
+      "dng": {
+        "units": 11,
+        "faceUnits": 0,
+        "focusOk": 0,
+        "focusNa": 0,
+        "focusAbsent": 11,
+        "sourceKinds": {
+          "decoded-raw": 11
+        }
+      },
+      "arw": {
+        "units": 1,
+        "faceUnits": 0,
+        "focusOk": 0,
+        "focusNa": 0,
+        "focusAbsent": 1,
+        "sourceKinds": {
+          "decoded-raw": 1
+        }
+      }
+    },
+    "limitation": "No-face units may skip focus; missing source kind is not decode failure; paired RAW may supply native pixels."
+  },
+  {
+    "label": "library-1-ratings-500",
+    "formats": {
+      "jpg": {
+        "units": 240,
+        "faceUnits": 227,
+        "focusOk": 227,
+        "focusNa": 0,
+        "focusAbsent": 13,
+        "sourceKinds": {
+          "not-recorded": 227,
+          "jpeg": 13
+        }
+      },
+      "arw": {
+        "units": 40,
+        "faceUnits": 37,
+        "focusOk": 37,
+        "focusNa": 0,
+        "focusAbsent": 3,
+        "sourceKinds": {
+          "not-recorded": 37,
+          "embedded-jpeg": 3
+        }
+      },
+      "heic": {
+        "units": 11,
+        "faceUnits": 5,
+        "focusOk": 5,
+        "focusNa": 0,
+        "focusAbsent": 6,
+        "sourceKinds": {
+          "not-recorded": 11
+        }
+      }
+    },
+    "limitation": "No-face units may skip focus; missing source kind is not decode failure; paired RAW may supply native pixels."
+  }
+]

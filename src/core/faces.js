@@ -1,6 +1,14 @@
 import { localSetting } from './local-config.js';
 import { spawn } from "node:child_process";
 import { createInterface } from "node:readline";
+import os from "node:os";
+function lowerWindowsPriority(child) {
+  if (process.platform !== "win32") return;
+  child.once("spawn", () => {
+    try { os.setPriority(child.pid, os.constants.priority.PRIORITY_BELOW_NORMAL); }
+    catch (error) { child.kill(); child.emit("error", error); }
+  });
+}
 export function runFaceWorker(
   items,
   {
@@ -19,6 +27,7 @@ export function runFaceWorker(
       windowsHide: true,
       env: { ...process.env, PYTHONUTF8: "1" },
     });
+    lowerWindowsPriority(child);
     const results = [];
     let stderr = "";
     createInterface({ input: child.stdout }).on("line", (line) => {
@@ -143,6 +152,7 @@ export class FaceWorkerPool {
         OPENBLAS_NUM_THREADS: "1",
       },
     });
+    lowerWindowsPriority(child);
     const worker = { child, active: null, stderr: "", stopping: false };
     this.workers.add(worker);
     this.starts += 1;

@@ -63,7 +63,7 @@ gate 理由沿用 `ranking[].reasons`，未新增主结构字段。score 仍表�
 ## AnalysisRun
 ```json
 { "contractVersion": 1, "id": "run-...", "status": "queued|running|completed|cancelled|failed",
-  "progress": { "completed": 0, "total": 0, "cached": 0, "stage": "scanning|pairing|metrics|embedding|faces|pose|grouping|ranking|done" },
+  "progress": { "completed": 0, "total": 0, "cached": 0, "stage": "scanning|pairing|metrics|embedding|faces|pose|focus|grouping|ranking|done" },
   "startedAt": "ISO", "error": null, "libraryPath": "/abs/x.library", "itemCount": 76, "unitCount": 38, "groupCount": 0 }
 ```
 
@@ -88,7 +88,9 @@ Group 可新增 `candidateSet`，不改变旧 `ranking`、`suggested` 字段：
 | 方法 | 路径 | 说明 | 负责方 |
 |---|---|---|---|
 | GET | /health | `{ok, service, contractVersion}` | 共用 |
-| POST | /runs | body `{libraryPath?, itemIds?: string[], items?: Item[], options?}` → 202 AnalysisRun | 分析 |
+| POST | /runs | body `{libraryPath?, itemIds?: string[], items?: Item[], options?}` → 202 AnalysisRun；忙碌409包含`{error,run}`与进度 | 分析 |
+| GET | /runs/status | 只读活动/最近任务metadata；无活动进程的旧running返回interrupted，单任务GET一致 | 分析 |
+| GET | /runs?limit=20&cursor=0 | `{runs: RunSummary[], page}`，按开始时间倒序 | 分析 |
 | GET | /runs/:id | AnalysisRun | 分析 |
 | POST | /runs/:id/cancel | 取消运行中任务；已结束返回 409 | 分析 |
 | GET | /runs/:id/results | `{run, units: CaptureUnit[], results: UnitResult[], groups: Group[], items: Item[], groupOverrides, writebackAvailable: boolean}` | 分析 |
@@ -105,6 +107,15 @@ Group 可新增 `candidateSet`，不改变旧 `ranking`、`suggested` 字段：
 | POST | /runs/:id/groups/merge | `{groupIds}`，至少两个不同组，保留第一个组 ID | 审阅 |
 | POST | /runs/:id/groups/undo | `{}`，撤销最近一次修正；空历史无操作 | 审阅 |
 | GET | /runs/:id/report?format=json|csv | 每个文件一行：分组、排名、分数、理由、决定、写回标签和 tagsSource | 审阅 |
+
+`GET /runs` 默认 limit=20，范围 1–100；cursor 为非负整数，参数无效返回 400。
+page 为 `{total,cursor,limit,nextCursor}`，末页 nextCursor=null；同时间按 ID 倒序。
+摘要字段：`id,status,startedAt,itemCount,unitCount,groupCount,reviewedGroupCount,scope,error,progress`。
+只读取 run 元数据、分组摘要及人工决定，不读取完整 results、JSONL 结果分片或原片。
+所有组内单元都有 source=human 决定才算已审；无轻量组摘要的旧 run 返回 reviewedGroupCount=null。
+新 run 终态及修组后保存 review-summary.json；兼容未修组的旧 results-index.json 组摘要。
+POST /runs 可带 `scope:{type:"selection"|"folder"|"library",label,folderId?}`，仅用于显示范围。
+旧 run 的 scope 为 `{type:"unknown",label:"以前的分析"}`；失败/取消原因在 error 中，续跑使用 resumeRunId。
 
 新分析结果持久化到 `data/runs/<id>/results-index.json` 与 JSONL 分片；旧 `results.json` 可读。结果缓存放在 `data/cache/`，按 fingerprint 命中。服务重启后仍能读取已有 run。成功写回后，最终标签按 `{id, fileName, tags, previousTags}` 持久化到 `data/runs/<id>/applied.json`，报告优先使用这些标签；没有该文件时使用 planned 标签。
 

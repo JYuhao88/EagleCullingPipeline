@@ -157,7 +157,7 @@ if sum(p.stat().st_size for p in paths)>300*1024*1024:raise ValueError('export e
 for path in paths:
  raw=path.read_bytes(); chunks=[raw[i:i+16384] for i in range(0,len(raw),16384)] or [b'']
  for index,chunk in enumerate(chunks):
-  print('W2_CHUNK '+json.dumps({'path':str(path.relative_to(root)),'index':index,'count':len(chunks),'size':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'chunk_sha256':hashlib.sha256(chunk).hexdigest(),'data':base64.b64encode(gzip.compress(chunk)).decode()}),flush=True)
+  print('W2_CHUNK '+json.dumps({'path':path.relative_to(root).as_posix(),'index':index,'count':len(chunks),'size':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'chunk_sha256':hashlib.sha256(chunk).hexdigest(),'data':base64.b64encode(gzip.compress(chunk)).decode()}),flush=True)
 print('W2_TRANSFER_DONE',flush=True)
 '''
 

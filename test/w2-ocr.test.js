@@ -4,7 +4,7 @@ import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 test("CPU OCR tier votes and checksummed transfer are conservative", () => {
   const result = spawnSync(
-    "python3",
+    (process.env.EAGLE_PYTHON || "python3"),
     [
       "-c",
       `

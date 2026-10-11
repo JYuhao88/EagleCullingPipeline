@@ -3,7 +3,7 @@ import { cp, mkdir, readdir, readFile, stat, writeFile } from "node:fs/promises"
 import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
-const libraryPath = process.env.EAGLE_LIBRARY_PATH || "D:/Photography/EagleLibraries/Culling.library";
+const libraryPath = process.env.EAGLE_LIBRARY_PATH || (() => { throw new Error("Set EAGLE_LIBRARY_PATH"); })();
 const outputPath = path.resolve(root, process.env.MAC_FIXTURE_OUTPUT || "exports/mac-fixture-v3");
 const selectedNames = new Set([
   ...Array.from({ length: 34 }, (_, index) => `R001${1300 + index}`),

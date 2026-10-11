@@ -1,3 +1,4 @@
+import { localSetting } from './local-config.js';
 import { completeEyeRois, EYE_ROI_VERSION } from "./eye-roi.js";
 import { checkCancelled } from "./checkpoints.js";
 import { setImmediate as yieldTurn } from "node:timers/promises";
@@ -76,6 +77,7 @@ export class AnalysisPipeline {
               "analysis-v6-exposure-gates",
               POSE_CACHE_KEY,
               SCORER_CACHE_KEY,
+              process.env.EAGLE_DINO_PROVIDER || "cpu",
             ]),
           )
           .digest("hex");
@@ -298,12 +300,14 @@ export class AnalysisPipeline {
     // embedded JPEG/rawpy is represented as na and never guessed from proxy sharpness.
     for (const [index, result] of results.entries()) {
       check();
+      onProgress({ completed: index, total: records.length, cached, stage: "focus" });
       if (!nativeFocus || stages.get(result.unitId) === "focus") continue;
       if (!result.sourcePath || !result.faces?.length) { await saveUnit(result, "focus"); continue; }
       try {
         const sourceStat = await stat(result.sourcePath);
         const focusKey = crypto.createHash("sha256").update(JSON.stringify([
           "focus-v3", EYE_ROI_VERSION, result.sourcePath, sourceStat.size, sourceStat.mtimeMs, result.faces,
+          ...(process.platform === "win32" ? [localSetting("EAGLE_EXIFTOOL")] : []),
         ])).digest("hex");
         const focusFile = path.join(this.cacheRoot, "focus", `${focusKey}.json`);
         let focus;

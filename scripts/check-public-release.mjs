@@ -13,6 +13,7 @@ const checks = [
   ['internal host', /(?:[\w-]+\.)*(?:oa|woa)\.com\b|star\x2dproxy/i],
   ['private username', /\x66elixjjiang/i],
   ['personal home', /\/Users\//],
+  ['windows local path', /\b[A-Z]:[\\/]{1,2}(?:Users|Photography)\b|\b[A-Z]:[\\/][^\s"'`]*\.library\b/i],
   ['cluster storage', /\x74aijifs|\x61pdcephfs|\/mnt\//i],
   ['private corpus release', /\x74aiji_paper|\x64\x34_paper_\w+_\d+_release|provenance_2026\x31009/i],
   ['agent memory or conversation', /\.codex\/(?:memories|sessions)|oai\x2dmem-citation|rollout\x5fsummaries/],

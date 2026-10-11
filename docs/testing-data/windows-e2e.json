@@ -1,0 +1,97 @@
+{
+  "status": "pass",
+  "steps": [
+    {
+      "name": "analysis",
+      "result": {
+        "status": "completed",
+        "units": 203,
+        "groups": 43,
+        "elapsedSeconds": 299.826,
+        "sampledStagesMilliseconds": {
+          "scanning": 2000,
+          "metrics": 109000,
+          "embedding": 12000,
+          "faces": 13000,
+          "pose": 22000,
+          "focus": 104000
+        }
+      }
+    },
+    {
+      "name": "review",
+      "result": {
+        "loaded": true
+      }
+    },
+    {
+      "name": "decisions-and-reasons",
+      "result": {
+        "actions": [
+          "selected",
+          "rejected"
+        ],
+        "reasonPreserved": true
+      }
+    },
+    {
+      "name": "learning",
+      "result": {
+        "httpStatus": 200,
+        "ready": null,
+        "note": "Automation decisions only; few labels do not establish trained preference quality."
+      }
+    },
+    {
+      "name": "native-1-to-1",
+      "result": {
+        "dimensions": [
+          {
+            "natural": [
+              297,
+              139
+            ],
+            "css": [
+              297,
+              139
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "reports",
+      "result": {
+        "json": true,
+        "csv": true,
+        "reasonExported": true
+      }
+    },
+    {
+      "name": "integrity",
+      "result": {
+        "originalsChecked": 399,
+        "mismatches": 0
+      }
+    }
+  ],
+  "browserErrors": 0,
+  "contextAdapter": true,
+  "items": 399,
+  "folderHash": "2cf9272e0447b40a95d921f52d7c654ab32f844029b1bc63e23c7b07e780c9b2",
+  "runId": "run-b93c301d-277e-47c2-8e81-7c88b2b46fbd",
+  "missingQuality": 0,
+  "restore": {
+    "restored": true
+  },
+  "proxy": {
+    "pid": 31040,
+    "port": 43135,
+    "requests": {
+      "GET /api/v2/library/info": 8
+    },
+    "switchCount": 0,
+    "denied": 0,
+    "otherWriteRequests": 0
+  }
+}

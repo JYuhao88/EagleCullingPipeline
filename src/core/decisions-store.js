@@ -1,4 +1,5 @@
-import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
+import { replaceFile } from './atomic-file.js';
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 
@@ -25,7 +26,7 @@ export class DecisionsStore {
     await mkdir(this.runDir, { recursive: true });
     const temporary = `${this.file}.${randomUUID()}.tmp`;
     await writeFile(temporary, JSON.stringify(decisions, null, 2), "utf8");
-    await rename(temporary, this.file);
+    await replaceFile(temporary, this.file);
     return decisions;
   }
 

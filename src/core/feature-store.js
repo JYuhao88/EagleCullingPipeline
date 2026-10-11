@@ -1,6 +1,7 @@
+import { replaceFile } from './atomic-file.js';
 import { createHash, randomUUID } from 'node:crypto';
 import { createReadStream } from 'node:fs';
-import { access, mkdir, readFile, rename, writeFile } from 'node:fs/promises';
+import { access, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 export const FEATURE_SCHEMA_VERSION = 1;
@@ -15,7 +16,7 @@ export async function atomicJson(file, value) {
   await mkdir(path.dirname(file), { recursive: true });
   const temporary = `${file}.${randomUUID()}.tmp`;
   await writeFile(temporary, JSON.stringify(value));
-  await rename(temporary, file);
+  await replaceFile(temporary, file);
 }
 export class FeatureStore {
   constructor(root = 'data/learning') { this.root = root; this.dir = path.join(root, 'features', 'v1'); this.queue = Promise.resolve(); }

@@ -6,9 +6,9 @@ import { cp, mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises"
 import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
-const libraryPath = process.env.EAGLE_LIBRARY_PATH || "D:/Photography/EagleLibraries/Culling.library";
+const libraryPath = process.env.EAGLE_LIBRARY_PATH || (() => { throw new Error("Set EAGLE_LIBRARY_PATH"); })();
 const apiBase = process.env.EAGLE_API_BASE || "http://127.0.0.1:41595/api/v2";
-const backupRoot = process.env.EAGLE_THUMBNAIL_BACKUP || "D:/Photography/EagleThumbnailBackups/pre-native-refresh";
+const backupRoot = process.env.EAGLE_THUMBNAIL_BACKUP || (() => { throw new Error("Set EAGLE_THUMBNAIL_BACKUP"); })();
 const limit = Number(process.env.RESTORE_LIMIT || 0);
 const concurrency = Math.max(1, Math.min(4, Number(process.env.RESTORE_CONCURRENCY || 2)));
 

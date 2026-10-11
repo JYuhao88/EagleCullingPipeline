@@ -5,7 +5,7 @@ import path from "node:path";
 import sharp from "sharp";
 
 const root = path.resolve(import.meta.dirname, "..");
-const libraryPath = process.env.EAGLE_LIBRARY_PATH || "D:/Photography/EagleLibraries/Culling.library";
+const libraryPath = process.env.EAGLE_LIBRARY_PATH || (() => { throw new Error("Set EAGLE_LIBRARY_PATH"); })();
 const api = process.env.EAGLE_API_BASE || "http://127.0.0.1:41595/api/v2";
 const outputRoot = path.join(root, "data", "clean-thumbnails");
 const limit = Number(process.env.CLEAN_THUMBNAIL_LIMIT || 0);

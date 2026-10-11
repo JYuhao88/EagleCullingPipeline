@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 const ort = require("onnxruntime-node");
 const mean = [0.485, 0.456, 0.406];
 const std = [0.229, 0.224, 0.225];
-let sessionPromise;
+const sessions = new Map();
 
 function modelPath(value) {
   return (
@@ -17,12 +17,15 @@ function modelPath(value) {
 }
 
 async function getSession(model) {
-  if (!sessionPromise) {
-    sessionPromise = ort.InferenceSession.create(model, {
-      intraOpNumThreads: Number(process.env.EAGLE_DINO_THREADS || 2),
-    });
+  const provider = process.env.EAGLE_DINO_PROVIDER || 'cpu';
+  const key = `${model}:${provider}`;
+  if (!sessions.has(key)) {
+    const options = { intraOpNumThreads: Number(process.env.EAGLE_DINO_THREADS || 2) };
+    if (process.env.EAGLE_DINO_PROVIDER) options.executionProviders = [provider];
+    if (provider === 'dml') { options.enableMemPattern = false; options.executionMode = 'sequential'; }
+    sessions.set(key, ort.InferenceSession.create(model, options));
   }
-  return sessionPromise;
+  return sessions.get(key);
 }
 
 async function embedRaw(filePath, model, signal) {
@@ -73,7 +76,9 @@ export async function embedImage(
   }
   const key =
     fingerprint || crypto.createHash("sha256").update(filePath).digest("hex");
-  const cachePath = path.resolve(cacheDir, `${key}.json`);
+  const providerKey = process.env.EAGLE_DINO_PROVIDER
+    ? '-' + crypto.createHash('sha256').update(process.env.EAGLE_DINO_PROVIDER).digest('hex') : '';
+  const cachePath = path.resolve(cacheDir, `${key}${providerKey}.json`);
   try {
     return JSON.parse(await readFile(cachePath, "utf8"));
   } catch {

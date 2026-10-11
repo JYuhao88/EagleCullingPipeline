@@ -14,22 +14,22 @@ class FaceRegionsTest(unittest.TestCase):
         self.assertTrue(face_worker.same_face(a,b))
         self.assertFalse(face_worker.same_face(a,c))
         image = Image.new("RGB", (1280,1280))
-        with patch.object(face_worker,"detect_region",side_effect=[[],[a],[b],[c],[]]):
+        with patch.object(face_worker,"detect_region",side_effect=[[],[a],[b],[c]] + [[]] * 15):
             result = face_worker.analyze_faces(None,image,True)
         self.assertEqual(result["faceCount"],2)
-        self.assertEqual(result["regionsAnalyzed"],5)
+        self.assertEqual(result["regionsAnalyzed"],19)
 
-    def test_tiles_only_run_after_no_detection_and_on_bounded_large_previews(self):
+    def test_tiles_cover_large_previews_even_when_whole_preview_has_faces(self):
         with patch.object(face_worker,"detect_region",return_value=[]) as detect:
             result=face_worker.analyze_faces(None,Image.new("RGB",(1280,1280)),False)
             self.assertEqual(result["regionsAnalyzed"],1)
             self.assertEqual(detect.call_count,1)
         with patch.object(face_worker,"detect_region",return_value=[]) as detect:
-            face_worker.analyze_faces(None,Image.new("RGB",(320,480)),True)
+            face_worker.analyze_faces(None,Image.new("RGB",(300,300)),True)
             self.assertEqual(detect.call_count,1)
         with patch.object(face_worker,"detect_region",return_value=[{"box":[0.1,0.1,0.3,0.3]}]) as detect:
             face_worker.analyze_faces(None,Image.new("RGB",(1280,1280)),True)
-            self.assertEqual(detect.call_count,1)
+            self.assertEqual(detect.call_count,19)
 
     def test_missing_blendshapes_are_not_normal_eyes(self):
         landmarks=[SimpleNamespace(x=0.2,y=0.2),SimpleNamespace(x=0.4,y=0.4)]

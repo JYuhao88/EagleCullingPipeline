@@ -1,9 +1,130 @@
 // Batch-import remaining HEIC items as native Eagle items.
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-const root=path.resolve(import.meta.dirname,".."); const libraryPath=process.env.EAGLE_LIBRARY_PATH||"D:/Photography/EagleLibraries/Culling.library"; const api=process.env.EAGLE_API_BASE||"http://127.0.0.1:41595/api/v2"; const batchSize=50;
-async function req(endpoint,options={}){const r=await fetch(`${api}/${endpoint}`,{...options,signal:AbortSignal.timeout(120000)});const p=await r.json().catch(()=>({}));if(!r.ok||p.status!=="success")throw new Error(p.message||`Eagle HTTP ${r.status}`);return p.data}
-async function source(item){const dir=path.join(libraryPath,"images",`${item.id}.info`);const files=await readdir(dir);const name=files.find(x=>x.toLowerCase().endsWith('.heic'));if(!name)throw new Error(`HEIC不存在：${item.id}`);return path.join(dir,name)}
-async function all(){let out=[],o=0;while(1){const p=await req(`item/get?offset=${o}&limit=1000`);out.push(...(p.data||[]));o+=p.data?.length||0;if(!p.data?.length||o>=p.total)return out}}
-const reportPath=path.join(root,"data/native-migration.json");let report=JSON.parse(await readFile(reportPath,"utf8"));report.results=report.results.filter(Boolean);const done=new Set(report.results.filter(x=>x.status==='migrated').map(x=>x.oldId));const items=(await all()).filter(x=>!x.isDeleted&&x.customThumbnail===true&&x.ext.toLowerCase()==='heic'&&!done.has(x.id));
-for(let start=0;start<items.length;start+=batchSize){const chunk=items.slice(start,start+batchSize);const payload=[];for(const item of chunk)payload.push({path:await source(item),name:item.name,tags:item.tags||[],folders:item.folders||[],annotation:item.annotation||""});const added=await req('item/add',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({items:payload})});const ids=added.ids||[];if(ids.length!==chunk.length)throw new Error(`批量导入返回数量不一致：${ids.length}/${chunk.length}`);for(let i=0;i<chunk.length;i++){const old=chunk[i],newId=ids[i];try{let imported;for(let t=0;t<60;t++){imported=(await req(`item/get?id=${encodeURIComponent(newId)}`)).data?.[0];if(imported?.ext?.toLowerCase()==='heic'&&imported.width&&imported.height&&imported.customThumbnail!==true)break;await new Promise(r=>setTimeout(r,500))}if(!imported||imported.ext.toLowerCase()!=='heic'||!imported.width||!imported.height||imported.customThumbnail===true)throw new Error(`新项目未达到原生状态：${newId}`);const meta={id:newId,tags:old.tags||[],folders:old.folders||[],annotation:old.annotation||""};if(Number.isInteger(old.star))meta.star=old.star;await req('item/update',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(meta)});await req('item/update',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:old.id,isDeleted:true})});report.results.push({oldId:old.id,newId,name:old.name,ext:'heic',width:imported.width,height:imported.height,status:'migrated'})}catch(error){report.results.push({oldId:old.id,newId,name:old.name,ext:'heic',status:'failed',error:error.message})}report.updatedAt=new Date().toISOString();await mkdir(path.dirname(reportPath),{recursive:true});await writeFile(reportPath,JSON.stringify(report,null,2),'utf8')}}console.log(JSON.stringify({selected:items.length,migrated:report.results.filter(x=>x.status==='migrated').length,failed:report.results.filter(x=>x.status==='failed').length},null,2));
+const root = path.resolve(import.meta.dirname, "..");
+const libraryPath =
+  process.env.EAGLE_LIBRARY_PATH ||
+  (() => {
+    throw new Error("Set EAGLE_LIBRARY_PATH");
+  })();
+const api = process.env.EAGLE_API_BASE || "http://127.0.0.1:41595/api/v2";
+const batchSize = 50;
+async function req(endpoint, options = {}) {
+  const r = await fetch(`${api}/${endpoint}`, { ...options, signal: AbortSignal.timeout(120000) });
+  const p = await r.json().catch(() => ({}));
+  if (!r.ok || p.status !== "success") throw new Error(p.message || `Eagle HTTP ${r.status}`);
+  return p.data;
+}
+async function source(item) {
+  const dir = path.join(libraryPath, "images", `${item.id}.info`);
+  const files = await readdir(dir);
+  const name = files.find((x) => x.toLowerCase().endsWith(".heic"));
+  if (!name) throw new Error(`HEIC不存在：${item.id}`);
+  return path.join(dir, name);
+}
+async function all() {
+  let out = [],
+    o = 0;
+  while (1) {
+    const p = await req(`item/get?offset=${o}&limit=1000`);
+    out.push(...(p.data || []));
+    o += p.data?.length || 0;
+    if (!p.data?.length || o >= p.total) return out;
+  }
+}
+const reportPath = path.join(root, "data/native-migration.json");
+let report = JSON.parse(await readFile(reportPath, "utf8"));
+report.results = report.results.filter(Boolean);
+const done = new Set(report.results.filter((x) => x.status === "migrated").map((x) => x.oldId));
+const items = (await all()).filter(
+  (x) => !x.isDeleted && x.customThumbnail === true && x.ext.toLowerCase() === "heic" && !done.has(x.id),
+);
+for (let start = 0; start < items.length; start += batchSize) {
+  const chunk = items.slice(start, start + batchSize);
+  const payload = [];
+  for (const item of chunk)
+    payload.push({
+      path: await source(item),
+      name: item.name,
+      tags: item.tags || [],
+      folders: item.folders || [],
+      annotation: item.annotation || "",
+    });
+  const added = await req("item/add", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ items: payload }),
+  });
+  const ids = added.ids || [];
+  if (ids.length !== chunk.length) throw new Error(`批量导入返回数量不一致：${ids.length}/${chunk.length}`);
+  for (let i = 0; i < chunk.length; i++) {
+    const old = chunk[i],
+      newId = ids[i];
+    try {
+      let imported;
+      for (let t = 0; t < 60; t++) {
+        imported = (await req(`item/get?id=${encodeURIComponent(newId)}`)).data?.[0];
+        if (
+          imported?.ext?.toLowerCase() === "heic" &&
+          imported.width &&
+          imported.height &&
+          imported.customThumbnail !== true
+        )
+          break;
+        await new Promise((r) => setTimeout(r, 500));
+      }
+      if (
+        !imported ||
+        imported.ext.toLowerCase() !== "heic" ||
+        !imported.width ||
+        !imported.height ||
+        imported.customThumbnail === true
+      )
+        throw new Error(`新项目未达到原生状态：${newId}`);
+      const meta = { id: newId, tags: old.tags || [], folders: old.folders || [], annotation: old.annotation || "" };
+      if (Number.isInteger(old.star)) meta.star = old.star;
+      await req("item/update", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(meta),
+      });
+      await req("item/update", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id: old.id, isDeleted: true }),
+      });
+      report.results.push({
+        oldId: old.id,
+        newId,
+        name: old.name,
+        ext: "heic",
+        width: imported.width,
+        height: imported.height,
+        status: "migrated",
+      });
+    } catch (error) {
+      report.results.push({
+        oldId: old.id,
+        newId,
+        name: old.name,
+        ext: "heic",
+        status: "failed",
+        error: error.message,
+      });
+    }
+    report.updatedAt = new Date().toISOString();
+    await mkdir(path.dirname(reportPath), { recursive: true });
+    await writeFile(reportPath, JSON.stringify(report, null, 2), "utf8");
+  }
+}
+console.log(
+  JSON.stringify(
+    {
+      selected: items.length,
+      migrated: report.results.filter((x) => x.status === "migrated").length,
+      failed: report.results.filter((x) => x.status === "failed").length,
+    },
+    null,
+    2,
+  ),
+);

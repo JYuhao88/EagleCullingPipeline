@@ -1,0 +1,7 @@
+.update-panel { margin: 0 0 12px; font-size: 13px; }
+.update-banner { padding: 8px 12px; border: 1px solid #697ba6; border-radius: 8px; }
+.update-banner span { margin-right: 12px; }
+.update-panel button { margin: 4px; }
+.update-about { padding: 6px 12px; }
+.update-about summary { cursor: pointer; }
+.update-about pre { white-space: pre-wrap; max-height: 240px; overflow: auto; }

@@ -1,4 +1,6 @@
 import { execFile } from 'node:child_process';
+import path from 'node:path';
+import { localSetting } from './local-config.js';
 
 /** EXIF wall time without an offset is kept on a synthetic UTC timeline.
  * offset:null distinguishes that convention from a known UTC capture. */
@@ -32,9 +34,11 @@ export function parseCaptureMetadata(row = {}) {
 
 function runExiftool(paths, { signal } = {}) {
   return new Promise((resolve, reject) => {
-    const child = execFile('exiftool', ['-json', '-DateTimeOriginal', '-SubSecDateTimeOriginal',
+    const child = execFile(localSetting('EAGLE_EXIFTOOL', 'exiftool'),
+      ['-json', '-DateTimeOriginal', '-SubSecDateTimeOriginal',
       '-SubSecTimeOriginal', '-OffsetTimeOriginal', '-Make', '-Model', '-SerialNumber',
-      '-BodySerialNumber', '-@', '-'], { maxBuffer: 4 * 1024 * 1024, timeout: 30_000, signal },
+      '-BodySerialNumber', ...(process.platform === 'win32' ? ['-charset', 'filename=UTF8'] : []), '-@', '-'],
+    { maxBuffer: 4 * 1024 * 1024, timeout: 30_000, signal },
     (error, stdout) => {
       // exiftool may return 1 for one unreadable file alongside valid rows.
       try { resolve(JSON.parse(stdout)); } catch { reject(error || new Error('Invalid EXIF response')); }
@@ -45,19 +49,25 @@ function runExiftool(paths, { signal } = {}) {
 }
 
 /** Serial bounded batches avoid argv/output growth and concurrent RAW readers. */
-export async function enrichCaptureMetadata(records, { batchSize = 256, reader = runExiftool, signal, checkpoint } = {}) {
+export async function enrichCaptureMetadata(records, {
+  batchSize = 256, reader = runExiftool, signal, checkpoint, onProgress = () => {},
+} = {}) {
   if (!Number.isInteger(batchSize) || batchSize < 1) throw new Error('batchSize must be positive');
   const candidates = records.filter(record => record.filePath && !/[\r\n]/.test(record.filePath));
+  onProgress({ stage: 'scanning', phase: 'capture-metadata', completed: 0, total: candidates.length, cached: 0 });
   for (let start = 0; start < candidates.length; start += batchSize) {
     signal?.throwIfAborted();
     const batch = candidates.slice(start, start + batchSize);
     try {
       const rows = await reader(batch.map(record => record.filePath), { signal });
       signal?.throwIfAborted();
-      const byPath = new Map(rows.map(row => [row.SourceFile, parseCaptureMetadata(row)]));
-      for (const record of batch) Object.assign(record, byPath.get(record.filePath) || {});
+      const sourceKey = value => process.platform === 'win32' && typeof value === 'string'
+        ? path.normalize(value).toLowerCase() : value;
+      const byPath = new Map(rows.map(row => [sourceKey(row.SourceFile), parseCaptureMetadata(row)]));
+      for (const record of batch) Object.assign(record, byPath.get(sourceKey(record.filePath)) || {});
     } catch { signal?.throwIfAborted(); /* Missing EXIF preserves legacy grouping. */ }
     if (checkpoint) for (const record of batch) await checkpoint.put(`scan:${record.id}`, record);
+    onProgress({ stage: 'scanning', phase: 'capture-metadata', completed: start + batch.length, total: candidates.length, cached: 0 });
   }
   assignCaptureSessions(records);
   return records;

@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """Two order-swapped visual labels per subject; no user labels or Eagle writes."""
 import argparse
-import fcntl
+import os
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from ml.common import file_lock as fcntl
 import hashlib
 import json
 import math
@@ -132,7 +136,9 @@ def cache_key(sample, persons, image, model):
 
 
 def command(image, schema, output, model, codex='codex'):
-    return ['nice', '-n', '10', codex, 'exec', '-c', 'model_provider="codex-lb"',
+    prefix = ([] if os.name == 'nt' else ['nice', '-n', '10'])
+    executable = [sys.executable, codex] if str(codex).endswith('.py') else [codex]
+    return prefix + executable + ['exec', '-c', 'model_provider="codex-lb"',
             '-c', PROVIDER, '--sandbox', 'read-only', '--ephemeral', '-m', model,
             '--output-schema', str(schema), '-o', str(output), '-i', str(image), '-']
 

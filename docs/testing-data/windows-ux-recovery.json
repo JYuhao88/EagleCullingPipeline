@@ -1,0 +1,37 @@
+{
+  "status": "pass",
+  "realUserServicePosts": 0,
+  "scenarios": [
+    {
+      "name": "real-user-service-GET-only",
+      "passed": true
+    },
+    {
+      "name": "busy-409-progress",
+      "passed": true
+    },
+    {
+      "name": "reopen-running",
+      "passed": true
+    },
+    {
+      "name": "two-network-failures-then-progress-recovers",
+      "passed": true
+    },
+    {
+      "name": "reopen-failed-friendly-reason",
+      "passed": true
+    },
+    {
+      "name": "reopen-interrupted",
+      "passed": true
+    }
+  ],
+  "browserErrors": 0,
+  "screenshotErrors": [
+    {
+      "name": "real-user-home.png",
+      "reason": "page.screenshot: Protocol error (Page.captureScreenshot): Unable to capture screenshot"
+    }
+  ]
+}

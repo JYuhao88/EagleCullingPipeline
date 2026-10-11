@@ -23,7 +23,7 @@ test(`source files keep lines under ${MAX_LINE} characters`, async () => {
   const offenders = [];
   for (const root of ROOTS) {
     for await (const file of walk(root)) {
-      const lines = (await readFile(file, "utf8")).split("\n");
+      const lines = (await readFile(file, "utf8")).split(/\r?\n/);
       lines.forEach((line, index) => {
         if (line.length > MAX_LINE) offenders.push(`${file}:${index + 1} (${line.length})`);
       });

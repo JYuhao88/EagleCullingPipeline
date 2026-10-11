@@ -48,7 +48,14 @@ class OnnxScorer:
         options = ort.SessionOptions()
         options.intra_op_num_threads = min(max(1, threads), 3)
         options.inter_op_num_threads = 1
-        self.session = ort.InferenceSession(str(path), options, providers=['CPUExecutionProvider'])
+        provider = os.environ.get('EAGLE_SCORER_PROVIDER', 'CPUExecutionProvider')
+        if provider not in ort.get_available_providers():
+            raise RuntimeError(f'Unavailable provider: {provider}')
+        options.enable_mem_pattern = False
+        options.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
+        self.session = ort.InferenceSession(str(path), options, providers=[provider])
+        if self.session.get_providers()[0] != provider:
+            raise RuntimeError(f'Requested provider did not initialize: {provider}')
         self.input_name = self.session.get_inputs()[0].name
 
     def raw_score(self, path: str) -> float:

@@ -73,7 +73,8 @@ export async function analysisSignature() {
   for (const file of ['portrait', 'landscape', 'street']) chunks.push(await readFile(`src/rules/${file}.json`));
   for (const file of ['pose_worker.py', 'face_worker.py']) chunks.push(await readFile(`python_worker/${file}`));
   chunks.push(Buffer.from(JSON.stringify([process.env.EAGLE_PYTHON, process.env.PYTHONPATH, process.env.EAGLE_POSE_MODE,
-    process.env.EAGLE_POSE_PROVIDER, process.env.EAGLE_POSE_MODEL, process.env.EAGLE_POSE_DETECTOR])));
+    process.env.EAGLE_POSE_PROVIDER, process.env.EAGLE_POSE_MODEL, process.env.EAGLE_POSE_DETECTOR,
+    process.env.EAGLE_SCORER_PROVIDER])));
   return hash(Buffer.concat(chunks));
 }
 async function analyze(images, directory, warnings, signature) {
@@ -108,7 +109,7 @@ async function analyze(images, directory, warnings, signature) {
   const scored = await score(pending.map(p => p.file));
   console.error('bench: faces');
   const detectedFaces = await detectFaces(pending.map(p => p.file));
-  console.error('bench: pose (one CPU worker)');
+  console.error(`bench: pose (one worker; provider ${process.env.EAGLE_POSE_PROVIDER || 'default'})`);
   const poses = await detectPose(pending.map((p, j) => ({ id: p.image.id, filePath: p.file,
     faces: detectedFaces[j]?.faceDetails ?? [] })), { size: 1 });
   for (const [j, item] of pending.entries()) {
@@ -241,7 +242,8 @@ export async function main(argv = process.argv.slice(2)) {
   process.env.EAGLE_SCORER_THREADS = '2';
   for (const key of ['OMP_NUM_THREADS', 'MKL_NUM_THREADS', 'OPENBLAS_NUM_THREADS']) process.env[key] = '2';
   if (!process.env.EAGLE_PYTHON) {
-    const local = path.resolve('python_worker/.venv/bin/python');
+    const local = path.resolve(process.platform === 'win32'
+      ? 'python_worker/.venv/Scripts/python.exe' : 'python_worker/.venv/bin/python');
     try { await access(local); process.env.EAGLE_PYTHON = local; }
     catch { throw new Error('Set EAGLE_PYTHON or install python_worker/.venv'); }
   }

@@ -26,7 +26,7 @@ class TeacherTests(unittest.TestCase):
         self.write(self.source / 'all-results.json', dict(results=[dict(unitId='one')]))
         self.write(self.source / 'raw-poses.json', [dict(id='one', persons=[dict(isMain=True, box=[.1,.1,.9,.9])])])
         self.counter = self.root / 'count'
-        self.mock = self.root / 'codex'
+        self.mock = self.root / 'codex.py'
         self.mock.write_text('#!' + sys.executable + '\n' +
             'import json, pathlib, sys\n' +
             'count = pathlib.Path(' + repr(str(self.counter)) + ')\n' +
@@ -38,7 +38,7 @@ class TeacherTests(unittest.TestCase):
     def write(self, path, data):
         path.write_text(json.dumps(data))
     def cli(self, *extra, expected=0):
-        result = subprocess.run(['nice', '-n', '10', sys.executable, str(SCRIPT), '--input', str(self.source),
+        result = subprocess.run([sys.executable, str(SCRIPT), '--input', str(self.source),
             '--out', str(self.out), '--codex', str(self.mock), *extra], capture_output=True, text=True)
         self.assertEqual(result.returncode, expected, result.stdout + result.stderr)
         filename = 'prepare-summary.json' if '--prepare-only' in extra else 'summary.json'
@@ -117,6 +117,6 @@ class TeacherTests(unittest.TestCase):
         self.assertEqual(self.count(), 6)
 unittest.main(argv=['teacher-tests'], verbosity=2)
 `;
-  const result = spawnSync('python3', ['-c', program], { encoding: 'utf8', timeout: 60_000 });
+  const result = spawnSync((process.env.EAGLE_PYTHON || 'python3'), ['-c', program], { encoding: 'utf8', timeout: 60_000 });
   assert.equal(result.status, 0, `${result.error ?? ''}\n${result.stdout}\n${result.stderr}`);
 });

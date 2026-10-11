@@ -1,6 +1,7 @@
+import { replaceFile } from './atomic-file.js';
 import path from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
-import { mkdir, readFile, readdir, rename, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { OffsetJournal } from './offset-journal.js';
 export class ResultsStore {
   constructor(root = 'data/cache') {
@@ -25,7 +26,7 @@ export class ResultsStore {
     await mkdir(path.dirname(file), { recursive: true });
     const temporary = `${file}.${randomUUID()}.tmp`;
     await writeFile(temporary, JSON.stringify({ fingerprint, result }));
-    await rename(temporary, file);
+    await replaceFile(temporary, file);
     return result;
   }
   async size() {

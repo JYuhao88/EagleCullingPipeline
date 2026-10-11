@@ -1,9 +1,10 @@
+import { replaceFile } from '../core/atomic-file.js';
 import { groupConfidence } from "../core/ranking.js";
 import { DecisionsStore } from "../core/decisions-store.js";
 import { writeSegmented, readManifest, readRow, readRows } from "../core/segmented-results.js";
 import { LearningData } from "../core/learning-data.js";
 import path from "node:path";
-import { mkdir, readFile, rename, writeFile, stat } from "node:fs/promises";
+import { mkdir, readFile, readdir, writeFile, stat } from "node:fs/promises";
 import { randomUUID, createHash } from "node:crypto";
 import { applyGroupOverrides } from "../core/group-overrides.js";
 
@@ -50,6 +51,7 @@ export class RunStore {
       };
       if (!metadataOnly && (state.results || state.units || state.groups || state.items)) {
         await writeSegmented(directory, resultData);
+        await this.saveReviewSummary(run.id, resultData.groups);
         if (run.status === "completed") {
           try { await this.learningData.ingestRun(resultData); }
           catch (error) { runJson.learningWarning = error.message; }
@@ -82,6 +84,65 @@ export class RunStore {
       if (error.code === "ENOENT") return null;
       throw error;
     }
+  }
+
+  async recentRuns(limit = 10) {
+    let entries;
+    try { entries = await readdir(this.root, { withFileTypes: true }); }
+    catch (error) { if (error.code === 'ENOENT') return []; throw error; }
+    const runs = [];
+    for (const entry of entries) {
+      if (!entry.isDirectory() || !/^run-[a-zA-Z0-9_-]+$/.test(entry.name)) continue;
+      const run = await this.getRun(entry.name);
+      if (run) runs.push(run);
+    }
+    return runs.sort((a, b) => String(b.startedAt).localeCompare(String(a.startedAt))).slice(0, limit);
+  }
+
+  async saveReviewSummary(id, groups) {
+    await this.writeAtomic(id, 'review-summary.json', groups.map(group => ({ id: group.id, unitIds: group.unitIds })));
+  }
+
+  async reviewSummary(id) {
+    try {
+      return JSON.parse(await readFile(path.join(this.dir(id), 'review-summary.json'), 'utf8'));
+    } catch (error) { if (error.code !== 'ENOENT') throw error; }
+    // Legacy runs may have a lightweight manifest but no dedicated summary yet.
+    // Never materialize results or rerank corrected groups for the home page.
+    if ((await this.groupOverrides(id)).operations.length) return null;
+    return (await this.manifest(id))?.groups || null;
+  }
+
+  async list({ limit = 20, cursor = 0 } = {}) {
+    let entries;
+    try { entries = await readdir(this.root, { withFileTypes: true }); }
+    catch (error) { if (error.code === 'ENOENT') entries = []; else throw error; }
+    const runs = [];
+    for (const entry of entries) {
+      if (!entry.isDirectory() || !/^[a-zA-Z0-9_-]+$/.test(entry.name)) continue;
+      try {
+        const run = await this.getRun(entry.name);
+        if (run && run.id === entry.name) runs.push(run);
+      } catch (error) { if (!(error instanceof SyntaxError)) throw error; }
+    }
+    runs.sort((a, b) => (Date.parse(b.startedAt || b.createdAt) || 0) -
+      (Date.parse(a.startedAt || a.createdAt) || 0) || b.id.localeCompare(a.id));
+    const summaries = [];
+    for (const run of runs.slice(cursor, cursor + limit)) {
+      const groups = await this.reviewSummary(run.id);
+      const reviewed = new Set((await new DecisionsStore(this.dir(run.id)).read())
+        .filter(row => row.source === 'human').map(row => row.unitId));
+      summaries.push({ id: run.id, status: run.status, startedAt: run.startedAt || run.createdAt || null,
+        itemCount: run.itemCount || run.progress?.summary?.itemCount || 0,
+        unitCount: run.unitCount || run.progress?.summary?.unitCount || 0,
+        groupCount: groups?.length ?? run.groupCount ?? run.progress?.summary?.groupCount ?? 0,
+        reviewedGroupCount: groups ? groups.filter(group => group.unitIds.length &&
+          group.unitIds.every(id => reviewed.has(id))).length : null,
+        scope: run.scope || { type: 'unknown', label: '以前的分析' }, error: run.error || null,
+        progress: run.progress || null });
+    }
+    return { runs: summaries, page: { total: runs.length, cursor, limit,
+      nextCursor: cursor + limit < runs.length ? String(cursor + limit) : null } };
   }
 
   async get(id, { readOnly = false } = {}) {
@@ -335,7 +396,7 @@ export class RunStore {
     // Large result arrays contain embeddings/geometry; whitespace doubles IO
     // without changing the JSON contract. Small human-edited metadata stays pretty.
     await writeFile(temporary, JSON.stringify(value, null, filename === "results.json" ? 0 : 2), "utf8");
-    await rename(temporary, file);
+    await replaceFile(temporary, file);
   }
 
   async groupOverrides(id) {
@@ -364,6 +425,7 @@ export class RunStore {
       const groups = applyGroupOverrides(base.groups, base.results, operations);
       const groupOverrides = { contractVersion: 1, operations };
       await this.writeAtomic(id, "group-overrides.json", groupOverrides);
+      await this.saveReviewSummary(id, groups);
       return { groups, groupOverrides };
     });
     const queued = operation.catch(() => {});

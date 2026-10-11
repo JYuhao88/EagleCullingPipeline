@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { localSetting } from './core/local-config.js';
 import path from "node:path";
+import { restartService, candidateService } from "./server/update-restart.js";
 import { access, writeFile } from "node:fs/promises";
 import { createAnalysisServer } from "./server.js";
 import { DecisionsStore } from "./core/decisions-store.js";
@@ -48,13 +49,24 @@ async function doctor() {
   } catch {
     checks.sharp = false;
   }
-  const python = localSetting("EAGLE_PYTHON", "python_worker/.venv/bin/python");
   try {
-    await access(python);
+    await new Promise((resolve, reject) => execFile(localSetting("EAGLE_EXIFTOOL", "exiftool"), ["-ver"],
+      { timeout: 5000 }, error => error ? reject(error) : resolve()));
+    checks.exiftool = true;
+  } catch { checks.exiftool = false; }
+  const python = localSetting("EAGLE_PYTHON", process.platform === "win32"
+    ? "python_worker/.venv/Scripts/python.exe" : "python_worker/.venv/bin/python");
+  try {
+    await new Promise((resolve, reject) => execFile(python, ["--version"], error => error ? reject(error) : resolve()));
     checks.python = true;
-    checks.mediapipe = true;
   } catch {
     checks.python = false;
+  }
+  try {
+    await new Promise((resolve, reject) => execFile(python, ["-c", "import mediapipe"],
+      error => error ? reject(error) : resolve()));
+    checks.mediapipe = true;
+  } catch {
     checks.mediapipe = false;
   }
   try {
@@ -169,7 +181,8 @@ async function serve() {
     concurrency: Number(arg("--concurrency", 2)) || 2, store: new ResultsStore()
   });
   const server = createAnalysisServer({ port, pipeline });
-  await server.listen();
+  server.updater.restart = restartService(server, { port });
+  if (!(await candidateService(server))) await server.listen();
   console.log(`Eagle 照片筛选服务：http://127.0.0.1:${port}`);
 }
 async function loadRun(runId) {

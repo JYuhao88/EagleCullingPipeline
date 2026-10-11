@@ -1,5 +1,6 @@
+import { replaceFile } from './atomic-file.js';
 import path from 'node:path';
-import { mkdir, open, readFile, rename } from 'node:fs/promises';
+import { mkdir, open, readFile } from 'node:fs/promises';
 import { randomUUID, createHash } from 'node:crypto';
 
 // Publish immutable generations with one atomic manifest replacement. Readers
@@ -50,7 +51,7 @@ export async function writeSegmented(directory, data) {
   const temporary = path.join(directory, `results-index.${randomUUID()}.tmp`);
   const file = await open(temporary, 'wx');
   try { await file.writeFile(JSON.stringify(manifest)); } finally { await file.close(); }
-  await rename(temporary, path.join(directory, 'results-index.json'));
+  await replaceFile(temporary, path.join(directory, 'results-index.json'));
   return manifest;
 }
 

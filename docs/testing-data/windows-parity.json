@@ -1,0 +1,2448 @@
+{
+  "summaries": [
+    {
+      "baseline": "dml",
+      "reference": "Windows CPU",
+      "images": 388,
+      "matchedPeople": 1194,
+      "unmatchedPeople": 0,
+      "reorderedPeople": 0,
+      "matchedFaces": 278,
+      "unmatchedFaces": 0,
+      "statistics": {
+        "topiq": {
+          "count": 388,
+          "max": 0.00017389655113220215,
+          "mean": 0.00003900276208968507
+        },
+        "personBox": {
+          "count": 4776,
+          "max": 5.513429641723633e-7,
+          "mean": 2.4993979168318607e-8
+        },
+        "keypointConfidence": {
+          "count": 158802,
+          "max": 0.006858319044113159,
+          "mean": 0.000030806386884306075
+        },
+        "keypointCoordinateBothAtLeast0.3": {
+          "count": 249712,
+          "max": 0.20972952689044178,
+          "mean": 0.0000039158414184591376
+        },
+        "keypointCoordinateBothAtLeast0.5": {
+          "count": 193642,
+          "max": 0.1815245533362031,
+          "mean": 0.0000025364406220235705
+        },
+        "keypointCoordinateBothAtLeast0.7": {
+          "count": 136004,
+          "max": 0.003614096131890232,
+          "mean": 0.0000012013001963660975
+        },
+        "keypointCoordinateBothAtLeast0.75": {
+          "count": 114796,
+          "max": 0.003613930437377344,
+          "mean": 0.0000010041959633069011
+        },
+        "faceBox": {
+          "count": 1112,
+          "max": 0,
+          "mean": 0
+        }
+      },
+      "classificationChangedImages": 0,
+      "confidenceCrossings": 19,
+      "changed": [
+        {
+          "id": "s006",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s017",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s001-noise-50",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-horizon-tilt-8",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s005-defocus-blur-3",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s005-joint-crop-wrist-1",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s006-noise-25",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-underexposure--1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-noise-50",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s014-motion-blur-41",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s014-underexposure--2.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s014-noise-50",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s014-face-highlight-clipping-2.5",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s016-defocus-blur-3",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s016-underexposure--1.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s016-noise-50",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s016-horizon-tilt-3",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s016-joint-crop-neck-1",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s017-defocus-blur-1",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s017-overexposure-2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-noise-50",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        }
+      ]
+    },
+    {
+      "baseline": "mac",
+      "reference": "Windows CPU",
+      "images": 388,
+      "matchedPeople": 1189,
+      "unmatchedPeople": 13,
+      "reorderedPeople": 59,
+      "matchedFaces": 278,
+      "unmatchedFaces": 0,
+      "statistics": {
+        "topiq": {
+          "count": 388,
+          "max": 5.364418029785156e-7,
+          "mean": 1.0314157482275029e-7
+        },
+        "personBox": {
+          "count": 4756,
+          "max": 0.030910499649818513,
+          "mean": 0.00017373168197850163
+        },
+        "keypointConfidence": {
+          "count": 158137,
+          "max": 0.25727176666259766,
+          "mean": 0.004393113722070335
+        },
+        "keypointCoordinateBothAtLeast0.3": {
+          "count": 247398,
+          "max": 0.600013935373957,
+          "mean": 0.0005771045851088898
+        },
+        "keypointCoordinateBothAtLeast0.5": {
+          "count": 192174,
+          "max": 0.251043652720193,
+          "mean": 0.0003142856929782464
+        },
+        "keypointCoordinateBothAtLeast0.7": {
+          "count": 134736,
+          "max": 0.015904946873585235,
+          "mean": 0.00027263938157409733
+        },
+        "keypointCoordinateBothAtLeast0.75": {
+          "count": 113850,
+          "max": 0.01587383697430278,
+          "mean": 0.00026559455919614145
+        },
+        "faceBox": {
+          "count": 1112,
+          "max": 0.00008101761341094971,
+          "mean": 0.000002860143795242528
+        }
+      },
+      "classificationChangedImages": 21,
+      "confidenceCrossings": 3615,
+      "changed": [
+        {
+          "id": "s001",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s002",
+          "crossings": 12,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s003",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004",
+          "crossings": 12,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s005",
+          "crossings": 9,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006",
+          "crossings": 12,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014",
+          "crossings": 11,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016",
+          "crossings": 52,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017",
+          "crossings": 81,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020",
+          "crossings": 19,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-defocus-blur-1",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-defocus-blur-3",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-defocus-blur-6",
+          "crossings": 31,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-motion-blur-9",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-motion-blur-21",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-motion-blur-41",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-underexposure--2.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-underexposure--1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-overexposure-1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-overexposure-2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-noise-25",
+          "crossings": 55,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-noise-50",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-horizon-tilt-3",
+          "crossings": 0,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-horizon-tilt-8",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-excess-headroom-0.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s001-joint-crop-wrist-1",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s002-underexposure--2.5",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s002-underexposure--1.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s002-overexposure-1.5",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s002-overexposure-2.5",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s002-horizon-tilt-3",
+          "crossings": 10,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s002-horizon-tilt-8",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s002-joint-crop-ankle-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s003-underexposure--2.5",
+          "crossings": 0,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s003-underexposure--1.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s003-overexposure-1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s003-overexposure-2.5",
+          "crossings": 35,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s003-noise-25",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s003-noise-50",
+          "crossings": 14,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s003-excess-headroom-0.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-defocus-blur-1",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-defocus-blur-3",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-defocus-blur-6",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-motion-blur-9",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-motion-blur-21",
+          "crossings": 5,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-motion-blur-41",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-underexposure--2.5",
+          "crossings": 10,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-underexposure--1.5",
+          "crossings": 13,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s004-overexposure-1.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-noise-25",
+          "crossings": 10,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-noise-50",
+          "crossings": 74,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-horizon-tilt-8",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-excess-headroom-0.5",
+          "crossings": 5,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-head-top-crop-0.2",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-face-highlight-clipping-2.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s004-joint-crop-wrist-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-joint-crop-neck-1",
+          "crossings": 5,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-defocus-blur-1",
+          "crossings": 28,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s005-defocus-blur-3",
+          "crossings": 10,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s005-defocus-blur-6",
+          "crossings": 6,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-motion-blur-9",
+          "crossings": 30,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-motion-blur-21",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-motion-blur-41",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-underexposure--2.5",
+          "crossings": 27,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-underexposure--1.5",
+          "crossings": 20,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-overexposure-1.5",
+          "crossings": 21,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-overexposure-2.5",
+          "crossings": 27,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-noise-25",
+          "crossings": 41,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-noise-50",
+          "crossings": 36,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-horizon-tilt-3",
+          "crossings": 26,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-horizon-tilt-8",
+          "crossings": 11,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-excess-headroom-0.5",
+          "crossings": 17,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-joint-crop-wrist-1",
+          "crossings": 63,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-joint-crop-knee-1",
+          "crossings": 32,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s005-joint-crop-neck-1",
+          "crossings": 27,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-defocus-blur-1",
+          "crossings": 12,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-defocus-blur-3",
+          "crossings": 11,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-defocus-blur-6",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-motion-blur-9",
+          "crossings": 7,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-motion-blur-21",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-motion-blur-41",
+          "crossings": 5,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-underexposure--2.5",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-underexposure--1.5",
+          "crossings": 6,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-overexposure-1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-overexposure-2.5",
+          "crossings": 20,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-noise-25",
+          "crossings": 28,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-noise-50",
+          "crossings": 5,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-horizon-tilt-3",
+          "crossings": 8,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-horizon-tilt-8",
+          "crossings": 15,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-excess-headroom-0.5",
+          "crossings": 18,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-head-top-crop-0.2",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-face-highlight-clipping-2.5",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-joint-crop-wrist-1",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s006-joint-crop-knee-1",
+          "crossings": 17,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-defocus-blur-1",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-defocus-blur-3",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-defocus-blur-6",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-motion-blur-9",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-motion-blur-21",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-motion-blur-41",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-underexposure--2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-underexposure--1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-overexposure-1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-overexposure-2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-noise-25",
+          "crossings": 43,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-noise-50",
+          "crossings": 13,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-horizon-tilt-3",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-horizon-tilt-8",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-head-top-crop-0.2",
+          "crossings": 8,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-face-highlight-clipping-2.5",
+          "crossings": 0,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s007-joint-crop-wrist-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-defocus-blur-1",
+          "crossings": 6,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-defocus-blur-3",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-defocus-blur-6",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-motion-blur-9",
+          "crossings": 13,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-motion-blur-21",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-motion-blur-41",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-underexposure--2.5",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-underexposure--1.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-overexposure-1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-overexposure-2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-noise-25",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-noise-50",
+          "crossings": 1,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-horizon-tilt-3",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-horizon-tilt-8",
+          "crossings": 18,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-excess-headroom-0.5",
+          "crossings": 20,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-head-top-crop-0.2",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-face-highlight-clipping-2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s008-joint-crop-wrist-1",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-defocus-blur-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-defocus-blur-3",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-defocus-blur-6",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-motion-blur-9",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-motion-blur-21",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-motion-blur-41",
+          "crossings": 10,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-underexposure--2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-underexposure--1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-overexposure-2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-noise-25",
+          "crossings": 6,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-noise-50",
+          "crossings": 3,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-horizon-tilt-3",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-horizon-tilt-8",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-excess-headroom-0.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-head-top-crop-0.2",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-joint-crop-wrist-1",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s009-joint-crop-neck-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-defocus-blur-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-defocus-blur-3",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-defocus-blur-6",
+          "crossings": 5,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-motion-blur-9",
+          "crossings": 11,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-motion-blur-21",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-motion-blur-41",
+          "crossings": 2,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-underexposure--2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-underexposure--1.5",
+          "crossings": 2,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-overexposure-1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-overexposure-2.5",
+          "crossings": 33,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-noise-25",
+          "crossings": 16,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-noise-50",
+          "crossings": 26,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-horizon-tilt-3",
+          "crossings": 6,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-horizon-tilt-8",
+          "crossings": 4,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-excess-headroom-0.5",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-head-top-crop-0.2",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-face-highlight-clipping-2.5",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-joint-crop-wrist-1",
+          "crossings": 13,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s010-joint-crop-neck-1",
+          "crossings": 7,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-defocus-blur-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-defocus-blur-3",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-defocus-blur-6",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-motion-blur-9",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-motion-blur-21",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-motion-blur-41",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-underexposure--2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-underexposure--1.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-overexposure-1.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-overexposure-2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-noise-25",
+          "crossings": 9,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-noise-50",
+          "crossings": 25,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-horizon-tilt-3",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-horizon-tilt-8",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-excess-headroom-0.5",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-head-top-crop-0.2",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-face-highlight-clipping-2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-joint-crop-wrist-1",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-joint-crop-knee-1",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-joint-crop-ankle-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s011-joint-crop-neck-1",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-defocus-blur-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-defocus-blur-3",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-defocus-blur-6",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-motion-blur-9",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-motion-blur-21",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-motion-blur-41",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-underexposure--2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-underexposure--1.5",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-overexposure-1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-overexposure-2.5",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-noise-25",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-noise-50",
+          "crossings": 6,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-horizon-tilt-3",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-horizon-tilt-8",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-head-top-crop-0.2",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-face-highlight-clipping-2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-joint-crop-wrist-1",
+          "crossings": 6,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-joint-crop-knee-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-joint-crop-ankle-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s012-joint-crop-neck-1",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-defocus-blur-1",
+          "crossings": 1,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-defocus-blur-3",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-defocus-blur-6",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-motion-blur-9",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-motion-blur-21",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-motion-blur-41",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-overexposure-1.5",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-overexposure-2.5",
+          "crossings": 7,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-noise-25",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-noise-50",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-horizon-tilt-3",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-horizon-tilt-8",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-excess-headroom-0.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-head-top-crop-0.2",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-face-highlight-clipping-2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-joint-crop-wrist-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s013-joint-crop-neck-1",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-defocus-blur-1",
+          "crossings": 13,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-defocus-blur-6",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-motion-blur-9",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-motion-blur-21",
+          "crossings": 9,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-motion-blur-41",
+          "crossings": 19,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-underexposure--2.5",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-underexposure--1.5",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-overexposure-1.5",
+          "crossings": 32,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-overexposure-2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-noise-25",
+          "crossings": 11,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s014-noise-50",
+          "crossings": 11,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-horizon-tilt-3",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-horizon-tilt-8",
+          "crossings": 33,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-excess-headroom-0.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-head-top-crop-0.2",
+          "crossings": 11,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-face-highlight-clipping-2.5",
+          "crossings": 10,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-joint-crop-wrist-1",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s014-joint-crop-neck-1",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-defocus-blur-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-defocus-blur-3",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-defocus-blur-6",
+          "crossings": 0,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-motion-blur-9",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-motion-blur-21",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-motion-blur-41",
+          "crossings": 11,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-underexposure--2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-underexposure--1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-overexposure-1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-overexposure-2.5",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-noise-50",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-horizon-tilt-3",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-horizon-tilt-8",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-excess-headroom-0.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-head-top-crop-0.2",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-face-highlight-clipping-2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s015-joint-crop-neck-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-defocus-blur-1",
+          "crossings": 11,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-defocus-blur-3",
+          "crossings": 101,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s016-defocus-blur-6",
+          "crossings": 39,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-motion-blur-9",
+          "crossings": 32,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-motion-blur-21",
+          "crossings": 11,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-motion-blur-41",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-underexposure--2.5",
+          "crossings": 38,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-underexposure--1.5",
+          "crossings": 20,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-overexposure-1.5",
+          "crossings": 24,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-overexposure-2.5",
+          "crossings": 26,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-noise-25",
+          "crossings": 5,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-noise-50",
+          "crossings": 68,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-horizon-tilt-3",
+          "crossings": 36,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s016-horizon-tilt-8",
+          "crossings": 16,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-excess-headroom-0.5",
+          "crossings": 25,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-joint-crop-wrist-1",
+          "crossings": 36,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s016-joint-crop-neck-1",
+          "crossings": 50,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-defocus-blur-1",
+          "crossings": 44,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-defocus-blur-3",
+          "crossings": 45,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-defocus-blur-6",
+          "crossings": 32,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-motion-blur-9",
+          "crossings": 23,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-motion-blur-21",
+          "crossings": 64,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-motion-blur-41",
+          "crossings": 25,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-underexposure--2.5",
+          "crossings": 78,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-underexposure--1.5",
+          "crossings": 69,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-overexposure-1.5",
+          "crossings": 94,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-overexposure-2.5",
+          "crossings": 29,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-noise-25",
+          "crossings": 37,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s017-noise-50",
+          "crossings": 410,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-horizon-tilt-3",
+          "crossings": 75,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-horizon-tilt-8",
+          "crossings": 39,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-excess-headroom-0.5",
+          "crossings": 52,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-joint-crop-wrist-1",
+          "crossings": 20,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-joint-crop-knee-1",
+          "crossings": 29,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-joint-crop-neck-1",
+          "crossings": 33,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s018-noise-50",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-defocus-blur-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-defocus-blur-3",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-defocus-blur-6",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-motion-blur-9",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-motion-blur-21",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-motion-blur-41",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-underexposure--2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-underexposure--1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-overexposure-1.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-overexposure-2.5",
+          "crossings": 10,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-noise-25",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-noise-50",
+          "crossings": 10,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-horizon-tilt-3",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-horizon-tilt-8",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-excess-headroom-0.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-head-top-crop-0.2",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-face-highlight-clipping-2.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-joint-crop-wrist-1",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s019-joint-crop-neck-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-defocus-blur-1",
+          "crossings": 5,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-defocus-blur-3",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-defocus-blur-6",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-motion-blur-9",
+          "crossings": 12,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-motion-blur-21",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-motion-blur-41",
+          "crossings": 2,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-underexposure--2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-underexposure--1.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-overexposure-1.5",
+          "crossings": 4,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-overexposure-2.5",
+          "crossings": 25,
+          "classificationChanged": true,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-noise-25",
+          "crossings": 16,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-noise-50",
+          "crossings": 5,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-horizon-tilt-3",
+          "crossings": 12,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-horizon-tilt-8",
+          "crossings": 6,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-head-top-crop-0.2",
+          "crossings": 3,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-face-highlight-clipping-2.5",
+          "crossings": 33,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s020-joint-crop-wrist-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s020-joint-crop-neck-1",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        }
+      ]
+    },
+    {
+      "baseline": "ray",
+      "reference": "Windows CPU",
+      "images": 388,
+      "matchedPeople": 1194,
+      "unmatchedPeople": 0,
+      "reorderedPeople": 0,
+      "matchedFaces": 278,
+      "unmatchedFaces": 0,
+      "statistics": {
+        "topiq": {
+          "count": 388,
+          "max": 4.172325134277344e-7,
+          "mean": 1.0277192617200085e-7
+        },
+        "personBox": {
+          "count": 4776,
+          "max": 6.705522537231445e-7,
+          "mean": 1.2283863881843874e-8
+        },
+        "keypointConfidence": {
+          "count": 158802,
+          "max": 0.0012921392917633057,
+          "mean": 0.000017773159301226477
+        },
+        "keypointCoordinateBothAtLeast0.3": {
+          "count": 249712,
+          "max": 0.027108505048090592,
+          "mean": 0.0000013966888418488623
+        },
+        "keypointCoordinateBothAtLeast0.5": {
+          "count": 193640,
+          "max": 0.018125273414563603,
+          "mean": 0.0000010164835074108655
+        },
+        "keypointCoordinateBothAtLeast0.7": {
+          "count": 136006,
+          "max": 0.0036140095611616463,
+          "mean": 7.738422860979431e-7
+        },
+        "keypointCoordinateBothAtLeast0.75": {
+          "count": 114794,
+          "max": 0.0036140095611616463,
+          "mean": 7.301926515050884e-7
+        },
+        "faceBox": {
+          "count": 1112,
+          "max": 0,
+          "mean": 0
+        }
+      },
+      "classificationChangedImages": 0,
+      "confidenceCrossings": 16,
+      "changed": [
+        {
+          "id": "s006",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s001-noise-50",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s004-noise-50",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s005-defocus-blur-3",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s005-noise-50",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s005-excess-headroom-0.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s008-motion-blur-41",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s010-horizon-tilt-3",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s014-motion-blur-21",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s014-horizon-tilt-8",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s016-horizon-tilt-3",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s016-joint-crop-wrist-1",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s016-joint-crop-neck-1",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s017-defocus-blur-1",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s017-overexposure-1.5",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s017-overexposure-2.5",
+          "crossings": 0,
+          "classificationChanged": false,
+          "evidenceChanged": true
+        },
+        {
+          "id": "s017-noise-25",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s017-noise-50",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        },
+        {
+          "id": "s020-head-top-crop-0.2",
+          "crossings": 1,
+          "classificationChanged": false,
+          "evidenceChanged": false
+        }
+      ]
+    }
+  ],
+  "methodology": "Greedy one-to-one box IoU >=0.5; compare clipped signal coordinates; confidence gates require both sides.",
+  "limitation": "Matching and confidence filters are diagnostic conventions, not independent accuracy ground truth."
+}

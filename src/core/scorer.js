@@ -8,12 +8,12 @@ const require = createRequire(import.meta.url);
 const ort = require("onnxruntime-node");
 export const SCORER_MODEL = "topiq-nr-onnx";
 export const SCORER_VERSION = "topiq-nr-512-v1";
-export const SCORER_CACHE_KEY = `${SCORER_MODEL}:${SCORER_VERSION}`;
+export const SCORER_CACHE_KEY = `${SCORER_MODEL}:${SCORER_VERSION}:${process.env.EAGLE_SCORER_PROVIDER || "cpu"}`;
 export const EXPECTED_SHA256 = Object.freeze({
   "topiq_nr_512.onnx": "bc1f59ca097afadb7c9343fa370d0fe47b0cfe5e21b623957f597a6f2bea08eb",
   "topiq_nr_512.onnx.data": "0ab4e4c4da5eb6461357379178e96b06ebfc11105a02c0854598d56b910b2582",
 });
-let sessionPromise;
+const sessions = new Map();
 const modelValidation = new Map();
 function modelPath(root) {
   return path.join(root, "models", "scorer", "topiq_nr_512.onnx");
@@ -49,15 +49,18 @@ async function validateModels(root) {
   return modelValidation.get(root);
 }
 async function getSession(model) {
-  if (!sessionPromise) {
-    sessionPromise = ort.InferenceSession.create(model, {
-      intraOpNumThreads: Math.min(
-        3,
-        Math.max(1, Number(process.env.EAGLE_SCORER_THREADS || 3)),
-      ),
-    });
+  const provider = process.env.EAGLE_SCORER_PROVIDER || 'cpu';
+  const key = `${model}:${provider}`;
+  if (!sessions.has(key)) {
+    const options = {
+      intraOpNumThreads: Math.min(3, Math.max(1, Number(process.env.EAGLE_SCORER_THREADS || 3))),
+    };
+    // Explicit provider requests must fail visibly rather than silently become CPU runs.
+    if (process.env.EAGLE_SCORER_PROVIDER) options.executionProviders = [provider];
+    if (provider === 'dml') { options.enableMemPattern = false; options.executionMode = 'sequential'; }
+    sessions.set(key, ort.InferenceSession.create(model, options));
   }
-  return sessionPromise;
+  return sessions.get(key);
 }
 async function tensorFor(filePath) {
   const { data } = await sharp(filePath, { failOn: "none" })

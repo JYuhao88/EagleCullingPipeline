@@ -110,7 +110,7 @@ test("disconnected start view exposes absolute command and retry hides guide aft
     "#analyzeSelected", "#analyzeAll", "#cancel", "#openRun", "#serviceGuide", "#repositoryPath", "#serviceCommand",
     "#copyServiceCommand", "#retryService", "#startService"]);
   const originalStorage = globalThis.localStorage;
-  globalThis.localStorage = { getItem: () => "/tmp/photo repo", setItem() {} };
+  globalThis.localStorage = { getItem: () => process.platform === "win32" ? "C:/photo repo" : "/tmp/photo repo", setItem() {} };
   let connected = false;
   const api = async () => {
     if (!connected) throw new Error("offline");
@@ -121,7 +121,9 @@ test("disconnected start view exposes absolute command and retry hides guide aft
     const view = createStartView({ root, api, onRun() {}, autoCheck: false });
     await view.checkHealth();
     assert.equal(root.elements["#serviceGuide"].hidden, false);
-    assert.match(root.elements["#serviceCommand"].textContent, /cd '\/tmp\/photo repo'.*--concurrency 1 --port 43210/);
+    assert.match(root.elements["#serviceCommand"].textContent, process.platform === "win32"
+      ? /Set-Location -LiteralPath 'C:\/photo repo'.*--concurrency 1 --port 43210/
+      : /cd '\/tmp\/photo repo'.*--concurrency 1 --port 43210/);
     assert.equal(root.elements["#startService"].hidden, true);
     connected = true;
     await root.elements["#retryService"].click();

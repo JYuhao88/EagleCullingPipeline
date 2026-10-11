@@ -183,12 +183,14 @@ class UploadTests(unittest.TestCase):
             {'ray_version': '2.51.1'} if path == '/api/version' else [])
         observed = [{'remote_rel': item['remote_rel'], 'complete': True,
                      'size': item['size'], 'sha256': item['sha256']}]
-        with patch.object(uploader, 'run_job', side_effect=[observed, observed, []]) as job, patch.object(upload.time, 'sleep'):
+        with patch.object(uploader, 'run_job', side_effect=[observed, observed, []]) as job, \
+                patch.object(upload.time, 'sleep'), patch.object(upload.time, 'monotonic', return_value=1):
             uploader.upload()
         uploader.http.upload.assert_not_called()
         self.assertEqual(job.call_args_list[1].args[0], 'audit')
         self.assertEqual(uploader.state['status'], 'complete')
         self.assertEqual(json.loads(uploader.receipt.read_text())['ray_version'], '2.51.1')
+        self.assertIsNone(uploader.state['sessions'][-1]['effective_MBps'])
 
     def test_resurrected_owned_record_redeleted_not_other_jobs(self):
         item = self.file()
@@ -218,6 +220,7 @@ class UploadTests(unittest.TestCase):
         self.assertEqual(uploader.state['cleanup_stable_empty_checks'], 3)
         self.assertFalse(any(call.args[:2] == ('DELETE', '/api/jobs/someone-else') for call in uploader.http.request.call_args_list))
 
+    @unittest.skipIf(__import__('os').name == 'nt', 'POSIX worker directory permission contract')
     def test_worker_partial_finalize_and_audit(self):
         item = self.file(data=b'complete')
         target = self.root / 'ceph/test/raw/example.mp4'

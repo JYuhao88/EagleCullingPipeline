@@ -45,6 +45,6 @@ assert classify('服装和背景颜色不和谐',['styling','color']) == 'color'
 named = {'0': {'title':'姿态自然','statement':'姿态应自然，避免僵硬。','severity':'hint','exceptions':['刻意的静态造型']}}
 assert build_outputs(rows, seed, named)[0]['rules'][0]['namingStatus'] == 'codex'
 `;
-  const result = spawnSync("python3", ["-c", script], { encoding: "utf8" });
+  const result = spawnSync((process.env.EAGLE_PYTHON || "python3"), ["-c", script], { encoding: "utf8" });
   assert.equal(result.status, 0, result.stderr || result.stdout);
 });

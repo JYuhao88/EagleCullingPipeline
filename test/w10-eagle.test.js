@@ -67,8 +67,54 @@ test('actual proxy rejects a write without reaching upstream and counts every re
   t.after(async () => { await close(proxy.server); await close(upstream); });
   const base = `http://127.0.0.1:${proxy.server.address().port}`;
   assert.equal((await fetch(base+'/api/item/update', {method:'POST',body:'{}'})).status,405);
+  assert.equal((await fetch(base+'/api/library/switch', {method:'POST',body:'{"libraryPath":"safe.library"}'})).status,405);
   assert.equal((await fetch(base+'/api/item/list')).status,200);
   assert.deepEqual(reached,['GET']);
-  assert.deepEqual(proxy.summary(), {'POST /api/item/update':1,'GET /api/item/list':1});
+  assert.deepEqual(proxy.summary(), {'POST /api/item/update':1,'POST /api/library/switch':1,'GET /api/item/list':1});
   assert.equal(proxy.requests[0].allowed,false);
+});
+
+test('proxy permits only explicitly listed library switches and logs a target hash', async t => {
+  const http = await import('node:http');
+  const { createReadOnlyEagleProxy } = await import('../scripts/eagle-readonly-proxy.mjs');
+  const reached = [];
+  const upstream = http.createServer(async (req, res) => {
+    let body = ''; for await (const chunk of req) body += chunk;
+    reached.push({ method: req.method, path: req.url, body: JSON.parse(body) }); res.end('{}');
+  });
+  const listen = server => new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  const close = server => new Promise(resolve => { server.close(resolve); server.closeAllConnections(); });
+  await listen(upstream);
+  const proxy = createReadOnlyEagleProxy(`http://127.0.0.1:${upstream.address().port}`,
+    { switchLibraries: ['safe.library', '未删减.library'] });
+  await listen(proxy.server);
+  t.after(async () => { await close(proxy.server); await close(upstream); });
+  const base = `http://127.0.0.1:${proxy.server.address().port}`;
+  for (const body of [{ libraryPath: 'unknown.library' }, { libraryPath: '未删减.library' },
+    { libraryPath: 'safe.library', extra: true }, { libraryPath: null }]) {
+    assert.equal((await fetch(base+'/api/library/switch', { method: 'POST', body: JSON.stringify(body) })).status,405);
+  }
+  assert.equal((await fetch(base+'/api/item/update', { method: 'POST', body: '{}' })).status,405);
+  assert.equal((await fetch(base+'/api/library/switch',
+    { method: 'POST', body: JSON.stringify({ libraryPath: 'safe.library' }) })).status,200);
+  assert.deepEqual(reached, [{ method: 'POST', path: '/api/library/switch', body: { libraryPath: 'safe.library' } }]);
+  const entry = proxy.requests.at(-1);
+  assert.equal(entry.kind, 'library-switch'); assert.match(entry.targetHash, /^[a-f0-9]{64}$/);
+  assert.equal(JSON.stringify(entry).includes('safe.library'),false);
+});
+
+test('proxy fails closed when its durable request audit cannot be written', async t => {
+  const http = await import('node:http');
+  const { createReadOnlyEagleProxy } = await import('../scripts/eagle-readonly-proxy.mjs');
+  let reached = false;
+  const upstream = http.createServer((req, res) => { reached = true; res.end('{}'); });
+  const listen = server => new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  const close = server => new Promise(resolve => { server.close(resolve); server.closeAllConnections(); });
+  await listen(upstream);
+  const proxy = createReadOnlyEagleProxy(`http://127.0.0.1:${upstream.address().port}`,
+    { auditRequest: async () => { throw new Error('Disk unavailable'); } });
+  await listen(proxy.server);
+  t.after(async () => { await close(proxy.server); await close(upstream); });
+  assert.equal((await fetch(`http://127.0.0.1:${proxy.server.address().port}/api/library/info`)).status,503);
+  assert.equal(reached,false); assert.equal(proxy.requests[0].allowed,false);
 });

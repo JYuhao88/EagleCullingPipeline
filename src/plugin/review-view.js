@@ -88,9 +88,10 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
       .map((unitId, index) => renderUnitThumbnail(viewState, group, unitId, index)));
     root.querySelector("#group").classList.toggle("face-comparing", Boolean(comparing || magnifier));
     root.querySelector("#group").classList.toggle("native-comparing", magnifier);
-    renderList(root.querySelector("#group"), ids
+    renderList(root.querySelector("#group"), ids.length ? ids
       .map((unitId, index) => renderUnit(viewState, group, unitId, index,
-        magnifier ? [faceRows[magnifierFace]] : comparing ? faceRows : null)));
+        magnifier ? [faceRows[magnifierFace]] : comparing ? faceRows : null))
+      : ['<p class="review-empty">这个筛选下没有照片组。请在顶部切换「全部（含单张组）」，或返回主页开始新的分析。</p>']);
     root.querySelector("#unitStrip .focus")?.scrollIntoView?.({ block: "nearest", inline: "nearest" });
     root.querySelector("#review").classList.toggle("zoomed", viewState.zoomed);
     void expose();

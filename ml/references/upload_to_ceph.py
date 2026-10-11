@@ -7,7 +7,7 @@ if 'ml.common.private_env' not in _private_sys.modules:
 from ml.common.private_env import worker_source, require_path, dashboard_url, merge_private_env
 import argparse
 import base64
-import fcntl
+from ml.common import file_lock as fcntl
 import hashlib
 import http.client
 import json
@@ -502,12 +502,13 @@ class Uploader:
         finally:
             session['elapsed_seconds'] = time.monotonic() - started
             session['finished_at'] = time.strftime('%Y-%m-%dT%H:%M:%S%z')
-            session['effective_MBps'] = session['uploaded_bytes'] / 1e6 / session['elapsed_seconds']
+            session['effective_MBps'] = (session['uploaded_bytes'] / 1e6 / session['elapsed_seconds']
+                                         if session['elapsed_seconds'] > 0 else None)
             session['put_MBps'] = session['uploaded_bytes'] / 1e6 / session['put_seconds'] if session['put_seconds'] else 0
             self.persist()
             save(self.receipt, {**self.state, 'dashboard': self.http.dashboard, 'files': self.files,
                                 'payload_cap_bytes': CAP, 'http_limit_bytes': 100 * 1024 * 1024,
-                                'nice': os.getpriority(os.PRIO_PROCESS, 0)})
+                                'nice': os.getpriority(os.PRIO_PROCESS, 0) if hasattr(os, 'getpriority') else None})
             self.lock.close()
 
 

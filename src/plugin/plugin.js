@@ -1,4 +1,5 @@
 import { createLearningPanel } from "./learning-panel.js";
+import { createReviewUx } from "./review-ux.js";
 import { createApi } from "./api.js";
 import { createReviewView } from "./review-view.js";
 import { createStartView } from "./start-view.js";
@@ -23,6 +24,7 @@ import { rankedUnitIds, selectionTargets } from "./selection.js";
 import { createFeedbackRecorder, defaultRejectReasons, winnerChanges, escapeHtml } from "./feedback.js";
 
 const root = document;
+const reviewUx = createReviewUx({ root });
 let viewState = { ...initialState };
 let api = createApi(viewState.base);
 let reviewView = null;
@@ -206,6 +208,7 @@ async function openRun(runId) {
     await learningPanel?.refresh();
     renderDecisions();
     renderPageControls();
+    reviewUx.enter();
   } catch (error) {
     root.querySelector("#health").textContent = `加载失败：${error.message}`;
     throw error;
@@ -217,6 +220,7 @@ async function openRun(runId) {
 function closeReview() {
   root.querySelector("#review").hidden = true;
   root.querySelector("#start").hidden = false;
+  void startView.checkHealth();
 }
 
 async function saveDecision(unitId, action, metadata = {}, explicitTargets = null) {
@@ -365,6 +369,8 @@ async function undoLast() {
 }
 
 root.addEventListener("keydown", async event => {
+  // A modal owns the keyboard; review shortcuts resume after it closes.
+  if (root.querySelector('dialog[open]:not(#previewDialog)')) return;
   if (previewUnitId && event.key === "Escape") {
     event.preventDefault();
     closePreview();
@@ -457,12 +463,13 @@ root.querySelector("#base").addEventListener("change", event => {
   viewState.base = event.target.value.replace(/\/$/, "");
   localStorage.setItem("eagle-culling-base", viewState.base);
   api = createApi(viewState.base);
+  void startView.checkHealth();
 });
 
 const startView = createStartView({ root, api, getApi: () => api, onRun: openRun, autoCheck: false });
 reviewView = createReviewView({ root, state, setState,
   onFilter: filter => loadReviewPage(0, filter).catch(error => {
-    root.querySelector("#health").textContent = `加载失败：${error.message}`; }),
+    root.querySelector("#writeback").textContent = `暂时无法加载照片组：${error.message}。请检查服务连接后重新选择筛选。`; }),
   getRunId: () => viewState.runId, onBack: closeReview, onDecision: saveDecision,
   onPreview: openPreview, getCatalog: () => catalog,
   onExposure: exposure => api(`/runs/${viewState.runId}/learning/exposure?groupId=${encodeURIComponent(exposure.groupId)}`, {
@@ -486,7 +493,9 @@ for (const [id, direction] of [['previousPage', -1], ['nextPage', 1]]) {
   root.querySelector(`#${id}`)?.addEventListener('click', () => {
     const page = viewState.data.page;
     const cursor = direction < 0 ? Math.max(0, page.cursor - page.limit) : Number(page.nextCursor);
-    loadReviewPage(cursor).catch(error => { root.querySelector('#health').textContent = error.message; });
+    loadReviewPage(cursor).catch(error => {
+      root.querySelector('#writeback').textContent = `暂时无法翻页：${error.message}。请检查服务连接后重试。`;
+    });
   });
 }
 window.loadRun = openRun;

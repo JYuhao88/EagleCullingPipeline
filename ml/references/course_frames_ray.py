@@ -14,7 +14,7 @@ import os
 import argparse
 import base64
 from contextlib import contextmanager
-import fcntl
+from ml.common import file_lock as fcntl
 import gzip
 import hashlib
 import json
