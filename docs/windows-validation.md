@@ -289,3 +289,116 @@ GIT_EDITOR=true git merge --continue
 ```
 
 本轮最终公开检查：`node scripts/check-public-release.mjs` 扫描473文件、0命中；`git diff --check`通过。
+
+## w16 GitHub 克隆安装与更新演练（2026-10-12）
+
+本节 `<validation-root>` 表示机器上既有的安装根目录；真实路径和恢复命令只写在
+该机器不入库的 `PROGRESS.md`、本地脚本和日志中。旧 `repo` 保留，没有移动或删除。
+Mac 本轮只追加本节，没有修改仓库源码、模型、依赖清单或 Git 提交，没有 push。
+
+在新建的 `app` 执行公开仓库克隆、`git checkout --detach v1.2.0` 和
+`npm.cmd ci --ignore-scripts`；HEAD 为 `4377170759f49af02c2c4e4a6bf72a90830f1eec`。
+安装成功，sharp 实际生成 PNG、ONNX Node 模块加载成功；未放开安装脚本。
+复制旧 `config/local.json`、`models/`、完整 `data/`；本地配置中的 `EAGLE_PYTHON`
+改为指向保留的旧虚拟环境，避免迁移 Windows venv 启动器。旧 EXIF 工具设置保留。
+这些内容由 `.gitignore` 忽略，`git status --porcelain --untracked-files=all` 为空。
+
+旧服务的数据根是 `data/windows-user`，CLI 默认读取 `data/runs`、`data/cache`，
+因此额外复制该用户目录的 runs/cache 到默认位置，原复制目录也保留。
+SHA-256 逐文件比较：12 个模型（601299723 bytes）、1280 个用户数据文件
+（94590071 bytes）、映射到默认 runs 的 10 个文件（53585135 bytes）均零差异。
+`GET /runs` 能看到旧用户服务的全部两条历史 run。旧用户目录没有 L1 learning 目录，
+不存在可迁移的 L1 记录；已有决定随 run 文件复制，不声称额外生成或完成学习。
+其它验证数据仍保存在复制的原目录层级，没有混入用户任务列表。
+
+切换前连续三次确认 `/runs/status.active=null`，每次关闭检查请求连接后确认
+43125 无 Established 连接；复制刷新后、停止前再次复查。只停止核实过命令行的旧服务。
+新服务从 `app` 根目录通过 CIM 脱离 SSH 启动，使用：
+
+```powershell
+node --max-old-space-size=2048 --import ./data/service-runtime.mjs src/cli.js serve --port 43125 --concurrency 1
+```
+
+启动脚本设置 BelowNormal、DirectML scorer/DINO/pose、sharp 并发 2、PYTHONUTF8。
+忽略目录内的本地 `service-runtime.mjs` 将 FaceWorkerPool 的 worker 上限设为 1，
+保留旧服务的 worker 设置；不修改受版本控制源码，更新重启保留该启动参数。
+`/health` 成功，`/update/status` 为 currentVersion=v1.2.0、latestVersion=v1.2.0、
+canUpdate=true、checkError=null。初次读取曾命中复制来的旧 origin 失败缓存，
+仅删除新安装 `data/update-status.json` 后重新检查公开 origin，旧目录缓存未改。
+
+没有配置开机任务；重启或重登后可运行根目录的 `w16-launch.ps1` 恢复脱离 SSH 的服务，
+它在 43125 已有监听时拒绝重复启动。具体命令已写入该机器 `PROGRESS.md`。
+用户还需要在 Eagle 移除旧插件，再「导入本地项目」选择
+`<validation-root>/app/src/plugin`，之后使用插件内自动更新。没有在 Eagle 宿主中自动点击。
+
+隔离演练在 `update-drill` 另建公开克隆并 checkout v1.2.0，随后仅将演练 origin
+改为本地 bare 仓库，测试 tag v1.2.1 只推送到该 bare 仓库。
+一次性入口采用 `test/updater.test.js` 已有的 `acceptOrigin` 注入方式，
+配合真实 `restartService`/`candidateService` 和 HTTP 更新路由；不改克隆源码。
+依赖未变化的测试 tag 只修改 package/插件版本及测试说明，保留原 lockfile，
+这是更新机制 fixture，不是符合正式发布版本同步规则的新 Release。
+43145 上检查→更新→重启→回退全部通过：两个 POST 均返回 202，
+更新与回退最终 phase=completed，版本分别为 v1.2.1、v1.2.0，
+健康检查的候选随机标识发生两次变化，验证真实进程接管而非模拟重启。
+保留测试决定/学习标记文件，回退后 Git 工作区干净；演练服务已停、目录已删。
+
+额外的 lockfile 变化演练两次失败：服务已加载 sharp 的 `libvips-42.dll`，
+`npm.cmd ci --ignore-scripts` 在 unlink DLL 时返回 EPERM（errno -4048），
+恢复旧依赖的 npm ci 同样失败。首次安装没有该问题；没有放开脚本或修改仓库代码来绕过。
+**涉及 lockfile 改变的 Windows 自动更新与依赖恢复未通过**，不能将上述无依赖变化
+演练当作全场景通过。生产 43125 没有参与演练，不受这次依赖失败影响。
+未来此类更新需要维护者修复安装/进程顺序，或在服务空闲、停止后手动重装依赖；
+本轮没有在生产安装制造新的 tag 或执行真实版本升级。
+失败和成功证据保留在机器根目录 `logs/w16-drill-lock-change.json`、
+`logs/w16-drill.json`、`logs/w16-drill-update-logs/`，复制与最终状态另有对应 JSON。
+本轮未请求 Eagle 写接口、未切库、未修改 Eagle 数据或原片，未启动 Ray 作业。
+
+收尾真实验证命令与结果：
+
+```sh
+EAGLE_PYTHON=python3 nice -n 15 node --max-old-space-size=2048 --test --test-concurrency=1 --test-skip-pattern='fixture face detection recall|fixture grouping reaches'
+```
+
+Mac Node 回归 411 pass、0 fail、1 skip，共 412 项，194.806 秒；
+跳过的是本地 Python/姿态模型不可用的 JSONL 烟雾测试。
+Mac cache-only bench 曾命中 0/388 uncached，但停在 MediaPipe 人脸 worker 初始化，
+主动中止（exit 130），没有生成报告，**该次 Mac 质量比较未完成**。
+没有绕过原函数、修改缓存签名或硬编码指标。
+随后在 Windows 新克隆串行真实运行：
+
+```powershell
+$env:EAGLE_PYTHON=(Resolve-Path '../repo/python_worker/.venv/Scripts/python.exe').Path
+$env:EAGLE_SCORER_PROVIDER='dml'
+$env:EAGLE_DINO_PROVIDER='dml'
+$env:EAGLE_POSE_PROVIDER='DmlExecutionProvider'
+$env:EAGLE_BENCH_CACHE_ONLY='1'
+node --max-old-space-size=2048 scripts/bench.mjs --compare <baseline.json>
+```
+
+`<baseline.json>` 是实际传入的最新清单一致报告
+`2026-10-11T18-16-24-560Z/report.json` 的副本；复制的是比较输入，没有复制旧报告充当输出。
+Windows 进程 BelowNormal、Node heap 2048 MiB，开始前确认用户无活动分析并持有本次 GPU 预约锁，
+结束释放预约。实际 exit 0，0/388 uncached，没有整批本地冷推理。
+新报告为 `app/data/cache/bench/reports/2026-10-11T18-27-52-486Z/report.json`，
+manifest SHA-256 为 `64fae9780400401ccfac34051101cdac4b0514aa69c5da919f2f9d1246828c48`。
+偏好准确率 354/368、严重 gate 101/112、源图误淘汰 1/20，三项 delta=0，
+368 行 unchangedRows=true，warnings=[]；**本清单质量门槛通过**。
+这证明固定清单缓存回放与 scorer 健康复查，不是全库模型推理验收。
+
+Windows 使用配置指向的原环境执行
+`python -B -m unittest discover -s python_worker -p test_face_regions.py`：3/3 通过。
+MediaPipe/ONNX 导入通过，可用 providers 为 DmlExecutionProvider、CPUExecutionProvider。
+旧环境没有可选 Torch；没有安装额外依赖或验证可选 Torch worker。
+最终复查用户服务 PID 36916、BelowNormal、active=null、两条历史 run 可见，
+currentVersion=v1.2.0、canUpdate=true、checkError=null，app Git 状态为空；
+43145 无监听，演练目录不存在，旧 repo 保留。手工 Eagle 宿主重新导入及实际审阅尚未完成，
+留给用户执行；没有在用户宿主自动点击或制造真实分析任务。
+Mac 所有命令请求 nice 15，沙箱拒绝调整优先级；Windows 使用 BelowNormal。
+最终 `nice -n 15 node scripts/check-public-release.mjs`：480 文件、0 命中；
+`nice -n 15 git diff --check` 通过。Mac tracked 改动仅本文件，未提交、未 push。
+
+## w17-depswap 针对性复验（Windows）
+
+在独立临时演练目录和端口 `43145` 完成了 `v1.2.0`（真实 `node_modules`）→ `v1.2.1`（仅版本变化）→ `v1.2.2` → `v1.2.3` → `v1.2.4` 的连续更新；后三级每次只改变 lockfile 标记，服务运行期间已加载 sharp。每次更新后 `/health` 正常、`/update/status` 为 `completed`，根 `node_modules` 为 Junction，当前依赖目录存在，上一版依赖目录仍保留。依赖目录按 mtime 保留并保护当前及上一版目标；首次真实目录迁移留下的旧目录也未被删除。
+
+从 `v1.2.4` 回退到 `v1.2.3` 成功，Junction 指回仍存在的上一版依赖目录，服务健康。演练服务通过 Windows Scheduled Task 脱离 SSH 启动，断开 SSH 后重新连接仍可访问 `/health`。演练服务、任务、临时目录和端口监听已清理；未触碰用户服务端口 `43125` 或固定应用目录。

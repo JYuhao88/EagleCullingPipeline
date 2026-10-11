@@ -2,6 +2,7 @@ import { spawn } from 'node:child_process';
 import { open } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import { lowerNode } from '../core/update-process.js';
+import { DependencyStore } from '../core/dependency-store.js';
 
 async function health(port, token) {
   const response = await fetch(`http://127.0.0.1:${port}/health`, { signal: AbortSignal.timeout(3000) });
@@ -25,24 +26,31 @@ export function restartService(instance, {
   cwd = process.cwd(), port, args = process.argv.slice(2), entry = process.argv[1], exit = () => process.exit(0),
   execArgs = process.execArgv.filter(value => !value.startsWith('--inspect')),
 } = {}) {
-  return async ({ logFile }) => {
+  return async ({ logFile, dependency = null }) => {
     const token = randomUUID();
     const log = await open(logFile, 'a');
     const nodeArgs = ['--max-old-space-size=2048', ...execArgs, entry, ...args];
     const posix = process.platform !== 'win32';
-    const child = spawn(posix ? 'nice' : process.execPath,
-      posix ? ['-n', '15', process.execPath, ...nodeArgs] : nodeArgs, {
-        cwd, env: { ...process.env, EAGLE_UPDATE_CANDIDATE: token },
-        stdio: ['ignore', log.fd, log.fd, 'ipc'], detached: true,
-      });
+    let child;
     let released = false;
     try {
+      // A real node_modules directory may contain locked native DLLs. Release the
+      // old service before renaming it; junction installs can switch while it runs.
+      if (dependency?.plan?.rootKind === 'directory') {
+        await instance.close();
+        released = true;
+        await dependency.activate();
+      } else if (dependency) await dependency.activate();
+      child = spawn(posix ? 'nice' : process.execPath,
+        posix ? ['-n', '15', process.execPath, ...nodeArgs] : nodeArgs, {
+          cwd, env: { ...process.env, EAGLE_UPDATE_CANDIDATE: token },
+          stdio: ['ignore', log.fd, log.fd, 'ipc'], detached: true,
+        });
       lowerNode(child);
       child.on('error', () => {});
       const ready = await message(child, 'update-ready');
       await health(ready.port, token);
-      await instance.close();
-      released = true;
+      if (!released) { await instance.close(); released = true; }
       const promoted = message(child, 'update-promoted');
       child.send({ type: 'update-promote', port });
       await promoted;
@@ -60,8 +68,11 @@ export function restartService(instance, {
         },
       };
     } catch (error) {
-      child.kill('SIGKILL');
-      await new Promise(resolve => !child.pid || child.exitCode !== null ? resolve() : child.once('exit', resolve));
+      if (child) {
+        child.kill('SIGKILL');
+        await new Promise(resolve => !child.pid || child.exitCode !== null ? resolve() : child.once('exit', resolve));
+      }
+      if (dependency) { try { await dependency.restore(); } catch { /* recovery below keeps old service available */ } }
       if (released) await instance.listen();
       throw error;
     } finally { await log.close(); }
@@ -71,6 +82,10 @@ export function restartService(instance, {
 export async function candidateService(instance) {
   const token = process.env.EAGLE_UPDATE_CANDIDATE;
   if (!token || !process.send) return false;
+  // The first fixed release may start with a legacy real node_modules. Migrate
+  // it after imports have completed; loaded modules keep using the renamed path.
+  try { await new DependencyStore({ cwd: process.cwd(), run: async () => {} }).migrateExisting(); }
+  catch { /* A locked Windows directory is left in place for the next handoff. */ }
   await new Promise((resolve, reject) => {
     instance.server.once('error', reject);
     instance.server.listen(0, '127.0.0.1', resolve);

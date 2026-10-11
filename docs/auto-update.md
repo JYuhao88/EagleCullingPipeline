@@ -29,7 +29,13 @@ fetch 后验证目标是 tag 对应提交、属于 origin/master 历史，并验
 `data/update-history.json` 保存上一提交；「回退到上一版」执行相同的安全检查、依赖安装和重启。
 回退成功后上一版本成为刚离开的版本，可再次切换。
 
-仅当 lockfile 改变时执行 `npm ci --ignore-scripts`。这阻止项目和依赖安装脚本，
+仅当 lockfile 改变时执行 `npm ci --ignore-scripts`。安装不会覆盖运行中的根 `node_modules`：
+更新器按 `package-lock.json` 的 SHA-256 将依赖暂存到 `data/deps/<hash>/node_modules`，
+再把仓库根 `node_modules` 切换为指向该目录的目录联接（Windows junction）或目录符号链接（macOS）。
+切换只删除联接本身，旧依赖目录保留给已经加载 DLL 的旧进程；保留最近两个哈希目录，
+其余目录删除失败会跳过并在下一次更新重试。首次发现真实的 `node_modules` 目录时，
+更新重启流程先释放旧服务，再改名保留该目录并建立联接；候选启动失败会恢复原目录并重新拉起旧服务。
+这阻止项目和依赖安装脚本，
 但部分原生依赖可能依赖安装脚本，候选服务启动失败时会恢复旧提交并重装旧 lockfile。
 不要为了通过健康检查自动放开脚本；此类依赖应由维护者提供无需脚本的发布或另行说明安装步骤。
 Python requirements/pyproject/poetry 清单改变只提示，绝不自动安装。
@@ -53,7 +59,8 @@ POSIX 子进程使用 nice 15，Windows 使用 BelowNormal；npm 使用 npm.cmd�
 
 ## 发布前检查
 
-发布者同时修改 `package.json`、`src/plugin/manifest.json` 和 lockfile 里的项目版本，
+发布者同时修改 `package.json` 与 `src/plugin/manifest.json` 的版本；依赖未变时不要改动 `package-lock.json`（包括其中的项目版本字段），
+因为任何 lockfile 字节变化都会触发依赖重装，而 v1.2.0 的更新器在 Windows 上就地重装会失败。
 新增 `docs/release-notes-vX.Y.Z.md`，然后运行：
 
 ```sh

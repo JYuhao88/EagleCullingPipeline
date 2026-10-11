@@ -4,6 +4,7 @@ import { mkdir, readFile, writeFile, rename, open, unlink, realpath } from 'node
 import { createWriteStream, existsSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import { lowPriority } from './update-process.js';
+import { DependencyStore } from './dependency-store.js';
 
 export const UPDATE_INTERVAL = 6 * 60 * 60 * 1000;
 export const REPOSITORY = 'https://github.com/JYuhao88/EagleCullingPipeline';
@@ -34,15 +35,15 @@ export class Updater {
     this.data = path.join(cwd, 'data');
     this.phase = 'idle';
     this.error = null;
-    this.run = run || ((command, args) => this.command(command, args));
+    this.run = run || ((command, args, options) => this.command(command, args, options));
   }
-  async command(command, args) {
+  async command(command, args, { cwd = this.cwd } = {}) {
     await mkdir(path.join(this.data, 'logs'), { recursive: true });
     this.logFile ||= path.join(this.data, 'logs', `update-${this.now()}-${randomUUID()}.log`);
     const log = createWriteStream(this.logFile, { flags: 'a' });
     log.write(`${command} ${args.join(' ')}\n`);
     return new Promise((resolve, reject) => {
-      const child = lowPriority(command, args, { cwd: this.cwd, detached: process.platform !== 'win32',
+      const child = lowPriority(command, args, { cwd, detached: process.platform !== 'win32',
         env: { ...process.env, GIT_TERMINAL_PROMPT: '0' } });
       let output = '', timedOut = false;
       const timer = setTimeout(() => {
@@ -111,7 +112,10 @@ export class Updater {
       phase: this.phase === 'idle' ? history.phase || 'idle' : this.phase,
       error: this.error || history.error || null, pythonChanged: this.pythonChanged || history.pythonChanged || false };
   }
-  async install() { await this.run(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['ci', '--ignore-scripts']); }
+  async install() {
+    const store = new DependencyStore({ cwd: this.cwd, data: this.data, run: this.run });
+    return store.prepare();
+  }
   async apply({ rollback = false } = {}) {
     if (this.updating) throw new Error('正在更新，请稍候');
     this.updating = true;
@@ -119,6 +123,7 @@ export class Updater {
     this.phase = 'preparing';
     this.logFile = null;
     let original, switched = false, dependencyChanged = false, lock, handoff, needsDependencyRepair = false;
+    let dependencyStore = null, dependencyPlan = null, dependencyState = null;
     const historyFile = path.join(this.data, 'update-history.json');
     try {
       await mkdir(this.data, { recursive: true });
@@ -160,10 +165,16 @@ export class Updater {
       switched = true;
       if (dependencyChanged) {
         this.phase = 'install'; needsDependencyRepair = true;
-        await this.install(); needsDependencyRepair = false;
+        dependencyStore = new DependencyStore({ cwd: this.cwd, data: this.data, run: this.run });
+        dependencyPlan = await dependencyStore.prepare();
+        needsDependencyRepair = false;
       }
       this.phase = 'restart';
-      handoff = await this.restart({ commit, logFile: this.logFile });
+      handoff = await this.restart({ commit, logFile: this.logFile,
+        dependency: dependencyPlan ? { store: dependencyStore, plan: dependencyPlan,
+          activate: async () => { dependencyState = await dependencyStore.activate(dependencyPlan); },
+          restore: async () => dependencyStore.restore(dependencyState) } : null });
+      if (dependencyStore) await dependencyStore.prune(2, [dependencyState?.previousTarget]).catch(() => {});
       await atomic(historyFile, { previous: original, current: commit, phase: 'completed',
         pythonChanged: this.pythonChanged, updatedAt: new Date().toISOString() });
       this.phase = 'completed';
@@ -173,8 +184,14 @@ export class Updater {
       if (switched) {
         try {
           await handoff?.abort?.();
+          if (dependencyStore && dependencyState) await dependencyStore.restore(dependencyState);
           await this.git('checkout', '--no-overwrite-ignore', '--detach', original);
-          if (dependencyChanged) { needsDependencyRepair = true; await this.install(); needsDependencyRepair = false; }
+          if (dependencyChanged) {
+            needsDependencyRepair = true;
+            const restoreStore = new DependencyStore({ cwd: this.cwd, data: this.data, run: this.run });
+            await restoreStore.prepare();
+            needsDependencyRepair = false;
+          }
           this.error += '；已恢复原版本';
         } catch (recovery) { this.error += `；恢复未完成：${recovery.message}`; }
       }

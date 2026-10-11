@@ -97,10 +97,13 @@ test('npm ci failure restores original commit and dependencies', async t => {
   const { updater, git } = await fixture(t, { lockChange: true });
   const head = await git('rev-parse', 'HEAD');
   const run = updater.run; let installs = 0;
-  updater.run = (cmd, args) => {
+  updater.run = async (cmd, args, options) => {
     if (cmd.startsWith('npm')) {
+      assert.equal(args[0], 'ci');
+      assert.deepEqual(args.slice(0, 2), ['ci', '--ignore-scripts']);
       assert.deepEqual(args, ['ci', '--ignore-scripts']);
       if (++installs === 1) throw new Error('npm ci failed');
+      await mkdir(path.join(options.cwd, 'node_modules'), { recursive: true });
       return '';
     }
     return run(cmd, args);
