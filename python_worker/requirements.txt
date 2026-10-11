@@ -2,5 +2,6 @@
 pillow>=10
 numpy>=1.26
 # Windows GPU default; reports DmlExecutionProvider when available.
-onnxruntime-directml>=1.24
+onnxruntime-directml>=1.24; sys_platform == "win32"
+onnxruntime>=1.24; sys_platform != "win32"
 mediapipe>=0.10

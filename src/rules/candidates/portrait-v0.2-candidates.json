@@ -1,0 +1,3823 @@
+{
+  "contractVersion": 1,
+  "library": "portrait",
+  "version": "0.2.0-candidates",
+  "genres": [
+    "portrait",
+    "street-portrait",
+    "fashion",
+    "wedding"
+  ],
+  "rules": [
+    {
+      "id": "P-YD-TONAL-GRAY",
+      "aspect": "color",
+      "title": "明暗层次粘连",
+      "statement": "检查画面是否灰平、亮暗层次粘连，导致轮廓与质感难以区分。",
+      "exceptions": [
+        "雾景、柔和影调或灰调有意成立；不要求每张都有纯黑纯白"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 60,
+        "videos": 60,
+        "segments": 106,
+        "positive": 7,
+        "negative": 102
+      },
+      "tierContrast": {
+        "low": 11,
+        "high": 12,
+        "unknown": 83,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1JZryYTEP7",
+          "segment": 234,
+          "t": 1430.08,
+          "paraphrase": "后期色阶处理有问题，缺少纯黑纯白",
+          "text": "后期色阶处理有问题，缺少纯黑纯白",
+          "tier": null,
+          "frame": "frames/BV1JZryYTEP7/0234.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV12Ge36YEXY",
+          "segment": 546,
+          "t": 3388.31,
+          "paraphrase": "亮处和暗处都呈灰色，明暗不合理",
+          "text": "亮处和暗处都呈灰色，明暗不合理",
+          "tier": "NPC",
+          "frame": "frames/BV12Ge36YEXY/0546.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV13FUDYdEfh",
+          "segment": 98,
+          "t": 351.0,
+          "paraphrase": "红色逆光整体发灰，颜色不够饱和",
+          "text": "红色逆光整体发灰，颜色不够饱和",
+          "tier": null,
+          "frame": "frames/BV13FUDYdEfh/0098.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1ARsKzTE5p",
+          "segment": 24,
+          "t": 257.26,
+          "paraphrase": "影调集中在中间，缺少高光和阴影",
+          "text": "影调集中在中间，缺少高光和阴影",
+          "tier": null,
+          "frame": "frames/BV1ARsKzTE5p/0024.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1JZryYTEP7?t=1430.08",
+        "bilibili:BV12Ge36YEXY?t=3388.31",
+        "bilibili:BV13FUDYdEfh?t=351.0",
+        "bilibili:BV1ARsKzTE5p?t=257.26"
+      ]
+    },
+    {
+      "id": "P-YD-TILT",
+      "aspect": "framing",
+      "title": "无意歪斜",
+      "statement": "检查地平线、建筑或框架是否无意歪斜并削弱画面稳定感。",
+      "exceptions": [
+        "荷兰角、动态构图或透视汇聚有明确表达作用时可保留"
+      ],
+      "polarity": "negative",
+      "check": {
+        "by": "measure",
+        "signal": [
+          "horizontalTiltDegrees",
+          "verticalTiltDegrees",
+          "horizontalLineConfidence",
+          "verticalLineConfidence"
+        ],
+        "proxyOnly": true,
+        "limitations": "只测可靠线候选，无法识别地平线或判断歪斜意图；无可靠线时需人工复核，不提议数值阈值。"
+      },
+      "severity": "hint",
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 53,
+        "videos": 53,
+        "segments": 90,
+        "positive": 11,
+        "negative": 82
+      },
+      "tierContrast": {
+        "low": 9,
+        "high": 6,
+        "unknown": 75,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1QN2QYWEvk",
+          "segment": 222,
+          "t": 1397.3,
+          "paraphrase": "没有考虑环境和画面横平竖直，基本功不足",
+          "text": "没有考虑环境和画面横平竖直，基本功不足",
+          "tier": null,
+          "frame": "frames/BV1QN2QYWEvk/0222.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV13FUDYdEfh",
+          "segment": 117,
+          "t": 401.0,
+          "paraphrase": "歪斜构图不好看，建议先把画面端平",
+          "text": "歪斜构图不好看，建议先把画面端平",
+          "tier": null,
+          "frame": "frames/BV13FUDYdEfh/0117.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1JViYBJESE",
+          "segment": 237,
+          "t": 1302.55,
+          "paraphrase": "倾斜画面没有增强冲击力，反而难看",
+          "text": "倾斜画面没有增强冲击力，反而难看",
+          "tier": null,
+          "frame": "frames/BV1JViYBJESE/0237.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1raaZ6EE6u",
+          "segment": 45,
+          "t": 377.95,
+          "paraphrase": "平视画面采用歪斜构图，被明确否定",
+          "text": "平视画面采用歪斜构图，被明确否定",
+          "tier": "NPC",
+          "frame": "frames/BV1raaZ6EE6u/0045.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1QN2QYWEvk?t=1397.3",
+        "bilibili:BV13FUDYdEfh?t=401.0",
+        "bilibili:BV1JViYBJESE?t=1302.55",
+        "bilibili:BV1raaZ6EE6u?t=377.95"
+      ]
+    },
+    {
+      "id": "P-YD-NONFACE-HIGHLIGHTS",
+      "aspect": "exposure",
+      "title": "非面部高光细节",
+      "statement": "检查衣服、头发或环境的高光是否大面积溢出并丢失需要保留的细节。",
+      "exceptions": [
+        "纯白背景、反光点或有意高调片无需保留所有高光细节"
+      ],
+      "polarity": "negative",
+      "check": {
+        "by": "measure",
+        "signal": "clippedHighlights",
+        "proxyOnly": true,
+        "limitations": "全图代理信号包含面部，不能定位衣服、头发或判断需要保留的细节；需结合截图复核，无新增阈值。"
+      },
+      "severity": "hint",
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 46,
+        "videos": 46,
+        "segments": 80,
+        "positive": 4,
+        "negative": 77
+      },
+      "tierContrast": {
+        "low": 7,
+        "high": 6,
+        "unknown": 67,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1JViYBJESE",
+          "segment": 171,
+          "t": 976.82,
+          "paraphrase": "头发高光溢出，黑衣与白背景反差过大",
+          "text": "头发高光溢出，黑衣与白背景反差过大",
+          "tier": null,
+          "frame": "frames/BV1JViYBJESE/0171.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1K89sBEE7z",
+          "segment": 502,
+          "t": 1789.42,
+          "paraphrase": "逆光拍天空导致大面积过曝，画面很丑",
+          "text": "逆光拍天空导致大面积过曝，画面很丑",
+          "tier": null,
+          "frame": "frames/BV1K89sBEE7z/0502.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1BxM26nETV",
+          "segment": 171,
+          "t": 804,
+          "paraphrase": "头顶受光区域大面积过曝，观感怪异",
+          "text": "头顶受光区域大面积过曝，观感怪异",
+          "tier": null,
+          "frame": "frames/BV1BxM26nETV/0171.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1PUXfBgEPt",
+          "segment": 88,
+          "t": 460.68,
+          "paraphrase": "天空过曝，失去蓝色且保留意义不足",
+          "text": "天空过曝，失去蓝色且保留意义不足",
+          "tier": "NPC",
+          "frame": "frames/BV1PUXfBgEPt/0088.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1JViYBJESE?t=976.82",
+        "bilibili:BV1K89sBEE7z?t=1789.42",
+        "bilibili:BV1BxM26nETV?t=804",
+        "bilibili:BV1PUXfBgEPt?t=460.68"
+      ]
+    },
+    {
+      "id": "P-YD-BG-SEPARATION",
+      "aspect": "background",
+      "title": "人物轮廓分离",
+      "statement": "人物、衣服和发丝轮廓应与背景可区分，避免无意融成一块。",
+      "exceptions": [
+        "剪影、同色隐身或抽象表达可有意弱化轮廓"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 43,
+        "videos": 43,
+        "segments": 66,
+        "positive": 10,
+        "negative": 57
+      },
+      "tierContrast": {
+        "low": 7,
+        "high": 8,
+        "unknown": 51,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV19p7ezjEpQ",
+          "segment": 298,
+          "t": 2005.4,
+          "paraphrase": "原片整体过暖，灯光人物背景缺少色彩区分",
+          "text": "原片整体过暖，灯光人物背景缺少色彩区分",
+          "tier": null,
+          "frame": "frames/BV19p7ezjEpQ/0298.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV16sfBBdE2y",
+          "segment": 354,
+          "t": 1344.62,
+          "paraphrase": "原图色调与明暗接近，人物背景区分不足",
+          "text": "原图色调与明暗接近，人物背景区分不足",
+          "tier": "夯",
+          "frame": "frames/BV16sfBBdE2y/0354.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV12Ge36YEXY",
+          "segment": 170,
+          "t": 1342.07,
+          "paraphrase": "强光使白色翅膀融入背景，难以辨认",
+          "text": "强光使白色翅膀融入背景，难以辨认",
+          "tier": "人上人",
+          "frame": "frames/BV12Ge36YEXY/0170.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1SkPcz7EYS",
+          "segment": 211,
+          "t": 997.24,
+          "paraphrase": "影调处理欠佳，人物与背景缺少分离",
+          "text": "影调处理欠佳，人物与背景缺少分离",
+          "tier": "NPC",
+          "frame": "frames/BV1SkPcz7EYS/0211.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV19p7ezjEpQ?t=2005.4",
+        "bilibili:BV16sfBBdE2y?t=1344.62",
+        "bilibili:BV12Ge36YEXY?t=1342.07",
+        "bilibili:BV1SkPcz7EYS?t=997.24"
+      ]
+    },
+    {
+      "id": "P-YD-SCENE-CONTRAST",
+      "aspect": "light",
+      "title": "场景光比",
+      "statement": "检查亮暗反差是否过强，使所需人物或环境细节难以同时辨认。",
+      "exceptions": [
+        "强反差、剪影或戏剧性光线符合表达意图"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 30,
+        "videos": 30,
+        "segments": 50,
+        "positive": 7,
+        "negative": 43
+      },
+      "tierContrast": {
+        "low": 2,
+        "high": 3,
+        "unknown": 45,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV13FUDYdEfh",
+          "segment": 221,
+          "t": 899.0,
+          "paraphrase": "阴影太黑，高光又过亮，后期处理不好看",
+          "text": "阴影太黑，高光又过亮，后期处理不好看",
+          "tier": null,
+          "frame": "frames/BV13FUDYdEfh/0221.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1JViYBJESE",
+          "segment": 171,
+          "t": 976.82,
+          "paraphrase": "头发高光溢出，黑衣与白背景反差过大",
+          "text": "头发高光溢出，黑衣与白背景反差过大",
+          "tier": null,
+          "frame": "frames/BV1JViYBJESE/0171.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1SkPcz7EYS",
+          "segment": 354,
+          "t": 1599.36,
+          "paraphrase": "背景大窗造成光比过大，影响画面效果",
+          "text": "背景大窗造成光比过大，影响画面效果",
+          "tier": null,
+          "frame": "frames/BV1SkPcz7EYS/0354.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1HpTYzwEjf",
+          "segment": 96,
+          "t": 884.5,
+          "paraphrase": "窗外与脸部光比过大，后期难调整",
+          "text": "窗外与脸部光比过大，后期难调整",
+          "tier": null,
+          "frame": "frames/BV1HpTYzwEjf/0096.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV13FUDYdEfh?t=899.0",
+        "bilibili:BV1JViYBJESE?t=976.82",
+        "bilibili:BV1SkPcz7EYS?t=1599.36",
+        "bilibili:BV1HpTYzwEjf?t=884.5"
+      ]
+    },
+    {
+      "id": "P-YD-LIGHT-FLAT",
+      "aspect": "light",
+      "title": "光影空间感",
+      "statement": "需要立体感的画面中，检查均匀平光是否抹平人物与环境的空间层次。",
+      "exceptions": [
+        "有意平面化、无影棚拍或直闪风格"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 30,
+        "videos": 30,
+        "segments": 37,
+        "positive": 0,
+        "negative": 37
+      },
+      "tierContrast": {
+        "low": 3,
+        "high": 2,
+        "unknown": 32,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1E5Y9zEE4s",
+          "segment": 3,
+          "t": 30.59,
+          "paraphrase": "花丛和场地被整体照亮，光线缺乏层次",
+          "text": "花丛和场地被整体照亮，光线缺乏层次",
+          "tier": null,
+          "frame": "frames/BV1E5Y9zEE4s/0003.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1ARsKzTE5p",
+          "segment": 238,
+          "t": 1818.07,
+          "paraphrase": "前后光相互抵消，画面缺乏立体感",
+          "text": "前后光相互抵消，画面缺乏立体感",
+          "tier": null,
+          "frame": "frames/BV1ARsKzTE5p/0238.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1JViYBJESE",
+          "segment": 106,
+          "t": 632.4,
+          "paraphrase": "光线处理缺少立体感，明暗不理想",
+          "text": "光线处理缺少立体感，明暗不理想",
+          "tier": null,
+          "frame": "frames/BV1JViYBJESE/0106.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1oZK8z2EeM",
+          "segment": 382,
+          "t": 1865.61,
+          "paraphrase": "画面光影太平，缺少立体感和光感",
+          "text": "画面光影太平，缺少立体感和光感",
+          "tier": null,
+          "frame": "frames/BV1oZK8z2EeM/0382.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1E5Y9zEE4s?t=30.59",
+        "bilibili:BV1ARsKzTE5p?t=1818.07",
+        "bilibili:BV1JViYBJESE?t=632.4",
+        "bilibili:BV1oZK8z2EeM?t=1865.61"
+      ]
+    },
+    {
+      "id": "P-YD-COLOR-LAYERS",
+      "aspect": "color",
+      "title": "色彩缺少区分",
+      "statement": "需要色彩层次的画面中，检查是否通篇同色或冷暖趋同而难以区分内容。",
+      "exceptions": [
+        "单色、同色系或黑白表达无需冷暖对比"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 27,
+        "videos": 27,
+        "segments": 41,
+        "positive": 9,
+        "negative": 34
+      },
+      "tierContrast": {
+        "low": 1,
+        "high": 5,
+        "unknown": 35,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1HpTYzwEjf",
+          "segment": 108,
+          "t": 1178.18,
+          "paraphrase": "光线与环境色温相同，整体缺乏层次",
+          "text": "光线与环境色温相同，整体缺乏层次",
+          "tier": null,
+          "frame": "frames/BV1HpTYzwEjf/0108.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1KArCBvEwW",
+          "segment": 413,
+          "t": 2477.37,
+          "paraphrase": "原照片整体都是暖色，色彩缺少变化",
+          "text": "原照片整体都是暖色，色彩缺少变化",
+          "tier": null,
+          "frame": "frames/BV1KArCBvEwW/0413.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1LLibBaEt9",
+          "segment": 360,
+          "t": 1742.84,
+          "paraphrase": "色彩平衡欠佳，整体偏灰且缺少冷暖",
+          "text": "色彩平衡欠佳，整体偏灰且缺少冷暖",
+          "tier": null,
+          "frame": "frames/BV1LLibBaEt9/0360.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1XZ42157B5",
+          "segment": 71,
+          "t": 499.0,
+          "paraphrase": "面光轮廓光和背景同色温，画面发平",
+          "text": "面光轮廓光和背景同色温，画面发平",
+          "tier": null,
+          "frame": "frames/BV1XZ42157B5/0071.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1HpTYzwEjf?t=1178.18",
+        "bilibili:BV1KArCBvEwW?t=2477.37",
+        "bilibili:BV1LLibBaEt9?t=1742.84",
+        "bilibili:BV1XZ42157B5?t=499.0"
+      ]
+    },
+    {
+      "id": "P-YD-FACE-PERSPECTIVE",
+      "aspect": "face",
+      "title": "面部透视变形",
+      "statement": "检查面部是否明显拉长、放大或扭曲，结合距离与画面位置复核透视或处理痕迹。",
+      "exceptions": [
+        "鱼眼、夸张透视有明确表达意图时可保留"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 27,
+        "videos": 27,
+        "segments": 36,
+        "positive": 0,
+        "negative": 36
+      },
+      "tierContrast": {
+        "low": 4,
+        "high": 2,
+        "unknown": 30,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1gaxFeGE1V",
+          "segment": 98,
+          "t": 874.24,
+          "paraphrase": "人物头脚贴近上下边缘，广角变形显得怪异",
+          "text": "人物头脚贴近上下边缘，广角变形显得怪异",
+          "tier": null,
+          "frame": "frames/BV1gaxFeGE1V/0098.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1QN2QYWEvk",
+          "segment": 164,
+          "t": 1003.09,
+          "paraphrase": "广角近拍把模特头部拉得过长，显得奇怪",
+          "text": "广角近拍把模特头部拉得过长，显得奇怪",
+          "tier": null,
+          "frame": "frames/BV1QN2QYWEvk/0164.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1693JzMEkD",
+          "segment": 85,
+          "t": 637.28,
+          "paraphrase": "广角使头脚拉长、身体显短，比例失真",
+          "text": "广角使头脚拉长、身体显短，比例失真",
+          "tier": null,
+          "frame": "frames/BV1693JzMEkD/0085.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV16sfBBdE2y",
+          "segment": 306,
+          "t": 1189.669,
+          "paraphrase": "脸部过于靠近画面边缘，头部明显变形",
+          "text": "脸部过于靠近画面边缘，头部明显变形",
+          "tier": "顶尖",
+          "frame": "frames/BV16sfBBdE2y/0306.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1gaxFeGE1V?t=874.24",
+        "bilibili:BV1QN2QYWEvk?t=1003.09",
+        "bilibili:BV1693JzMEkD?t=637.28",
+        "bilibili:BV16sfBBdE2y?t=1189.669"
+      ]
+    },
+    {
+      "id": "P-YD-MOTION-READABLE",
+      "aspect": "pose",
+      "title": "动感加分",
+      "statement": "动作或运动痕迹清楚支持人物状态时，可作为组内优选线索。",
+      "exceptions": [
+        "运动模糊遮住关键人物或动作关系不可读时不加分"
+      ],
+      "polarity": "positive",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 25,
+        "videos": 25,
+        "segments": 35,
+        "positive": 34,
+        "negative": 1
+      },
+      "tierContrast": {
+        "low": 1,
+        "high": 10,
+        "unknown": 24,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1KArCBvEwW",
+          "segment": 337,
+          "t": 1917.62,
+          "paraphrase": "流动路人与静止模特形成出色动静对比",
+          "text": "流动路人与静止模特形成出色动静对比",
+          "tier": null,
+          "frame": "frames/BV1KArCBvEwW/0337.jpg",
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1pQJ56YE7c",
+          "segment": 18,
+          "t": 35.96,
+          "paraphrase": "照片兼具活力动感，模特也拍得好看",
+          "text": "照片兼具活力动感，模特也拍得好看",
+          "tier": "夯",
+          "frame": "frames/BV1pQJ56YE7c/0018.jpg",
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1rYaZ6mE3x",
+          "segment": 57,
+          "t": 201.0,
+          "paraphrase": "模特情绪动感活泼，整体造型很棒",
+          "text": "模特情绪动感活泼，整体造型很棒",
+          "tier": "夯",
+          "frame": "frames/BV1rYaZ6mE3x/0057.jpg",
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV19x4tzpE52",
+          "segment": 350,
+          "t": 2582.48,
+          "paraphrase": "动感与发丝光结合，效果出色",
+          "text": "动感与发丝光结合，效果出色",
+          "tier": null,
+          "frame": "frames/BV19x4tzpE52/0350.jpg",
+          "kind": "praise",
+          "polarity": "positive"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1KArCBvEwW?t=1917.62",
+        "bilibili:BV1pQJ56YE7c?t=35.96",
+        "bilibili:BV1rYaZ6mE3x?t=201.0",
+        "bilibili:BV19x4tzpE52?t=2582.48"
+      ]
+    },
+    {
+      "id": "P-YD-EXPOSURE-READABLE",
+      "aspect": "exposure",
+      "title": "整体曝光可读",
+      "statement": "检查整体曝光是否使需要表达的内容难以辨认；不把偏暗或偏亮本身当作错误。",
+      "exceptions": [
+        "低调、高调或剪影意图明确且关键内容可读"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 24,
+        "videos": 24,
+        "segments": 39,
+        "positive": 0,
+        "negative": 39
+      },
+      "tierContrast": {
+        "low": 2,
+        "high": 3,
+        "unknown": 34,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1JViYBJESE",
+          "segment": 119,
+          "t": 703.49,
+          "paraphrase": "照片曝光不足，后期强拉后画面受损",
+          "text": "照片曝光不足，后期强拉后画面受损",
+          "tier": null,
+          "frame": "frames/BV1JViYBJESE/0119.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1BW2VYoEgK",
+          "segment": 175,
+          "t": 1158.82,
+          "paraphrase": "第二张起曝光异常，画面明显偏黑",
+          "text": "第二张起曝光异常，画面明显偏黑",
+          "tier": null,
+          "frame": "frames/BV1BW2VYoEgK/0175.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1CDP9zXE1N",
+          "segment": 42,
+          "t": 453.0,
+          "paraphrase": "人物严重欠曝，画面几乎看不见人",
+          "text": "人物严重欠曝，画面几乎看不见人",
+          "tier": "人上人",
+          "frame": "frames/BV1CDP9zXE1N/0042.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1TPt16LEVY",
+          "segment": 84,
+          "t": 901.0,
+          "paraphrase": "照片属于欠曝，不是有意的暗调",
+          "text": "照片属于欠曝，不是有意的暗调",
+          "tier": null,
+          "frame": "frames/BV1TPt16LEVY/0084.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1JViYBJESE?t=703.49",
+        "bilibili:BV1BW2VYoEgK?t=1158.82",
+        "bilibili:BV1CDP9zXE1N?t=453.0",
+        "bilibili:BV1TPt16LEVY?t=901.0"
+      ]
+    },
+    {
+      "id": "P-YD-SCENE-INTEGRATION",
+      "aspect": "background",
+      "title": "人物融入场景",
+      "statement": "检查人物与场景的光影、质感及接地关系是否连贯，避免无意悬浮或贴图感。",
+      "exceptions": [
+        "拼贴、超现实或明确分离的视觉风格"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 23,
+        "videos": 23,
+        "segments": 29,
+        "positive": 1,
+        "negative": 28
+      },
+      "tierContrast": {
+        "low": 1,
+        "high": 1,
+        "unknown": 27,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1HpbAzKEPN",
+          "segment": 470,
+          "t": 2121.51,
+          "paraphrase": "肤色与蓝色背景不协调，人物像贴上去的",
+          "text": "肤色与蓝色背景不协调，人物像贴上去的",
+          "tier": null,
+          "frame": "frames/BV1HpbAzKEPN/0470.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1dtB4BaEgG",
+          "segment": 55,
+          "t": 417.69,
+          "paraphrase": "补光后人物显得扁平，像贴在画面上",
+          "text": "补光后人物显得扁平，像贴在画面上",
+          "tier": null,
+          "frame": "frames/BV1dtB4BaEgG/0055.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1qpEdzSEvm",
+          "segment": 2,
+          "t": 22.77,
+          "paraphrase": "最后一张人物像贴上去，缺乏融合感",
+          "text": "最后一张人物像贴上去，缺乏融合感",
+          "tier": null,
+          "frame": "frames/BV1qpEdzSEvm/0002.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1J289z1EJN",
+          "segment": 185,
+          "t": 1150.79,
+          "paraphrase": "人物像贴在背景上，缺乏环境融合",
+          "text": "人物像贴在背景上，缺乏环境融合",
+          "tier": null,
+          "frame": "frames/BV1J289z1EJN/0185.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1HpbAzKEPN?t=2121.51",
+        "bilibili:BV1dtB4BaEgG?t=417.69",
+        "bilibili:BV1qpEdzSEvm?t=22.77",
+        "bilibili:BV1J289z1EJN?t=1150.79"
+      ]
+    },
+    {
+      "id": "P-YD-POSE-RESTRAINED",
+      "aspect": "pose",
+      "title": "姿态拘谨",
+      "statement": "检查动作是否僵硬端着、摆拍痕迹过重而不符合画面的自然状态。",
+      "exceptions": [
+        "庄重肖像、仪式性摆姿不要求活泼"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 20,
+        "videos": 20,
+        "segments": 22,
+        "positive": 0,
+        "negative": 22
+      },
+      "tierContrast": {
+        "low": 1,
+        "high": 1,
+        "unknown": 20,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1ARsKzTE5p",
+          "segment": 71,
+          "t": 563,
+          "paraphrase": "持花姿态显得扭捏，让点评者不适",
+          "text": "持花姿态显得扭捏，让点评者不适",
+          "tier": null,
+          "frame": "frames/BV1ARsKzTE5p/0071.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1J289z1EJN",
+          "segment": 110,
+          "t": 678.08,
+          "paraphrase": "肢体不协调，缺少玩耍的自然感",
+          "text": "肢体不协调，缺少玩耍的自然感",
+          "tier": null,
+          "frame": "frames/BV1J289z1EJN/0110.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1E5Y9zEE4s",
+          "segment": 30,
+          "t": 258.73,
+          "paraphrase": "摆拍感较强，缺乏动感与活力",
+          "text": "摆拍感较强，缺乏动感与活力",
+          "tier": null,
+          "frame": "frames/BV1E5Y9zEE4s/0030.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1RT4y1a7tR",
+          "segment": 68,
+          "t": 1102.41,
+          "paraphrase": "互动表现太拘谨，亲近感不足",
+          "text": "互动表现太拘谨，亲近感不足",
+          "tier": null,
+          "frame": "frames/BV1RT4y1a7tR/0068.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1ARsKzTE5p?t=563",
+        "bilibili:BV1J289z1EJN?t=678.08",
+        "bilibili:BV1E5Y9zEE4s?t=258.73",
+        "bilibili:BV1RT4y1a7tR?t=1102.41"
+      ]
+    },
+    {
+      "id": "P-YD-HAIR-MOTION",
+      "aspect": "pose",
+      "title": "发丝动态加分",
+      "statement": "飞扬或掠过脸颊的发丝能增强画面的动感和空气感，可作为组内优选线索。",
+      "exceptions": [
+        "发丝遮眼或损害主要表达时不加分"
+      ],
+      "polarity": "positive",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 19,
+        "videos": 19,
+        "segments": 23,
+        "positive": 23,
+        "negative": 0
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 4,
+        "unknown": 19,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1m86RYGEBw",
+          "segment": 45,
+          "t": 225.22,
+          "paraphrase": "照片很好看，发丝有被风吹动的感觉",
+          "text": "照片很好看，发丝有被风吹动的感觉",
+          "tier": null,
+          "frame": "frames/BV1m86RYGEBw/0045.jpg",
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1TJu6zNEWg",
+          "segment": 21,
+          "t": 97,
+          "paraphrase": "最喜欢这张发丝被风吹动的感觉",
+          "text": "最喜欢这张发丝被风吹动的感觉",
+          "tier": null,
+          "frame": "frames/BV1TJu6zNEWg/0021.jpg",
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1XcpgeaEgL",
+          "segment": 20,
+          "t": 161.29,
+          "paraphrase": "这张最受偏爱，碎发带来生动感",
+          "text": "这张最受偏爱，碎发带来生动感",
+          "tier": null,
+          "frame": "frames/BV1XcpgeaEgL/0020.jpg",
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1yDpqzpEck",
+          "segment": 133,
+          "t": 969.92,
+          "paraphrase": "吹起的头发配合后方逆光效果好",
+          "text": "吹起的头发配合后方逆光效果好",
+          "tier": null,
+          "frame": "frames/BV1yDpqzpEck/0133.jpg",
+          "kind": "praise",
+          "polarity": "positive"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1m86RYGEBw?t=225.22",
+        "bilibili:BV1TJu6zNEWg?t=97",
+        "bilibili:BV1XcpgeaEgL?t=161.29",
+        "bilibili:BV1yDpqzpEck?t=969.92"
+      ]
+    },
+    {
+      "id": "P-YD-BG-BLACK",
+      "aspect": "background",
+      "title": "环境信息死黑",
+      "statement": "环境承担表达作用时，背景不应黑成一片而丢失场景信息。",
+      "exceptions": [
+        "纯黑棚拍、剪影或有意省略环境"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 17,
+        "videos": 17,
+        "segments": 19,
+        "positive": 0,
+        "negative": 19
+      },
+      "tierContrast": {
+        "low": 1,
+        "high": 3,
+        "unknown": 15,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV17owUzxEwK",
+          "segment": 101,
+          "t": 653.85,
+          "paraphrase": "拍摄时间太晚，背景全黑缺乏层次",
+          "text": "拍摄时间太晚，背景全黑缺乏层次",
+          "tier": "人上人",
+          "frame": "frames/BV17owUzxEwK/0101.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1StUMYiEcd",
+          "segment": 46,
+          "t": 387.65,
+          "paraphrase": "拍摄时间偏晚，背景已变成一片黑",
+          "text": "拍摄时间偏晚，背景已变成一片黑",
+          "tier": null,
+          "frame": "frames/BV1StUMYiEcd/0046.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1kXBUYLEEt",
+          "segment": 113,
+          "t": 568.67,
+          "paraphrase": "背景漆黑，看不出旅行地点与景色",
+          "text": "背景漆黑，看不出旅行地点与景色",
+          "tier": null,
+          "frame": "frames/BV1kXBUYLEEt/0113.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1M4421U7MC",
+          "segment": 69,
+          "t": 512.59,
+          "paraphrase": "环境信息缺失，场景价值未体现",
+          "text": "环境信息缺失，场景价值未体现",
+          "tier": null,
+          "frame": "frames/BV1M4421U7MC/0069.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV17owUzxEwK?t=653.85",
+        "bilibili:BV1StUMYiEcd?t=387.65",
+        "bilibili:BV1kXBUYLEEt?t=568.67",
+        "bilibili:BV1M4421U7MC?t=512.59"
+      ]
+    },
+    {
+      "id": "P-YD-COMPOSITE",
+      "aspect": "quality",
+      "title": "附加效果可信",
+      "statement": "检查换天、叠加雨雪或景深效果是否与原画面的尺度、虚实及光影关系相符。",
+      "exceptions": [
+        "拼贴、插画或有意超现实风格"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 16,
+        "videos": 16,
+        "segments": 20,
+        "positive": 0,
+        "negative": 20
+      },
+      "tierContrast": {
+        "low": 2,
+        "high": 3,
+        "unknown": 15,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1C94y117Lj",
+          "segment": 65,
+          "t": 178.3,
+          "paraphrase": "喷溅液体与手之间的缝隙暴露合成痕迹",
+          "text": "喷溅液体与手之间的缝隙暴露合成痕迹",
+          "tier": null,
+          "frame": "frames/BV1C94y117Lj/0065.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1M34y1e7nY",
+          "segment": 153,
+          "t": 1143.26,
+          "paraphrase": "后期光斑不符合现场光线，显得奇怪",
+          "text": "后期光斑不符合现场光线，显得奇怪",
+          "tier": null,
+          "frame": "frames/BV1M34y1e7nY/0153.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1JZryYTEP7",
+          "segment": 166,
+          "t": 853,
+          "paraphrase": "添加的球过于清晰，虚实关系显假",
+          "text": "添加的球过于清晰，虚实关系显假",
+          "tier": null,
+          "frame": "frames/BV1JZryYTEP7/0166.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1K89sBEE7z",
+          "segment": 419,
+          "t": 1522.96,
+          "paraphrase": "液化只改了人物，窗户也被拉变形",
+          "text": "液化只改了人物，窗户也被拉变形",
+          "tier": "NPC",
+          "frame": "frames/BV1K89sBEE7z/0419.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1C94y117Lj?t=178.3",
+        "bilibili:BV1M34y1e7nY?t=1143.26",
+        "bilibili:BV1JZryYTEP7?t=853",
+        "bilibili:BV1K89sBEE7z?t=1522.96"
+      ]
+    },
+    {
+      "id": "P-YD-BG-DEPTH",
+      "aspect": "background",
+      "title": "空间纵深",
+      "statement": "检查人物贴近背景或前后景同层是否使画面缺少所需的空间纵深。",
+      "exceptions": [
+        "平面化、压缩空间或贴墙肖像可以成立"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 16,
+        "videos": 16,
+        "segments": 19,
+        "positive": 1,
+        "negative": 18
+      },
+      "tierContrast": {
+        "low": 3,
+        "high": 0,
+        "unknown": 16,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1QN2QYWEvk",
+          "segment": 160,
+          "t": 957.62,
+          "paraphrase": "背景贴墙没有层次，加灯后反而变平",
+          "text": "背景贴墙没有层次，加灯后反而变平",
+          "tier": null,
+          "frame": "frames/BV1QN2QYWEvk/0160.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1rzN7z7EgK",
+          "segment": 158,
+          "t": 748,
+          "paraphrase": "背景紧贴墙面，缺乏纵深和虚化感",
+          "text": "背景紧贴墙面，缺乏纵深和虚化感",
+          "tier": null,
+          "frame": "frames/BV1rzN7z7EgK/0158.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1LYVBzHE24",
+          "segment": 189,
+          "t": 1312.67,
+          "paraphrase": "人物与背景同层，画面缺少层次",
+          "text": "人物与背景同层，画面缺少层次",
+          "tier": null,
+          "frame": "frames/BV1LYVBzHE24/0189.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1etmtB9Ekj",
+          "segment": 308,
+          "t": 1880.89,
+          "paraphrase": "模特离背景太近，画面层次欠佳",
+          "text": "模特离背景太近，画面层次欠佳",
+          "tier": null,
+          "frame": "frames/BV1etmtB9Ekj/0308.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1QN2QYWEvk?t=957.62",
+        "bilibili:BV1rzN7z7EgK?t=748",
+        "bilibili:BV1LYVBzHE24?t=1312.67",
+        "bilibili:BV1etmtB9Ekj?t=1880.89"
+      ]
+    },
+    {
+      "id": "P-YD-ANATOMY-ARTIFACT",
+      "aspect": "quality",
+      "title": "形体修饰失真",
+      "statement": "检查明显修饰痕迹是否使五官比例、左右结构或肩颈连接不自然。",
+      "exceptions": [
+        "漫画化或超现实形体处理有明确意图；自然不对称不判错"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 15,
+        "videos": 15,
+        "segments": 19,
+        "positive": 0,
+        "negative": 19
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 1,
+        "unknown": 18,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1Yf421q76x",
+          "segment": 144,
+          "t": 1201.78,
+          "paraphrase": "液化后颧骨高低不一致，手臂粗细失衡",
+          "text": "液化后颧骨高低不一致，手臂粗细失衡",
+          "tier": null,
+          "frame": "frames/BV1Yf421q76x/0144.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1K89sBEE7z",
+          "segment": 127,
+          "t": 589.86,
+          "paraphrase": "液化处理不佳，脖颈与下巴衔接异常",
+          "text": "液化处理不佳，脖颈与下巴衔接异常",
+          "tier": null,
+          "frame": "frames/BV1K89sBEE7z/0127.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV19x4tzpE52",
+          "segment": 268,
+          "t": 2114.35,
+          "paraphrase": "缩脸后发型未同步调整，比例失衡",
+          "text": "缩脸后发型未同步调整，比例失衡",
+          "tier": null,
+          "frame": "frames/BV19x4tzpE52/0268.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1etmtB9Ekj",
+          "segment": 211,
+          "t": 1312.59,
+          "paraphrase": "修图把眼黑拉成椭圆，显得不自然",
+          "text": "修图把眼黑拉成椭圆，显得不自然",
+          "tier": null,
+          "frame": "frames/BV1etmtB9Ekj/0211.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1Yf421q76x?t=1201.78",
+        "bilibili:BV1K89sBEE7z?t=589.86",
+        "bilibili:BV19x4tzpE52?t=2114.35",
+        "bilibili:BV1etmtB9Ekj?t=1312.59"
+      ]
+    },
+    {
+      "id": "P-YD-SATURATION",
+      "aspect": "color",
+      "title": "饱和度过强",
+      "statement": "检查局部或整体色彩是否过度鲜艳、浓重，干扰人物和画面表达。",
+      "exceptions": [
+        "高饱和、撞色或商业风格有明确意图"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 14,
+        "videos": 14,
+        "segments": 19,
+        "positive": 2,
+        "negative": 19
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 4,
+        "unknown": 15,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1M4421U7MC",
+          "segment": 247,
+          "t": 1656.13,
+          "paraphrase": "绿色过于鲜艳，与古风氛围不协调",
+          "text": "绿色过于鲜艳，与古风氛围不协调",
+          "tier": null,
+          "frame": "frames/BV1M4421U7MC/0247.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1M34y1e7nY",
+          "segment": 64,
+          "t": 335,
+          "paraphrase": "后期色彩过重，削弱画面高级感",
+          "text": "后期色彩过重，削弱画面高级感",
+          "tier": null,
+          "frame": "frames/BV1M34y1e7nY/0064.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1UWQoY5EWy",
+          "segment": 108,
+          "t": 496.42,
+          "paraphrase": "整体颜色过度饱和，观感不舒服",
+          "text": "整体颜色过度饱和，观感不舒服",
+          "tier": null,
+          "frame": "frames/BV1UWQoY5EWy/0108.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1UF14BTEyv",
+          "segment": 352,
+          "t": 1874.21,
+          "paraphrase": "原先的绿色过于浓重，不好看",
+          "text": "原先的绿色过于浓重，不好看",
+          "tier": null,
+          "frame": "frames/BV1UF14BTEyv/0352.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1M4421U7MC?t=1656.13",
+        "bilibili:BV1M34y1e7nY?t=335",
+        "bilibili:BV1UWQoY5EWy?t=496.42",
+        "bilibili:BV1UF14BTEyv?t=1874.21"
+      ]
+    },
+    {
+      "id": "P-YD-BODY-PROPORTION",
+      "aspect": "pose",
+      "title": "身形透视比例",
+      "statement": "检查透视是否使人物头大身小、腿短或头脚拉长而躯干压缩。",
+      "exceptions": [
+        "有意夸张身形的运动或时尚表达"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 14,
+        "videos": 14,
+        "segments": 14,
+        "positive": 0,
+        "negative": 14
+      },
+      "tierContrast": {
+        "low": 1,
+        "high": 0,
+        "unknown": 13,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1693JzMEkD",
+          "segment": 85,
+          "t": 637.28,
+          "paraphrase": "广角使头脚拉长、身体显短，比例失真",
+          "text": "广角使头脚拉长、身体显短，比例失真",
+          "tier": null,
+          "frame": "frames/BV1693JzMEkD/0085.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1XDqXYuEef",
+          "segment": 139,
+          "t": 674,
+          "paraphrase": "头显长、身体显短，脚部观感怪异",
+          "text": "头显长、身体显短，脚部观感怪异",
+          "tier": null,
+          "frame": "frames/BV1XDqXYuEef/0139.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV19GnUzcEU9",
+          "segment": 156,
+          "t": 1138.52,
+          "paraphrase": "广角拍摄造成头长腿长、身子短",
+          "text": "广角拍摄造成头长腿长、身子短",
+          "tier": null,
+          "frame": "frames/BV19GnUzcEU9/0156.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1JViYBJESE",
+          "segment": 228,
+          "t": 1253.69,
+          "paraphrase": "拍摄视角过高，把模特拍得显矮",
+          "text": "拍摄视角过高，把模特拍得显矮",
+          "tier": null,
+          "frame": "frames/BV1JViYBJESE/0228.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1693JzMEkD?t=637.28",
+        "bilibili:BV1XDqXYuEef?t=674",
+        "bilibili:BV19GnUzcEU9?t=1138.52",
+        "bilibili:BV1JViYBJESE?t=1253.69"
+      ]
+    },
+    {
+      "id": "P-YD-TEXTURE-SOFT",
+      "aspect": "quality",
+      "title": "纹理过度柔化",
+      "statement": "检查皮肤、头发或衣服是否被过度柔化到失去纹理，呈现塑料感。",
+      "exceptions": [
+        "柔焦、梦幻或插画表达有意成立"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 12,
+        "videos": 12,
+        "segments": 19,
+        "positive": 0,
+        "negative": 19
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 1,
+        "unknown": 18,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1dExJzwE4X",
+          "segment": 240,
+          "t": 1313.97,
+          "paraphrase": "柔化过度，帽子和人物周围出现白边",
+          "text": "柔化过度，帽子和人物周围出现白边",
+          "tier": null,
+          "frame": "frames/BV1dExJzwE4X/0240.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1fECcB3EAy",
+          "segment": 48,
+          "t": 245.34,
+          "paraphrase": "修后画面一味柔化，缺少软硬对比",
+          "text": "修后画面一味柔化，缺少软硬对比",
+          "tier": null,
+          "frame": "frames/BV1fECcB3EAy/0048.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV12Ge36YEXY",
+          "segment": 394,
+          "t": 2700.14,
+          "paraphrase": "脸部胶片颗粒消失，显得不真实",
+          "text": "脸部胶片颗粒消失，显得不真实",
+          "tier": "顶尖",
+          "frame": "frames/BV12Ge36YEXY/0394.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV14TDQYoEWj",
+          "segment": 120,
+          "t": 792.14,
+          "paraphrase": "全图磨皮导致眼睛和头发也变柔",
+          "text": "全图磨皮导致眼睛和头发也变柔",
+          "tier": null,
+          "frame": "frames/BV14TDQYoEWj/0120.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1dExJzwE4X?t=1313.97",
+        "bilibili:BV1fECcB3EAy?t=245.34",
+        "bilibili:BV12Ge36YEXY?t=2700.14",
+        "bilibili:BV14TDQYoEWj?t=792.14"
+      ]
+    },
+    {
+      "id": "P-YD-FLARE-DETAIL",
+      "aspect": "light",
+      "title": "冲光吞没细节",
+      "statement": "检查冲光、光晕或杂光是否吞没人物轮廓、色彩或关键细节。",
+      "exceptions": [
+        "逆光光晕、漏光或雾化是明确风格且主体可读"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 12,
+        "videos": 12,
+        "segments": 14,
+        "positive": 0,
+        "negative": 14
+      },
+      "tierContrast": {
+        "low": 1,
+        "high": 1,
+        "unknown": 12,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1raaZ6EE6u",
+          "segment": 19,
+          "t": 182.72,
+          "paraphrase": "后期过度压低高光，破坏原有冲光效果",
+          "text": "后期过度压低高光，破坏原有冲光效果",
+          "tier": "人上人",
+          "frame": "frames/BV1raaZ6EE6u/0019.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1TPt16LEVY",
+          "segment": 101,
+          "t": 1072.8,
+          "paraphrase": "冲光把人物头部轮廓冲掉，画面难看",
+          "text": "冲光把人物头部轮廓冲掉，画面难看",
+          "tier": "NPC",
+          "frame": "frames/BV1TPt16LEVY/0101.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1Vx4y1t7g3",
+          "segment": 87,
+          "t": 881.61,
+          "paraphrase": "光源入画后效果变差，亮度难以压低",
+          "text": "光源入画后效果变差，亮度难以压低",
+          "tier": null,
+          "frame": "frames/BV1Vx4y1t7g3/0087.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1HpbAzKEPN",
+          "segment": 94,
+          "t": 467,
+          "paraphrase": "杂光进入相机，造成画面颜色异常",
+          "text": "杂光进入相机，造成画面颜色异常",
+          "tier": null,
+          "frame": "frames/BV1HpbAzKEPN/0094.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1raaZ6EE6u?t=182.72",
+        "bilibili:BV1TPt16LEVY?t=1072.8",
+        "bilibili:BV1Vx4y1t7g3?t=881.61",
+        "bilibili:BV1HpbAzKEPN?t=467"
+      ]
+    },
+    {
+      "id": "P-YD-NOISE",
+      "aspect": "quality",
+      "title": "颗粒干扰",
+      "statement": "检查噪点或添加颗粒是否过密、破坏关键细节或与画面光感不协调。",
+      "exceptions": [
+        "胶片颗粒或有意粗粝风格；不以颗粒本身判废"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 12,
+        "videos": 12,
+        "segments": 14,
+        "positive": 0,
+        "negative": 14
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 1,
+        "unknown": 13,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV19p7ezjEpQ",
+          "segment": 335,
+          "t": 2240.83,
+          "paraphrase": "杂点与画面光感不协调，观感不佳",
+          "text": "杂点与画面光感不协调，观感不佳",
+          "tier": null,
+          "frame": "frames/BV19p7ezjEpQ/0335.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1MDEzz4ERu",
+          "segment": 182,
+          "t": 1033.29,
+          "paraphrase": "添加的颗粒过多，与打光效果不符",
+          "text": "添加的颗粒过多，与打光效果不符",
+          "tier": null,
+          "frame": "frames/BV1MDEzz4ERu/0182.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV19GnUzcEU9",
+          "segment": 27,
+          "t": 124.94,
+          "paraphrase": "照片欠曝后拉亮，噪点明显增加",
+          "text": "照片欠曝后拉亮，噪点明显增加",
+          "tier": null,
+          "frame": "frames/BV19GnUzcEU9/0027.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1XZ42157B5",
+          "segment": 99,
+          "t": 799.08,
+          "paraphrase": "添加杂点后效果显得不协调",
+          "text": "添加杂点后效果显得不协调",
+          "tier": null,
+          "frame": "frames/BV1XZ42157B5/0099.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV19p7ezjEpQ?t=2240.83",
+        "bilibili:BV1MDEzz4ERu?t=1033.29",
+        "bilibili:BV19GnUzcEU9?t=124.94",
+        "bilibili:BV1XZ42157B5?t=799.08"
+      ]
+    },
+    {
+      "id": "P-YD-INTERACTION",
+      "aspect": "pose",
+      "title": "人物与物件互动",
+      "statement": "互动题材中，人物与同伴、动物、道具或环境的动作关系应能看懂。",
+      "exceptions": [
+        "独立肖像或静置道具不要求互动"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 11,
+        "videos": 11,
+        "segments": 12,
+        "positive": 3,
+        "negative": 9
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 1,
+        "unknown": 11,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1Nzq5BCEVT",
+          "segment": 21,
+          "t": 150.97,
+          "paraphrase": "狗的位置太偏，未呈现人狗互动感",
+          "text": "狗的位置太偏，未呈现人狗互动感",
+          "tier": null,
+          "frame": "frames/BV1Nzq5BCEVT/0021.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1TPt16LEVY",
+          "segment": 247,
+          "t": 2776,
+          "paraphrase": "模特未与海水互动，场景利用不足",
+          "text": "模特未与海水互动，场景利用不足",
+          "tier": null,
+          "frame": "frames/BV1TPt16LEVY/0247.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV13FUDYdEfh",
+          "segment": 341,
+          "t": 1342.14,
+          "paraphrase": "拍摄视角疏远，缺少亲密互动感",
+          "text": "拍摄视角疏远，缺少亲密互动感",
+          "tier": null,
+          "frame": "frames/BV13FUDYdEfh/0341.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV19p7ezjEpQ",
+          "segment": 107,
+          "t": 715.76,
+          "paraphrase": "苹果被咬的关系没有拍出感觉",
+          "text": "苹果被咬的关系没有拍出感觉",
+          "tier": null,
+          "frame": "frames/BV19p7ezjEpQ/0107.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1Nzq5BCEVT?t=150.97",
+        "bilibili:BV1TPt16LEVY?t=2776",
+        "bilibili:BV13FUDYdEfh?t=1342.14",
+        "bilibili:BV19p7ezjEpQ?t=715.76"
+      ]
+    },
+    {
+      "id": "P-YD-NONFACE-SHADOWS",
+      "aspect": "exposure",
+      "title": "非面部暗部细节",
+      "statement": "检查身体、衣服或画面暗部是否压成死黑，丢失承担表达的细节。",
+      "exceptions": [
+        "低调片、黑色剪影或无关区域可有意省略细节"
+      ],
+      "polarity": "negative",
+      "check": {
+        "by": "measure",
+        "signal": "clippedShadows",
+        "proxyOnly": true,
+        "limitations": "全图代理信号包含面部，不能定位身体、衣服或判断暗部意图；需结合截图复核，无新增阈值。"
+      },
+      "severity": "hint",
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 9,
+        "videos": 9,
+        "segments": 13,
+        "positive": 0,
+        "negative": 13
+      },
+      "tierContrast": {
+        "low": 3,
+        "high": 3,
+        "unknown": 7,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1raaZ6EE6u",
+          "segment": 198,
+          "t": 1165.54,
+          "paraphrase": "身体和头发融入暗背景，难以辨认",
+          "text": "身体和头发融入暗背景，难以辨认",
+          "tier": "NPC",
+          "frame": "frames/BV1raaZ6EE6u/0198.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1K89sBEE7z",
+          "segment": 564,
+          "t": 2016.96,
+          "paraphrase": "除脸外画面漆黑，身体难以辨认",
+          "text": "除脸外画面漆黑，身体难以辨认",
+          "tier": null,
+          "frame": "frames/BV1K89sBEE7z/0564.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1QN2QYWEvk",
+          "segment": 26,
+          "t": 247.34,
+          "paraphrase": "修图后的亮部溢出、暗部死黑",
+          "text": "修图后的亮部溢出、暗部死黑",
+          "tier": null,
+          "frame": "frames/BV1QN2QYWEvk/0026.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1HpbAzKEPN",
+          "segment": 285,
+          "t": 1492.31,
+          "paraphrase": "此前版本黑色区域呈现死黑",
+          "text": "此前版本黑色区域呈现死黑",
+          "tier": null,
+          "frame": "frames/BV1HpbAzKEPN/0285.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1raaZ6EE6u?t=1165.54",
+        "bilibili:BV1K89sBEE7z?t=2016.96",
+        "bilibili:BV1QN2QYWEvk?t=247.34",
+        "bilibili:BV1HpbAzKEPN?t=1492.31"
+      ]
+    },
+    {
+      "id": "P-YD-POSE-THEME",
+      "aspect": "pose",
+      "title": "动作与情境",
+      "statement": "动作与神态应能支持画面可见的情境，避免主题与人物状态明显矛盾。",
+      "exceptions": [
+        "混搭、反差或幽默表达有意成立；题材未知时不判断"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 9,
+        "videos": 9,
+        "segments": 11,
+        "positive": 0,
+        "negative": 11
+      },
+      "tierContrast": {
+        "low": 2,
+        "high": 0,
+        "unknown": 9,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV19p7ezjEpQ",
+          "segment": 342,
+          "t": 2265.17,
+          "paraphrase": "坐姿与拿水的表现缺少棒球主题关联",
+          "text": "坐姿与拿水的表现缺少棒球主题关联",
+          "tier": null,
+          "frame": "frames/BV19p7ezjEpQ/0342.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1HpbAzKEPN",
+          "segment": 402,
+          "t": 1934.67,
+          "paraphrase": "动作幅度过大，不符合旗袍的含蓄感",
+          "text": "动作幅度过大，不符合旗袍的含蓄感",
+          "tier": null,
+          "frame": "frames/BV1HpbAzKEPN/0402.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1PUXfBgEPt",
+          "segment": 86,
+          "t": 452,
+          "paraphrase": "动作像普通打卡，与汉服风格不协调",
+          "text": "动作像普通打卡，与汉服风格不协调",
+          "tier": "NPC",
+          "frame": "frames/BV1PUXfBgEPt/0086.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1L6CRBdEMs",
+          "segment": 168,
+          "t": 900.0,
+          "paraphrase": "动作与淑女服装不搭，显得奇怪",
+          "text": "动作与淑女服装不搭，显得奇怪",
+          "tier": null,
+          "frame": "frames/BV1L6CRBdEMs/0168.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV19p7ezjEpQ?t=2265.17",
+        "bilibili:BV1HpbAzKEPN?t=1934.67",
+        "bilibili:BV1PUXfBgEPt?t=452",
+        "bilibili:BV1L6CRBdEMs?t=900.0"
+      ]
+    },
+    {
+      "id": "P-YD-NOSE-VIEW",
+      "aspect": "face",
+      "title": "鼻孔成为无意重点",
+      "statement": "检查仰头或仰视是否使鼻孔成为无意的视觉重点。",
+      "exceptions": [
+        "有意夸张视角或人物表达成立时可保留"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 9,
+        "videos": 9,
+        "segments": 9,
+        "positive": 1,
+        "negative": 8
+      },
+      "tierContrast": {
+        "low": 1,
+        "high": 1,
+        "unknown": 7,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1raaZ6EE6u",
+          "segment": 8,
+          "t": 49.81,
+          "paraphrase": "低角度仰拍不 flattering，鼻孔突出",
+          "text": "低角度仰拍不 flattering，鼻孔突出",
+          "tier": "NPC",
+          "frame": "frames/BV1raaZ6EE6u/0008.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1BxM26nETV",
+          "segment": 62,
+          "t": 239.72,
+          "paraphrase": "仰拍角度突出鼻孔，面部效果欠佳",
+          "text": "仰拍角度突出鼻孔，面部效果欠佳",
+          "tier": "人上人",
+          "frame": "frames/BV1BxM26nETV/0062.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1JLU1BSEfs",
+          "segment": 297,
+          "t": 1636.1,
+          "paraphrase": "当前机位容易突出鼻孔，观感欠佳",
+          "text": "当前机位容易突出鼻孔，观感欠佳",
+          "tier": null,
+          "frame": "frames/BV1JLU1BSEfs/0297.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1HpTYzwEjf",
+          "segment": 155,
+          "t": 1597.41,
+          "paraphrase": "鼻孔始终朝向镜头，观感不舒服",
+          "text": "鼻孔始终朝向镜头，观感不舒服",
+          "tier": null,
+          "frame": "frames/BV1HpTYzwEjf/0155.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1raaZ6EE6u?t=49.81",
+        "bilibili:BV1BxM26nETV?t=239.72",
+        "bilibili:BV1JLU1BSEfs?t=1636.1",
+        "bilibili:BV1HpTYzwEjf?t=1597.41"
+      ]
+    },
+    {
+      "id": "P-YD-LIGHT-DIRECTION",
+      "aspect": "light",
+      "title": "光影方向一致",
+      "statement": "检查人物、环境、影子和附加景物的光向是否相互矛盾。",
+      "exceptions": [
+        "多光源、舞台或超现实光照有明确意图"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 8,
+        "videos": 8,
+        "segments": 10,
+        "positive": 2,
+        "negative": 8
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 2,
+        "unknown": 8,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1E8G86EE3a",
+          "segment": 430,
+          "t": 2192.98,
+          "paraphrase": "前后同时出现强光，光线逻辑不合理",
+          "text": "前后同时出现强光，光线逻辑不合理",
+          "tier": null,
+          "frame": "frames/BV1E8G86EE3a/0430.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1uiV86MEmA",
+          "segment": 300,
+          "t": 1764.24,
+          "paraphrase": "窗外过曝区域被压灰，光线逻辑失真",
+          "text": "窗外过曝区域被压灰，光线逻辑失真",
+          "tier": null,
+          "frame": "frames/BV1uiV86MEmA/0300.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1ARsKzTE5p",
+          "segment": 238,
+          "t": 1880.09,
+          "paraphrase": "脚部阴影与外部阳光关系不合理",
+          "text": "脚部阴影与外部阳光关系不合理",
+          "tier": null,
+          "frame": "frames/BV1ARsKzTE5p/0238.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1qpEdzSEvm",
+          "segment": 198,
+          "t": 1379.13,
+          "paraphrase": "手臂上暗下亮，光线不合常理",
+          "text": "手臂上暗下亮，光线不合常理",
+          "tier": null,
+          "frame": "frames/BV1qpEdzSEvm/0198.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1E8G86EE3a?t=2192.98",
+        "bilibili:BV1uiV86MEmA?t=1764.24",
+        "bilibili:BV1ARsKzTE5p?t=1880.09",
+        "bilibili:BV1qpEdzSEvm?t=1379.13"
+      ]
+    },
+    {
+      "id": "P-YD-WALL-SHADOW",
+      "aspect": "light",
+      "title": "墙面投影高度",
+      "statement": "检查墙面投影高过人物是否形成不符合画面意图的压迫或怪异感。",
+      "exceptions": [
+        "恐怖、戏剧化或有意强调影子"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 8,
+        "videos": 8,
+        "segments": 9,
+        "positive": 1,
+        "negative": 8
+      },
+      "tierContrast": {
+        "low": 1,
+        "high": 0,
+        "unknown": 8,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1693JzMEkD",
+          "segment": 70,
+          "t": 459.49,
+          "paraphrase": "影子高出模特太多，视觉效果不好",
+          "text": "影子高出模特太多，视觉效果不好",
+          "tier": null,
+          "frame": "frames/BV1693JzMEkD/0070.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1yDpqzpEck",
+          "segment": 74,
+          "t": 558.89,
+          "paraphrase": "影子高过人物，显得怪异不舒服",
+          "text": "影子高过人物，显得怪异不舒服",
+          "tier": null,
+          "frame": "frames/BV1yDpqzpEck/0074.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV17owUzxEwK",
+          "segment": 21,
+          "t": 114.48,
+          "paraphrase": "低位向上打光使影子高于人物",
+          "text": "低位向上打光使影子高于人物",
+          "tier": "NPC",
+          "frame": "frames/BV17owUzxEwK/0021.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1CDP9zXE1N",
+          "segment": 194,
+          "t": 1495.12,
+          "paraphrase": "光从下方照射，影子高过人物",
+          "text": "光从下方照射，影子高过人物",
+          "tier": null,
+          "frame": "frames/BV1CDP9zXE1N/0194.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1693JzMEkD?t=459.49",
+        "bilibili:BV1yDpqzpEck?t=558.89",
+        "bilibili:BV17owUzxEwK?t=114.48",
+        "bilibili:BV1CDP9zXE1N?t=1495.12"
+      ]
+    },
+    {
+      "id": "P-YD-GAZE-DIRECTION",
+      "aspect": "face",
+      "title": "视线意图",
+      "statement": "人物视线应与画内动作或交流对象相呼应，避免无意盯视或看向无关方向。",
+      "exceptions": [
+        "直视镜头的肖像或有意游离的情绪表达"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 7,
+        "videos": 7,
+        "segments": 9,
+        "positive": 0,
+        "negative": 9
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 0,
+        "unknown": 9,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1uiV86MEmA",
+          "segment": 374,
+          "t": 2150.83,
+          "paraphrase": "模特视线朝向其他摄影师，眼神偏低",
+          "text": "模特视线朝向其他摄影师，眼神偏低",
+          "tier": null,
+          "frame": "frames/BV1uiV86MEmA/0374.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1HpTYzwEjf",
+          "segment": 150,
+          "t": 1556.11,
+          "paraphrase": "人物视线都朝旁边，未看拍摄镜头",
+          "text": "人物视线都朝旁边，未看拍摄镜头",
+          "tier": null,
+          "frame": "frames/BV1HpTYzwEjf/0150.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1LYVBzHE24",
+          "segment": 211,
+          "t": 1482.52,
+          "paraphrase": "模特视线偏向旁边，缺少明确意图",
+          "text": "模特视线偏向旁边，缺少明确意图",
+          "tier": null,
+          "frame": "frames/BV1LYVBzHE24/0211.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1BW2VYoEgK",
+          "segment": 132,
+          "t": 782.0,
+          "paraphrase": "整组都盯着摄影师，表现力不足",
+          "text": "整组都盯着摄影师，表现力不足",
+          "tier": null,
+          "frame": "frames/BV1BW2VYoEgK/0132.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1uiV86MEmA?t=2150.83",
+        "bilibili:BV1HpTYzwEjf?t=1556.11",
+        "bilibili:BV1LYVBzHE24?t=1482.52",
+        "bilibili:BV1BW2VYoEgK?t=782.0"
+      ]
+    },
+    {
+      "id": "P-YD-FACE-OCCLUDED",
+      "aspect": "face",
+      "title": "面部遮挡",
+      "statement": "面部作为主要表达对象时，避免头发、前景或道具遮挡到难以辨认。",
+      "exceptions": [
+        "遮面、背影、剪影或局部特写有明确意图"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 6,
+        "videos": 6,
+        "segments": 8,
+        "positive": 0,
+        "negative": 8
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 3,
+        "unknown": 5,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV16sfBBdE2y",
+          "segment": 201,
+          "t": 729.03,
+          "paraphrase": "遮挡过多，面部只剩眼睛和嘴巴可见",
+          "text": "遮挡过多，面部只剩眼睛和嘴巴可见",
+          "tier": "人上人",
+          "frame": "frames/BV16sfBBdE2y/0201.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1JViYBJESE",
+          "segment": 105,
+          "t": 616.04,
+          "paraphrase": "刘海和偏高的光线遮挡了脸部",
+          "text": "刘海和偏高的光线遮挡了脸部",
+          "tier": null,
+          "frame": "frames/BV1JViYBJESE/0105.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1rYaZ6mE3x",
+          "segment": 76,
+          "t": 312.31,
+          "paraphrase": "动感画面遮住了模特的脸",
+          "text": "动感画面遮住了模特的脸",
+          "tier": "夯",
+          "frame": "frames/BV1rYaZ6mE3x/0076.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV17owUzxEwK",
+          "segment": 311,
+          "t": 1863.07,
+          "paraphrase": "特写没有露出人物脸部",
+          "text": "特写没有露出人物脸部",
+          "tier": "人上人",
+          "frame": "frames/BV17owUzxEwK/0311.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV16sfBBdE2y?t=729.03",
+        "bilibili:BV1JViYBJESE?t=616.04",
+        "bilibili:BV1rYaZ6mE3x?t=312.31",
+        "bilibili:BV17owUzxEwK?t=1863.07"
+      ]
+    },
+    {
+      "id": "P-YD-SHOULDER-NECK",
+      "aspect": "pose",
+      "title": "肩颈轮廓",
+      "statement": "检查耸肩或发丝遮蔽是否使肩颈轮廓挤压、脖颈难以辨认。",
+      "exceptions": [
+        "缩肩或遮颈是明确的动作设计"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 6,
+        "videos": 6,
+        "segments": 7,
+        "positive": 2,
+        "negative": 5
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 1,
+        "unknown": 6,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV19U84zbEdv",
+          "segment": 170,
+          "t": 1232,
+          "paraphrase": "黑长直头发形成大片暗块，不美观",
+          "text": "黑长直头发形成大片暗块，不美观",
+          "tier": null,
+          "frame": "frames/BV19U84zbEdv/0170.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1raaZ6EE6u",
+          "segment": 230,
+          "t": 1378.9,
+          "paraphrase": "黑长直披发在人像中显得没脖子",
+          "text": "黑长直披发在人像中显得没脖子",
+          "tier": "人上人",
+          "frame": "frames/BV1raaZ6EE6u/0230.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1wUtFzZEn8",
+          "segment": 108,
+          "t": 523.55,
+          "paraphrase": "模特持续耸肩，姿态不放松",
+          "text": "模特持续耸肩，姿态不放松",
+          "tier": null,
+          "frame": "frames/BV1wUtFzZEn8/0108.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV17owUzxEwK",
+          "segment": 58,
+          "t": 311.06,
+          "paraphrase": "脖子显得比头还粗",
+          "text": "脖子显得比头还粗",
+          "tier": null,
+          "frame": "frames/BV17owUzxEwK/0058.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV19U84zbEdv?t=1232",
+        "bilibili:BV1raaZ6EE6u?t=1378.9",
+        "bilibili:BV1wUtFzZEn8?t=523.55",
+        "bilibili:BV17owUzxEwK?t=311.06"
+      ]
+    },
+    {
+      "id": "P-YD-EDGE-ARTIFACT",
+      "aspect": "quality",
+      "title": "边缘合成痕迹",
+      "statement": "检查人物与天空、前景的交界是否出现明显白边、色边或生硬抠图痕迹。",
+      "exceptions": [
+        "自然色散或有意描边；无法确认处理痕迹时仅提示"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 6,
+        "videos": 6,
+        "segments": 6,
+        "positive": 0,
+        "negative": 6
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 1,
+        "unknown": 5,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1C94y117Lj",
+          "segment": 65,
+          "t": 178.3,
+          "paraphrase": "喷溅液体与手之间的缝隙暴露合成痕迹",
+          "text": "喷溅液体与手之间的缝隙暴露合成痕迹",
+          "tier": null,
+          "frame": "frames/BV1C94y117Lj/0065.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1dExJzwE4X",
+          "segment": 240,
+          "t": 1313.97,
+          "paraphrase": "柔化过度，帽子和人物周围出现白边",
+          "text": "柔化过度，帽子和人物周围出现白边",
+          "tier": null,
+          "frame": "frames/BV1dExJzwE4X/0240.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV12Ge36YEXY",
+          "segment": 198,
+          "t": 1566.32,
+          "paraphrase": "手与天空交界出现明显蓝色边线",
+          "text": "手与天空交界出现明显蓝色边线",
+          "tier": "顶尖",
+          "frame": "frames/BV12Ge36YEXY/0198.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1kS421R7SZ",
+          "segment": 16,
+          "t": 107.3,
+          "paraphrase": "人物边缘处理生硬，显得悬浮",
+          "text": "人物边缘处理生硬，显得悬浮",
+          "tier": null,
+          "frame": "frames/BV1kS421R7SZ/0016.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1C94y117Lj?t=178.3",
+        "bilibili:BV1dExJzwE4X?t=1313.97",
+        "bilibili:BV12Ge36YEXY?t=1566.32",
+        "bilibili:BV1kS421R7SZ?t=107.3"
+      ]
+    },
+    {
+      "id": "P-YD-VIGNETTE",
+      "aspect": "quality",
+      "title": "无意暗角",
+      "statement": "检查暗角是否无意遮蔽画面边缘的有效内容或造成突兀黑角。",
+      "exceptions": [
+        "暗角用于聚焦主体或复古风格时可保留"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 5,
+        "videos": 5,
+        "segments": 7,
+        "positive": 0,
+        "negative": 7
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 2,
+        "unknown": 5,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1LLibBaEt9",
+          "segment": 8,
+          "t": 36.52,
+          "paraphrase": "肩带遮挡镜头，造成画面一角发黑",
+          "text": "肩带遮挡镜头，造成画面一角发黑",
+          "tier": null,
+          "frame": "frames/BV1LLibBaEt9/0008.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1HpbAzKEPN",
+          "segment": 409,
+          "t": 1988.56,
+          "paraphrase": "逆光画面出现暗角显得奇怪",
+          "text": "逆光画面出现暗角显得奇怪",
+          "tier": null,
+          "frame": "frames/BV1HpbAzKEPN/0409.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1JLU1BSEfs",
+          "segment": 311,
+          "t": 1726.95,
+          "paraphrase": "逆光画面的暗角显得奇怪",
+          "text": "逆光画面的暗角显得奇怪",
+          "tier": null,
+          "frame": "frames/BV1JLU1BSEfs/0311.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1TxLV6oE88",
+          "segment": 237,
+          "t": 1101,
+          "paraphrase": "每张照片都有明显暗角",
+          "text": "每张照片都有明显暗角",
+          "tier": "人上人",
+          "frame": "frames/BV1TxLV6oE88/0237.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1LLibBaEt9?t=36.52",
+        "bilibili:BV1HpbAzKEPN?t=1988.56",
+        "bilibili:BV1JLU1BSEfs?t=1726.95",
+        "bilibili:BV1TxLV6oE88?t=1101"
+      ]
+    },
+    {
+      "id": "P-YD-ACTION-MOMENT",
+      "aspect": "pose",
+      "title": "动作完成瞬间",
+      "statement": "检查奔跑、跳跃或转身的瞬间是否完整可读，避免未准备好或像失衡摔倒。",
+      "exceptions": [
+        "有意记录过渡动作或失衡感"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 5,
+        "videos": 5,
+        "segments": 5,
+        "positive": 0,
+        "negative": 5
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 0,
+        "unknown": 5,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV19x4tzpE52",
+          "segment": 260,
+          "t": 2041.3,
+          "paraphrase": "动作像前扑摔倒，缺少向上跳的感觉",
+          "text": "动作像前扑摔倒，缺少向上跳的感觉",
+          "tier": null,
+          "frame": "frames/BV19x4tzpE52/0260.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1Nzq5BCEVT",
+          "segment": 99,
+          "t": 475.81,
+          "paraphrase": "未拍出银杏叶撒开的动态效果",
+          "text": "未拍出银杏叶撒开的动态效果",
+          "tier": null,
+          "frame": "frames/BV1Nzq5BCEVT/0099.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1X67JzBELo",
+          "segment": 20,
+          "t": 220,
+          "paraphrase": "模特动作尚未准备好就被拍下",
+          "text": "模特动作尚未准备好就被拍下",
+          "tier": null,
+          "frame": "frames/BV1X67JzBELo/0020.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1HpTYzwEjf",
+          "segment": 123,
+          "t": 1359.2,
+          "paraphrase": "动作没有呈现预期的腾空感",
+          "text": "动作没有呈现预期的腾空感",
+          "tier": null,
+          "frame": "frames/BV1HpTYzwEjf/0123.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV19x4tzpE52?t=2041.3",
+        "bilibili:BV1Nzq5BCEVT?t=475.81",
+        "bilibili:BV1X67JzBELo?t=220",
+        "bilibili:BV1HpTYzwEjf?t=1359.2"
+      ]
+    },
+    {
+      "id": "P-YD-POSE-COMPACT",
+      "aspect": "pose",
+      "title": "肢体舒展",
+      "statement": "检查蜷缩或脚腿紧贴的姿态是否使人物轮廓拥挤、动作难以辨认。",
+      "exceptions": [
+        "蜷缩、紧张或无助正是表达意图"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 5,
+        "videos": 5,
+        "segments": 5,
+        "positive": 0,
+        "negative": 5
+      },
+      "tierContrast": {
+        "low": 1,
+        "high": 0,
+        "unknown": 4,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV14TDQYoEWj",
+          "segment": 286,
+          "t": 1709.23,
+          "paraphrase": "人物像踩在地上，画面不够舒展",
+          "text": "人物像踩在地上，画面不够舒展",
+          "tier": null,
+          "frame": "frames/BV14TDQYoEWj/0286.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1m86RYGEBw",
+          "segment": 13,
+          "t": 37.02,
+          "paraphrase": "双脚贴地，腿部动作不够舒展",
+          "text": "双脚贴地，腿部动作不够舒展",
+          "tier": null,
+          "frame": "frames/BV1m86RYGEBw/0013.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1r3Ts64EQE",
+          "segment": 6,
+          "t": 49.17,
+          "paraphrase": "模特缩成一团，姿态观感不佳",
+          "text": "模特缩成一团，姿态观感不佳",
+          "tier": "NPC",
+          "frame": "frames/BV1r3Ts64EQE/0006.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1pi421a7N9",
+          "segment": 202,
+          "t": 1288.45,
+          "paraphrase": "坐姿使模特难以看清",
+          "text": "坐姿使模特难以看清",
+          "tier": null,
+          "frame": "frames/BV1pi421a7N9/0202.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV14TDQYoEWj?t=1709.23",
+        "bilibili:BV1m86RYGEBw?t=37.02",
+        "bilibili:BV1r3Ts64EQE?t=49.17",
+        "bilibili:BV1pi421a7N9?t=1288.45"
+      ]
+    },
+    {
+      "id": "P-YD-BG-BLUR",
+      "aspect": "background",
+      "title": "环境虚化信息",
+      "statement": "需要交代环境的照片中，避免过度虚化使背景信息完全丢失。",
+      "exceptions": [
+        "浅景深肖像以人物为唯一表达对象时可保留"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 4,
+        "videos": 4,
+        "segments": 4,
+        "positive": 0,
+        "negative": 4
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 0,
+        "unknown": 4,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1GGzuBCEPw",
+          "segment": 328,
+          "t": 1681.76,
+          "paraphrase": "背景虚化成一团，失去背景表现",
+          "text": "背景虚化成一团，失去背景表现",
+          "tier": null,
+          "frame": "frames/BV1GGzuBCEPw/0328.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1r3Ts64EQE",
+          "segment": 482,
+          "t": 2217.96,
+          "paraphrase": "背景虚化过度，缺少可看的内容",
+          "text": "背景虚化过度，缺少可看的内容",
+          "tier": null,
+          "frame": "frames/BV1r3Ts64EQE/0482.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1693JzMEkD",
+          "segment": 333,
+          "t": 2245.9,
+          "paraphrase": "背景全部虚化，环境内容不足",
+          "text": "背景全部虚化，环境内容不足",
+          "tier": null,
+          "frame": "frames/BV1693JzMEkD/0333.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1L6CRBdEMs",
+          "segment": 51,
+          "t": 219,
+          "paraphrase": "背景过于柔化，质感不足",
+          "text": "背景过于柔化，质感不足",
+          "tier": null,
+          "frame": "frames/BV1L6CRBdEMs/0051.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1GGzuBCEPw?t=1681.76",
+        "bilibili:BV1r3Ts64EQE?t=2217.96",
+        "bilibili:BV1693JzMEkD?t=2245.9",
+        "bilibili:BV1L6CRBdEMs?t=219"
+      ]
+    },
+    {
+      "id": "P-YD-MULTIPLE-SHADOWS",
+      "aspect": "light",
+      "title": "多重投影",
+      "statement": "检查多重影子是否无意分割人物或使画面光源关系混乱。",
+      "exceptions": [
+        "多光源设计、重影或实验表达成立"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 4,
+        "videos": 4,
+        "segments": 4,
+        "positive": 0,
+        "negative": 4
+      },
+      "tierContrast": {
+        "low": 1,
+        "high": 0,
+        "unknown": 3,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1dtB4BaEgG",
+          "segment": 45,
+          "t": 309.85,
+          "paraphrase": "多重影子使画面混乱，影响观感",
+          "text": "多重影子使画面混乱，影响观感",
+          "tier": null,
+          "frame": "frames/BV1dtB4BaEgG/0045.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV17owUzxEwK",
+          "segment": 21,
+          "t": 124.58,
+          "paraphrase": "多重影子带来诡异观感",
+          "text": "多重影子带来诡异观感",
+          "tier": "NPC",
+          "frame": "frames/BV17owUzxEwK/0021.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1QN2QYWEvk",
+          "segment": 3,
+          "t": 16.88,
+          "paraphrase": "人物影子与树影重叠",
+          "text": "人物影子与树影重叠",
+          "tier": null,
+          "frame": "frames/BV1QN2QYWEvk/0003.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1TPkuYnEs1",
+          "segment": 377,
+          "t": 2092.59,
+          "paraphrase": "多重影子影响观感",
+          "text": "多重影子影响观感",
+          "tier": null,
+          "frame": "frames/BV1TPkuYnEs1/0377.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1dtB4BaEgG?t=309.85",
+        "bilibili:BV17owUzxEwK?t=124.58",
+        "bilibili:BV1QN2QYWEvk?t=16.88",
+        "bilibili:BV1TPkuYnEs1?t=2092.59"
+      ]
+    },
+    {
+      "id": "P-YD-TEXTURE-SHARP",
+      "aspect": "quality",
+      "title": "锐化生硬",
+      "statement": "检查过度锐化是否使皮肤凹凸或人物边缘出现不自然的硬感。",
+      "exceptions": [
+        "有意强调粗粝质感；自然皮肤纹理不是缺陷"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 3,
+        "videos": 3,
+        "segments": 3,
+        "positive": 0,
+        "negative": 3
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 1,
+        "unknown": 2,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1HpTYzwEjf",
+          "segment": 91,
+          "t": 800.22,
+          "paraphrase": "锐化让脸部凹凸过于明显，不美观",
+          "text": "锐化让脸部凹凸过于明显，不美观",
+          "tier": null,
+          "frame": "frames/BV1HpTYzwEjf/0091.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1K89sBEE7z",
+          "segment": 58,
+          "t": 321.33,
+          "paraphrase": "其中一个处理版本显得过于锐利",
+          "text": "其中一个处理版本显得过于锐利",
+          "tier": "顶尖",
+          "frame": "frames/BV1K89sBEE7z/0058.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1LLibBaEt9",
+          "segment": 360,
+          "t": 1733.82,
+          "paraphrase": "人物锐度增加过多",
+          "text": "人物锐度增加过多",
+          "tier": null,
+          "frame": "frames/BV1LLibBaEt9/0360.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1HpTYzwEjf?t=800.22",
+        "bilibili:BV1K89sBEE7z?t=321.33",
+        "bilibili:BV1LLibBaEt9?t=1733.82"
+      ]
+    },
+    {
+      "id": "P-YD-CATCHLIGHT",
+      "aspect": "face",
+      "title": "眼神光可信",
+      "statement": "眼神光的形状、位置、亮度和反射关系应可信，不应呈现明显涂抹感。",
+      "exceptions": [
+        "舞台彩光或有意超现实处理不按自然反射要求"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 2,
+        "videos": 2,
+        "segments": 5,
+        "positive": 0,
+        "negative": 5
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 0,
+        "unknown": 5,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1M34y1e7nY",
+          "segment": 187,
+          "t": 1398.85,
+          "paraphrase": "眼神光采用单色涂抹，缺少真实反射色彩",
+          "text": "眼神光采用单色涂抹，缺少真实反射色彩",
+          "tier": null,
+          "frame": "frames/BV1M34y1e7nY/0187.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1HpbAzKEPN",
+          "segment": 122,
+          "t": 667,
+          "paraphrase": "眼部亮光缺乏依据，显得虚假",
+          "text": "眼部亮光缺乏依据，显得虚假",
+          "tier": null,
+          "frame": "frames/BV1HpbAzKEPN/0122.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1M34y1e7nY",
+          "segment": 187,
+          "t": 1269.85,
+          "paraphrase": "添加的眼神光落在睫毛等错误位置",
+          "text": "添加的眼神光落在睫毛等错误位置",
+          "tier": null,
+          "frame": "frames/BV1M34y1e7nY/0187.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1M34y1e7nY",
+          "segment": 187,
+          "t": 1403.43,
+          "paraphrase": "两块眼神光大小相同，不合理",
+          "text": "两块眼神光大小相同，不合理",
+          "tier": null,
+          "frame": "frames/BV1M34y1e7nY/0187.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1M34y1e7nY?t=1398.85",
+        "bilibili:BV1HpbAzKEPN?t=667",
+        "bilibili:BV1M34y1e7nY?t=1269.85",
+        "bilibili:BV1M34y1e7nY?t=1403.43"
+      ]
+    },
+    {
+      "id": "P-YD-COLOR-BANDING",
+      "aspect": "color",
+      "title": "色阶断层",
+      "statement": "检查天空等平滑区域是否出现不自然的色阶断层或分级痕迹。",
+      "exceptions": [
+        "有意色块化或海报化表现"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 2,
+        "videos": 2,
+        "segments": 2,
+        "positive": 0,
+        "negative": 2
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 0,
+        "unknown": 2,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1HpTYzwEjf",
+          "segment": 76,
+          "t": 699.67,
+          "paraphrase": "天空有明显分级感，后期痕迹突出",
+          "text": "天空有明显分级感，后期痕迹突出",
+          "tier": null,
+          "frame": "frames/BV1HpTYzwEjf/0076.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1TPkuYnEs1",
+          "segment": 306,
+          "t": 1619.71,
+          "paraphrase": "天空调整后出现断层",
+          "text": "天空调整后出现断层",
+          "tier": null,
+          "frame": "frames/BV1TPkuYnEs1/0306.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1HpTYzwEjf?t=699.67",
+        "bilibili:BV1TPkuYnEs1?t=1619.71"
+      ]
+    },
+    {
+      "id": "P-YD-EYE-CROP",
+      "aspect": "framing",
+      "title": "眼部裁切",
+      "statement": "避免画框无意切掉半只眼睛或使眼睛出界。",
+      "exceptions": [
+        "有明确遮蔽意图的极近特写"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 2,
+        "videos": 2,
+        "segments": 2,
+        "positive": 0,
+        "negative": 2
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 0,
+        "unknown": 2,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1M34y1e7nY",
+          "segment": 90,
+          "t": 545.54,
+          "paraphrase": "裁掉半只眼睛后画面显得奇怪",
+          "text": "裁掉半只眼睛后画面显得奇怪",
+          "tier": null,
+          "frame": "frames/BV1M34y1e7nY/0090.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1L6CRBdEMs",
+          "segment": 189,
+          "t": 1041.64,
+          "paraphrase": "构图过近，眼睛位置出界",
+          "text": "构图过近，眼睛位置出界",
+          "tier": null,
+          "frame": "frames/BV1L6CRBdEMs/0189.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1M34y1e7nY?t=545.54",
+        "bilibili:BV1L6CRBdEMs?t=1041.64"
+      ]
+    },
+    {
+      "id": "P-YD-PROFILE",
+      "aspect": "face",
+      "title": "剪影轮廓可读",
+      "statement": "以侧脸剪影表达人物时，鼻额唇等轮廓应能辨认。",
+      "exceptions": [
+        "抽象剪影可有意省略五官"
+      ],
+      "polarity": "negative",
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 2,
+        "videos": 2,
+        "segments": 2,
+        "positive": 0,
+        "negative": 2
+      },
+      "tierContrast": {
+        "low": 0,
+        "high": 0,
+        "unknown": 2,
+        "lowTiers": [
+          "NPC",
+          "拉"
+        ],
+        "highTiers": [
+          "人上人",
+          "夯",
+          "顶尖"
+        ]
+      },
+      "evidence": [
+        {
+          "bvid": "BV1TJu6zNEWg",
+          "segment": 170,
+          "t": 939.67,
+          "paraphrase": "剪影未显出鼻子，脸部轮廓不明确",
+          "text": "剪影未显出鼻子，脸部轮廓不明确",
+          "tier": null,
+          "frame": "frames/BV1TJu6zNEWg/0170.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1UWQoY5EWy",
+          "segment": 159,
+          "t": 999.45,
+          "paraphrase": "脸部侧转不足，剪影轮廓未呈现",
+          "text": "脸部侧转不足，剪影轮廓未呈现",
+          "tier": null,
+          "frame": "frames/BV1UWQoY5EWy/0159.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "sources": [
+        "bilibili:BV1TJu6zNEWg?t=939.67",
+        "bilibili:BV1UWQoY5EWy?t=999.45"
+      ]
+    }
+  ],
+  "extractionStatus": "complete",
+  "inputSegments": 6651,
+  "extractedSegments": 6651,
+  "promptVersion": "critique@0.2.1",
+  "rulesVersion": "portrait@0.1.0",
+  "synthesis": {
+    "method": "codex-semantic",
+    "filteredVague": 4082,
+    "nonSelectionCount": 461,
+    "commentaryItems": 6292,
+    "filteredVagueRatio": 0.64876,
+    "unresolvedConcrete": 23,
+    "selectionCount": 1726,
+    "mappedEvidenceAssignments": 809,
+    "mappedUniqueItems": 791,
+    "negativeSamples": 3748,
+    "negativeSamplesExtracted": 3497,
+    "tieredSegments": 1029,
+    "episodes": 97,
+    "excludedSingleEpisode": [],
+    "annotationIndex": "portrait-synthesis-index.json",
+    "codebook": "portrait-synthesis-codebook.json",
+    "inputDigest": "bead83217a4e1cc777e5bae016bc46db2156cc57e0428f9844293e054648412e",
+    "evidencePolicy": "候选最多4条、跨期优先；frequency为全量匹配的去重期数/段数；tierContrast为观察段数，非因果或误差率。"
+  }
+}

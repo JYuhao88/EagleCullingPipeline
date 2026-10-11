@@ -1,0 +1,330 @@
+{
+  "date": "2026-10-10",
+  "use": "private internal research only",
+  "canonical": {
+    "wulin_fetch": "w3-genres-wulin-fetch-1010",
+    "wulin_asr": "w3-genres-wulin-asr-1010",
+    "wulin_segment": "w3-genres-wulin-segment-v3-1010",
+    "wux_asr": "w3-genres-wuxiaolong-asr-1010",
+    "wux_topics": "w3-genres-wuxiaolong-topics-v2-1010",
+    "wux_export": "w3-genres-wuxiaolong-export-v2-1010",
+    "wulin_align": "w3-genres-wulin-align-v2-1010",
+    "wulin_verify": "w3-genres-wulin-verify-1010",
+    "wulin_export": "w3-genres-wulin-export-1010",
+    "wulin_qa": "w3-genres-wulin-qa-1010"
+  },
+  "jobs": [
+    {
+      "submission_id": "w3-genres-wulin-fetch-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791611470585,
+      "end_time": 1791613340865,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 1870.28
+    },
+    {
+      "submission_id": "w3-genres-wuxiaolong-asr-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791611470975,
+      "end_time": 1791611858210,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 387.235
+    },
+    {
+      "submission_id": "w3-genres-wulin-layout-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791611550164,
+      "end_time": 1791611637407,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 87.243
+    },
+    {
+      "submission_id": "w3-genres-wulin-layout-samples-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791611603492,
+      "end_time": 1791611608576,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 5.084
+    },
+    {
+      "submission_id": "w3-genres-wulin-segment-pilot-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791611654919,
+      "end_time": 1791611893505,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 238.586
+    },
+    {
+      "submission_id": "w3-genres-wuxiaolong-topics-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791611865145,
+      "end_time": 1791611881498,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 16.353
+    },
+    {
+      "submission_id": "w3-genres-wulin-asr-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791611865522,
+      "end_time": 1791613165894,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 1300.372
+    },
+    {
+      "submission_id": "w3-genres-wuxiaolong-export-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791611891776,
+      "end_time": 1791611900728,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 8.952
+    },
+    {
+      "submission_id": "w3-genres-wulin-segment-full-1010",
+      "status": "STOPPED",
+      "start_time": 1791611916817,
+      "end_time": 1791613203710,
+      "driver_exit_code": null,
+      "elapsed_seconds": 1286.893
+    },
+    {
+      "submission_id": "w3-genres-wulin-align-pilot-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791611966554,
+      "end_time": 1791612004691,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 38.137
+    },
+    {
+      "submission_id": "w3-genres-wulin-pilot-qa-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791612019541,
+      "end_time": 1791612023061,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 3.52
+    },
+    {
+      "submission_id": "w3-genres-wuxiaolong-topics-v2-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791612279877,
+      "end_time": 1791612292682,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 12.805
+    },
+    {
+      "submission_id": "w3-genres-wuxiaolong-export-v2-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791612345563,
+      "end_time": 1791612352704,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 7.141
+    },
+    {
+      "submission_id": "w3-genres-wulin-metadata-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791612392260,
+      "end_time": 1791612400828,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 8.568
+    },
+    {
+      "submission_id": "w3-genres-wulin-ui-match-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791613064476,
+      "end_time": 1791613067388,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 2.912
+    },
+    {
+      "submission_id": "w3-genres-wulin-ui-match-v2-1010",
+      "status": "FAILED",
+      "start_time": 1791613202899,
+      "end_time": 1791613207715,
+      "driver_exit_code": 1,
+      "elapsed_seconds": 4.816
+    },
+    {
+      "submission_id": "w3-genres-wulin-ui-match-v3-1010",
+      "status": "FAILED",
+      "start_time": 1791613299998,
+      "end_time": 1791613304746,
+      "driver_exit_code": 1,
+      "elapsed_seconds": 4.748
+    },
+    {
+      "submission_id": "w3-genres-wulin-ui-match-v4-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791613415122,
+      "end_time": 1791613417851,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 2.729
+    },
+    {
+      "submission_id": "w3-genres-wulin-segment-v2-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791613427516,
+      "end_time": 1791615077472,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 1649.956
+    },
+    {
+      "submission_id": "w3-genres-wulin-align-full-1010",
+      "status": "FAILED",
+      "start_time": 1791615760819,
+      "end_time": 1791615882144,
+      "driver_exit_code": 1,
+      "elapsed_seconds": 121.325
+    },
+    {
+      "submission_id": "w3-genres-wulin-zero-inspect-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791615960814,
+      "end_time": 1791615967995,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 7.181
+    },
+    {
+      "submission_id": "w3-genres-wulin-segment-v3-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791616088165,
+      "end_time": 1791617646270,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 1558.105
+    },
+    {
+      "submission_id": "w3-genres-wulin-align-v2-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791617678831,
+      "end_time": 1791617749783,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 70.952
+    },
+    {
+      "submission_id": "w3-genres-wulin-verify-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791617761199,
+      "end_time": 1791617920588,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 159.389
+    },
+    {
+      "submission_id": "w3-genres-wulin-export-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791618010804,
+      "end_time": 1791618023109,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 12.305
+    },
+    {
+      "submission_id": "w3-genres-wulin-qa-1010",
+      "status": "SUCCEEDED",
+      "start_time": 1791618455261,
+      "end_time": 1791618474689,
+      "driver_exit_code": 0,
+      "elapsed_seconds": 19.428
+    }
+  ],
+  "wulin": {
+    "manifest_videos": 40,
+    "public_duration_seconds": 105696,
+    "fetch": {
+      "videos": 40,
+      "subtitle_videos": 30,
+      "heights": [
+        1080
+      ],
+      "bytes": 14524083736
+    },
+    "asr": {
+      "videos": 40,
+      "duration": 105673.790375,
+      "sentences": 42026,
+      "video_seconds": 1246.98,
+      "peak_gpu_memory_gb": 5.519,
+      "device": "NVIDIA H20"
+    },
+    "alignment_totals": {
+      "duration_seconds": 105673.790375,
+      "photo_coverage_seconds": 98786.9,
+      "photo_coverage_ratio": 0.9348287749444703,
+      "critique_count": 4272,
+      "segments_without_transcript": 68,
+      "unassigned_asr_sentences": 111,
+      "asr_sentences_assigned_to_other": 2228,
+      "asr_sentences": 42026,
+      "unique_photo_ids": 2693
+    },
+    "candidate_counts": {
+      "videos": 40,
+      "photo": 4252,
+      "compare": 20,
+      "rows": 4272
+    },
+    "verification": {
+      "wall_seconds": 156.962,
+      "resource": {
+        "cpus": 8,
+        "gpus": 0,
+        "io_threads": 8
+      },
+      "expected": 40,
+      "verified": 40,
+      "errors": [],
+      "jpeg_files_checked": 6613,
+      "raw_bytes": 14527261002,
+      "raw_inventory_sha256": "ecab1cabf249bde6ecf0cf97617de88557ae6101e7100c464bfcdff8da4a9192"
+    }
+  },
+  "wuxiaolong": {
+    "videos": 19,
+    "duration": 37933.420195,
+    "sentences": 17079,
+    "topic_segments": 826,
+    "covered_sentences": 2704,
+    "topic_seconds": 7107.338000000003,
+    "sentence_coverage": 0.15832308683178173,
+    "duration_coverage": 0.18736349012201176
+  },
+  "tests": {
+    "python": {
+      "total": 34,
+      "passed": 29,
+      "skipped": 5,
+      "failed": 0
+    },
+    "node": {
+      "passed": 2,
+      "failed": 0
+    },
+    "npm": {
+      "total": 214,
+      "passed": 213,
+      "skipped": 1,
+      "failed": 0
+    }
+  },
+  "qa_bvids": [
+    "BV1Cy4y157vi",
+    "BV1KR4y1e77x",
+    "BV1NZhw6cEpS"
+  ],
+  "local_data_root": "/tmp/w3-genres-data",
+  "limits": [
+    "photo identity counts are heuristic, not independent works",
+    "topic windows are keyword matches, not expert labels",
+    "raw inventory hash covers size/mtime, not raw video content"
+  ],
+  "extraction": "prepared only; user runs Codex outside sandbox",
+  "transfer": {
+    "wulin_text_files_sha256_checked": 126,
+    "wuxiaolong_text_files_sha256_checked": 40,
+    "wulin_qa_html_files_sha256_checked": 3,
+    "wulin_preprocessed_videos": 40,
+    "qa_overview_pages": 21
+  },
+  "qa_observed_limits": [
+    "principle slides, host opening, folder grids and gear diagrams appear in candidates",
+    "paired comparisons often labeled photo",
+    "edited views may get separate identities",
+    "manual QA sampled pages, not exhaustive precision ground truth"
+  ]
+}

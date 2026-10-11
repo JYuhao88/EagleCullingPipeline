@@ -1,0 +1,1636 @@
+{
+  "contractVersion": 1,
+  "library": "landscape-street",
+  "version": "0.2.0-candidates",
+  "genres": [
+    "landscape",
+    "nature",
+    "architecture",
+    "street",
+    "documentary"
+  ],
+  "rules": [
+    {
+      "id": "L-WL-ANCHOR",
+      "library": "landscape",
+      "theme": "composition",
+      "subtheme": "anchor",
+      "title": "观看路径有停留点",
+      "aspect": "composition",
+      "statement": "大场景、重复元素或引导线应承接到可见兴趣点；不以壮观场景替代内容。",
+      "exceptions": [
+        "类型学、抽象或留白不强求单一主体"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-VISUAL-INTENT",
+        "L-LEADING-LINES"
+      ],
+      "status": "proposed",
+      "severity": "hint",
+      "source": "wulin-critiques",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "frequency": {
+        "episodes": 21,
+        "videos": 21,
+        "segments": 57,
+        "positive": 16,
+        "negative": 42
+      },
+      "supportEpisodes": 21,
+      "supportSegments": 57,
+      "evidence": [
+        {
+          "bvid": "BV1dL41147Kf",
+          "segment": 4,
+          "t": 32.42,
+          "paraphrase": "缺少有效参照物和兴趣点",
+          "text": "缺少有效参照物和兴趣点",
+          "frame": "frames/BV1dL41147Kf/0004.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1324y1a7Aa",
+          "segment": 12,
+          "t": 200.24,
+          "paraphrase": "远处元素承接视线，形成落脚点",
+          "text": "远处元素承接视线，形成落脚点",
+          "frame": "frames/BV1324y1a7Aa/0012.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV13PT2zQEfF",
+          "segment": 117,
+          "t": 1954.22,
+          "paraphrase": "各元素缺乏统领，画面没有中心",
+          "text": "各元素缺乏统领，画面没有中心",
+          "frame": "frames/BV13PT2zQEfF/0117.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV15p421y71E",
+          "segment": 131,
+          "t": 2471.17,
+          "paraphrase": "画面没有明确的视觉落脚点",
+          "text": "画面没有明确的视觉落脚点",
+          "frame": "frames/BV15p421y71E/0131.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "crossEvidence": [],
+      "sources": [
+        "bilibili:BV1dL41147Kf?t=32.42",
+        "bilibili:BV1324y1a7Aa?t=200.24",
+        "bilibili:BV13PT2zQEfF?t=1954.22",
+        "bilibili:BV15p421y71E?t=2471.17"
+      ]
+    },
+    {
+      "id": "L-WL-TONE-DEPTH",
+      "library": "landscape",
+      "theme": "light",
+      "subtheme": "tone-depth",
+      "title": "影调层级服务空间与重点",
+      "aspect": "light",
+      "statement": "亮度层级应支持空间与重点；各处同亮或细节全显导致平淡时提示，也允许柔和低反差。",
+      "exceptions": [
+        "雾景、高调、低调和刻意平面化可成立",
+        "不要求暗部全部可见"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-LIGHT-INTENT",
+        "L-SHADOW-RECOVERY"
+      ],
+      "status": "proposed",
+      "severity": "hint",
+      "source": "wulin-critiques",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "frequency": {
+        "episodes": 20,
+        "videos": 20,
+        "segments": 33,
+        "positive": 11,
+        "negative": 22
+      },
+      "supportEpisodes": 20,
+      "supportSegments": 33,
+      "evidence": [
+        {
+          "bvid": "BV1dL41147Kf",
+          "segment": 25,
+          "t": 778.16,
+          "paraphrase": "大面积暗部使画面拥堵、不通透",
+          "text": "大面积暗部使画面拥堵、不通透",
+          "frame": "frames/BV1dL41147Kf/0025.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1KR4y1e77x",
+          "segment": 13,
+          "t": 180.32,
+          "paraphrase": "影调展现出山峦叠加的层次",
+          "text": "影调展现出山峦叠加的层次",
+          "frame": "frames/BV1KR4y1e77x/0013.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1NZhw6cEpS",
+          "segment": 245,
+          "t": 3010.05,
+          "paraphrase": "明暗变化使画面空间关系产生互动",
+          "text": "明暗变化使画面空间关系产生互动",
+          "frame": "frames/BV1NZhw6cEpS/0245.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1yXpjzhEFn",
+          "segment": 30,
+          "t": 774.15,
+          "paraphrase": "暗部占比过大，画面显得堵塞",
+          "text": "暗部占比过大，画面显得堵塞",
+          "frame": "frames/BV1yXpjzhEFn/0030.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "crossEvidence": [
+        {
+          "theme": "光影层次",
+          "relation": "agreement-with-exceptions",
+          "summary": "光影应支持地形和气氛；书籍论文允许阴雨、顶光，不限定黄金时段或全部细节可见。",
+          "candidateIds": [
+            "L-WL-TONE-DEPTH",
+            "L-WL-MOTION-STATIC"
+          ],
+          "ruleIds": [
+            "L-LIGHT-INTENT"
+          ],
+          "references": [
+            {
+              "source": "book",
+              "ruleId": "L-LIGHT-INTENT",
+              "kind": "source",
+              "paraphrase": "阴雨柔光也可表达空气、层次与情绪",
+              "locator": "第三讲／摄影用光的误区",
+              "bookSlug": "photography-aesthetics-six-lectures"
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-LIGHT-INTENT",
+              "kind": "source",
+              "paraphrase": "比较光影是否呈现地形、质感与气氛",
+              "locator": "段落11／5-2-3 上午和下午的光线",
+              "paperSlug": "paper-09e3480ff75dbc24",
+              "supportCount": 7
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-LIGHT-INTENT",
+              "kind": "exception",
+              "paraphrase": "顶光或柔和光仍可有用途，不限定黄金时段",
+              "locator": "段落15／5-2-4 中午的光线",
+              "paperSlug": "paper-09e3480ff75dbc24",
+              "supportCount": 3
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "bilibili:BV1dL41147Kf?t=778.16",
+        "bilibili:BV1KR4y1e77x?t=180.32",
+        "bilibili:BV1NZhw6cEpS?t=3010.05",
+        "bilibili:BV1yXpjzhEFn?t=774.15"
+      ]
+    },
+    {
+      "id": "L-WL-NEAR-TEXTURE",
+      "library": "landscape",
+      "theme": "composition",
+      "subtheme": "near-texture",
+      "title": "近景质感承接远景气势",
+      "aspect": "composition",
+      "statement": "近处纹理、形态与远景形成尺度和观看入口；质感不足或过重时结合主题复核。",
+      "exceptions": [
+        "平面化、远景压缩或极简可无近景"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-FOREGROUND-ROLE"
+      ],
+      "status": "proposed",
+      "severity": "hint",
+      "source": "wulin-critiques",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "frequency": {
+        "episodes": 18,
+        "videos": 18,
+        "segments": 24,
+        "positive": 20,
+        "negative": 4
+      },
+      "supportEpisodes": 18,
+      "supportSegments": 24,
+      "evidence": [
+        {
+          "bvid": "BV13PT2zQEfF",
+          "segment": 201,
+          "t": 3213.21,
+          "paraphrase": "前景纹理和线条不够突出",
+          "text": "前景纹理和线条不够突出",
+          "frame": "frames/BV13PT2zQEfF/0201.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1NZhw6cEpS",
+          "segment": 71,
+          "t": 607.33,
+          "paraphrase": "近景质感与远山气势是突出特点",
+          "text": "近景质感与远山气势是突出特点",
+          "frame": "frames/BV1NZhw6cEpS/0071.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV15p421y71E",
+          "segment": 59,
+          "t": 1239.92,
+          "paraphrase": "前景石头质感出色",
+          "text": "前景石头质感出色",
+          "frame": "frames/BV15p421y71E/0059.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV174XXYDEqo",
+          "segment": 97,
+          "t": 1433,
+          "paraphrase": "前景石头纹理表现出色",
+          "text": "前景石头纹理表现出色",
+          "frame": "frames/BV174XXYDEqo/0097.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        }
+      ],
+      "crossEvidence": [
+        {
+          "theme": "前景与层次",
+          "relation": "agreement-with-exceptions",
+          "summary": "前景支持尺度和空间；枝干可框景，也可形成干扰，不强求干净或有前景。",
+          "candidateIds": [
+            "L-WL-FOREGROUND-ORDER",
+            "L-WL-DEPTH-BUFFER",
+            "L-WL-NEAR-TEXTURE"
+          ],
+          "ruleIds": [
+            "L-FOREGROUND-ROLE",
+            "L-LEADING-LINES"
+          ],
+          "references": [
+            {
+              "source": "book",
+              "ruleId": "L-FOREGROUND-ROLE",
+              "kind": "exception",
+              "paraphrase": "枝干前景可遮挡部分建筑并引导观看",
+              "locator": "第一讲／知识之外的无言之美",
+              "bookSlug": "photography-aesthetics-six-lectures"
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-FOREGROUND-ROLE",
+              "kind": "source",
+              "paraphrase": "前景可交代尺度与空间，不以有无作门槛",
+              "locator": "段落13／风光摄影的技巧掌握五、利用前景增强空间感",
+              "paperSlug": "paper-b7bc16c4801a55d3",
+              "supportCount": 3
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-LEADING-LINES",
+              "kind": "source",
+              "paraphrase": "线条可组织观看路径并勾勒主体",
+              "locator": "段落18／(二)摄影构图中线的作用",
+              "paperSlug": "paper-0a66b2043073515a",
+              "supportCount": 1
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-FOREGROUND-ROLE",
+              "kind": "counterpoint",
+              "paraphrase": "前景柳枝若令画面杂乱，反而削弱构图",
+              "locator": "段落6",
+              "paperSlug": "paper-5f14b6d264dad77a",
+              "supportCount": 1
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "bilibili:BV13PT2zQEfF?t=3213.21",
+        "bilibili:BV1NZhw6cEpS?t=607.33",
+        "bilibili:BV15p421y71E?t=1239.92",
+        "bilibili:BV174XXYDEqo?t=1433"
+      ]
+    },
+    {
+      "id": "L-WL-DEPTH-BUFFER",
+      "library": "landscape",
+      "theme": "composition",
+      "subtheme": "depth-buffer",
+      "title": "前中后景留有空间缓冲",
+      "aspect": "composition",
+      "statement": "前景与主体间的间距和中景过渡应支持纵深，避免重叠拥堵或空白割裂观看路径。",
+      "exceptions": [
+        "长焦压缩、平面图案可有意减少纵深"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-FOREGROUND-ROLE",
+        "L-LEADING-LINES"
+      ],
+      "status": "proposed",
+      "severity": "hint",
+      "source": "wulin-critiques",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "frequency": {
+        "episodes": 17,
+        "videos": 17,
+        "segments": 35,
+        "positive": 16,
+        "negative": 20
+      },
+      "supportEpisodes": 17,
+      "supportSegments": 35,
+      "evidence": [
+        {
+          "bvid": "BV13PT2zQEfF",
+          "segment": 79,
+          "t": 1287.69,
+          "paraphrase": "视角较平淡，立体感与纵深不足",
+          "text": "视角较平淡，立体感与纵深不足",
+          "frame": "frames/BV13PT2zQEfF/0079.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV15p421y71E",
+          "segment": 44,
+          "t": 903.02,
+          "paraphrase": "石头与高楼错开，避免空间压抑",
+          "text": "石头与高楼错开，避免空间压抑",
+          "frame": "frames/BV15p421y71E/0044.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV15V4y1a7Mo",
+          "segment": 76,
+          "t": 1058.62,
+          "paraphrase": "前景空间不足，限制了视觉引导",
+          "text": "前景空间不足，限制了视觉引导",
+          "frame": "frames/BV15V4y1a7Mo/0076.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV174XXYDEqo",
+          "segment": 97,
+          "t": 1400.49,
+          "paraphrase": "冰块间距过近，空间感不足",
+          "text": "冰块间距过近，空间感不足",
+          "frame": "frames/BV174XXYDEqo/0097.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "crossEvidence": [
+        {
+          "theme": "前景与层次",
+          "relation": "agreement-with-exceptions",
+          "summary": "前景支持尺度和空间；枝干可框景，也可形成干扰，不强求干净或有前景。",
+          "candidateIds": [
+            "L-WL-FOREGROUND-ORDER",
+            "L-WL-DEPTH-BUFFER",
+            "L-WL-NEAR-TEXTURE"
+          ],
+          "ruleIds": [
+            "L-FOREGROUND-ROLE",
+            "L-LEADING-LINES"
+          ],
+          "references": [
+            {
+              "source": "book",
+              "ruleId": "L-FOREGROUND-ROLE",
+              "kind": "exception",
+              "paraphrase": "枝干前景可遮挡部分建筑并引导观看",
+              "locator": "第一讲／知识之外的无言之美",
+              "bookSlug": "photography-aesthetics-six-lectures"
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-FOREGROUND-ROLE",
+              "kind": "source",
+              "paraphrase": "前景可交代尺度与空间，不以有无作门槛",
+              "locator": "段落13／风光摄影的技巧掌握五、利用前景增强空间感",
+              "paperSlug": "paper-b7bc16c4801a55d3",
+              "supportCount": 3
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-LEADING-LINES",
+              "kind": "source",
+              "paraphrase": "线条可组织观看路径并勾勒主体",
+              "locator": "段落18／(二)摄影构图中线的作用",
+              "paperSlug": "paper-0a66b2043073515a",
+              "supportCount": 1
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-FOREGROUND-ROLE",
+              "kind": "counterpoint",
+              "paraphrase": "前景柳枝若令画面杂乱，反而削弱构图",
+              "locator": "段落6",
+              "paperSlug": "paper-5f14b6d264dad77a",
+              "supportCount": 1
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "bilibili:BV13PT2zQEfF?t=1287.69",
+        "bilibili:BV15p421y71E?t=903.02",
+        "bilibili:BV15V4y1a7Mo?t=1058.62",
+        "bilibili:BV174XXYDEqo?t=1400.49"
+      ]
+    },
+    {
+      "id": "L-WL-MOTION-STATIC",
+      "library": "landscape",
+      "theme": "motion",
+      "subtheme": "motion-static",
+      "title": "动静对照有形态与方向",
+      "aspect": "motion",
+      "statement": "流云、流水和光轨的方向、节奏与静景相互配合；动感不足或混杂时按意图比较。",
+      "exceptions": [
+        "平静水面、冻结浪花与弱动感都可成立",
+        "不据成片倒推出快门时长"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-BLUR-CAMERA",
+        "L-LIGHT-INTENT"
+      ],
+      "status": "proposed",
+      "severity": "hint",
+      "source": "wulin-critiques",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "frequency": {
+        "episodes": 17,
+        "videos": 17,
+        "segments": 30,
+        "positive": 22,
+        "negative": 9
+      },
+      "supportEpisodes": 17,
+      "supportSegments": 30,
+      "evidence": [
+        {
+          "bvid": "BV15V4y1a7Mo",
+          "segment": 24,
+          "t": 222.44,
+          "paraphrase": "水面拉丝动感不明显，柔化过度",
+          "text": "水面拉丝动感不明显，柔化过度",
+          "frame": "frames/BV15V4y1a7Mo/0024.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1Cy4y157vi",
+          "segment": 34,
+          "t": 874.62,
+          "paraphrase": "海水拉丝效果出色",
+          "text": "海水拉丝效果出色",
+          "frame": "frames/BV1Cy4y157vi/0034.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1KR4y1e77x",
+          "segment": 45,
+          "t": 506.87,
+          "paraphrase": "长曝光呈现动感效果",
+          "text": "长曝光呈现动感效果",
+          "frame": "frames/BV1KR4y1e77x/0045.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1dL41147Kf",
+          "segment": 18,
+          "t": 460.98,
+          "paraphrase": "平整湖水突出了画面意境",
+          "text": "平整湖水突出了画面意境",
+          "frame": "frames/BV1dL41147Kf/0018.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        }
+      ],
+      "crossEvidence": [
+        {
+          "theme": "光影层次",
+          "relation": "agreement-with-exceptions",
+          "summary": "光影应支持地形和气氛；书籍论文允许阴雨、顶光，不限定黄金时段或全部细节可见。",
+          "candidateIds": [
+            "L-WL-TONE-DEPTH",
+            "L-WL-MOTION-STATIC"
+          ],
+          "ruleIds": [
+            "L-LIGHT-INTENT"
+          ],
+          "references": [
+            {
+              "source": "book",
+              "ruleId": "L-LIGHT-INTENT",
+              "kind": "source",
+              "paraphrase": "阴雨柔光也可表达空气、层次与情绪",
+              "locator": "第三讲／摄影用光的误区",
+              "bookSlug": "photography-aesthetics-six-lectures"
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-LIGHT-INTENT",
+              "kind": "source",
+              "paraphrase": "比较光影是否呈现地形、质感与气氛",
+              "locator": "段落11／5-2-3 上午和下午的光线",
+              "paperSlug": "paper-09e3480ff75dbc24",
+              "supportCount": 7
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-LIGHT-INTENT",
+              "kind": "exception",
+              "paraphrase": "顶光或柔和光仍可有用途，不限定黄金时段",
+              "locator": "段落15／5-2-4 中午的光线",
+              "paperSlug": "paper-09e3480ff75dbc24",
+              "supportCount": 3
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "bilibili:BV15V4y1a7Mo?t=222.44",
+        "bilibili:BV1Cy4y157vi?t=874.62",
+        "bilibili:BV1KR4y1e77x?t=506.87",
+        "bilibili:BV1dL41147Kf?t=460.98"
+      ]
+    },
+    {
+      "id": "L-WL-REFLECTION-ROLE",
+      "library": "landscape",
+      "theme": "framing",
+      "subtheme": "reflection-role",
+      "title": "倒影与影子保留叙事作用",
+      "aspect": "framing",
+      "statement": "倒影或影子承担对称、尺度和内容时检查其边界完整性，避免无意截断；不强求镜面。",
+      "exceptions": [
+        "涟漪、碎片倒影或开放构图可有意不完整"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-HORIZON-PLACEMENT",
+        "L-EDGE-DISTRACTION"
+      ],
+      "status": "proposed",
+      "severity": "hint",
+      "source": "wulin-critiques",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "frequency": {
+        "episodes": 15,
+        "videos": 15,
+        "segments": 22,
+        "positive": 12,
+        "negative": 13
+      },
+      "supportEpisodes": 15,
+      "supportSegments": 22,
+      "evidence": [
+        {
+          "bvid": "BV15V4y1a7Mo",
+          "segment": 103,
+          "t": 1526.57,
+          "paraphrase": "前景水中倒影不够完整",
+          "text": "前景水中倒影不够完整",
+          "frame": "frames/BV15V4y1a7Mo/0103.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV13PT2zQEfF",
+          "segment": 117,
+          "t": 1868,
+          "paraphrase": "上下倒影的构思可取",
+          "text": "上下倒影的构思可取",
+          "frame": "frames/BV13PT2zQEfF/0117.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV15p421y71E",
+          "segment": 36,
+          "t": 655.93,
+          "paraphrase": "第二张下方倒影不完整",
+          "text": "第二张下方倒影不完整",
+          "frame": "frames/BV15p421y71E/0036.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV18F411h7nA",
+          "segment": 28,
+          "t": 888.68,
+          "paraphrase": "前方空间不足，树木倒影不够完整",
+          "text": "前方空间不足，树木倒影不够完整",
+          "frame": "frames/BV18F411h7nA/0028.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "crossEvidence": [
+        {
+          "theme": "边缘干扰",
+          "relation": "tension",
+          "summary": "点评强调完整和精简；论文允许陪体不完整、意义完整。无意干扰与有意开放构图需区分。",
+          "candidateIds": [
+            "L-WL-REFLECTION-ROLE"
+          ],
+          "ruleIds": [
+            "S-EDGE-CONTENT"
+          ],
+          "references": [
+            {
+              "source": "paper",
+              "ruleId": "S-EDGE-CONTENT",
+              "kind": "exception",
+              "paraphrase": "陪体不必完整，不能为完整而削弱主体",
+              "locator": "段落7",
+              "paperSlug": "paper-3cbe84f8cab60c5a",
+              "supportCount": 2
+            },
+            {
+              "source": "paper",
+              "ruleId": "S-EDGE-CONTENT",
+              "kind": "exception",
+              "paraphrase": "新闻画面完整可指意义完整，而非外形全貌",
+              "locator": "段落9",
+              "paperSlug": "paper-ea232b406161d1a4",
+              "supportCount": 1
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "bilibili:BV15V4y1a7Mo?t=1526.57",
+        "bilibili:BV13PT2zQEfF?t=1868",
+        "bilibili:BV15p421y71E?t=655.93",
+        "bilibili:BV18F411h7nA?t=888.68"
+      ]
+    },
+    {
+      "id": "S-WL-INTERACTION",
+      "library": "street",
+      "theme": "narrative",
+      "subtheme": "interaction",
+      "title": "可见细节与互动支撑人文表达",
+      "aspect": "narrative",
+      "statement": "人物视线、手势、物件细节与可见互动支撑人文表达；避免只靠想象解释身份和故事。",
+      "exceptions": [
+        "静态观察、孤独人物也可成立",
+        "不据表情推断身份和事件"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "S-NARRATIVE-EVIDENCE",
+        "S-MOMENT-ACTION"
+      ],
+      "status": "proposed",
+      "severity": "hint",
+      "source": "wulin-critiques",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "frequency": {
+        "episodes": 12,
+        "videos": 12,
+        "segments": 20,
+        "positive": 18,
+        "negative": 2
+      },
+      "supportEpisodes": 12,
+      "supportSegments": 20,
+      "evidence": [
+        {
+          "bvid": "BV1Yd4y1X7wg",
+          "segment": 136,
+          "t": 2188.35,
+          "paraphrase": "故事与情绪表达不充分",
+          "text": "故事与情绪表达不充分",
+          "frame": "frames/BV1Yd4y1X7wg/0136.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV13PT2zQEfF",
+          "segment": 153,
+          "t": 2429.25,
+          "paraphrase": "脚上装备呈现值得关注的民俗内容",
+          "text": "脚上装备呈现值得关注的民俗内容",
+          "frame": "frames/BV13PT2zQEfF/0153.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV15p421y71E",
+          "segment": 36,
+          "t": 690.5,
+          "paraphrase": "老人眼神与观众有互动感",
+          "text": "老人眼神与观众有互动感",
+          "frame": "frames/BV15p421y71E/0036.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV174XXYDEqo",
+          "segment": 4,
+          "t": 43.75,
+          "paraphrase": "自然姿态与微笑传达友好情感",
+          "text": "自然姿态与微笑传达友好情感",
+          "frame": "frames/BV174XXYDEqo/0004.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        }
+      ],
+      "crossEvidence": [
+        {
+          "theme": "街拍瞬间",
+          "relation": "agreement-with-exceptions",
+          "summary": "可见手势和人物关系支撑内容；好瞬间可有多个，不把单一自然表情当硬门槛。",
+          "candidateIds": [
+            "S-WL-INTERACTION"
+          ],
+          "ruleIds": [
+            "S-MOMENT-ACTION",
+            "S-NARRATIVE-EVIDENCE"
+          ],
+          "references": [
+            {
+              "source": "book",
+              "ruleId": "S-MOMENT-ACTION",
+              "kind": "source",
+              "paraphrase": "跨门槛的步态可同时建立人物与场景关系",
+              "locator": "第六讲／禅意摄影的美",
+              "bookSlug": "photography-aesthetics-six-lectures"
+            },
+            {
+              "source": "book",
+              "ruleId": "S-NARRATIVE-EVIDENCE",
+              "kind": "counterpoint",
+              "paraphrase": "轮廓可引发联想，人物身份仍需另行核验",
+              "locator": "第六讲／禅意摄影的美",
+              "bookSlug": "photography-aesthetics-six-lectures"
+            },
+            {
+              "source": "book",
+              "ruleId": "S-MOMENT-ACTION",
+              "kind": "counterpoint",
+              "paraphrase": "好瞬间可有多个，不把某一峰值当唯一答案",
+              "locator": "章节55／A Watch Tower, Koje Do Island, Korea, 1952, by Werner Bischof／段落16",
+              "bookSlug": "freeman-vision"
+            },
+            {
+              "source": "book",
+              "ruleId": "S-MOMENT-ACTION",
+              "kind": "source",
+              "paraphrase": "邻帧的手势与神态差异可改变单张首选",
+              "locator": "章节55／A Watch Tower, Koje Do Island, Korea, 1952, by Werner Bischof／段落24",
+              "bookSlug": "freeman-vision"
+            },
+            {
+              "source": "book",
+              "ruleId": "S-MOMENT-ACTION",
+              "kind": "source",
+              "paraphrase": "邻帧优选轮廓清楚且人物落在树间的一张",
+              "locator": "章节54／BACKLIGHT   The Silhouette／段落2",
+              "bookSlug": "freeman-capturing-light"
+            },
+            {
+              "source": "paper",
+              "ruleId": "S-MOMENT-ACTION",
+              "kind": "source",
+              "paraphrase": "比较动作、神态与物件关系是否清楚",
+              "locator": "段落5／一、时间的把握",
+              "paperSlug": "paper-4eef298928e340c4",
+              "supportCount": 11
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "bilibili:BV1Yd4y1X7wg?t=2188.35",
+        "bilibili:BV13PT2zQEfF?t=2429.25",
+        "bilibili:BV15p421y71E?t=690.5",
+        "bilibili:BV174XXYDEqo?t=43.75"
+      ]
+    },
+    {
+      "id": "L-WL-FOREGROUND-ORDER",
+      "library": "landscape",
+      "theme": "composition",
+      "subtheme": "foreground-order",
+      "title": "前景纹理有秩序",
+      "aspect": "composition",
+      "statement": "细碎前景的方向、疏密与重复应形成可读秩序，避免杂物堆叠削弱主题。",
+      "exceptions": [
+        "自然杂乱承担现场信息时保留",
+        "不要求每张有前景"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-FOREGROUND-ROLE"
+      ],
+      "status": "proposed",
+      "severity": "hint",
+      "source": "wulin-critiques",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "frequency": {
+        "episodes": 12,
+        "videos": 12,
+        "segments": 15,
+        "positive": 4,
+        "negative": 12
+      },
+      "supportEpisodes": 12,
+      "supportSegments": 15,
+      "evidence": [
+        {
+          "bvid": "BV1dL41147Kf",
+          "segment": 19,
+          "t": 481.31,
+          "paraphrase": "前景石头过多，占据面积过大",
+          "text": "前景石头过多，占据面积过大",
+          "frame": "frames/BV1dL41147Kf/0019.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV15V4y1a7Mo",
+          "segment": 100,
+          "t": 1464.81,
+          "paraphrase": "首选照片的前景规律且工整",
+          "text": "首选照片的前景规律且工整",
+          "frame": "frames/BV15V4y1a7Mo/0100.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1324y1a7Aa",
+          "segment": 84,
+          "t": 1379.95,
+          "paraphrase": "前景割裂明显，缺少规律与节奏",
+          "text": "前景割裂明显，缺少规律与节奏",
+          "frame": "frames/BV1324y1a7Aa/0084.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV18F411h7nA",
+          "segment": 44,
+          "t": 1469.01,
+          "paraphrase": "石头分布较杂乱",
+          "text": "石头分布较杂乱",
+          "frame": "frames/BV18F411h7nA/0044.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "crossEvidence": [
+        {
+          "theme": "前景与层次",
+          "relation": "agreement-with-exceptions",
+          "summary": "前景支持尺度和空间；枝干可框景，也可形成干扰，不强求干净或有前景。",
+          "candidateIds": [
+            "L-WL-FOREGROUND-ORDER",
+            "L-WL-DEPTH-BUFFER",
+            "L-WL-NEAR-TEXTURE"
+          ],
+          "ruleIds": [
+            "L-FOREGROUND-ROLE",
+            "L-LEADING-LINES"
+          ],
+          "references": [
+            {
+              "source": "book",
+              "ruleId": "L-FOREGROUND-ROLE",
+              "kind": "exception",
+              "paraphrase": "枝干前景可遮挡部分建筑并引导观看",
+              "locator": "第一讲／知识之外的无言之美",
+              "bookSlug": "photography-aesthetics-six-lectures"
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-FOREGROUND-ROLE",
+              "kind": "source",
+              "paraphrase": "前景可交代尺度与空间，不以有无作门槛",
+              "locator": "段落13／风光摄影的技巧掌握五、利用前景增强空间感",
+              "paperSlug": "paper-b7bc16c4801a55d3",
+              "supportCount": 3
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-LEADING-LINES",
+              "kind": "source",
+              "paraphrase": "线条可组织观看路径并勾勒主体",
+              "locator": "段落18／(二)摄影构图中线的作用",
+              "paperSlug": "paper-0a66b2043073515a",
+              "supportCount": 1
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-FOREGROUND-ROLE",
+              "kind": "counterpoint",
+              "paraphrase": "前景柳枝若令画面杂乱，反而削弱构图",
+              "locator": "段落6",
+              "paperSlug": "paper-5f14b6d264dad77a",
+              "supportCount": 1
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "bilibili:BV1dL41147Kf?t=481.31",
+        "bilibili:BV15V4y1a7Mo?t=1464.81",
+        "bilibili:BV1324y1a7Aa?t=1379.95",
+        "bilibili:BV18F411h7nA?t=1469.01"
+      ]
+    },
+    {
+      "id": "L-WL-COLOR-COHERENCE",
+      "library": "landscape",
+      "theme": "color",
+      "subtheme": "color-coherence",
+      "title": "色彩分区与环境相互呼应",
+      "aspect": "color",
+      "statement": "局部色块与整体光色呼应；突兀偏色、断层或多色抢眼时提示，不规定自然色或低饱和。",
+      "exceptions": [
+        "协调的粉紫、青蓝和高饱和风格可成立",
+        "无法仅凭成片证明现场色彩真假"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-NATURAL-COLOR"
+      ],
+      "status": "proposed",
+      "severity": "hint",
+      "source": "wulin-critiques",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "frequency": {
+        "episodes": 11,
+        "videos": 11,
+        "segments": 21,
+        "positive": 13,
+        "negative": 8
+      },
+      "supportEpisodes": 11,
+      "supportSegments": 21,
+      "evidence": [
+        {
+          "bvid": "BV1NZhw6cEpS",
+          "segment": 83,
+          "t": 1077.93,
+          "paraphrase": "添加的颜色使画面割裂为两个色彩块",
+          "text": "添加的颜色使画面割裂为两个色彩块",
+          "frame": "frames/BV1NZhw6cEpS/0083.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV15p421y71E",
+          "segment": 91,
+          "t": 1917.17,
+          "paraphrase": "色彩虽稍艳，仍在可接受范围内",
+          "text": "色彩虽稍艳，仍在可接受范围内",
+          "frame": "frames/BV15p421y71E/0091.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1Cs421T7B1",
+          "segment": 42,
+          "t": 456.1,
+          "paraphrase": "两张作品的色调、光源与环境协调统一",
+          "text": "两张作品的色调、光源与环境协调统一",
+          "frame": "frames/BV1Cs421T7B1/0042.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1VU4y1w74y",
+          "segment": 24,
+          "t": 1201.75,
+          "paraphrase": "高饱和黄蓝冲突使画面显乱",
+          "text": "高饱和黄蓝冲突使画面显乱",
+          "frame": "frames/BV1VU4y1w74y/0024.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "crossEvidence": [
+        {
+          "theme": "自然色彩",
+          "relation": "tension",
+          "summary": "武林常批评紫色与浓艳；书籍允许调色，论文强调主次。只提示不协调，不认定现场失真。",
+          "candidateIds": [
+            "L-WL-COLOR-COHERENCE",
+            "L-WL-LIGHT-COHERENCE"
+          ],
+          "ruleIds": [
+            "L-NATURAL-COLOR"
+          ],
+          "references": [
+            {
+              "source": "book",
+              "ruleId": "L-NATURAL-COLOR",
+              "kind": "exception",
+              "paraphrase": "少量调色可协调场景，不必照搬自然色",
+              "locator": "第三讲／光对画面的影响",
+              "bookSlug": "photography-aesthetics-six-lectures"
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-NATURAL-COLOR",
+              "kind": "source",
+              "paraphrase": "色彩应有主次，避免杂色干扰主体",
+              "locator": "段落7／画面色彩的和谐统一",
+              "paperSlug": "paper-7709fb61f58e199b",
+              "supportCount": 3
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-NATURAL-COLOR",
+              "kind": "exception",
+              "paraphrase": "雨雪雾中的淡雅色彩也可形成有效表达",
+              "locator": "段落6／柔和色彩的运用",
+              "paperSlug": "paper-49f7f3d08a286c19",
+              "supportCount": 1
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "bilibili:BV1NZhw6cEpS?t=1077.93",
+        "bilibili:BV15p421y71E?t=1917.17",
+        "bilibili:BV1Cs421T7B1?t=456.1",
+        "bilibili:BV1VU4y1w74y?t=1201.75"
+      ]
+    },
+    {
+      "id": "L-WL-LIGHT-COHERENCE",
+      "library": "landscape",
+      "theme": "light",
+      "subtheme": "light-coherence",
+      "title": "局部光线关系自洽",
+      "aspect": "light",
+      "statement": "局部亮度、倒影与受光方向应形成可信关系，突兀光斑或逆光暗面异常抢亮时提示。",
+      "exceptions": [
+        "超现实、拼贴或舞台补光有明确意图时人工判断",
+        "不能仅凭成片推断真实现场"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-LIGHT-INTENT",
+        "L-NATURAL-COLOR"
+      ],
+      "status": "proposed",
+      "severity": "hint",
+      "source": "wulin-critiques",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "frequency": {
+        "episodes": 11,
+        "videos": 11,
+        "segments": 21,
+        "positive": 1,
+        "negative": 20
+      },
+      "supportEpisodes": 11,
+      "supportSegments": 21,
+      "evidence": [
+        {
+          "bvid": "BV1NZhw6cEpS",
+          "segment": 236,
+          "t": 2930.05,
+          "paraphrase": "高亮区域与天空的亮度不协调",
+          "text": "高亮区域与天空的亮度不协调",
+          "frame": "frames/BV1NZhw6cEpS/0236.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV13PT2zQEfF",
+          "segment": 166,
+          "t": 2641.33,
+          "paraphrase": "调整后的光线关系符合规律",
+          "text": "调整后的光线关系符合规律",
+          "frame": "frames/BV13PT2zQEfF/0166.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV18F411h7nA",
+          "segment": 33,
+          "t": 1129.93,
+          "paraphrase": "上部压暗过重，前景偏亮，光比失衡",
+          "text": "上部压暗过重，前景偏亮，光比失衡",
+          "frame": "frames/BV18F411h7nA/0033.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1FP4y157Cb",
+          "segment": 47,
+          "t": 1397.17,
+          "paraphrase": "山体及云层局部偏亮，与周围不协调",
+          "text": "山体及云层局部偏亮，与周围不协调",
+          "frame": "frames/BV1FP4y157Cb/0047.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ],
+      "crossEvidence": [
+        {
+          "theme": "自然色彩",
+          "relation": "tension",
+          "summary": "武林常批评紫色与浓艳；书籍允许调色，论文强调主次。只提示不协调，不认定现场失真。",
+          "candidateIds": [
+            "L-WL-COLOR-COHERENCE",
+            "L-WL-LIGHT-COHERENCE"
+          ],
+          "ruleIds": [
+            "L-NATURAL-COLOR"
+          ],
+          "references": [
+            {
+              "source": "book",
+              "ruleId": "L-NATURAL-COLOR",
+              "kind": "exception",
+              "paraphrase": "少量调色可协调场景，不必照搬自然色",
+              "locator": "第三讲／光对画面的影响",
+              "bookSlug": "photography-aesthetics-six-lectures"
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-NATURAL-COLOR",
+              "kind": "source",
+              "paraphrase": "色彩应有主次，避免杂色干扰主体",
+              "locator": "段落7／画面色彩的和谐统一",
+              "paperSlug": "paper-7709fb61f58e199b",
+              "supportCount": 3
+            },
+            {
+              "source": "paper",
+              "ruleId": "L-NATURAL-COLOR",
+              "kind": "exception",
+              "paraphrase": "雨雪雾中的淡雅色彩也可形成有效表达",
+              "locator": "段落6／柔和色彩的运用",
+              "paperSlug": "paper-49f7f3d08a286c19",
+              "supportCount": 1
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "bilibili:BV1NZhw6cEpS?t=2930.05",
+        "bilibili:BV13PT2zQEfF?t=2641.33",
+        "bilibili:BV18F411h7nA?t=1129.93",
+        "bilibili:BV1FP4y157Cb?t=1397.17"
+      ]
+    },
+    {
+      "id": "L-WL-SKY-ROLE",
+      "library": "landscape",
+      "theme": "framing",
+      "subtheme": "sky-role",
+      "title": "天空留白有内容作用",
+      "aspect": "framing",
+      "statement": "天空留白与地景重点相称；天空无有效内容却挤压主体时提示，不固定比例。",
+      "exceptions": [
+        "云层、星空是主题或留白表达宁静时可多留天空",
+        "镜面对称可居中"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-HORIZON-PLACEMENT"
+      ],
+      "status": "proposed",
+      "severity": "hint",
+      "source": "wulin-critiques",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "frequency": {
+        "episodes": 6,
+        "videos": 6,
+        "segments": 6,
+        "positive": 3,
+        "negative": 3
+      },
+      "supportEpisodes": 6,
+      "supportSegments": 6,
+      "evidence": [
+        {
+          "bvid": "BV15p421y71E",
+          "segment": 74,
+          "t": 1734.9,
+          "paraphrase": "天空过于吸引注意，削弱内容重点",
+          "text": "天空过于吸引注意，削弱内容重点",
+          "frame": "frames/BV15p421y71E/0074.jpg",
+          "tier": null,
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV13PT2zQEfF",
+          "segment": 88,
+          "t": 1444.6,
+          "paraphrase": "天空缺少细节仍与画面相配",
+          "text": "天空缺少细节仍与画面相配",
+          "frame": "frames/BV13PT2zQEfF/0088.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1G54y1o7Fx",
+          "segment": 239,
+          "t": 2002.2,
+          "paraphrase": "天空漂亮，具有足够吸引力",
+          "text": "天空漂亮，具有足够吸引力",
+          "frame": "frames/BV1G54y1o7Fx/0239.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        },
+        {
+          "bvid": "BV1Yd4y1X7wg",
+          "segment": 25,
+          "t": 431.87,
+          "paraphrase": "天空的色彩情绪处理可以成立",
+          "text": "天空的色彩情绪处理可以成立",
+          "frame": "frames/BV1Yd4y1X7wg/0025.jpg",
+          "tier": null,
+          "kind": "praise",
+          "polarity": "positive"
+        }
+      ],
+      "crossEvidence": [
+        {
+          "theme": "天空占比",
+          "relation": "agreement-with-exceptions",
+          "summary": "分配服务内容；居中与大天空都可成立，不能固化为少天空。",
+          "candidateIds": [
+            "L-WL-SKY-ROLE"
+          ],
+          "ruleIds": [
+            "L-HORIZON-PLACEMENT"
+          ],
+          "references": [
+            {
+              "source": "book",
+              "ruleId": "L-HORIZON-PLACEMENT",
+              "kind": "source",
+              "paraphrase": "天空与地面分配看视觉平衡，比例可变",
+              "locator": "第四讲／构图法则之结构平衡",
+              "bookSlug": "photography-aesthetics-six-lectures"
+            },
+            {
+              "source": "book",
+              "ruleId": "L-HORIZON-PLACEMENT",
+              "kind": "counterpoint",
+              "paraphrase": "传统构图偏好三分线，应限于其表达目的",
+              "locator": "章节43／Common Problems in Composition／段落16",
+              "bookSlug": "master-guide"
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "bilibili:BV15p421y71E?t=1734.9",
+        "bilibili:BV13PT2zQEfF?t=1444.6",
+        "bilibili:BV1G54y1o7Fx?t=2002.2",
+        "bilibili:BV1Yd4y1X7wg?t=431.87"
+      ]
+    }
+  ],
+  "extractionStatus": "complete",
+  "inputSegments": 2591,
+  "extractedSegments": 2591,
+  "synthesis": {
+    "method": "codex-semantic",
+    "episodes": 40,
+    "segments": 2591,
+    "commentaryItems": 3697,
+    "counts": {
+      "unresolved": 847,
+      "observation": 1244,
+      "vague": 432,
+      "mapped": 625,
+      "selection": 301,
+      "nonSelection": 248
+    },
+    "mappedEvidenceAssignments": 625,
+    "excludedBelowThreshold": [],
+    "topOpinions": [
+      {
+        "id": "L-WL-ANCHOR",
+        "title": "观看路径有停留点",
+        "episodes": 21,
+        "segments": 57
+      },
+      {
+        "id": "L-WL-TONE-DEPTH",
+        "title": "影调层级服务空间与重点",
+        "episodes": 20,
+        "segments": 33
+      },
+      {
+        "id": "L-WL-NEAR-TEXTURE",
+        "title": "近景质感承接远景气势",
+        "episodes": 18,
+        "segments": 24
+      },
+      {
+        "id": "L-WL-DEPTH-BUFFER",
+        "title": "前中后景留有空间缓冲",
+        "episodes": 17,
+        "segments": 35
+      },
+      {
+        "id": "L-WL-MOTION-STATIC",
+        "title": "动静对照有形态与方向",
+        "episodes": 17,
+        "segments": 30
+      },
+      {
+        "id": "L-WL-REFLECTION-ROLE",
+        "title": "倒影与影子保留叙事作用",
+        "episodes": 15,
+        "segments": 22
+      },
+      {
+        "id": "S-WL-INTERACTION",
+        "title": "可见细节与互动支撑人文表达",
+        "episodes": 12,
+        "segments": 20
+      },
+      {
+        "id": "L-WL-FOREGROUND-ORDER",
+        "title": "前景纹理有秩序",
+        "episodes": 12,
+        "segments": 15
+      },
+      {
+        "id": "L-WL-COLOR-COHERENCE",
+        "title": "色彩分区与环境相互呼应",
+        "episodes": 11,
+        "segments": 21
+      },
+      {
+        "id": "L-WL-LIGHT-COHERENCE",
+        "title": "局部光线关系自洽",
+        "episodes": 11,
+        "segments": 21
+      },
+      {
+        "id": "L-WL-SKY-ROLE",
+        "title": "天空留白有内容作用",
+        "episodes": 6,
+        "segments": 6
+      }
+    ],
+    "inputDigest": "fdd18c03afddb736c57f1ec8fd924f376ac04c9ba4727ea70b7674afc3f29779",
+    "observationTopics": [
+      {
+        "id": "OBS:FOCUS",
+        "theme": "technical",
+        "title": "焦点观察",
+        "notCandidateReason": "现有焦点规则已覆盖；题材与故意失焦语境未核验",
+        "frequency": {
+          "episodes": 20,
+          "videos": 20,
+          "segments": 38,
+          "positive": 4,
+          "negative": 34
+        },
+        "commentaryItems": 39
+      },
+      {
+        "id": "OBS:QUALITY",
+        "theme": "technical",
+        "title": "画质与交付细节",
+        "notCandidateReason": "现有噪声规则已覆盖；需原图和交付尺寸",
+        "frequency": {
+          "episodes": 29,
+          "videos": 29,
+          "segments": 91,
+          "positive": 23,
+          "negative": 69
+        },
+        "commentaryItems": 93
+      },
+      {
+        "id": "OBS:EXPOSURE",
+        "theme": "technical",
+        "title": "必要明暗细节",
+        "notCandidateReason": "现有曝光规则已覆盖；不从代理图认定RAW不可恢复",
+        "frequency": {
+          "episodes": 25,
+          "videos": 25,
+          "segments": 41,
+          "positive": 4,
+          "negative": 37
+        },
+        "commentaryItems": 42
+      },
+      {
+        "id": "OBS:GEOMETRY",
+        "theme": "framing",
+        "title": "水平垂直与透视",
+        "notCandidateReason": "现有规则已覆盖；需确认意图和可靠参照",
+        "frequency": {
+          "episodes": 22,
+          "videos": 22,
+          "segments": 35,
+          "positive": 16,
+          "negative": 19
+        },
+        "commentaryItems": 35
+      },
+      {
+        "id": "OBS:COLOR",
+        "theme": "color",
+        "title": "色彩观感",
+        "notCandidateReason": "宽主题含偏色、配色、饱和及风格，不能合成单一规则",
+        "frequency": {
+          "episodes": 36,
+          "videos": 36,
+          "segments": 144,
+          "positive": 75,
+          "negative": 73
+        },
+        "commentaryItems": 154
+      },
+      {
+        "id": "OBS:EDGE",
+        "theme": "framing",
+        "title": "边界观察",
+        "notCandidateReason": "现有边缘规则已覆盖；成片干扰与处理边痕需区分",
+        "frequency": {
+          "episodes": 7,
+          "videos": 7,
+          "segments": 8,
+          "positive": 0,
+          "negative": 8
+        },
+        "commentaryItems": 8
+      },
+      {
+        "id": "OBS:COMPOSITION",
+        "theme": "composition",
+        "title": "构图与内容观察",
+        "notCandidateReason": "宽主题混合主体、线条和空间，仅具体子主题生成候选",
+        "frequency": {
+          "episodes": 40,
+          "videos": 40,
+          "segments": 506,
+          "positive": 274,
+          "negative": 274
+        },
+        "commentaryItems": 607
+      },
+      {
+        "id": "OBS:ATMOSPHERE",
+        "theme": "light",
+        "title": "光影与氛围观察",
+        "notCandidateReason": "宽主题含主观氛围及柔和偏好，不直接设通用约束",
+        "frequency": {
+          "episodes": 39,
+          "videos": 39,
+          "segments": 239,
+          "positive": 163,
+          "negative": 88
+        },
+        "commentaryItems": 266
+      }
+    ],
+    "annotationIndex": "landscape-street-synthesis-index.json",
+    "codebook": "landscape-street-synthesis-codebook.json",
+    "evidencePolicy": "候选最多4条，正反例及跨期优先；段数为(bvid,segment)去重，非独立照片数或因果支持。未归类转述明确待复核。"
+  }
+}

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>摄影规则审核</title>
+    <link rel="stylesheet" href="rules-review.css" />
+  </head>
+  <body>
+    <header>
+      <h1>摄影规则审核</h1>
+      <span id="version"></span><button id="export">导出 v0.2 草案</button>
+    </header>
+    <p id="message" role="status"></p>
+    <main>
+      <aside>
+        <div class="filters">
+          <label>排序<select id="sort">
+              <option value="priority">审核优先级（建议）</option>
+              <option value="frequency">出现频次</option>
+            </select></label>
+          <label
+            >方面<select id="aspect">
+              <option value="">全部</option>
+            </select></label
+          ><label
+            >状态<select id="status">
+              <option value="">全部</option>
+              <option value="proposed">待审核</option>
+              <option value="approved">已通过</option>
+              <option value="existing">已有</option>
+              <option value="reference">其他库证据（只读）</option>
+              <option value="merged">已合并</option>
+              <option value="deleted">已删除</option>
+            </select></label
+          ><label>来源<select id="source">
+              <option value="">全部</option>
+              <option value="book">书籍</option>
+              <option value="paper">论文</option>
+              <option value="course">课程</option>
+              <option value="wulin">武林</option>
+              <option value="other">其他</option>
+            </select></label>
+        </div>
+        <nav id="list" aria-label="规则列表"></nav>
+      </aside>
+      <article id="detail"><p>请选择一条规则。</p></article>
+    </main>
+    <script src="rules-review.js" defer></script>
+  </body>
+</html>

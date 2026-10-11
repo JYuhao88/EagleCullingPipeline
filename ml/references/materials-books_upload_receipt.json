@@ -1,0 +1,698 @@
+{
+  "identity": "abaa5dcaff5cc5a32159e7765df5a315e55a5cd3bfc43205433372106b65279a",
+  "source": "materials-books",
+  "offsets": {
+    "books/02-姿势/Lindsay Adler/50个美术摄影摆姿势实例的详细说明.pdf": 26637740,
+    "books/02-姿势/Lindsay Adler/Boudoir Posing Guide/Lindsay Adler - Boudoir Posing Guide.no_watermark.zh.mono.pdf": 9169773,
+    "books/02-姿势/Lindsay Adler/Boudoir Posing Guide/Lindsay Adler - Boudoir Posing Guide.pdf": 10998892,
+    "books/02-姿势/Lindsay Adler/Couples Posing Guide/Couples-Posing-Guide-Lindsay-Adler-Photography.no_watermark.zh.mono.pdf": 81990390,
+    "books/02-姿势/Lindsay Adler/Couples Posing Guide/Couples-Posing-Guide-Lindsay-Adler-Photography.pdf": 81422455,
+    "books/02-姿势/Lindsay Adler/Posing Hands/Lindsay-Adler-Posing-Hands.no_watermark.zh.mono.pdf": 16498223,
+    "books/02-姿势/Lindsay Adler/Posing Hands/Lindsay-Adler-Posing-Hands.pdf": 16447863,
+    "books/02-姿势/Lindsay Adler/The Posing Series/Lindsay Adler - The Photographer’s Guide to POSING Techniques to Flatter Everyone.epub": 33823321,
+    "books/02-姿势/Lindsay Adler/The Posing Series/Lindsay Adler - The Photographer’s Guide to POSING Techniques to Flatter Everyone.pdf": 59794694,
+    "books/02-姿势/Lindsay Adler/The Posing Series/Posing-Pitfalls-Checklist-Lindsay-Adler-Photography.pdf": 2028289,
+    "books/02-姿势/Lindsay Adler/The Posing Series/Posing-Pocket-Checklist-Lindsay-Adler.pdf": 163992,
+    "books/02-姿势/Lindsay Adler/Tweens Teens Seniors Posing Guide/Tweens-Teens-Seniors-Posing-Guide-Lindsay-Adler.no_watermark.zh.mono.pdf": 78595316,
+    "books/02-姿势/Lindsay Adler/Tweens Teens Seniors Posing Guide/Tweens-Teens-Seniors-Posing-Guide-Lindsay-Adler.pdf": 78145573,
+    "books/02-姿势/拍出绝世美姿 摄影师与模特的完美摆姿技巧解密.pdf": 62497608,
+    "books/03-综合技法/拍出绝世佳作 世界顶级摄影师私藏技法解密.pdf": 139480241
+  },
+  "jobs": [
+    {
+      "id": "w4-upload-materials-books-a0a95df0706d46f0bd186e175b20c9e7",
+      "action": "inspect",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-books-943cefe0db4c4aca9ffac58e4c94ebe8",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-books-45d45dbe153042c98866a789f47e8b6d",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-books-4192c15c05894f64835c5e5322a13884",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-books-64a97a9ac40a4315b354a8b309251105",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-books-b51ea7852af44df69957559b27a53074",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-books-62e43a0f176b4eb4b76d4f6ed628fd3d",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-books-08cab5f1f0df47bf97277fcb7c65c513",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-books-56c416ef221840c4a8dab021629dc695",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-books-6dab5eb37f254399ac3638845a089eb1",
+      "action": "audit",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-books-c400b1765d964ef1a26cd41276b75297",
+      "action": "cleanup",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-books-f270d70067c0470ea76e9c89429b7770",
+      "action": "inspect",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-books-ca0bc4ebc7764e29a8f6f76e23c4114f",
+      "action": "audit",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-books-4c925304e9bf405d932d2b6a25906ea4",
+      "action": "cleanup",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    }
+  ],
+  "batches": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/50个美术摄影摆姿势实例的详细说明.pdf",
+          "offset": 26637740,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/Boudoir Posing Guide/Lindsay Adler - Boudoir Posing Guide.no_watermark.zh.mono.pdf",
+          "offset": 9169773,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/Boudoir Posing Guide/Lindsay Adler - Boudoir Posing Guide.pdf",
+          "offset": 10998892,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/Couples Posing Guide/Couples-Posing-Guide-Lindsay-Adler-Photography.no_watermark.zh.mono.pdf",
+          "offset": 47565435,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/Couples Posing Guide/Couples-Posing-Guide-Lindsay-Adler-Photography.no_watermark.zh.mono.pdf",
+          "offset": 81990390,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/Couples Posing Guide/Couples-Posing-Guide-Lindsay-Adler-Photography.pdf",
+          "offset": 59946885,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/Couples Posing Guide/Couples-Posing-Guide-Lindsay-Adler-Photography.pdf",
+          "offset": 81422455,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/Posing Hands/Lindsay-Adler-Posing-Hands.no_watermark.zh.mono.pdf",
+          "offset": 16498223,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/Posing Hands/Lindsay-Adler-Posing-Hands.pdf",
+          "offset": 16447863,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/The Posing Series/Lindsay Adler - The Photographer’s Guide to POSING Techniques to Flatter Everyone.epub",
+          "offset": 33823321,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/The Posing Series/Lindsay Adler - The Photographer’s Guide to POSING Techniques to Flatter Everyone.pdf",
+          "offset": 6126863,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/The Posing Series/Lindsay Adler - The Photographer’s Guide to POSING Techniques to Flatter Everyone.pdf",
+          "offset": 59794694,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/The Posing Series/Posing-Pitfalls-Checklist-Lindsay-Adler-Photography.pdf",
+          "offset": 2028289,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/The Posing Series/Posing-Pocket-Checklist-Lindsay-Adler.pdf",
+          "offset": 163992,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/Tweens Teens Seniors Posing Guide/Tweens-Teens-Seniors-Posing-Guide-Lindsay-Adler.no_watermark.zh.mono.pdf",
+          "offset": 38511728,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/Tweens Teens Seniors Posing Guide/Tweens-Teens-Seniors-Posing-Guide-Lindsay-Adler.no_watermark.zh.mono.pdf",
+          "offset": 78595316,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/Tweens Teens Seniors Posing Guide/Tweens-Teens-Seniors-Posing-Guide-Lindsay-Adler.pdf",
+          "offset": 54288252,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "books/02-姿势/Lindsay Adler/Tweens Teens Seniors Posing Guide/Tweens-Teens-Seniors-Posing-Guide-Lindsay-Adler.pdf",
+          "offset": 78145573,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/02-姿势/拍出绝世美姿 摄影师与模特的完美摆姿技巧解密.pdf",
+          "offset": 62497608,
+          "complete": true
+        },
+        {
+          "remote_rel": "books/03-综合技法/拍出绝世佳作 世界顶级摄影师私藏技法解密.pdf",
+          "offset": 8016911,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "books/03-综合技法/拍出绝世佳作 世界顶级摄影师私藏技法解密.pdf",
+          "offset": 102388751,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 37091490,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "books/03-综合技法/拍出绝世佳作 世界顶级摄影师私藏技法解密.pdf",
+          "offset": 139480241,
+          "complete": true
+        }
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "started_at": "2026-10-11T00:23:55+0800",
+      "uploaded_bytes": 697736158,
+      "put_seconds": 104.41336337497341,
+      "elapsed_seconds": 252.3434914170066,
+      "finished_at": "2026-10-11T00:28:07+0800",
+      "effective_MBps": 2.765025379025791,
+      "put_MBps": 6.682441168897723
+    },
+    {
+      "started_at": "2026-10-11T00:31:01+0800",
+      "uploaded_bytes": 0,
+      "put_seconds": 0,
+      "elapsed_seconds": 32.87166533397976,
+      "finished_at": "2026-10-11T00:31:34+0800",
+      "effective_MBps": 0.0,
+      "put_MBps": 0
+    }
+  ],
+  "status": "complete",
+  "ray_version": "2.51.1",
+  "audit": [
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/Lindsay Adler/50个美术摄影摆姿势实例的详细说明.pdf",
+      "size": 26637740,
+      "sha256": "99eb8df2c11daf81b3e658d48b29698bad2d466f3b74fcc28074d38f2366de49",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Boudoir Posing Guide/Lindsay Adler - Boudoir Posing Guide.no_watermark.zh.mono.pdf",
+      "size": 9169773,
+      "sha256": "26576642c89caa076faeac05a124d65a786439901d0657bd0bea029818a1cac5",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler/Boudoir Posing Guide": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Boudoir Posing Guide/Lindsay Adler - Boudoir Posing Guide.pdf",
+      "size": 10998892,
+      "sha256": "fac29bdf3aed691a6538b55054b0319d492f78e4039808c1f56207b08f4c5edc",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler/Boudoir Posing Guide": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Couples Posing Guide/Couples-Posing-Guide-Lindsay-Adler-Photography.no_watermark.zh.mono.pdf",
+      "size": 81990390,
+      "sha256": "1ee3af000bf153cc595fedc73593507611d4b395caf657ae53f9d3881687e0a2",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler/Couples Posing Guide": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Couples Posing Guide/Couples-Posing-Guide-Lindsay-Adler-Photography.pdf",
+      "size": 81422455,
+      "sha256": "2d4dbf64619289a67d586fc5d89648672821f91342c063d837d17a95c7e58f84",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler/Couples Posing Guide": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Posing Hands/Lindsay-Adler-Posing-Hands.no_watermark.zh.mono.pdf",
+      "size": 16498223,
+      "sha256": "f51030415bab012446ef9eecc55fe9828cb686062b982de653e21b630e7f7229",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler/Posing Hands": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Posing Hands/Lindsay-Adler-Posing-Hands.pdf",
+      "size": 16447863,
+      "sha256": "fa2336dbb4d514742b93d13f456799faf8847b014464fcd97f6b526a364ae1ad",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler/Posing Hands": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/Lindsay Adler/The Posing Series/Lindsay Adler - The Photographer’s Guide to POSING Techniques to Flatter Everyone.epub",
+      "size": 33823321,
+      "sha256": "647b400e9783eedec81aa137cdd07597a6479b5d759dacb8060cca0a4952db6f",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler/The Posing Series": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/Lindsay Adler/The Posing Series/Lindsay Adler - The Photographer’s Guide to POSING Techniques to Flatter Everyone.pdf",
+      "size": 59794694,
+      "sha256": "84e7166f07e2135e6909254e2a3c91cb0cf50eb3b4cc4ffd15b41d6ce2a385c1",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler/The Posing Series": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/Lindsay Adler/The Posing Series/Posing-Pitfalls-Checklist-Lindsay-Adler-Photography.pdf",
+      "size": 2028289,
+      "sha256": "6191036702c30247307d0a56e030e1635aaa314e8aac26582abdb31613c33bdc",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler/The Posing Series": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/Lindsay Adler/The Posing Series/Posing-Pocket-Checklist-Lindsay-Adler.pdf",
+      "size": 163992,
+      "sha256": "8f6e8285b36f7bf7d6a90de53823d93ea9de04a2987128a3828d291f79596024",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler/The Posing Series": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Tweens Teens Seniors Posing Guide/Tweens-Teens-Seniors-Posing-Guide-Lindsay-Adler.no_watermark.zh.mono.pdf",
+      "size": 78595316,
+      "sha256": "ddf75301404b4b17a315b361ab2a4a2f1ae3149a3571fa8ab9866b355590c87a",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler/Tweens Teens Seniors Posing Guide": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Tweens Teens Seniors Posing Guide/Tweens-Teens-Seniors-Posing-Guide-Lindsay-Adler.pdf",
+      "size": 78145573,
+      "sha256": "e249c5a937065cc9dd4ac1cf44bd332998052f848a4186c7ee13e121238e0215",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler/Tweens Teens Seniors Posing Guide": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势/Lindsay Adler": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/02-姿势/拍出绝世美姿 摄影师与模特的完美摆姿技巧解密.pdf",
+      "size": 62497608,
+      "sha256": "0defb639d94892ef804ffa5e1c94522a082f6dea772a25a1598776561d0bd3b9",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/02-姿势": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-books",
+      "remote_rel": "books/03-综合技法/拍出绝世佳作 世界顶级摄影师私藏技法解密.pdf",
+      "size": 139480241,
+      "sha256": "eb43f167943d4ea494f213b18c2cdbcc6ab25ad75b79702f1c1cb175b0b01f0e",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-books/raw/books/03-综合技法": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw/books": "0o700",
+        "<CEPH_ROOT>/references/materials-books/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-books": "0o700"
+      },
+      "part_exists": false
+    }
+  ],
+  "package_verification": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    }
+  ],
+  "redeleted_job_records": [
+    "w4-upload-materials-books-45d45dbe153042c98866a789f47e8b6d"
+  ],
+  "cleanup_stable_empty_checks": 3,
+  "owned_jobs_remaining": [],
+  "dashboard": "<RAY_DASHBOARD>",
+  "files": [
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> Adler/50个美术摄影摆姿势实例的详细说明.pdf",
+      "remote_rel": "books/02-姿势/Lindsay Adler/50个美术摄影摆姿势实例的详细说明.pdf",
+      "size": 26637740,
+      "sha256": "99eb8df2c11daf81b3e658d48b29698bad2d466f3b74fcc28074d38f2366de49"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> Adler/Boudoir Posing Guide/Lindsay Adler - Boudoir Posing Guide.no_watermark.zh.mono.pdf",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Boudoir Posing Guide/Lindsay Adler - Boudoir Posing Guide.no_watermark.zh.mono.pdf",
+      "size": 9169773,
+      "sha256": "26576642c89caa076faeac05a124d65a786439901d0657bd0bea029818a1cac5"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> Adler/Boudoir Posing Guide/Lindsay Adler - Boudoir Posing Guide.pdf",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Boudoir Posing Guide/Lindsay Adler - Boudoir Posing Guide.pdf",
+      "size": 10998892,
+      "sha256": "fac29bdf3aed691a6538b55054b0319d492f78e4039808c1f56207b08f4c5edc"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> Adler/Couples Posing Guide/Couples-Posing-Guide-Lindsay-Adler-Photography.no_watermark.zh.mono.pdf",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Couples Posing Guide/Couples-Posing-Guide-Lindsay-Adler-Photography.no_watermark.zh.mono.pdf",
+      "size": 81990390,
+      "sha256": "1ee3af000bf153cc595fedc73593507611d4b395caf657ae53f9d3881687e0a2"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> Adler/Couples Posing Guide/Couples-Posing-Guide-Lindsay-Adler-Photography.pdf",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Couples Posing Guide/Couples-Posing-Guide-Lindsay-Adler-Photography.pdf",
+      "size": 81422455,
+      "sha256": "2d4dbf64619289a67d586fc5d89648672821f91342c063d837d17a95c7e58f84"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> Adler/Posing Hands/Lindsay-Adler-Posing-Hands.no_watermark.zh.mono.pdf",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Posing Hands/Lindsay-Adler-Posing-Hands.no_watermark.zh.mono.pdf",
+      "size": 16498223,
+      "sha256": "f51030415bab012446ef9eecc55fe9828cb686062b982de653e21b630e7f7229"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> Adler/Posing Hands/Lindsay-Adler-Posing-Hands.pdf",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Posing Hands/Lindsay-Adler-Posing-Hands.pdf",
+      "size": 16447863,
+      "sha256": "fa2336dbb4d514742b93d13f456799faf8847b014464fcd97f6b526a364ae1ad"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> Adler/The Posing Series/Lindsay Adler - The Photographer’s Guide to POSING Techniques to Flatter Everyone.epub",
+      "remote_rel": "books/02-姿势/Lindsay Adler/The Posing Series/Lindsay Adler - The Photographer’s Guide to POSING Techniques to Flatter Everyone.epub",
+      "size": 33823321,
+      "sha256": "647b400e9783eedec81aa137cdd07597a6479b5d759dacb8060cca0a4952db6f"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> Adler/The Posing Series/Lindsay Adler - The Photographer’s Guide to POSING Techniques to Flatter Everyone.pdf",
+      "remote_rel": "books/02-姿势/Lindsay Adler/The Posing Series/Lindsay Adler - The Photographer’s Guide to POSING Techniques to Flatter Everyone.pdf",
+      "size": 59794694,
+      "sha256": "84e7166f07e2135e6909254e2a3c91cb0cf50eb3b4cc4ffd15b41d6ce2a385c1"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> Adler/The Posing Series/Posing-Pitfalls-Checklist-Lindsay-Adler-Photography.pdf",
+      "remote_rel": "books/02-姿势/Lindsay Adler/The Posing Series/Posing-Pitfalls-Checklist-Lindsay-Adler-Photography.pdf",
+      "size": 2028289,
+      "sha256": "6191036702c30247307d0a56e030e1635aaa314e8aac26582abdb31613c33bdc"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> Adler/The Posing Series/Posing-Pocket-Checklist-Lindsay-Adler.pdf",
+      "remote_rel": "books/02-姿势/Lindsay Adler/The Posing Series/Posing-Pocket-Checklist-Lindsay-Adler.pdf",
+      "size": 163992,
+      "sha256": "8f6e8285b36f7bf7d6a90de53823d93ea9de04a2987128a3828d291f79596024"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> Adler/Tweens Teens Seniors Posing Guide/Tweens-Teens-Seniors-Posing-Guide-Lindsay-Adler.no_watermark.zh.mono.pdf",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Tweens Teens Seniors Posing Guide/Tweens-Teens-Seniors-Posing-Guide-Lindsay-Adler.no_watermark.zh.mono.pdf",
+      "size": 78595316,
+      "sha256": "ddf75301404b4b17a315b361ab2a4a2f1ae3149a3571fa8ab9866b355590c87a"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> Adler/Tweens Teens Seniors Posing Guide/Tweens-Teens-Seniors-Posing-Guide-Lindsay-Adler.pdf",
+      "remote_rel": "books/02-姿势/Lindsay Adler/Tweens Teens Seniors Posing Guide/Tweens-Teens-Seniors-Posing-Guide-Lindsay-Adler.pdf",
+      "size": 78145573,
+      "sha256": "e249c5a937065cc9dd4ac1cf44bd332998052f848a4186c7ee13e121238e0215"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> 摄影师与模特的完美摆姿技巧解密.pdf",
+      "remote_rel": "books/02-姿势/拍出绝世美姿 摄影师与模特的完美摆姿技巧解密.pdf",
+      "size": 62497608,
+      "sha256": "0defb639d94892ef804ffa5e1c94522a082f6dea772a25a1598776561d0bd3b9"
+    },
+    {
+      "source": "materials-books",
+      "local": "<LOCAL_PATH> 世界顶级摄影师私藏技法解密.pdf",
+      "remote_rel": "books/03-综合技法/拍出绝世佳作 世界顶级摄影师私藏技法解密.pdf",
+      "size": 139480241,
+      "sha256": "eb43f167943d4ea494f213b18c2cdbcc6ab25ad75b79702f1c1cb175b0b01f0e"
+    }
+  ],
+  "payload_cap_bytes": 94371840,
+  "http_limit_bytes": 104857600,
+  "nice": 10
+}

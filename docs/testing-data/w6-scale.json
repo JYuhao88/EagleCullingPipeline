@@ -1,0 +1,1450 @@
+{
+  "ray": [
+    {
+      "contractVersion": 1,
+      "synthetic": true,
+      "modelInference": "deterministic stub",
+      "files": 400,
+      "units": 200,
+      "node": "v22.14.0",
+      "stages": {
+        "setup": {
+          "elapsedMs": 38.312447000000006,
+          "count": 400,
+          "perSecond": 10440.471212919392
+        },
+        "scan": {
+          "elapsedMs": 795.268926,
+          "count": 400,
+          "perSecond": 502.97451204575293
+        },
+        "pairing": {
+          "elapsedMs": 1.24837100000002,
+          "count": 400,
+          "perSecond": 320417.5681748403
+        },
+        "modelStub": {
+          "elapsedMs": 1.9940760000000637,
+          "count": 200,
+          "perSecond": 100297.07995081111
+        },
+        "grouping": {
+          "elapsedMs": 11.129288999999972,
+          "count": 200,
+          "perSecond": 17970.599918826847
+        },
+        "ranking": {
+          "elapsedMs": 2.970931000000064,
+          "count": 200,
+          "perSecond": 67318.96499783928
+        },
+        "storage": {
+          "elapsedMs": 4.323802000000001,
+          "count": 200,
+          "perSecond": 46255.587096726435
+        },
+        "progressStorage": {
+          "elapsedMs": 2.3653339999999616,
+          "count": 20,
+          "perSecond": 8455.465486058343
+        },
+        "httpRun": {
+          "elapsedMs": 11.940207999999984,
+          "count": 1,
+          "perSecond": 83.75063482981213
+        },
+        "index100k": {
+          "elapsedMs": 0.06524400000000696,
+          "count": 200,
+          "perSecond": 3065415.9769477444
+        },
+        "crossDayRecall100k": {
+          "elapsedMs": 1.6743639999999687,
+          "count": 200,
+          "perSecond": 119448.33978752754
+        },
+        "grouping100k": {
+          "elapsedMs": 12.928881000000047,
+          "count": 200,
+          "perSecond": 15469.242852494293
+        },
+        "identicalHashRecall100k": {
+          "elapsedMs": 1.1410909999999603,
+          "count": 200,
+          "perSecond": 175270.85920404852
+        }
+      },
+      "memorySamples": [
+        {
+          "stage": "setup:before",
+          "rssMiB": 75.77734375,
+          "heapMiB": 8.366340637207031
+        },
+        {
+          "stage": "setup:after",
+          "rssMiB": 80.48046875,
+          "heapMiB": 9.963958740234375
+        },
+        {
+          "stage": "scan:before",
+          "rssMiB": 80.48046875,
+          "heapMiB": 9.96661376953125
+        },
+        {
+          "stage": "scan:after",
+          "rssMiB": 83.890625,
+          "heapMiB": 10.452781677246094
+        },
+        {
+          "stage": "pairing:before",
+          "rssMiB": 83.890625,
+          "heapMiB": 10.457237243652344
+        },
+        {
+          "stage": "pairing:after",
+          "rssMiB": 83.890625,
+          "heapMiB": 11.10498046875
+        },
+        {
+          "stage": "modelStub:before",
+          "rssMiB": 83.890625,
+          "heapMiB": 11.124061584472656
+        },
+        {
+          "stage": "modelStub:after",
+          "rssMiB": 85.265625,
+          "heapMiB": 11.955215454101562
+        },
+        {
+          "stage": "grouping:before",
+          "rssMiB": 85.265625,
+          "heapMiB": 11.974372863769531
+        },
+        {
+          "stage": "grouping:after",
+          "rssMiB": 87.73046875,
+          "heapMiB": 11.803703308105469
+        },
+        {
+          "stage": "ranking:before",
+          "rssMiB": 87.73046875,
+          "heapMiB": 11.83868408203125
+        },
+        {
+          "stage": "ranking:after",
+          "rssMiB": 87.9375,
+          "heapMiB": 13.414176940917969
+        },
+        {
+          "stage": "storage:before",
+          "rssMiB": 87.9375,
+          "heapMiB": 13.420326232910156
+        },
+        {
+          "stage": "storage:after",
+          "rssMiB": 89.57421875,
+          "heapMiB": 11.221908569335938
+        },
+        {
+          "stage": "progressStorage:before",
+          "rssMiB": 89.57421875,
+          "heapMiB": 11.229110717773438
+        },
+        {
+          "stage": "progressStorage:after",
+          "rssMiB": 89.57421875,
+          "heapMiB": 11.625083923339844
+        },
+        {
+          "stage": "httpRun:before",
+          "rssMiB": 91.24609375,
+          "heapMiB": 11.844337463378906
+        },
+        {
+          "stage": "httpRun:after",
+          "rssMiB": 92.265625,
+          "heapMiB": 12.43011474609375
+        },
+        {
+          "stage": "index100k:before",
+          "rssMiB": 99.41015625,
+          "heapMiB": 14.770866394042969
+        },
+        {
+          "stage": "index100k:after",
+          "rssMiB": 99.41015625,
+          "heapMiB": 14.804550170898438
+        },
+        {
+          "stage": "crossDayRecall100k:before",
+          "rssMiB": 99.41015625,
+          "heapMiB": 14.806900024414062
+        },
+        {
+          "stage": "crossDayRecall100k:after",
+          "rssMiB": 99.41015625,
+          "heapMiB": 15.619621276855469
+        },
+        {
+          "stage": "grouping100k:before",
+          "rssMiB": 99.41015625,
+          "heapMiB": 15.623161315917969
+        },
+        {
+          "stage": "grouping100k:after",
+          "rssMiB": 101.07421875,
+          "heapMiB": 15.572402954101562
+        },
+        {
+          "stage": "identicalHashRecall100k:before",
+          "rssMiB": 101.07421875,
+          "heapMiB": 15.664527893066406
+        },
+        {
+          "stage": "identicalHashRecall100k:after",
+          "rssMiB": 101.07421875,
+          "heapMiB": 16.41716766357422
+        }
+      ],
+      "host": {
+        "platform": "linux",
+        "arch": "x64",
+        "cpu": "AMD EPYC 9K84 96-Core Processor",
+        "cores": 384
+      },
+      "filePayload": "16x16 JPEG with EXIF, repeated in JPG and mock ARW extension; no RAW decoding",
+      "groupingPayload": "deterministic 64-bit hashes, four-frame bursts, 500 captures per session; embeddings omitted",
+      "scanMetadata": {
+        "exifComplete": true,
+        "statComplete": true,
+        "example": {
+          "dateTimeOriginal": "2026:01:01 10:00:00",
+          "subSecTimeOriginal": "250",
+          "offsetTimeOriginal": "+00:00",
+          "localDate": "2026-01-01"
+        }
+      },
+      "storage": {
+        "resultsBytes": 637898,
+        "resultPayloadWrites": 1,
+        "progressMetadataWrites": 20,
+        "baselineProgressBytesEstimate": 127579600
+      },
+      "httpFirstScreen": {
+        "status": 200,
+        "headersMs": 8.638286999999991,
+        "bodyAndParseMs": 12.044789000000037,
+        "bytes": 449141,
+        "groups": 50,
+        "scope": "HTTP full results transfer plus JSON parse; browser rendering not measured"
+      },
+      "index": {
+        "units": 200,
+        "recallEntries": 0,
+        "projectedResultBytes": 637898,
+        "groups": 50,
+        "identicalHashRecallEntries": 0
+      },
+      "peakRssMiB": 101.07421875,
+      "groupCount": 50,
+      "rayJobId": "w6-scale-stress-c142206d3f9c",
+      "rayHost": {
+        "cpu": "AMD EPYC 9K84 96-Core Processor",
+        "logicalCores": 384,
+        "affinity": [
+          0,
+          1
+        ],
+        "reservedCpus": 2,
+        "reservedMemoryGiB": 8,
+        "gpu": 0,
+        "nodeVersion": "22.14.0",
+        "nodeSha256": "69b09dba5c8dcb05c4e4273a4340db1005abeafe3927efda2bc5b249e80437ec"
+      },
+      "processGroupPeakMiB": 106.49609375
+    },
+    {
+      "contractVersion": 1,
+      "synthetic": true,
+      "modelInference": "deterministic stub",
+      "files": 10000,
+      "units": 5000,
+      "node": "v22.14.0",
+      "stages": {
+        "setup": {
+          "elapsedMs": 923.358829,
+          "count": 10000,
+          "perSecond": 10830.025864191959
+        },
+        "scan": {
+          "elapsedMs": 18902.429007000002,
+          "count": 10000,
+          "perSecond": 529.0325384265044
+        },
+        "pairing": {
+          "elapsedMs": 22.87303400000019,
+          "count": 10000,
+          "perSecond": 437196.04491472
+        },
+        "modelStub": {
+          "elapsedMs": 35.428578999999445,
+          "count": 5000,
+          "perSecond": 141129.0020974332
+        },
+        "grouping": {
+          "elapsedMs": 187.77683500000057,
+          "count": 5000,
+          "perSecond": 26627.352623128325
+        },
+        "ranking": {
+          "elapsedMs": 32.113807999998244,
+          "count": 5000,
+          "perSecond": 155696.26622916452
+        },
+        "storage": {
+          "elapsedMs": 95.82109900000069,
+          "count": 5000,
+          "perSecond": 52180.5745517484
+        },
+        "progressStorage": {
+          "elapsedMs": 18.368137000001298,
+          "count": 20,
+          "perSecond": 1088.8420529528164
+        },
+        "httpRun": {
+          "elapsedMs": 13.128704999999172,
+          "count": 1,
+          "perSecond": 76.16897477702965
+        },
+        "index100k": {
+          "elapsedMs": 17.828475000002072,
+          "count": 100000,
+          "perSecond": 5609004.69613853
+        },
+        "crossDayRecall100k": {
+          "elapsedMs": 1924.585664000002,
+          "count": 100000,
+          "perSecond": 51959.235626936425
+        },
+        "grouping100k": {
+          "elapsedMs": 3119.001322,
+          "count": 100000,
+          "perSecond": 32061.544602320628
+        },
+        "identicalHashRecall100k": {
+          "elapsedMs": 4588.4467600000025,
+          "count": 100000,
+          "perSecond": 21793.867343466776
+        }
+      },
+      "memorySamples": [
+        {
+          "stage": "setup:before",
+          "rssMiB": 76.1484375,
+          "heapMiB": 8.356864929199219
+        },
+        {
+          "stage": "setup:after",
+          "rssMiB": 81.87109375,
+          "heapMiB": 8.984809875488281
+        },
+        {
+          "stage": "scan:before",
+          "rssMiB": 81.87109375,
+          "heapMiB": 8.987464904785156
+        },
+        {
+          "stage": "scan:after",
+          "rssMiB": 95.37109375,
+          "heapMiB": 18.267379760742188
+        },
+        {
+          "stage": "pairing:before",
+          "rssMiB": 95.484375,
+          "heapMiB": 18.27845001220703
+        },
+        {
+          "stage": "pairing:after",
+          "rssMiB": 102.68359375,
+          "heapMiB": 23.75499725341797
+        },
+        {
+          "stage": "modelStub:before",
+          "rssMiB": 102.94140625,
+          "heapMiB": 23.757652282714844
+        },
+        {
+          "stage": "modelStub:after",
+          "rssMiB": 110.828125,
+          "heapMiB": 25.199440002441406
+        },
+        {
+          "stage": "grouping:before",
+          "rssMiB": 110.828125,
+          "heapMiB": 25.21849822998047
+        },
+        {
+          "stage": "grouping:after",
+          "rssMiB": 127.27734375,
+          "heapMiB": 31.4739990234375
+        },
+        {
+          "stage": "ranking:before",
+          "rssMiB": 127.53125,
+          "heapMiB": 32.36278533935547
+        },
+        {
+          "stage": "ranking:after",
+          "rssMiB": 131.46875,
+          "heapMiB": 36.895591735839844
+        },
+        {
+          "stage": "storage:before",
+          "rssMiB": 131.46875,
+          "heapMiB": 36.90187072753906
+        },
+        {
+          "stage": "storage:after",
+          "rssMiB": 180.8046875,
+          "heapMiB": 56.17919158935547
+        },
+        {
+          "stage": "progressStorage:before",
+          "rssMiB": 180.8046875,
+          "heapMiB": 56.189064025878906
+        },
+        {
+          "stage": "progressStorage:after",
+          "rssMiB": 150.98046875,
+          "heapMiB": 23.834213256835938
+        },
+        {
+          "stage": "httpRun:before",
+          "rssMiB": 150.98046875,
+          "heapMiB": 24.08252716064453
+        },
+        {
+          "stage": "httpRun:after",
+          "rssMiB": 151.98046875,
+          "heapMiB": 24.66625213623047
+        },
+        {
+          "stage": "index100k:before",
+          "rssMiB": 297.6015625,
+          "heapMiB": 170.9571990966797
+        },
+        {
+          "stage": "index100k:after",
+          "rssMiB": 305.078125,
+          "heapMiB": 185.10459899902344
+        },
+        {
+          "stage": "crossDayRecall100k:before",
+          "rssMiB": 305.078125,
+          "heapMiB": 185.10694885253906
+        },
+        {
+          "stage": "crossDayRecall100k:after",
+          "rssMiB": 343.34375,
+          "heapMiB": 211.16924285888672
+        },
+        {
+          "stage": "grouping100k:before",
+          "rssMiB": 343.34375,
+          "heapMiB": 211.1727294921875
+        },
+        {
+          "stage": "grouping100k:after",
+          "rssMiB": 365.27734375,
+          "heapMiB": 237.01873016357422
+        },
+        {
+          "stage": "identicalHashRecall100k:before",
+          "rssMiB": 386.93359375,
+          "heapMiB": 266.6744155883789
+        },
+        {
+          "stage": "identicalHashRecall100k:after",
+          "rssMiB": 439.9453125,
+          "heapMiB": 309.04285430908203
+        }
+      ],
+      "host": {
+        "platform": "linux",
+        "arch": "x64",
+        "cpu": "AMD EPYC 9K84 96-Core Processor",
+        "cores": 384
+      },
+      "filePayload": "16x16 JPEG with EXIF, repeated in JPG and mock ARW extension; no RAW decoding",
+      "groupingPayload": "deterministic 64-bit hashes, four-frame bursts, 500 captures per session; embeddings omitted",
+      "scanMetadata": {
+        "exifComplete": true,
+        "statComplete": true,
+        "example": {
+          "dateTimeOriginal": "2026:01:01 10:00:00",
+          "subSecTimeOriginal": "250",
+          "offsetTimeOriginal": "+00:00",
+          "localDate": "2026-01-01"
+        }
+      },
+      "storage": {
+        "resultsBytes": 16016283,
+        "resultPayloadWrites": 1,
+        "progressMetadataWrites": 20,
+        "baselineProgressBytesEstimate": 80081415000
+      },
+      "httpFirstScreen": {
+        "status": 200,
+        "headersMs": 162.39728000000105,
+        "bodyAndParseMs": 246.3604430000014,
+        "bytes": 11297526,
+        "groups": 1250,
+        "scope": "HTTP full results transfer plus JSON parse; browser rendering not measured"
+      },
+      "index": {
+        "units": 100000,
+        "recallEntries": 0,
+        "projectedResultBytes": 320325660,
+        "groups": 25000,
+        "identicalHashRecallEntries": 99500
+      },
+      "peakRssMiB": 439.9453125,
+      "groupCount": 1250,
+      "rayJobId": "w6-scale-stress-c142206d3f9c",
+      "rayHost": {
+        "cpu": "AMD EPYC 9K84 96-Core Processor",
+        "logicalCores": 384,
+        "affinity": [
+          0,
+          1
+        ],
+        "reservedCpus": 2,
+        "reservedMemoryGiB": 8,
+        "gpu": 0,
+        "nodeVersion": "22.14.0",
+        "nodeSha256": "69b09dba5c8dcb05c4e4273a4340db1005abeafe3927efda2bc5b249e80437ec"
+      },
+      "processGroupPeakMiB": 475.12109375
+    },
+    {
+      "contractVersion": 1,
+      "synthetic": true,
+      "modelInference": "deterministic stub",
+      "files": 20000,
+      "units": 10000,
+      "node": "v22.14.0",
+      "stages": {
+        "setup": {
+          "elapsedMs": 1759.14653,
+          "count": 20000,
+          "perSecond": 11369.149561406917
+        },
+        "scan": {
+          "elapsedMs": 37680.555680000005,
+          "count": 20000,
+          "perSecond": 530.7777350697498
+        },
+        "pairing": {
+          "elapsedMs": 38.716231999998854,
+          "count": 20000,
+          "perSecond": 516579.19603334833
+        },
+        "modelStub": {
+          "elapsedMs": 61.87988000000041,
+          "count": 10000,
+          "perSecond": 161603.41616693395
+        },
+        "grouping": {
+          "elapsedMs": 344.40809699999954,
+          "count": 10000,
+          "perSecond": 29035.32201218839
+        },
+        "ranking": {
+          "elapsedMs": 66.84208699999726,
+          "count": 10000,
+          "perSecond": 149606.34008929748
+        },
+        "storage": {
+          "elapsedMs": 180.34808299999713,
+          "count": 10000,
+          "perSecond": 55448.32988327444
+        },
+        "progressStorage": {
+          "elapsedMs": 25.252685999999812,
+          "count": 20,
+          "perSecond": 791.9949584768982
+        },
+        "httpRun": {
+          "elapsedMs": 12.709880999995221,
+          "count": 1,
+          "perSecond": 78.67894278478107
+        },
+        "index100k": {
+          "elapsedMs": 17.82478500000434,
+          "count": 100000,
+          "perSecond": 5610165.844916259
+        },
+        "crossDayRecall100k": {
+          "elapsedMs": 1949.6433670000042,
+          "count": 100000,
+          "perSecond": 51291.431906274265
+        },
+        "grouping100k": {
+          "elapsedMs": 3122.709668000003,
+          "count": 100000,
+          "perSecond": 32023.470201136835
+        },
+        "identicalHashRecall100k": {
+          "elapsedMs": 4618.6633040000015,
+          "count": 100000,
+          "perSecond": 21651.28597128845
+        }
+      },
+      "memorySamples": [
+        {
+          "stage": "setup:before",
+          "rssMiB": 75.95703125,
+          "heapMiB": 8.359832763671875
+        },
+        {
+          "stage": "setup:after",
+          "rssMiB": 82.05859375,
+          "heapMiB": 9.679496765136719
+        },
+        {
+          "stage": "scan:before",
+          "rssMiB": 82.05859375,
+          "heapMiB": 9.682174682617188
+        },
+        {
+          "stage": "scan:after",
+          "rssMiB": 115.1875,
+          "heapMiB": 31.425392150878906
+        },
+        {
+          "stage": "pairing:before",
+          "rssMiB": 115.1875,
+          "heapMiB": 31.436424255371094
+        },
+        {
+          "stage": "pairing:after",
+          "rssMiB": 129.16796875,
+          "heapMiB": 33.499000549316406
+        },
+        {
+          "stage": "modelStub:before",
+          "rssMiB": 129.16796875,
+          "heapMiB": 33.50165557861328
+        },
+        {
+          "stage": "modelStub:after",
+          "rssMiB": 143.05859375,
+          "heapMiB": 47.35516357421875
+        },
+        {
+          "stage": "grouping:before",
+          "rssMiB": 143.05859375,
+          "heapMiB": 47.374229431152344
+        },
+        {
+          "stage": "grouping:after",
+          "rssMiB": 145.953125,
+          "heapMiB": 43.91193389892578
+        },
+        {
+          "stage": "ranking:before",
+          "rssMiB": 146.7265625,
+          "heapMiB": 45.641937255859375
+        },
+        {
+          "stage": "ranking:after",
+          "rssMiB": 153.45703125,
+          "heapMiB": 53.98036193847656
+        },
+        {
+          "stage": "storage:before",
+          "rssMiB": 153.45703125,
+          "heapMiB": 53.98664093017578
+        },
+        {
+          "stage": "storage:after",
+          "rssMiB": 243.4375,
+          "heapMiB": 103.84927368164062
+        },
+        {
+          "stage": "progressStorage:before",
+          "rssMiB": 243.4375,
+          "heapMiB": 103.85889434814453
+        },
+        {
+          "stage": "progressStorage:after",
+          "rssMiB": 152.265625,
+          "heapMiB": 36.63713073730469
+        },
+        {
+          "stage": "httpRun:before",
+          "rssMiB": 152.828125,
+          "heapMiB": 36.94853973388672
+        },
+        {
+          "stage": "httpRun:after",
+          "rssMiB": 153.52734375,
+          "heapMiB": 37.558021545410156
+        },
+        {
+          "stage": "index100k:before",
+          "rssMiB": 490.14453125,
+          "heapMiB": 317.5221633911133
+        },
+        {
+          "stage": "index100k:after",
+          "rssMiB": 497.87890625,
+          "heapMiB": 331.70774841308594
+        },
+        {
+          "stage": "crossDayRecall100k:before",
+          "rssMiB": 497.87890625,
+          "heapMiB": 331.71009826660156
+        },
+        {
+          "stage": "crossDayRecall100k:after",
+          "rssMiB": 537.21484375,
+          "heapMiB": 357.8100814819336
+        },
+        {
+          "stage": "grouping100k:before",
+          "rssMiB": 537.21484375,
+          "heapMiB": 357.8134765625
+        },
+        {
+          "stage": "grouping100k:after",
+          "rssMiB": 562.2578125,
+          "heapMiB": 384.5995407104492
+        },
+        {
+          "stage": "identicalHashRecall100k:before",
+          "rssMiB": 590.359375,
+          "heapMiB": 409.95357513427734
+        },
+        {
+          "stage": "identicalHashRecall100k:after",
+          "rssMiB": 615.109375,
+          "heapMiB": 353.19666290283203
+        }
+      ],
+      "host": {
+        "platform": "linux",
+        "arch": "x64",
+        "cpu": "AMD EPYC 9K84 96-Core Processor",
+        "cores": 384
+      },
+      "filePayload": "16x16 JPEG with EXIF, repeated in JPG and mock ARW extension; no RAW decoding",
+      "groupingPayload": "deterministic 64-bit hashes, four-frame bursts, 500 captures per session; embeddings omitted",
+      "scanMetadata": {
+        "exifComplete": true,
+        "statComplete": true,
+        "example": {
+          "dateTimeOriginal": "2026:01:01 10:00:00",
+          "subSecTimeOriginal": "250",
+          "offsetTimeOriginal": "+00:00",
+          "localDate": "2026-01-01"
+        }
+      },
+      "storage": {
+        "resultsBytes": 32111131,
+        "resultPayloadWrites": 1,
+        "progressMetadataWrites": 20,
+        "baselineProgressBytesEstimate": 321111310000
+      },
+      "httpFirstScreen": {
+        "status": 200,
+        "headersMs": 328.2694160000028,
+        "bodyAndParseMs": 493.5094670000035,
+        "bytes": 22673624,
+        "groups": 2500,
+        "scope": "HTTP full results transfer plus JSON parse; browser rendering not measured"
+      },
+      "index": {
+        "units": 100000,
+        "recallEntries": 0,
+        "projectedResultBytes": 321111310,
+        "groups": 25000,
+        "identicalHashRecallEntries": 99500
+      },
+      "peakRssMiB": 726.7421875,
+      "groupCount": 2500,
+      "rayJobId": "w6-scale-stress-c142206d3f9c",
+      "rayHost": {
+        "cpu": "AMD EPYC 9K84 96-Core Processor",
+        "logicalCores": 384,
+        "affinity": [
+          0,
+          1
+        ],
+        "reservedCpus": 2,
+        "reservedMemoryGiB": 8,
+        "gpu": 0,
+        "nodeVersion": "22.14.0",
+        "nodeSha256": "69b09dba5c8dcb05c4e4273a4340db1005abeafe3927efda2bc5b249e80437ec"
+      },
+      "processGroupPeakMiB": 723.90625
+    },
+    {
+      "contractVersion": 1,
+      "synthetic": true,
+      "modelInference": "deterministic stub",
+      "files": 50000,
+      "units": 25000,
+      "node": "v22.14.0",
+      "stages": {
+        "setup": {
+          "elapsedMs": 4492.422559,
+          "count": 50000,
+          "perSecond": 11129.852399977677
+        },
+        "scan": {
+          "elapsedMs": 93984.518914,
+          "count": 50000,
+          "perSecond": 532.0025103895272
+        },
+        "pairing": {
+          "elapsedMs": 112.41119199999957,
+          "count": 50000,
+          "perSecond": 444795.56804272824
+        },
+        "modelStub": {
+          "elapsedMs": 138.5294830000057,
+          "count": 25000,
+          "perSecond": 180466.99849445748
+        },
+        "grouping": {
+          "elapsedMs": 830.2200659999944,
+          "count": 25000,
+          "perSecond": 30112.497907271936
+        },
+        "ranking": {
+          "elapsedMs": 143.71014999999898,
+          "count": 25000,
+          "perSecond": 173961.26856732232
+        },
+        "storage": {
+          "elapsedMs": 483.35374299999967,
+          "count": 25000,
+          "perSecond": 51721.95387343885
+        },
+        "progressStorage": {
+          "elapsedMs": 2.600923000005423,
+          "count": 20,
+          "perSecond": 7689.577892139944
+        },
+        "httpRun": {
+          "elapsedMs": 13.23549500000081,
+          "count": 1,
+          "perSecond": 75.55440880752391
+        },
+        "index100k": {
+          "elapsedMs": 22.368579000001773,
+          "count": 100000,
+          "perSecond": 4470556.667904209
+        },
+        "crossDayRecall100k": {
+          "elapsedMs": 1993.1873979999946,
+          "count": 100000,
+          "perSecond": 50170.897177225816
+        },
+        "grouping100k": {
+          "elapsedMs": 3139.4768449999974,
+          "count": 100000,
+          "perSecond": 31852.440689047377
+        },
+        "identicalHashRecall100k": {
+          "elapsedMs": 4579.319315999994,
+          "count": 100000,
+          "perSecond": 21837.306616859678
+        }
+      },
+      "memorySamples": [
+        {
+          "stage": "setup:before",
+          "rssMiB": 76.30078125,
+          "heapMiB": 8.344108581542969
+        },
+        {
+          "stage": "setup:after",
+          "rssMiB": 91.6796875,
+          "heapMiB": 9.713623046875
+        },
+        {
+          "stage": "scan:before",
+          "rssMiB": 91.6796875,
+          "heapMiB": 9.721885681152344
+        },
+        {
+          "stage": "scan:after",
+          "rssMiB": 143.87109375,
+          "heapMiB": 57.42070007324219
+        },
+        {
+          "stage": "pairing:before",
+          "rssMiB": 143.87109375,
+          "heapMiB": 57.441062927246094
+        },
+        {
+          "stage": "pairing:after",
+          "rssMiB": 172.49609375,
+          "heapMiB": 64.4404525756836
+        },
+        {
+          "stage": "modelStub:before",
+          "rssMiB": 172.49609375,
+          "heapMiB": 64.44820404052734
+        },
+        {
+          "stage": "modelStub:after",
+          "rssMiB": 185.87890625,
+          "heapMiB": 79.71208190917969
+        },
+        {
+          "stage": "grouping:before",
+          "rssMiB": 185.87890625,
+          "heapMiB": 79.71434783935547
+        },
+        {
+          "stage": "grouping:after",
+          "rssMiB": 188.36328125,
+          "heapMiB": 85.94024658203125
+        },
+        {
+          "stage": "ranking:before",
+          "rssMiB": 190.15234375,
+          "heapMiB": 89.64608764648438
+        },
+        {
+          "stage": "ranking:after",
+          "rssMiB": 204.7734375,
+          "heapMiB": 90.65828704833984
+        },
+        {
+          "stage": "storage:before",
+          "rssMiB": 204.7734375,
+          "heapMiB": 90.68702697753906
+        },
+        {
+          "stage": "storage:after",
+          "rssMiB": 426.0625,
+          "heapMiB": 229.82827758789062
+        },
+        {
+          "stage": "progressStorage:before",
+          "rssMiB": 426.0625,
+          "heapMiB": 229.84213256835938
+        },
+        {
+          "stage": "progressStorage:after",
+          "rssMiB": 426.0625,
+          "heapMiB": 230.237548828125
+        },
+        {
+          "stage": "httpRun:before",
+          "rssMiB": 426.0625,
+          "heapMiB": 230.46952056884766
+        },
+        {
+          "stage": "httpRun:after",
+          "rssMiB": 427.26953125,
+          "heapMiB": 231.06985473632812
+        },
+        {
+          "stage": "index100k:before",
+          "rssMiB": 704.5390625,
+          "heapMiB": 450.9339828491211
+        },
+        {
+          "stage": "index100k:after",
+          "rssMiB": 712.2734375,
+          "heapMiB": 453.0466537475586
+        },
+        {
+          "stage": "crossDayRecall100k:before",
+          "rssMiB": 712.2734375,
+          "heapMiB": 453.0490036010742
+        },
+        {
+          "stage": "crossDayRecall100k:after",
+          "rssMiB": 735.5078125,
+          "heapMiB": 494.3079605102539
+        },
+        {
+          "stage": "grouping100k:before",
+          "rssMiB": 735.5078125,
+          "heapMiB": 494.3114471435547
+        },
+        {
+          "stage": "grouping100k:after",
+          "rssMiB": 756.66015625,
+          "heapMiB": 519.9752960205078
+        },
+        {
+          "stage": "identicalHashRecall100k:before",
+          "rssMiB": 783.73046875,
+          "heapMiB": 542.3189163208008
+        },
+        {
+          "stage": "identicalHashRecall100k:after",
+          "rssMiB": 928.1015625,
+          "heapMiB": 675.7965469360352
+        }
+      ],
+      "host": {
+        "platform": "linux",
+        "arch": "x64",
+        "cpu": "AMD EPYC 9K84 96-Core Processor",
+        "cores": 384
+      },
+      "filePayload": "16x16 JPEG with EXIF, repeated in JPG and mock ARW extension; no RAW decoding",
+      "groupingPayload": "deterministic 64-bit hashes, four-frame bursts, 500 captures per session; embeddings omitted",
+      "scanMetadata": {
+        "exifComplete": true,
+        "statComplete": true,
+        "example": {
+          "dateTimeOriginal": "2026:01:01 10:00:00",
+          "subSecTimeOriginal": "250",
+          "offsetTimeOriginal": "+00:00",
+          "localDate": "2026-01-01"
+        }
+      },
+      "storage": {
+        "resultsBytes": 80354766,
+        "resultPayloadWrites": 1,
+        "progressMetadataWrites": 20,
+        "baselineProgressBytesEstimate": 2008869150000
+      },
+      "httpFirstScreen": {
+        "status": 200,
+        "headersMs": 717.198258000004,
+        "bodyAndParseMs": 1286.5784249999997,
+        "bytes": 56761009,
+        "groups": 6250,
+        "scope": "HTTP full results transfer plus JSON parse; browser rendering not measured"
+      },
+      "index": {
+        "units": 100000,
+        "recallEntries": 0,
+        "projectedResultBytes": 321419064,
+        "groups": 25000,
+        "identicalHashRecallEntries": 99500
+      },
+      "peakRssMiB": 1178.7109375,
+      "groupCount": 6250,
+      "rayJobId": "w6-scale-stress-c142206d3f9c",
+      "rayHost": {
+        "cpu": "AMD EPYC 9K84 96-Core Processor",
+        "logicalCores": 384,
+        "affinity": [
+          0,
+          1
+        ],
+        "reservedCpus": 2,
+        "reservedMemoryGiB": 8,
+        "gpu": 0,
+        "nodeVersion": "22.14.0",
+        "nodeSha256": "69b09dba5c8dcb05c4e4273a4340db1005abeafe3927efda2bc5b249e80437ec"
+      },
+      "processGroupPeakMiB": 1191.15625
+    }
+  ],
+  "macSmoke": {
+    "contractVersion": 1,
+    "synthetic": true,
+    "modelInference": "deterministic stub",
+    "files": 400,
+    "units": 200,
+    "node": "v22.9.0",
+    "stages": {
+      "setup": {
+        "elapsedMs": 63.284082999999995,
+        "count": 400,
+        "perSecond": 6320.704686516514
+      },
+      "scan": {
+        "elapsedMs": 2071.639375,
+        "count": 400,
+        "perSecond": 193.08379867031633
+      },
+      "pairing": {
+        "elapsedMs": 1.0179999999995744,
+        "count": 400,
+        "perSecond": 392927.3084481014
+      },
+      "modelStub": {
+        "elapsedMs": 2.1899169999996957,
+        "count": 200,
+        "perSecond": 91327.66218994958
+      },
+      "grouping": {
+        "elapsedMs": 8.078541999999743,
+        "count": 200,
+        "perSecond": 24756.94252750142
+      },
+      "ranking": {
+        "elapsedMs": 2.315958000000137,
+        "count": 200,
+        "perSecond": 86357.35190361318
+      },
+      "storage": {
+        "elapsedMs": 3.4757910000002994,
+        "count": 200,
+        "perSecond": 57540.85904474198
+      },
+      "progressStorage": {
+        "elapsedMs": 5.560708999999861,
+        "count": 20,
+        "perSecond": 3596.663662853154
+      },
+      "httpRun": {
+        "elapsedMs": 9.640666999999667,
+        "count": 1,
+        "perSecond": 103.72726285432684
+      },
+      "index100k": {
+        "elapsedMs": 0.049500000000080036,
+        "count": 200,
+        "perSecond": 4040404.040397507
+      },
+      "crossDayRecall100k": {
+        "elapsedMs": 1.9735840000003009,
+        "count": 200,
+        "perSecond": 101338.47862567264
+      },
+      "grouping100k": {
+        "elapsedMs": 7.931999999999789,
+        "count": 200,
+        "perSecond": 25214.32173474601
+      },
+      "identicalHashRecall100k": {
+        "elapsedMs": 0.7487499999997453,
+        "count": 200,
+        "perSecond": 267111.85308857163
+      }
+    },
+    "memorySamples": [
+      {
+        "stage": "setup:before",
+        "rssMiB": 68.9375,
+        "heapMiB": 7.606605529785156
+      },
+      {
+        "stage": "setup:after",
+        "rssMiB": 73.65625,
+        "heapMiB": 9.900627136230469
+      },
+      {
+        "stage": "scan:before",
+        "rssMiB": 73.65625,
+        "heapMiB": 9.903358459472656
+      },
+      {
+        "stage": "scan:after",
+        "rssMiB": 76.75,
+        "heapMiB": 11.514076232910156
+      },
+      {
+        "stage": "pairing:before",
+        "rssMiB": 76.75,
+        "heapMiB": 11.518684387207031
+      },
+      {
+        "stage": "pairing:after",
+        "rssMiB": 77.390625,
+        "heapMiB": 12.167800903320312
+      },
+      {
+        "stage": "modelStub:before",
+        "rssMiB": 77.40625,
+        "heapMiB": 12.187950134277344
+      },
+      {
+        "stage": "modelStub:after",
+        "rssMiB": 77.75,
+        "heapMiB": 9.754318237304688
+      },
+      {
+        "stage": "grouping:before",
+        "rssMiB": 77.75,
+        "heapMiB": 9.77447509765625
+      },
+      {
+        "stage": "grouping:after",
+        "rssMiB": 79.28125,
+        "heapMiB": 9.4583740234375
+      },
+      {
+        "stage": "ranking:before",
+        "rssMiB": 79.28125,
+        "heapMiB": 9.493400573730469
+      },
+      {
+        "stage": "ranking:after",
+        "rssMiB": 79.421875,
+        "heapMiB": 11.069084167480469
+      },
+      {
+        "stage": "storage:before",
+        "rssMiB": 79.421875,
+        "heapMiB": 11.076019287109375
+      },
+      {
+        "stage": "storage:after",
+        "rssMiB": 83.859375,
+        "heapMiB": 12.3905029296875
+      },
+      {
+        "stage": "progressStorage:before",
+        "rssMiB": 83.859375,
+        "heapMiB": 12.398643493652344
+      },
+      {
+        "stage": "progressStorage:after",
+        "rssMiB": 83.875,
+        "heapMiB": 12.816818237304688
+      },
+      {
+        "stage": "httpRun:before",
+        "rssMiB": 84.25,
+        "heapMiB": 13.052116394042969
+      },
+      {
+        "stage": "httpRun:after",
+        "rssMiB": 85.046875,
+        "heapMiB": 13.675941467285156
+      },
+      {
+        "stage": "index100k:before",
+        "rssMiB": 90.3125,
+        "heapMiB": 14.626968383789062
+      },
+      {
+        "stage": "index100k:after",
+        "rssMiB": 90.328125,
+        "heapMiB": 14.666366577148438
+      },
+      {
+        "stage": "crossDayRecall100k:before",
+        "rssMiB": 90.328125,
+        "heapMiB": 14.668792724609375
+      },
+      {
+        "stage": "crossDayRecall100k:after",
+        "rssMiB": 90.78125,
+        "heapMiB": 12.399871826171875
+      },
+      {
+        "stage": "grouping100k:before",
+        "rssMiB": 90.8125,
+        "heapMiB": 12.403488159179688
+      },
+      {
+        "stage": "grouping100k:after",
+        "rssMiB": 95.15625,
+        "heapMiB": 13.901519775390625
+      },
+      {
+        "stage": "identicalHashRecall100k:before",
+        "rssMiB": 95.15625,
+        "heapMiB": 13.993728637695312
+      },
+      {
+        "stage": "identicalHashRecall100k:after",
+        "rssMiB": 95.203125,
+        "heapMiB": 14.754684448242188
+      }
+    ],
+    "host": {
+      "platform": "darwin",
+      "arch": "arm64",
+      "cpu": "Apple M3 Pro",
+      "cores": 12
+    },
+    "filePayload": "16x16 JPEG with EXIF, repeated in JPG and mock ARW extension; no RAW decoding",
+    "groupingPayload": "deterministic 64-bit hashes, four-frame bursts, 500 captures per session; embeddings omitted",
+    "scanMetadata": {
+      "exifComplete": true,
+      "statComplete": true,
+      "example": {
+        "dateTimeOriginal": "2026:01:01 10:00:00",
+        "subSecTimeOriginal": "250",
+        "offsetTimeOriginal": "+00:00",
+        "localDate": "2026-01-01"
+      }
+    },
+    "storage": {
+      "resultsBytes": 655276,
+      "resultPayloadWrites": 1,
+      "progressMetadataWrites": 20,
+      "baselineProgressBytesEstimate": 131055200
+    },
+    "httpFirstScreen": {
+      "status": 200,
+      "headersMs": 6.389290999999957,
+      "bodyAndParseMs": 9.240499999999884,
+      "bytes": 466519,
+      "groups": 50,
+      "scope": "HTTP full results transfer plus JSON parse; browser rendering not measured"
+    },
+    "index": {
+      "units": 200,
+      "recallEntries": 0,
+      "projectedResultBytes": 655276,
+      "groups": 50,
+      "identicalHashRecallEntries": 0
+    },
+    "peakRssMiB": 95.21875,
+    "groupCount": 50
+  },
+  "quality": {
+    "benchmarkReport": "2026-10-11T00-38-44-385Z",
+    "pairs": 368,
+    "accuracy": 0.9646739130434783,
+    "gate": {
+      "hits": 101,
+      "total": 112,
+      "rate": 0.9017857142857143
+    },
+    "sourceFalseReject": {
+      "assumption": "All technically screened sources are retained controls; no independent aesthetic labels",
+      "hits": 1,
+      "total": 20,
+      "rate": 0.05,
+      "ci": {
+        "low": 0,
+        "high": 0.15,
+        "samples": 1000
+      }
+    },
+    "comparison": {
+      "matchedPairs": 368,
+      "additionalPairs": 0,
+      "syntheticAccuracyDelta": 0,
+      "severeGateDelta": 0,
+      "sourceFalseRejectDelta": 0,
+      "byDegradation": {
+        "defocus-blur": {
+          "pairs": 60,
+          "accuracyDelta": 0
+        },
+        "motion-blur": {
+          "pairs": 60,
+          "accuracyDelta": 0
+        },
+        "underexposure": {
+          "pairs": 40,
+          "accuracyDelta": 0
+        },
+        "overexposure": {
+          "pairs": 40,
+          "accuracyDelta": 0
+        },
+        "noise": {
+          "pairs": 40,
+          "accuracyDelta": 0
+        },
+        "horizon-tilt": {
+          "pairs": 40,
+          "accuracyDelta": 0
+        },
+        "excess-headroom": {
+          "pairs": 20,
+          "accuracyDelta": 0
+        },
+        "joint-crop-wrist": {
+          "pairs": 16,
+          "accuracyDelta": 0
+        },
+        "joint-crop-knee": {
+          "pairs": 7,
+          "accuracyDelta": 0
+        },
+        "joint-crop-ankle": {
+          "pairs": 3,
+          "accuracyDelta": 0
+        },
+        "head-top-crop": {
+          "pairs": 13,
+          "accuracyDelta": 0
+        },
+        "face-highlight-clipping": {
+          "pairs": 13,
+          "accuracyDelta": 0
+        },
+        "joint-crop-neck": {
+          "pairs": 16,
+          "accuracyDelta": 0
+        }
+      },
+      "unchangedRows": true,
+      "triageTop1Delta": null
+    },
+    "warnings": []
+  },
+  "replay": {
+    "cached": {
+      "input": "/tmp/w2-gate2-qa/final-analyze.json",
+      "baselineRef": "7bc228a324f2919ac888e38612b11c8cd1e33722",
+      "units": 253,
+      "addedPairs": [],
+      "removedPairs": [],
+      "crossDayCandidates": {},
+      "beforeGroups": 83,
+      "afterGroups": 83,
+      "maxGroupSize": 19
+    },
+    "freshExif": {
+      "input": "/tmp/w2-gate2-qa/final-analyze.json",
+      "baselineRef": "7bc228a324f2919ac888e38612b11c8cd1e33722",
+      "freshExif": true,
+      "units": 253,
+      "sameInputAddedPairs": [],
+      "sameInputRemovedPairs": [],
+      "addedPairs": [
+        "unit:MV1M3YEFSHBF4|unit:MV1M3YEHD2049",
+        "unit:MV1M3YEFSHBF4|unit:MV1M3YEIO8QEZ",
+        "unit:MV1M3YEFSHBF4|unit:MV1M3YEKZ1ACS",
+        "unit:MV1M3YEFSHBF4|unit:MV1M3YEMBNHAX",
+        "unit:MV1M3YEFSHBF4|unit:MV1M3YENGV7C2",
+        "unit:MV1M3YEW9E9WR|unit:MV1M3YEXL5APH",
+        "unit:MV1M3YEW9E9WR|unit:MV1M3YEYD9H60",
+        "unit:MV1M47SB3K61D|unit:MV1M47SCA7HQ2",
+        "unit:MV1M47SB3K61D|unit:MV1M47SDMPYWR",
+        "unit:MV1M47SB3K61D|unit:MV1M47SE54O3L",
+        "unit:MV1M47SB3K61D|unit:MV1M47SEWC1N5",
+        "unit:MV1M47SB3K61D|unit:MV1M47SFQWGW6",
+        "unit:MV1M47SB3K61D|unit:MV1M47SGRT9PF",
+        "unit:MV1M47SB3K61D|unit:MV1M47SGIRKYY"
+      ],
+      "removedPairs": [
+        "unit:MV1M33ZU832PV|unit:MV1M3YEFSHBF4",
+        "unit:MV1M33ZV0S3LH|unit:MV1M3YEFSHBF4",
+        "unit:MV1M3YEPQPG7L|unit:MV1M3YEW9E9WR",
+        "unit:MV1M3YEQPAVSH|unit:MV1M3YEW9E9WR",
+        "unit:MV1M3YES5FSIB|unit:MV1M3YEW9E9WR",
+        "unit:MV1M3YETJTMAK|unit:MV1M3YEW9E9WR",
+        "unit:MV1M3YEUCCS21|unit:MV1M3YEW9E9WR",
+        "unit:MV1M3YEVIC598|unit:MV1M3YEW9E9WR",
+        "unit:MV1M47S7IFNWY|unit:MV1M47SB3K61D",
+        "unit:MV1M47S781PJP|unit:MV1M47SB3K61D",
+        "unit:MV1M3401JNJMY|unit:MV1M47SB3K61D",
+        "unit:MV1M47S8RVJL9|unit:MV1M47SB3K61D",
+        "unit:MV1M47S8ZU4PQ|unit:MV1M47SB3K61D",
+        "unit:MV1M47S993TCY|unit:MV1M47SB3K61D",
+        "unit:MV1M47SA5XTOH|unit:MV1M47SB3K61D",
+        "unit:MV1M34029OUY4|unit:MV1M47SB3K61D",
+        "unit:MV1M3402R840G|unit:MV1M47SB3K61D",
+        "unit:MV1M47SB3K61D|unit:MV1M47SBS2N24"
+      ],
+      "crossDayCandidates": {},
+      "beforeGroups": 83,
+      "afterGroups": 83,
+      "maxGroupSize": 19
+    }
+  }
+}

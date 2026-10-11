@@ -1,0 +1,495 @@
+[
+ {
+  "score": 4,
+  "title": "XtalOpt Version 14: Variable-Composition Crystal Structure Search for Functional Materials Through Pareto Optimization",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2506.17246",
+  "kw": [
+   "pareto",
+   "multi-objective"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Extending the air2water Model to Simulate Lake Ice Phenology, Thickness, and Composition Using Minimal Inputs",
+  "year": 2026,
+  "venue": "Journal of Advances in Modeling Earth Systems",
+  "source_id": "doi:10.1029/2025ms005430",
+  "kw": [
+   "multi-objective"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Generalized Decomposition Priors on R2",
+  "year": 2026,
+  "venue": "Bayesian Analysis",
+  "source_id": "doi:10.1214/25-ba1524",
+  "kw": [
+   "pareto"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "SynthLight: Portrait Relighting with Diffusion Model by Learning to Re-render Synthetic Faces",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2501.09756",
+  "kw": [
+   "portrait photography",
+   "facial expression"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Bokeh Diffusion: Defocus Blur Control in Text-to-Image Diffusion Models",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2503.08434",
+  "kw": [
+   "bokeh"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Comparison of derivative-free and gradient-based minimization for multi-objective compositional design of shape memory alloys",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2508.14127",
+  "kw": [
+   "multi-objective"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Data Driven Insights into Composition Property Relationships in FCC High Entropy Alloys",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2508.04841",
+  "kw": [
+   "multi-objective"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Efficient nanophotonic devices optimization using deep neural network trained with physics-based transfer learning (PBTL) methodology",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2506.10418",
+  "kw": [
+   "multi-objective"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "GratNet: A Photorealistic Neural Shader for Diffractive Surfaces",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2506.15815",
+  "kw": [
+   "bokeh"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Inverse Design in Nanophotonics via Representation Learning",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2507.00546",
+  "kw": [
+   "multi-objective"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Inverse Design of 3D Nanophotonic Devices with Structural Integrity Using Auxiliary Thermal Solvers",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2501.05900",
+  "kw": [
+   "multi-objective"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Large-Scale Linear Energy System Optimization: A Systematic Review on Parallelization Strategies via Decomposition",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2507.21932",
+  "kw": [
+   "multi-objective"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Reduced Order Data-driven Twin Models for Nonlinear PDEs by Randomized Koopman Orthogonal Decomposition and Explainable Deep Learning",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2508.03325",
+  "kw": [
+   "pareto"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Seeded Topology Optimization for Commercial Foundry Integrated Photonics",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2503.00199",
+  "kw": [
+   "multi-objective"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Self-organized critical characteristics of teraelectronvolt photons from GRB 221009A",
+  "year": 2025,
+  "venue": "Astronomy & Astrophysics",
+  "source_id": "doi:10.1051/0004-6361/202453174",
+  "kw": [
+   "pareto"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "A Structure-Preserving Domain Decomposition Method for Data-Driven Modeling",
+  "year": 2024,
+  "venue": "arXiv",
+  "source_id": "arxiv:2406.05571",
+  "kw": [
+   "multi-objective"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "BoReMi: Bokeh-based jupyter-interface for registering spatio-molecular data to related microscopy images",
+  "year": 2024,
+  "venue": "PLOS Computational Biology",
+  "source_id": "doi:10.1371/journal.pcbi.1012504",
+  "kw": [
+   "bokeh"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Neutral competition explains the clonal composition of neural organoids",
+  "year": 2024,
+  "venue": "PLOS Computational Biology",
+  "source_id": "doi:10.1371/journal.pcbi.1012054",
+  "kw": [
+   "pareto"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Photonic implementation of the quantum Morra game",
+  "year": 2024,
+  "venue": "Physical Review Research",
+  "source_id": "doi:10.1103/physrevresearch.6.023248",
+  "kw": [
+   "pareto"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Variational inference for acceleration of SN Ia photometric distance estimation with BayeSN",
+  "year": 2024,
+  "venue": "Monthly Notices of the Royal Astronomical Society",
+  "source_id": "doi:10.1093/mnras/stae2465",
+  "kw": [
+   "pareto"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "XbarSim: A Decomposition-Based Memristive Crossbar Simulator",
+  "year": 2024,
+  "venue": "arXiv",
+  "source_id": "arxiv:2410.19993",
+  "kw": [
+   "multi-objective"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Automatic differentiation accelerated shape optimization approaches to photonic inverse design on rectilinear simulation grids",
+  "year": 2023,
+  "venue": "arXiv",
+  "source_id": "arxiv:2311.05646",
+  "kw": [
+   "multi-objective"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Datasets and Benchmarks for Nanophotonic Structure and Parametric Design Simulations",
+  "year": 2023,
+  "venue": "arXiv",
+  "source_id": "arxiv:2310.19053",
+  "kw": [
+   "multi-objective"
+  ]
+ },
+ {
+  "score": 2,
+  "title": "Detecting Photoshopped Faces by Scripting Photoshop",
+  "year": 2019,
+  "venue": "arXiv:1906.05856 [cs]",
+  "source_id": "arxiv:1906.05856",
+  "kw": [
+   "portrait photography",
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "CharGen: Fast and Fluent Portrait Modification",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2509.25058",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "Diffusion-Based Facial Aesthetics Enhancement With 3D Structure Guidance",
+  "year": 2025,
+  "venue": "IEEE Transactions on Image Processing",
+  "source_id": "doi:10.1109/tip.2025.3551077",
+  "kw": [
+   "facial attractiveness"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "FLAP: Fully-controllable Audio-driven Portrait Video Generation through 3D head conditioned diffusion model",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2502.19455",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "GSAC: Leveraging Gaussian Splatting for Photorealistic Avatar Creation with Unity Integration",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2504.12999",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "Generative Head-Mounted Camera Captures for Photorealistic Avatars",
+  "year": 2025,
+  "venue": "ACM Transactions on Graphics",
+  "source_id": "doi:10.1145/3763300",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "MVP4D: Multi-View Portrait Video Diffusion for Animatable 4D Avatars",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2510.12785",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "Near-zero photon bioimaging by fusing deep learning and ultralow-light microscopy",
+  "year": 2025,
+  "venue": "Proceedings of the National Academy of Sciences",
+  "source_id": "doi:10.1073/pnas.2412261122",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "Phase-adaptive cooling of fringe-trapped nanoparticles at room temperature in hollow-core photonic crystal fiber",
+  "year": 2025,
+  "venue": "Physical Review Research",
+  "source_id": "doi:10.1103/cg5v-lpjy",
+  "kw": [
+   "genre"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "RAP: Real-time Audio-driven Portrait Animation with Video Diffusion Transformer",
+  "year": 2025,
+  "venue": "arXiv",
+  "source_id": "arxiv:2508.05115",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "AniPortrait: Audio-Driven Synthesis of Photorealistic Portrait Animation",
+  "year": 2024,
+  "venue": "arXiv",
+  "source_id": "arxiv:2403.17694",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "Appearance-Preserved Portrait-to-Anime Translation via Proxy-Guided Domain Adaptation",
+  "year": 2024,
+  "venue": "IEEE Transactions on Visualization and Computer Graphics",
+  "source_id": "doi:10.1109/tvcg.2022.3228707",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "Disentangling Genotype and Environment Specific Latent Features for Improved Trait Prediction using a Compositional Autoencoder",
+  "year": 2024,
+  "venue": "arXiv",
+  "source_id": "arxiv:2410.19922",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "EgoAvatar: Egocentric View-Driven and Photorealistic Full-body Avatars",
+  "year": 2024,
+  "venue": "arXiv",
+  "source_id": "arxiv:2410.01835",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "Enhancing the Aesthetics of 3D Shapes via Reference-based Editing",
+  "year": 2024,
+  "venue": "ACM Transactions on Graphics",
+  "source_id": "doi:10.1145/3687954",
+  "kw": [
+   "facial attractiveness"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "FLOAT: Generative Motion Latent Flow Matching for Audio-driven Talking Portrait",
+  "year": 2024,
+  "venue": "arXiv",
+  "source_id": "arxiv:2412.01064",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "Hallo3: Highly Dynamic and Realistic Portrait Image Animation with Video Diffusion Transformer",
+  "year": 2024,
+  "venue": "arXiv",
+  "source_id": "arxiv:2412.00733",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "INSPIRE: INvestigating Stellar Population In RElics – VI. The low-mass end slope of the stellar initial mass function and chemical composition",
+  "year": 2024,
+  "venue": "Monthly Notices of the Royal Astronomical Society",
+  "source_id": "doi:10.1093/mnras/stae1318",
+  "kw": [
+   "skyline"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "One hundred optical emission lines of molecular hydrogen from a low-metallicity photodissociation region",
+  "year": 2024,
+  "venue": "Monthly Notices of the Royal Astronomical Society",
+  "source_id": "doi:10.1093/mnras/stae486",
+  "kw": [
+   "genre"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "Overcoming photobleaching in imaging of single barium atoms in a solid xenon matrix",
+  "year": 2024,
+  "venue": "Physical Review Research",
+  "source_id": "doi:10.1103/physrevresearch.6.043193",
+  "kw": [
+   "skyline"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "PatternPortrait: Draw Me Like One of Your Scribbles",
+  "year": 2024,
+  "venue": "arXiv",
+  "source_id": "arxiv:2401.13001",
+  "kw": [
+   "genre"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "Sonic: Shifting Focus to Global Audio Perception in Portrait Animation",
+  "year": 2024,
+  "venue": "arXiv",
+  "source_id": "arxiv:2411.16331",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "ToonAging: Face Re-Aging upon Artistic Portrait Style Transfer",
+  "year": 2024,
+  "venue": "arXiv",
+  "source_id": "arxiv:2402.02733",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "Towards Geometric-Photometric Joint Alignment for Facial Mesh Registration",
+  "year": 2024,
+  "venue": "arXiv",
+  "source_id": "arxiv:2403.02629",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "3DFaceShop: Explicitly Controllable 3D-Aware Portrait Generation",
+  "year": 2023,
+  "venue": "IEEE Transactions on Visualization and Computer Graphics",
+  "source_id": "doi:10.1109/tvcg.2023.3323578",
+  "kw": [
+   "facial expression"
+  ]
+ },
+ {
+  "score": 1,
+  "title": "Finding the Right Moment: Human-Assisted Trailer Creation via Task Composition",
+  "year": 2023,
+  "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+  "source_id": "doi:10.1109/tpami.2023.3323030",
+  "kw": [
+   "genre"
+  ]
+ }
+]

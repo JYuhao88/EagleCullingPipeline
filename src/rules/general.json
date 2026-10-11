@@ -1,0 +1,83 @@
+{
+  "contractVersion": 1,
+  "library": "general",
+  "version": "0.1.0",
+  "genres": [
+    "portrait",
+    "street-portrait",
+    "fashion",
+    "wedding",
+    "landscape",
+    "nature",
+    "architecture",
+    "street",
+    "documentary"
+  ],
+  "rules": [
+    {
+      "id": "G-EDGE-GRADIENT",
+      "aspect": "framing",
+      "title": "边缘强对比需复核",
+      "statement": "代理图边缘带梯度显著高于内部时提示复核；框景与开放构图可以成立。",
+      "check": {
+        "by": "measure",
+        "signal": [
+          "edgeGradientRatio"
+        ],
+        "measure": {
+          "version": "measure-v3",
+          "scope": "image",
+          "mode": "thresholds",
+          "conditions": [
+            {
+              "signal": "edgeGradientRatio",
+              "op": "gt",
+              "threshold": 2,
+              "units": "border/interior gradient ratio",
+              "min": 0
+            }
+          ],
+          "outcome": "warn",
+          "intent": "unknown; proxy hint only"
+        }
+      },
+      "severity": "hint",
+      "sources": [
+        "research:portrait-body-section8"
+      ]
+    },
+    {
+      "id": "G-PROXY-BLUR",
+      "aspect": "focus",
+      "title": "代理图清晰度需复核",
+      "statement": "代理图拉普拉斯方差低时提示检查原图，不能区分失焦、运动、柔焦或平坦纹理。",
+      "check": {
+        "by": "measure",
+        "signal": [
+          "laplacianVariance"
+        ],
+        "measure": {
+          "version": "measure-v3",
+          "scope": "image",
+          "mode": "thresholds",
+          "conditions": [
+            {
+              "signal": "laplacianVariance",
+              "op": "lt",
+              "threshold": 200,
+              "units": "8-bit luminance squared",
+              "min": 0
+            }
+          ],
+          "outcome": "warn",
+          "intent": "unknown; proxy hint only",
+          "calibration": "synthetic-v1: gaussian sigma3/8 + motion radius12/30; degraded<=150.59, clear/mild>=1268.39"
+        }
+      },
+      "severity": "hint",
+      "sources": [
+        "research:portrait-body-section8"
+      ]
+    }
+  ]
+}

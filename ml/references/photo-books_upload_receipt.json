@@ -1,0 +1,390 @@
+{
+  "identity": "c8eea382f5d2c088189dde4434c1b82fd2645b8063518fd13473eb2cd13b2e83",
+  "source": "photo-books",
+  "offsets": {
+    "photography-books/摄影/拍照姿势.pdf": 69624042,
+    "photography-books/摄影/摄影技艺教程第7版_13241922.pdf": 278860144,
+    "photography-books/摄影/斯科特 凯尔比的 风光摄影手册.pdf": 7722846,
+    "photography-books/摄影/斯科特·凯尔比的自然光人像摄影手册.pdf": 22261488,
+    "photography-books/摄影/美国纽约摄影学院摄影教材（上册） 最新修订版 (美国纽约摄影学院) (Z-Library).pdf": 126884273,
+    "photography-books/摄影/美国纽约摄影学院摄影教材（下册） 最新修订版 (美国纽约摄影学院) (Z-Library).pdf": 143807952,
+    "photography-books/摄影/街头摄影  52个任务清单.pdf": 17124159
+  },
+  "jobs": [
+    {
+      "id": "w4-upload-photo-books-5b6b871f49f248fbb73d5c4c16c059c4",
+      "action": "inspect",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-0fe095a7e4f844b6b18ef02c3cefdf51",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-1616628ea9b342da8684aa56e1381b99",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-dbe5a934cf9a4655999b13d2fedf0238",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-9701055c7bc840659675b2c6d9d293cf",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-28b10991e5f2461aaf61fd8c9e246b63",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-0c0cf836f34643269baa80d363e4a0e8",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-178a29f0903344ef8c5f181af2588d6a",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-78e47f7a5170492682357a193c1e0029",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-ad41222909084ec18291f73dd6b00728",
+      "action": "audit",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-7922c7afbd2844c49d6a420ab7a99a91",
+      "action": "cleanup",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-c00307fb96444dd2b4d503178ffcd009",
+      "action": "inspect",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-618955e26266402aad9ce4622b51c117",
+      "action": "audit",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-355a47ad1b0a473f86ee1d96fe107e68",
+      "action": "cleanup",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    }
+  ],
+  "batches": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "photography-books/摄影/拍照姿势.pdf",
+          "offset": 69624042,
+          "complete": true
+        },
+        {
+          "remote_rel": "photography-books/摄影/摄影技艺教程第7版_13241922.pdf",
+          "offset": 24747798,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "photography-books/摄影/摄影技艺教程第7版_13241922.pdf",
+          "offset": 119119638,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "photography-books/摄影/摄影技艺教程第7版_13241922.pdf",
+          "offset": 213491478,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "photography-books/摄影/摄影技艺教程第7版_13241922.pdf",
+          "offset": 278860144,
+          "complete": true
+        },
+        {
+          "remote_rel": "photography-books/摄影/斯科特 凯尔比的 风光摄影手册.pdf",
+          "offset": 7722846,
+          "complete": true
+        },
+        {
+          "remote_rel": "photography-books/摄影/斯科特·凯尔比的自然光人像摄影手册.pdf",
+          "offset": 21280328,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "photography-books/摄影/斯科特·凯尔比的自然光人像摄影手册.pdf",
+          "offset": 22261488,
+          "complete": true
+        },
+        {
+          "remote_rel": "photography-books/摄影/美国纽约摄影学院摄影教材（上册） 最新修订版 (美国纽约摄影学院) (Z-Library).pdf",
+          "offset": 93390680,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "photography-books/摄影/美国纽约摄影学院摄影教材（上册） 最新修订版 (美国纽约摄影学院) (Z-Library).pdf",
+          "offset": 126884273,
+          "complete": true
+        },
+        {
+          "remote_rel": "photography-books/摄影/美国纽约摄影学院摄影教材（下册） 最新修订版 (美国纽约摄影学院) (Z-Library).pdf",
+          "offset": 60878247,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "photography-books/摄影/美国纽约摄影学院摄影教材（下册） 最新修订版 (美国纽约摄影学院) (Z-Library).pdf",
+          "offset": 143807952,
+          "complete": true
+        },
+        {
+          "remote_rel": "photography-books/摄影/街头摄影  52个任务清单.pdf",
+          "offset": 11442135,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 5682024,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "photography-books/摄影/街头摄影  52个任务清单.pdf",
+          "offset": 17124159,
+          "complete": true
+        }
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "started_at": "2026-10-10T22:25:23+0800",
+      "uploaded_bytes": 666319940,
+      "put_seconds": 105.02261766698211,
+      "elapsed_seconds": 240.35189270798583,
+      "finished_at": "2026-10-10T22:29:23+0800",
+      "effective_MBps": 2.7722683291266677,
+      "put_MBps": 6.344537536788927
+    },
+    {
+      "started_at": "2026-10-10T22:30:12+0800",
+      "uploaded_bytes": 0,
+      "put_seconds": 0,
+      "elapsed_seconds": 21.40396112500457,
+      "finished_at": "2026-10-10T22:30:34+0800",
+      "effective_MBps": 0.0,
+      "put_MBps": 0
+    }
+  ],
+  "audit": [
+    {
+      "remote_rel": "photography-books/摄影/拍照姿势.pdf",
+      "size": 69624042,
+      "sha256": "561db6c3db1384681b72dcd208885365467152e208fa008c9b85bdb4e3af957a"
+    },
+    {
+      "remote_rel": "photography-books/摄影/摄影技艺教程第7版_13241922.pdf",
+      "size": 278860144,
+      "sha256": "b344f1db766f34de01383da70b15de301272b7d8625014c4284ffc597513a7b3"
+    },
+    {
+      "remote_rel": "photography-books/摄影/斯科特 凯尔比的 风光摄影手册.pdf",
+      "size": 7722846,
+      "sha256": "6f096147743847759db9846fdc908b737116cba0bbe80f062f0aa93c78f1cb6a"
+    },
+    {
+      "remote_rel": "photography-books/摄影/斯科特·凯尔比的自然光人像摄影手册.pdf",
+      "size": 22261488,
+      "sha256": "94f697540fa7db92233182f6100a324580c0da7654ad7b6a412d69b21ee8a1e2"
+    },
+    {
+      "remote_rel": "photography-books/摄影/美国纽约摄影学院摄影教材（上册） 最新修订版 (美国纽约摄影学院) (Z-Library).pdf",
+      "size": 126884273,
+      "sha256": "ebb4cd9facdbdd3827300b4379ddb9ff5a6069c961b171c433dfead0fb360e7c"
+    },
+    {
+      "remote_rel": "photography-books/摄影/美国纽约摄影学院摄影教材（下册） 最新修订版 (美国纽约摄影学院) (Z-Library).pdf",
+      "size": 143807952,
+      "sha256": "1fa54f3afd4b1e9f442e8055e3aaf49aedf9e64c06455c065c98150f33b6692e"
+    },
+    {
+      "remote_rel": "photography-books/摄影/街头摄影  52个任务清单.pdf",
+      "size": 17124159,
+      "sha256": "5e842fad7a9ea9cd4aa6432f1d12ff3b35503552b6ff4dba54d3b8c1c3a545cc"
+    }
+  ],
+  "package_verification": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    }
+  ],
+  "owned_jobs_remaining": [],
+  "status": "complete",
+  "ray_version": "2.51.1",
+  "dashboard": "<RAY_DASHBOARD>",
+  "files": [
+    {
+      "source": "photo-books",
+      "local": "<LOCAL_PATH> 摄影素材/摄影/拍照姿势.pdf",
+      "remote_rel": "photography-books/摄影/拍照姿势.pdf",
+      "size": 69624042,
+      "sha256": "561db6c3db1384681b72dcd208885365467152e208fa008c9b85bdb4e3af957a"
+    },
+    {
+      "source": "photo-books",
+      "local": "<LOCAL_PATH> 摄影素材/摄影/摄影技艺教程第7版_13241922.pdf",
+      "remote_rel": "photography-books/摄影/摄影技艺教程第7版_13241922.pdf",
+      "size": 278860144,
+      "sha256": "b344f1db766f34de01383da70b15de301272b7d8625014c4284ffc597513a7b3"
+    },
+    {
+      "source": "photo-books",
+      "local": "<LOCAL_PATH> 摄影素材/摄影/斯科特 凯尔比的 风光摄影手册.pdf",
+      "remote_rel": "photography-books/摄影/斯科特 凯尔比的 风光摄影手册.pdf",
+      "size": 7722846,
+      "sha256": "6f096147743847759db9846fdc908b737116cba0bbe80f062f0aa93c78f1cb6a"
+    },
+    {
+      "source": "photo-books",
+      "local": "<LOCAL_PATH> 摄影素材/摄影/斯科特·凯尔比的自然光人像摄影手册.pdf",
+      "remote_rel": "photography-books/摄影/斯科特·凯尔比的自然光人像摄影手册.pdf",
+      "size": 22261488,
+      "sha256": "94f697540fa7db92233182f6100a324580c0da7654ad7b6a412d69b21ee8a1e2"
+    },
+    {
+      "source": "photo-books",
+      "local": "<LOCAL_PATH> 摄影素材/摄影/美国纽约摄影学院摄影教材（上册） 最新修订版 (美国纽约摄影学院) (Z-Library).pdf",
+      "remote_rel": "photography-books/摄影/美国纽约摄影学院摄影教材（上册） 最新修订版 (美国纽约摄影学院) (Z-Library).pdf",
+      "size": 126884273,
+      "sha256": "ebb4cd9facdbdd3827300b4379ddb9ff5a6069c961b171c433dfead0fb360e7c"
+    },
+    {
+      "source": "photo-books",
+      "local": "<LOCAL_PATH> 摄影素材/摄影/美国纽约摄影学院摄影教材（下册） 最新修订版 (美国纽约摄影学院) (Z-Library).pdf",
+      "remote_rel": "photography-books/摄影/美国纽约摄影学院摄影教材（下册） 最新修订版 (美国纽约摄影学院) (Z-Library).pdf",
+      "size": 143807952,
+      "sha256": "1fa54f3afd4b1e9f442e8055e3aaf49aedf9e64c06455c065c98150f33b6692e"
+    },
+    {
+      "source": "photo-books",
+      "local": "<LOCAL_PATH> 摄影素材/摄影/街头摄影  52个任务清单.pdf",
+      "remote_rel": "photography-books/摄影/街头摄影  52个任务清单.pdf",
+      "size": 17124159,
+      "sha256": "5e842fad7a9ea9cd4aa6432f1d12ff3b35503552b6ff4dba54d3b8c1c3a545cc"
+    }
+  ],
+  "payload_cap_bytes": 94371840,
+  "http_limit_bytes": 104857600,
+  "nice": 10
+}

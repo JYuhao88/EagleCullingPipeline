@@ -1,0 +1,26 @@
+{
+  "contractVersion": 1,
+  "checked_at": "2026-10-10",
+  "downloaded_images_or_weights": false,
+  "checks": [
+    {
+      "name": "Depth Anything V2",
+      "url": "https://github.com/DepthAnything/Depth-Anything-V2",
+      "verified": "official README: Small weights Apache-2.0; Base/Large/Giant CC-BY-NC-4.0"
+    },
+    {
+      "name": "AADB",
+      "url": "https://github.com/aimerykong/deepImageAestheticsAnalysis",
+      "verified": "official README: research-only images and models; per-image Flickr CC conditions need review; patent notice is present"
+    },
+    {
+      "name": "MIT-Adobe FiveK",
+      "urls": [
+        "https://data.csail.mit.edu/graphics/fivek/",
+        "https://data.csail.mit.edu/graphics/fivek/legal/LicenseAdobe.txt",
+        "https://data.csail.mit.edu/graphics/fivek/legal/LicenseAdobeMIT.txt"
+      ],
+      "verified": "Both research licenses restrict use to own research and prohibit commercial advantage/monetary compensation; copyright and license retention required; separate image file lists select applicable license"
+    }
+  ]
+}

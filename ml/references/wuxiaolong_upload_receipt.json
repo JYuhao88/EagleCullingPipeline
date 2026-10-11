@@ -1,0 +1,3104 @@
+{
+  "contractVersion": 1,
+  "started_at": "2026-10-10T10:25:59+0800",
+  "ray_version": "2.51.1",
+  "dashboard": "<RAY_DASHBOARD>",
+  "nice": 10,
+  "package_limit_bytes": 536870912,
+  "batches": [
+    {
+      "index": 1,
+      "payload_bytes": 52428800,
+      "target_mib": 50,
+      "submission_id": "w1-genres-wuxiaolong-c30f462090ee-001",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 6,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:26:02,319\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 6, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 52428800}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 2,
+      "payload_bytes": 209715200,
+      "target_mib": 200,
+      "submission_id": "w1-genres-wuxiaolong-50736d98aa5f-002",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 6,
+          "offset": 52428800,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 7,
+          "offset": 0,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 8,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "HTTP_413_NOT_SUBMITTED",
+      "deleted_job_record": "not created",
+      "failure_reason": "Request failed with status code 413: Maximum request body size 104857600 exceeded, actual body size 104890795."
+    },
+    {
+      "index": 3,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-0b8e5e875a9e-003",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 6,
+          "offset": 52428800,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 7,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:27:14,492\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 6, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"cefdc97aad43d3f507202d6bf897c9626ff64df35eb57ca620b5bf7ad49f6e1d\", \"size_bytes\": 113528918}\n{\"episode\": 7, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 33271722}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 4,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-f42e7ad56a0c-004",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 7,
+          "offset": 33271722,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:27:40,618\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 7, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 127643562}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 5,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-6149dac81648-005",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 7,
+          "offset": 127643562,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 8,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:27:51,635\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 7, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"4d8a0e6fe52f0c6f4cd9e9c2ddf129d04a4e131aba9c214ae533a76c3387361e\", \"size_bytes\": 138723197}\n{\"episode\": 8, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 83292205}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 6,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-bc4b3c67f390-006",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 8,
+          "offset": 83292205,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 12,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:28:19,306\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 8, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"e82c268de1380b2e170dd904e403eb4881afb740d9d14c8c3ecef7df33868df1\", \"size_bytes\": 125269288}\n{\"episode\": 12, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 52394757}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 7,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-c7dda8b443f9-007",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 12,
+          "offset": 52394757,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 13,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:28:45,333\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 12, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"53ac096c25e59fd3414b8474a4f6addd5136de1139b15ce84c06937fdde8e988\", \"size_bytes\": 130826851}\n{\"episode\": 13, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 15939746}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 8,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-e5928cbfa7ab-008",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 13,
+          "offset": 15939746,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 14,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:29:11,350\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 13, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"07107402853ad0b60ab99fd83f19e7af0dc5177e8352ac3187bd67da7b397e4b\", \"size_bytes\": 101932989}\n{\"episode\": 14, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 8378597}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 9,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-48f24a0233f6-009",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 14,
+          "offset": 8378597,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:29:28,432\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 14, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 102750437}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 10,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-8aac20c59f77-010",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 14,
+          "offset": 102750437,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 15,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:29:38,893\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 14, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"023fb673db474907ff57fe6c95e7e7042eeb28362ca4a2db051fbaf0e20a4d3e\", \"size_bytes\": 126482992}\n{\"episode\": 15, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 70639285}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 11,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-0de0d7ec5433-011",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 15,
+          "offset": 70639285,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:30:05,223\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 15, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 165011125}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 12,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-1bdbf968b8a7-012",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 15,
+          "offset": 165011125,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 16,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:30:15,238\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 15, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"bc02fdac988bcddc936cbc6a88f1e5887da9d518d6f801a4a150e1cb9c2bfa1d\", \"size_bytes\": 169719565}\n{\"episode\": 16, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 89663400}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 13,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-a6ef9380feca-013",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 16,
+          "offset": 89663400,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 17,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:30:41,731\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 16, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"9270f173ec311f63dc58dfb003030bc3d95d636d15da11ba5e0aee0971a4a37e\", \"size_bytes\": 99970991}\n{\"episode\": 17, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 84064249}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 14,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-bc15421593dc-014",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 17,
+          "offset": 84064249,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 18,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:31:02,184\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 17, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"4c4b73f44f4b8fdcd7361f8bfbe8c456733056e57f9392f3cd99f287d2ce2e8c\", \"size_bytes\": 110723844}\n{\"episode\": 18, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 67712245}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 15,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-28ac250d467a-015",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 18,
+          "offset": 67712245,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 19,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:31:23,107\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 18, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"0bc1d32f7994b6ebdc4b4477719d57457d81fca2dea8089e923a619806f5ce10\", \"size_bytes\": 118691017}\n{\"episode\": 19, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 43393068}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 16,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-73ac336a41fe-016",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 19,
+          "offset": 43393068,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 20,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:31:44,064\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 19, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"1a300ee7e300cf46709504b9196696ef53ab5489ece6b9e78bc0dee88ba5c99a\", \"size_bytes\": 101999195}\n{\"episode\": 20, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 35765713}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 17,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-f259e7f3964f-017",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 20,
+          "offset": 35765713,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 21,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:32:05,043\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 20, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"3f87afaffa2b03ad844d58d94091e2e8c40b388d92cc169e47a5d781b9d0f43e\", \"size_bytes\": 89558005}\n{\"episode\": 21, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 40579548}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 18,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-e698392825bb-018",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 21,
+          "offset": 40579548,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:32:21,442\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 21, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 134951388}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 19,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-a73f751eefc1-019",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 21,
+          "offset": 134951388,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 22,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:32:31,420\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 21, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"84186e75372cb1742a85c1349725dc1b9348646e368d9f161b754c7696bea855\", \"size_bytes\": 193814439}\n{\"episode\": 22, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 35508789}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 20,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-dc7f32d54f50-020",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 22,
+          "offset": 35508789,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:33:10,808\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 22, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 129880629}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 21,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-c23199c13435-021",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 22,
+          "offset": 129880629,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 23,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:33:22,143\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 22, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"0929b6c3ef877624cee637c330447ab431abd257a5f5cc60f2053afed632f82b\", \"size_bytes\": 197790926}\n{\"episode\": 23, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 26461543}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 22,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-bc1055d2f801-022",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 23,
+          "offset": 26461543,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:33:59,685\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 23, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 120833383}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 23,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-d58fe3efe821-023",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 23,
+          "offset": 120833383,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 24,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:34:11,369\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 23, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"e864cb4b788294e24a6f2aa82024b873fbe01da88e83ea20d82b70adb089166e\", \"size_bytes\": 208578865}\n{\"episode\": 24, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 6626358}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 24,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-fd3626f83dba-024",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 24,
+          "offset": 6626358,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 25,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:34:42,159\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 24, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"552aa2082ac947e2a399dbbc9a76438b31ab3088809f33abde8ece67de2727d3\", \"size_bytes\": 97693376}\n{\"episode\": 25, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 3304822}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 25,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-6d95ada35f05-025",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 25,
+          "offset": 3304822,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 26,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:35:01,057\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 25, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"3fca5dbb545fabacccdd079f2b11cd2c5407f4a3079622a29efaea140d63a1d8\", \"size_bytes\": 86878303}\n{\"episode\": 26, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 10798359}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 26,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-5d47b26dafc3-026",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 26,
+          "offset": 10798359,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 27,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:35:16,589\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 26, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"3d9e8016710178f968198fc169a3f5aee35b717f13083d99bea55fb6d7fe3427\", \"size_bytes\": 90010905}\n{\"episode\": 27, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 15159294}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 27,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-b31b5b5895ff-027",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 27,
+          "offset": 15159294,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 4,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:35:32,638\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 27, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"dc1a5e34d51d06709538bafc87c17fb6bae67fde5315ed85b969cc8e2210a7f8\", \"size_bytes\": 71465662}\n{\"episode\": 4, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 38065472}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 28,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-6ef4dea49a87-028",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 4,
+          "offset": 38065472,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:35:54,524\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 4, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 132437312}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 29,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-7ed99beea0f3-029",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 4,
+          "offset": 132437312,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 9,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:36:04,785\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 4, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"655324e760bbd15903e7475b5a40d0f565fe5b5b7d3e39a47aa281ad9cfa9821\", \"size_bytes\": 157596825}\n{\"episode\": 9, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 69212327}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 30,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-6c68975eac3c-030",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 9,
+          "offset": 69212327,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 11,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:36:42,414\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 9, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"5f2ecbbde5a5cc494a9b8598ba5ef063c6d304905742b9260b12cb1240c02f28\", \"size_bytes\": 76236566}\n{\"episode\": 11, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 87347601}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 31,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-c156c96388b3-031",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 11,
+          "offset": 87347601,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:37:08,508\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 11, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 181719441}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 32,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-f64b6ece80ba-032",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 11,
+          "offset": 181719441,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:37:19,004\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 11, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 276091281}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 33,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-ba0e52186920-033",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 11,
+          "offset": 276091281,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 17,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:37:29,656\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 11, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"1fef88bd63b627bfe5f145d6b3dd3ff6d65c8f971088b2c61dedd6398b978bbf\", \"size_bytes\": 331873817}\n{\"episode\": 17, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 38589304}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 34,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-4207201a1b41-034",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 17,
+          "offset": 38589304,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 3,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:38:27,051\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 17, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"011d5c138821a8fd104a986240d5655cdb87838a9a02b1fa14ac7782e377693a\", \"size_bytes\": 123042782}\n{\"episode\": 3, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 9918362}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 35,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-9a4cd7d28872-035",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 3,
+          "offset": 9918362,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:38:42,964\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 3, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 104290202}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 36,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-e8d394afc62d-036",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 3,
+          "offset": 104290202,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 4,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:38:54,558\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 3, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"8f09fdf34e250c42535ee7bfe06f565c27a6325d358085da30ec25a9e449cb43\", \"size_bytes\": 188291735}\n{\"episode\": 4, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 10370307}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 37,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-e088bc3acb49-037",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 4,
+          "offset": 10370307,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 5,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:39:26,810\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 4, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"0f3ac741ecf12708d463d5a8294df06ffbb49e413198a15cadcc6042c67e7fb5\", \"size_bytes\": 99608392}\n{\"episode\": 5, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 5133755}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 38,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-a44ed5d65115-038",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 5,
+          "offset": 5133755,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:39:43,245\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 5, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 99505595}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 39,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-bf65a5cd6afb-039",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 5,
+          "offset": 99505595,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 6,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:39:54,589\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 5, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"aa560f16415c77b88d8570739f54f1d97d9eb5b203ea280af19e9cf2338cb319\", \"size_bytes\": 106058328}\n{\"episode\": 6, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 87819107}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 40,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-9527447aa45c-040",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 6,
+          "offset": 87819107,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 7,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:40:11,030\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 6, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"a404505ec1ca11bb0728f0bbd91cb0cb738b12e6669600ae079903711ef38373\", \"size_bytes\": 99343818}\n{\"episode\": 7, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 82847129}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 41,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-820ccc40afbc-041",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 7,
+          "offset": 82847129,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 8,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:40:38,116\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 7, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"c4eebc27dd9cec69a88230a66596b54bc72bb4cdb539c23b5308fdd54f8e5e25\", \"size_bytes\": 131639266}\n{\"episode\": 8, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 45579703}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 42,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-6ecb38e873cb-042",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 8,
+          "offset": 45579703,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:40:58,887\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 8, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 139951543}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 43,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-01c5ce16da1a-043",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 8,
+          "offset": 139951543,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 9,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:41:09,427\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 8, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"b9c9832e3a79ceb3722b849260e84b8e4202b47b82a8f93e8e767e64d8072781\", \"size_bytes\": 166435000}\n{\"episode\": 9, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 67888383}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 44,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-deb2fdde6fd8-044",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 9,
+          "offset": 67888383,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 10,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:41:36,238\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 9, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"d7b52c879d92f8c1466fda38ca4cf5697f57aa661cbfd4f4c7d6b5c2e4b2e2fc\", \"size_bytes\": 124837737}\n{\"episode\": 10, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 37422486}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 45,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-26b7fc561fab-045",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 10,
+          "offset": 37422486,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 11,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:41:57,730\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 10, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"f14ee0974118208d0dc4a193194d3f9227554bd078302f2a924bb92477fdd50f\", \"size_bytes\": 119816104}\n{\"episode\": 11, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 11978222}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 46,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-aad2de770c8b-046",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 11,
+          "offset": 11978222,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:42:13,814\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 11, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 106350062}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 47,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-9d51376f0717-047",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 11,
+          "offset": 106350062,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 28,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:42:25,227\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 11, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"3d42e0d40f58e29269965db1e3482f72609cdcece0f1dd37f365bd6c6c477e9f\", \"size_bytes\": 145273748}\n{\"episode\": 28, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 55448154}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 48,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-ad4b63651cbf-048",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 28,
+          "offset": 55448154,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 29,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:42:56,677\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 28, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"9d48f607c4b26c78ab503aa3f54760cb1321673384104f3c0c927321d032e67d\", \"size_bytes\": 105083290}\n{\"episode\": 29, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 44736704}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 49,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-8b147b6f4123-049",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 29,
+          "offset": 44736704,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:43:18,978\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 29, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 139108544}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 50,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-ef5d625151a9-050",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 29,
+          "offset": 139108544,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:43:29,280\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 29, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 233480384}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 51,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-774fc9015ed8-051",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 29,
+          "offset": 233480384,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 30,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:43:41,055\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 29, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"ffa47b0b0164a854c0a1481dc6134ba282c8559c32197a953a632a83dce7982b\", \"size_bytes\": 249920442}\n{\"episode\": 30, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 77931782}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 52,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-dbbee0364076-052",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 30,
+          "offset": 77931782,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:44:14,561\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 30, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 172303622}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 53,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-c34d58967ebc-053",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 30,
+          "offset": 172303622,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 31,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:44:25,289\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 30, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"0350a1d87a4eb4aaf28830cf5682ca7c90e6d7700ec9b71022f8d66fc5182dde\", \"size_bytes\": 185722366}\n{\"episode\": 31, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 80953096}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 54,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-c3c4b3b0b8bb-054",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 31,
+          "offset": 80953096,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:44:51,686\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 31, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 175324936}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 55,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-896319590cd6-055",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 31,
+          "offset": 175324936,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 32,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:45:02,162\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 31, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"3ec69a144b3548ccf96c8940a388d45e5873e2b21f3eb32853c5d7ccccda8d6e\", \"size_bytes\": 226377157}\n{\"episode\": 32, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 43319619}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 56,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-d36af6ec5900-056",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 32,
+          "offset": 43319619,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:45:34,139\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 32, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 137691459}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 57,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-ed57ddd72e72-057",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 32,
+          "offset": 137691459,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 33,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:45:44,482\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 32, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"50ad02dc1868d986923079e3c9242715a9553b05b9953a788d2b5ac8f00f90d3\", \"size_bytes\": 156219672}\n{\"episode\": 33, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 75843627}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 58,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-407022b41bf1-058",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 33,
+          "offset": 75843627,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:46:10,531\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 33, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 170215467}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 59,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-47ff60794c68-059",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 33,
+          "offset": 170215467,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 34,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:46:21,516\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 33, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"e21ac13cb9c19d644874ce5f5f30923be9de8ac6f15c310cf6bc18ed2aaf40f0\", \"size_bytes\": 204834821}\n{\"episode\": 34, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 59752486}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 60,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-00040f5f307e-060",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 34,
+          "offset": 59752486,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 42,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:46:58,456\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 34, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"c89df55d6cb8362a686197e0c2c1d95f7efd974b4059744a080703cca3653808\", \"size_bytes\": 124073997}\n{\"episode\": 42, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 30050329}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 61,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-17710407fc46-061",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 42,
+          "offset": 30050329,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:47:21,326\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 42, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 124422169}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 62,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-86e59f646052-062",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 42,
+          "offset": 124422169,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 47,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:47:32,233\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 42, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"fdabb2d3f62e28fb32990c42536386fd24deb27977e60d2645518dc3f87a7b2e\", \"size_bytes\": 168509038}\n{\"episode\": 47, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 50284971}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 63,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-be93ecd00cc1-063",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 47,
+          "offset": 50284971,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 48,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:47:47,692\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 47, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"363e106e939adef8d476aa42a30fe2893dcc6cdb038e65030fad775d2c36afaa\", \"size_bytes\": 144069510}\n{\"episode\": 48, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 587301}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 64,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-2f7fcf97acc6-064",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 48,
+          "offset": 587301,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:47:58,242\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 48, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 94959141}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 65,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-ad8378a9c80a-065",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 48,
+          "offset": 94959141,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 49,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:48:10,287\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 48, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"c886fa08e6e1f8913b5f89b0453b4cff8ddc515e9aeffc7af5f4697ecc73caf4\", \"size_bytes\": 153992787}\n{\"episode\": 49, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 35338194}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 66,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-266bac5af3df-066",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 49,
+          "offset": 35338194,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 50,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:48:27,128\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 49, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"05951ff6671e277fe5e9c98c6ff54ccfdaa5391253bab363bab0b6a3c5048743\", \"size_bytes\": 76281283}\n{\"episode\": 50, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 53428751}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 67,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-a0a5764f1b6a-067",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 50,
+          "offset": 53428751,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 1,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:48:38,143\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 50, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"2edcc7cfd31734d83a853ad740f933d13153da8d54324bfbef62eaf59c46097a\", \"size_bytes\": 131189497}\n{\"episode\": 1, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 16611094}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 68,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-646171c9bf5c-068",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 1,
+          "offset": 16611094,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 2,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:48:56,782\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 1, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"e151335655ff4a532fda9b62f41afc34b58c75f0802463ca0d50608f53a6e3e8\", \"size_bytes\": 28340843}\n{\"episode\": 2, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 82642091}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 69,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-1dd5eef8ae65-069",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 2,
+          "offset": 82642091,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 3,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:49:12,397\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 2, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"f216a585be05996d144e0a17033ede7550582134b74387686504c8e2c92e5295\", \"size_bytes\": 84596341}\n{\"episode\": 3, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 92417590}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 70,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-2396d1af10c9-070",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 3,
+          "offset": 92417590,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 5,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:49:24,377\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 3, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"fcd8f5291418f9e04f88f8f9605c88c9418885c5d308490790c3903cbd72d328\", \"size_bytes\": 138029677}\n{\"episode\": 5, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 48759753}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 71,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-78f7227cf950-071",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 5,
+          "offset": 48759753,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:49:40,966\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 5, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 143131593}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 72,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-fd8ef931dba5-072",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 5,
+          "offset": 143131593,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:49:51,816\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 5, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 237503433}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 73,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-c5ede5860577-073",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 5,
+          "offset": 237503433,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:50:03,005\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 5, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 331875273}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 74,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-f9dc9344c4e7-074",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 5,
+          "offset": 331875273,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 10,
+          "offset": 0,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 12,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:50:19,063\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 5, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"d95e2c349e49348f9f3fc86f414f48b72fdc318322777ef8b074bb97070aa49f\", \"size_bytes\": 351381957}\n{\"episode\": 10, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"9182ef536cbdf3e33538438f231734876f9a9aa8a0e59d75c4c7db5771198eba\", \"size_bytes\": 51744040}\n{\"episode\": 12, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 23121116}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 75,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-3aa248701d67-075",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 12,
+          "offset": 23121116,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:51:07,136\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 12, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 117492956}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 76,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-86286051908d-076",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 12,
+          "offset": 117492956,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 13,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:51:18,460\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 12, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"8b527b59ea9cca13f09734ed840715ca5f7601721b60afeea5094e59d114099d\", \"size_bytes\": 122860739}\n{\"episode\": 13, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 89004057}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 77,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-5e67a2304b56-077",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 13,
+          "offset": 89004057,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 14,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:51:29,519\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 13, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"3e8f261ac686ad11f3639f4777f69b8c36d5e0a016f05e4a9db79986eee6f344\", \"size_bytes\": 136583061}\n{\"episode\": 14, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 46792836}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 78,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-1edfcfac2e19-078",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 14,
+          "offset": 46792836,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:51:45,908\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 14, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 141164676}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 79,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-30a17e9c66ec-079",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 14,
+          "offset": 141164676,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 15,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:51:58,024\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 14, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"80a464b6821c64a608a3d73b31273ef4f552aa81754262f8b6b5616ff4e10d3e\", \"size_bytes\": 153903634}\n{\"episode\": 15, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 81632882}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 80,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-fffb1b93f1a2-080",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 15,
+          "offset": 81632882,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 16,
+          "offset": 0,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 18,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:52:14,972\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 15, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"5eada51ba10d37e3a3627889615e78eac0887f1141c75c4c73dc54178ba3f921\", \"size_bytes\": 92826239}\n{\"episode\": 16, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"ae754dca66ce73292f46124b4b751945ee915f8e255ae9553aa5070447e99f52\", \"size_bytes\": 82529479}\n{\"episode\": 18, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 649004}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 81,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-1cf2e732a048-081",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 18,
+          "offset": 649004,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 19,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:52:31,553\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 18, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"d3a9b5e48ec0c10a61ef30ddf03f800e66b1b488aceb5c74d65ee957adaaaff8\", \"size_bytes\": 62552044}\n{\"episode\": 19, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 32468800}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 82,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-3d8508f4fe62-082",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 19,
+          "offset": 32468800,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 20,
+          "offset": 0,
+          "final": true
+        },
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 21,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:52:48,193\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 19, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"43a29b1dcdf8a2d0f621b972a38abdb91d8dd5ead552a78f08e9cf4ffa478e98\", \"size_bytes\": 40032200}\n{\"episode\": 20, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"76263aff4edced64a1e56c1af62e2d80cd8455769831c4c51070e1daed8a2e22\", \"size_bytes\": 63154439}\n{\"episode\": 21, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"partial\", \"bytes\": 23654001}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 83,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-4ff9e2637667-083",
+      "episodes": [
+        {
+          "course": "当代经典摄影20讲",
+          "episode": 21,
+          "offset": 23654001,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 1,
+          "offset": 0,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 2,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:53:04,294\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 21, \"course\": \"\\u5f53\\u4ee3\\u7ecf\\u5178\\u6444\\u5f7120\\u8bb2\", \"status\": \"verified\", \"sha256\": \"aa7ffd3cd5c556842ffd428676c37a73fe95c001d12186ff171ffc21feece82b\", \"size_bytes\": 55630335}\n{\"episode\": 1, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"c2dc8eeeaca07dbee4ebb7daa0582cdcedb4dc252204af7124a7d0e6ba097f52\", \"size_bytes\": 33756608}\n{\"episode\": 2, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 28638898}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 84,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-1d5c06dd588e-084",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 2,
+          "offset": 28638898,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:53:20,497\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 2, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 123010738}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 85,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-cd8dcda3b14d-085",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 2,
+          "offset": 123010738,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 35,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:53:31,421\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 2, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"321cabc416c8f33c43acdde8f3f7510ed305b9a8ff3f97aca955e79d6aa4d87f\", \"size_bytes\": 196182092}\n{\"episode\": 35, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 21200486}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 86,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-0119a41a9009-086",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 35,
+          "offset": 21200486,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 36,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:53:42,081\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 35, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"ef1c13e56914ea2ba18511c97592d10a2c51096d7fe3540db622d025485dc0f3\", \"size_bytes\": 104188457}\n{\"episode\": 36, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 11383869}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 87,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-1162aba539ba-087",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 36,
+          "offset": 11383869,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:53:53,152\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 36, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 105755709}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 88,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-0791d7d53dec-088",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 36,
+          "offset": 105755709,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 37,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:54:04,167\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 36, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"a8df46982101b51a6289e8cad680cd2348d7c6eb898fcd305802a1eff411eb96\", \"size_bytes\": 125631894}\n{\"episode\": 37, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 74495655}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 89,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-0fc0879baf97-089",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 37,
+          "offset": 74495655,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:54:20,101\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 37, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 168867495}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 90,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-56e3281bd7b5-090",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 37,
+          "offset": 168867495,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 38,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:54:30,597\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 37, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"a0b83c8c2b4d052e9bda293380b8ee08d8b5b15794bb10b5ffc516cd94766abf\", \"size_bytes\": 218514664}\n{\"episode\": 38, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 44724671}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 91,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-c989d528d067-091",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 38,
+          "offset": 44724671,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:55:02,636\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 38, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 139096511}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 92,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-f3bd88473d44-092",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 38,
+          "offset": 139096511,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 39,
+          "offset": 0,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 40,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:55:14,496\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 38, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"8ef3e789c6c77f7be213307f34a55d821459883cd77a76e8ef14454c4eaf93c2\", \"size_bytes\": 160797214}\n{\"episode\": 39, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"989cf6c9d4c6792be091364cd49ea010d582af126dd5ab03689c3a93c87420f1\", \"size_bytes\": 53371339}\n{\"episode\": 40, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 19299798}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 93,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-00d9f3fca762-093",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 40,
+          "offset": 19299798,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 41,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:55:30,456\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 40, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"9ba166e151002f70eec391d408b80fc26c79c90fa003d3c50ccdb0470809f866\", \"size_bytes\": 55693535}\n{\"episode\": 41, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 57978103}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 94,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-5fed4c5c8646-094",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 41,
+          "offset": 57978103,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 43,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:55:41,073\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 41, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"6cfa169ce128b9d1fc8ac69c1f89b7b33a1593f20adb954cab12c7abd99e3f54\", \"size_bytes\": 107691251}\n{\"episode\": 43, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 44658692}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 95,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-2ca223d0cc48-095",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 43,
+          "offset": 44658692,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:55:57,824\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 43, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 139030532}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 96,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-a4a57b883103-096",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 43,
+          "offset": 139030532,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 44,
+          "offset": 0,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 45,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:56:09,522\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 43, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"654bb57c6b3b0c358e40d27a2777011cb745785e3bf2a904ed9a71df38588424\", \"size_bytes\": 139554668}\n{\"episode\": 44, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"9b23f7692075e390315ff4549c7393a34858eb4c00189d43d322228198ee4593\", \"size_bytes\": 60301037}\n{\"episode\": 45, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 33546667}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 97,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-fae84c959f8c-097",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 45,
+          "offset": 33546667,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:56:27,299\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 45, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 127918507}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 98,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-b0fb2cd60f43-098",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 45,
+          "offset": 127918507,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:56:38,871\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 45, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 222290347}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 99,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-0ba5b6c4ccea-099",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 45,
+          "offset": 222290347,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 46,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:56:49,467\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 45, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"498a5b99bce1f4a3daf260e12914881c610cf39668046577c1e5bb9c1f0a2e65\", \"size_bytes\": 293424168}\n{\"episode\": 46, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 23238019}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 100,
+      "payload_bytes": 94371840,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-19dd3b317a03-100",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 46,
+          "offset": 23238019,
+          "final": true
+        },
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 51,
+          "offset": 0,
+          "final": false
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:57:26,102\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 46, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"c0c4245b6853c227dd86b464ce83112d6e0061dda67f1212cbf356b62b0c9f10\", \"size_bytes\": 55201424}\n{\"episode\": 51, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"partial\", \"bytes\": 62408435}\nBATCH_OK\n",
+      "deleted_job_record": true
+    },
+    {
+      "index": 101,
+      "payload_bytes": 23600555,
+      "target_mib": 90,
+      "submission_id": "w1-genres-wuxiaolong-ab43adb58a6c-101",
+      "episodes": [
+        {
+          "course": "黄金时代的摄影50讲：如何理解大师之作",
+          "episode": 51,
+          "offset": 62408435,
+          "final": true
+        }
+      ],
+      "status": "SUCCEEDED",
+      "package_uri": "<RAY_PACKAGE>",
+      "log": "2026-10-10 10:57:39,778\tINFO job_manager.py:604 -- Runtime env is setting up.\n{\"episode\": 51, \"course\": \"\\u9ec4\\u91d1\\u65f6\\u4ee3\\u7684\\u6444\\u5f7150\\u8bb2\\uff1a\\u5982\\u4f55\\u7406\\u89e3\\u5927\\u5e08\\u4e4b\\u4f5c\", \"status\": \"verified\", \"sha256\": \"23dfef03c2687f52c796fd3519227b1842479855230458eed07c8b53d9e327b8\", \"size_bytes\": 86008990}\nBATCH_OK\n",
+      "deleted_job_record": true
+    }
+  ],
+  "status": "complete",
+  "owned_jobs": [
+    "w1-genres-wuxiaolong-c30f462090ee-001",
+    "w1-genres-wuxiaolong-50736d98aa5f-002",
+    "w1-genres-wuxiaolong-0b8e5e875a9e-003",
+    "w1-genres-wuxiaolong-f42e7ad56a0c-004",
+    "w1-genres-wuxiaolong-6149dac81648-005",
+    "w1-genres-wuxiaolong-bc4b3c67f390-006",
+    "w1-genres-wuxiaolong-c7dda8b443f9-007",
+    "w1-genres-wuxiaolong-e5928cbfa7ab-008",
+    "w1-genres-wuxiaolong-48f24a0233f6-009",
+    "w1-genres-wuxiaolong-8aac20c59f77-010",
+    "w1-genres-wuxiaolong-0de0d7ec5433-011",
+    "w1-genres-wuxiaolong-1bdbf968b8a7-012",
+    "w1-genres-wuxiaolong-a6ef9380feca-013",
+    "w1-genres-wuxiaolong-bc15421593dc-014",
+    "w1-genres-wuxiaolong-28ac250d467a-015",
+    "w1-genres-wuxiaolong-73ac336a41fe-016",
+    "w1-genres-wuxiaolong-f259e7f3964f-017",
+    "w1-genres-wuxiaolong-e698392825bb-018",
+    "w1-genres-wuxiaolong-a73f751eefc1-019",
+    "w1-genres-wuxiaolong-dc7f32d54f50-020",
+    "w1-genres-wuxiaolong-c23199c13435-021",
+    "w1-genres-wuxiaolong-bc1055d2f801-022",
+    "w1-genres-wuxiaolong-d58fe3efe821-023",
+    "w1-genres-wuxiaolong-fd3626f83dba-024",
+    "w1-genres-wuxiaolong-6d95ada35f05-025",
+    "w1-genres-wuxiaolong-5d47b26dafc3-026",
+    "w1-genres-wuxiaolong-b31b5b5895ff-027",
+    "w1-genres-wuxiaolong-6ef4dea49a87-028",
+    "w1-genres-wuxiaolong-7ed99beea0f3-029",
+    "w1-genres-wuxiaolong-6c68975eac3c-030",
+    "w1-genres-wuxiaolong-c156c96388b3-031",
+    "w1-genres-wuxiaolong-f64b6ece80ba-032",
+    "w1-genres-wuxiaolong-ba0e52186920-033",
+    "w1-genres-wuxiaolong-4207201a1b41-034",
+    "w1-genres-wuxiaolong-9a4cd7d28872-035",
+    "w1-genres-wuxiaolong-e8d394afc62d-036",
+    "w1-genres-wuxiaolong-e088bc3acb49-037",
+    "w1-genres-wuxiaolong-a44ed5d65115-038",
+    "w1-genres-wuxiaolong-bf65a5cd6afb-039",
+    "w1-genres-wuxiaolong-9527447aa45c-040",
+    "w1-genres-wuxiaolong-820ccc40afbc-041",
+    "w1-genres-wuxiaolong-6ecb38e873cb-042",
+    "w1-genres-wuxiaolong-01c5ce16da1a-043",
+    "w1-genres-wuxiaolong-deb2fdde6fd8-044",
+    "w1-genres-wuxiaolong-26b7fc561fab-045",
+    "w1-genres-wuxiaolong-aad2de770c8b-046",
+    "w1-genres-wuxiaolong-9d51376f0717-047",
+    "w1-genres-wuxiaolong-ad4b63651cbf-048",
+    "w1-genres-wuxiaolong-8b147b6f4123-049",
+    "w1-genres-wuxiaolong-ef5d625151a9-050",
+    "w1-genres-wuxiaolong-774fc9015ed8-051",
+    "w1-genres-wuxiaolong-dbbee0364076-052",
+    "w1-genres-wuxiaolong-c34d58967ebc-053",
+    "w1-genres-wuxiaolong-c3c4b3b0b8bb-054",
+    "w1-genres-wuxiaolong-896319590cd6-055",
+    "w1-genres-wuxiaolong-d36af6ec5900-056",
+    "w1-genres-wuxiaolong-ed57ddd72e72-057",
+    "w1-genres-wuxiaolong-407022b41bf1-058",
+    "w1-genres-wuxiaolong-47ff60794c68-059",
+    "w1-genres-wuxiaolong-00040f5f307e-060",
+    "w1-genres-wuxiaolong-17710407fc46-061",
+    "w1-genres-wuxiaolong-86e59f646052-062",
+    "w1-genres-wuxiaolong-be93ecd00cc1-063",
+    "w1-genres-wuxiaolong-2f7fcf97acc6-064",
+    "w1-genres-wuxiaolong-ad8378a9c80a-065",
+    "w1-genres-wuxiaolong-266bac5af3df-066",
+    "w1-genres-wuxiaolong-a0a5764f1b6a-067",
+    "w1-genres-wuxiaolong-646171c9bf5c-068",
+    "w1-genres-wuxiaolong-1dd5eef8ae65-069",
+    "w1-genres-wuxiaolong-2396d1af10c9-070",
+    "w1-genres-wuxiaolong-78f7227cf950-071",
+    "w1-genres-wuxiaolong-fd8ef931dba5-072",
+    "w1-genres-wuxiaolong-c5ede5860577-073",
+    "w1-genres-wuxiaolong-f9dc9344c4e7-074",
+    "w1-genres-wuxiaolong-3aa248701d67-075",
+    "w1-genres-wuxiaolong-86286051908d-076",
+    "w1-genres-wuxiaolong-5e67a2304b56-077",
+    "w1-genres-wuxiaolong-1edfcfac2e19-078",
+    "w1-genres-wuxiaolong-30a17e9c66ec-079",
+    "w1-genres-wuxiaolong-fffb1b93f1a2-080",
+    "w1-genres-wuxiaolong-1cf2e732a048-081",
+    "w1-genres-wuxiaolong-3d8508f4fe62-082",
+    "w1-genres-wuxiaolong-4ff9e2637667-083",
+    "w1-genres-wuxiaolong-1d5c06dd588e-084",
+    "w1-genres-wuxiaolong-cd8dcda3b14d-085",
+    "w1-genres-wuxiaolong-0119a41a9009-086",
+    "w1-genres-wuxiaolong-1162aba539ba-087",
+    "w1-genres-wuxiaolong-0791d7d53dec-088",
+    "w1-genres-wuxiaolong-0fc0879baf97-089",
+    "w1-genres-wuxiaolong-56e3281bd7b5-090",
+    "w1-genres-wuxiaolong-c989d528d067-091",
+    "w1-genres-wuxiaolong-f3bd88473d44-092",
+    "w1-genres-wuxiaolong-00d9f3fca762-093",
+    "w1-genres-wuxiaolong-5fed4c5c8646-094",
+    "w1-genres-wuxiaolong-2ca223d0cc48-095",
+    "w1-genres-wuxiaolong-a4a57b883103-096",
+    "w1-genres-wuxiaolong-fae84c959f8c-097",
+    "w1-genres-wuxiaolong-b0fb2cd60f43-098",
+    "w1-genres-wuxiaolong-0ba5b6c4ccea-099",
+    "w1-genres-wuxiaolong-19dd3b317a03-100",
+    "w1-genres-wuxiaolong-ab43adb58a6c-101",
+    "w1-genres-wuxiaolong-audit-65fa3490e48d",
+    "w1-genres-wuxiaolong-cleanup-3fdfa5b501cf"
+  ],
+  "effective_http_limit_bytes": 104857600,
+  "batch_payload_cap_bytes": 94371840,
+  "probe_note": "50 MiB succeeded; 200 MiB rejected HTTP 413 at 100 MiB body limit; 400 MiB unnecessary and not attempted",
+  "finished_at": "2026-10-10T10:57:45+0800",
+  "audit_job": {
+    "submission_id": "w1-genres-wuxiaolong-audit-65fa3490e48d",
+    "status": "SUCCEEDED",
+    "package_uri": "<RAY_PACKAGE>",
+    "log": "2026-10-10 10:57:47,795\tINFO job_manager.py:604 -- Runtime env is setting up.\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 1, \"sha256\": \"c2dc8eeeaca07dbee4ebb7daa0582cdcedb4dc252204af7124a7d0e6ba097f52\", \"size_bytes\": 33756608, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 2, \"sha256\": \"321cabc416c8f33c43acdde8f3f7510ed305b9a8ff3f97aca955e79d6aa4d87f\", \"size_bytes\": 196182092, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 3, \"sha256\": \"8f09fdf34e250c42535ee7bfe06f565c27a6325d358085da30ec25a9e449cb43\", \"size_bytes\": 188291735, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 4, \"sha256\": \"0f3ac741ecf12708d463d5a8294df06ffbb49e413198a15cadcc6042c67e7fb5\", \"size_bytes\": 99608392, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 5, \"sha256\": \"aa560f16415c77b88d8570739f54f1d97d9eb5b203ea280af19e9cf2338cb319\", \"size_bytes\": 106058328, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 6, \"sha256\": \"a404505ec1ca11bb0728f0bbd91cb0cb738b12e6669600ae079903711ef38373\", \"size_bytes\": 99343818, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 7, \"sha256\": \"c4eebc27dd9cec69a88230a66596b54bc72bb4cdb539c23b5308fdd54f8e5e25\", \"size_bytes\": 131639266, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 8, \"sha256\": \"b9c9832e3a79ceb3722b849260e84b8e4202b47b82a8f93e8e767e64d8072781\", \"size_bytes\": 166435000, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 9, \"sha256\": \"d7b52c879d92f8c1466fda38ca4cf5697f57aa661cbfd4f4c7d6b5c2e4b2e2fc\", \"size_bytes\": 124837737, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 10, \"sha256\": \"f14ee0974118208d0dc4a193194d3f9227554bd078302f2a924bb92477fdd50f\", \"size_bytes\": 119816104, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 11, \"sha256\": \"3d42e0d40f58e29269965db1e3482f72609cdcece0f1dd37f365bd6c6c477e9f\", \"size_bytes\": 145273748, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 12, \"sha256\": \"53ac096c25e59fd3414b8474a4f6addd5136de1139b15ce84c06937fdde8e988\", \"size_bytes\": 130826851, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 13, \"sha256\": \"07107402853ad0b60ab99fd83f19e7af0dc5177e8352ac3187bd67da7b397e4b\", \"size_bytes\": 101932989, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 14, \"sha256\": \"023fb673db474907ff57fe6c95e7e7042eeb28362ca4a2db051fbaf0e20a4d3e\", \"size_bytes\": 126482992, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 15, \"sha256\": \"bc02fdac988bcddc936cbc6a88f1e5887da9d518d6f801a4a150e1cb9c2bfa1d\", \"size_bytes\": 169719565, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 16, \"sha256\": \"9270f173ec311f63dc58dfb003030bc3d95d636d15da11ba5e0aee0971a4a37e\", \"size_bytes\": 99970991, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 17, \"sha256\": \"4c4b73f44f4b8fdcd7361f8bfbe8c456733056e57f9392f3cd99f287d2ce2e8c\", \"size_bytes\": 110723844, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 18, \"sha256\": \"0bc1d32f7994b6ebdc4b4477719d57457d81fca2dea8089e923a619806f5ce10\", \"size_bytes\": 118691017, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 19, \"sha256\": \"1a300ee7e300cf46709504b9196696ef53ab5489ece6b9e78bc0dee88ba5c99a\", \"size_bytes\": 101999195, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 20, \"sha256\": \"3f87afaffa2b03ad844d58d94091e2e8c40b388d92cc169e47a5d781b9d0f43e\", \"size_bytes\": 89558005, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 21, \"sha256\": \"84186e75372cb1742a85c1349725dc1b9348646e368d9f161b754c7696bea855\", \"size_bytes\": 193814439, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 22, \"sha256\": \"0929b6c3ef877624cee637c330447ab431abd257a5f5cc60f2053afed632f82b\", \"size_bytes\": 197790926, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 23, \"sha256\": \"e864cb4b788294e24a6f2aa82024b873fbe01da88e83ea20d82b70adb089166e\", \"size_bytes\": 208578865, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 24, \"sha256\": \"552aa2082ac947e2a399dbbc9a76438b31ab3088809f33abde8ece67de2727d3\", \"size_bytes\": 97693376, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 25, \"sha256\": \"3fca5dbb545fabacccdd079f2b11cd2c5407f4a3079622a29efaea140d63a1d8\", \"size_bytes\": 86878303, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 26, \"sha256\": \"3d9e8016710178f968198fc169a3f5aee35b717f13083d99bea55fb6d7fe3427\", \"size_bytes\": 90010905, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 27, \"sha256\": \"dc1a5e34d51d06709538bafc87c17fb6bae67fde5315ed85b969cc8e2210a7f8\", \"size_bytes\": 71465662, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 28, \"sha256\": \"9d48f607c4b26c78ab503aa3f54760cb1321673384104f3c0c927321d032e67d\", \"size_bytes\": 105083290, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 29, \"sha256\": \"ffa47b0b0164a854c0a1481dc6134ba282c8559c32197a953a632a83dce7982b\", \"size_bytes\": 249920442, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 30, \"sha256\": \"0350a1d87a4eb4aaf28830cf5682ca7c90e6d7700ec9b71022f8d66fc5182dde\", \"size_bytes\": 185722366, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 31, \"sha256\": \"3ec69a144b3548ccf96c8940a388d45e5873e2b21f3eb32853c5d7ccccda8d6e\", \"size_bytes\": 226377157, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 32, \"sha256\": \"50ad02dc1868d986923079e3c9242715a9553b05b9953a788d2b5ac8f00f90d3\", \"size_bytes\": 156219672, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 33, \"sha256\": \"e21ac13cb9c19d644874ce5f5f30923be9de8ac6f15c310cf6bc18ed2aaf40f0\", \"size_bytes\": 204834821, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 34, \"sha256\": \"c89df55d6cb8362a686197e0c2c1d95f7efd974b4059744a080703cca3653808\", \"size_bytes\": 124073997, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 35, \"sha256\": \"ef1c13e56914ea2ba18511c97592d10a2c51096d7fe3540db622d025485dc0f3\", \"size_bytes\": 104188457, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 36, \"sha256\": \"a8df46982101b51a6289e8cad680cd2348d7c6eb898fcd305802a1eff411eb96\", \"size_bytes\": 125631894, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 37, \"sha256\": \"a0b83c8c2b4d052e9bda293380b8ee08d8b5b15794bb10b5ffc516cd94766abf\", \"size_bytes\": 218514664, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 38, \"sha256\": \"8ef3e789c6c77f7be213307f34a55d821459883cd77a76e8ef14454c4eaf93c2\", \"size_bytes\": 160797214, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 39, \"sha256\": \"989cf6c9d4c6792be091364cd49ea010d582af126dd5ab03689c3a93c87420f1\", \"size_bytes\": 53371339, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 40, \"sha256\": \"9ba166e151002f70eec391d408b80fc26c79c90fa003d3c50ccdb0470809f866\", \"size_bytes\": 55693535, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 41, \"sha256\": \"6cfa169ce128b9d1fc8ac69c1f89b7b33a1593f20adb954cab12c7abd99e3f54\", \"size_bytes\": 107691251, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 42, \"sha256\": \"fdabb2d3f62e28fb32990c42536386fd24deb27977e60d2645518dc3f87a7b2e\", \"size_bytes\": 168509038, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 43, \"sha256\": \"654bb57c6b3b0c358e40d27a2777011cb745785e3bf2a904ed9a71df38588424\", \"size_bytes\": 139554668, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 44, \"sha256\": \"9b23f7692075e390315ff4549c7393a34858eb4c00189d43d322228198ee4593\", \"size_bytes\": 60301037, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 45, \"sha256\": \"498a5b99bce1f4a3daf260e12914881c610cf39668046577c1e5bb9c1f0a2e65\", \"size_bytes\": 293424168, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 46, \"sha256\": \"c0c4245b6853c227dd86b464ce83112d6e0061dda67f1212cbf356b62b0c9f10\", \"size_bytes\": 55201424, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 47, \"sha256\": \"363e106e939adef8d476aa42a30fe2893dcc6cdb038e65030fad775d2c36afaa\", \"size_bytes\": 144069510, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 48, \"sha256\": \"c886fa08e6e1f8913b5f89b0453b4cff8ddc515e9aeffc7af5f4697ecc73caf4\", \"size_bytes\": 153992787, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 49, \"sha256\": \"05951ff6671e277fe5e9c98c6ff54ccfdaa5391253bab363bab0b6a3c5048743\", \"size_bytes\": 76281283, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 50, \"sha256\": \"2edcc7cfd31734d83a853ad740f933d13153da8d54324bfbef62eaf59c46097a\", \"size_bytes\": 131189497, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"黄金时代的摄影50讲：如何理解大师之作\", \"episode\": 51, \"sha256\": \"23dfef03c2687f52c796fd3519227b1842479855230458eed07c8b53d9e327b8\", \"size_bytes\": 86008990, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 1, \"sha256\": \"e151335655ff4a532fda9b62f41afc34b58c75f0802463ca0d50608f53a6e3e8\", \"size_bytes\": 28340843, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 2, \"sha256\": \"f216a585be05996d144e0a17033ede7550582134b74387686504c8e2c92e5295\", \"size_bytes\": 84596341, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 3, \"sha256\": \"fcd8f5291418f9e04f88f8f9605c88c9418885c5d308490790c3903cbd72d328\", \"size_bytes\": 138029677, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 4, \"sha256\": \"655324e760bbd15903e7475b5a40d0f565fe5b5b7d3e39a47aa281ad9cfa9821\", \"size_bytes\": 157596825, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 5, \"sha256\": \"d95e2c349e49348f9f3fc86f414f48b72fdc318322777ef8b074bb97070aa49f\", \"size_bytes\": 351381957, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 6, \"sha256\": \"cefdc97aad43d3f507202d6bf897c9626ff64df35eb57ca620b5bf7ad49f6e1d\", \"size_bytes\": 113528918, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 7, \"sha256\": \"4d8a0e6fe52f0c6f4cd9e9c2ddf129d04a4e131aba9c214ae533a76c3387361e\", \"size_bytes\": 138723197, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 8, \"sha256\": \"e82c268de1380b2e170dd904e403eb4881afb740d9d14c8c3ecef7df33868df1\", \"size_bytes\": 125269288, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 9, \"sha256\": \"5f2ecbbde5a5cc494a9b8598ba5ef063c6d304905742b9260b12cb1240c02f28\", \"size_bytes\": 76236566, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 10, \"sha256\": \"9182ef536cbdf3e33538438f231734876f9a9aa8a0e59d75c4c7db5771198eba\", \"size_bytes\": 51744040, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 11, \"sha256\": \"1fef88bd63b627bfe5f145d6b3dd3ff6d65c8f971088b2c61dedd6398b978bbf\", \"size_bytes\": 331873817, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 12, \"sha256\": \"8b527b59ea9cca13f09734ed840715ca5f7601721b60afeea5094e59d114099d\", \"size_bytes\": 122860739, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 13, \"sha256\": \"3e8f261ac686ad11f3639f4777f69b8c36d5e0a016f05e4a9db79986eee6f344\", \"size_bytes\": 136583061, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 14, \"sha256\": \"80a464b6821c64a608a3d73b31273ef4f552aa81754262f8b6b5616ff4e10d3e\", \"size_bytes\": 153903634, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 15, \"sha256\": \"5eada51ba10d37e3a3627889615e78eac0887f1141c75c4c73dc54178ba3f921\", \"size_bytes\": 92826239, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 16, \"sha256\": \"ae754dca66ce73292f46124b4b751945ee915f8e255ae9553aa5070447e99f52\", \"size_bytes\": 82529479, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 17, \"sha256\": \"011d5c138821a8fd104a986240d5655cdb87838a9a02b1fa14ac7782e377693a\", \"size_bytes\": 123042782, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 18, \"sha256\": \"d3a9b5e48ec0c10a61ef30ddf03f800e66b1b488aceb5c74d65ee957adaaaff8\", \"size_bytes\": 62552044, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 19, \"sha256\": \"43a29b1dcdf8a2d0f621b972a38abdb91d8dd5ead552a78f08e9cf4ffa478e98\", \"size_bytes\": 40032200, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 20, \"sha256\": \"76263aff4edced64a1e56c1af62e2d80cd8455769831c4c51070e1daed8a2e22\", \"size_bytes\": 63154439, \"mode\": \"0o600\"}\nAUDIT_EPISODE {\"course\": \"当代经典摄影20讲\", \"episode\": 21, \"sha256\": \"aa7ffd3cd5c556842ffd428676c37a73fe95c001d12186ff171ffc21feece82b\", \"size_bytes\": 55630335, \"mode\": \"0o600\"}\nAUDIT_SUMMARY {\"episodes\": 72, \"size_bytes\": 9324469675, \"sha256_matches\": 72, \"partials\": 0, \"files_private\": true, \"root_mode\": \"0o700\"}\n",
+    "deleted_job_record": true
+  },
+  "independent_audit": {
+    "episodes": 72,
+    "size_bytes": 9324469675,
+    "sha256_matches": 72,
+    "partials": 0,
+    "files_private": true,
+    "root_mode": "0o700"
+  },
+  "cleanup_job": {
+    "submission_id": "w1-genres-wuxiaolong-cleanup-3fdfa5b501cf",
+    "status": "SUCCEEDED",
+    "log": "2026-10-10 10:58:04,908\tINFO job_manager.py:604 -- Runtime env is setting up.\n/opt/conda/envs/torch-base/lib/python3.13/site-packages/ray/_private/worker.py:2317: FutureWarning: Tip: In future versions of Ray, Ray will no longer override accelerator visible devices env var if num_gpus=0 or num_gpus=None (default). To enable this behavior and turn off this error message, set RAY_ACCEL_ENV_VAR_OVERRIDE_ON_ZERO=0\n  warnings.warn(\nGCS_CLEANUP [{\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": true, \"deleted\": 1, \"exists_after\": false}, {\"uri\": \"<RAY_PACKAGE>\", \"existed_before\": false, \"deleted\": 0, \"exists_after\": false}]\n",
+    "deleted_job_record": true
+  },
+  "gcs_cleanup": {
+    "package_count": 101,
+    "remaining": 0,
+    "results": [
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": true,
+        "deleted": 1,
+        "exists_after": false
+      },
+      {
+        "uri": "<RAY_PACKAGE>",
+        "existed_before": false,
+        "deleted": 0,
+        "exists_after": false
+      }
+    ],
+    "manually_removed": 37,
+    "already_absent": 64
+  },
+  "job_cleanup": {
+    "owned_job_identifiers": 103,
+    "pending_or_running": [],
+    "remaining_job_records": [],
+    "other_jobs_untouched": true,
+    "cleanup_status_race_records": [
+      {
+        "submission_id": "w1-genres-wuxiaolong-bc4b3c67f390-006",
+        "status": "FAILED",
+        "error_type": "JOB_SUPERVISOR_ACTOR_DIED",
+        "re_deleted": true
+      },
+      {
+        "submission_id": "w1-genres-wuxiaolong-86286051908d-076",
+        "status": "FAILED",
+        "error_type": "JOB_SUPERVISOR_ACTOR_DIED",
+        "re_deleted": true
+      },
+      {
+        "submission_id": "w1-genres-wuxiaolong-deb2fdde6fd8-044",
+        "status": "FAILED",
+        "error_type": "JOB_SUPERVISOR_ACTOR_DIED",
+        "re_deleted": true
+      },
+      {
+        "submission_id": "w1-genres-wuxiaolong-cd8dcda3b14d-085",
+        "status": "FAILED",
+        "error_type": "JOB_SUPERVISOR_ACTOR_DIED",
+        "re_deleted": true
+      },
+      {
+        "submission_id": "w1-genres-wuxiaolong-e698392825bb-018",
+        "status": "FAILED",
+        "error_type": "JOB_SUPERVISOR_ACTOR_DIED",
+        "re_deleted": true
+      },
+      {
+        "submission_id": "w1-genres-wuxiaolong-c23199c13435-021",
+        "status": "FAILED",
+        "error_type": "JOB_SUPERVISOR_ACTOR_DIED",
+        "re_deleted": true
+      },
+      {
+        "submission_id": "w1-genres-wuxiaolong-f259e7f3964f-017",
+        "status": "FAILED",
+        "error_type": "JOB_SUPERVISOR_ACTOR_DIED",
+        "re_deleted": true
+      },
+      {
+        "submission_id": "w1-genres-wuxiaolong-1162aba539ba-087",
+        "status": "FAILED",
+        "error_type": "JOB_SUPERVISOR_ACTOR_DIED",
+        "re_deleted": true
+      },
+      {
+        "submission_id": "w1-genres-wuxiaolong-73ac336a41fe-016",
+        "status": "FAILED",
+        "error_type": "JOB_SUPERVISOR_ACTOR_DIED",
+        "re_deleted": true
+      },
+      {
+        "submission_id": "w1-genres-wuxiaolong-00d9f3fca762-093",
+        "status": "FAILED",
+        "error_type": "JOB_SUPERVISOR_ACTOR_DIED",
+        "re_deleted": true
+      },
+      {
+        "submission_id": "w1-genres-wuxiaolong-5d47b26dafc3-026",
+        "status": "FAILED",
+        "error_type": "JOB_SUPERVISOR_ACTOR_DIED",
+        "re_deleted": true
+      },
+      {
+        "submission_id": "w1-genres-wuxiaolong-be93ecd00cc1-063",
+        "status": "FAILED",
+        "error_type": "JOB_SUPERVISOR_ACTOR_DIED",
+        "re_deleted": true
+      }
+    ],
+    "cleanup_status_race_note": "12 successfully completed jobs reappeared as FAILED after first delete_job: JOB_SUPERVISOR_ACTOR_DIED with INTENDED_USER_EXIT. Per-job BATCH_OK logs and independent 72-file SHA audit demonstrate successful transfer. Re-deleted only these terminal task-owned records after supervisors had exited.",
+    "final_checked_at": "2026-10-10T11:03:52+0800"
+  },
+  "completed_at": "2026-10-10T10:58:13+0800",
+  "handled_probe_error": "Request failed with status code 413: Maximum request body size 104857600 exceeded, actual body size 104890795.",
+  "local_temp_cleanup": {
+    "path": "/tmp/w1-genres-upload/",
+    "exists_after": false
+  },
+  "git": {
+    "staged": false,
+    "committed": false,
+    "pushed": false,
+    "block": "sandbox denied creation of main .git/worktrees/w1-genres/index.lock"
+  }
+}

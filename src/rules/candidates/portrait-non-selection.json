@@ -1,0 +1,600 @@
+{
+  "contractVersion": 1,
+  "source": "yidao-critiques",
+  "method": "codex-semantic",
+  "nonSelectionCount": 461,
+  "nonSelection": [
+    {
+      "id": "NS:SERIES-VARIETY",
+      "title": "组照景别与动作变化",
+      "statement": "组照需在景别、机位和动作上有有效变化，避免重复；不据此淘汰单张。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 57,
+        "videos": 57,
+        "segments": 97,
+        "positive": 7,
+        "negative": 90
+      },
+      "evidence": [
+        {
+          "bvid": "BV1rYaZ6mE3x",
+          "segment": 129,
+          "t": 665.14,
+          "paraphrase": "只拍半身和大头，细节与情感不够细腻",
+          "text": "只拍半身和大头，细节与情感不够细腻",
+          "tier": "人上人",
+          "frame": "frames/BV1rYaZ6mE3x/0129.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV17EHQzmEbn",
+          "segment": 152,
+          "t": 768.49,
+          "paraphrase": "照片整体平庸，取景和动作缺乏变化",
+          "text": "照片整体平庸，取景和动作缺乏变化",
+          "tier": null,
+          "frame": "frames/BV17EHQzmEbn/0152.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:CONCEPT",
+      "title": "创作策划与参考模仿",
+      "statement": "拍摄前明确主题与参考，检查主题、道具及行动的关系，避免照搬形式。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 31,
+        "videos": 31,
+        "segments": 34,
+        "positive": 10,
+        "negative": 26
+      },
+      "evidence": [
+        {
+          "bvid": "BV17EHQzmEbn",
+          "segment": 203,
+          "t": 1132.86,
+          "paraphrase": "拍摄效果不如参考样片，动作不到位",
+          "text": "拍摄效果不如参考样片，动作不到位",
+          "tier": null,
+          "frame": "frames/BV17EHQzmEbn/0203.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1C94y117Lj",
+          "segment": 48,
+          "t": 138.7,
+          "paraphrase": "动作角度相似，但模仿效果仍不到位",
+          "text": "动作角度相似，但模仿效果仍不到位",
+          "tier": null,
+          "frame": "frames/BV1C94y117Lj/0048.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:SERIES-COHERENCE",
+      "title": "组照主题与情绪连贯",
+      "statement": "整组色彩、影调、情绪与叙事衔接需结合选片顺序复核。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 25,
+        "videos": 25,
+        "segments": 44,
+        "positive": 5,
+        "negative": 39
+      },
+      "evidence": [
+        {
+          "bvid": "BV1X67JzBELo",
+          "segment": 282,
+          "t": 1910,
+          "paraphrase": "照片色温不统一，有的偏蓝有的偏黄",
+          "text": "照片色温不统一，有的偏蓝有的偏黄",
+          "tier": null,
+          "frame": "frames/BV1X67JzBELo/0282.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1XZ42157B5",
+          "segment": 39,
+          "t": 316.4,
+          "paraphrase": "每张照片颜色不一致，后期统一不足",
+          "text": "每张照片颜色不一致，后期统一不足",
+          "tier": null,
+          "frame": "frames/BV1XZ42157B5/0039.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:LAYOUT",
+      "title": "拼图、排版与封面用途",
+      "statement": "拼图排版、画幅与封面头像选择需结合展示用途单独审核。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 25,
+        "videos": 25,
+        "segments": 36,
+        "positive": 14,
+        "negative": 23
+      },
+      "evidence": [
+        {
+          "bvid": "BV1JViYBJESE",
+          "segment": 144,
+          "t": 832.57,
+          "paraphrase": "拼图比例错误，导致脸部被拉长或压扁",
+          "text": "拼图比例错误，导致脸部被拉长或压扁",
+          "tier": null,
+          "frame": "frames/BV1JViYBJESE/0144.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV19x4tzpE52",
+          "segment": 91,
+          "t": 884.32,
+          "paraphrase": "脸在画面中太小，封面吸引力不足",
+          "text": "脸在画面中太小，封面吸引力不足",
+          "tier": null,
+          "frame": "frames/BV19x4tzpE52/0091.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:RETOUCH-EFFECT",
+      "title": "特效与合成制作",
+      "statement": "预设、滤镜、HDR与前景光效需匹配题材，避免机械套用或叠加。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 24,
+        "videos": 24,
+        "segments": 32,
+        "positive": 5,
+        "negative": 27
+      },
+      "evidence": [
+        {
+          "bvid": "BV1TPt16LEVY",
+          "segment": 127,
+          "t": 1378.0,
+          "paraphrase": "人像不应反向拉高光和阴影，当前后期效果差",
+          "text": "人像不应反向拉高光和阴影，当前后期效果差",
+          "tier": "人上人",
+          "frame": "frames/BV1TPt16LEVY/0127.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1QN2QYWEvk",
+          "segment": 178,
+          "t": 1111.41,
+          "paraphrase": "大光圈与商业画面及HDR后期不协调",
+          "text": "大光圈与商业画面及HDR后期不协调",
+          "tier": null,
+          "frame": "frames/BV1QN2QYWEvk/0178.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:STYLING",
+      "title": "服装妆造与发型设计",
+      "statement": "服装、妆容、发型及道具造型需与主题匹配，外貌喜好不作淘汰依据。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 23,
+        "videos": 23,
+        "segments": 31,
+        "positive": 21,
+        "negative": 12
+      },
+      "evidence": [
+        {
+          "bvid": "BV1J289z1EJN",
+          "segment": 168,
+          "t": 994.32,
+          "paraphrase": "模仿只停留在服装道具场地，效果逊于参考",
+          "text": "模仿只停留在服装道具场地，效果逊于参考",
+          "tier": null,
+          "frame": "frames/BV1J289z1EJN/0168.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1rzN7z7EgK",
+          "segment": 380,
+          "t": 2390.37,
+          "paraphrase": "认为模特不好看，素颜和造型会让照片失分",
+          "text": "认为模特不好看，素颜和造型会让照片失分",
+          "tier": null,
+          "frame": "frames/BV1rzN7z7EgK/0380.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:CAMERA",
+      "title": "器材、焦段与曝光设置",
+      "statement": "焦段、光圈、快门及曝光方法应服务于景深、动态和预期风格。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 23,
+        "videos": 23,
+        "segments": 29,
+        "positive": 7,
+        "negative": 22
+      },
+      "evidence": [
+        {
+          "bvid": "BV1L6CRBdEMs",
+          "segment": 165,
+          "t": 862.18,
+          "paraphrase": "照片像只是按下快门，效果不如手机",
+          "text": "照片像只是按下快门，效果不如手机",
+          "tier": null,
+          "frame": "frames/BV1L6CRBdEMs/0165.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1oV3Bz7Epn",
+          "segment": 49,
+          "t": 246.54,
+          "paraphrase": "使用十四毫米拍摄显得过广、不好看",
+          "text": "使用十四毫米拍摄显得过广、不好看",
+          "tier": null,
+          "frame": "frames/BV1oV3Bz7Epn/0049.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:VIEWPOINT",
+      "title": "机位、视角与拍摄距离",
+      "statement": "拍摄距离和机位应给环境、人物比例及后续取景留出适当余地。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 21,
+        "videos": 21,
+        "segments": 23,
+        "positive": 4,
+        "negative": 19
+      },
+      "evidence": [
+        {
+          "bvid": "BV1HpTYzwEjf",
+          "segment": 52,
+          "t": 312.71,
+          "paraphrase": "拍摄距离太远、留空太多，冲击力不足",
+          "text": "拍摄距离太远、留空太多，冲击力不足",
+          "tier": null,
+          "frame": "frames/BV1HpTYzwEjf/0052.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1TPkuYnEs1",
+          "segment": 354,
+          "t": 1939.6,
+          "paraphrase": "校正基准线选择不当，画面不舒服",
+          "text": "校正基准线选择不当，画面不舒服",
+          "tier": null,
+          "frame": "frames/BV1TPkuYnEs1/0354.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:PERSONAL",
+      "title": "模特外貌、审美与客户偏好",
+      "statement": "模特外貌、个人喜好及客户满意度属于审美或交付背景，不泛化为选片硬规则。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 20,
+        "videos": 20,
+        "segments": 24,
+        "positive": 17,
+        "negative": 7
+      },
+      "evidence": [
+        {
+          "bvid": "BV1K89sBEE7z",
+          "segment": 359,
+          "t": 1321.0,
+          "paraphrase": "照片主要靠模特外貌撑起，拍摄本身不佳",
+          "text": "照片主要靠模特外貌撑起，拍摄本身不佳",
+          "tier": "人上人",
+          "frame": "frames/BV1K89sBEE7z/0359.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV19GnUzcEU9",
+          "segment": 121,
+          "t": 886.08,
+          "paraphrase": "模特不够上镜，不适合只拍糖水大头",
+          "text": "模特不够上镜，不适合只拍糖水大头",
+          "tier": null,
+          "frame": "frames/BV19GnUzcEU9/0121.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:LOCATION",
+      "title": "场地与置景道具选择",
+      "statement": "选景、置景与道具需配合主题，并考虑其在画面中是否有作用。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 16,
+        "videos": 16,
+        "segments": 19,
+        "positive": 9,
+        "negative": 11
+      },
+      "evidence": [
+        {
+          "bvid": "BV1Nzq5BCEVT",
+          "segment": 171,
+          "t": 899.68,
+          "paraphrase": "枯草场景影响观感，显得难看廉价",
+          "text": "枯草场景影响观感，显得难看廉价",
+          "tier": null,
+          "frame": "frames/BV1Nzq5BCEVT/0171.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1RT4y1a7tR",
+          "segment": 232,
+          "t": 2952.76,
+          "paraphrase": "缺少真实鹿的呼应，道具显得突兀",
+          "text": "缺少真实鹿的呼应，道具显得突兀",
+          "tier": null,
+          "frame": "frames/BV1RT4y1a7tR/0232.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:LIGHT-CHOICE",
+      "title": "补光与选光方法",
+      "statement": "选择现场可用光或补光方法，避免无目的地叠加光源。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 16,
+        "videos": 16,
+        "segments": 17,
+        "positive": 6,
+        "negative": 11
+      },
+      "evidence": [
+        {
+          "bvid": "BV1dtB4BaEgG",
+          "segment": 405,
+          "t": 1922.34,
+          "paraphrase": "补光过强，未呈现参考作品的感觉",
+          "text": "补光过强，未呈现参考作品的感觉",
+          "tier": null,
+          "frame": "frames/BV1dtB4BaEgG/0405.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1kXBUYLEEt",
+          "segment": 135,
+          "t": 674,
+          "paraphrase": "拍摄太晚，闪光使画面层次更差",
+          "text": "拍摄太晚，闪光使画面层次更差",
+          "tier": null,
+          "frame": "frames/BV1kXBUYLEEt/0135.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:LIGHT-PLACEMENT",
+      "title": "灯位、灯距与布光操作",
+      "statement": "调整灯位、灯距及人物与墙的距离，控制光向、阴影和溢光。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 15,
+        "videos": 15,
+        "segments": 19,
+        "positive": 1,
+        "negative": 18
+      },
+      "evidence": [
+        {
+          "bvid": "BV1693JzMEkD",
+          "segment": 216,
+          "t": 1346.02,
+          "paraphrase": "两盏灯照向同一位置，布光不合理",
+          "text": "两盏灯照向同一位置，布光不合理",
+          "tier": null,
+          "frame": "frames/BV1693JzMEkD/0216.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1UF14BTEyv",
+          "segment": 86,
+          "t": 449.9,
+          "paraphrase": "布光位置过低，人工光痕迹明显",
+          "text": "布光位置过低，人工光痕迹明显",
+          "tier": null,
+          "frame": "frames/BV1UF14BTEyv/0086.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:DIRECTION",
+      "title": "模特引导与动作设计",
+      "statement": "拍摄时引导视线与动作并留意人物能否完成，不把引导能力当成成片规则。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 15,
+        "videos": 15,
+        "segments": 15,
+        "positive": 3,
+        "negative": 12
+      },
+      "evidence": [
+        {
+          "bvid": "BV1m86RYGEBw",
+          "segment": 275,
+          "t": 1494.25,
+          "paraphrase": "动作和情绪缺少设计，主题未充分展开",
+          "text": "动作和情绪缺少设计，主题未充分展开",
+          "tier": null,
+          "frame": "frames/BV1m86RYGEBw/0275.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV17EHQzmEbn",
+          "segment": 236,
+          "t": 1469.66,
+          "paraphrase": "模特动作不够夸张，摄影师引导不足",
+          "text": "模特动作不够夸张，摄影师引导不足",
+          "tier": null,
+          "frame": "frames/BV17EHQzmEbn/0236.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:RETOUCH-COLOR",
+      "title": "调色工具与分区",
+      "statement": "白平衡与分区调色需结合场景，不用全局调整同时改变背景和肤色。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 14,
+        "videos": 14,
+        "segments": 14,
+        "positive": 0,
+        "negative": 14
+      },
+      "evidence": [
+        {
+          "bvid": "BV16sfBBdE2y",
+          "segment": 246,
+          "t": 882,
+          "paraphrase": "后期色彩不好看，缺少通透感和胶片感",
+          "text": "后期色彩不好看，缺少通透感和胶片感",
+          "tier": "人上人",
+          "frame": "frames/BV16sfBBdE2y/0246.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1fdvwzLEmM",
+          "segment": 105,
+          "t": 745.37,
+          "paraphrase": "固定白平衡的色彩效果不如自动设置",
+          "text": "固定白平衡的色彩效果不如自动设置",
+          "tier": null,
+          "frame": "frames/BV1fdvwzLEmM/0105.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:TIME",
+      "title": "拍摄时段选择",
+      "statement": "拍摄时段影响现场光线与环境呈现，时段选择不作成片淘汰条件。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 5,
+        "videos": 5,
+        "segments": 5,
+        "positive": 0,
+        "negative": 5
+      },
+      "evidence": [
+        {
+          "bvid": "BV1Vz421z7K6",
+          "segment": 62,
+          "t": 529.83,
+          "paraphrase": "这组照片拍摄时段过于接近正午",
+          "text": "这组照片拍摄时段过于接近正午",
+          "tier": null,
+          "frame": "frames/BV1Vz421z7K6/0062.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV1wUtFzZEn8",
+          "segment": 308,
+          "t": 1439.44,
+          "paraphrase": "拍摄时间选择是这组的主要问题",
+          "text": "拍摄时间选择是这组的主要问题",
+          "tier": null,
+          "frame": "frames/BV1wUtFzZEn8/0308.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        }
+      ]
+    },
+    {
+      "id": "NS:RETOUCH-GENERAL",
+      "title": "后期目标质感与风格",
+      "statement": "后期质感需匹配胶片等目标风格，处理方法与目标风格另行复盘。",
+      "source": "yidao-critiques",
+      "frequency": {
+        "episodes": 2,
+        "videos": 2,
+        "segments": 2,
+        "positive": 1,
+        "negative": 1
+      },
+      "evidence": [
+        {
+          "bvid": "BV1TJu6zNEWg",
+          "segment": 264,
+          "t": 1554.9,
+          "paraphrase": "后期质感不符合胶片小清新风格",
+          "text": "后期质感不符合胶片小清新风格",
+          "tier": null,
+          "frame": "frames/BV1TJu6zNEWg/0264.jpg",
+          "kind": "issue",
+          "polarity": "negative"
+        },
+        {
+          "bvid": "BV16sfBBdE2y",
+          "segment": 370,
+          "t": 1484.29,
+          "paraphrase": "后期呈现鲜明的胶片感",
+          "text": "后期呈现鲜明的胶片感",
+          "tier": "顶尖",
+          "frame": "frames/BV16sfBBdE2y/0370.jpg",
+          "kind": "praise",
+          "polarity": "positive"
+        }
+      ]
+    }
+  ]
+}

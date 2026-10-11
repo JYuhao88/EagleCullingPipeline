@@ -1,0 +1,88 @@
+{
+  "contractVersion": 1,
+  "source": "wulin-critiques",
+  "method": "codex-semantic",
+  "nonSelectionCount": 248,
+  "nonSelection": [
+    {
+      "id": "NS:POSTPROCESS",
+      "theme": "non-selection",
+      "subtheme": "postprocess",
+      "title": "后期操作与方案",
+      "statement": "仅涉及处理方案、工具或操作评价，不能作为单张选片门槛。",
+      "source": "wulin-critiques",
+      "frequency": {
+        "episodes": 32,
+        "videos": 32,
+        "segments": 135,
+        "positive": 90,
+        "negative": 49
+      },
+      "commentaryItems": 152
+    },
+    {
+      "id": "NS:CAPTURE-PLAN",
+      "theme": "non-selection",
+      "subtheme": "capture-plan",
+      "title": "拍摄时段与机位计划",
+      "statement": "仅描述时段、曝光时长或机位建议，不从成片反推参数。",
+      "source": "wulin-critiques",
+      "frequency": {
+        "episodes": 25,
+        "videos": 25,
+        "segments": 65,
+        "positive": 23,
+        "negative": 43
+      },
+      "commentaryItems": 68
+    },
+    {
+      "id": "NS:DELIVERY",
+      "theme": "non-selection",
+      "subtheme": "delivery",
+      "title": "投稿尺寸与交付",
+      "statement": "投稿像素不足或显示条件限制，需索取原图而非认定原片质量。",
+      "source": "wulin-critiques",
+      "frequency": {
+        "episodes": 11,
+        "videos": 11,
+        "segments": 12,
+        "positive": 2,
+        "negative": 11
+      },
+      "commentaryItems": 13
+    },
+    {
+      "id": "NS:SERIES",
+      "theme": "non-selection",
+      "subtheme": "series",
+      "title": "组照与创作用途",
+      "statement": "系列数量、统一性和比赛用途需要组照语境，单张成片不能判断。",
+      "source": "wulin-critiques",
+      "frequency": {
+        "episodes": 7,
+        "videos": 7,
+        "segments": 10,
+        "positive": 5,
+        "negative": 6
+      },
+      "commentaryItems": 12
+    },
+    {
+      "id": "NS:GEAR",
+      "theme": "non-selection",
+      "subtheme": "gear",
+      "title": "器材与拍摄条件",
+      "statement": "器材潜力、获取难度或运气不能由单张成片验证。",
+      "source": "wulin-critiques",
+      "frequency": {
+        "episodes": 3,
+        "videos": 3,
+        "segments": 3,
+        "positive": 1,
+        "negative": 2
+      },
+      "commentaryItems": 3
+    }
+  ]
+}

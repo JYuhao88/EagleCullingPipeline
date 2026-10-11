@@ -1,0 +1,28 @@
+{
+  "seed": 808,
+  "groupsPerDay": 10,
+  "switchAfterGroups": 30,
+  "freezeAfterSwitch": true,
+  "regression": true,
+  "styles": [
+    "dark-tight",
+    "bright-loose"
+  ],
+  "noiseRate": 0.06,
+  "anchorRate": 0.12,
+  "tieEvery": 17,
+  "rejectEvery": 23,
+  "undoEvery": 19,
+  "trainEvery": 10,
+  "strong": {
+    "trainingGroups": 120,
+    "stableGroups": 50,
+    "switchedGroups": 180,
+    "holdoutGroups": 12,
+    "groupsPerDay": 25,
+    "noiseRate": 0,
+    "anchorRate": 0,
+    "switchGapDays": 365,
+    "switchedHalfLifeDays": 3
+  }
+}

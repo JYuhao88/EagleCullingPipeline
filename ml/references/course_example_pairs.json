@@ -1,0 +1,4036 @@
+{
+  "schema_version": 1,
+  "created": "2026-10-11",
+  "source": "materials-courses",
+  "ceph_frames_root": "references/materials-courses/frames/",
+  "subtitle_root": "references/materials-course-texts/text/",
+  "purpose": "teacher-and-rule-sensitivity-check",
+  "user_preference_ground_truth": false,
+  "user_visual_qa": "pending",
+  "sampling": {
+    "fps": 1,
+    "selection": "subtitle contrast plus posing keywords; pHash scene anchors and five-second fallback; Codex subtitle-and-visual review",
+    "native_export": "1280x720 sampled at 2 FPS; closest reviewed viewport MAE <=8; actual showinfo PTS recorded"
+  },
+  "limitations": [
+    "讲课画面与屏幕翻拍，不能代表原始照片质量",
+    "示范可能夸张；机位、姿势、表情与光线常同时变化",
+    "部分照片含教学标记或局部裁剪，不应用于全身构图阈值",
+    "正反方向仅对应讲师在该上下文中的目标，尚待用户目测",
+    "同屏面板不是时序调整；避免把课程相邻照片分散到训练与测试"
+  ],
+  "summary": {
+    "subtitle_videos": 136,
+    "scope_videos": {
+      "lindsay-adler": 17,
+      "michele-celentano": 119
+    },
+    "candidate_windows": 728,
+    "candidate_by_course": {
+      "lindsay-adler": 275,
+      "michele-celentano": 453
+    },
+    "selected_windows": 140,
+    "decoded_windows": 140,
+    "combined_review_windows": 1,
+    "review_decisions": 49,
+    "retained_pairs": 43,
+    "pairs_by_course": {
+      "lindsay-adler": 35,
+      "michele-celentano": 8
+    },
+    "pairs_by_rule": {
+      "P-BOOK-GROUP-HEAD-LAYERS": 1,
+      "P-BOOK-GROUP-READINESS": 1,
+      "P-COURSE-ARM-PROJECTION": 1,
+      "P-COURSE-CLOTHING-LINES": 4,
+      "P-COURSE-GROUP-HEAD-LAYERS": 1,
+      "P-CROP-WRIST": 1,
+      "P-FACE-EXPRESSION": 2,
+      "P-FACE-EYES": 1,
+      "P-FRAME-GROUP-PERSPECTIVE": 2,
+      "P-FRAME-HEAD-DIRECTION": 4,
+      "P-FRAME-LIMB-PROJECTION": 2,
+      "P-FRAME-POSE-ASYMMETRY": 4,
+      "P-FRAME-POSE-CONTOUR": 6,
+      "P-HAND-NATURAL": 2,
+      "P-POSE-LIMB-HIDDEN": 1,
+      "P-POSE-WEIGHT": 5,
+      "P-YD-SHOULDER-NECK": 5
+    },
+    "discarded_review_windows": 62,
+    "discard_reasons": {
+      "host-or-text-only": 7,
+      "ambiguous-direction-or-context": 2,
+      "missing-comparison-or-duplicate": 13,
+      "non-pose-or-nonvisual-comparison": 2,
+      "缺少同构图的明确反例照片": 1,
+      "讲师口述或单张范例": 1,
+      "发量对比超出本批姿势规则范围": 1,
+      "单张照片及讲师口述": 1,
+      "缺少第二张稳定照片": 1,
+      "讲师口述": 2,
+      "单张范例": 1,
+      "讲师口述或缺少明确正反照片": 5,
+      "群体镜头焦段例与已保留例重复": 1,
+      "缺少明确同构图正反照片或仅汇总画面": 4,
+      "情侣亲密头距对比，现有本批规则覆盖不足": 1,
+      "讲师口述、幻灯片或缺少正反照片": 4,
+      "眼神方向变化在候选缩略帧中不够明确": 1,
+      "缺少稳定正反照片或只有讲师示范镜头": 6,
+      "字幕未明确所见闭眼帧的选片方向": 1,
+      "细微头发比较无法明确映射正反方向": 1,
+      "重复窗口、单张范例或缺少明确正反照片": 5,
+      "已并入w20-21组合窗口": 1
+    },
+    "not_reviewed_windows": 30,
+    "final_exclusions": {
+      "michele-celentano-acc6f6a55629-w1-pair": "导出画面人数与字幕所述双人比较不一致，规则方向不够明确",
+      "michele-celentano-018cc26a147b-w4-pair": "闭眼变化在原生照片中不够明确",
+      "lindsay-adler-f448d609680a-w30-pair": "分离同屏面板后原生匹配误差超阈值，丢弃旧的双面板截图对"
+    },
+    "qa_html": "/tmp/w4-frames-qa/index.html",
+    "qa_contact_sheets": "/tmp/w4-frames-qa/contact-*.jpg",
+    "native_export_rejections": [
+      {
+        "id": "lindsay-adler-f448d609680a-w14-pair",
+        "reason": "native-preview-mismatch",
+        "label": "b",
+        "mae": 27.847
+      },
+      {
+        "id": "lindsay-adler-8e441278778a-w10-pair",
+        "reason": "native-preview-mismatch",
+        "label": "b",
+        "mae": 17.535
+      },
+      {
+        "id": "lindsay-adler-f448d609680a-w13-pair",
+        "reason": "native-preview-mismatch",
+        "label": "a",
+        "mae": 13.843
+      },
+      {
+        "id": "lindsay-adler-f448d609680a-w30-pair",
+        "reason": "native-preview-mismatch",
+        "label": "a",
+        "mae": 8.125
+      }
+    ],
+    "readiness": {
+      "verified_videos": 136,
+      "missing_video_count": 0,
+      "last_probe_unix": 1791679851.3405902
+    },
+    "ceph_final_audit": {
+      "pairs": 43,
+      "distinct_frame_files": 253,
+      "errors": 0
+    },
+    "ray_cleanup": {
+      "own_jobs": 12,
+      "status_counts": {
+        "SUCCEEDED": 9,
+        "STOPPED": 1,
+        "FAILED": 2
+      },
+      "running_pending": 0,
+      "peak_running_pending": 2,
+      "cpu_per_job": 1,
+      "gpu_per_job": 0,
+      "polling_deviation": "initial watcher first repeat about 83 seconds after initial audit; later watcher sleeps 300 seconds and CLI guards cross-job repeats"
+    }
+  },
+  "rules": {
+    "P-BOOK-GROUP-HEAD-LAYERS": {
+      "status": "existing-candidate",
+      "source_file": "src/rules/candidates/book-candidates.json"
+    },
+    "P-BOOK-GROUP-READINESS": {
+      "status": "existing-candidate",
+      "source_file": "src/rules/candidates/book-candidates.json"
+    },
+    "P-COURSE-ARM-PROJECTION": {
+      "status": "existing-candidate",
+      "source_file": "src/rules/candidates/course-candidates.json"
+    },
+    "P-COURSE-CLOTHING-LINES": {
+      "status": "existing-candidate",
+      "source_file": "src/rules/candidates/course-candidates.json"
+    },
+    "P-COURSE-GROUP-HEAD-LAYERS": {
+      "status": "existing-candidate",
+      "source_file": "src/rules/candidates/course-candidates.json"
+    },
+    "P-CROP-WRIST": {
+      "status": "formal",
+      "source_file": "src/rules/portrait.json"
+    },
+    "P-FACE-EXPRESSION": {
+      "status": "formal",
+      "source_file": "src/rules/portrait.json"
+    },
+    "P-FACE-EYES": {
+      "status": "formal",
+      "source_file": "src/rules/portrait.json"
+    },
+    "P-FRAME-GROUP-PERSPECTIVE": {
+      "status": "local-candidate",
+      "definition": "群体前后人物的相对尺度，依讲师目标调整距离或视角。",
+      "scope": "this-manifest-only"
+    },
+    "P-FRAME-HEAD-DIRECTION": {
+      "status": "local-candidate",
+      "definition": "依讲师指定的人像意图比较头部朝向和颈部轮廓，不推断性别规范。",
+      "scope": "this-manifest-only"
+    },
+    "P-FRAME-LIMB-PROJECTION": {
+      "status": "local-candidate",
+      "definition": "依示范目标减少手臂或腿部的透视缩短，改善肢体可读性。",
+      "scope": "this-manifest-only"
+    },
+    "P-FRAME-POSE-ASYMMETRY": {
+      "status": "local-candidate",
+      "definition": "讲师指定的动态姿态可使用不同肢体高度；对称姿态并非普遍错误。",
+      "scope": "this-manifest-only"
+    },
+    "P-FRAME-POSE-CONTOUR": {
+      "status": "local-candidate",
+      "definition": "只检验讲师指定的身体侧线或比例目标，不推断普遍身材审美。",
+      "scope": "this-manifest-only"
+    },
+    "P-HAND-NATURAL": {
+      "status": "formal",
+      "source_file": "src/rules/portrait.json"
+    },
+    "P-POSE-LIMB-HIDDEN": {
+      "status": "formal",
+      "source_file": "src/rules/portrait.json"
+    },
+    "P-POSE-WEIGHT": {
+      "status": "formal",
+      "source_file": "src/rules/portrait.json"
+    },
+    "P-YD-SHOULDER-NECK": {
+      "status": "existing-candidate",
+      "source_file": "src/rules/candidates/portrait-v0.2-candidates.json"
+    }
+  },
+  "pairs": [
+    {
+      "id": "lindsay-adler-1d1d77f0e4f6-w10-pair",
+      "course": "lindsay-adler",
+      "episode": 10,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/10.Posing-Men-Lindsay-Adler.mp4",
+      "video_size": 825237962,
+      "video_sha256": "a312237e228efc7b9e13bcb77cb137c16dc51ecc07ca4a476d8cdbd63bc32760",
+      "start": 791.7,
+      "end": 861.655,
+      "subtitle_output": "lindsay-adler/lindsay-adler-1d1d77f0e4f6.json",
+      "subtitle_sentence_indices": [
+        254,
+        255
+      ],
+      "rule_id": "P-POSE-WEIGHT",
+      "paraphrase": "改变站姿脚位并抬高后脚，姿态更有动感",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w10-pair/a.jpg",
+          "time": 827.0,
+          "preview_time": 826.7,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-1d1d77f0e4f6-w10/0035.jpg",
+          "preview_sha256": "c0549e82a71a52081b0afaaf00a20891e1c21d1a71067dc4cee97c5cf4d4083d",
+          "viewport_match_mae": 0.48,
+          "sha256": "14ba8a9b90a33cb79f94ef153f411b3540a48c9d2f81891a26117dddfba17c32",
+          "size": 100815,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w10-pair/a_source.jpg",
+          "source_frame_sha256": "14ba8a9b90a33cb79f94ef153f411b3540a48c9d2f81891a26117dddfba17c32",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w10-pair/b.jpg",
+          "time": 834.0,
+          "preview_time": 833.7,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-1d1d77f0e4f6-w10/0042.jpg",
+          "preview_sha256": "5e7aef2af0ed9bf7c6aa23859f1100057a2f63b3128dd986a56121f9b34be898",
+          "viewport_match_mae": 0.487,
+          "sha256": "ac88dc57755c4c6ef1642af2ad5f3a9e17c7b4a6883be31560a8db916ff6ccc2",
+          "size": 102781,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w10-pair/b_source.jpg",
+          "source_frame_sha256": "ac88dc57755c4c6ef1642af2ad5f3a9e17c7b4a6883be31560a8db916ff6ccc2",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "limitation": "hands, foot position and facial expression jointly change",
+      "rule_status": "formal"
+    },
+    {
+      "id": "lindsay-adler-f448d609680a-w9-pair",
+      "course": "lindsay-adler",
+      "episode": 3,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/3.Posing-Pitfalls-Lindsay-Adler.mp4",
+      "video_size": 1817824290,
+      "video_sha256": "1d42db53d25a33841c0ab38929cd91c22d0354d224ef02c8fecf28a40727fd16",
+      "start": 768.87,
+      "end": 826.471,
+      "subtitle_output": "lindsay-adler/lindsay-adler-f448d609680a.json",
+      "subtitle_sentence_indices": [
+        253
+      ],
+      "rule_id": "P-YD-SHOULDER-NECK",
+      "paraphrase": "伸展身体后，身形显得更高挑",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "same-screen-panels",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w9-pair/a.jpg",
+          "time": 817.0,
+          "preview_time": 816.87,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w9/0048.jpg",
+          "preview_sha256": "3b7e5f2d8a668010254ad1062ef6e29ebe78cee690b067fc462a0e7baeaae0f0",
+          "viewport_match_mae": 0.843,
+          "sha256": "5c59b20c05c31c1588fddcbf6dca8b2ab7ba3359eb9cbbe0a1dcf76f8ff6a364",
+          "size": 48284,
+          "width": 640,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w9-pair/a_source.jpg",
+          "source_frame_sha256": "a2d398c7047dc097a4ce6f7bb07956e6a72afbe5cb71a5a8178f3383cded7897",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            0.5,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            640,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w9-pair/b.jpg",
+          "time": 817.0,
+          "preview_time": 816.87,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w9/0048.jpg",
+          "preview_sha256": "3b7e5f2d8a668010254ad1062ef6e29ebe78cee690b067fc462a0e7baeaae0f0",
+          "viewport_match_mae": 0.775,
+          "sha256": "a9b8f00c321dd759238a0b386a3aec3b59714f39ba50de45cf369beb2f9cd6f9",
+          "size": 44505,
+          "width": 640,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w9-pair/b_source.jpg",
+          "source_frame_sha256": "a2d398c7047dc097a4ce6f7bb07956e6a72afbe5cb71a5a8178f3383cded7897",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.5,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            640,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "limitation": "same-screen comparison panels",
+      "rule_status": "existing-candidate"
+    },
+    {
+      "id": "lindsay-adler-f448d609680a-w6-pair",
+      "course": "lindsay-adler",
+      "episode": 3,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/3.Posing-Pitfalls-Lindsay-Adler.mp4",
+      "video_size": 1817824290,
+      "video_sha256": "1d42db53d25a33841c0ab38929cd91c22d0354d224ef02c8fecf28a40727fd16",
+      "start": 546.96,
+      "end": 620.312,
+      "subtitle_output": "lindsay-adler/lindsay-adler-f448d609680a.json",
+      "subtitle_sentence_indices": [
+        174,
+        176
+      ],
+      "rule_id": "P-YD-SHOULDER-NECK",
+      "paraphrase": "挺直姿态后，肩颈舒展、脸部更清晰",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "same-screen-panels",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w6-pair/a.jpg",
+          "time": 560.0,
+          "preview_time": 559.96,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w6/0013.jpg",
+          "preview_sha256": "a065b95eb3b333211e7e6c18d1bc0820b91eaebe6cb23c86261cd1fdd5bd35f3",
+          "viewport_match_mae": 1.086,
+          "sha256": "39100f7a0f5b85db53419824ce917d7f125a30df39cac4c48ee6c5d05ac0fce2",
+          "size": 56820,
+          "width": 640,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w6-pair/a_source.jpg",
+          "source_frame_sha256": "6c9c4ff4487c021bf9e0e296e99d13fdcc71e1136fbe3fa37c5153834efad38b",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            0.5,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            640,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w6-pair/b.jpg",
+          "time": 560.0,
+          "preview_time": 559.96,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w6/0013.jpg",
+          "preview_sha256": "a065b95eb3b333211e7e6c18d1bc0820b91eaebe6cb23c86261cd1fdd5bd35f3",
+          "viewport_match_mae": 1.068,
+          "sha256": "b0eb199d9b370e3445fb7e097dc6fa1b6787bc7521ae9f28a84286499eef040e",
+          "size": 55242,
+          "width": 640,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w6-pair/b_source.jpg",
+          "source_frame_sha256": "6c9c4ff4487c021bf9e0e296e99d13fdcc71e1136fbe3fa37c5153834efad38b",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.5,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            640,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "limitation": "same-screen comparison panels",
+      "rule_status": "existing-candidate"
+    },
+    {
+      "id": "lindsay-adler-8e441278778a-w13-pair",
+      "course": "lindsay-adler",
+      "episode": 8,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/8.Posing-Family-Lindsay-Adler.mp4",
+      "video_size": 1440177653,
+      "video_sha256": "da016c197c151676b67992c1d4811804f317cafe28970da249ab167e2706a045",
+      "start": 990.0,
+      "end": 1069.753,
+      "subtitle_output": "lindsay-adler/lindsay-adler-8e441278778a.json",
+      "subtitle_sentence_indices": [
+        311,
+        315
+      ],
+      "rule_id": "P-FRAME-GROUP-PERSPECTIVE",
+      "paraphrase": "后排前倾靠近后，前后排比例更协调",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w13-pair/a.jpg",
+          "time": 1016.0,
+          "preview_time": 1016.0,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8e441278778a-w13/0026.jpg",
+          "preview_sha256": "20b95f3f3e350fbc70cb4d46f597ee713c3df96deb686e616f603717d704273d",
+          "viewport_match_mae": 0.795,
+          "sha256": "0d839d23ad5fb1d0aa0d68be2d6496060d4720608e20c30c5046d46586fdac90",
+          "size": 121231,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w13-pair/a_source.jpg",
+          "source_frame_sha256": "0d839d23ad5fb1d0aa0d68be2d6496060d4720608e20c30c5046d46586fdac90",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w13-pair/b.jpg",
+          "time": 1037.5,
+          "preview_time": 1037.0,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8e441278778a-w13/0047.jpg",
+          "preview_sha256": "698aaf7015b6c7a4e7673d4967729459fc03d762a97815a5d026ff065a90b041",
+          "viewport_match_mae": 0.855,
+          "sha256": "3575b8519ab5055333b15855fbf88a3f5e41a612cba139bc20145766f9f614af",
+          "size": 137588,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w13-pair/b_source.jpg",
+          "source_frame_sha256": "3575b8519ab5055333b15855fbf88a3f5e41a612cba139bc20145766f9f614af",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "lindsay-adler-f448d609680a-w10-pair",
+      "course": "lindsay-adler",
+      "episode": 3,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/3.Posing-Pitfalls-Lindsay-Adler.mp4",
+      "video_size": 1817824290,
+      "video_sha256": "1d42db53d25a33841c0ab38929cd91c22d0354d224ef02c8fecf28a40727fd16",
+      "start": 931.48,
+      "end": 1015.371,
+      "subtitle_output": "lindsay-adler/lindsay-adler-f448d609680a.json",
+      "subtitle_sentence_indices": [
+        294,
+        304,
+        305
+      ],
+      "rule_id": "P-COURSE-ARM-PROJECTION",
+      "paraphrase": "放低肘部后，手臂不再正对镜头缩短",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w10-pair/a.jpg",
+          "time": 985.5,
+          "preview_time": 985.48,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w10/0054.jpg",
+          "preview_sha256": "6d1668bd82ce45ed854b2e847d683e1eb0c413fc60c262b45ede934a08329ddc",
+          "viewport_match_mae": 1.422,
+          "sha256": "453e330d9fdd57a97197129936100aee7627c9d743d8ffc142f6de14266de2bb",
+          "size": 27783,
+          "width": 464,
+          "height": 420,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w10-pair/a_source.jpg",
+          "source_frame_sha256": "527b065d5afdac3b3e680affd1964ee0bc5b246e6005803706328683f657b559",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.017,
+            0.017,
+            0.38,
+            0.6
+          ],
+          "crop_pixels": [
+            22,
+            12,
+            486,
+            432
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w10-pair/b.jpg",
+          "time": 1009.0,
+          "preview_time": 1008.48,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w10/0077.jpg",
+          "preview_sha256": "57f696f9d263769d88deb0064692d8ace607ca090edb49734d4b1edffa0310f4",
+          "viewport_match_mae": 1.56,
+          "sha256": "351d9d941f703fa1300dc03a906f1316d61e3eed8f1423bc853511af41fb7ba6",
+          "size": 28275,
+          "width": 464,
+          "height": 420,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w10-pair/b_source.jpg",
+          "source_frame_sha256": "adb31743d4eb912378dacabcb722013b80aeded764473773788f12388ba43441",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.017,
+            0.017,
+            0.38,
+            0.6
+          ],
+          "crop_pixels": [
+            22,
+            12,
+            486,
+            432
+          ]
+        }
+      },
+      "limitation": "inset photograph",
+      "rule_status": "existing-candidate"
+    },
+    {
+      "id": "lindsay-adler-f448d609680a-w12-pair",
+      "course": "lindsay-adler",
+      "episode": 3,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/3.Posing-Pitfalls-Lindsay-Adler.mp4",
+      "video_size": 1817824290,
+      "video_sha256": "1d42db53d25a33841c0ab38929cd91c22d0354d224ef02c8fecf28a40727fd16",
+      "start": 1078.72,
+      "end": 1164.075,
+      "subtitle_output": "lindsay-adler/lindsay-adler-f448d609680a.json",
+      "subtitle_sentence_indices": [
+        342,
+        343,
+        351
+      ],
+      "rule_id": "P-FRAME-LIMB-PROJECTION",
+      "paraphrase": "坐姿转向侧面后，大腿结构更易辨认",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w12-pair/a.jpg",
+          "time": 1096.5,
+          "preview_time": 1095.72,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w12/0017.jpg",
+          "preview_sha256": "2d61834488cd87e713475c146e4b5b99a2153c2abcd66392e7e111cb432ebbcf",
+          "viewport_match_mae": 1.903,
+          "sha256": "cff365db5bd8eddbb439fe86c28242eef02a1d91da337c82a9341acf342f51a2",
+          "size": 30659,
+          "width": 362,
+          "height": 535,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w12-pair/a_source.jpg",
+          "source_frame_sha256": "db61bdb56875a0756828ccbd96fe821438b91a7e9ed091ffe453e9f59b6a98c3",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.017,
+            0.017,
+            0.3,
+            0.76
+          ],
+          "crop_pixels": [
+            22,
+            12,
+            384,
+            547
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w12-pair/b.jpg",
+          "time": 1155.0,
+          "preview_time": 1155.72,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w12/0077.jpg",
+          "preview_sha256": "c403dc60741c87e6cddcec2049fa1105da7a63b0151b4983edfa52c02710eb63",
+          "viewport_match_mae": 1.618,
+          "sha256": "22168ec451bb899093562820c16c30396449cd57ceab6327c619849afd8a3f5c",
+          "size": 42750,
+          "width": 388,
+          "height": 614,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w12-pair/b_source.jpg",
+          "source_frame_sha256": "92cc9310133d76fbcca1e618be68700f1a4390cd22b59499f9073cb8773640e8",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.017,
+            0.017,
+            0.32,
+            0.87
+          ],
+          "crop_pixels": [
+            22,
+            12,
+            410,
+            626
+          ]
+        }
+      },
+      "limitation": "inset photograph",
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "lindsay-adler-f448d609680a-w17-pair",
+      "course": "lindsay-adler",
+      "episode": 3,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/3.Posing-Pitfalls-Lindsay-Adler.mp4",
+      "video_size": 1817824290,
+      "video_sha256": "1d42db53d25a33841c0ab38929cd91c22d0354d224ef02c8fecf28a40727fd16",
+      "start": 1650.916,
+      "end": 1733.84,
+      "subtitle_output": "lindsay-adler/lindsay-adler-f448d609680a.json",
+      "subtitle_sentence_indices": [
+        504,
+        523
+      ],
+      "rule_id": "P-COURSE-CLOTHING-LINES",
+      "paraphrase": "手臂位置改变后，体侧线条更清楚",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w17-pair/a.jpg",
+          "time": 1651.5,
+          "preview_time": 1650.916,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w17/0000.jpg",
+          "preview_sha256": "612d224232d30ce085026cd5d9caa5cfab7490a9e7dbec1b7ffcbb4389cc0abe",
+          "viewport_match_mae": 1.766,
+          "sha256": "a4d508c3157f656a986a58ef700af9bc42dc86cb453fdb483ba6ccedc5fa6622",
+          "size": 31358,
+          "width": 377,
+          "height": 590,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w17-pair/a_source.jpg",
+          "source_frame_sha256": "c4385f92205e7fb0adc9f04cda5156ce995e9aff24dad6b43c4773ccaff51825",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.02,
+            0.03,
+            0.315,
+            0.85
+          ],
+          "crop_pixels": [
+            26,
+            22,
+            403,
+            612
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w17-pair/b.jpg",
+          "time": 1690.5,
+          "preview_time": 1689.916,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w17/0039.jpg",
+          "preview_sha256": "e03f2f182a05f0e5d3ac9f0282dd4e71de1a4483350ba626a7db6a3829831dcf",
+          "viewport_match_mae": 1.652,
+          "sha256": "83a534f79fe954279f28b223ff3482852fc87c878d538c33b0407c1d25fed386",
+          "size": 30924,
+          "width": 377,
+          "height": 590,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w17-pair/b_source.jpg",
+          "source_frame_sha256": "9b8ea33067fac41d59ba160b378ca46c327db503386d7159eb2c14e2f5b6728a",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.02,
+            0.03,
+            0.315,
+            0.85
+          ],
+          "crop_pixels": [
+            26,
+            22,
+            403,
+            612
+          ]
+        }
+      },
+      "limitation": "inset photograph",
+      "rule_status": "existing-candidate"
+    },
+    {
+      "id": "lindsay-adler-f448d609680a-w23-pair",
+      "course": "lindsay-adler",
+      "episode": 3,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/3.Posing-Pitfalls-Lindsay-Adler.mp4",
+      "video_size": 1817824290,
+      "video_sha256": "1d42db53d25a33841c0ab38929cd91c22d0354d224ef02c8fecf28a40727fd16",
+      "start": 2232.219,
+      "end": 2295.501,
+      "subtitle_output": "lindsay-adler/lindsay-adler-f448d609680a.json",
+      "subtitle_sentence_indices": [
+        671
+      ],
+      "rule_id": "P-COURSE-CLOTHING-LINES",
+      "paraphrase": "手置夹克内收腰后，宽松衣服下腰线可辨",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w23-pair/a.jpg",
+          "time": 2246.5,
+          "preview_time": 2246.219,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w23/0014.jpg",
+          "preview_sha256": "31d9a215e4d78ba0162b7479f5f07c28d8815ab0180011bee610db53c0873a73",
+          "viewport_match_mae": 5.804,
+          "sha256": "167ce9152a602f4a59b9beacd0bcd60ff154d14962fbd8346252364b4eb3f24a",
+          "size": 40106,
+          "width": 640,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w23-pair/a_source.jpg",
+          "source_frame_sha256": "d0122cfd92028024ccf422c22bb38e17cefbc18159e747d2e9e27f34f6b536ca",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.5,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            640,
+            0,
+            1280,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w23-pair/b.jpg",
+          "time": 2286.5,
+          "preview_time": 2286.219,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w23/0054.jpg",
+          "preview_sha256": "5fe55dd2322618922df478a1389983e140d3d802406f0c8ddd9988d414307760",
+          "viewport_match_mae": 3.982,
+          "sha256": "0360ffc734b44ad689536e756e4254a44acaef3260bc9d18a8b09a1d01aedb8d",
+          "size": 43801,
+          "width": 640,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w23-pair/b_source.jpg",
+          "source_frame_sha256": "97da1edfe60d0be748b8c7de0bb73d681ad90002807ba36ac102ce12e7e2eda7",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.5,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            640,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "limitation": "comparison panel; different photographs",
+      "rule_status": "existing-candidate"
+    },
+    {
+      "id": "lindsay-adler-f448d609680a-w34-pair",
+      "course": "lindsay-adler",
+      "episode": 3,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/3.Posing-Pitfalls-Lindsay-Adler.mp4",
+      "video_size": 1817824290,
+      "video_sha256": "1d42db53d25a33841c0ab38929cd91c22d0354d224ef02c8fecf28a40727fd16",
+      "start": 3275.625,
+      "end": 3316.04,
+      "subtitle_output": "lindsay-adler/lindsay-adler-f448d609680a.json",
+      "subtitle_sentence_indices": [
+        964,
+        965
+      ],
+      "rule_id": "P-FACE-EXPRESSION",
+      "paraphrase": "放松额头后，同样微笑的面部张力减轻",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "same-screen-panels",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w34-pair/a.jpg",
+          "time": 3294.0,
+          "preview_time": 3293.625,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w34/0018.jpg",
+          "preview_sha256": "1abccc78405dbd497f751b0efd52d0af80aaf5016c68faefcfcec940311fda96",
+          "viewport_match_mae": 1.153,
+          "sha256": "4a7bd7f5f26f90bd519366b15b893f95079902acd532ac2f251e83e800198a33",
+          "size": 62964,
+          "width": 640,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w34-pair/a_source.jpg",
+          "source_frame_sha256": "e443703b5fc36444a77741a2f4d7f0ec60cb245b4ef5ea06231ea634fdb741db",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            0.5,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            640,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w34-pair/b.jpg",
+          "time": 3294.0,
+          "preview_time": 3293.625,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w34/0018.jpg",
+          "preview_sha256": "1abccc78405dbd497f751b0efd52d0af80aaf5016c68faefcfcec940311fda96",
+          "viewport_match_mae": 1.07,
+          "sha256": "6e543e1bfbd8b233f4cb5cee30fd938d2c8d3eb9e3769bc29639f760b01aa580",
+          "size": 55665,
+          "width": 640,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w34-pair/b_source.jpg",
+          "source_frame_sha256": "e443703b5fc36444a77741a2f4d7f0ec60cb245b4ef5ea06231ea634fdb741db",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.5,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            640,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "limitation": "same-screen comparison panels",
+      "rule_status": "formal"
+    },
+    {
+      "id": "lindsay-adler-8e441278778a-w2-pair",
+      "course": "lindsay-adler",
+      "episode": 8,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/8.Posing-Family-Lindsay-Adler.mp4",
+      "video_size": 1440177653,
+      "video_sha256": "da016c197c151676b67992c1d4811804f317cafe28970da249ab167e2706a045",
+      "start": 108.12,
+      "end": 178.311,
+      "subtitle_output": "lindsay-adler/lindsay-adler-8e441278778a.json",
+      "subtitle_sentence_indices": [
+        30,
+        31,
+        33,
+        41
+      ],
+      "rule_id": "P-COURSE-GROUP-HEAD-LAYERS",
+      "paraphrase": "将竖直堆叠的头位错开后，群体层次更清楚",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w2-pair/a.jpg",
+          "time": 125.5,
+          "preview_time": 125.12,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8e441278778a-w2/0017.jpg",
+          "preview_sha256": "e29dd5675f88db069be7213bad57496df6201e589a8b97a8dd8f43e82ebbfdb3",
+          "viewport_match_mae": 1.798,
+          "sha256": "dd714d59e4256cff5e8ab945f66d5d5159112b8edcf3b271003d3ac6dd93f7d9",
+          "size": 77767,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w2-pair/a_source.jpg",
+          "source_frame_sha256": "0a3ab6e1a0696bf556084e2fbe200e8f4fa6842b6a1bc8b9dbfe7022f6bd386f",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w2-pair/b.jpg",
+          "time": 137.5,
+          "preview_time": 137.12,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8e441278778a-w2/0029.jpg",
+          "preview_sha256": "9f37751fe4650c0a0ddfa11d96f77a35bdf96ba9ccdaeaac067dda2f14f0be5e",
+          "viewport_match_mae": 1.896,
+          "sha256": "fb8262a6d7c180e9863ba3088f060ae3b8732d5391986a92184fac16a2b98fc9",
+          "size": 84833,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w2-pair/b_source.jpg",
+          "source_frame_sha256": "a6b5dec9a8d33c8180362f23c560674b36db5fb5412e67c5a471c7ec4399a43b",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        }
+      },
+      "rule_status": "existing-candidate"
+    },
+    {
+      "id": "lindsay-adler-8e441278778a-w12-pair",
+      "course": "lindsay-adler",
+      "episode": 8,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/8.Posing-Family-Lindsay-Adler.mp4",
+      "video_size": 1440177653,
+      "video_sha256": "da016c197c151676b67992c1d4811804f317cafe28970da249ab167e2706a045",
+      "start": 932.432,
+      "end": 976.977,
+      "subtitle_output": "lindsay-adler/lindsay-adler-8e441278778a.json",
+      "subtitle_sentence_indices": [
+        303,
+        304
+      ],
+      "rule_id": "P-FRAME-GROUP-PERSPECTIVE",
+      "paraphrase": "后退并用长焦后，前后排人物比例更接近",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w12-pair/a.jpg",
+          "time": 941.5,
+          "preview_time": 941.432,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8e441278778a-w12/0009.jpg",
+          "preview_sha256": "b0ee5db9d77a4967fe62483ad08d70acea6e4f1b85a3dccfbb4ff5478334524d",
+          "viewport_match_mae": 1.509,
+          "sha256": "10d448c7b1683cba9b9494c968ab73cf5c63801c98f5c115cfd62a21929e1979",
+          "size": 111109,
+          "width": 973,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w12-pair/a_source.jpg",
+          "source_frame_sha256": "c7d36b78385a9d844747542c482d83ec003bc247c83b7776899163cbf64c2d6b",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.11,
+            0,
+            0.87,
+            1
+          ],
+          "crop_pixels": [
+            141,
+            0,
+            1114,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w12-pair/b.jpg",
+          "time": 944.5,
+          "preview_time": 944.432,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8e441278778a-w12/0012.jpg",
+          "preview_sha256": "52c92fbe66e76edbebcd526b46cf4d975cbf779bcbc78a2378358ef2485432f1",
+          "viewport_match_mae": 1.587,
+          "sha256": "253be39a25c4b2cd7e6874d70f76a1b20d2160fcbcdc1c184ab9ce12abc284f4",
+          "size": 126431,
+          "width": 973,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w12-pair/b_source.jpg",
+          "source_frame_sha256": "4bdcf02df21dfc6ebd5de98b0fcbd6db9eba1b479421671ad1134fc420287140",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.11,
+            0,
+            0.87,
+            1
+          ],
+          "crop_pixels": [
+            141,
+            0,
+            1114,
+            720
+          ]
+        }
+      },
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "lindsay-adler-8e441278778a-w16-pair",
+      "course": "lindsay-adler",
+      "episode": 8,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/8.Posing-Family-Lindsay-Adler.mp4",
+      "video_size": 1440177653,
+      "video_sha256": "da016c197c151676b67992c1d4811804f317cafe28970da249ab167e2706a045",
+      "start": 1234.76,
+      "end": 1307.195,
+      "subtitle_output": "lindsay-adler/lindsay-adler-8e441278778a.json",
+      "subtitle_sentence_indices": [
+        378,
+        388
+      ],
+      "rule_id": "P-BOOK-GROUP-HEAD-LAYERS",
+      "paraphrase": "缩短头位间隙并靠近后，家人联系更明确",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w16-pair/a.jpg",
+          "time": 1235.0,
+          "preview_time": 1234.76,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8e441278778a-w16/0000.jpg",
+          "preview_sha256": "6e6cab956c2e003d9abb5163824adcc3243cdbed8e886640659514c5db601a53",
+          "viewport_match_mae": 2.22,
+          "sha256": "85abd916a9a606ab960f76fcc59a0087f0c815599a9275d0cf0464e136c6e6af",
+          "size": 98476,
+          "width": 614,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w16-pair/a_source.jpg",
+          "source_frame_sha256": "8f0b8b4fb27467f9a3d1944441f46881932a58927d15bd7bc2ad2739708e26f2",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.26,
+            0,
+            0.74,
+            1
+          ],
+          "crop_pixels": [
+            333,
+            0,
+            947,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w16-pair/b.jpg",
+          "time": 1268.0,
+          "preview_time": 1267.76,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8e441278778a-w16/0033.jpg",
+          "preview_sha256": "1825f4ceafb4782d9a4ae1c450ea8c57be5818fb998aa4e217a85704f32bc8b3",
+          "viewport_match_mae": 2.348,
+          "sha256": "cfb94a3bc42ce216b8807aab482389aefa13545a39a0a9c0892198b7956a93d9",
+          "size": 107381,
+          "width": 614,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w16-pair/b_source.jpg",
+          "source_frame_sha256": "5702ec52ae534d78bc3330303da6e11b845af87f760888b6e62bb4c33e522ddb",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.26,
+            0,
+            0.74,
+            1
+          ],
+          "crop_pixels": [
+            333,
+            0,
+            947,
+            720
+          ]
+        }
+      },
+      "rule_status": "existing-candidate"
+    },
+    {
+      "id": "lindsay-adler-991ea3a5e40b-w12-pair",
+      "course": "lindsay-adler",
+      "episode": 11,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/11.Posing-Women2-Lindsay-Adler.mp4",
+      "video_size": 1915612145,
+      "video_sha256": "5c552d3448ef4f69e724c39803a10da10156be1f9a37e573c65b775928f16de5",
+      "start": 1129.75,
+      "end": 1208.702,
+      "subtitle_output": "lindsay-adler/lindsay-adler-991ea3a5e40b.json",
+      "subtitle_sentence_indices": [
+        309,
+        319
+      ],
+      "rule_id": "P-COURSE-CLOTHING-LINES",
+      "paraphrase": "弯肘并留出体侧空隙后，身形线条更清楚",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w12-pair/a.jpg",
+          "time": 1130.0,
+          "preview_time": 1129.75,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-991ea3a5e40b-w12/0000.jpg",
+          "preview_sha256": "c7720725caf9c009f678141d3f9b8e318da3dfe5ebed6f731a6d19a7b5f32af3",
+          "viewport_match_mae": 1.651,
+          "sha256": "55866e1a45508ffb56f49a0514b28a6cdfd4aaffedf24487f3b07124bacaea5b",
+          "size": 68452,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w12-pair/a_source.jpg",
+          "source_frame_sha256": "a92008c51e54465f2587211b9aca04312554bad429186c5f2b5e872a6afc2b7d",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w12-pair/b.jpg",
+          "time": 1159.0,
+          "preview_time": 1157.75,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-991ea3a5e40b-w12/0028.jpg",
+          "preview_sha256": "95c59bae24269e779b7224c3cebce143ee841ed7b7648b7d896abfbff25e967d",
+          "viewport_match_mae": 1.786,
+          "sha256": "c3f016a8f0cf1ecc962cda1a661e9a56636f8ac40d4db3f247f9d398ee07d65b",
+          "size": 68910,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w12-pair/b_source.jpg",
+          "source_frame_sha256": "c36503825c72c35b1ceffec6871eb70d430e758024631b41ad0018c7e0e83373",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        }
+      },
+      "rule_status": "existing-candidate"
+    },
+    {
+      "id": "lindsay-adler-1d1d77f0e4f6-w12-pair",
+      "course": "lindsay-adler",
+      "episode": 10,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/10.Posing-Men-Lindsay-Adler.mp4",
+      "video_size": 825237962,
+      "video_sha256": "a312237e228efc7b9e13bcb77cb137c16dc51ecc07ca4a476d8cdbd63bc32760",
+      "start": 883.7,
+      "end": 969.526,
+      "subtitle_output": "lindsay-adler/lindsay-adler-1d1d77f0e4f6.json",
+      "subtitle_sentence_indices": [
+        272,
+        273,
+        284,
+        287,
+        288,
+        289
+      ],
+      "rule_id": "P-YD-SHOULDER-NECK",
+      "paraphrase": "放低肩膀并微侧身后，站姿更放松",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w12-pair/a.jpg",
+          "time": 903.5,
+          "preview_time": 903.7,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-1d1d77f0e4f6-w12/0020.jpg",
+          "preview_sha256": "43f3111046a26fc915d279df40a7acf7e8013d5971d157d3b19f979dee7b5d5e",
+          "viewport_match_mae": 1.063,
+          "sha256": "7994359aac40314f9dc955ad12faf357df7a1eb422fa71adf3a06d454ebebeac",
+          "size": 54266,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w12-pair/a_source.jpg",
+          "source_frame_sha256": "24aff332f68922fd058f8fb7399a523f37fe6bd8e349be6dab5792e3ef91ea8e",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w12-pair/b.jpg",
+          "time": 906.5,
+          "preview_time": 906.7,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-1d1d77f0e4f6-w12/0023.jpg",
+          "preview_sha256": "cbd58cc4306b01fa533404e1ff599e3a0e1eae490ca59d3a8f99a670a2cc7fb4",
+          "viewport_match_mae": 1.404,
+          "sha256": "0caa61df1c5c4d6d40df1b497c93f2a15fe085760c2b5d61525515c67f2b89ee",
+          "size": 61347,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w12-pair/b_source.jpg",
+          "source_frame_sha256": "c53eebbb36f6074baa8ff35736bb429b5cfad757b823acefecc2b5489664ad21",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        }
+      },
+      "rule_status": "existing-candidate"
+    },
+    {
+      "id": "lindsay-adler-660e71dc7526-w5-pair",
+      "course": "lindsay-adler",
+      "episode": 4,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/4.Steps-to-Posing-Variation-Lindsay-Adler.mp4",
+      "video_size": 1077648305,
+      "video_sha256": "9a415ae1bf617935b11701386b4173b6bda762be3bd00bd8eac1d02224c44d32",
+      "start": 303.12,
+      "end": 385.392,
+      "subtitle_output": "lindsay-adler/lindsay-adler-660e71dc7526.json",
+      "subtitle_sentence_indices": [
+        113,
+        114
+      ],
+      "rule_id": "P-FRAME-LIMB-PROJECTION",
+      "paraphrase": "错开腿位并弯肘后，肢体结构更清楚",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-660e71dc7526-w5-pair/a.jpg",
+          "time": 311.5,
+          "preview_time": 311.12,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-660e71dc7526-w5/0008.jpg",
+          "preview_sha256": "53b52aa138fbdd07e1fef8463cba5a1217b51686bfd2731c4054916c0c810b10",
+          "viewport_match_mae": 3.51,
+          "sha256": "fb5a4ff260690abf0c210e9ff8f933d4602326e9ebba4c861ab69232aed6ec0d",
+          "size": 278821,
+          "width": 1171,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-660e71dc7526-w5-pair/a_source.jpg",
+          "source_frame_sha256": "ab743e58a51adfa4d9f2330258c4c04c6c513b09b1fc41f76249283e60117646",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.045,
+            0,
+            0.96,
+            1
+          ],
+          "crop_pixels": [
+            58,
+            0,
+            1229,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-660e71dc7526-w5-pair/b.jpg",
+          "time": 329.5,
+          "preview_time": 330.12,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-660e71dc7526-w5/0027.jpg",
+          "preview_sha256": "98fa161b70583f75c607617b1feef8bbfe9cda899d7b8ed47b4cf1225640d1a8",
+          "viewport_match_mae": 3.273,
+          "sha256": "26833d3d4b552c27dc0251faa014cc7c52ed8ff05e2bae25c6d51f2b4b944ba9",
+          "size": 247681,
+          "width": 1171,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-660e71dc7526-w5-pair/b_source.jpg",
+          "source_frame_sha256": "62c5b8444f6a6cde8b9962a308472c3718d38f00f0037c0936c8f1df590bf7f2",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.045,
+            0,
+            0.96,
+            1
+          ],
+          "crop_pixels": [
+            58,
+            0,
+            1229,
+            720
+          ]
+        }
+      },
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "lindsay-adler-2a20b12fc14c-w0-pair",
+      "course": "lindsay-adler",
+      "episode": 6,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/6.Posing-Boudoir-Lindsay-Adler.mp4",
+      "video_size": 1187284913,
+      "video_sha256": "75989c938b56e7b57755b441a04f72c85aaa5b7c73d23f99f411cb7aa8b68193",
+      "start": 93.56,
+      "end": 161.337,
+      "subtitle_output": "lindsay-adler/lindsay-adler-2a20b12fc14c.json",
+      "subtitle_sentence_indices": [
+        30,
+        32
+      ],
+      "rule_id": "P-POSE-WEIGHT",
+      "paraphrase": "肩髋相对倾斜后，重心与身体曲线更明确",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-2a20b12fc14c-w0-pair/a.jpg",
+          "time": 115.5,
+          "preview_time": 115.56,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-2a20b12fc14c-w0/0022.jpg",
+          "preview_sha256": "6ffa997e557468d2ddc028fc9c91f4188c2167eede77c7edcae0064a5c80788b",
+          "viewport_match_mae": 1.659,
+          "sha256": "8da9e4542b067fb5bbfdd657b4fe9dbc2a98beeec0e4c91af24b14e0b3df7c44",
+          "size": 63566,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-2a20b12fc14c-w0-pair/a_source.jpg",
+          "source_frame_sha256": "3bf83c7c252163ae5eb2dc5879bfe62889882bcf1bdaa0acafaa50e8d1c1da7f",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-2a20b12fc14c-w0-pair/b.jpg",
+          "time": 136.5,
+          "preview_time": 134.56,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-2a20b12fc14c-w0/0041.jpg",
+          "preview_sha256": "4382038772963fb0ed74f6bb1d3caacfd7d766627f6206812f7ca7f6a4ef242b",
+          "viewport_match_mae": 1.664,
+          "sha256": "977884e1ec20c70b01871c57730902310691436e2611b78cb2ffa1f8d44a1476",
+          "size": 62792,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-2a20b12fc14c-w0-pair/b_source.jpg",
+          "source_frame_sha256": "af702b606a53ab9041899281afa78a0ed1ba709c02147517a3e43f5e66be832e",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        }
+      },
+      "rule_status": "formal"
+    },
+    {
+      "id": "lindsay-adler-2a20b12fc14c-w2-pair",
+      "course": "lindsay-adler",
+      "episode": 6,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/6.Posing-Boudoir-Lindsay-Adler.mp4",
+      "video_size": 1187284913,
+      "video_sha256": "75989c938b56e7b57755b441a04f72c85aaa5b7c73d23f99f411cb7aa8b68193",
+      "start": 341.24,
+      "end": 383.272,
+      "subtitle_output": "lindsay-adler/lindsay-adler-2a20b12fc14c.json",
+      "subtitle_sentence_indices": [
+        116
+      ],
+      "rule_id": "P-FRAME-POSE-ASYMMETRY",
+      "paraphrase": "弯曲一侧膝盖后，卧姿的线条更有变化",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-2a20b12fc14c-w2-pair/a.jpg",
+          "time": 349.0,
+          "preview_time": 349.24,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-2a20b12fc14c-w2/0008.jpg",
+          "preview_sha256": "af3ddb6c5fed8dd95c1a254a65d0052ca4da20d77b873b016ee59bf8bf6d7d04",
+          "viewport_match_mae": 0.752,
+          "sha256": "608ae4a2d8e3f4b53f3cf2fe530f63456f8bae27f8a47ecb1c98688baa0e29ce",
+          "size": 97774,
+          "width": 1100,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-2a20b12fc14c-w2-pair/a_source.jpg",
+          "source_frame_sha256": "bb489124e8db1d80a061a7325688af3df0e6062b63b462678e935b7330af757c",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.07,
+            0,
+            0.93,
+            1
+          ],
+          "crop_pixels": [
+            90,
+            0,
+            1190,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-2a20b12fc14c-w2-pair/b.jpg",
+          "time": 350.5,
+          "preview_time": 350.24,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-2a20b12fc14c-w2/0009.jpg",
+          "preview_sha256": "5aca10857b1e222c394e7414d313d52e43c2327bc6db00b420d230c6cfdffe8d",
+          "viewport_match_mae": 0.664,
+          "sha256": "3df98e0de006b72397ea28e26065f7386ae7b9cbfd36da15f8e19978f459a35d",
+          "size": 92159,
+          "width": 1100,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-2a20b12fc14c-w2-pair/b_source.jpg",
+          "source_frame_sha256": "c67f9cf7cf27ca78d7d7af152ba91b6b18a8edca8c8ae3d7e91a7390b4b546c6",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.07,
+            0,
+            0.93,
+            1
+          ],
+          "crop_pixels": [
+            90,
+            0,
+            1190,
+            720
+          ]
+        }
+      },
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "lindsay-adler-8380d559be78-w12-pair",
+      "course": "lindsay-adler",
+      "episode": 12,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/12.Posing-Women2-Lindsay-Adler.mp4",
+      "video_size": 1737962386,
+      "video_sha256": "f9ed533b24e40be56de91a8f29c101b24a34d3ac7357e5465d0b5f16d3119480",
+      "start": 1022.66,
+      "end": 1107.683,
+      "subtitle_output": "lindsay-adler/lindsay-adler-8380d559be78.json",
+      "subtitle_sentence_indices": [
+        275,
+        281
+      ],
+      "rule_id": "P-FRAME-POSE-CONTOUR",
+      "paraphrase": "坐姿取消叠腿、膝部并拢后，腿部轮廓更流畅",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w12-pair/a.jpg",
+          "time": 1066.5,
+          "preview_time": 1063.66,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8380d559be78-w12/0041.jpg",
+          "preview_sha256": "7123656ab659b15aafe7bdb7a7e64f76a225c6ecfb44286dab608fbcbefff9b6",
+          "viewport_match_mae": 1.797,
+          "sha256": "f0950a14fc473e9232a8f398ff34c29671e6997e78f4036db4ba8250572c592a",
+          "size": 71343,
+          "width": 614,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w12-pair/a_source.jpg",
+          "source_frame_sha256": "620bae114db0e1880ddac4f7a0bf6a9fd01bd7ebdb3d25f589302c424aa38009",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.26,
+            0,
+            0.74,
+            1
+          ],
+          "crop_pixels": [
+            333,
+            0,
+            947,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w12-pair/b.jpg",
+          "time": 1075.5,
+          "preview_time": 1078.66,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8380d559be78-w12/0056.jpg",
+          "preview_sha256": "322264fd288574ca7da41d6e58b98957c38eb0b5b7dbdc6429374213968a1755",
+          "viewport_match_mae": 1.769,
+          "sha256": "c1a5700b080b6d59b069c97db5c4eaf0be9dbe6846b442666e2976e0e2d1cf4b",
+          "size": 70505,
+          "width": 614,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w12-pair/b_source.jpg",
+          "source_frame_sha256": "d3a714485ab8f3f2cae7d547d77c4a66ed56f3105a12a89ccc9d430c80184073",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.26,
+            0,
+            0.74,
+            1
+          ],
+          "crop_pixels": [
+            333,
+            0,
+            947,
+            720
+          ]
+        }
+      },
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "lindsay-adler-8380d559be78-w5-pair",
+      "course": "lindsay-adler",
+      "episode": 12,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/12.Posing-Women2-Lindsay-Adler.mp4",
+      "video_size": 1737962386,
+      "video_sha256": "f9ed533b24e40be56de91a8f29c101b24a34d3ac7357e5465d0b5f16d3119480",
+      "start": 419.38,
+      "end": 494.539,
+      "subtitle_output": "lindsay-adler/lindsay-adler-8380d559be78.json",
+      "subtitle_sentence_indices": [
+        104,
+        114
+      ],
+      "rule_id": "P-FRAME-POSE-ASYMMETRY",
+      "paraphrase": "侧身交错手脚后，呆板的对称姿态减弱",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w5-pair/a.jpg",
+          "time": 442.0,
+          "preview_time": 442.38,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8380d559be78-w5/0023.jpg",
+          "preview_sha256": "b20fad92de442118a1dfcf029b35765417d20dfd8a71bb5884e3a6b973c37d59",
+          "viewport_match_mae": 2.694,
+          "sha256": "c6d6022cec84798c7285d12d1672b74d2895b4fcb2c605f45446077ba3896434",
+          "size": 100160,
+          "width": 460,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w5-pair/a_source.jpg",
+          "source_frame_sha256": "890956eb3d9b405ba62a226fe7dbfa85fc1c65480dbcfa37a781f9c322e7dda1",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.32,
+            0,
+            0.68,
+            1
+          ],
+          "crop_pixels": [
+            410,
+            0,
+            870,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w5-pair/b.jpg",
+          "time": 463.0,
+          "preview_time": 463.38,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8380d559be78-w5/0044.jpg",
+          "preview_sha256": "497e28ad5d22dd804264b8811db20fc465a2ec213b78f058203ea48e363fd299",
+          "viewport_match_mae": 2.039,
+          "sha256": "699cb509cfee2ed730176c66b748de7f4280e584977fc1b8d3f3d5c348c045b5",
+          "size": 78013,
+          "width": 460,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w5-pair/b_source.jpg",
+          "source_frame_sha256": "ce20ca548e64de852dbdf683ea10a9d7a657f333115045db611d5f499ac61a31",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.32,
+            0,
+            0.68,
+            1
+          ],
+          "crop_pixels": [
+            410,
+            0,
+            870,
+            720
+          ]
+        }
+      },
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "lindsay-adler-1d1d77f0e4f6-w8-pair",
+      "course": "lindsay-adler",
+      "episode": 10,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/10.Posing-Men-Lindsay-Adler.mp4",
+      "video_size": 825237962,
+      "video_sha256": "a312237e228efc7b9e13bcb77cb137c16dc51ecc07ca4a476d8cdbd63bc32760",
+      "start": 680.2,
+      "end": 741.456,
+      "subtitle_output": "lindsay-adler/lindsay-adler-1d1d77f0e4f6.json",
+      "subtitle_sentence_indices": [
+        224,
+        225,
+        226,
+        227,
+        228
+      ],
+      "rule_id": "P-POSE-LIMB-HIDDEN",
+      "paraphrase": "将后臂移到前面后，双臂结构更完整",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w8-pair/a.jpg",
+          "time": 692.5,
+          "preview_time": 692.2,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-1d1d77f0e4f6-w8/0012.jpg",
+          "preview_sha256": "3df24cdb6bd220f15ea90b53e161e2881c9218a2d81242af8d1005f0376c8218",
+          "viewport_match_mae": 1.367,
+          "sha256": "cfa6b50d184618b34c5badbd93b700106e17c355a5f79860371417b5c96f872c",
+          "size": 118463,
+          "width": 1005,
+          "height": 692,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w8-pair/a_source.jpg",
+          "source_frame_sha256": "ef08c52090d5c68a287cad6f801742a11b591c3b789ce2b946113b78e0d47901",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.1,
+            0.02,
+            0.885,
+            0.98
+          ],
+          "crop_pixels": [
+            128,
+            14,
+            1133,
+            706
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w8-pair/b.jpg",
+          "time": 711.5,
+          "preview_time": 711.2,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-1d1d77f0e4f6-w8/0031.jpg",
+          "preview_sha256": "9a40bf02dc4f23fde5bcf3fc03b83f03eeb0a13eabe73720ea29291682a2300b",
+          "viewport_match_mae": 1.436,
+          "sha256": "02924f654595d1ac45b4092be82c6e1b7f05bf634e6eeccee3a31d9307c2326a",
+          "size": 123556,
+          "width": 1005,
+          "height": 692,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w8-pair/b_source.jpg",
+          "source_frame_sha256": "ae19e61dabc8e854b10539d1c90fce649d8f0fe7b278cb78cddc201d2435d7e1",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.1,
+            0.02,
+            0.885,
+            0.98
+          ],
+          "crop_pixels": [
+            128,
+            14,
+            1133,
+            706
+          ]
+        }
+      },
+      "rule_status": "formal"
+    },
+    {
+      "id": "lindsay-adler-8e441278778a-w15-pair",
+      "course": "lindsay-adler",
+      "episode": 8,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/8.Posing-Family-Lindsay-Adler.mp4",
+      "video_size": 1440177653,
+      "video_sha256": "da016c197c151676b67992c1d4811804f317cafe28970da249ab167e2706a045",
+      "start": 1186.392,
+      "end": 1270.756,
+      "subtitle_output": "lindsay-adler/lindsay-adler-8e441278778a.json",
+      "subtitle_sentence_indices": [
+        366,
+        370,
+        371,
+        376
+      ],
+      "rule_id": "P-HAND-NATURAL",
+      "paraphrase": "减少叠手与只露指尖后，手位更完整自然",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w15-pair/a.jpg",
+          "time": 1189.0,
+          "preview_time": 1186.392,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8e441278778a-w15/0000.jpg",
+          "preview_sha256": "176cb2c5c4b517aac29b01cce19d33dc5a9ca6a96e78c55ff60bffa5927d9a45",
+          "viewport_match_mae": 2.281,
+          "sha256": "365372d7a1b54b4ef4d3673fe9bb5089b399f53c76b3ae41d276dfaaaae8eee8",
+          "size": 104336,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w15-pair/a_source.jpg",
+          "source_frame_sha256": "47968ed1ef9c978c2fa9987a439eb8ed7d01f89655bf90a95b717198e6f1a09d",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w15-pair/b.jpg",
+          "time": 1202.5,
+          "preview_time": 1202.392,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8e441278778a-w15/0016.jpg",
+          "preview_sha256": "0693cce7dc18690e288024f71abc88ecc6e07d124367a551a88f91a3859b83bb",
+          "viewport_match_mae": 2.275,
+          "sha256": "7b8b23ff53a0106d8ecfa209214a471611fa83789e6787b93fcec29d7fa4ce32",
+          "size": 103473,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8e441278778a-w15-pair/b_source.jpg",
+          "source_frame_sha256": "c54d1e77ce4cc8fb2ab8b093bfbd323c05075089a8a0b9bc8574e369d5085544",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        }
+      },
+      "limitation": "negative photo has teaching overlays",
+      "rule_status": "formal"
+    },
+    {
+      "id": "lindsay-adler-991ea3a5e40b-w3-pair",
+      "course": "lindsay-adler",
+      "episode": 11,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/11.Posing-Women2-Lindsay-Adler.mp4",
+      "video_size": 1915612145,
+      "video_sha256": "5c552d3448ef4f69e724c39803a10da10156be1f9a37e573c65b775928f16de5",
+      "start": 316.085,
+      "end": 390.42,
+      "subtitle_output": "lindsay-adler/lindsay-adler-991ea3a5e40b.json",
+      "subtitle_sentence_indices": [
+        89,
+        90,
+        93
+      ],
+      "rule_id": "P-YD-SHOULDER-NECK",
+      "paraphrase": "移开遮颈头发后，下颌与颈部线条可辨",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w3-pair/a.jpg",
+          "time": 339.5,
+          "preview_time": 339.085,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-991ea3a5e40b-w3/0023.jpg",
+          "preview_sha256": "63c597ea9d2d2ae0dd295edb8751facb29192bc552546df36d92db1b1776e474",
+          "viewport_match_mae": 1.889,
+          "sha256": "67f94accc6b57244bdd060456fe05a656d04a1e51796235f6a6bef92796719a0",
+          "size": 88845,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w3-pair/a_source.jpg",
+          "source_frame_sha256": "56928f539088ca77badb8b4da1d3a9a52e0c55ac1efef899921a680ba94f7632",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w3-pair/b.jpg",
+          "time": 366.0,
+          "preview_time": 366.085,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-991ea3a5e40b-w3/0050.jpg",
+          "preview_sha256": "651299d33206b17ea79854cc7ca11055e1c8de6147122560a45b17fda36babb6",
+          "viewport_match_mae": 1.885,
+          "sha256": "3ea154ed08c4a87adbd73eb8021b1148fe8c40105e76465bb95432e528c2feb8",
+          "size": 69048,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w3-pair/b_source.jpg",
+          "source_frame_sha256": "d691c97118073bea65d7678c4ed1763ecb3676e24d48f504a16d748d3281b90a",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        }
+      },
+      "rule_status": "existing-candidate"
+    },
+    {
+      "id": "lindsay-adler-8380d559be78-w18-pair",
+      "course": "lindsay-adler",
+      "episode": 12,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/12.Posing-Women2-Lindsay-Adler.mp4",
+      "video_size": 1737962386,
+      "video_sha256": "f9ed533b24e40be56de91a8f29c101b24a34d3ac7357e5465d0b5f16d3119480",
+      "start": 1478.445,
+      "end": 1561.964,
+      "subtitle_output": "lindsay-adler/lindsay-adler-8380d559be78.json",
+      "subtitle_sentence_indices": [
+        382,
+        387
+      ],
+      "rule_id": "P-POSE-WEIGHT",
+      "paraphrase": "重心后移并交叉腿位后，身体比例更协调",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w18-pair/a.jpg",
+          "time": 1481.0,
+          "preview_time": 1478.445,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8380d559be78-w18/0000.jpg",
+          "preview_sha256": "8605b129c89a8912c954a2ddaff22ee2bb5af582b26e840dd4232c1c7b04f02d",
+          "viewport_match_mae": 2.866,
+          "sha256": "b1af77d9a74d312fb27a4b7f455ae34a10d090239538fa7f49af35877adf950a",
+          "size": 112654,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w18-pair/a_source.jpg",
+          "source_frame_sha256": "0b3401031d86ab0addffca3f4d6083e8d4bc4c1842fdc381d486078648ec1a74",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w18-pair/b.jpg",
+          "time": 1494.5,
+          "preview_time": 1493.445,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8380d559be78-w18/0015.jpg",
+          "preview_sha256": "72d78ed11d4184c277e79b4e9dda6821ff9a6e437edba7440068d3ee189e6443",
+          "viewport_match_mae": 2.698,
+          "sha256": "4501682a315953cc6a1074beac12b3febff147a8bfe035691e2ddf0bf9f43615",
+          "size": 103731,
+          "width": 512,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w18-pair/b_source.jpg",
+          "source_frame_sha256": "c46233bb2d34adcc4b1268ecdd3ce00712531854a6f29273bd91b567759dba6a",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.3,
+            0,
+            0.7,
+            1
+          ],
+          "crop_pixels": [
+            384,
+            0,
+            896,
+            720
+          ]
+        }
+      },
+      "limitation": "negative photo has teaching overlays",
+      "rule_status": "formal"
+    },
+    {
+      "id": "lindsay-adler-f448d609680a-w20-21-pair",
+      "course": "lindsay-adler",
+      "episode": 3,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/3.Posing-Pitfalls-Lindsay-Adler.mp4",
+      "video_size": 1817824290,
+      "video_sha256": "1d42db53d25a33841c0ab38929cd91c22d0354d224ef02c8fecf28a40727fd16",
+      "start": 2021.5,
+      "end": 2085.2,
+      "subtitle_output": "lindsay-adler/lindsay-adler-f448d609680a.json",
+      "subtitle_sentence_indices": [
+        605,
+        606,
+        607,
+        608,
+        609,
+        610,
+        611,
+        612,
+        613,
+        614,
+        615,
+        616,
+        617,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624
+      ],
+      "rule_id": "P-COURSE-CLOTHING-LINES",
+      "paraphrase": "手臂向内弯曲塑形后，衣服下体侧线更清楚",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w20-21-pair/a.jpg",
+          "time": 2025.5,
+          "preview_time": 2025.5,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w20/0004.jpg",
+          "preview_sha256": "79819139294652270d4d26de8d80f3d93b445e829cf363640b0493e8bbf3eefc",
+          "viewport_match_mae": 1.757,
+          "sha256": "ddf39b02aeb222566480195986edb288206c06f5b0dbbd435c10e899b68d9bf5",
+          "size": 36286,
+          "width": 403,
+          "height": 620,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w20-21-pair/a_source.jpg",
+          "source_frame_sha256": "e090bd055f633fec765770161c15044eea74d314824c1de02bb52ffb7a15af7f",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.015,
+            0.02,
+            0.33,
+            0.88
+          ],
+          "crop_pixels": [
+            19,
+            14,
+            422,
+            634
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w20-21-pair/b.jpg",
+          "time": 2069.0,
+          "preview_time": 2068.38,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-f448d609680a-w21/0003.jpg",
+          "preview_sha256": "24b7f1fe6827aa6307c31b8582ee00aa779cd53bfca3e5a490a4e25394ab739e",
+          "viewport_match_mae": 1.677,
+          "sha256": "7757125fea9cc66b72066d0f4d6ac3989e1d115bba8e7ac0af38648bfcb747da",
+          "size": 35257,
+          "width": 403,
+          "height": 620,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-f448d609680a-w20-21-pair/b_source.jpg",
+          "source_frame_sha256": "77c6831f67f576a8b61b2f58d607e8d75f152dd637f26e1a99c06785903a7bb3",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.015,
+            0.02,
+            0.33,
+            0.88
+          ],
+          "crop_pixels": [
+            19,
+            14,
+            422,
+            634
+          ]
+        }
+      },
+      "limitation": "inset photograph; joined adjacent subtitle windows",
+      "rule_status": "existing-candidate"
+    },
+    {
+      "id": "lindsay-adler-1d1d77f0e4f6-w6-pair",
+      "course": "lindsay-adler",
+      "episode": 10,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/10.Posing-Men-Lindsay-Adler.mp4",
+      "video_size": 825237962,
+      "video_sha256": "a312237e228efc7b9e13bcb77cb137c16dc51ecc07ca4a476d8cdbd63bc32760",
+      "start": 551.98,
+      "end": 637.992,
+      "subtitle_output": "lindsay-adler/lindsay-adler-1d1d77f0e4f6.json",
+      "subtitle_sentence_indices": [
+        160,
+        163,
+        164,
+        165,
+        166,
+        169,
+        180
+      ],
+      "rule_id": "P-FRAME-POSE-ASYMMETRY",
+      "paraphrase": "抬高后脚并改变膝位，坐姿更有层次",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w6-pair/a.jpg",
+          "time": 598.0,
+          "preview_time": 597.98,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-1d1d77f0e4f6-w6/0046.jpg",
+          "preview_sha256": "3a62bdc5aa6da3e14d4933ed1031252a385c6cea784ac27abe0a4244408c01b7",
+          "viewport_match_mae": 0.319,
+          "sha256": "164583c48de2ed513046826b447edc92a79a98510b8b2cdf1744986baac0dc65",
+          "size": 67150,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w6-pair/a_source.jpg",
+          "source_frame_sha256": "164583c48de2ed513046826b447edc92a79a98510b8b2cdf1744986baac0dc65",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w6-pair/b.jpg",
+          "time": 606.5,
+          "preview_time": 607.98,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-1d1d77f0e4f6-w6/0056.jpg",
+          "preview_sha256": "768b37343c0336044968484b0ddf7c643f52499f8ea831eb4c5fbbaff5c5acc9",
+          "viewport_match_mae": 0.318,
+          "sha256": "29842d79b570dd596261d131b3a5f47036135be8dfc1d55940d1368be83022e0",
+          "size": 66666,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-1d1d77f0e4f6-w6-pair/b_source.jpg",
+          "source_frame_sha256": "29842d79b570dd596261d131b3a5f47036135be8dfc1d55940d1368be83022e0",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "limitation": "specific dynamic-pose objective; hands also change",
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "lindsay-adler-991ea3a5e40b-w5-pair",
+      "course": "lindsay-adler",
+      "episode": 11,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/11.Posing-Women2-Lindsay-Adler.mp4",
+      "video_size": 1915612145,
+      "video_sha256": "5c552d3448ef4f69e724c39803a10da10156be1f9a37e573c65b775928f16de5",
+      "start": 514.42,
+      "end": 563.928,
+      "subtitle_output": "lindsay-adler/lindsay-adler-991ea3a5e40b.json",
+      "subtitle_sentence_indices": [
+        133,
+        136,
+        137
+      ],
+      "rule_id": "P-FRAME-POSE-CONTOUR",
+      "paraphrase": "提高机位并前倾上身，改变躯干比例",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w5-pair/a.jpg",
+          "time": 516.5,
+          "preview_time": 519.42,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-991ea3a5e40b-w5/0005.jpg",
+          "preview_sha256": "5972ee5e952b90d54955aaaa7dddc508d614c364a3c40f8d46b637b54761baaf",
+          "viewport_match_mae": 0.476,
+          "sha256": "5592b532112114e020a9aa5be63a8816a3dfa929d49509c3d6c59194eb2dbe97",
+          "size": 70527,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w5-pair/a_source.jpg",
+          "source_frame_sha256": "5592b532112114e020a9aa5be63a8816a3dfa929d49509c3d6c59194eb2dbe97",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w5-pair/b.jpg",
+          "time": 534.5,
+          "preview_time": 533.42,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-991ea3a5e40b-w5/0019.jpg",
+          "preview_sha256": "3caf84b433feb95ad3e572f6c6723d1f127a608b125a5bc285b6a52307c17ec4",
+          "viewport_match_mae": 0.48,
+          "sha256": "d6a71f26928cca0d2c0822d270e479e35a65587c74c584603eae99cea1b62d3e",
+          "size": 72047,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w5-pair/b_source.jpg",
+          "source_frame_sha256": "d6a71f26928cca0d2c0822d270e479e35a65587c74c584603eae99cea1b62d3e",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "limitation": "camera angle and pose jointly change; teacher-specific contour objective",
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "lindsay-adler-991ea3a5e40b-w10-pair",
+      "course": "lindsay-adler",
+      "episode": 11,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/11.Posing-Women2-Lindsay-Adler.mp4",
+      "video_size": 1915612145,
+      "video_sha256": "5c552d3448ef4f69e724c39803a10da10156be1f9a37e573c65b775928f16de5",
+      "start": 878.92,
+      "end": 942.678,
+      "subtitle_output": "lindsay-adler/lindsay-adler-991ea3a5e40b.json",
+      "subtitle_sentence_indices": [
+        237,
+        239,
+        242
+      ],
+      "rule_id": "P-POSE-WEIGHT",
+      "paraphrase": "转动脚位、重心后移并前倾，塑造站姿",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w10-pair/a.jpg",
+          "time": 922.5,
+          "preview_time": 921.92,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-991ea3a5e40b-w10/0043.jpg",
+          "preview_sha256": "c24760762ae4a6cf3aa5b06a0eb835ef35b39274e158661be359816921de41cf",
+          "viewport_match_mae": 0.376,
+          "sha256": "45ec2cd8b74376ec57154a7216ba4139f6cf480fe6e8dc70c91f222b19ec04f0",
+          "size": 55273,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w10-pair/a_source.jpg",
+          "source_frame_sha256": "45ec2cd8b74376ec57154a7216ba4139f6cf480fe6e8dc70c91f222b19ec04f0",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w10-pair/b.jpg",
+          "time": 933.0,
+          "preview_time": 932.92,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-991ea3a5e40b-w10/0054.jpg",
+          "preview_sha256": "0a0f1b2778c918f51ccf504f858bb1897f134a56a301d085fd2de9e68535a338",
+          "viewport_match_mae": 0.359,
+          "sha256": "a123e478cb33738b1527a88edf6dcc2fb155cce37bbc417a527e6bbac569da4f",
+          "size": 55702,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-991ea3a5e40b-w10-pair/b_source.jpg",
+          "source_frame_sha256": "a123e478cb33738b1527a88edf6dcc2fb155cce37bbc417a527e6bbac569da4f",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "limitation": "multi-step pose changes; teacher-specific contour objective",
+      "rule_status": "formal"
+    },
+    {
+      "id": "lindsay-adler-8380d559be78-w8-pair",
+      "course": "lindsay-adler",
+      "episode": 12,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/12.Posing-Women2-Lindsay-Adler.mp4",
+      "video_size": 1737962386,
+      "video_sha256": "f9ed533b24e40be56de91a8f29c101b24a34d3ac7357e5465d0b5f16d3119480",
+      "start": 632.463,
+      "end": 674.375,
+      "subtitle_output": "lindsay-adler/lindsay-adler-8380d559be78.json",
+      "subtitle_sentence_indices": [
+        162,
+        163
+      ],
+      "rule_id": "P-POSE-WEIGHT",
+      "paraphrase": "膝盖交叠并转移重心，直立姿势出现曲线",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w8-pair/a.jpg",
+          "time": 663.0,
+          "preview_time": 662.463,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8380d559be78-w8/0030.jpg",
+          "preview_sha256": "da4fbd375809e4266ceb8c6f67d613a522a9243770fe6c2bbe8e39d90c927ad5",
+          "viewport_match_mae": 0.294,
+          "sha256": "993e0b9ce4b1b8ec947a44ce7f5e708c4453bbe25827a0223499fba7e354cee5",
+          "size": 52068,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w8-pair/a_source.jpg",
+          "source_frame_sha256": "993e0b9ce4b1b8ec947a44ce7f5e708c4453bbe25827a0223499fba7e354cee5",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w8-pair/b.jpg",
+          "time": 664.5,
+          "preview_time": 664.463,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8380d559be78-w8/0032.jpg",
+          "preview_sha256": "9c9a2e96298676d4978e5f51e826e523a4bedc7c218a8cc454f1582c6cdaa48a",
+          "viewport_match_mae": 0.254,
+          "sha256": "11d5402c824aa1010b16678562c2a4ffa10e1265f91bf51635ff0a62fb71a1be",
+          "size": 49184,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w8-pair/b_source.jpg",
+          "source_frame_sha256": "11d5402c824aa1010b16678562c2a4ffa10e1265f91bf51635ff0a62fb71a1be",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "rule_status": "formal"
+    },
+    {
+      "id": "lindsay-adler-8380d559be78-w11-pair",
+      "course": "lindsay-adler",
+      "episode": 12,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/12.Posing-Women2-Lindsay-Adler.mp4",
+      "video_size": 1737962386,
+      "video_sha256": "f9ed533b24e40be56de91a8f29c101b24a34d3ac7357e5465d0b5f16d3119480",
+      "start": 871.3,
+      "end": 941.2,
+      "subtitle_output": "lindsay-adler/lindsay-adler-8380d559be78.json",
+      "subtitle_sentence_indices": [
+        225,
+        233
+      ],
+      "rule_id": "P-FRAME-POSE-CONTOUR",
+      "paraphrase": "膝盖由外转内并交叠，轮廓出现曲线",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w11-pair/a.jpg",
+          "time": 874.0,
+          "preview_time": 876.3,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8380d559be78-w11/0005.jpg",
+          "preview_sha256": "9de6ff44ab6da711ef310a64c1b799422d6596d2e0da1c0d4af037e65b9eddcb",
+          "viewport_match_mae": 0.372,
+          "sha256": "2c851bd1f1bf85230ee2d99ef55329e2c8b8d2e960c5afe258e17df6c40536cf",
+          "size": 55955,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w11-pair/a_source.jpg",
+          "source_frame_sha256": "2c851bd1f1bf85230ee2d99ef55329e2c8b8d2e960c5afe258e17df6c40536cf",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w11-pair/b.jpg",
+          "time": 903.5,
+          "preview_time": 904.3,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-8380d559be78-w11/0033.jpg",
+          "preview_sha256": "16b8856e1b5577fe128c546bda05164d20a8a3f7aedc48c226d89d54d6bea0c7",
+          "viewport_match_mae": 0.385,
+          "sha256": "f2d6ac59894239873c99dc8cc2c8bbe15c36149c46869f45f65bf4291c95d99d",
+          "size": 58015,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-8380d559be78-w11-pair/b_source.jpg",
+          "source_frame_sha256": "f2d6ac59894239873c99dc8cc2c8bbe15c36149c46869f45f65bf4291c95d99d",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "limitation": "teacher-specific contour objective; not universal body preference",
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "lindsay-adler-3642b95c1da0-w11-pair",
+      "course": "lindsay-adler",
+      "episode": 2,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/2.Posing-Faces-Lindsay-Adler.mp4",
+      "video_size": 1349652410,
+      "video_sha256": "022f782a85557588f757db25d82e2cfa0fbf37f310ca437d68283fff5c3c13c8",
+      "start": 1010.52,
+      "end": 1068.21,
+      "subtitle_output": "lindsay-adler/lindsay-adler-3642b95c1da0.json",
+      "subtitle_sentence_indices": [
+        312,
+        317
+      ],
+      "rule_id": "P-YD-SHOULDER-NECK",
+      "paraphrase": "转动下巴与肩膀，显露颈部并舒展眼神",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-3642b95c1da0-w11-pair/a.jpg",
+          "time": 1013.0,
+          "preview_time": 1015.52,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-3642b95c1da0-w11/0005.jpg",
+          "preview_sha256": "305a16f7006c4ae36abb801199fc98bbdea4691cd3be767b7743801489263442",
+          "viewport_match_mae": 0.734,
+          "sha256": "2dd9606b2e14174e1cfbbbef50f60a1440eb3ae740e73d8329c4ee5f04d258d6",
+          "size": 160150,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-3642b95c1da0-w11-pair/a_source.jpg",
+          "source_frame_sha256": "2dd9606b2e14174e1cfbbbef50f60a1440eb3ae740e73d8329c4ee5f04d258d6",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-3642b95c1da0-w11-pair/b.jpg",
+          "time": 1033.5,
+          "preview_time": 1035.52,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-3642b95c1da0-w11/0025.jpg",
+          "preview_sha256": "6d9527270bbdf04742fc482859ed05964206a7403cccbecf002b3b9ebb3d9f2f",
+          "viewport_match_mae": 0.717,
+          "sha256": "a589700cb35cfd113b3ce31b7fc4d4613ed89fcb1ba9d083d863810c286ada7d",
+          "size": 141028,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-3642b95c1da0-w11-pair/b_source.jpg",
+          "source_frame_sha256": "a589700cb35cfd113b3ce31b7fc4d4613ed89fcb1ba9d083d863810c286ada7d",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "rule_status": "existing-candidate"
+    },
+    {
+      "id": "lindsay-adler-e22286f03ed1-w9-pair",
+      "course": "lindsay-adler",
+      "episode": 5,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/5.What-the-camera-sees-Lindsay-Adler.mp4",
+      "video_size": 1225105240,
+      "video_sha256": "ca3b5233ae9ea1f72a8b2278045defe8df3b6a6dc26c2d61c118ddc9dc723a9b",
+      "start": 1296.386,
+      "end": 1368.64,
+      "subtitle_output": "lindsay-adler/lindsay-adler-e22286f03ed1.json",
+      "subtitle_sentence_indices": [
+        382,
+        387,
+        394
+      ],
+      "rule_id": "P-CROP-WRIST",
+      "paraphrase": "改用头部特写，避开手腕关节处截断",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-e22286f03ed1-w9-pair/a.jpg",
+          "time": 1297.5,
+          "preview_time": 1296.386,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-e22286f03ed1-w9/0000.jpg",
+          "preview_sha256": "1f1b9145f1e4a9c63ad18a675f42ab620c4f33c2320fb98989d9b319dbe12c10",
+          "viewport_match_mae": 0.527,
+          "sha256": "6dd328700a6a12fd4989bdfb26dac4c55363e2e617f3397a578707ce44922bef",
+          "size": 98576,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-e22286f03ed1-w9-pair/a_source.jpg",
+          "source_frame_sha256": "6dd328700a6a12fd4989bdfb26dac4c55363e2e617f3397a578707ce44922bef",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-e22286f03ed1-w9-pair/b.jpg",
+          "time": 1310.0,
+          "preview_time": 1311.386,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-e22286f03ed1-w9/0015.jpg",
+          "preview_sha256": "b8736a28195203623b6e6d732ae0c4f12068771e8ead680ef6f5ec629ce07060",
+          "viewport_match_mae": 0.527,
+          "sha256": "906c9c45ba0301944b2d96074363bfc4ae8605e3f7e8bc9eb28e1bf07b66269f",
+          "size": 120639,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-e22286f03ed1-w9-pair/b_source.jpg",
+          "source_frame_sha256": "906c9c45ba0301944b2d96074363bfc4ae8605e3f7e8bc9eb28e1bf07b66269f",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "limitation": "teaching arrows on negative; changes field of view and aspect ratio",
+      "rule_status": "formal"
+    },
+    {
+      "id": "lindsay-adler-2a20b12fc14c-w9-pair",
+      "course": "lindsay-adler",
+      "episode": 6,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/6.Posing-Boudoir-Lindsay-Adler.mp4",
+      "video_size": 1187284913,
+      "video_sha256": "75989c938b56e7b57755b441a04f72c85aaa5b7c73d23f99f411cb7aa8b68193",
+      "start": 1168.347,
+      "end": 1238.834,
+      "subtitle_output": "lindsay-adler/lindsay-adler-2a20b12fc14c.json",
+      "subtitle_sentence_indices": [
+        345,
+        356
+      ],
+      "rule_id": "P-FRAME-POSE-CONTOUR",
+      "paraphrase": "转动身体朝向，改变腹部与腿部轮廓",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-2a20b12fc14c-w9-pair/a.jpg",
+          "time": 1199.5,
+          "preview_time": 1199.347,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-2a20b12fc14c-w9/0031.jpg",
+          "preview_sha256": "191059a2bdfc6a771f017e716daf7d6b276ee690089bd5229699d5b15035b5d0",
+          "viewport_match_mae": 0.383,
+          "sha256": "ab8f3143d4a858ca926cb22946d18584d685a5fbbcd4e20a1e6334fa057bd0ee",
+          "size": 64270,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-2a20b12fc14c-w9-pair/a_source.jpg",
+          "source_frame_sha256": "ab8f3143d4a858ca926cb22946d18584d685a5fbbcd4e20a1e6334fa057bd0ee",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-2a20b12fc14c-w9-pair/b.jpg",
+          "time": 1221.5,
+          "preview_time": 1221.347,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-2a20b12fc14c-w9/0053.jpg",
+          "preview_sha256": "da8561e99e55ee68988140495921a8fdfd21aaae8ac2c8486281caf10d6a8ecc",
+          "viewport_match_mae": 0.424,
+          "sha256": "4f16b79f99593c68b1461b0e669398e46a8e981f38cf47a1a7a8ba635145f02c",
+          "size": 70109,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-2a20b12fc14c-w9-pair/b_source.jpg",
+          "source_frame_sha256": "4f16b79f99593c68b1461b0e669398e46a8e981f38cf47a1a7a8ba635145f02c",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "limitation": "teacher-specific contour objective; exaggerated demonstration",
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "lindsay-adler-18b2e61aa6b5-w3-pair",
+      "course": "lindsay-adler",
+      "episode": 7,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/7.Posing-Couples_Lindsay-Adler.mp4",
+      "video_size": 1199879531,
+      "video_sha256": "d257f682b138219b33dfd5ff1f09e6fa0f0d3858a53fba00a6bba19880dddab0",
+      "start": 267.215,
+      "end": 356.196,
+      "subtitle_output": "lindsay-adler/lindsay-adler-18b2e61aa6b5.json",
+      "subtitle_sentence_indices": [
+        86,
+        94,
+        95,
+        99,
+        107
+      ],
+      "rule_id": "P-FRAME-POSE-ASYMMETRY",
+      "paraphrase": "把手从腰部移到肩部，形成不对称线条",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-18b2e61aa6b5-w3-pair/a.jpg",
+          "time": 275.0,
+          "preview_time": 275.215,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-18b2e61aa6b5-w3/0008.jpg",
+          "preview_sha256": "f065e6c4fa542e937d256b1bb0c4350954188ad5440645e9c246c3e2a9a6db1a",
+          "viewport_match_mae": 0.611,
+          "sha256": "6a6df70dbe9aaa748bbf53a22f39bf19a71b818e51d7ca12125fe1d68d7fd449",
+          "size": 95350,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-18b2e61aa6b5-w3-pair/a_source.jpg",
+          "source_frame_sha256": "6a6df70dbe9aaa748bbf53a22f39bf19a71b818e51d7ca12125fe1d68d7fd449",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-18b2e61aa6b5-w3-pair/b.jpg",
+          "time": 285.5,
+          "preview_time": 285.215,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-18b2e61aa6b5-w3/0018.jpg",
+          "preview_sha256": "69bc9c3ff4a57f217e5104ca620e515255997c6d12241b995f8575743803a4f3",
+          "viewport_match_mae": 0.618,
+          "sha256": "6bd915ba23235857d1d9ea0ce04af388f3a43d1ad641b6541f64266f90680bd1",
+          "size": 94446,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-18b2e61aa6b5-w3-pair/b_source.jpg",
+          "source_frame_sha256": "6bd915ba23235857d1d9ea0ce04af388f3a43d1ad641b6541f64266f90680bd1",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "limitation": "couple pose; multiple gestures differ",
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "michele-celentano-0ae87289202c-w4-pair",
+      "course": "michele-celentano",
+      "episode": 79,
+      "video_remote_rel": "courses/01-人像姿势/Michele Celentano-家庭与群体摆姿/06-Contemporary Studio/08 TPM180421_MicheleCelentanoContemporaryStudio_02F1_MonroeFamilyPortraitDarkBackdr.mp4",
+      "video_size": 69724610,
+      "video_sha256": "5fe8396ee1ff6ec9f8580a89a0a49a2761df55984e47d434af225fa701b761e9",
+      "start": 332.845,
+      "end": 388.545,
+      "subtitle_output": "michele-celentano/michele-celentano-0ae87289202c.json",
+      "subtitle_sentence_indices": [
+        136,
+        137,
+        139,
+        140
+      ],
+      "rule_id": "P-FRAME-HEAD-DIRECTION",
+      "paraphrase": "降低右侧人物下巴，头向与群体更协调",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-0ae87289202c-w4-pair/a.jpg",
+          "time": 354.0,
+          "preview_time": 353.845,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-0ae87289202c-w4/0021.jpg",
+          "preview_sha256": "e575b1f12a0df3721bed33c7e95826ea6ee71543db09626a556d984d085873bd",
+          "viewport_match_mae": 2.482,
+          "sha256": "ee0574c6cc3efefafe2c2e0433b59627c17ff98271dc39381e5b7ea169948350",
+          "size": 97341,
+          "width": 756,
+          "height": 541,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-0ae87289202c-w4-pair/a_source.jpg",
+          "source_frame_sha256": "f9c8182b3668e9cd4975a293f40783732e259f10314ba6910d7fcfbfcc658c78",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.205,
+            0.065,
+            0.795,
+            0.817
+          ],
+          "crop_pixels": [
+            262,
+            47,
+            1018,
+            588
+          ]
+        },
+        "b": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-0ae87289202c-w4-pair/b.jpg",
+          "time": 356.5,
+          "preview_time": 356.845,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-0ae87289202c-w4/0024.jpg",
+          "preview_sha256": "a8620c32c7265c45ed7232514f89a99d7e0897d51a9ee9e2dd9f05c755618b9a",
+          "viewport_match_mae": 2.5,
+          "sha256": "2074bfc61257bd9d799ec1e5beebab9fa7d03a8cc74eaf2c2ae53c9ade6f4d64",
+          "size": 97760,
+          "width": 756,
+          "height": 541,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-0ae87289202c-w4-pair/b_source.jpg",
+          "source_frame_sha256": "9c14bec04673e18b01e7715c6a8fe5549a6b1879ffd2a9bf509d6607909518e7",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.205,
+            0.065,
+            0.795,
+            0.817
+          ],
+          "crop_pixels": [
+            262,
+            47,
+            1018,
+            588
+          ]
+        }
+      },
+      "limitation": "screen recording; instructor-specific head-direction preference; expressions also change",
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "michele-celentano-f00986d2f326-w14-pair",
+      "course": "michele-celentano",
+      "episode": 80,
+      "video_remote_rel": "courses/01-人像姿势/Michele Celentano-家庭与群体摆姿/06-Contemporary Studio/09 TPM180421_MicheleCelentanoContemporaryStudio_03F1_MonroeFamilyPortraitBrownBackd.mp4",
+      "video_size": 150249987,
+      "video_sha256": "6f94faed65d4e1da57a2a51eadf6a7383211d98f1b8fcd612907431f2c05bf1f",
+      "start": 1489.595,
+      "end": 1569.065,
+      "subtitle_output": "michele-celentano/michele-celentano-f00986d2f326.json",
+      "subtitle_sentence_indices": [
+        633,
+        634,
+        638
+      ],
+      "rule_id": "P-FRAME-HEAD-DIRECTION",
+      "paraphrase": "减少侧向歪头，符合讲师指定的有力姿态",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-f00986d2f326-w14-pair/a.jpg",
+          "time": 1537.5,
+          "preview_time": 1534.595,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-f00986d2f326-w14/0045.jpg",
+          "preview_sha256": "da06858f6f4268422de3d73ac5d5cf6edef583ce747e754ddf0323778509b8d6",
+          "viewport_match_mae": 2.007,
+          "sha256": "56178b8e56a71c913d8782a983bb8bc54027250daa45fa3cc932aef54e261401",
+          "size": 42129,
+          "width": 390,
+          "height": 619,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-f00986d2f326-w14-pair/a_source.jpg",
+          "source_frame_sha256": "814f6366fbfe2ffffa8978f43f40bb1539ae9eb0ffaae9eff4d90dad7ab4e6f3",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.285,
+            0.065,
+            0.59,
+            0.925
+          ],
+          "crop_pixels": [
+            365,
+            47,
+            755,
+            666
+          ]
+        },
+        "b": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-f00986d2f326-w14-pair/b.jpg",
+          "time": 1509.0,
+          "preview_time": 1509.595,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-f00986d2f326-w14/0020.jpg",
+          "preview_sha256": "e56520d357c625114897123f68e8c22796c2f472f3fbe1306300a7f45f26d019",
+          "viewport_match_mae": 2.026,
+          "sha256": "4d6e7a45aab4267b559e81eddc578bdc8e536f2f2838229678dda807a65180fc",
+          "size": 43465,
+          "width": 390,
+          "height": 619,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-f00986d2f326-w14-pair/b_source.jpg",
+          "source_frame_sha256": "196db0c3a1f1dab5159d916aaf41c0afa4b068a0c9d23a05adc00f5389108a8c",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.285,
+            0.065,
+            0.59,
+            0.925
+          ],
+          "crop_pixels": [
+            365,
+            47,
+            755,
+            666
+          ]
+        }
+      },
+      "limitation": "screen recording; personality-specific teaching objective, not a gender norm",
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "michele-celentano-3893500f3eee-w2-pair",
+      "course": "michele-celentano",
+      "episode": 83,
+      "video_remote_rel": "courses/01-人像姿势/Michele Celentano-家庭与群体摆姿/07-Multi-Generation/03 TPM180419_MichelleCeletanoFamiglia_02D1_CarvajlFamily_1080p.mp4",
+      "video_size": 282084552,
+      "video_sha256": "1b2929eedc4ad7107f5905cb6a0d567012d33151eb0fd4c90a901059df12a9c1",
+      "start": 504.88,
+      "end": 549.64,
+      "subtitle_output": "michele-celentano/michele-celentano-3893500f3eee.json",
+      "subtitle_sentence_indices": [
+        432,
+        433
+      ],
+      "rule_id": "P-HAND-NATURAL",
+      "paraphrase": "松开爪状手指并弯腕，手势更柔和",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-3893500f3eee-w2-pair/a.jpg",
+          "time": 527.0,
+          "preview_time": 526.88,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-3893500f3eee-w2/0022.jpg",
+          "preview_sha256": "6f30c84b5a2484ec7b4cdb3ad38f1fa6c05df86504f9e7a99870a78e2390e56b",
+          "viewport_match_mae": 2.879,
+          "sha256": "13f09c96267feb52d04002cb03b8fd8ec11663d9333af79fed10db73dc693b1b",
+          "size": 50241,
+          "width": 595,
+          "height": 388,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-3893500f3eee-w2-pair/a_source.jpg",
+          "source_frame_sha256": "20f39b7078b9536d822493f1a4ad1dad2d81cc46d2e0c2c587255a9d8938ba0a",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.515,
+            0.23,
+            0.98,
+            0.77
+          ],
+          "crop_pixels": [
+            659,
+            166,
+            1254,
+            554
+          ]
+        },
+        "b": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-3893500f3eee-w2-pair/b.jpg",
+          "time": 543.0,
+          "preview_time": 542.88,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-3893500f3eee-w2/0038.jpg",
+          "preview_sha256": "19cc617198b33d44d23eb022707bc626b2e18e70e11889278ef6c0d7006101af",
+          "viewport_match_mae": 2.838,
+          "sha256": "9af8ac3fed2bbf0c5d7259cf546c88c99a83eed1f50e4d288fd6c8577d7b319a",
+          "size": 50739,
+          "width": 595,
+          "height": 388,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-3893500f3eee-w2-pair/b_source.jpg",
+          "source_frame_sha256": "be6389366f9d416593af30413d5bfa8fcdf51cdd36cf9c103bdd7f4038ba01a7",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.515,
+            0.23,
+            0.98,
+            0.77
+          ],
+          "crop_pixels": [
+            659,
+            166,
+            1254,
+            554
+          ]
+        }
+      },
+      "limitation": "inset photograph; leaning and expression also change",
+      "rule_status": "formal"
+    },
+    {
+      "id": "michele-celentano-46b4196a2168-w0-pair",
+      "course": "michele-celentano",
+      "episode": 40,
+      "video_remote_rel": "courses/01-人像姿势/Michele Celentano-家庭与群体摆姿/03-Posing Groups - Sitting/07 TPM180411_MichelleCelentanoFamiglia_27F2_GroupOfTwoSitting_1080p.mp4",
+      "video_size": 20777164,
+      "video_sha256": "ccf82265e09f13f6c93111ae5f35c7c4ecf91344eb3c0e74e87076197f6b21a1",
+      "start": 96.42,
+      "end": 136.5,
+      "subtitle_output": "michele-celentano/michele-celentano-46b4196a2168.json",
+      "subtitle_sentence_indices": [
+        70
+      ],
+      "rule_id": "P-FRAME-POSE-CONTOUR",
+      "paraphrase": "尾骨后移并前倾，双人姿态更舒展",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "same-screen-panels",
+      "frames": {
+        "a": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-46b4196a2168-w0-pair/a.jpg",
+          "time": 101.5,
+          "preview_time": 101.42,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-46b4196a2168-w0/0005.jpg",
+          "preview_sha256": "320058908e91c0de93dc6a233d4b0068633e70a76c159b02ab44070eca823103",
+          "viewport_match_mae": 3.262,
+          "sha256": "318a39182838ce8277b6872285254e72560962b1ccbe8453d2248699f4bb04c7",
+          "size": 42271,
+          "width": 589,
+          "height": 388,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-46b4196a2168-w0-pair/a_source.jpg",
+          "source_frame_sha256": "e3d77bc10e2b02297714528ba8f9328bf6cf15d982f92c3568931df81269afab",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.025,
+            0.23,
+            0.485,
+            0.77
+          ],
+          "crop_pixels": [
+            32,
+            166,
+            621,
+            554
+          ]
+        },
+        "b": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-46b4196a2168-w0-pair/b.jpg",
+          "time": 101.5,
+          "preview_time": 101.42,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-46b4196a2168-w0/0005.jpg",
+          "preview_sha256": "320058908e91c0de93dc6a233d4b0068633e70a76c159b02ab44070eca823103",
+          "viewport_match_mae": 2.49,
+          "sha256": "ebc88a8218d04e9e4929b1a284afc6009e44009c6b11b627f27adf8c043ed76c",
+          "size": 49558,
+          "width": 595,
+          "height": 388,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-46b4196a2168-w0-pair/b_source.jpg",
+          "source_frame_sha256": "e3d77bc10e2b02297714528ba8f9328bf6cf15d982f92c3568931df81269afab",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.515,
+            0.23,
+            0.98,
+            0.77
+          ],
+          "crop_pixels": [
+            659,
+            166,
+            1254,
+            554
+          ]
+        }
+      },
+      "limitation": "same-screen comparison panels; head tilt and expression also change",
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "michele-celentano-f00986d2f326-w5-pair",
+      "course": "michele-celentano",
+      "episode": 80,
+      "video_remote_rel": "courses/01-人像姿势/Michele Celentano-家庭与群体摆姿/06-Contemporary Studio/09 TPM180421_MicheleCelentanoContemporaryStudio_03F1_MonroeFamilyPortraitBrownBackd.mp4",
+      "video_size": 150249987,
+      "video_sha256": "6f94faed65d4e1da57a2a51eadf6a7383211d98f1b8fcd612907431f2c05bf1f",
+      "start": 361.615,
+      "end": 434.64,
+      "subtitle_output": "michele-celentano/michele-celentano-f00986d2f326.json",
+      "subtitle_sentence_indices": [
+        141,
+        142,
+        145
+      ],
+      "rule_id": "P-FACE-EYES",
+      "paraphrase": "视线改向相机上沿，双眼睁开更充分",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-f00986d2f326-w5-pair/a.jpg",
+          "time": 369.0,
+          "preview_time": 366.615,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-f00986d2f326-w5/0005.jpg",
+          "preview_sha256": "562130f8948759e2a07fa6cb7f0a02bb4b07d15870c6550aff184914438ecc7b",
+          "viewport_match_mae": 3.021,
+          "sha256": "a935767f439b706ca7b2c90eba8b67e8a3d57ab4052cae7a7fec621a6196c619",
+          "size": 57566,
+          "width": 422,
+          "height": 541,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-f00986d2f326-w5-pair/a_source.jpg",
+          "source_frame_sha256": "b86f9d22d82b96926939cefaaba01dec0c9c5866e9eeee1a7abe8ccfd5bee2b9",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.335,
+            0.065,
+            0.665,
+            0.817
+          ],
+          "crop_pixels": [
+            429,
+            47,
+            851,
+            588
+          ]
+        },
+        "b": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-f00986d2f326-w5-pair/b.jpg",
+          "time": 377.0,
+          "preview_time": 376.615,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-f00986d2f326-w5/0015.jpg",
+          "preview_sha256": "f7e903c939626e9424a068dfe5e8a70e0a77476bacda0944a35761533b719b10",
+          "viewport_match_mae": 3.06,
+          "sha256": "8237c0470ccabb35df237dce865e33bc3e642fd341e398840fa1a10864b8fcca",
+          "size": 57235,
+          "width": 422,
+          "height": 541,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-f00986d2f326-w5-pair/b_source.jpg",
+          "source_frame_sha256": "24e2b500e4a33fcfbde7e275d119bad718ae69b171ac17c847c88f3e8433f887",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.335,
+            0.065,
+            0.665,
+            0.817
+          ],
+          "crop_pixels": [
+            429,
+            47,
+            851,
+            588
+          ]
+        }
+      },
+      "limitation": "screen recording; subtle eye opening; individual gaze target is above lens",
+      "rule_status": "formal"
+    },
+    {
+      "id": "michele-celentano-f00986d2f326-w6-pair",
+      "course": "michele-celentano",
+      "episode": 80,
+      "video_remote_rel": "courses/01-人像姿势/Michele Celentano-家庭与群体摆姿/06-Contemporary Studio/09 TPM180421_MicheleCelentanoContemporaryStudio_03F1_MonroeFamilyPortraitBrownBackd.mp4",
+      "video_size": 150249987,
+      "video_sha256": "6f94faed65d4e1da57a2a51eadf6a7383211d98f1b8fcd612907431f2c05bf1f",
+      "start": 650.355,
+      "end": 723.96,
+      "subtitle_output": "michele-celentano/michele-celentano-f00986d2f326.json",
+      "subtitle_sentence_indices": [
+        248,
+        257
+      ],
+      "rule_id": "P-FRAME-HEAD-DIRECTION",
+      "paraphrase": "略前倾并收下巴，调整颈部轮廓",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-f00986d2f326-w6-pair/a.jpg",
+          "time": 669.0,
+          "preview_time": 667.355,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-f00986d2f326-w6/0017.jpg",
+          "preview_sha256": "f7b0fb43cbed1ae64394c15287d5224271dbb0f11652a9519f7a62ce73fe9470",
+          "viewport_match_mae": 3.98,
+          "sha256": "bd8564c2dfdbc2e1d3c33fa6036a73ddadabb7fe5bbbca12f6c713355b38209b",
+          "size": 75126,
+          "width": 422,
+          "height": 541,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-f00986d2f326-w6-pair/a_source.jpg",
+          "source_frame_sha256": "afdd0572fbf4cac646dedb1cdcf34fca5350a7de5aba6f6baec463700d0012ae",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.335,
+            0.065,
+            0.665,
+            0.817
+          ],
+          "crop_pixels": [
+            429,
+            47,
+            851,
+            588
+          ]
+        },
+        "b": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-f00986d2f326-w6-pair/b.jpg",
+          "time": 687.0,
+          "preview_time": 684.355,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-f00986d2f326-w6/0034.jpg",
+          "preview_sha256": "0684e0cab6ec724fec0ecfdd9b99a79ad2a9b347ac63ffeb7ed827031765003f",
+          "viewport_match_mae": 4.124,
+          "sha256": "1092447f4263d26ef6f6c9aa39da3f3da9f919b63526bca8071ddbf909a84b10",
+          "size": 79325,
+          "width": 422,
+          "height": 541,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-f00986d2f326-w6-pair/b_source.jpg",
+          "source_frame_sha256": "c15089f9d5782809f82c2b8c1569828745ff7ea14f54bb633116fb058ddc7aa9",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.335,
+            0.065,
+            0.665,
+            0.817
+          ],
+          "crop_pixels": [
+            429,
+            47,
+            851,
+            588
+          ]
+        }
+      },
+      "limitation": "screen recording; teacher-specific neck contour objective",
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "michele-celentano-6498d4e16121-w2-pair",
+      "course": "michele-celentano",
+      "episode": 96,
+      "video_remote_rel": "courses/01-人像姿势/Michele Celentano-家庭与群体摆姿/09-Baby With Parents/05 TPM180420_MicheleCelentanoWhiteContemporary_03F1_AndersenFamilyCulling_1080p.mp4",
+      "video_size": 103592635,
+      "video_sha256": "2d23c786610ec274053b7ba49c085e1f182ab83bc33d511abd4c9e24102b046e",
+      "start": 195.74,
+      "end": 235.26,
+      "subtitle_output": "michele-celentano/michele-celentano-6498d4e16121.json",
+      "subtitle_sentence_indices": [
+        69
+      ],
+      "rule_id": "P-FACE-EXPRESSION",
+      "paraphrase": "换到母子表情更喜悦的相邻照片",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-6498d4e16121-w2-pair/a.jpg",
+          "time": 216.5,
+          "preview_time": 215.74,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-6498d4e16121-w2/0020.jpg",
+          "preview_sha256": "199992004fd1ad463c314677260720ced9166ab8b5ef0fb8f87fcb28b782545b",
+          "viewport_match_mae": 2.333,
+          "sha256": "7928bc6b7e90b6e06a757385cef9fe6594467744dd2660cf4c1b2a88834c8e94",
+          "size": 54316,
+          "width": 396,
+          "height": 572,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-6498d4e16121-w2-pair/a_source.jpg",
+          "source_frame_sha256": "52be72e25568e1e96ccb15c9ea58b61f4633f7f3922a95941bf0ef7c30da4e82",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.345,
+            0.025,
+            0.655,
+            0.82
+          ],
+          "crop_pixels": [
+            442,
+            18,
+            838,
+            590
+          ]
+        },
+        "b": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-6498d4e16121-w2-pair/b.jpg",
+          "time": 221.0,
+          "preview_time": 220.74,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-6498d4e16121-w2/0025.jpg",
+          "preview_sha256": "5f1b6256e7e6b4fa678cad5657da5a5ab033eec53d6a8b43929b4f07c1758b43",
+          "viewport_match_mae": 2.297,
+          "sha256": "f27855a9b3740002d18a85d73d3581e24446655046853246bd6f63e9885f7338",
+          "size": 53805,
+          "width": 396,
+          "height": 572,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-6498d4e16121-w2-pair/b_source.jpg",
+          "source_frame_sha256": "dd39d050ff7f240b79db127ecb3649595ea7d65838ed4b25da66e7d08be69429",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.345,
+            0.025,
+            0.655,
+            0.82
+          ],
+          "crop_pixels": [
+            442,
+            18,
+            838,
+            590
+          ]
+        }
+      },
+      "limitation": "screen recording; spontaneous child expression and hand gesture both change",
+      "rule_status": "formal"
+    },
+    {
+      "id": "lindsay-adler-4faf9463d340-w9-pair",
+      "course": "lindsay-adler",
+      "episode": 14,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/14.Fashion-Flair-Women-with-curves-Lindsay-Adler.mp4",
+      "video_size": 954214969,
+      "video_sha256": "95b877b3ec0cfaa597527cf735a6ebcbc01cd1f5579ece50c07989d6ef15d3f5",
+      "start": 1066.74,
+      "end": 1147.08,
+      "subtitle_output": "lindsay-adler/lindsay-adler-4faf9463d340.json",
+      "subtitle_sentence_indices": [
+        270,
+        286
+      ],
+      "rule_id": "P-FRAME-HEAD-DIRECTION",
+      "paraphrase": "下巴前伸再下压，下颌边界更清楚",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "same-screen-panels",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-4faf9463d340-w9-pair/a.jpg",
+          "time": 1112.0,
+          "preview_time": 1111.74,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-4faf9463d340-w9/0045.jpg",
+          "preview_sha256": "48fe3660796f4120a9a05b0500df8d9194b5e2be75c66a992b13b292a1c99baa",
+          "viewport_match_mae": 1.786,
+          "sha256": "10a926abc1dacad9f1bb70b7fb70fe48a285e0c7d65ff1faf1876612af3390d4",
+          "size": 112488,
+          "width": 640,
+          "height": 634,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-4faf9463d340-w9-pair/a_source.jpg",
+          "source_frame_sha256": "5dcbde755d184df86df5d1837c97226a99356f99de041debdd6a01471407b760",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            0.5,
+            0.88
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            640,
+            634
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-4faf9463d340-w9-pair/b.jpg",
+          "time": 1112.0,
+          "preview_time": 1111.74,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-4faf9463d340-w9/0045.jpg",
+          "preview_sha256": "48fe3660796f4120a9a05b0500df8d9194b5e2be75c66a992b13b292a1c99baa",
+          "viewport_match_mae": 1.827,
+          "sha256": "b82251e2e7b4ce5dcd0a5f74e6cad4cc4105e887a0c477ad731aa0f477c70904",
+          "size": 116834,
+          "width": 640,
+          "height": 634,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-4faf9463d340-w9-pair/b_source.jpg",
+          "source_frame_sha256": "5dcbde755d184df86df5d1837c97226a99356f99de041debdd6a01471407b760",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.5,
+            0,
+            1,
+            0.88
+          ],
+          "crop_pixels": [
+            640,
+            0,
+            1280,
+            634
+          ]
+        }
+      },
+      "limitation": "same-screen comparison panels; photo viewport excludes teaching caption",
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "lindsay-adler-4faf9463d340-w12-pair",
+      "course": "lindsay-adler",
+      "episode": 14,
+      "video_remote_rel": "courses/01-人像姿势/Lindsay Adler-The Posing Series/14.Fashion-Flair-Women-with-curves-Lindsay-Adler.mp4",
+      "video_size": 954214969,
+      "video_sha256": "95b877b3ec0cfaa597527cf735a6ebcbc01cd1f5579ece50c07989d6ef15d3f5",
+      "start": 1354.16,
+      "end": 1441.26,
+      "subtitle_output": "lindsay-adler/lindsay-adler-4faf9463d340.json",
+      "subtitle_sentence_indices": [
+        361,
+        362,
+        363,
+        371,
+        376
+      ],
+      "rule_id": "P-FRAME-POSE-CONTOUR",
+      "paraphrase": "双手抬高并向内收，改变腰部轮廓",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-4faf9463d340-w12-pair/a.jpg",
+          "time": 1412.5,
+          "preview_time": 1411.16,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-4faf9463d340-w12/0057.jpg",
+          "preview_sha256": "acf45bfdcbdbbbb3b83d180f5937d823b087b495b2eafe389df45f7a9b47ef7f",
+          "viewport_match_mae": 0.376,
+          "sha256": "05870842fa1b220aeb1ae7b07d2a39e55e86a9773753c90846c8dbac360910ce",
+          "size": 56330,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-4faf9463d340-w12-pair/a_source.jpg",
+          "source_frame_sha256": "05870842fa1b220aeb1ae7b07d2a39e55e86a9773753c90846c8dbac360910ce",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        },
+        "b": {
+          "path": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-4faf9463d340-w12-pair/b.jpg",
+          "time": 1419.5,
+          "preview_time": 1419.16,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "lindsay-adler/w4-frames-20261011/lindsay-adler-4faf9463d340-w12/0065.jpg",
+          "preview_sha256": "7a0ce259209f879633e85aaaa5f54a71b173a817657f8adfe72fa85ae8fcd20e",
+          "viewport_match_mae": 0.361,
+          "sha256": "bb37acb541b877516bcd01c82edb3814584120e5ab6cb4bd092a5a33633474a1",
+          "size": 52367,
+          "width": 1280,
+          "height": 720,
+          "source_frame": "lindsay-adler/w4-frames-20261011/accepted/lindsay-adler-4faf9463d340-w12-pair/b_source.jpg",
+          "source_frame_sha256": "bb37acb541b877516bcd01c82edb3814584120e5ab6cb4bd092a5a33633474a1",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "crop_pixels": [
+            0,
+            0,
+            1280,
+            720
+          ]
+        }
+      },
+      "limitation": "teacher-specific contour objective; shoulders and torso also change",
+      "rule_status": "local-candidate"
+    },
+    {
+      "id": "michele-celentano-018cc26a147b-w7-pair",
+      "course": "michele-celentano",
+      "episode": 86,
+      "video_remote_rel": "courses/01-人像姿势/Michele Celentano-家庭与群体摆姿/07-Multi-Generation/06 TPM180421_MicheleCeletanoContemporaryStudio_01F1_CarvajalFamilyCulling_1080p.mp4",
+      "video_size": 147578892,
+      "video_sha256": "ac4321d63a4310682c0781bf1ee192afbe45deae9c3f48922233fbff4662bccb",
+      "start": 948.48,
+      "end": 1037.94,
+      "subtitle_output": "michele-celentano/michele-celentano-018cc26a147b.json",
+      "subtitle_sentence_indices": [
+        381,
+        392,
+        399
+      ],
+      "rule_id": "P-BOOK-GROUP-READINESS",
+      "paraphrase": "排除有人闭眼的帧，复核全组眼神",
+      "positive": "b",
+      "review": "subtitle-and-visual",
+      "reviewed_by": "codex",
+      "user_visual_qa": "pending",
+      "comparison_mode": "different-times",
+      "frames": {
+        "a": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-018cc26a147b-w7-pair/a.jpg",
+          "time": 967.0,
+          "preview_time": 966.48,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-018cc26a147b-w7/0018.jpg",
+          "preview_sha256": "d47aa01334dcdf7ccff4b47c900cb0aafdd0a603892c6320b3a3b29c23ec5824",
+          "viewport_match_mae": 2.18,
+          "sha256": "983af4870efadc7a56322fb2277d868a9a5485480e4e58e0526a63cdfd58b41d",
+          "size": 84447,
+          "width": 806,
+          "height": 570,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-018cc26a147b-w7-pair/a_source.jpg",
+          "source_frame_sha256": "b712b422b7b04fe720ccc1a0e17b2f2139dca111e5aa5dfc3db2e8ef1850b823",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.185,
+            0.025,
+            0.815,
+            0.817
+          ],
+          "crop_pixels": [
+            237,
+            18,
+            1043,
+            588
+          ]
+        },
+        "b": {
+          "path": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-018cc26a147b-w7-pair/b.jpg",
+          "time": 970.0,
+          "preview_time": 969.48,
+          "time_tolerance_seconds": 0.25,
+          "preview_path": "michele-celentano/w4-frames-20261011/michele-celentano-018cc26a147b-w7/0021.jpg",
+          "preview_sha256": "99a3954d416664a0a8a32359144098fa69503d20d71af719d800cf6a7829c320",
+          "viewport_match_mae": 2.204,
+          "sha256": "d37ce11ef7a94d16061ba9516dc57fbe3aeb42ab085b51dad60e7f8eb75e3a1b",
+          "size": 86896,
+          "width": 806,
+          "height": 570,
+          "source_frame": "michele-celentano/w4-frames-20261011/accepted/michele-celentano-018cc26a147b-w7-pair/b_source.jpg",
+          "source_frame_sha256": "ee2ff97ab0d3138e075f14c3cf3bae74d8b23b0a7621f6160eb7d479d2f8ef91",
+          "viewport": [
+            1280,
+            720
+          ],
+          "crop_normalized": [
+            0.185,
+            0.025,
+            0.815,
+            0.817
+          ],
+          "crop_pixels": [
+            237,
+            18,
+            1043,
+            588
+          ]
+        }
+      },
+      "limitation": "screen recording; hand positions and facial direction also change",
+      "rule_status": "existing-candidate"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 # Lightweight Windows worker (no PyTorch required)
 pillow>=10
 numpy>=1.26
-onnxruntime-directml>=1.24
+onnxruntime-directml>=1.24; sys_platform == "win32"
+onnxruntime>=1.24; sys_platform != "win32"

@@ -1,0 +1,537 @@
+{
+  "method": "codex-semantic",
+  "description": "人工阅读转述、比较现有陈述后定稿；索引逐条保存语义归属，生成器仅计数和输出，不进行相似度聚类、网络访问或模型调用。",
+  "rules": [
+    {
+      "id": "P-YD-TILT",
+      "aspect": "framing",
+      "title": "无意歪斜",
+      "statement": "检查地平线、建筑或框架是否无意歪斜并削弱画面稳定感。",
+      "exceptions": [
+        "荷兰角、动态构图或透视汇聚有明确表达作用时可保留"
+      ],
+      "polarity": "negative",
+      "check": {
+        "by": "measure",
+        "signal": [
+          "horizontalTiltDegrees",
+          "verticalTiltDegrees",
+          "horizontalLineConfidence",
+          "verticalLineConfidence"
+        ],
+        "proxyOnly": true,
+        "limitations": "只测可靠线候选，无法识别地平线或判断歪斜意图；无可靠线时需人工复核，不提议数值阈值。"
+      }
+    },
+    {
+      "id": "P-YD-EYE-CROP",
+      "aspect": "framing",
+      "title": "眼部裁切",
+      "statement": "避免画框无意切掉半只眼睛或使眼睛出界。",
+      "exceptions": [
+        "有明确遮蔽意图的极近特写"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-FACE-PERSPECTIVE",
+      "aspect": "face",
+      "title": "面部透视变形",
+      "statement": "检查面部是否明显拉长、放大或扭曲，结合距离与画面位置复核透视或处理痕迹。",
+      "exceptions": [
+        "鱼眼、夸张透视有明确表达意图时可保留"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-BODY-PROPORTION",
+      "aspect": "pose",
+      "title": "身形透视比例",
+      "statement": "检查透视是否使人物头大身小、腿短或头脚拉长而躯干压缩。",
+      "exceptions": [
+        "有意夸张身形的运动或时尚表达"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-NOSE-VIEW",
+      "aspect": "face",
+      "title": "鼻孔成为无意重点",
+      "statement": "检查仰头或仰视是否使鼻孔成为无意的视觉重点。",
+      "exceptions": [
+        "有意夸张视角或人物表达成立时可保留"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-FACE-OCCLUDED",
+      "aspect": "face",
+      "title": "面部遮挡",
+      "statement": "面部作为主要表达对象时，避免头发、前景或道具遮挡到难以辨认。",
+      "exceptions": [
+        "遮面、背影、剪影或局部特写有明确意图"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-GAZE-DIRECTION",
+      "aspect": "face",
+      "title": "视线意图",
+      "statement": "人物视线应与画内动作或交流对象相呼应，避免无意盯视或看向无关方向。",
+      "exceptions": [
+        "直视镜头的肖像或有意游离的情绪表达"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-CATCHLIGHT",
+      "aspect": "face",
+      "title": "眼神光可信",
+      "statement": "眼神光的形状、位置、亮度和反射关系应可信，不应呈现明显涂抹感。",
+      "exceptions": [
+        "舞台彩光或有意超现实处理不按自然反射要求"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-PROFILE",
+      "aspect": "face",
+      "title": "剪影轮廓可读",
+      "statement": "以侧脸剪影表达人物时，鼻额唇等轮廓应能辨认。",
+      "exceptions": [
+        "抽象剪影可有意省略五官"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-POSE-RESTRAINED",
+      "aspect": "pose",
+      "title": "姿态拘谨",
+      "statement": "检查动作是否僵硬端着、摆拍痕迹过重而不符合画面的自然状态。",
+      "exceptions": [
+        "庄重肖像、仪式性摆姿不要求活泼"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-ACTION-MOMENT",
+      "aspect": "pose",
+      "title": "动作完成瞬间",
+      "statement": "检查奔跑、跳跃或转身的瞬间是否完整可读，避免未准备好或像失衡摔倒。",
+      "exceptions": [
+        "有意记录过渡动作或失衡感"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-POSE-COMPACT",
+      "aspect": "pose",
+      "title": "肢体舒展",
+      "statement": "检查蜷缩或脚腿紧贴的姿态是否使人物轮廓拥挤、动作难以辨认。",
+      "exceptions": [
+        "蜷缩、紧张或无助正是表达意图"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-SHOULDER-NECK",
+      "aspect": "pose",
+      "title": "肩颈轮廓",
+      "statement": "检查耸肩或发丝遮蔽是否使肩颈轮廓挤压、脖颈难以辨认。",
+      "exceptions": [
+        "缩肩或遮颈是明确的动作设计"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-POSE-THEME",
+      "aspect": "pose",
+      "title": "动作与情境",
+      "statement": "动作与神态应能支持画面可见的情境，避免主题与人物状态明显矛盾。",
+      "exceptions": [
+        "混搭、反差或幽默表达有意成立；题材未知时不判断"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-INTERACTION",
+      "aspect": "pose",
+      "title": "人物与物件互动",
+      "statement": "互动题材中，人物与同伴、动物、道具或环境的动作关系应能看懂。",
+      "exceptions": [
+        "独立肖像或静置道具不要求互动"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-HAIR-MOTION",
+      "aspect": "pose",
+      "title": "发丝动态加分",
+      "statement": "飞扬或掠过脸颊的发丝能增强画面的动感和空气感，可作为组内优选线索。",
+      "exceptions": [
+        "发丝遮眼或损害主要表达时不加分"
+      ],
+      "polarity": "positive"
+    },
+    {
+      "id": "P-YD-MOTION-READABLE",
+      "aspect": "pose",
+      "title": "动感加分",
+      "statement": "动作或运动痕迹清楚支持人物状态时，可作为组内优选线索。",
+      "exceptions": [
+        "运动模糊遮住关键人物或动作关系不可读时不加分"
+      ],
+      "polarity": "positive"
+    },
+    {
+      "id": "P-YD-BG-SEPARATION",
+      "aspect": "background",
+      "title": "人物轮廓分离",
+      "statement": "人物、衣服和发丝轮廓应与背景可区分，避免无意融成一块。",
+      "exceptions": [
+        "剪影、同色隐身或抽象表达可有意弱化轮廓"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-BG-DEPTH",
+      "aspect": "background",
+      "title": "空间纵深",
+      "statement": "检查人物贴近背景或前后景同层是否使画面缺少所需的空间纵深。",
+      "exceptions": [
+        "平面化、压缩空间或贴墙肖像可以成立"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-BG-BLACK",
+      "aspect": "background",
+      "title": "环境信息死黑",
+      "statement": "环境承担表达作用时，背景不应黑成一片而丢失场景信息。",
+      "exceptions": [
+        "纯黑棚拍、剪影或有意省略环境"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-BG-BLUR",
+      "aspect": "background",
+      "title": "环境虚化信息",
+      "statement": "需要交代环境的照片中，避免过度虚化使背景信息完全丢失。",
+      "exceptions": [
+        "浅景深肖像以人物为唯一表达对象时可保留"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-SCENE-INTEGRATION",
+      "aspect": "background",
+      "title": "人物融入场景",
+      "statement": "检查人物与场景的光影、质感及接地关系是否连贯，避免无意悬浮或贴图感。",
+      "exceptions": [
+        "拼贴、超现实或明确分离的视觉风格"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-LIGHT-DIRECTION",
+      "aspect": "light",
+      "title": "光影方向一致",
+      "statement": "检查人物、环境、影子和附加景物的光向是否相互矛盾。",
+      "exceptions": [
+        "多光源、舞台或超现实光照有明确意图"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-MULTIPLE-SHADOWS",
+      "aspect": "light",
+      "title": "多重投影",
+      "statement": "检查多重影子是否无意分割人物或使画面光源关系混乱。",
+      "exceptions": [
+        "多光源设计、重影或实验表达成立"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-WALL-SHADOW",
+      "aspect": "light",
+      "title": "墙面投影高度",
+      "statement": "检查墙面投影高过人物是否形成不符合画面意图的压迫或怪异感。",
+      "exceptions": [
+        "恐怖、戏剧化或有意强调影子"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-SCENE-CONTRAST",
+      "aspect": "light",
+      "title": "场景光比",
+      "statement": "检查亮暗反差是否过强，使所需人物或环境细节难以同时辨认。",
+      "exceptions": [
+        "强反差、剪影或戏剧性光线符合表达意图"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-FLARE-DETAIL",
+      "aspect": "light",
+      "title": "冲光吞没细节",
+      "statement": "检查冲光、光晕或杂光是否吞没人物轮廓、色彩或关键细节。",
+      "exceptions": [
+        "逆光光晕、漏光或雾化是明确风格且主体可读"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-NONFACE-HIGHLIGHTS",
+      "aspect": "exposure",
+      "title": "非面部高光细节",
+      "statement": "检查衣服、头发或环境的高光是否大面积溢出并丢失需要保留的细节。",
+      "exceptions": [
+        "纯白背景、反光点或有意高调片无需保留所有高光细节"
+      ],
+      "polarity": "negative",
+      "check": {
+        "by": "measure",
+        "signal": "clippedHighlights",
+        "proxyOnly": true,
+        "limitations": "全图代理信号包含面部，不能定位衣服、头发或判断需要保留的细节；需结合截图复核，无新增阈值。"
+      }
+    },
+    {
+      "id": "P-YD-NONFACE-SHADOWS",
+      "aspect": "exposure",
+      "title": "非面部暗部细节",
+      "statement": "检查身体、衣服或画面暗部是否压成死黑，丢失承担表达的细节。",
+      "exceptions": [
+        "低调片、黑色剪影或无关区域可有意省略细节"
+      ],
+      "polarity": "negative",
+      "check": {
+        "by": "measure",
+        "signal": "clippedShadows",
+        "proxyOnly": true,
+        "limitations": "全图代理信号包含面部，不能定位身体、衣服或判断暗部意图；需结合截图复核，无新增阈值。"
+      }
+    },
+    {
+      "id": "P-YD-TONAL-GRAY",
+      "aspect": "color",
+      "title": "明暗层次粘连",
+      "statement": "检查画面是否灰平、亮暗层次粘连，导致轮廓与质感难以区分。",
+      "exceptions": [
+        "雾景、柔和影调或灰调有意成立；不要求每张都有纯黑纯白"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-SATURATION",
+      "aspect": "color",
+      "title": "饱和度过强",
+      "statement": "检查局部或整体色彩是否过度鲜艳、浓重，干扰人物和画面表达。",
+      "exceptions": [
+        "高饱和、撞色或商业风格有明确意图"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-COLOR-LAYERS",
+      "aspect": "color",
+      "title": "色彩缺少区分",
+      "statement": "需要色彩层次的画面中，检查是否通篇同色或冷暖趋同而难以区分内容。",
+      "exceptions": [
+        "单色、同色系或黑白表达无需冷暖对比"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-COLOR-BANDING",
+      "aspect": "color",
+      "title": "色阶断层",
+      "statement": "检查天空等平滑区域是否出现不自然的色阶断层或分级痕迹。",
+      "exceptions": [
+        "有意色块化或海报化表现"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-TEXTURE-SOFT",
+      "aspect": "quality",
+      "title": "纹理过度柔化",
+      "statement": "检查皮肤、头发或衣服是否被过度柔化到失去纹理，呈现塑料感。",
+      "exceptions": [
+        "柔焦、梦幻或插画表达有意成立"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-TEXTURE-SHARP",
+      "aspect": "quality",
+      "title": "锐化生硬",
+      "statement": "检查过度锐化是否使皮肤凹凸或人物边缘出现不自然的硬感。",
+      "exceptions": [
+        "有意强调粗粝质感；自然皮肤纹理不是缺陷"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-NOISE",
+      "aspect": "quality",
+      "title": "颗粒干扰",
+      "statement": "检查噪点或添加颗粒是否过密、破坏关键细节或与画面光感不协调。",
+      "exceptions": [
+        "胶片颗粒或有意粗粝风格；不以颗粒本身判废"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-EDGE-ARTIFACT",
+      "aspect": "quality",
+      "title": "边缘合成痕迹",
+      "statement": "检查人物与天空、前景的交界是否出现明显白边、色边或生硬抠图痕迹。",
+      "exceptions": [
+        "自然色散或有意描边；无法确认处理痕迹时仅提示"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-ANATOMY-ARTIFACT",
+      "aspect": "quality",
+      "title": "形体修饰失真",
+      "statement": "检查明显修饰痕迹是否使五官比例、左右结构或肩颈连接不自然。",
+      "exceptions": [
+        "漫画化或超现实形体处理有明确意图；自然不对称不判错"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-COMPOSITE",
+      "aspect": "quality",
+      "title": "附加效果可信",
+      "statement": "检查换天、叠加雨雪或景深效果是否与原画面的尺度、虚实及光影关系相符。",
+      "exceptions": [
+        "拼贴、插画或有意超现实风格"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-VIGNETTE",
+      "aspect": "quality",
+      "title": "无意暗角",
+      "statement": "检查暗角是否无意遮蔽画面边缘的有效内容或造成突兀黑角。",
+      "exceptions": [
+        "暗角用于聚焦主体或复古风格时可保留"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-EXPOSURE-READABLE",
+      "aspect": "exposure",
+      "title": "整体曝光可读",
+      "statement": "检查整体曝光是否使需要表达的内容难以辨认；不把偏暗或偏亮本身当作错误。",
+      "exceptions": [
+        "低调、高调或剪影意图明确且关键内容可读"
+      ],
+      "polarity": "negative"
+    },
+    {
+      "id": "P-YD-LIGHT-FLAT",
+      "aspect": "light",
+      "title": "光影空间感",
+      "statement": "需要立体感的画面中，检查均匀平光是否抹平人物与环境的空间层次。",
+      "exceptions": [
+        "有意平面化、无影棚拍或直闪风格"
+      ],
+      "polarity": "negative"
+    }
+  ],
+  "nonSelection": [
+    {
+      "id": "NS:RETOUCH-SKIN",
+      "title": "皮肤修饰与液化",
+      "statement": "皮肤修饰、液化需保留自然结构和纹理；只讨论处理方法。"
+    },
+    {
+      "id": "NS:RETOUCH-COLOR",
+      "title": "调色工具与分区",
+      "statement": "白平衡与分区调色需结合场景，不用全局调整同时改变背景和肤色。"
+    },
+    {
+      "id": "NS:RETOUCH-EFFECT",
+      "title": "特效与合成制作",
+      "statement": "预设、滤镜、HDR与前景光效需匹配题材，避免机械套用或叠加。"
+    },
+    {
+      "id": "NS:RETOUCH-GENERAL",
+      "title": "后期目标质感与风格",
+      "statement": "后期质感需匹配胶片等目标风格，处理方法与目标风格另行复盘。"
+    },
+    {
+      "id": "NS:LIGHT-PLACEMENT",
+      "title": "灯位、灯距与布光操作",
+      "statement": "调整灯位、灯距及人物与墙的距离，控制光向、阴影和溢光。"
+    },
+    {
+      "id": "NS:LIGHT-CHOICE",
+      "title": "补光与选光方法",
+      "statement": "选择现场可用光或补光方法，避免无目的地叠加光源。"
+    },
+    {
+      "id": "NS:CAMERA",
+      "title": "器材、焦段与曝光设置",
+      "statement": "焦段、光圈、快门及曝光方法应服务于景深、动态和预期风格。"
+    },
+    {
+      "id": "NS:VIEWPOINT",
+      "title": "机位、视角与拍摄距离",
+      "statement": "拍摄距离和机位应给环境、人物比例及后续取景留出适当余地。"
+    },
+    {
+      "id": "NS:DIRECTION",
+      "title": "模特引导与动作设计",
+      "statement": "拍摄时引导视线与动作并留意人物能否完成，不把引导能力当成成片规则。"
+    },
+    {
+      "id": "NS:STYLING",
+      "title": "服装妆造与发型设计",
+      "statement": "服装、妆容、发型及道具造型需与主题匹配，外貌喜好不作淘汰依据。"
+    },
+    {
+      "id": "NS:LOCATION",
+      "title": "场地与置景道具选择",
+      "statement": "选景、置景与道具需配合主题，并考虑其在画面中是否有作用。"
+    },
+    {
+      "id": "NS:TIME",
+      "title": "拍摄时段选择",
+      "statement": "拍摄时段影响现场光线与环境呈现，时段选择不作成片淘汰条件。"
+    },
+    {
+      "id": "NS:SERIES-VARIETY",
+      "title": "组照景别与动作变化",
+      "statement": "组照需在景别、机位和动作上有有效变化，避免重复；不据此淘汰单张。"
+    },
+    {
+      "id": "NS:SERIES-COHERENCE",
+      "title": "组照主题与情绪连贯",
+      "statement": "整组色彩、影调、情绪与叙事衔接需结合选片顺序复核。"
+    },
+    {
+      "id": "NS:LAYOUT",
+      "title": "拼图、排版与封面用途",
+      "statement": "拼图排版、画幅与封面头像选择需结合展示用途单独审核。"
+    },
+    {
+      "id": "NS:CONCEPT",
+      "title": "创作策划与参考模仿",
+      "statement": "拍摄前明确主题与参考，检查主题、道具及行动的关系，避免照搬形式。"
+    },
+    {
+      "id": "NS:PERSONAL",
+      "title": "模特外貌、审美与客户偏好",
+      "statement": "模特外貌、个人喜好及客户满意度属于审美或交付背景，不泛化为选片硬规则。"
+    }
+  ],
+  "singleEpisodePolicy": "仅有一期的候选不收；眼部边界裁切若证据明确可作为重要硬伤提示保留，但不提议 penalty。"
+}

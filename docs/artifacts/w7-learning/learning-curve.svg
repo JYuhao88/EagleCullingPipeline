@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520">
+<rect width="100%" height="100%" fill="white"/>
+<g font-family="sans-serif" font-size="13" fill="#222">
+<text x="70" y="28" font-size="19">L1 simulated users: source-disjoint future holdout</text>
+<path d="M70 430H820" stroke="#ddd"/>
+<text x="30" y="434">0</text>
+<path d="M70 338.75H820" stroke="#ddd"/>
+<text x="30" y="342.75">0.25</text>
+<path d="M70 247.5H820" stroke="#ddd"/>
+<text x="30" y="251.5">0.5</text>
+<path d="M70 156.25H820" stroke="#ddd"/>
+<text x="30" y="160.25">0.75</text>
+<path d="M70 65H820" stroke="#ddd"/>
+<text x="30" y="69">1</text>
+<text x="58" y="455">10</text>
+<text x="287.39902039054186" y="455">25</text>
+<text x="460.9326802603613" y="455">50</text>
+<text x="634.4663401301807" y="455">100</text>
+<text x="808" y="455">200</text>
+<text x="70" y="52" fill="#146ab8">T-syn: L1 solid / L0 dashed; group bootstrap 95% CI</text>
+<polyline points="70,430 299.39902039054186,430 472.9326802603613,430 646.4663401301807,430 820,430" fill="none" stroke="#146ab8" stroke-width="2" stroke-dasharray="6 4"/>
+<polyline points="70,186.66666666666669 299.39902039054186,186.66666666666669 472.9326802603613,125.83333333333331 646.4663401301807,125.83333333333331 820,65" fill="none" stroke="#146ab8" stroke-width="2" />
+<path d="M70 308.33333333333337V65" stroke="#146ab8"/>
+<circle cx="70" cy="186.66666666666669" r="4" fill="#146ab8"/>
+<path d="M299.39902039054186 308.33333333333337V65" stroke="#146ab8"/>
+<circle cx="299.39902039054186" cy="186.66666666666669" r="4" fill="#146ab8"/>
+<path d="M472.9326802603613 247.5V65" stroke="#146ab8"/>
+<circle cx="472.9326802603613" cy="125.83333333333331" r="4" fill="#146ab8"/>
+<path d="M646.4663401301807 247.5V65" stroke="#146ab8"/>
+<circle cx="646.4663401301807" cy="125.83333333333331" r="4" fill="#146ab8"/>
+<path d="M820 65V65" stroke="#146ab8"/>
+<circle cx="820" cy="65" r="4" fill="#146ab8"/>
+<text x="410" y="52" fill="#b35113">Shantou: L1 solid / L0 dashed; group bootstrap 95% CI</text>
+<polyline points="70,289.61538461538464 299.39902039054186,289.61538461538464 472.9326802603613,289.61538461538464 646.4663401301807,289.61538461538464 820,289.61538461538464" fill="none" stroke="#b35113" stroke-width="2" stroke-dasharray="6 4"/>
+<polyline points="70,177.30769230769232 299.39902039054186,177.30769230769232 472.9326802603613,177.30769230769232 646.4663401301807,177.30769230769232 820,149.23076923076923" fill="none" stroke="#b35113" stroke-width="2" />
+<path d="M70 261.53846153846155V93.07692307692307" stroke="#b35113"/>
+<circle cx="70" cy="177.30769230769232" r="4" fill="#b35113"/>
+<path d="M299.39902039054186 289.61538461538464V93.07692307692307" stroke="#b35113"/>
+<circle cx="299.39902039054186" cy="177.30769230769232" r="4" fill="#b35113"/>
+<path d="M472.9326802603613 261.53846153846155V93.07692307692307" stroke="#b35113"/>
+<circle cx="472.9326802603613" cy="177.30769230769232" r="4" fill="#b35113"/>
+<path d="M646.4663401301807 261.53846153846155V93.07692307692307" stroke="#b35113"/>
+<circle cx="646.4663401301807" cy="177.30769230769232" r="4" fill="#b35113"/>
+<path d="M820 233.46153846153848V65" stroke="#b35113"/>
+<circle cx="820" cy="149.23076923076923" r="4" fill="#b35113"/>
+<text x="230" y="488">Simulated actions (log scale); repeated cached bursts are not independent new groups</text>
+</g></svg>

@@ -1,0 +1,4220 @@
+{
+  "identity": "e332bd4d0c2a43d21a6e845c3129a1a9240d6c1159aa4abed937eed34d134138",
+  "source": "hanjing",
+  "offsets": {
+    "hanjing-posing/拍照姿势教学课程_韩晶/10_10.对镜自拍的蹲姿和跪姿造型_720p.mp4": 85114687,
+    "hanjing-posing/拍照姿势教学课程_韩晶/11_11.对镜自拍的靠姿_720p.mp4": 101290147,
+    "hanjing-posing/拍照姿势教学课程_韩晶/12_12.站姿的重心切换_1080p.mp4": 211326443,
+    "hanjing-posing/拍照姿势教学课程_韩晶/13_13.脚位造型顯腿長_1080p.mp4": 44305712,
+    "hanjing-posing/拍照姿势教学课程_韩晶/14_14.休閑風格脚位造型_1080p.mp4": 33719934,
+    "hanjing-posing/拍照姿势教学课程_韩晶/15_15.腰椎造型的米字法_1080p.mp4": 135709852,
+    "hanjing-posing/拍照姿势教学课程_韩晶/16_16.脊椎的C型与S型作用_1080p.mp4": 51091623,
+    "hanjing-posing/拍照姿势教学课程_韩晶/17_17.手与面部结合造型_1080p.mp4": 371855697,
+    "hanjing-posing/拍照姿势教学课程_韩晶/18_18.手与身体结合造型_1080p.mp4": 164255305,
+    "hanjing-posing/拍照姿势教学课程_韩晶/19_19.手与腰部造型_1080p.mp4": 80354247,
+    "hanjing-posing/拍照姿势教学课程_韩晶/1_购买后如何看课_1080p.mp4": 5862693,
+    "hanjing-posing/拍照姿势教学课程_韩晶/20_20.手与口袋造型_1080p.mp4": 33718221,
+    "hanjing-posing/拍照姿势教学课程_韩晶/21_21.手臂的大结构造型_1080p.mp4": 183350895,
+    "hanjing-posing/拍照姿势教学课程_韩晶/22_22.双手与中轴线的造型_1080p.mp4": 147530089,
+    "hanjing-posing/拍照姿势教学课程_韩晶/23_23.肩膀造型与身体重心运用_1080p.mp4": 26084998,
+    "hanjing-posing/拍照姿势教学课程_韩晶/24_24.头部的上中下结构与脸型分析_1080p.mp4": 46635925,
+    "hanjing-posing/拍照姿势教学课程_韩晶/25_25.头部米字与美人筋的运用_1080p.mp4": 116096789,
+    "hanjing-posing/拍照姿势教学课程_韩晶/26_26.表情管理眼神（一）_1080p.mp4": 137155699,
+    "hanjing-posing/拍照姿势教学课程_韩晶/27_27.表情管理情绪（二）_1080p.mp4": 104482492,
+    "hanjing-posing/拍照姿势教学课程_韩晶/28_28.肩膀与墙面的靠姿_1080p.mp4": 150993437,
+    "hanjing-posing/拍照姿势教学课程_韩晶/29_29.手撑与肘靠的运用1_1080p.mp4": 128902867,
+    "hanjing-posing/拍照姿势教学课程_韩晶/2_1.咖啡廳室内如何拍攝_1080p.mp4": 59911072,
+    "hanjing-posing/拍照姿势教学课程_韩晶/30_29.手撑与肘靠的运用2_1080p.mp4": 105137237,
+    "hanjing-posing/拍照姿势教学课程_韩晶/31_30.臀、脚与墙面的靠姿造型2_1080p.mp4": 99982997,
+    "hanjing-posing/拍照姿势教学课程_韩晶/32_30.臀、脚与墙面的靠姿造型1_1080p.mp4": 108046698,
+    "hanjing-posing/拍照姿势教学课程_韩晶/33_31.男生坐姿造型_1080p.mp4": 146883875,
+    "hanjing-posing/拍照姿势教学课程_韩晶/34_32.女生坐姿造型_1080p.mp4": 50528715,
+    "hanjing-posing/拍照姿势教学课程_韩晶/35_33.高脚凳坐姿造型_1080p.mp4": 47736049,
+    "hanjing-posing/拍照姿势教学课程_韩晶/36_34.地面坐姿造型_1080p.mp4": 18997533,
+    "hanjing-posing/拍照姿势教学课程_韩晶/37_35.台階坐姿造型_1080p.mp4": 79303387,
+    "hanjing-posing/拍照姿势教学课程_韩晶/38_36.半蹲造型_1080p.mp4": 16754034,
+    "hanjing-posing/拍照姿势教学课程_韩晶/39_37.单膝跪姿造型_1080p.mp4": 21562935,
+    "hanjing-posing/拍照姿势教学课程_韩晶/3_2.戶外大草坪拍攝技巧課_1080p.mp4": 216511969,
+    "hanjing-posing/拍照姿势教学课程_韩晶/40_38.方位蹲姿造型_1080p.mp4": 17723514,
+    "hanjing-posing/拍照姿势教学课程_韩晶/41_39.身体侧后及多方位造型_1080p.mp4": 20040657,
+    "hanjing-posing/拍照姿势教学课程_韩晶/42_40.上衣风格总类一： 吊带风格_1080p.mp4": 47623568,
+    "hanjing-posing/拍照姿势教学课程_韩晶/43_41.上衣风格总类二：T恤休闲风_1080p.mp4": 25883586,
+    "hanjing-posing/拍照姿势教学课程_韩晶/44_42.上衣风格总类三：毛衣宽松慵懒_1080p.mp4": 40218308,
+    "hanjing-posing/拍照姿势教学课程_韩晶/45_43.上衣外套风格一：短外套_1080p.mp4": 58872714,
+    "hanjing-posing/拍照姿势教学课程_韩晶/46_44.上衣外套风格二：长款外套风衣_1080p.mp4": 83054658,
+    "hanjing-posing/拍照姿势教学课程_韩晶/47_45.裤装风格小脚裤上：站和走姿造型_1080p.mp4": 41115390,
+    "hanjing-posing/拍照姿势教学课程_韩晶/48_46.裤装风格小脚裤下：坐姿造型_1080p.mp4": 37290203,
+    "hanjing-posing/拍照姿势教学课程_韩晶/49_47.裤装风格直筒_闊腿褲上：站与走姿造型_1080p.mp4": 35711729,
+    "hanjing-posing/拍照姿势教学课程_韩晶/4_3.建築物怎麽拍攝和構圖更好看_1080p.mp4": 45074264,
+    "hanjing-posing/拍照姿势教学课程_韩晶/50_48.裤装风格直筒_阔腿裤下：坐与靠姿造型_1080p.mp4": 28505220,
+    "hanjing-posing/拍照姿势教学课程_韩晶/51_49.裤装风格短裤上：站与走姿造型_1080p.mp4": 82210118,
+    "hanjing-posing/拍照姿势教学课程_韩晶/52_50.裤装风格短裤下：坐与靠姿造型_1080p.mp4": 59591106,
+    "hanjing-posing/拍照姿势教学课程_韩晶/53_51.裙装风格短裙上：站与走造型_1080p.mp4": 43851787,
+    "hanjing-posing/拍照姿势教学课程_韩晶/54_52.裙装风格短裙下：坐姿造型_1080p.mp4": 64633259,
+    "hanjing-posing/拍照姿势教学课程_韩晶/55_53.裙装风格长裙上： 站与走姿造型_1080p.mp4": 35442923,
+    "hanjing-posing/拍照姿势教学课程_韩晶/56_54.裙装风格长裙下： 坐姿造型_1080p.mp4": 24490097,
+    "hanjing-posing/拍照姿势教学课程_韩晶/57_55.线条连衣裙的站.走造型_1080p.mp4": 29832826,
+    "hanjing-posing/拍照姿势教学课程_韩晶/58_56.曲綫連衣裙站.走造型_1080p.mp4": 79722366,
+    "hanjing-posing/拍照姿势教学课程_韩晶/59_57.职业套装风格造型（一）_1080p.mp4": 39175048,
+    "hanjing-posing/拍照姿势教学课程_韩晶/5_4.看展或博物馆如何打卡更有感觉_1080p.mp4": 236040150,
+    "hanjing-posing/拍照姿势教学课程_韩晶/60_58.职业套装风格造型（二）_1080p.mp4": 29503354,
+    "hanjing-posing/拍照姿势教学课程_韩晶/61_59.运动套装风格造型(一)_1080p.mp4": 106967001,
+    "hanjing-posing/拍照姿势教学课程_韩晶/62_60.运动套装风格造型（二）_1080p.mp4": 66597138,
+    "hanjing-posing/拍照姿势教学课程_韩晶/63_61.校园套装风格造型（一）_1080p.mp4": 47847884,
+    "hanjing-posing/拍照姿势教学课程_韩晶/64_62.校园套装风格造型2_1080p.mp4": 17509875,
+    "hanjing-posing/拍照姿势教学课程_韩晶/65_赠送1：雙人1  坐姿_1080p.mp4": 20994190,
+    "hanjing-posing/拍照姿势教学课程_韩晶/66_赠送2：雙人2 半身造型_1080p.mp4": 65040885,
+    "hanjing-posing/拍照姿势教学课程_韩晶/67_赠送3：雙人3 站姿全身_1080p.mp4": 61240573,
+    "hanjing-posing/拍照姿势教学课程_韩晶/68_赠送4：情侶1_1080p.mp4": 34905409,
+    "hanjing-posing/拍照姿势教学课程_韩晶/69_赠送5：道具 咖啡杯_1080p.mp4": 33019232,
+    "hanjing-posing/拍照姿势教学课程_韩晶/6_6.对镜自拍的机位与构图_720p.mp4": 76566448,
+    "hanjing-posing/拍照姿势教学课程_韩晶/70_赠送6：道具 花_1080p.mp4": 34203410,
+    "hanjing-posing/拍照姿势教学课程_韩晶/71_赠送7：道具 手套_1080p.mp4": 36205115,
+    "hanjing-posing/拍照姿势教学课程_韩晶/72_赠送8：帽子道具_1080p.mp4": 24452161,
+    "hanjing-posing/拍照姿势教学课程_韩晶/73_赠送9：道具 報紙_1080p.mp4": 31758090,
+    "hanjing-posing/拍照姿势教学课程_韩晶/74_赠送10：道具 雨伞_1080p.mp4": 47621713,
+    "hanjing-posing/拍照姿势教学课程_韩晶/75_赠送11：道具-墨镜_1080p.mp4": 42281960,
+    "hanjing-posing/拍照姿势教学课程_韩晶/76_赠送12：道具-油纸伞_1080p.mp4": 72606298,
+    "hanjing-posing/拍照姿势教学课程_韩晶/77_赠送13：道具团扇_1080p.mp4": 43887238,
+    "hanjing-posing/拍照姿势教学课程_韩晶/78_赠送14：手与头部及上半身结构_720p.mp4": 40269437,
+    "hanjing-posing/拍照姿势教学课程_韩晶/79_赠送15：旗袍站姿造型与手部结构造型_1080p.mp4": 126776654,
+    "hanjing-posing/拍照姿势教学课程_韩晶/7_7.对镜自拍手臂该如何摆放_720p.mp4": 64494180,
+    "hanjing-posing/拍照姿势教学课程_韩晶/80_赠送16：旗袍坐姿_1080p.mp4": 50417096,
+    "hanjing-posing/拍照姿势教学课程_韩晶/8_8.对镜自拍的站姿与脚位_720p.mp4": 78870971,
+    "hanjing-posing/拍照姿势教学课程_韩晶/9_9.如何坐着对镜自拍_720p.mp4": 97504577
+  },
+  "jobs": [
+    {
+      "id": "w4-upload-hanjing-280ee47e369c4f99917d058c602551de",
+      "action": "inspect",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-32f01d7f15d54845b48972e9a88861c1",
+      "action": "cleanup",
+      "uri": null,
+      "status": "FAILED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-2d60daa8db4748c38c3018fe20dcb006",
+      "action": "cleanup",
+      "uri": null,
+      "status": "FAILED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-3e15fad897714b8d95740815bbf46513",
+      "action": "cleanup",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-c163defdb3d04a61a495f6d779b25739",
+      "action": "inspect",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-7b2d583a7b6d4e6bb0c88a3003899f5c",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-db2da13aef5b4fb387a4c497b42a2a1f",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-3068555c3ade43ad9a82552b1c9a7a7a",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-f7daae8c14ee4ad49c52f7062717422a",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-4319cba267114a46aab8080d72c63f6e",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-1d482f1762834ba8bfd37f90fd4de543",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-11f1c71d06e34a1d86b3cbe39d8113cc",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-f2622ebc230c400ebe9370e674a10970",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-d65e3443048b4983bdbc1af03f80f81b",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-abe2c6561cfc4913ae7cc7fdc7ea2079",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-5cc0149138294f35a0f331be025e9a66",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-2a8d3bd049964e6d9a2b0e99df41856b",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-6341e5f7d8f14aa1a6e355420370d6f7",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-d850d5354bd744a18fdbef7db1684a5b",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-8932f3e62a1f428da10b70f0acc7de92",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-2b751266c4aa407cb0760716d398f5a7",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-89487d70797a4d7089656d84e252d3b9",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-27e70576cdd949ef9b25e19b6ed1c7a3",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-9d8619ddc5c34311a674b7fe7b5844e0",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-1f6c65a11fdc4637bdb979564d26f913",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-c9dbc15c6c1848d0b954170dd46a5231",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-f67e2257696d43169be79422639c9e63",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-6c235e4012994d8a9e485903be17c4e6",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-a9fdd73ca1fc47058d2fa406f0c8c002",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-ca03f6a9902f47a289b03885638c003f",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-4f3359e94122453eaf964343d9733b55",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-23aabe32d81e4c86afa64a9f78e9934f",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-6b46fc34282c4454980f6e9cbc0b5ad1",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-2f720d4ce24a44e8b43cd0e00966e14c",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-9ac1cf8d8bea4bc38a8127e15cdfc51d",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-79e2560f9bdc406f800411f8a527c374",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-ff42a181181e46998f3b50b35e497812",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-05aeeb0367be4e3993109bfd5ae6fb57",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-a3edfd842c4e427496d3a27935996cb1",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-1ed1b470b23d422eb44b8274062ad417",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-8ba40e8ffdcf4fed97ef278743283701",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-5196bd982e3446cea0d9257043d10c26",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-4e7d170bfef0444e902cdd0a32547fce",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-4f31c9e3229a446682ec5e04c3efa79f",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-3d1a34fa6a8749409a4f2fe62a818c0b",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-ec03b1ca453144eda3f6fff2b0d35584",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-87d2631abb5644b0a1a622a080cb8e70",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-14ad4b36a13e4310a5937faac5634007",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-e047d1ee7e144bcfa238121ae505eacf",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-91dc559be4be4745bc0c105fda30d7f7",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-91c160eb160f4952b9c78553d5c101d9",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-4b0ace79145949d5a7fe924258c635c9",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-ee546392df794bc9b7efe573b5f0b80f",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-1493df4c677f4249a37b5869f95442a8",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-364cf52375bf4cd4950d1e5836e539f7",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-70d57b4232f44381b93f0f6afb09e9fb",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-bd302a2687884e9ba822ab49e4fc7d14",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-3a14e9784b184dc1899a35b20ae0d90b",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-f1634cde82fe4db2bfa9c57703a69fa6",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-9034f064771b4e568f4ba8e149be1d3f",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-d0519c7a9c274f56ba5aba44ca58b572",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-bb04fa50055445a4b115774a432f26d0",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-ba04ab32a20b452c96631187d8116ce1",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-bd5bc0ec1cb64bfdbb336a1a86223ada",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-37f9b031fd514a88b0a6c7c6473aadbc",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-3cbcd0eb46de4f0a97d02e350812279b",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-b9e65a1453044bbca8377d5c8e69e5d7",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-a84bc6cbea7f4bb3bb7ed00238658fb5",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-631ccc7ca59940b9ba320a3781f4b78c",
+      "action": "audit",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-10ef57a0f8884eb0b71395d74edb6c6f",
+      "action": "cleanup",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-0a72e14e294b43b08be684d70d2e6fee",
+      "action": "inspect",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-24593780890a4698a2d74c5ce51e111f",
+      "action": "audit",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-hanjing-d00e1618e15046f08cd64f1993f6de32",
+      "action": "cleanup",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    }
+  ],
+  "batches": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/10_10.对镜自拍的蹲姿和跪姿造型_720p.mp4",
+          "offset": 85114687,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/11_11.对镜自拍的靠姿_720p.mp4",
+          "offset": 9257153,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/11_11.对镜自拍的靠姿_720p.mp4",
+          "offset": 101290147,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/12_12.站姿的重心切换_1080p.mp4",
+          "offset": 2338846,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/12_12.站姿的重心切换_1080p.mp4",
+          "offset": 96710686,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/12_12.站姿的重心切换_1080p.mp4",
+          "offset": 191082526,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/12_12.站姿的重心切换_1080p.mp4",
+          "offset": 211326443,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/13_13.脚位造型顯腿長_1080p.mp4",
+          "offset": 44305712,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/14_14.休閑風格脚位造型_1080p.mp4",
+          "offset": 29822211,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/14_14.休閑風格脚位造型_1080p.mp4",
+          "offset": 33719934,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/15_15.腰椎造型的米字法_1080p.mp4",
+          "offset": 90474117,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/15_15.腰椎造型的米字法_1080p.mp4",
+          "offset": 135709852,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/16_16.脊椎的C型与S型作用_1080p.mp4",
+          "offset": 49136105,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/16_16.脊椎的C型与S型作用_1080p.mp4",
+          "offset": 51091623,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/17_17.手与面部结合造型_1080p.mp4",
+          "offset": 92416322,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/17_17.手与面部结合造型_1080p.mp4",
+          "offset": 186788162,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/17_17.手与面部结合造型_1080p.mp4",
+          "offset": 281160002,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/17_17.手与面部结合造型_1080p.mp4",
+          "offset": 371855697,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/18_18.手与身体结合造型_1080p.mp4",
+          "offset": 3676145,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/18_18.手与身体结合造型_1080p.mp4",
+          "offset": 98047985,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/18_18.手与身体结合造型_1080p.mp4",
+          "offset": 164255305,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/19_19.手与腰部造型_1080p.mp4",
+          "offset": 28164520,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/19_19.手与腰部造型_1080p.mp4",
+          "offset": 80354247,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/1_购买后如何看课_1080p.mp4",
+          "offset": 5862693,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/20_20.手与口袋造型_1080p.mp4",
+          "offset": 33718221,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/21_21.手臂的大结构造型_1080p.mp4",
+          "offset": 2601199,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/21_21.手臂的大结构造型_1080p.mp4",
+          "offset": 96973039,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/21_21.手臂的大结构造型_1080p.mp4",
+          "offset": 183350895,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/22_22.双手与中轴线的造型_1080p.mp4",
+          "offset": 7993984,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/22_22.双手与中轴线的造型_1080p.mp4",
+          "offset": 102365824,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/22_22.双手与中轴线的造型_1080p.mp4",
+          "offset": 147530089,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/23_23.肩膀造型与身体重心运用_1080p.mp4",
+          "offset": 26084998,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/24_24.头部的上中下结构与脸型分析_1080p.mp4",
+          "offset": 23122577,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/24_24.头部的上中下结构与脸型分析_1080p.mp4",
+          "offset": 46635925,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/25_25.头部米字与美人筋的运用_1080p.mp4",
+          "offset": 70858492,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/25_25.头部米字与美人筋的运用_1080p.mp4",
+          "offset": 116096789,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/26_26.表情管理眼神（一）_1080p.mp4",
+          "offset": 49133543,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/26_26.表情管理眼神（一）_1080p.mp4",
+          "offset": 137155699,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/27_27.表情管理情绪（二）_1080p.mp4",
+          "offset": 6349684,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/27_27.表情管理情绪（二）_1080p.mp4",
+          "offset": 100721524,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/27_27.表情管理情绪（二）_1080p.mp4",
+          "offset": 104482492,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/28_28.肩膀与墙面的靠姿_1080p.mp4",
+          "offset": 90610872,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/28_28.肩膀与墙面的靠姿_1080p.mp4",
+          "offset": 150993437,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/29_29.手撑与肘靠的运用1_1080p.mp4",
+          "offset": 33989275,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/29_29.手撑与肘靠的运用1_1080p.mp4",
+          "offset": 128361115,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/29_29.手撑与肘靠的运用1_1080p.mp4",
+          "offset": 128902867,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/2_1.咖啡廳室内如何拍攝_1080p.mp4",
+          "offset": 59911072,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/30_29.手撑与肘靠的运用2_1080p.mp4",
+          "offset": 33919016,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/30_29.手撑与肘靠的运用2_1080p.mp4",
+          "offset": 105137237,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/31_30.臀、脚与墙面的靠姿造型2_1080p.mp4",
+          "offset": 23153619,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/31_30.臀、脚与墙面的靠姿造型2_1080p.mp4",
+          "offset": 99982997,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/32_30.臀、脚与墙面的靠姿造型1_1080p.mp4",
+          "offset": 17542462,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/32_30.臀、脚与墙面的靠姿造型1_1080p.mp4",
+          "offset": 108046698,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/33_31.男生坐姿造型_1080p.mp4",
+          "offset": 3867604,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/33_31.男生坐姿造型_1080p.mp4",
+          "offset": 98239444,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/33_31.男生坐姿造型_1080p.mp4",
+          "offset": 146883875,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/34_32.女生坐姿造型_1080p.mp4",
+          "offset": 45727409,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/34_32.女生坐姿造型_1080p.mp4",
+          "offset": 50528715,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/35_33.高脚凳坐姿造型_1080p.mp4",
+          "offset": 47736049,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/36_34.地面坐姿造型_1080p.mp4",
+          "offset": 18997533,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/37_35.台階坐姿造型_1080p.mp4",
+          "offset": 22836952,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/37_35.台階坐姿造型_1080p.mp4",
+          "offset": 79303387,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/38_36.半蹲造型_1080p.mp4",
+          "offset": 16754034,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/39_37.单膝跪姿造型_1080p.mp4",
+          "offset": 21151371,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/39_37.单膝跪姿造型_1080p.mp4",
+          "offset": 21562935,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/3_2.戶外大草坪拍攝技巧課_1080p.mp4",
+          "offset": 93960276,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/3_2.戶外大草坪拍攝技巧課_1080p.mp4",
+          "offset": 188332116,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/3_2.戶外大草坪拍攝技巧課_1080p.mp4",
+          "offset": 216511969,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/40_38.方位蹲姿造型_1080p.mp4",
+          "offset": 17723514,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/41_39.身体侧后及多方位造型_1080p.mp4",
+          "offset": 20040657,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/42_40.上衣风格总类一： 吊带风格_1080p.mp4",
+          "offset": 28427816,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/42_40.上衣风格总类一： 吊带风格_1080p.mp4",
+          "offset": 47623568,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/43_41.上衣风格总类二：T恤休闲风_1080p.mp4",
+          "offset": 25883586,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/44_42.上衣风格总类三：毛衣宽松慵懒_1080p.mp4",
+          "offset": 40218308,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/45_43.上衣外套风格一：短外套_1080p.mp4",
+          "offset": 9074194,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/45_43.上衣外套风格一：短外套_1080p.mp4",
+          "offset": 58872714,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/46_44.上衣外套风格二：长款外套风衣_1080p.mp4",
+          "offset": 44573320,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/46_44.上衣外套风格二：长款外套风衣_1080p.mp4",
+          "offset": 83054658,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/47_45.裤装风格小脚裤上：站和走姿造型_1080p.mp4",
+          "offset": 41115390,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/48_46.裤装风格小脚裤下：坐姿造型_1080p.mp4",
+          "offset": 14775112,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/48_46.裤装风格小脚裤下：坐姿造型_1080p.mp4",
+          "offset": 37290203,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/49_47.裤装风格直筒_闊腿褲上：站与走姿造型_1080p.mp4",
+          "offset": 35711729,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/4_3.建築物怎麽拍攝和構圖更好看_1080p.mp4",
+          "offset": 36145020,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/4_3.建築物怎麽拍攝和構圖更好看_1080p.mp4",
+          "offset": 45074264,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/50_48.裤装风格直筒_阔腿裤下：坐与靠姿造型_1080p.mp4",
+          "offset": 28505220,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/51_49.裤装风格短裤上：站与走姿造型_1080p.mp4",
+          "offset": 56937376,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/51_49.裤装风格短裤上：站与走姿造型_1080p.mp4",
+          "offset": 82210118,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/52_50.裤装风格短裤下：坐与靠姿造型_1080p.mp4",
+          "offset": 59591106,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/53_51.裙装风格短裙上：站与走造型_1080p.mp4",
+          "offset": 9507992,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/53_51.裙装风格短裙上：站与走造型_1080p.mp4",
+          "offset": 43851787,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/54_52.裙装风格短裙下：坐姿造型_1080p.mp4",
+          "offset": 60028045,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/54_52.裙装风格短裙下：坐姿造型_1080p.mp4",
+          "offset": 64633259,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/55_53.裙装风格长裙上： 站与走姿造型_1080p.mp4",
+          "offset": 35442923,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/56_54.裙装风格长裙下： 坐姿造型_1080p.mp4",
+          "offset": 24490097,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/57_55.线条连衣裙的站.走造型_1080p.mp4",
+          "offset": 29832826,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/58_56.曲綫連衣裙站.走造型_1080p.mp4",
+          "offset": 780,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/58_56.曲綫連衣裙站.走造型_1080p.mp4",
+          "offset": 79722366,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/59_57.职业套装风格造型（一）_1080p.mp4",
+          "offset": 14650254,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/59_57.职业套装风格造型（一）_1080p.mp4",
+          "offset": 39175048,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/5_4.看展或博物馆如何打卡更有感觉_1080p.mp4",
+          "offset": 69847046,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/5_4.看展或博物馆如何打卡更有感觉_1080p.mp4",
+          "offset": 164218886,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/5_4.看展或博物馆如何打卡更有感觉_1080p.mp4",
+          "offset": 236040150,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/60_58.职业套装风格造型（二）_1080p.mp4",
+          "offset": 22550576,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/60_58.职业套装风格造型（二）_1080p.mp4",
+          "offset": 29503354,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/61_59.运动套装风格造型(一)_1080p.mp4",
+          "offset": 87419062,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/61_59.运动套装风格造型(一)_1080p.mp4",
+          "offset": 106967001,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/62_60.运动套装风格造型（二）_1080p.mp4",
+          "offset": 66597138,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/63_61.校园套装风格造型（一）_1080p.mp4",
+          "offset": 8226763,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/63_61.校园套装风格造型（一）_1080p.mp4",
+          "offset": 47847884,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/64_62.校园套装风格造型2_1080p.mp4",
+          "offset": 17509875,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/65_赠送1：雙人1  坐姿_1080p.mp4",
+          "offset": 20994190,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/66_赠送2：雙人2 半身造型_1080p.mp4",
+          "offset": 16246654,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/66_赠送2：雙人2 半身造型_1080p.mp4",
+          "offset": 65040885,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/67_赠送3：雙人3 站姿全身_1080p.mp4",
+          "offset": 45577609,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/67_赠送3：雙人3 站姿全身_1080p.mp4",
+          "offset": 61240573,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/68_赠送4：情侶1_1080p.mp4",
+          "offset": 34905409,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/69_赠送5：道具 咖啡杯_1080p.mp4",
+          "offset": 33019232,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/6_6.对镜自拍的机位与构图_720p.mp4",
+          "offset": 10784235,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/6_6.对镜自拍的机位与构图_720p.mp4",
+          "offset": 76566448,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/70_赠送6：道具 花_1080p.mp4",
+          "offset": 28589627,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/70_赠送6：道具 花_1080p.mp4",
+          "offset": 34203410,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/71_赠送7：道具 手套_1080p.mp4",
+          "offset": 36205115,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/72_赠送8：帽子道具_1080p.mp4",
+          "offset": 24452161,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/73_赠送9：道具 報紙_1080p.mp4",
+          "offset": 28100781,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/73_赠送9：道具 報紙_1080p.mp4",
+          "offset": 31758090,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/74_赠送10：道具 雨伞_1080p.mp4",
+          "offset": 47621713,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/75_赠送11：道具-墨镜_1080p.mp4",
+          "offset": 42281960,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/76_赠送12：道具-油纸伞_1080p.mp4",
+          "offset": 810858,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/76_赠送12：道具-油纸伞_1080p.mp4",
+          "offset": 72606298,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/77_赠送13：道具团扇_1080p.mp4",
+          "offset": 22576400,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/77_赠送13：道具团扇_1080p.mp4",
+          "offset": 43887238,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/78_赠送14：手与头部及上半身结构_720p.mp4",
+          "offset": 40269437,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/79_赠送15：旗袍站姿造型与手部结构造型_1080p.mp4",
+          "offset": 32791565,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/79_赠送15：旗袍站姿造型与手部结构造型_1080p.mp4",
+          "offset": 126776654,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/7_7.对镜自拍手臂该如何摆放_720p.mp4",
+          "offset": 386751,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/7_7.对镜自拍手臂该如何摆放_720p.mp4",
+          "offset": 64494180,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/80_赠送16：旗袍坐姿_1080p.mp4",
+          "offset": 30264411,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/80_赠送16：旗袍坐姿_1080p.mp4",
+          "offset": 50417096,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/8_8.对镜自拍的站姿与脚位_720p.mp4",
+          "offset": 74219155,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/8_8.对镜自拍的站姿与脚位_720p.mp4",
+          "offset": 78870971,
+          "complete": true
+        },
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/9_9.如何坐着对镜自拍_720p.mp4",
+          "offset": 89720024,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 7784553,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/9_9.如何坐着对镜自拍_720p.mp4",
+          "offset": 97504577,
+          "complete": true
+        }
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "started_at": "2026-10-10T21:45:13+0800",
+      "uploaded_bytes": 0,
+      "put_seconds": 0
+    },
+    {
+      "started_at": "2026-10-10T21:50:42+0800",
+      "uploaded_bytes": 0,
+      "put_seconds": 0,
+      "elapsed_seconds": 11.907360167009756,
+      "finished_at": "2026-10-10T21:50:53+0800",
+      "effective_MBps": 0.0,
+      "put_MBps": 0
+    },
+    {
+      "started_at": "2026-10-10T21:52:54+0800",
+      "uploaded_bytes": 5859117399,
+      "put_seconds": 1027.6222247540136,
+      "elapsed_seconds": 1948.131253833999,
+      "finished_at": "2026-10-10T22:25:23+0800",
+      "effective_MBps": 3.0075578262342573,
+      "put_MBps": 5.701625809428676
+    },
+    {
+      "started_at": "2026-10-10T22:29:33+0800",
+      "uploaded_bytes": 0,
+      "put_seconds": 0,
+      "elapsed_seconds": 39.53175349999219,
+      "finished_at": "2026-10-10T22:30:12+0800",
+      "effective_MBps": 0.0,
+      "put_MBps": 0
+    }
+  ],
+  "status": "complete",
+  "audit": [
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/10_10.对镜自拍的蹲姿和跪姿造型_720p.mp4",
+      "size": 85114687,
+      "sha256": "c548f01d2c21c2c90a0576e800b18c03594661811b7c2bfea6b4b5fd5f7a9243"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/11_11.对镜自拍的靠姿_720p.mp4",
+      "size": 101290147,
+      "sha256": "983e2facb00be8f0dc2f59cbebb6642fd42115325dd34e15debbcee591286205"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/12_12.站姿的重心切换_1080p.mp4",
+      "size": 211326443,
+      "sha256": "7be3b6e6406e8d4bd41b2a63e2dfbfbb09955da5a0a1f5c671d28429ce5c48b9"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/13_13.脚位造型顯腿長_1080p.mp4",
+      "size": 44305712,
+      "sha256": "71e4c4aec5ff636b736c260c3395c658b6ff20e86a518a71f9ec1c48c2dc3f9a"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/14_14.休閑風格脚位造型_1080p.mp4",
+      "size": 33719934,
+      "sha256": "20c4cfadd089cd20cfeb84734da0ea72294fa0d479a98bdb684c15815daa5127"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/15_15.腰椎造型的米字法_1080p.mp4",
+      "size": 135709852,
+      "sha256": "6817f2d3bfcd2c990d7162dc03d0d404efccb84330f487f69fbe9f95fb9cc656"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/16_16.脊椎的C型与S型作用_1080p.mp4",
+      "size": 51091623,
+      "sha256": "64609fbbeb5d08f13fb0d464cb4e0c81ab20f57f86ef0fe6a21ed37a031404f8"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/17_17.手与面部结合造型_1080p.mp4",
+      "size": 371855697,
+      "sha256": "f15381c43b5ecea08db5f8e30b16ce8ec2314453142227ad329e7ae3aefc9bac"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/18_18.手与身体结合造型_1080p.mp4",
+      "size": 164255305,
+      "sha256": "a8c34d3b7bb439e6ed8d3ca9a30e80ab86cbdcb4660b83538f66f4c061f4b1e4"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/19_19.手与腰部造型_1080p.mp4",
+      "size": 80354247,
+      "sha256": "cf4f69fa568cf54e9eda0cc69a98a6335c7c957d0f515155408114f09db465e4"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/1_购买后如何看课_1080p.mp4",
+      "size": 5862693,
+      "sha256": "c4a881b6a4b33971510c6f95fc59e81e871661ddfd9b7cf7f94c64b2731a9c40"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/20_20.手与口袋造型_1080p.mp4",
+      "size": 33718221,
+      "sha256": "dec07c4d9322548720dae93aa413c6a46bcc390bf513fc4b0b20c13ab37779ad"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/21_21.手臂的大结构造型_1080p.mp4",
+      "size": 183350895,
+      "sha256": "f6c02ff324d53af3db2bbf849f5d2fbc1d97a50e00851aa5de3939b6cbc85b9e"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/22_22.双手与中轴线的造型_1080p.mp4",
+      "size": 147530089,
+      "sha256": "cb6dac65673fb4757264de3e6e61fca31503804b5b33bb2db94836f82a1ca6c4"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/23_23.肩膀造型与身体重心运用_1080p.mp4",
+      "size": 26084998,
+      "sha256": "0498e379e54ca1a7f466c00b372d70787680987eef8f4abf45260ceed6af4890"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/24_24.头部的上中下结构与脸型分析_1080p.mp4",
+      "size": 46635925,
+      "sha256": "a2e40496a38bb08ce9d32ca8233728c0acd0851352fbc5b34802a403144cf231"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/25_25.头部米字与美人筋的运用_1080p.mp4",
+      "size": 116096789,
+      "sha256": "3aa45a11ba08877321d85546eb72d00b4fec689082727e152c0262a84ea0f410"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/26_26.表情管理眼神（一）_1080p.mp4",
+      "size": 137155699,
+      "sha256": "5a8a3af76a0159834f6ba5bc21298e9dda73d258e6b93bf40f8ceba5c7b1b229"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/27_27.表情管理情绪（二）_1080p.mp4",
+      "size": 104482492,
+      "sha256": "d9e4ad9b5a5f508cb4cc5f6b77c0684a1ee52cac31cc69e0a32eec34df7e3576"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/28_28.肩膀与墙面的靠姿_1080p.mp4",
+      "size": 150993437,
+      "sha256": "f2f6b557340ed7ecf844751ba06ec6c17aba4b29e5241d5a2502760719cad508"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/29_29.手撑与肘靠的运用1_1080p.mp4",
+      "size": 128902867,
+      "sha256": "6015770b9cf607e5e4ab46cc0401852b6131bb1dfffc8515944c289c13c066e8"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/2_1.咖啡廳室内如何拍攝_1080p.mp4",
+      "size": 59911072,
+      "sha256": "fba0037bd9f132fbc26c508c2d8d249fbff90110ddec894f1ed19125b1ded2c3"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/30_29.手撑与肘靠的运用2_1080p.mp4",
+      "size": 105137237,
+      "sha256": "57721d6967319a320e8ada1eba01a6517140c9ea308e89a35636d713c9d54912"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/31_30.臀、脚与墙面的靠姿造型2_1080p.mp4",
+      "size": 99982997,
+      "sha256": "83660e6d4956a3e5f60f0edfd964b84d7c541886381e2e2e058f0cf5275bfdc3"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/32_30.臀、脚与墙面的靠姿造型1_1080p.mp4",
+      "size": 108046698,
+      "sha256": "c8fb5995a3379a236eca35f771ad7e940840629cce11e11c3186bb3d67e01452"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/33_31.男生坐姿造型_1080p.mp4",
+      "size": 146883875,
+      "sha256": "8e5f2467029ca78c29d1f6fd17378fe7d5b01787f84a5a7f1259b6a422eafcff"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/34_32.女生坐姿造型_1080p.mp4",
+      "size": 50528715,
+      "sha256": "601c4c2a782eb62dc0dbf0c3c18183364d295db7f8fd5e57ca37860e968415e1"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/35_33.高脚凳坐姿造型_1080p.mp4",
+      "size": 47736049,
+      "sha256": "dc79978f6675130faa0a5ac609ceb762f3f937233f0b810569e8c6e0f03c17d5"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/36_34.地面坐姿造型_1080p.mp4",
+      "size": 18997533,
+      "sha256": "c37124c370eed8b40c9af1a02e1b795e00efc41db2840d977f9567c15a6d91ea"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/37_35.台階坐姿造型_1080p.mp4",
+      "size": 79303387,
+      "sha256": "79f3292d450845234070b888262ec9f6018a67f7fa50ae10db9e343bec21969f"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/38_36.半蹲造型_1080p.mp4",
+      "size": 16754034,
+      "sha256": "74f384f81ac20ffc2cca250629016cbf619d315f0f843f5b2b99077e9928b374"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/39_37.单膝跪姿造型_1080p.mp4",
+      "size": 21562935,
+      "sha256": "a7a26b6737b49224d6f2e29128f20cce5d0f44463e525e96e50624524da86a35"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/3_2.戶外大草坪拍攝技巧課_1080p.mp4",
+      "size": 216511969,
+      "sha256": "4908bfccbf2fae85b3b1275490c40b6488545046c4f7c16e7a15feedd652c91e"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/40_38.方位蹲姿造型_1080p.mp4",
+      "size": 17723514,
+      "sha256": "2eeba01e1bd3ee5da93feeb2b3c228308df41deaa63e45f5aeedef3371ab3629"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/41_39.身体侧后及多方位造型_1080p.mp4",
+      "size": 20040657,
+      "sha256": "21cd3ee391de650caa1f3f7d2570b13016029ffd230321cfd062944be7c19830"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/42_40.上衣风格总类一： 吊带风格_1080p.mp4",
+      "size": 47623568,
+      "sha256": "d34ad6af2f80d09dd103fbd34fca1b990856720a6af374daff0e86f4d00927c9"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/43_41.上衣风格总类二：T恤休闲风_1080p.mp4",
+      "size": 25883586,
+      "sha256": "b9c1085dc93e228951bd0b8d581db90d9545e0598ada06207de4276ca9ed4b16"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/44_42.上衣风格总类三：毛衣宽松慵懒_1080p.mp4",
+      "size": 40218308,
+      "sha256": "f01eca17e8655c57339cc954dbcb0ded2a662ba47fd8eaa3220566503aa36669"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/45_43.上衣外套风格一：短外套_1080p.mp4",
+      "size": 58872714,
+      "sha256": "5e28236a8e05cc673c38a06dfb2d7a7ef3a361f923cab9c075cf0b86cac233a8"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/46_44.上衣外套风格二：长款外套风衣_1080p.mp4",
+      "size": 83054658,
+      "sha256": "230b2b27e3199ec664469239de3534485b96ae4172d399112cb8604b955e8f85"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/47_45.裤装风格小脚裤上：站和走姿造型_1080p.mp4",
+      "size": 41115390,
+      "sha256": "44e5fabcf7f3c085434514a77db29ae2347f7e237d01188201800eba6c080aa5"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/48_46.裤装风格小脚裤下：坐姿造型_1080p.mp4",
+      "size": 37290203,
+      "sha256": "d066d38f51d877284ba87499d3d5ca6f980c55c9e2645098a3c20ad3352fa89d"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/49_47.裤装风格直筒_闊腿褲上：站与走姿造型_1080p.mp4",
+      "size": 35711729,
+      "sha256": "cfc3ce0c0278f9644c1fb4bb2c5ab5bd30a45deb3d26656ed007fe93531103c8"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/4_3.建築物怎麽拍攝和構圖更好看_1080p.mp4",
+      "size": 45074264,
+      "sha256": "d235ebaec31819964017ac931455f5328e2ac4801582adffe56a33f75480823a"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/50_48.裤装风格直筒_阔腿裤下：坐与靠姿造型_1080p.mp4",
+      "size": 28505220,
+      "sha256": "6512217425dba8b69d4fe876f4dc7892cf187cc8e56d60f061ab64e385001d65"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/51_49.裤装风格短裤上：站与走姿造型_1080p.mp4",
+      "size": 82210118,
+      "sha256": "e9427880fe41644404705d530847998aa7288805b5c5ab9b2c54c6cf0e380f8c"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/52_50.裤装风格短裤下：坐与靠姿造型_1080p.mp4",
+      "size": 59591106,
+      "sha256": "21789fbfa08f43136518381f0efbe799754ccb4007c31006fa5953e283bc1067"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/53_51.裙装风格短裙上：站与走造型_1080p.mp4",
+      "size": 43851787,
+      "sha256": "73b900bed0aaea18987bcaeced194a8894c801137d6997f8cde1b8808d96d8bb"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/54_52.裙装风格短裙下：坐姿造型_1080p.mp4",
+      "size": 64633259,
+      "sha256": "a7d1356baf070ce23e146c400c0e813ed2963a66c8867cea6ba7a5babb5868a0"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/55_53.裙装风格长裙上： 站与走姿造型_1080p.mp4",
+      "size": 35442923,
+      "sha256": "a0ed7591eca7154a3828db04aba39faa899e07ef539875cd1fdc5d33c57723f2"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/56_54.裙装风格长裙下： 坐姿造型_1080p.mp4",
+      "size": 24490097,
+      "sha256": "b6ed0f29401acecaf897d4a5d0baa4c78cdb18d5458eb8b556e582528d4e3ef2"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/57_55.线条连衣裙的站.走造型_1080p.mp4",
+      "size": 29832826,
+      "sha256": "3a372afcece762b43e21299a1ea4c0c49e8803957c83ab7b6cbfeed19c7a05de"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/58_56.曲綫連衣裙站.走造型_1080p.mp4",
+      "size": 79722366,
+      "sha256": "ec1fadfc4fbafbce1accb2b423b071e6ee3143d820211086f4b3fc7054212c76"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/59_57.职业套装风格造型（一）_1080p.mp4",
+      "size": 39175048,
+      "sha256": "91e71f52dcde38f1964c527c21ecd7c4ffd323a009986948728f00893c5f3236"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/5_4.看展或博物馆如何打卡更有感觉_1080p.mp4",
+      "size": 236040150,
+      "sha256": "3dbd8d80bda6b631fbbee1f37b36b3673f07d2cd07f2c74d66af339aa9ddf3f9"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/60_58.职业套装风格造型（二）_1080p.mp4",
+      "size": 29503354,
+      "sha256": "605e6ec50d243de641a6bd098488ba37e77d5a51e5ec0872eaee9f42e6a4c218"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/61_59.运动套装风格造型(一)_1080p.mp4",
+      "size": 106967001,
+      "sha256": "b156060a833e03ebfd7e4d404823ea4d2f3813ac28d8d78af8f0224e78409f02"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/62_60.运动套装风格造型（二）_1080p.mp4",
+      "size": 66597138,
+      "sha256": "3796382c2eb7153f0c57a46ea4bdb23af83e960b971d3af036af63c5fd6bc476"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/63_61.校园套装风格造型（一）_1080p.mp4",
+      "size": 47847884,
+      "sha256": "d728962e1df4ab1c4aedb2fa21ba63ef0bf0d2617a85fa7efa0985c6e87c4dea"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/64_62.校园套装风格造型2_1080p.mp4",
+      "size": 17509875,
+      "sha256": "6d3d47a4a3177ce9f12f27210330d634c003ac4eb105a68c64e3a96cfd78ada8"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/65_赠送1：雙人1  坐姿_1080p.mp4",
+      "size": 20994190,
+      "sha256": "b41ca67a6d9ee9a62f75f5436401b9a50e0e3cff867551373a0925ffa6c76469"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/66_赠送2：雙人2 半身造型_1080p.mp4",
+      "size": 65040885,
+      "sha256": "45e0504da82957f09a83afaeaaeb7cee0c69307dc8931348493f09853a70eca0"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/67_赠送3：雙人3 站姿全身_1080p.mp4",
+      "size": 61240573,
+      "sha256": "7cbe361db64ed9450ff2c723ead62de0daac0c36a1829a7d06342f00bd6ac24a"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/68_赠送4：情侶1_1080p.mp4",
+      "size": 34905409,
+      "sha256": "726e594fe7819d6f67c2c3e123b48e128b8faf2f0a303e9e4eb66e7c98acb118"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/69_赠送5：道具 咖啡杯_1080p.mp4",
+      "size": 33019232,
+      "sha256": "b712ca216ffd97157dbb0887df440bf26a525e64ea839df09e334e82abadcc8c"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/6_6.对镜自拍的机位与构图_720p.mp4",
+      "size": 76566448,
+      "sha256": "8b96c9df29704646eec189ecea56362fa6a4337ecfdf5127235d82d91a815699"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/70_赠送6：道具 花_1080p.mp4",
+      "size": 34203410,
+      "sha256": "3103d7d5102b924477ca2bac99b52038a7e9f6c17544a695ce8df38f3e0f7632"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/71_赠送7：道具 手套_1080p.mp4",
+      "size": 36205115,
+      "sha256": "f465614207f7a9088d3065f9854e82c2d4b823bf5b23d656155ae4878580f66b"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/72_赠送8：帽子道具_1080p.mp4",
+      "size": 24452161,
+      "sha256": "322e7e784b3c4ac3a45590dba200232bbf822e16d550730471095c1b35f452c0"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/73_赠送9：道具 報紙_1080p.mp4",
+      "size": 31758090,
+      "sha256": "cee485d9ecf3a89377442d52624346c95b0dc6c34482fdd7c78789cdc8d6e208"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/74_赠送10：道具 雨伞_1080p.mp4",
+      "size": 47621713,
+      "sha256": "958fe83079a61e48dcd1aa8d75fd9b9f81ed9b3c621ccc1e2be4ca902aaeb2cd"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/75_赠送11：道具-墨镜_1080p.mp4",
+      "size": 42281960,
+      "sha256": "d0f58fa5929f2c2fd8933f1d664dd12c7f79288805931c13cda986c2f29c8e1e"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/76_赠送12：道具-油纸伞_1080p.mp4",
+      "size": 72606298,
+      "sha256": "18645ebcfbb8ac430472b331af70e0b8d13f489f6f8828a925ed4350ed1aa4ea"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/77_赠送13：道具团扇_1080p.mp4",
+      "size": 43887238,
+      "sha256": "03cea8ae3862816f4ed10ab6b7b85afc50404ff58539034a19a98b67448f543b"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/78_赠送14：手与头部及上半身结构_720p.mp4",
+      "size": 40269437,
+      "sha256": "b5d5271e308610248114f1e51a020188ce0d039d8e19c0d917143a3d96d21dae"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/79_赠送15：旗袍站姿造型与手部结构造型_1080p.mp4",
+      "size": 126776654,
+      "sha256": "fa08c03e5931cd58052f7576157f50850927a0d228ab7997c3e84d449de02198"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/7_7.对镜自拍手臂该如何摆放_720p.mp4",
+      "size": 64494180,
+      "sha256": "8fd6441279b060c7af198cf715ff7778d289947257021113d5d942f0c710a7fb"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/80_赠送16：旗袍坐姿_1080p.mp4",
+      "size": 50417096,
+      "sha256": "3b4bed6b33b06c2d4d1b05eefd9f706502eac6e1d0d865a3e48b04654af31605"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/8_8.对镜自拍的站姿与脚位_720p.mp4",
+      "size": 78870971,
+      "sha256": "4a0e0934eff7be3d43d9a9129a7b1f87990cd0cc4639ae4aae7d5feed681f629"
+    },
+    {
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/9_9.如何坐着对镜自拍_720p.mp4",
+      "size": 97504577,
+      "sha256": "84c4438ec03b27d0b4c6d4813da2aa23c3d3aaa06082d84dc0c76d54e1722397"
+    }
+  ],
+  "package_verification": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    }
+  ],
+  "owned_jobs_remaining": [],
+  "ray_version": "2.51.1",
+  "dashboard": "<RAY_DASHBOARD>",
+  "files": [
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/10_10.对镜自拍的蹲姿和跪姿造型_720p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/10_10.对镜自拍的蹲姿和跪姿造型_720p.mp4",
+      "size": 85114687,
+      "sha256": "c548f01d2c21c2c90a0576e800b18c03594661811b7c2bfea6b4b5fd5f7a9243",
+      "duration_seconds": 440.646,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 720,
+          "height": 1556
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/11_11.对镜自拍的靠姿_720p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/11_11.对镜自拍的靠姿_720p.mp4",
+      "size": 101290147,
+      "sha256": "983e2facb00be8f0dc2f59cbebb6642fd42115325dd34e15debbcee591286205",
+      "duration_seconds": 550.646,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 720,
+          "height": 1560
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/12_12.站姿的重心切换_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/12_12.站姿的重心切换_1080p.mp4",
+      "size": 211326443,
+      "sha256": "7be3b6e6406e8d4bd41b2a63e2dfbfbb09955da5a0a1f5c671d28429ce5c48b9",
+      "duration_seconds": 1517.012667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/13_13.脚位造型顯腿長_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/13_13.脚位造型顯腿長_1080p.mp4",
+      "size": 44305712,
+      "sha256": "71e4c4aec5ff636b736c260c3395c658b6ff20e86a518a71f9ec1c48c2dc3f9a",
+      "duration_seconds": 565.712667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1428,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/14_14.休閑風格脚位造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/14_14.休閑風格脚位造型_1080p.mp4",
+      "size": 33719934,
+      "sha256": "20c4cfadd089cd20cfeb84734da0ea72294fa0d479a98bdb684c15815daa5127",
+      "duration_seconds": 444.779333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/15_15.腰椎造型的米字法_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/15_15.腰椎造型的米字法_1080p.mp4",
+      "size": 135709852,
+      "sha256": "6817f2d3bfcd2c990d7162dc03d0d404efccb84330f487f69fbe9f95fb9cc656",
+      "duration_seconds": 1237.855782,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/16_16.脊椎的C型与S型作用_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/16_16.脊椎的C型与S型作用_1080p.mp4",
+      "size": 51091623,
+      "sha256": "64609fbbeb5d08f13fb0d464cb4e0c81ab20f57f86ef0fe6a21ed37a031404f8",
+      "duration_seconds": 447.216327,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/17_17.手与面部结合造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/17_17.手与面部结合造型_1080p.mp4",
+      "size": 371855697,
+      "sha256": "f15381c43b5ecea08db5f8e30b16ce8ec2314453142227ad329e7ae3aefc9bac",
+      "duration_seconds": 1257.379333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/18_18.手与身体结合造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/18_18.手与身体结合造型_1080p.mp4",
+      "size": 164255305,
+      "sha256": "a8c34d3b7bb439e6ed8d3ca9a30e80ab86cbdcb4660b83538f66f4c061f4b1e4",
+      "duration_seconds": 598.146,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/19_19.手与腰部造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/19_19.手与腰部造型_1080p.mp4",
+      "size": 80354247,
+      "sha256": "cf4f69fa568cf54e9eda0cc69a98a6335c7c957d0f515155408114f09db465e4",
+      "duration_seconds": 845.679333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/1_购买后如何看课_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/1_购买后如何看课_1080p.mp4",
+      "size": 5862693,
+      "sha256": "c4a881b6a4b33971510c6f95fc59e81e871661ddfd9b7cf7f94c64b2731a9c40",
+      "duration_seconds": 168.612667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 2044,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/20_20.手与口袋造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/20_20.手与口袋造型_1080p.mp4",
+      "size": 33718221,
+      "sha256": "dec07c4d9322548720dae93aa413c6a46bcc390bf513fc4b0b20c13ab37779ad",
+      "duration_seconds": 288.379333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/21_21.手臂的大结构造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/21_21.手臂的大结构造型_1080p.mp4",
+      "size": 183350895,
+      "sha256": "f6c02ff324d53af3db2bbf849f5d2fbc1d97a50e00851aa5de3939b6cbc85b9e",
+      "duration_seconds": 680.579333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/22_22.双手与中轴线的造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/22_22.双手与中轴线的造型_1080p.mp4",
+      "size": 147530089,
+      "sha256": "cb6dac65673fb4757264de3e6e61fca31503804b5b33bb2db94836f82a1ca6c4",
+      "duration_seconds": 510.879333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/23_23.肩膀造型与身体重心运用_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/23_23.肩膀造型与身体重心运用_1080p.mp4",
+      "size": 26084998,
+      "sha256": "0498e379e54ca1a7f466c00b372d70787680987eef8f4abf45260ceed6af4890",
+      "duration_seconds": 374.679333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1080,
+          "height": 1440
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/24_24.头部的上中下结构与脸型分析_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/24_24.头部的上中下结构与脸型分析_1080p.mp4",
+      "size": 46635925,
+      "sha256": "a2e40496a38bb08ce9d32ca8233728c0acd0851352fbc5b34802a403144cf231",
+      "duration_seconds": 408.412667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/25_25.头部米字与美人筋的运用_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/25_25.头部米字与美人筋的运用_1080p.mp4",
+      "size": 116096789,
+      "sha256": "3aa45a11ba08877321d85546eb72d00b4fec689082727e152c0262a84ea0f410",
+      "duration_seconds": 753.779333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/26_26.表情管理眼神（一）_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/26_26.表情管理眼神（一）_1080p.mp4",
+      "size": 137155699,
+      "sha256": "5a8a3af76a0159834f6ba5bc21298e9dda73d258e6b93bf40f8ceba5c7b1b229",
+      "duration_seconds": 1039.712667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/27_27.表情管理情绪（二）_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/27_27.表情管理情绪（二）_1080p.mp4",
+      "size": 104482492,
+      "sha256": "d9e4ad9b5a5f508cb4cc5f6b77c0684a1ee52cac31cc69e0a32eec34df7e3576",
+      "duration_seconds": 945.312667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/28_28.肩膀与墙面的靠姿_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/28_28.肩膀与墙面的靠姿_1080p.mp4",
+      "size": 150993437,
+      "sha256": "f2f6b557340ed7ecf844751ba06ec6c17aba4b29e5241d5a2502760719cad508",
+      "duration_seconds": 1083.212667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/29_29.手撑与肘靠的运用1_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/29_29.手撑与肘靠的运用1_1080p.mp4",
+      "size": 128902867,
+      "sha256": "6015770b9cf607e5e4ab46cc0401852b6131bb1dfffc8515944c289c13c066e8",
+      "duration_seconds": 950.912667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/2_1.咖啡廳室内如何拍攝_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/2_1.咖啡廳室内如何拍攝_1080p.mp4",
+      "size": 59911072,
+      "sha256": "fba0037bd9f132fbc26c508c2d8d249fbff90110ddec894f1ed19125b1ded2c3",
+      "duration_seconds": 636.946,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/30_29.手撑与肘靠的运用2_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/30_29.手撑与肘靠的运用2_1080p.mp4",
+      "size": 105137237,
+      "sha256": "57721d6967319a320e8ada1eba01a6517140c9ea308e89a35636d713c9d54912",
+      "duration_seconds": 802.612667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/31_30.臀、脚与墙面的靠姿造型2_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/31_30.臀、脚与墙面的靠姿造型2_1080p.mp4",
+      "size": 99982997,
+      "sha256": "83660e6d4956a3e5f60f0edfd964b84d7c541886381e2e2e058f0cf5275bfdc3",
+      "duration_seconds": 746.679333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/32_30.臀、脚与墙面的靠姿造型1_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/32_30.臀、脚与墙面的靠姿造型1_1080p.mp4",
+      "size": 108046698,
+      "sha256": "c8fb5995a3379a236eca35f771ad7e940840629cce11e11c3186bb3d67e01452",
+      "duration_seconds": 810.712667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/33_31.男生坐姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/33_31.男生坐姿造型_1080p.mp4",
+      "size": 146883875,
+      "sha256": "8e5f2467029ca78c29d1f6fd17378fe7d5b01787f84a5a7f1259b6a422eafcff",
+      "duration_seconds": 1317.046,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/34_32.女生坐姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/34_32.女生坐姿造型_1080p.mp4",
+      "size": 50528715,
+      "sha256": "601c4c2a782eb62dc0dbf0c3c18183364d295db7f8fd5e57ca37860e968415e1",
+      "duration_seconds": 499.546,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/35_33.高脚凳坐姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/35_33.高脚凳坐姿造型_1080p.mp4",
+      "size": 47736049,
+      "sha256": "dc79978f6675130faa0a5ac609ceb762f3f937233f0b810569e8c6e0f03c17d5",
+      "duration_seconds": 512.412667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/36_34.地面坐姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/36_34.地面坐姿造型_1080p.mp4",
+      "size": 18997533,
+      "sha256": "c37124c370eed8b40c9af1a02e1b795e00efc41db2840d977f9567c15a6d91ea",
+      "duration_seconds": 214.279333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/37_35.台階坐姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/37_35.台階坐姿造型_1080p.mp4",
+      "size": 79303387,
+      "sha256": "79f3292d450845234070b888262ec9f6018a67f7fa50ae10db9e343bec21969f",
+      "duration_seconds": 401.779333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/38_36.半蹲造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/38_36.半蹲造型_1080p.mp4",
+      "size": 16754034,
+      "sha256": "74f384f81ac20ffc2cca250629016cbf619d315f0f843f5b2b99077e9928b374",
+      "duration_seconds": 191.046,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/39_37.单膝跪姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/39_37.单膝跪姿造型_1080p.mp4",
+      "size": 21562935,
+      "sha256": "a7a26b6737b49224d6f2e29128f20cce5d0f44463e525e96e50624524da86a35",
+      "duration_seconds": 265.446,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/3_2.戶外大草坪拍攝技巧課_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/3_2.戶外大草坪拍攝技巧課_1080p.mp4",
+      "size": 216511969,
+      "sha256": "4908bfccbf2fae85b3b1275490c40b6488545046c4f7c16e7a15feedd652c91e",
+      "duration_seconds": 762.312667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/40_38.方位蹲姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/40_38.方位蹲姿造型_1080p.mp4",
+      "size": 17723514,
+      "sha256": "2eeba01e1bd3ee5da93feeb2b3c228308df41deaa63e45f5aeedef3371ab3629",
+      "duration_seconds": 189.246,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/41_39.身体侧后及多方位造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/41_39.身体侧后及多方位造型_1080p.mp4",
+      "size": 20040657,
+      "sha256": "21cd3ee391de650caa1f3f7d2570b13016029ffd230321cfd062944be7c19830",
+      "duration_seconds": 272.179333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/42_40.上衣风格总类一： 吊带风格_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/42_40.上衣风格总类一： 吊带风格_1080p.mp4",
+      "size": 47623568,
+      "sha256": "d34ad6af2f80d09dd103fbd34fca1b990856720a6af374daff0e86f4d00927c9",
+      "duration_seconds": 476.479333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/43_41.上衣风格总类二：T恤休闲风_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/43_41.上衣风格总类二：T恤休闲风_1080p.mp4",
+      "size": 25883586,
+      "sha256": "b9c1085dc93e228951bd0b8d581db90d9545e0598ada06207de4276ca9ed4b16",
+      "duration_seconds": 307.212667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/44_42.上衣风格总类三：毛衣宽松慵懒_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/44_42.上衣风格总类三：毛衣宽松慵懒_1080p.mp4",
+      "size": 40218308,
+      "sha256": "f01eca17e8655c57339cc954dbcb0ded2a662ba47fd8eaa3220566503aa36669",
+      "duration_seconds": 257.379333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/45_43.上衣外套风格一：短外套_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/45_43.上衣外套风格一：短外套_1080p.mp4",
+      "size": 58872714,
+      "sha256": "5e28236a8e05cc673c38a06dfb2d7a7ef3a361f923cab9c075cf0b86cac233a8",
+      "duration_seconds": 586.912667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/46_44.上衣外套风格二：长款外套风衣_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/46_44.上衣外套风格二：长款外套风衣_1080p.mp4",
+      "size": 83054658,
+      "sha256": "230b2b27e3199ec664469239de3534485b96ae4172d399112cb8604b955e8f85",
+      "duration_seconds": 790.412667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/47_45.裤装风格小脚裤上：站和走姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/47_45.裤装风格小脚裤上：站和走姿造型_1080p.mp4",
+      "size": 41115390,
+      "sha256": "44e5fabcf7f3c085434514a77db29ae2347f7e237d01188201800eba6c080aa5",
+      "duration_seconds": 539.446,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/48_46.裤装风格小脚裤下：坐姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/48_46.裤装风格小脚裤下：坐姿造型_1080p.mp4",
+      "size": 37290203,
+      "sha256": "d066d38f51d877284ba87499d3d5ca6f980c55c9e2645098a3c20ad3352fa89d",
+      "duration_seconds": 522.512667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/49_47.裤装风格直筒_闊腿褲上：站与走姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/49_47.裤装风格直筒_闊腿褲上：站与走姿造型_1080p.mp4",
+      "size": 35711729,
+      "sha256": "cfc3ce0c0278f9644c1fb4bb2c5ab5bd30a45deb3d26656ed007fe93531103c8",
+      "duration_seconds": 464.846,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/4_3.建築物怎麽拍攝和構圖更好看_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/4_3.建築物怎麽拍攝和構圖更好看_1080p.mp4",
+      "size": 45074264,
+      "sha256": "d235ebaec31819964017ac931455f5328e2ac4801582adffe56a33f75480823a",
+      "duration_seconds": 473.112667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/50_48.裤装风格直筒_阔腿裤下：坐与靠姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/50_48.裤装风格直筒_阔腿裤下：坐与靠姿造型_1080p.mp4",
+      "size": 28505220,
+      "sha256": "6512217425dba8b69d4fe876f4dc7892cf187cc8e56d60f061ab64e385001d65",
+      "duration_seconds": 400.546,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/51_49.裤装风格短裤上：站与走姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/51_49.裤装风格短裤上：站与走姿造型_1080p.mp4",
+      "size": 82210118,
+      "sha256": "e9427880fe41644404705d530847998aa7288805b5c5ab9b2c54c6cf0e380f8c",
+      "duration_seconds": 489.346,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/52_50.裤装风格短裤下：坐与靠姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/52_50.裤装风格短裤下：坐与靠姿造型_1080p.mp4",
+      "size": 59591106,
+      "sha256": "21789fbfa08f43136518381f0efbe799754ccb4007c31006fa5953e283bc1067",
+      "duration_seconds": 619.112667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/53_51.裙装风格短裙上：站与走造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/53_51.裙装风格短裙上：站与走造型_1080p.mp4",
+      "size": 43851787,
+      "sha256": "73b900bed0aaea18987bcaeced194a8894c801137d6997f8cde1b8808d96d8bb",
+      "duration_seconds": 383.579333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/54_52.裙装风格短裙下：坐姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/54_52.裙装风格短裙下：坐姿造型_1080p.mp4",
+      "size": 64633259,
+      "sha256": "a7d1356baf070ce23e146c400c0e813ed2963a66c8867cea6ba7a5babb5868a0",
+      "duration_seconds": 506.379333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/55_53.裙装风格长裙上： 站与走姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/55_53.裙装风格长裙上： 站与走姿造型_1080p.mp4",
+      "size": 35442923,
+      "sha256": "a0ed7591eca7154a3828db04aba39faa899e07ef539875cd1fdc5d33c57723f2",
+      "duration_seconds": 418.246,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/56_54.裙装风格长裙下： 坐姿造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/56_54.裙装风格长裙下： 坐姿造型_1080p.mp4",
+      "size": 24490097,
+      "sha256": "b6ed0f29401acecaf897d4a5d0baa4c78cdb18d5458eb8b556e582528d4e3ef2",
+      "duration_seconds": 319.112667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/57_55.线条连衣裙的站.走造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/57_55.线条连衣裙的站.走造型_1080p.mp4",
+      "size": 29832826,
+      "sha256": "3a372afcece762b43e21299a1ea4c0c49e8803957c83ab7b6cbfeed19c7a05de",
+      "duration_seconds": 370.646,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/58_56.曲綫連衣裙站.走造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/58_56.曲綫連衣裙站.走造型_1080p.mp4",
+      "size": 79722366,
+      "sha256": "ec1fadfc4fbafbce1accb2b423b071e6ee3143d820211086f4b3fc7054212c76",
+      "duration_seconds": 414.512667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/59_57.职业套装风格造型（一）_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/59_57.职业套装风格造型（一）_1080p.mp4",
+      "size": 39175048,
+      "sha256": "91e71f52dcde38f1964c527c21ecd7c4ffd323a009986948728f00893c5f3236",
+      "duration_seconds": 388.446,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/5_4.看展或博物馆如何打卡更有感觉_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/5_4.看展或博物馆如何打卡更有感觉_1080p.mp4",
+      "size": 236040150,
+      "sha256": "3dbd8d80bda6b631fbbee1f37b36b3673f07d2cd07f2c74d66af339aa9ddf3f9",
+      "duration_seconds": 696.079333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 2336,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/60_58.职业套装风格造型（二）_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/60_58.职业套装风格造型（二）_1080p.mp4",
+      "size": 29503354,
+      "sha256": "605e6ec50d243de641a6bd098488ba37e77d5a51e5ec0872eaee9f42e6a4c218",
+      "duration_seconds": 301.579333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/61_59.运动套装风格造型(一)_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/61_59.运动套装风格造型(一)_1080p.mp4",
+      "size": 106967001,
+      "sha256": "b156060a833e03ebfd7e4d404823ea4d2f3813ac28d8d78af8f0224e78409f02",
+      "duration_seconds": 558.179333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/62_60.运动套装风格造型（二）_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/62_60.运动套装风格造型（二）_1080p.mp4",
+      "size": 66597138,
+      "sha256": "3796382c2eb7153f0c57a46ea4bdb23af83e960b971d3af036af63c5fd6bc476",
+      "duration_seconds": 318.546,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/63_61.校园套装风格造型（一）_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/63_61.校园套装风格造型（一）_1080p.mp4",
+      "size": 47847884,
+      "sha256": "d728962e1df4ab1c4aedb2fa21ba63ef0bf0d2617a85fa7efa0985c6e87c4dea",
+      "duration_seconds": 649.253152,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/64_62.校园套装风格造型2_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/64_62.校园套装风格造型2_1080p.mp4",
+      "size": 17509875,
+      "sha256": "6d3d47a4a3177ce9f12f27210330d634c003ac4eb105a68c64e3a96cfd78ada8",
+      "duration_seconds": 243.182585,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/65_赠送1：雙人1  坐姿_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/65_赠送1：雙人1  坐姿_1080p.mp4",
+      "size": 20994190,
+      "sha256": "b41ca67a6d9ee9a62f75f5436401b9a50e0e3cff867551373a0925ffa6c76469",
+      "duration_seconds": 180.446,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/66_赠送2：雙人2 半身造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/66_赠送2：雙人2 半身造型_1080p.mp4",
+      "size": 65040885,
+      "sha256": "45e0504da82957f09a83afaeaaeb7cee0c69307dc8931348493f09853a70eca0",
+      "duration_seconds": 337.646,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/67_赠送3：雙人3 站姿全身_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/67_赠送3：雙人3 站姿全身_1080p.mp4",
+      "size": 61240573,
+      "sha256": "7cbe361db64ed9450ff2c723ead62de0daac0c36a1829a7d06342f00bd6ac24a",
+      "duration_seconds": 479.946,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/68_赠送4：情侶1_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/68_赠送4：情侶1_1080p.mp4",
+      "size": 34905409,
+      "sha256": "726e594fe7819d6f67c2c3e123b48e128b8faf2f0a303e9e4eb66e7c98acb118",
+      "duration_seconds": 395.679333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/69_赠送5：道具 咖啡杯_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/69_赠送5：道具 咖啡杯_1080p.mp4",
+      "size": 33019232,
+      "sha256": "b712ca216ffd97157dbb0887df440bf26a525e64ea839df09e334e82abadcc8c",
+      "duration_seconds": 365.212667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/6_6.对镜自拍的机位与构图_720p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/6_6.对镜自拍的机位与构图_720p.mp4",
+      "size": 76566448,
+      "sha256": "8b96c9df29704646eec189ecea56362fa6a4337ecfdf5127235d82d91a815699",
+      "duration_seconds": 497.012667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 720,
+          "height": 1556
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/70_赠送6：道具 花_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/70_赠送6：道具 花_1080p.mp4",
+      "size": 34203410,
+      "sha256": "3103d7d5102b924477ca2bac99b52038a7e9f6c17544a695ce8df38f3e0f7632",
+      "duration_seconds": 352.279333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/71_赠送7：道具 手套_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/71_赠送7：道具 手套_1080p.mp4",
+      "size": 36205115,
+      "sha256": "f465614207f7a9088d3065f9854e82c2d4b823bf5b23d656155ae4878580f66b",
+      "duration_seconds": 344.912667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/72_赠送8：帽子道具_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/72_赠送8：帽子道具_1080p.mp4",
+      "size": 24452161,
+      "sha256": "322e7e784b3c4ac3a45590dba200232bbf822e16d550730471095c1b35f452c0",
+      "duration_seconds": 344.979333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/73_赠送9：道具 報紙_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/73_赠送9：道具 報紙_1080p.mp4",
+      "size": 31758090,
+      "sha256": "cee485d9ecf3a89377442d52624346c95b0dc6c34482fdd7c78789cdc8d6e208",
+      "duration_seconds": 311.879333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/74_赠送10：道具 雨伞_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/74_赠送10：道具 雨伞_1080p.mp4",
+      "size": 47621713,
+      "sha256": "958fe83079a61e48dcd1aa8d75fd9b9f81ed9b3c621ccc1e2be4ca902aaeb2cd",
+      "duration_seconds": 321.646,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/75_赠送11：道具-墨镜_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/75_赠送11：道具-墨镜_1080p.mp4",
+      "size": 42281960,
+      "sha256": "d0f58fa5929f2c2fd8933f1d664dd12c7f79288805931c13cda986c2f29c8e1e",
+      "duration_seconds": 380.146,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/76_赠送12：道具-油纸伞_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/76_赠送12：道具-油纸伞_1080p.mp4",
+      "size": 72606298,
+      "sha256": "18645ebcfbb8ac430472b331af70e0b8d13f489f6f8828a925ed4350ed1aa4ea",
+      "duration_seconds": 634.012667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/77_赠送13：道具团扇_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/77_赠送13：道具团扇_1080p.mp4",
+      "size": 43887238,
+      "sha256": "03cea8ae3862816f4ed10ab6b7b85afc50404ff58539034a19a98b67448f543b",
+      "duration_seconds": 686.979333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/78_赠送14：手与头部及上半身结构_720p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/78_赠送14：手与头部及上半身结构_720p.mp4",
+      "size": 40269437,
+      "sha256": "b5d5271e308610248114f1e51a020188ce0d039d8e19c0d917143a3d96d21dae",
+      "duration_seconds": 856.766667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 960,
+          "height": 720
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/79_赠送15：旗袍站姿造型与手部结构造型_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/79_赠送15：旗袍站姿造型与手部结构造型_1080p.mp4",
+      "size": 126776654,
+      "sha256": "fa08c03e5931cd58052f7576157f50850927a0d228ab7997c3e84d449de02198",
+      "duration_seconds": 1306.566667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/7_7.对镜自拍手臂该如何摆放_720p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/7_7.对镜自拍手臂该如何摆放_720p.mp4",
+      "size": 64494180,
+      "sha256": "8fd6441279b060c7af198cf715ff7778d289947257021113d5d942f0c710a7fb",
+      "duration_seconds": 484.246,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 720,
+          "height": 1556
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/80_赠送16：旗袍坐姿_1080p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/80_赠送16：旗袍坐姿_1080p.mp4",
+      "size": 50417096,
+      "sha256": "3b4bed6b33b06c2d4d1b05eefd9f706502eac6e1d0d865a3e48b04654af31605",
+      "duration_seconds": 651.446,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/8_8.对镜自拍的站姿与脚位_720p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/8_8.对镜自拍的站姿与脚位_720p.mp4",
+      "size": 78870971,
+      "sha256": "4a0e0934eff7be3d43d9a9129a7b1f87990cd0cc4639ae4aae7d5feed681f629",
+      "duration_seconds": 452.412667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 720,
+          "height": 1556
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "hanjing",
+      "local": "<LOCAL_PATH> 摄影素材/拍照姿势教学课程_韩晶/9_9.如何坐着对镜自拍_720p.mp4",
+      "remote_rel": "hanjing-posing/拍照姿势教学课程_韩晶/9_9.如何坐着对镜自拍_720p.mp4",
+      "size": 97504577,
+      "sha256": "84c4438ec03b27d0b4c6d4813da2aa23c3d3aaa06082d84dc0c76d54e1722397",
+      "duration_seconds": 581.112667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 720,
+          "height": 1556
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    }
+  ],
+  "payload_cap_bytes": 94371840,
+  "http_limit_bytes": 104857600,
+  "nice": 10
+}

@@ -1,268 +1,242 @@
 #!/usr/bin/env node
+import { localSetting } from './core/local-config.js';
 import path from "node:path";
-import process from "node:process";
-import { readFile, mkdir } from "node:fs/promises";
-import { EagleApi } from "./eagle-api.js";
-import { collectInventory, writeInventoryAtomic } from "./inventory.js";
-import { analyzeImage, applyFaceQuality, clusterByPhash, listEagleImages } from "./image-analyzer.js";
-import { applyReview, loadReview } from "./review.js";
+import { access, writeFile } from "node:fs/promises";
 import { createAnalysisServer } from "./server.js";
-import { writeRecommendations } from "./recommend.js";
-import { writeBenchmark } from "./benchmark.js";
-import { embedImage, createEmbeddingExtractor, clusterByEmbedding } from "./embedding.js";
-import { verifyModels } from "./models.js";
-import { runFaceWorker } from "./face-worker-client.js";
-import { buildPairPlan, buildPairUpdate, buildPairedReviewUpdates } from "./pairing.js";
-import { createBadgeThumbnail } from "./badge-thumbnail.js";
-
-const api = new EagleApi();
-
-async function doctor() {
-  let app;
-  let library;
-  try {
-    [app, library] = await Promise.all([api.appInfo(), api.libraryInfo()]);
-  } catch (error) {
-    if (error.status === 404) {
-      throw new Error(
-        "Eagle is reachable, but Web API V2 is unavailable. Upgrade Eagle to 4.0 Build 21+ before running inventory.",
-      );
-    }
-    throw error;
-  }
-  console.log(JSON.stringify({
-    ok: true,
-    application: app,
-    library: {
-      name: library.name,
-      path: library.path,
-      applicationVersion: library.applicationVersion,
-    },
-  }, null, 2));
-}
-
-async function inventory() {
-  const outputPath = path.resolve("data", "inventory.json");
-  const result = await collectInventory(api);
-  await writeInventoryAtomic(result, outputPath);
-  console.log(`Saved ${result.itemCount} items to ${outputPath}`);
-}
-
-function option(name, fallback) {
+import { DecisionsStore } from "./core/decisions-store.js";
+import {
+  planWriteback, applyWriteback, withLiveTags, planRevertWriteback,
+  validateRevertRecords, writebackRecords, revertedRecords
+} from "./core/writeback.js";
+import { buildReport, reportCsv, reportJson } from "./core/report.js";
+import { EagleApi } from "./core/eagle-api.js";
+import { listEagleImages } from "./core/metrics.js";
+import { AnalysisPipeline } from "./core/pipeline.js";
+import { ResultsStore } from "./core/results-store.js";
+import { buildCaptureUnits } from "./core/capture-units.js";
+import { RunStore } from "./server/run-store.js";
+import { restoreThumbnails } from "./core/restore-thumbnails.js";
+import { execFile } from "node:child_process";
+const arg = (name, fallback) => {
   const index = process.argv.indexOf(name);
-  return index >= 0 && process.argv[index + 1] ? process.argv[index + 1] : fallback;
+  return index >= 0 ? (process.argv[index + 1] ?? fallback) : fallback;
+};
+const flag = (name) => process.argv.includes(name);
+async function doctor() {
+  const checks = {};
+  try {
+    const api = new EagleApi();
+    await api.libraryInfo();
+    checks.eagle = true;
+  } catch {
+    checks.eagle = false;
+  }
+  const library = arg("--library", localSetting("EAGLE_LIBRARY_PATH"));
+  checks.library = Boolean(library);
+  checks.sips = process.platform !== "darwin";
+  try {
+    await new Promise((resolve, reject) =>
+      execFile("sips", ["--version"], (error) =>
+        error ? reject(error) : resolve(),
+      ),
+    );
+    checks.sips = true;
+  } catch {}
+  try {
+    await import("sharp");
+    checks.sharp = true;
+  } catch {
+    checks.sharp = false;
+  }
+  const python = localSetting("EAGLE_PYTHON", "python_worker/.venv/bin/python");
+  try {
+    await access(python);
+    checks.python = true;
+    checks.mediapipe = true;
+  } catch {
+    checks.python = false;
+    checks.mediapipe = false;
+  }
+  try {
+    await access("models/mediapipe/face_landmarker.task");
+    checks.faceModel = true;
+  } catch {
+    checks.faceModel = false;
+  }
+  try {
+    await access("models/dinov2-small/model.onnx");
+    checks.dinoModel = true;
+  } catch {
+    checks.dinoModel = false;
+  }
+  console.log(
+    JSON.stringify({ ok: checks.eagle && checks.library, checks }, null, 2),
+  );
 }
-
 async function analyze() {
-  const libraryPath = option("--library", process.env.EAGLE_LIBRARY_PATH || "D:/Photography/EagleLibraries/Culling.library");
-  const limit = Number(option("--limit", "0")) || undefined;
-  const threshold = Number(option("--phash-threshold", "8"));
-  const concurrency = Math.max(1, Math.min(16, Number(option("--concurrency", "4")) || 4));
-  const useEmbeddings = process.argv.includes("--embeddings");
-  const useFaces = process.argv.includes("--faces");
-  const allRecords = await listEagleImages(libraryPath, { limit });
-  // Rate one rendition per capture unit by default. RAW files inherit the
-  // result through sync-paired-tags; --include-raw is available for diagnostics.
-  const records = process.argv.includes("--include-raw")
-    ? allRecords
-    : allRecords.filter((item) => ["jpg", "jpeg", "heic"].includes(item.ext?.toLowerCase()));
-  const analyzed = new Array(records.length);
-  let cursor = 0;
-  let completed = 0;
-  async function worker() {
-    while (true) {
-      const index = cursor;
-      cursor += 1;
-      if (index >= records.length) return;
-      try { analyzed[index] = await analyzeImage(records[index]); }
-      catch (error) { analyzed[index] = { ...records[index], analysisError: error.message }; }
-      completed += 1;
-      if (completed % 100 === 0 || completed === records.length) console.log(`Progress ${completed}/${records.length}`);
-    }
-  }
-  await Promise.all(Array.from({ length: Math.min(concurrency, records.length) }, worker));
-  if (useFaces) {
-    const faceResults = await runFaceWorker(records.map((item) => ({ ...item, filePath: item.thumbnailPath || item.filePath })));
-    const byId = new Map(faceResults.map((result) => [result.id, result]));
-    for (let index = 0; index < analyzed.length; index += 1) {
-      analyzed[index] = applyFaceQuality(analyzed[index], byId.get(analyzed[index].id) || { error: "no worker result" });
-    }
-  }
-  let groups = clusterByPhash(analyzed.filter((item) => item.phash), threshold);
-  if (useEmbeddings) {
-    await createEmbeddingExtractor({ model: option("--embedding-model", undefined) });
-    let embedded = 0;
-    for (const item of analyzed) {
-      try { item.embedding = await embedImage(item.filePath); embedded += 1; }
-      catch (error) { item.embeddingError = error.message; }
-      if (embedded % 25 === 0 || embedded === analyzed.length) console.log(`Embedding progress ${embedded}/${analyzed.length}`);
-    }
-    groups = clusterByEmbedding(analyzed.filter((item) => item.embedding), Number(option("--embedding-threshold", "0.82")));
-  }
-  const result = {
-    schemaVersion: 1,
-    generatedAt: new Date().toISOString(),
+  const libraryPath = arg("--library", localSetting("EAGLE_LIBRARY_PATH"));
+  if (!libraryPath) throw new Error("--library is required");
+  const items = await listEagleImages(path.resolve(libraryPath));
+  const units = buildCaptureUnits(items);
+  const byId = new Map(items.map((item) => [item.id, item]));
+  const records = units.map((unit) => ({
+    ...byId.get(unit.primaryItemId),
+    unitId: unit.id,
+    itemIds: unit.itemIds,
+  }));
+  const runStore = new RunStore();
+  const id = `run-${Date.now()}`;
+  const pipeline = new AnalysisPipeline({
+    concurrency: Number(arg("--concurrency", 2)) || 2,
+    store: new ResultsStore(),
+  });
+  const started = Date.now();
+  const result = await pipeline.run(records, {
+    id,
+    onProgress: (progress) => {
+      if (progress.completed === progress.total)
+        console.error(`分析完成 ${progress.completed}/${progress.total}`);
+    },
+  });
+  const run = {
+    contractVersion: 1,
+    id,
+    status: "completed",
     libraryPath,
-    itemCount: analyzed.length,
-    analyzedCount: analyzed.filter((item) => item.phash).length,
-    embeddingCount: analyzed.filter((item) => item.embedding).length,
-    faceCount: analyzed.filter((item) => item.face?.faceCount != null).length,
-    errorCount: analyzed.filter((item) => item.analysisError).length,
-    groups,
-    items: analyzed,
+    itemCount: items.length,
+    unitCount: units.length,
+    groupCount: result.groups.length,
+    progress: result.progress,
+    warnings: result.warnings || [],
+    elapsedMs: Date.now() - started,
+    results: result,
   };
-  const outputPath = option("--output", path.resolve("data", "analysis.json"));
-  await writeInventoryAtomic(result, outputPath);
-  console.log(`Analyzed ${result.analyzedCount}/${result.itemCount} items; wrote ${groups.length} groups to ${outputPath}`);
+  await runStore.save(run, {
+    run,
+    units,
+    items,
+    results: result.results,
+    groups: result.groups,
+  });
+  const output = arg("--out");
+  if (output)
+    await (
+      await import("node:fs/promises")
+    ).writeFile(output, JSON.stringify(run, null, 2));
+  const sizes = result.groups.reduce((map, group) => {
+    const size = group.unitIds.length;
+    map[size] = (map[size] || 0) + 1;
+    return map;
+  }, {});
+  const faces = result.results.filter(
+    (entry) => (entry.metrics?.faces || 0) > 0,
+  ).length;
+  const closed = result.results.filter(
+    (entry) => (entry.metrics?.eyesClosed || 0) > 0,
+  ).length;
+  console.log(
+    `分析完成：${items.length} 个文件，${units.length} 个单元，${result.groups.length} 组`,
+  );
+  console.log(
+    `组大小分布：${JSON.stringify(sizes)}；人脸单元 ${faces}，闭眼单元 ${closed}`,
+  );
+  console.log(
+    `耗时 ${run.elapsedMs} ms；缓存命中 ${result.progress.cached}；run ${id}`,
+  );
 }
-
-async function apply() {
-  const reviewPath = option("--review", "data/review.json");
-  const review = await loadReview(reviewPath);
-  const confirm = option("--confirm", "");
-  const shouldApply = process.argv.includes("--apply") && confirm === "APPLY_REVIEW";
-  let folderMap = {};
-  const folderMapPath = option("--folder-map", undefined);
-  if (folderMapPath) folderMap = JSON.parse(await readFile(folderMapPath, "utf8"));
-  // Build updates from a fresh Eagle snapshot when writing. This preserves
-  // user tags/folders and avoids applying a plan to items changed meanwhile.
-  const lookup = new Map();
-  if (shouldApply) {
-    const current = [];
-    for await (const item of api.items({ limit: 500 })) current.push(item);
-    current.forEach((item) => lookup.set(item.id, item));
-  } else {
-    try {
-      const cached = JSON.parse(await readFile("data/inventory.json", "utf8"));
-      for (const item of cached.items || []) lookup.set(item.id, item);
-    } catch { /* dry-run can still show a valid plan without a snapshot */ }
-  }
-  const eligibleDecisions = review.decisions.filter((decision) => lookup.has(decision.id));
-  const skippedCount = review.decisions.length - eligibleDecisions.length;
-  const eligibleReview = { ...review, decisions: eligibleDecisions };
-  const tagsOnly = process.argv.includes("--tags-only");
-  const result = await applyReview(api, eligibleReview, { apply: shouldApply, lookup, folderMap, includeStar: !tagsOnly });
-  if (!shouldApply) {
-    console.log(JSON.stringify({ mode: "dry-run", tagsOnly, decisionCount: result.plan.length, skippedCount, plan: result.plan }, null, 2));
-    console.log("No Eagle changes made. To apply, pass --apply --confirm APPLY_REVIEW.");
-    return;
-  }
-  console.log(`Applied ${result.plan.length} reviewed updates to Eagle; skipped ${skippedCount} IDs no longer present in the current inventory.`);
+async function restore() {
+  const file = arg("--ids-file");
+  const library = arg("--library");
+  if (!file || !library)
+    throw new Error("--ids-file and --library are required");
+  const { readFile } = await import("node:fs/promises");
+  const ids = (await readFile(file, "utf8")).split(/\r?\n/).filter(Boolean);
+  const api = new EagleApi({ expectedLibraryPath: library });
+  console.log(
+    JSON.stringify(
+      await restoreThumbnails(api, ids, {
+        apply: flag("--apply"),
+        confirm: arg("--confirm", ""),
+      }),
+      null,
+      2,
+    ),
+  );
 }
-
 async function serve() {
-  const port = Number(option("--port", process.env.CULLING_PORT || "43125"));
-  const service = createAnalysisServer({ port });
-  await service.listen();
-  console.log(`Local analysis service listening on http://127.0.0.1:${port}`);
-  await new Promise(() => {});
+  const port = Number(arg("--port", process.env.CULLING_PORT || 43125));
+  const pipeline = new AnalysisPipeline({
+    concurrency: Number(arg("--concurrency", 2)) || 2, store: new ResultsStore()
+  });
+  const server = createAnalysisServer({ port, pipeline });
+  await server.listen();
+  console.log(`Eagle 照片筛选服务：http://127.0.0.1:${port}`);
 }
-
-async function generateBadges() {
-  const libraryPath = option("--library", process.env.EAGLE_LIBRARY_PATH || "D:/Photography/EagleLibraries/Culling.library");
-  const outputDir = path.resolve(option("--output-dir", "data/thumbnail-badges"));
-  const manifestPath = path.resolve(option("--manifest", "data/thumbnail-badges.json"));
-  const concurrency = Math.max(1, Math.min(6, Number(option("--concurrency", "2")) || 2));
-  const records = await listEagleImages(libraryPath);
-  await mkdir(outputDir, { recursive: true });
-  const manifest = [];
-  let cursor = 0;
-  let completed = 0;
-  async function worker() {
-    while (true) {
-      const index = cursor;
-      cursor += 1;
-      if (index >= records.length) return;
-      const record = records[index];
-      const outputPath = path.join(outputDir, `${record.id}.png`);
-      const result = await createBadgeThumbnail({ sourcePath: record.thumbnailPath || record.filePath, outputPath, tags: record.tags || [] });
-      manifest[index] = { id: record.id, name: record.name, ext: record.ext, tags: record.tags || [], outputPath: result.outputPath, skipped: result.skipped };
-      completed += 1;
-      if (completed % 100 === 0 || completed === records.length) console.log(`Badge progress ${completed}/${records.length}`);
+async function loadRun(runId) {
+  const runStore = new RunStore();
+  const data = await runStore.get(runId);
+  if (!data) throw new Error(`run not found: ${runId}`);
+  return { ...data, dir: runStore.dir(runId) };
+}
+async function effectiveDecisions(data) {
+  return new DecisionsStore(data.dir).effective(data.results, data.groups);
+}
+async function report() {
+  const runId = arg("--run");
+  if (!runId) throw new Error("--run is required");
+  const data = await loadRun(runId);
+  const rows = buildReport({ ...data, decisions: await effectiveDecisions(data) });
+  const format = arg("--format", "json");
+  const output = format === "csv" ? reportCsv(rows) : reportJson(rows);
+  const destination = arg("--out");
+  if (destination) await writeFile(destination, output, "utf8");
+  else process.stdout.write(format === "csv" ? output : `${output}\n`);
+}
+async function apply() {
+  const runId = arg("--run");
+  if (!runId) throw new Error("--run is required");
+  const data = await loadRun(runId);
+  const api = new EagleApi({ expectedLibraryPath: data.run?.libraryPath });
+  const execute = flag("--apply");
+  const revert = flag("--revert");
+  if (revert && flag("--move-rejected-to-trash")) throw new Error("撤回不可同时移入废纸篓");
+  if (revert) validateRevertRecords(data.applied);
+  await api.assertLibrary();
+  const targets = revert ? data.applied.map(record => ({ id: record.id, name: record.fileName })) : data.items;
+  const { items } = await withLiveTags(targets, api, { requireTags: true });
+  const plan = revert ? planRevertWriteback({ applied: data.applied, items })
+    : planWriteback({ ...data, items, decisions: await effectiveDecisions(data) });
+  const result = await applyWriteback(plan, api, { apply: execute });
+  if (execute) {
+    const records = revert ? revertedRecords(data.applied, result) : writebackRecords(plan, result);
+    await new RunStore().saveApplied(data.run.id, records);
+  }
+  if (flag("--move-rejected-to-trash")) {
+    if (arg("--confirm", "") !== "MOVE_TO_TRASH") {
+      throw new Error("--move-rejected-to-trash requires --confirm MOVE_TO_TRASH");
     }
+    const ids = plan.items.filter((item) => item.action === "rejected").map((item) => item.id);
+    result.trash = execute ? await api.moveToTrash(ids) : { dryRun: true, ids };
   }
-  await Promise.all(Array.from({ length: Math.min(concurrency, records.length) }, worker));
-  await writeInventoryAtomic({ schemaVersion: 1, generatedAt: new Date().toISOString(), libraryPath, itemCount: manifest.length, items: manifest }, manifestPath);
-  console.log(`Generated ${manifest.filter((item) => !item.skipped).length}/${manifest.length} badge thumbnails; manifest: ${manifestPath}`);
+  if (revert) result.revert = true;
+  console.log(JSON.stringify(result, null, 2));
 }
-
-async function recommend() {
-  const analysisPath = option("--analysis", "data/analysis.json");
-  const outputPath = option("--output", "data/review.json");
-  const review = await writeRecommendations(analysisPath, outputPath);
-  console.log(`Generated ${review.decisions.length} review decisions at ${outputPath}; no Eagle changes made.`);
-}
-
-async function benchmark() {
-  const analysisPath = option("--analysis", "data/analysis.json");
-  const outputPath = option("--output", "data/benchmark.json");
-  const size = Math.max(1, Number(option("--size", "300")) || 300);
-  const set = await writeBenchmark(analysisPath, outputPath, size);
-  console.log(`Generated ${set.items.length}-item benchmark manifest at ${outputPath}; no Eagle changes made.`);
-}
-
-async function models() {
-  const results = await verifyModels();
-  console.log(JSON.stringify(results, null, 2));
-  if (results.some((result) => !result.ok)) process.exitCode = 1;
-}
-
-async function pairs() {
-  const current = [];
-  for await (const item of api.items({ limit: 500 })) current.push(item);
-  const plan = buildPairPlan(current);
-  const outputPath = option("--output", "data/pairs.json");
-  await writeInventoryAtomic({ schemaVersion: 1, generatedAt: new Date().toISOString(), ...plan }, outputPath);
-  const shouldApply = process.argv.includes("--apply") && option("--confirm", "") === "APPLY_PAIRS";
-  if (!shouldApply) {
-    console.log(`Planned ${plan.pairedUnits} certain, ${plan.uncertainUnits} uncertain capture units, and ${plan.unpairedOriginals} unpaired originals; no Eagle changes made.`);
-    return;
-  }
-  const byId = new Map(current.map((item) => [item.id, item]));
-  let applied = 0;
-  let unchanged = 0;
-  for (const planned of plan.updates) {
-    const item = byId.get(planned.id);
-    if (!item) continue;
-    const update = buildPairUpdate(item, planned);
-    if (JSON.stringify(update.tags) === JSON.stringify(item.tags || [])) {
-      unchanged += 1;
-      continue;
-    }
-    await api.updateItem(update);
-    applied += 1;
-    if (applied % 500 === 0) console.log(`Pair tag progress ${applied}/${plan.updates.length}`);
-  }
-  console.log(`Applied pair tags to ${applied} Eagle items; ${unchanged} were already current. No stars, folders, or files were changed.`);
-}
-
-async function syncPairedTags() {
-  const current = [];
-  for await (const item of api.items({ limit: 500 })) current.push(item);
-  const updates = buildPairedReviewUpdates(current);
-  const shouldApply = process.argv.includes("--apply") && option("--confirm", "") === "APPLY_PAIR_REVIEW";
-  if (!shouldApply) {
-    console.log(`Planned ${updates.length} JPG→RAW review synchronizations; no Eagle changes made.`);
-    return;
-  }
-  let applied = 0;
-  for (const update of updates) {
-    await api.updateItem({ id: update.id, tags: update.tags });
-    applied += 1;
-    if (applied % 500 === 0) console.log(`成片→RAW sync progress ${applied}/${updates.length}`);
-  }
-  console.log(`Synchronized ${applied} exact JPG/RAW pairs. No stars, folders, or files were changed.`);
-}
-
-const commands = { doctor, inventory, analyze, apply, serve, badges: generateBadges, recommend, benchmark, models, pairs, "sync-paired-tags": syncPairedTags };
 const command = process.argv[2];
-
+const commands = {
+  doctor,
+  analyze,
+  serve,
+  report,
+  apply,
+  "restore-thumbnails": restore,
+};
 if (!commands[command]) {
-  console.error("Usage: node src/cli.js <doctor|inventory|analyze|apply|badges> [options]");
+  console.error(
+    "Usage: node src/cli.js doctor|analyze|serve|report|apply|restore-thumbnails",
+  );
   process.exitCode = 2;
-} else {
+} else
   commands[command]().catch((error) => {
     console.error(error.message);
     process.exitCode = 1;
   });
-}

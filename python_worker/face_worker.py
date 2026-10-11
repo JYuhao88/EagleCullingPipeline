@@ -12,7 +12,9 @@ from mediapipe.tasks.python import vision
 
 def detect_region(detector, image, rectangle):
     left, top, right, bottom = rectangle
-    result = detector.detect(mp.Image(image_format=mp.ImageFormat.SRGB, data=np.asarray(image.crop(rectangle))))
+    crop = image.crop(rectangle)
+    crop.thumbnail((768, 768), Image.Resampling.LANCZOS)
+    result = detector.detect(mp.Image(image_format=mp.ImageFormat.SRGB, data=np.asarray(crop)))
     faces = []
     for index, landmarks in enumerate(result.face_landmarks):
         categories = result.face_blendshapes[index] if index < len(result.face_blendshapes or []) else []
@@ -21,7 +23,16 @@ def detect_region(detector, image, rectangle):
         blink_left, blink_right = scores.get("eyeBlinkLeft"), scores.get("eyeBlinkRight")
         xs = [(left + landmark.x * (right-left)) / image.width for landmark in landmarks]
         ys = [(top + landmark.y * (bottom-top)) / image.height for landmark in landmarks]
-        faces.append({"box": [max(0,min(xs)), max(0,min(ys)), min(1,max(xs)), min(1,max(ys))],
+        eye_boxes = []
+        for eye_indices in ([33, 133, 159, 145], [362, 263, 386, 374]):
+            if len(landmarks) <= max(eye_indices):
+                continue
+            ex = [xs[i] for i in eye_indices]
+            ey = [ys[i] for i in eye_indices]
+            padding = (max(ex) - min(ex)) * 0.35
+            eye_boxes.append([max(0, min(ex) - padding), max(0, min(ey) - padding),
+                              min(1, max(ex) + padding), min(1, max(ey) + padding)])
+        faces.append({"eyeBoxes": eye_boxes, "box": [max(0,min(xs)), max(0,min(ys)), min(1,max(xs)), min(1,max(ys))],
                       "eyesAssessed": assessed, "eyeBlinkLeft": blink_left, "eyeBlinkRight": blink_right,
                       "eyesClosed": assessed and (blink_left >= 0.5 or blink_right >= 0.5)})
     return faces
@@ -35,18 +46,26 @@ def same_face(a, b):
     return union > 0 and intersection / union > 0.3
 
 
-def analyze_faces(detector, image, scale_fallback=False):
+def analyze_faces(detector, image, scale_fallback=True):
     faces = detect_region(detector,image,(0,0,image.width,image.height))
     method, regions = "whole-preview", 1
-    if not faces and scale_fallback and max(image.size) >= 640:
-        method = "whole-plus-tiles-v1"
-        for x in (0,0.4):
-            for y in (0,0.4):
-                rectangle = (int(x*image.width),int(y*image.height),min(image.width,int((x+0.6)*image.width)),min(image.height,int((y+0.6)*image.height)))
-                regions += 1
-                for face in detect_region(detector,image,rectangle):
-                    if not any(same_face(face,known) for known in faces):
-                        faces.append(face)
+    if scale_fallback and max(image.size) >= 320:
+        method = "whole-plus-overlap-tiles-v2"
+        rectangles = []
+        for tile, stride in ((0.5, 0.375), (0.4, 0.3)):
+            positions = [0.0, stride, 1.0 - tile]
+            for x in positions:
+                for y in positions:
+                    rectangles.append((
+                        int(x * image.width), int(y * image.height),
+                        min(image.width, int((x + tile) * image.width)),
+                        min(image.height, int((y + tile) * image.height)),
+                    ))
+        for rectangle in rectangles:
+            regions += 1
+            for face in detect_region(detector, image, rectangle):
+                if not any(same_face(face, known) for known in faces):
+                    faces.append(face)
     return {"faceCount":len(faces),"faces":[{**face,"index":index} for index,face in enumerate(faces)],"detectionMethod":method,"regionsAnalyzed":regions}
 
 
@@ -86,7 +105,7 @@ def main():
                         raise ValueError("Use a bounded preview for face detection, not a high-resolution original")
                     image = ImageOps.exif_transpose(source).convert("RGB")
                     image.thumbnail((1280, 1280), Image.Resampling.LANCZOS)
-                result = analyze_faces(detector,image,record.get("scaleFallback") is True)
+                result = analyze_faces(detector, image, record.get("scaleFallback", True))
                 emit({"id": record.get("id"), "available": True, **result})
             except Exception as exc:
                 emit({"id": record.get("id"), "available": False, "error": {"code": "inference_error", "message": str(exc)}})

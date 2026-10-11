@@ -1,0 +1,74 @@
+{
+  "contractVersion": 1,
+  "date": "2026-10-10",
+  "rules": {
+    "command": "node --test test/rules.test.js",
+    "pass": 1,
+    "fail": 0
+  },
+  "rules_and_style": {
+    "command": "node --test test/rules.test.js test/style.test.js",
+    "pass": 2,
+    "fail": 0
+  },
+  "npm_test": {
+    "command": "npm test",
+    "execution_modifier": "nice -n 10; NODE_OPTIONS temporary CommonJS preload prevents fs/promises.access for Eagle library paths, allowing existing optional tests to skip",
+    "before_rule_addition": {
+      "tests": 122,
+      "pass": 120,
+      "fail": 0,
+      "skipped": 2,
+      "duration_ms": 4282.774209
+    },
+    "after_rule_addition": {
+      "tests": 122,
+      "pass": 120,
+      "fail": 0,
+      "skipped": 2,
+      "duration_ms": 3699.118458
+    },
+    "skipped_tests": [
+      "fixture grouping reaches paired F1 target when assets exist",
+      "fixture face detection recall and false positives"
+    ],
+    "limitation": "Eagle library reads/writes prohibited for W1-D; real-library analysis and previously documented paired F1 failure not revalidated; no full real-photo end-to-end claim"
+  },
+  "metadata_checks": [
+    "72 distinct course+episode and Ceph paths",
+    "manifest byte totals match all entries",
+    "40-video Wulin and 129-video Pan collections: count, duration, views and BV uniqueness match full video lists",
+    "12 named-expert supplementary searches are reported separately from primary deduplication count"
+  ],
+  "eagle_access": false,
+  "new_video_download_count": 0,
+  "ceph_audit": {
+    "episodes": 72,
+    "size_bytes": 9324469675,
+    "sha256_matches": 72,
+    "partials": 0,
+    "files_private": true,
+    "root_mode": "0o700"
+  },
+  "gcs_cleanup": {
+    "package_count": 101,
+    "remaining": 0,
+    "manually_removed": 37,
+    "already_absent": 64
+  },
+  "job_cleanup": {
+    "owned_job_identifiers": 103,
+    "pending_or_running": [],
+    "remaining_job_records": []
+  },
+  "local_temp_cleanup": {
+    "path": "/tmp/w1-genres-upload/",
+    "exists_after": false
+  },
+  "git": {
+    "staged": false,
+    "committed": false,
+    "pushed": false,
+    "block": "sandbox denied creation of main .git/worktrees/w1-genres/index.lock"
+  }
+}

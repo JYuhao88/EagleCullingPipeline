@@ -1,0 +1,36 @@
+{
+  "model": "topiq-iaa-onnx",
+  "version": "topiq-iaa-512-v1",
+  "pyiqa_version": "0.1.16",
+  "input_shape": [
+    1,
+    3,
+    512,
+    512
+  ],
+  "preprocess": "EXIF transpose, RGB, bilinear stretch 512, /255; no external mean/std",
+  "internal_preprocess": "torchvision antialias bilinear 512->384 then network ImageNet mean/std",
+  "raw_range": [
+    1,
+    10
+  ],
+  "unit_transform": {
+    "scale": 0.1111111111111111,
+    "offset": -0.1111111111111111
+  },
+  "actual_input_max_abs_diff": 0.0,
+  "resize_max_abs_diff": 1.1920928955078125e-07,
+  "n": 30,
+  "mean_abs_diff_raw": 6.945927937825521e-06,
+  "preview_mean_abs_diff_raw": 6.945927937825521e-06,
+  "mean_abs_diff_unit": 7.717697708695023e-07,
+  "parity_pass": true,
+  "sha256": "1507e13834b375822b426adcf9984c1d2293d91270c887ff524bde7e32aed1ad",
+  "files": {
+    "topiq_iaa_512.onnx": {
+      "sha256": "1507e13834b375822b426adcf9984c1d2293d91270c887ff524bde7e32aed1ad",
+      "size_bytes": 516702434
+    }
+  },
+  "ray_job_id": "raysubmit_k9sXGMj5TSejbZZW"
+}

@@ -1,0 +1,2053 @@
+{
+  "identity": "c1ff7b41c2858d29401bd4ab1eec1187cc8ccbe6c0136e9fd778c9a26cbe9db9",
+  "source": "liqiang",
+  "offsets": {
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/1--1.双灯韩系布光解析_ev.mp4": 166458155,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/10--10.冷调韩系肖像布光解析_ev.mp4": 92490937,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/11--11.白背景的色彩布光解析_ev.mp4": 132567751,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/12--12.通透三灯组合韩系布光解析_ev.mp4": 147007421,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/13--第一节转档_ev.mp4": 7978952,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/14--第二节转档_ev.mp4": 7368468,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/15--第三节转档_ev.mp4": 13068630,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/16--第四节转档_ev.mp4": 5123198,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/17--第五节转档_ev.mp4": 7235684,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/18--第六节转档_ev.mp4": 6255667,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/19--第七节转档_ev.mp4": 6245329,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/2--2.双灯色彩韩系布光解析_ev.mp4": 137019608,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/20--第十节课转档_ev.mp4": 8372126,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/21--第八节转档_ev.mp4": 6348233,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/22--第九节课转档_ev.mp4": 5963574,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/23--第十一节课转档_ev.mp4": 7079356,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/24--第十二节课转档_1_ev.mp4": 7699126,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/25--赠送灯光课之第十三节渐变布光_ev.mp4": 114683071,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/26--赠送灯光课之第十四节模拟自然光布光_ev.mp4": 64215915,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/27--赠送灯光课之第十五节冷调布光_ev.mp4": 79330271,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/28--赠送灯光课之第十六节通透三灯布光_ev.mp4": 61331084,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/29--赠送灯光课之第十七节蝴蝶光影布光_ev.mp4": 59845120,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/3--3.清冷调韩系布光解析_ev.mp4": 177535886,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/30--十三节转档_ev.mp4": 5358531,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/31--十四节转档_ev.mp4": 3273224,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/32--十五节转档_ev.mp4": 6830367,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/33--十六节转档_ev.mp4": 3453102,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/34--十七节转档_ev.mp4": 5063313,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/4--4.灰调背景韩系布光解析_ev.mp4": 174469711,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/5--5.灰调背景布光解析（2）_ev.mp4": 130696006,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/6--6.灰调背景通透布光解析_ev.mp4": 131464603,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/7--7.亮调韩系布光解析_ev.mp4": 145366035,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/8--8.色彩韩系光影布光解析_ev.mp4": 149566311,
+    "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/9--9.通透色彩韩系布光解析_ev.mp4": 108410327
+  },
+  "jobs": [
+    {
+      "id": "w4-upload-liqiang-ecfaa3295af44d228e4e44ad29afb4d3",
+      "action": "inspect",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-e72d53b9ca874eecbe719c03cbab00c5",
+      "action": "inspect",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-faca75e962e94c129b089281a5695352",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-7a22586b11ab4471b0e6344d183a4427",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-80484af4c730472aa26cab3c0c8734db",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-7451cdcef5784266a56bedee27194e4b",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-c9e0cc076dbc46f097df5d10c828cfca",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-8b56dea476104d00b0633dd3e292470c",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-9e9d9fd239ea467aa56c45d3ee61148a",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-ea111d5a299149f2a970ec8fb435ae3a",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-e1c3c14648104429987550b98d3813f2",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-c700e8a871504586b34fa1492f440c55",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-36fcc90a6eda42c6a2c9bb5d08ac7367",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-ad64616bd68e42b4b0cbe6c9f176578e",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-a280ccdadb984648ba8e8bf21bd67e31",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-346d37b48b59490ba651b112fd57d690",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-0fbd2bacaac24b69bdf4d09c1a7d734e",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-0be5e055aa0e4010b91fbd783f87b611",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-62fb8f9d895242179fd4f23f4d037ae9",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-0b8af5d0d2f04231b64906d5a6f5655a",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-804a1adaecdf427995476e42e1b12558",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-ab8ebe6bd47f421fbe10b4e1e6e841c7",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-6a7e9b4cfaa74590acf942031df6fe47",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-fa81b94f51b8472a8f2e826b7d6425e5",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-712296fc71284b4491c7e1a9b2dab19a",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-030460ab822b40cbbb67b3b69bfd60ef",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-8cf889951a10413bb74b1d16d2e69081",
+      "action": "audit",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-liqiang-da2b18f9e42a44168d415c764d0c23e7",
+      "action": "cleanup",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    }
+  ],
+  "batches": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/1--1.双灯韩系布光解析_ev.mp4",
+          "offset": 94371840,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/1--1.双灯韩系布光解析_ev.mp4",
+          "offset": 166458155,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/10--10.冷调韩系肖像布光解析_ev.mp4",
+          "offset": 22285525,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/10--10.冷调韩系肖像布光解析_ev.mp4",
+          "offset": 92490937,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/11--11.白背景的色彩布光解析_ev.mp4",
+          "offset": 24166428,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/11--11.白背景的色彩布光解析_ev.mp4",
+          "offset": 118538268,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/11--11.白背景的色彩布光解析_ev.mp4",
+          "offset": 132567751,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/12--12.通透三灯组合韩系布光解析_ev.mp4",
+          "offset": 80342357,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/12--12.通透三灯组合韩系布光解析_ev.mp4",
+          "offset": 147007421,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/13--第一节转档_ev.mp4",
+          "offset": 7978952,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/14--第二节转档_ev.mp4",
+          "offset": 7368468,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/15--第三节转档_ev.mp4",
+          "offset": 12359356,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/15--第三节转档_ev.mp4",
+          "offset": 13068630,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/16--第四节转档_ev.mp4",
+          "offset": 5123198,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/17--第五节转档_ev.mp4",
+          "offset": 7235684,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/18--第六节转档_ev.mp4",
+          "offset": 6255667,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/19--第七节转档_ev.mp4",
+          "offset": 6245329,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/2--2.双灯色彩韩系布光解析_ev.mp4",
+          "offset": 68802688,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/2--2.双灯色彩韩系布光解析_ev.mp4",
+          "offset": 137019608,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/20--第十节课转档_ev.mp4",
+          "offset": 8372126,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/21--第八节转档_ev.mp4",
+          "offset": 6348233,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/22--第九节课转档_ev.mp4",
+          "offset": 5963574,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/23--第十一节课转档_ev.mp4",
+          "offset": 5470987,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/23--第十一节课转档_ev.mp4",
+          "offset": 7079356,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/24--第十二节课转档_1_ev.mp4",
+          "offset": 7699126,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/25--赠送灯光课之第十三节渐变布光_ev.mp4",
+          "offset": 85064345,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/25--赠送灯光课之第十三节渐变布光_ev.mp4",
+          "offset": 114683071,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/26--赠送灯光课之第十四节模拟自然光布光_ev.mp4",
+          "offset": 64215915,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/27--赠送灯光课之第十五节冷调布光_ev.mp4",
+          "offset": 537199,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/27--赠送灯光课之第十五节冷调布光_ev.mp4",
+          "offset": 79330271,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/28--赠送灯光课之第十六节通透三灯布光_ev.mp4",
+          "offset": 15578768,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/28--赠送灯光课之第十六节通透三灯布光_ev.mp4",
+          "offset": 61331084,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/29--赠送灯光课之第十七节蝴蝶光影布光_ev.mp4",
+          "offset": 48619524,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/29--赠送灯光课之第十七节蝴蝶光影布光_ev.mp4",
+          "offset": 59845120,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/3--3.清冷调韩系布光解析_ev.mp4",
+          "offset": 83146244,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/3--3.清冷调韩系布光解析_ev.mp4",
+          "offset": 177518084,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/3--3.清冷调韩系布光解析_ev.mp4",
+          "offset": 177535886,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/30--十三节转档_ev.mp4",
+          "offset": 5358531,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/31--十四节转档_ev.mp4",
+          "offset": 3273224,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/32--十五节转档_ev.mp4",
+          "offset": 6830367,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/33--十六节转档_ev.mp4",
+          "offset": 3453102,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/34--十七节转档_ev.mp4",
+          "offset": 5063313,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/4--4.灰调背景韩系布光解析_ev.mp4",
+          "offset": 70375501,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/4--4.灰调背景韩系布光解析_ev.mp4",
+          "offset": 164747341,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/4--4.灰调背景韩系布光解析_ev.mp4",
+          "offset": 174469711,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/5--5.灰调背景布光解析（2）_ev.mp4",
+          "offset": 84649470,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/5--5.灰调背景布光解析（2）_ev.mp4",
+          "offset": 130696006,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/6--6.灰调背景通透布光解析_ev.mp4",
+          "offset": 48325304,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/6--6.灰调背景通透布光解析_ev.mp4",
+          "offset": 131464603,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/7--7.亮调韩系布光解析_ev.mp4",
+          "offset": 11232541,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/7--7.亮调韩系布光解析_ev.mp4",
+          "offset": 105604381,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/7--7.亮调韩系布光解析_ev.mp4",
+          "offset": 145366035,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/8--8.色彩韩系光影布光解析_ev.mp4",
+          "offset": 54610186,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/8--8.色彩韩系光影布光解析_ev.mp4",
+          "offset": 148982026,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/8--8.色彩韩系光影布光解析_ev.mp4",
+          "offset": 149566311,
+          "complete": true
+        },
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/9--9.通透色彩韩系布光解析_ev.mp4",
+          "offset": 93787555,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 14622772,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/9--9.通透色彩韩系布光解析_ev.mp4",
+          "offset": 108410327,
+          "complete": true
+        }
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "started_at": "2026-10-10T22:35:06+0800",
+      "uploaded_bytes": 0,
+      "put_seconds": 0
+    },
+    {
+      "started_at": "2026-10-10T23:22:12+0800",
+      "uploaded_bytes": 2185299646,
+      "put_seconds": 337.7806210879353,
+      "elapsed_seconds": 649.8902706250083,
+      "finished_at": "2026-10-10T23:33:01+0800",
+      "effective_MBps": 3.362567105210496,
+      "put_MBps": 6.469582650897831
+    }
+  ],
+  "status": "complete",
+  "ray_version": "2.51.1",
+  "audit": [
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/1--1.双灯韩系布光解析_ev.mp4",
+      "size": 166458155,
+      "sha256": "dabef4d8884fcb1ba4333e7525020af08a362d12516ab6d6e8072d93f825141b",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/10--10.冷调韩系肖像布光解析_ev.mp4",
+      "size": 92490937,
+      "sha256": "076601c85becdeb0a8d619b9489aec6385b4ae422f2593cfaaf49256b6efb580",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/11--11.白背景的色彩布光解析_ev.mp4",
+      "size": 132567751,
+      "sha256": "f60fc91531b05ee0986994779ee996f9c47d4a408a1a0527ea660689a36c181f",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/12--12.通透三灯组合韩系布光解析_ev.mp4",
+      "size": 147007421,
+      "sha256": "611557e05a9222d9d60df0a68672572df2cada62dfed4e7e9663dabce2e18a73",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/13--第一节转档_ev.mp4",
+      "size": 7978952,
+      "sha256": "99ddc940fd7f077a7b497f20b7a83fa1f1a8a4e8122f40400e4f8bb96cd4cb50",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/14--第二节转档_ev.mp4",
+      "size": 7368468,
+      "sha256": "e2a257eac7809abb361935c3db750e8c3c372640f7eb8d56f5ae99598d86ffbd",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/15--第三节转档_ev.mp4",
+      "size": 13068630,
+      "sha256": "4682283e833e191f4dae241cc24f084f54b39ea6ab78621e3845a0b84e68e942",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/16--第四节转档_ev.mp4",
+      "size": 5123198,
+      "sha256": "452b100b7fb1d568682e52acfc3178b1595f7e41f3c37d668f17908add8b7954",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/17--第五节转档_ev.mp4",
+      "size": 7235684,
+      "sha256": "ca4574ab3c3167244a712145ff08f7f0d23cdeeb5f1f7326282965088923164b",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/18--第六节转档_ev.mp4",
+      "size": 6255667,
+      "sha256": "90edf254a03e9bcddccae04c0eb8ec871381f2becda345682eeb61fbd09d597b",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/19--第七节转档_ev.mp4",
+      "size": 6245329,
+      "sha256": "bec11adab63ae02cec6460656d5f41dcc475a2ad6c21b53e9b047d7f18cea07b",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/2--2.双灯色彩韩系布光解析_ev.mp4",
+      "size": 137019608,
+      "sha256": "55f4a1fef8034d89925b78716d2a6549af9ceafc3ff4a25a2818864fa48f4690",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/20--第十节课转档_ev.mp4",
+      "size": 8372126,
+      "sha256": "6e6c1331c6ab7aa3574a144f582b9a3a7528ea597edf6262d150cc7b03f20162",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/21--第八节转档_ev.mp4",
+      "size": 6348233,
+      "sha256": "681bcdcd01f23111d3c10ce298a85f9e0ff112337d955a3a886964b32b6bd2b2",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/22--第九节课转档_ev.mp4",
+      "size": 5963574,
+      "sha256": "3c7a3d2d016fb4213e7099fe00f83b02d3877a2ca9fdb5d827094163e70cd2bb",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/23--第十一节课转档_ev.mp4",
+      "size": 7079356,
+      "sha256": "2096dfe88833f2719604fdbb56f5e29272b91c328c8dfa245f4089a25b6fc535",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/24--第十二节课转档_1_ev.mp4",
+      "size": 7699126,
+      "sha256": "c4ee04fdbf18ea6a566a1e2d29892db20b7adb41ac2ec865120a9b69e6538067",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/25--赠送灯光课之第十三节渐变布光_ev.mp4",
+      "size": 114683071,
+      "sha256": "2f9b08a6dd77d0bdb08a8a8c40623aab5f538de1b29f17c62d4290b93081b458",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/26--赠送灯光课之第十四节模拟自然光布光_ev.mp4",
+      "size": 64215915,
+      "sha256": "a129b35bc71fbf970ac6f15eeb85005ae483412e6d4ba64065d259de5d30f02e",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/27--赠送灯光课之第十五节冷调布光_ev.mp4",
+      "size": 79330271,
+      "sha256": "f592df72b78ca702c73ab56d936c48a55ac7b69e6780b27d8f45532265dc707b",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/28--赠送灯光课之第十六节通透三灯布光_ev.mp4",
+      "size": 61331084,
+      "sha256": "81fde8be73c4458f7c1c3b78f3c3726b4b44f18451ed8cdf9f09c4ee4a1a6639",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/29--赠送灯光课之第十七节蝴蝶光影布光_ev.mp4",
+      "size": 59845120,
+      "sha256": "6bbfa3cccf1adf2f1d9000d001c8e2d4a5c3c55f779098f52304355c48d5ba7a",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/3--3.清冷调韩系布光解析_ev.mp4",
+      "size": 177535886,
+      "sha256": "33626e2328d997451c06d210700a83e0d7e551ce6874811da392427b6356b0c6",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/30--十三节转档_ev.mp4",
+      "size": 5358531,
+      "sha256": "7ee28741107639138978f32f9c1ee77dce74128f0ec1f59a7a283233eb981a8f",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/31--十四节转档_ev.mp4",
+      "size": 3273224,
+      "sha256": "5904943d815dc24774db4e9aa9cdced510f1096acccdcaf6bcf44fd6731a8732",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/32--十五节转档_ev.mp4",
+      "size": 6830367,
+      "sha256": "7d4818c6510518b5b676f49974ae499578887627464cce5ed557ddd58e6d4f99",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/33--十六节转档_ev.mp4",
+      "size": 3453102,
+      "sha256": "0ebb542194d69e79ccc5d17ce1a45f6df9507e8e33079bcd7b616bb2770612fe",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/34--十七节转档_ev.mp4",
+      "size": 5063313,
+      "sha256": "4c360aab2892d9ec3e5fd4c669e4542e067eeacbd33af002b864f55e138966b6",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/4--4.灰调背景韩系布光解析_ev.mp4",
+      "size": 174469711,
+      "sha256": "911a42a246c90f092cbfb02b16e79655552a8400b5aa3e6c0b5ac3dd31100838",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/5--5.灰调背景布光解析（2）_ev.mp4",
+      "size": 130696006,
+      "sha256": "e47af6086758ca98b59dada303676997f1627413610c7d92e7b3ec1fe2fc31dd",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/6--6.灰调背景通透布光解析_ev.mp4",
+      "size": 131464603,
+      "sha256": "df98b2b581b1aa72c12c7db8587b291d483af465a679ea0505f6ab10deab9c50",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/7--7.亮调韩系布光解析_ev.mp4",
+      "size": 145366035,
+      "sha256": "32c064543ab2baf6b74741c6dadaf2e06866031d77ab02f915f8c0a642b1c46d",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/8--8.色彩韩系光影布光解析_ev.mp4",
+      "size": 149566311,
+      "sha256": "66948bc0a3c1c26c487300a0c717732f71aa729da815205de0f478b62501b717",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "liqiang",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/9--9.通透色彩韩系布光解析_ev.mp4",
+      "size": 108410327,
+      "sha256": "179936a11671947d3acb4a7017279a9171175e026e178225f6fbbad66bf7c065",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting/李强第二期人像摄影韩系灯光课": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw/liqiang-korean-lighting": "0o700",
+        "<CEPH_ROOT>/references/liqiang/raw": "0o700",
+        "<CEPH_ROOT>/references/liqiang": "0o700"
+      },
+      "part_exists": false
+    }
+  ],
+  "package_verification": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    }
+  ],
+  "redeleted_job_records": [
+    "w4-upload-liqiang-faca75e962e94c129b089281a5695352",
+    "w4-upload-liqiang-8b56dea476104d00b0633dd3e292470c",
+    "w4-upload-liqiang-ab8ebe6bd47f421fbe10b4e1e6e841c7",
+    "w4-upload-liqiang-ea111d5a299149f2a970ec8fb435ae3a",
+    "w4-upload-liqiang-0be5e055aa0e4010b91fbd783f87b611",
+    "w4-upload-liqiang-712296fc71284b4491c7e1a9b2dab19a",
+    "w4-upload-liqiang-0b8af5d0d2f04231b64906d5a6f5655a",
+    "w4-upload-liqiang-0fbd2bacaac24b69bdf4d09c1a7d734e"
+  ],
+  "cleanup_stable_empty_checks": 3,
+  "owned_jobs_remaining": [],
+  "dashboard": "<RAY_DASHBOARD>",
+  "files": [
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/1--1.双灯韩系布光解析_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/1--1.双灯韩系布光解析_ev.mp4",
+      "size": 166458155,
+      "sha256": "dabef4d8884fcb1ba4333e7525020af08a362d12516ab6d6e8072d93f825141b",
+      "duration_seconds": 614.4,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/10--10.冷调韩系肖像布光解析_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/10--10.冷调韩系肖像布光解析_ev.mp4",
+      "size": 92490937,
+      "sha256": "076601c85becdeb0a8d619b9489aec6385b4ae422f2593cfaaf49256b6efb580",
+      "duration_seconds": 437.463991,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/11--11.白背景的色彩布光解析_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/11--11.白背景的色彩布光解析_ev.mp4",
+      "size": 132567751,
+      "sha256": "f60fc91531b05ee0986994779ee996f9c47d4a408a1a0527ea660689a36c181f",
+      "duration_seconds": 515.621995,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/12--12.通透三灯组合韩系布光解析_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/12--12.通透三灯组合韩系布光解析_ev.mp4",
+      "size": 147007421,
+      "sha256": "611557e05a9222d9d60df0a68672572df2cada62dfed4e7e9663dabce2e18a73",
+      "duration_seconds": 606.992993,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/13--第一节转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/13--第一节转档_ev.mp4",
+      "size": 7978952,
+      "sha256": "99ddc940fd7f077a7b497f20b7a83fa1f1a8a4e8122f40400e4f8bb96cd4cb50",
+      "duration_seconds": 209.933333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/14--第二节转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/14--第二节转档_ev.mp4",
+      "size": 7368468,
+      "sha256": "e2a257eac7809abb361935c3db750e8c3c372640f7eb8d56f5ae99598d86ffbd",
+      "duration_seconds": 168.666667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/15--第三节转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/15--第三节转档_ev.mp4",
+      "size": 13068630,
+      "sha256": "4682283e833e191f4dae241cc24f084f54b39ea6ab78621e3845a0b84e68e942",
+      "duration_seconds": 314.2,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/16--第四节转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/16--第四节转档_ev.mp4",
+      "size": 5123198,
+      "sha256": "452b100b7fb1d568682e52acfc3178b1595f7e41f3c37d668f17908add8b7954",
+      "duration_seconds": 124.333333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/17--第五节转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/17--第五节转档_ev.mp4",
+      "size": 7235684,
+      "sha256": "ca4574ab3c3167244a712145ff08f7f0d23cdeeb5f1f7326282965088923164b",
+      "duration_seconds": 172.866667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/18--第六节转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/18--第六节转档_ev.mp4",
+      "size": 6255667,
+      "sha256": "90edf254a03e9bcddccae04c0eb8ec871381f2becda345682eeb61fbd09d597b",
+      "duration_seconds": 157.466667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/19--第七节转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/19--第七节转档_ev.mp4",
+      "size": 6245329,
+      "sha256": "bec11adab63ae02cec6460656d5f41dcc475a2ad6c21b53e9b047d7f18cea07b",
+      "duration_seconds": 168.0,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/2--2.双灯色彩韩系布光解析_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/2--2.双灯色彩韩系布光解析_ev.mp4",
+      "size": 137019608,
+      "sha256": "55f4a1fef8034d89925b78716d2a6549af9ceafc3ff4a25a2818864fa48f4690",
+      "duration_seconds": 510.467007,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/20--第十节课转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/20--第十节课转档_ev.mp4",
+      "size": 8372126,
+      "sha256": "6e6c1331c6ab7aa3574a144f582b9a3a7528ea597edf6262d150cc7b03f20162",
+      "duration_seconds": 209.133333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/21--第八节转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/21--第八节转档_ev.mp4",
+      "size": 6348233,
+      "sha256": "681bcdcd01f23111d3c10ce298a85f9e0ff112337d955a3a886964b32b6bd2b2",
+      "duration_seconds": 165.4,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/22--第九节课转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/22--第九节课转档_ev.mp4",
+      "size": 5963574,
+      "sha256": "3c7a3d2d016fb4213e7099fe00f83b02d3877a2ca9fdb5d827094163e70cd2bb",
+      "duration_seconds": 148.066667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/23--第十一节课转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/23--第十一节课转档_ev.mp4",
+      "size": 7079356,
+      "sha256": "2096dfe88833f2719604fdbb56f5e29272b91c328c8dfa245f4089a25b6fc535",
+      "duration_seconds": 184.4,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/24--第十二节课转档_1_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/24--第十二节课转档_1_ev.mp4",
+      "size": 7699126,
+      "sha256": "c4ee04fdbf18ea6a566a1e2d29892db20b7adb41ac2ec865120a9b69e6538067",
+      "duration_seconds": 174.8,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/25--赠送灯光课之第十三节渐变布光_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/25--赠送灯光课之第十三节渐变布光_ev.mp4",
+      "size": 114683071,
+      "sha256": "2f9b08a6dd77d0bdb08a8a8c40623aab5f538de1b29f17c62d4290b93081b458",
+      "duration_seconds": 355.985011,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/26--赠送灯光课之第十四节模拟自然光布光_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/26--赠送灯光课之第十四节模拟自然光布光_ev.mp4",
+      "size": 64215915,
+      "sha256": "a129b35bc71fbf970ac6f15eeb85005ae483412e6d4ba64065d259de5d30f02e",
+      "duration_seconds": 558.323991,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/27--赠送灯光课之第十五节冷调布光_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/27--赠送灯光课之第十五节冷调布光_ev.mp4",
+      "size": 79330271,
+      "sha256": "f592df72b78ca702c73ab56d936c48a55ac7b69e6780b27d8f45532265dc707b",
+      "duration_seconds": 461.566009,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/28--赠送灯光课之第十六节通透三灯布光_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/28--赠送灯光课之第十六节通透三灯布光_ev.mp4",
+      "size": 61331084,
+      "sha256": "81fde8be73c4458f7c1c3b78f3c3726b4b44f18451ed8cdf9f09c4ee4a1a6639",
+      "duration_seconds": 392.253991,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/29--赠送灯光课之第十七节蝴蝶光影布光_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/29--赠送灯光课之第十七节蝴蝶光影布光_ev.mp4",
+      "size": 59845120,
+      "sha256": "6bbfa3cccf1adf2f1d9000d001c8e2d4a5c3c55f779098f52304355c48d5ba7a",
+      "duration_seconds": 386.890998,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/3--3.清冷调韩系布光解析_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/3--3.清冷调韩系布光解析_ev.mp4",
+      "size": 177535886,
+      "sha256": "33626e2328d997451c06d210700a83e0d7e551ce6874811da392427b6356b0c6",
+      "duration_seconds": 576.83,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/30--十三节转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/30--十三节转档_ev.mp4",
+      "size": 5358531,
+      "sha256": "7ee28741107639138978f32f9c1ee77dce74128f0ec1f59a7a283233eb981a8f",
+      "duration_seconds": 137.2,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/31--十四节转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/31--十四节转档_ev.mp4",
+      "size": 3273224,
+      "sha256": "5904943d815dc24774db4e9aa9cdced510f1096acccdcaf6bcf44fd6731a8732",
+      "duration_seconds": 78.533333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/32--十五节转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/32--十五节转档_ev.mp4",
+      "size": 6830367,
+      "sha256": "7d4818c6510518b5b676f49974ae499578887627464cce5ed557ddd58e6d4f99",
+      "duration_seconds": 147.6,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/33--十六节转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/33--十六节转档_ev.mp4",
+      "size": 3453102,
+      "sha256": "0ebb542194d69e79ccc5d17ce1a45f6df9507e8e33079bcd7b616bb2770612fe",
+      "duration_seconds": 83.666667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/34--十七节转档_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/34--十七节转档_ev.mp4",
+      "size": 5063313,
+      "sha256": "4c360aab2892d9ec3e5fd4c669e4542e067eeacbd33af002b864f55e138966b6",
+      "duration_seconds": 120.666667,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/4--4.灰调背景韩系布光解析_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/4--4.灰调背景韩系布光解析_ev.mp4",
+      "size": 174469711,
+      "sha256": "911a42a246c90f092cbfb02b16e79655552a8400b5aa3e6c0b5ac3dd31100838",
+      "duration_seconds": 614.933991,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/5--5.灰调背景布光解析（2）_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/5--5.灰调背景布光解析（2）_ev.mp4",
+      "size": 130696006,
+      "sha256": "e47af6086758ca98b59dada303676997f1627413610c7d92e7b3ec1fe2fc31dd",
+      "duration_seconds": 438.95,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/6--6.灰调背景通透布光解析_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/6--6.灰调背景通透布光解析_ev.mp4",
+      "size": 131464603,
+      "sha256": "df98b2b581b1aa72c12c7db8587b291d483af465a679ea0505f6ab10deab9c50",
+      "duration_seconds": 428.833333,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/7--7.亮调韩系布光解析_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/7--7.亮调韩系布光解析_ev.mp4",
+      "size": 145366035,
+      "sha256": "32c064543ab2baf6b74741c6dadaf2e06866031d77ab02f915f8c0a642b1c46d",
+      "duration_seconds": 422.0,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/8--8.色彩韩系光影布光解析_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/8--8.色彩韩系光影布光解析_ev.mp4",
+      "size": 149566311,
+      "sha256": "66948bc0a3c1c26c487300a0c717732f71aa729da815205de0f478b62501b717",
+      "duration_seconds": 591.852993,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    },
+    {
+      "source": "liqiang",
+      "local": "<LOCAL_PATH> 摄影素材/李强第二期人像摄影韩系灯光课/9--9.通透色彩韩系布光解析_ev.mp4",
+      "remote_rel": "liqiang-korean-lighting/李强第二期人像摄影韩系灯光课/9--9.通透色彩韩系布光解析_ev.mp4",
+      "size": 108410327,
+      "sha256": "179936a11671947d3acb4a7017279a9171175e026e178225f6fbbad66bf7c065",
+      "duration_seconds": 479.653991,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null
+        }
+      ]
+    }
+  ],
+  "payload_cap_bytes": 94371840,
+  "http_limit_bytes": 104857600,
+  "nice": 10
+}

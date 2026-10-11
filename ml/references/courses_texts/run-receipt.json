@@ -1,0 +1,1146 @@
+{
+  "date": "2026-10-11",
+  "verifiedAtUTC": "2026-10-10T17:08:33.247106+00:00",
+  "branch": "w4-mastercourses",
+  "source": "materials-course-texts",
+  "cephOutput": "<CEPH_ROOT>/references/materials-course-texts/text",
+  "inputFiles": 188,
+  "rawSizeAndSHA256Verified": true,
+  "processingManifestSHA256": "73da18268498d6fa3a1ea519bb35a0c515a6bfb62f73d6ec9c014738c705e19d",
+  "courses": [
+    {
+      "slug": "magnum-street",
+      "title": "Magnum — The Art of Street Photography",
+      "source": "materials-course-texts",
+      "episodes": 11,
+      "processedEpisodes": 11,
+      "arrivedEpisodes": 11,
+      "sentenceSegments": 2315,
+      "uniqueSentenceSegments": 2315,
+      "workbooks": 10,
+      "workbookPages": 170,
+      "extractionStatus": "text-complete-manual-selected",
+      "evidenceCount": 16
+    },
+    {
+      "slug": "annie-leibovitz",
+      "title": "Annie Leibovitz — MasterClass",
+      "source": "materials-course-texts",
+      "episodes": 15,
+      "processedEpisodes": 15,
+      "arrivedEpisodes": 15,
+      "sentenceSegments": 2716,
+      "uniqueSentenceSegments": 2716,
+      "workbooks": 16,
+      "workbookPages": 91,
+      "extractionStatus": "text-complete-manual-selected",
+      "evidenceCount": 10
+    },
+    {
+      "slug": "lindsay-adler",
+      "title": "Lindsay Adler — The Posing Series",
+      "source": "materials-course-texts",
+      "episodes": 17,
+      "processedEpisodes": 17,
+      "arrivedEpisodes": 17,
+      "sentenceSegments": 7567,
+      "uniqueSentenceSegments": 7567,
+      "workbooks": 0,
+      "workbookPages": 0,
+      "extractionStatus": "text-complete-manual-selected",
+      "evidenceCount": 16
+    },
+    {
+      "slug": "michele-celentano",
+      "title": "Michele Celentano — 家庭与群体摆姿",
+      "source": "materials-course-texts",
+      "episodes": 119,
+      "processedEpisodes": 119,
+      "arrivedEpisodes": 119,
+      "sentenceSegments": 50251,
+      "uniqueSentenceSegments": 49585,
+      "workbooks": 0,
+      "workbookPages": 0,
+      "extractionStatus": "text-complete-manual-selected",
+      "evidenceCount": 18
+    }
+  ],
+  "counts": {
+    "addedEvidence": 60,
+    "kinds": {
+      "source": 45,
+      "exception": 12,
+      "counterpoint": 3
+    },
+    "addedCandidates": 4,
+    "totalEvidence": 111,
+    "totalCandidates": 7,
+    "timeLocators": 49,
+    "pageLocators": 11
+  },
+  "manualReading": "Full keyword concordance for coarse location; selected passages manually read, not all sentence segments; no external model, ASR, OCR, video or visual photo validation",
+  "manuallyUsedLocators": [
+    {
+      "ruleId": "S-MOMENT-ACTION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 9,
+        "episodeId": "magnum-street-6dcb6b13f011",
+        "start": 553.21,
+        "end": 594.44
+      }
+    },
+    {
+      "ruleId": "S-LAYERS-SEPARATION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 9,
+        "episodeId": "magnum-street-6dcb6b13f011",
+        "start": 553.21,
+        "end": 572.505
+      }
+    },
+    {
+      "ruleId": "S-PERSON-GEOMETRY",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 1,
+        "episodeId": "magnum-street-8ac1d99f32d3",
+        "page": 11
+      }
+    },
+    {
+      "ruleId": "S-MOMENT-ACTION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 9,
+        "episodeId": "magnum-street-1128638e1330",
+        "page": 11
+      }
+    },
+    {
+      "ruleId": "S-UNIQUE-COVERAGE",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 9,
+        "episodeId": "magnum-street-6dcb6b13f011",
+        "start": 1035.0,
+        "end": 1062.02
+      }
+    },
+    {
+      "ruleId": "G-BOOK-SEQUENCE-PACE",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 9,
+        "episodeId": "magnum-street-1128638e1330",
+        "page": 12
+      }
+    },
+    {
+      "ruleId": "G-BOOK-SEQUENCE-PACE",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 9,
+        "episodeId": "magnum-street-6dcb6b13f011",
+        "start": 1100.605,
+        "end": 1121.46
+      }
+    },
+    {
+      "ruleId": "G-BOOK-SEQUENCE-PACE",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 9,
+        "episodeId": "magnum-street-6dcb6b13f011",
+        "start": 175.73,
+        "end": 203.705
+      }
+    },
+    {
+      "ruleId": "S-LAYERS-SEPARATION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 4,
+        "episodeId": "magnum-street-6bbd5be5ffbc",
+        "page": 9
+      }
+    },
+    {
+      "ruleId": "S-PERSON-GEOMETRY",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 4,
+        "episodeId": "magnum-street-6bbd5be5ffbc",
+        "page": 12
+      }
+    },
+    {
+      "ruleId": "P-SUBJECT-PLACEMENT",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 4,
+        "episodeId": "magnum-street-6bbd5be5ffbc",
+        "page": 9
+      }
+    },
+    {
+      "ruleId": "G-COURSE-EDIT-JUSTIFICATION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 9,
+        "episodeId": "magnum-street-6dcb6b13f011",
+        "start": 728.74,
+        "end": 748.405
+      }
+    },
+    {
+      "ruleId": "G-COURSE-EDIT-JUSTIFICATION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 9,
+        "episodeId": "magnum-street-1128638e1330",
+        "page": 13
+      }
+    },
+    {
+      "ruleId": "G-COURSE-EDIT-JUSTIFICATION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 9,
+        "episodeId": "magnum-street-6dcb6b13f011",
+        "start": 880.4,
+        "end": 907.815
+      }
+    },
+    {
+      "ruleId": "G-COURSE-SELECTION-PURPOSE",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "annie-leibovitz",
+        "episode": 9,
+        "episodeId": "annie-leibovitz-0eede29825aa",
+        "start": 145.82,
+        "end": 152.88
+      }
+    },
+    {
+      "ruleId": "G-COURSE-SELECTION-PURPOSE",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "annie-leibovitz",
+        "episode": 9,
+        "episodeId": "annie-leibovitz-41db63003abb",
+        "page": 1
+      }
+    },
+    {
+      "ruleId": "P-FACE-EYES",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "annie-leibovitz",
+        "episode": 2,
+        "episodeId": "annie-leibovitz-c6d9b30f81dd",
+        "start": 574.905,
+        "end": 603.6
+      }
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "annie-leibovitz",
+        "episode": 6,
+        "episodeId": "annie-leibovitz-4b4cf4b550e7",
+        "page": 1
+      }
+    },
+    {
+      "ruleId": "P-BG-MERGER",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "annie-leibovitz",
+        "episode": 6,
+        "episodeId": "annie-leibovitz-1b0e221bfb27",
+        "start": 423.98,
+        "end": 439.24
+      }
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "annie-leibovitz",
+        "episode": 12,
+        "episodeId": "annie-leibovitz-44bd0eb5a7ec",
+        "page": 1
+      }
+    },
+    {
+      "ruleId": "P-BOOK-EXPRESSION-VARIETY",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "annie-leibovitz",
+        "episode": 2,
+        "episodeId": "annie-leibovitz-c6d9b30f81dd",
+        "start": 640.015,
+        "end": 666.035
+      }
+    },
+    {
+      "ruleId": "G-BOOK-SEQUENCE-PACE",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "annie-leibovitz",
+        "episode": 2,
+        "episodeId": "annie-leibovitz-c6d9b30f81dd",
+        "start": 797.49,
+        "end": 823.5
+      }
+    },
+    {
+      "ruleId": "G-COURSE-SELECTION-PURPOSE",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "annie-leibovitz",
+        "episode": 13,
+        "episodeId": "annie-leibovitz-fd5079e0e345",
+        "start": 548.595,
+        "end": 559.675
+      }
+    },
+    {
+      "ruleId": "G-COURSE-ITERATIVE-EDIT",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 9,
+        "episodeId": "magnum-street-1128638e1330",
+        "page": 7
+      }
+    },
+    {
+      "ruleId": "G-COURSE-ITERATIVE-EDIT",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "magnum-street",
+        "episode": 9,
+        "episodeId": "magnum-street-6dcb6b13f011",
+        "start": 395.515,
+        "end": 429.16
+      }
+    },
+    {
+      "ruleId": "G-COURSE-ITERATIVE-EDIT",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "annie-leibovitz",
+        "episode": 13,
+        "episodeId": "annie-leibovitz-fd5079e0e345",
+        "start": 16.63,
+        "end": 36.15
+      }
+    },
+    {
+      "ruleId": "P-COURSE-ARM-PROJECTION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 3,
+        "episodeId": "lindsay-adler-f448d609680a",
+        "start": 940.48,
+        "end": 972.136
+      }
+    },
+    {
+      "ruleId": "P-YD-POSE-COMPACT",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 3,
+        "episodeId": "lindsay-adler-f448d609680a",
+        "start": 1444.9,
+        "end": 1484.215
+      }
+    },
+    {
+      "ruleId": "P-YD-POSE-COMPACT",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 3,
+        "episodeId": "lindsay-adler-f448d609680a",
+        "start": 1534.22,
+        "end": 1569.62
+      }
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 3,
+        "episodeId": "lindsay-adler-f448d609680a",
+        "start": 2922.658,
+        "end": 2959.98
+      }
+    },
+    {
+      "ruleId": "P-FACE-EYES",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 12,
+        "episodeId": "lindsay-adler-8380d559be78",
+        "start": 97.004,
+        "end": 154.43
+      }
+    },
+    {
+      "ruleId": "P-YD-POSE-THEME",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 12,
+        "episodeId": "lindsay-adler-8380d559be78",
+        "start": 130.1,
+        "end": 154.43
+      }
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 8,
+        "episodeId": "lindsay-adler-8e441278778a",
+        "start": 612.92,
+        "end": 707.15
+      }
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 17,
+        "episodeId": "lindsay-adler-72705d3a52b7",
+        "start": 444.72,
+        "end": 469.92
+      }
+    },
+    {
+      "ruleId": "P-YD-BODY-PROPORTION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 8,
+        "episodeId": "lindsay-adler-8e441278778a",
+        "start": 953.937,
+        "end": 974.553
+      }
+    },
+    {
+      "ruleId": "P-CROP-ELBOW",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 17,
+        "episodeId": "lindsay-adler-72705d3a52b7",
+        "start": 491.32,
+        "end": 504.076
+      }
+    },
+    {
+      "ruleId": "P-CROP-WRIST",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 17,
+        "episodeId": "lindsay-adler-72705d3a52b7",
+        "start": 494.335,
+        "end": 502.472
+      }
+    },
+    {
+      "ruleId": "P-CROP-KNEE",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 17,
+        "episodeId": "lindsay-adler-72705d3a52b7",
+        "start": 499.92,
+        "end": 506.194
+      }
+    },
+    {
+      "ruleId": "P-CROP-HEADROOM",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 17,
+        "episodeId": "lindsay-adler-72705d3a52b7",
+        "start": 501.44,
+        "end": 513.904
+      }
+    },
+    {
+      "ruleId": "P-BOOK-GROUP-READINESS",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 17,
+        "episodeId": "lindsay-adler-72705d3a52b7",
+        "start": 469.92,
+        "end": 491.316
+      }
+    },
+    {
+      "ruleId": "P-COURSE-GROUP-HEAD-LAYERS",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 4,
+        "episodeId": "michele-celentano-821114d53372",
+        "start": 51.04,
+        "end": 100.645
+      }
+    },
+    {
+      "ruleId": "P-COURSE-GROUP-HEAD-LAYERS",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 8,
+        "episodeId": "lindsay-adler-8e441278778a",
+        "start": 57.2,
+        "end": 84.21
+      }
+    },
+    {
+      "ruleId": "P-COURSE-GROUP-HEAD-LAYERS",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "lindsay-adler",
+        "episode": 8,
+        "episodeId": "lindsay-adler-8e441278778a",
+        "start": 148.28,
+        "end": 175.76
+      }
+    },
+    {
+      "ruleId": "P-POSE-WEIGHT",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 3,
+        "episodeId": "michele-celentano-23163033817e",
+        "start": 24.055,
+        "end": 53.765
+      }
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 5,
+        "episodeId": "michele-celentano-f7bdb508b977",
+        "start": 122.275,
+        "end": 149.725
+      }
+    },
+    {
+      "ruleId": "P-FACE-FOCUS",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 5,
+        "episodeId": "michele-celentano-f7bdb508b977",
+        "start": 250.115,
+        "end": 275.145
+      }
+    },
+    {
+      "ruleId": "P-YD-FACE-PERSPECTIVE",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 5,
+        "episodeId": "michele-celentano-f7bdb508b977",
+        "start": 284.86,
+        "end": 317.58
+      }
+    },
+    {
+      "ruleId": "P-BOOK-GROUP-READINESS",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 86,
+        "episodeId": "michele-celentano-018cc26a147b",
+        "start": 495.385,
+        "end": 510.405
+      }
+    },
+    {
+      "ruleId": "P-BOOK-GROUP-READINESS",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 86,
+        "episodeId": "michele-celentano-018cc26a147b",
+        "start": 510.405,
+        "end": 516.04
+      }
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 86,
+        "episodeId": "michele-celentano-018cc26a147b",
+        "start": 595.095,
+        "end": 614.365
+      }
+    },
+    {
+      "ruleId": "P-COURSE-POSE-SERIES",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 86,
+        "episodeId": "michele-celentano-018cc26a147b",
+        "start": 595.095,
+        "end": 618.94
+      }
+    },
+    {
+      "ruleId": "P-FACE-EYES",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 86,
+        "episodeId": "michele-celentano-018cc26a147b",
+        "start": 695.99,
+        "end": 720.44
+      }
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 91,
+        "episodeId": "michele-celentano-48819a789ffc",
+        "start": 210.825,
+        "end": 220.36
+      }
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 91,
+        "episodeId": "michele-celentano-48819a789ffc",
+        "start": 364.465,
+        "end": 371.05
+      }
+    },
+    {
+      "ruleId": "P-BOOK-GROUP-READINESS",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 96,
+        "episodeId": "michele-celentano-6498d4e16121",
+        "start": 107.565,
+        "end": 114.85
+      }
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 96,
+        "episodeId": "michele-celentano-6498d4e16121",
+        "start": 180.7,
+        "end": 185.465
+      }
+    },
+    {
+      "ruleId": "P-BOOK-GROUP-READINESS",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 96,
+        "episodeId": "michele-celentano-6498d4e16121",
+        "start": 406.01,
+        "end": 443.95
+      }
+    },
+    {
+      "ruleId": "G-COURSE-EDIT-JUSTIFICATION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 96,
+        "episodeId": "michele-celentano-6498d4e16121",
+        "start": 406.01,
+        "end": 443.95
+      }
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 118,
+        "episodeId": "michele-celentano-2bd931e29895",
+        "start": 457.72,
+        "end": 464.89
+      }
+    },
+    {
+      "ruleId": "P-FACE-EYES",
+      "locator": {
+        "source": "materials-course-texts",
+        "course": "michele-celentano",
+        "episode": 118,
+        "episodeId": "michele-celentano-2bd931e29895",
+        "start": 468.315,
+        "end": 475.47
+      }
+    }
+  ],
+  "verifiedTransfers": [
+    {
+      "id": "lindsay-adler-a01514b2dcb2",
+      "output": "lindsay-adler/lindsay-adler-a01514b2dcb2.json",
+      "sha256": "17617dfe7e9f89ffd582693ea90fe8acb314737070c401c028a2fe8bbf84908a",
+      "size": 144305
+    },
+    {
+      "id": "lindsay-adler-991ea3a5e40b",
+      "output": "lindsay-adler/lindsay-adler-991ea3a5e40b.json",
+      "sha256": "23e7cfedd0bc4daf9307a3136f935460b3dace31c28a3bdc30f407d4f2579da6",
+      "size": 187683
+    },
+    {
+      "id": "lindsay-adler-8380d559be78",
+      "output": "lindsay-adler/lindsay-adler-8380d559be78.json",
+      "sha256": "a29f9e1ddf067d2ac46211a059cbf610a690fb4922b72062a0c698e1bc620d93",
+      "size": 186243
+    },
+    {
+      "id": "lindsay-adler-fd2d8d1c5b4f",
+      "output": "lindsay-adler/lindsay-adler-fd2d8d1c5b4f.json",
+      "sha256": "ed3d429e5a96d691b78c9729b302bd37c232df2c38330ac2410bca7653dfd550",
+      "size": 164329
+    },
+    {
+      "id": "lindsay-adler-72705d3a52b7",
+      "output": "lindsay-adler/lindsay-adler-72705d3a52b7.json",
+      "sha256": "78c41ba32cf8d9fe82371f6c4404858315be1e9bfc00e7b1ea786fdcf8239b33",
+      "size": 166623
+    },
+    {
+      "id": "lindsay-adler-3642b95c1da0",
+      "output": "lindsay-adler/lindsay-adler-3642b95c1da0.json",
+      "sha256": "6d1a2e89c1693fdce8d3630aee8b580b101dc9cfe6f27a840ecb6952dcf14f7e",
+      "size": 139300
+    },
+    {
+      "id": "lindsay-adler-f448d609680a",
+      "output": "lindsay-adler/lindsay-adler-f448d609680a.json",
+      "sha256": "077222cf8e8baf8b1031c9a0cf66f420d41cbeec3b039c2298623f3c216a7317",
+      "size": 346185
+    },
+    {
+      "id": "lindsay-adler-e22286f03ed1",
+      "output": "lindsay-adler/lindsay-adler-e22286f03ed1.json",
+      "sha256": "94109b40f8b6cca3999dcb4ec1b118291a2b67f290acbd93d86cec34c9ae9f16",
+      "size": 147620
+    },
+    {
+      "id": "lindsay-adler-18b2e61aa6b5",
+      "output": "lindsay-adler/lindsay-adler-18b2e61aa6b5.json",
+      "sha256": "00e656d9705df5c2f967a0b271a330b213bc403b76ad2b6a7df4de0a13b72bc8",
+      "size": 142328
+    },
+    {
+      "id": "lindsay-adler-8e441278778a",
+      "output": "lindsay-adler/lindsay-adler-8e441278778a.json",
+      "sha256": "3361aa4ebe0de5b2251ff088cfeca77e2c4bd4a8904e755095247dcf5f83a429",
+      "size": 141991
+    },
+    {
+      "id": "michele-celentano-fae90c732963",
+      "output": "michele-celentano/michele-celentano-fae90c732963.json",
+      "sha256": "dfc6aa225a0c2de1cb00c0e610a0210f82af4edd983d4df96db0a73b1f4e3a17",
+      "size": 73405
+    },
+    {
+      "id": "michele-celentano-1c6d7e8c4d6b",
+      "output": "michele-celentano/michele-celentano-1c6d7e8c4d6b.json",
+      "sha256": "0487751c734dd4578f0d68db9da9e85020555d68506646b9ba1a841db489f55b",
+      "size": 83885
+    },
+    {
+      "id": "michele-celentano-23163033817e",
+      "output": "michele-celentano/michele-celentano-23163033817e.json",
+      "sha256": "fb6fbeb54a88bd741cd150ad56642a487fc7492adf004565c66ee489dbe7a359",
+      "size": 28275
+    },
+    {
+      "id": "michele-celentano-821114d53372",
+      "output": "michele-celentano/michele-celentano-821114d53372.json",
+      "sha256": "c39ab149442bc379edf59773287922f4c91bc9c36cd8afe9ddc552bf2a57a29e",
+      "size": 30675
+    },
+    {
+      "id": "michele-celentano-f7bdb508b977",
+      "output": "michele-celentano/michele-celentano-f7bdb508b977.json",
+      "sha256": "939d97e9a53b4e9388f60440dad889a6f57b562ced7df5c6a58af2b9d9c490c4",
+      "size": 42483
+    },
+    {
+      "id": "michele-celentano-6ee97cd9c3bf",
+      "output": "michele-celentano/michele-celentano-6ee97cd9c3bf.json",
+      "sha256": "743419f9404c3be684fdf0b50a1e9b68a6558e37c5cfeffba55eb76059e515bc",
+      "size": 20589
+    },
+    {
+      "id": "michele-celentano-254d15253989",
+      "output": "michele-celentano/michele-celentano-254d15253989.json",
+      "sha256": "43a92888c7c53eabb669e2206e99788f23a07274d81275d6dd50b9666bf8fff1",
+      "size": 15505
+    },
+    {
+      "id": "michele-celentano-dd93b5b81395",
+      "output": "michele-celentano/michele-celentano-dd93b5b81395.json",
+      "sha256": "b38afd7d17e36717e763dc5ea7d1a4e052ea23674fd4e614d28ba100cf3bd2e2",
+      "size": 129739
+    },
+    {
+      "id": "michele-celentano-018cc26a147b",
+      "output": "michele-celentano/michele-celentano-018cc26a147b.json",
+      "sha256": "7ab2bc45636627e52cb078dd553a77618043b9bccb7fdd7fe6b5a1d017abd85f",
+      "size": 191046
+    },
+    {
+      "id": "michele-celentano-48819a789ffc",
+      "output": "michele-celentano/michele-celentano-48819a789ffc.json",
+      "sha256": "9c3a1551634bfe31dee425a7f5ff777024f8225d869287ce413ebd2fc43c8c97",
+      "size": 173559
+    },
+    {
+      "id": "michele-celentano-6498d4e16121",
+      "output": "michele-celentano/michele-celentano-6498d4e16121.json",
+      "sha256": "f21da9f7ef6820d87bb04c1621ce08884dc2050a170c5e88031a736dcd9532df",
+      "size": 141304
+    },
+    {
+      "id": "michele-celentano-2bd931e29895",
+      "output": "michele-celentano/michele-celentano-2bd931e29895.json",
+      "sha256": "8eefd7f59a595d7e7d910870ebc2df06f7bc6c178e5685a7ac9a0c5eb015f258",
+      "size": 265541
+    },
+    {
+      "id": "michele-celentano-9b0a612cd361",
+      "output": "michele-celentano/michele-celentano-9b0a612cd361.json",
+      "sha256": "37fbc2eac1cc0a437f6ad23f73227b699298afc61264687e1dd5cf39aaf91f23",
+      "size": 571541
+    },
+    {
+      "id": "annie-leibovitz-c6d9b30f81dd",
+      "output": "annie-leibovitz/annie-leibovitz-c6d9b30f81dd.json",
+      "sha256": "1579a1890ec2b16e6d8600554b168254b0b685625e610b0748faaa4a94ae2747",
+      "size": 92328
+    },
+    {
+      "id": "annie-leibovitz-1b0e221bfb27",
+      "output": "annie-leibovitz/annie-leibovitz-1b0e221bfb27.json",
+      "sha256": "574878344f0a5756a389560ab8e5781c456cae4cbf68bfb9d4d71fc2ef4f3875",
+      "size": 41272
+    },
+    {
+      "id": "annie-leibovitz-0eede29825aa",
+      "output": "annie-leibovitz/annie-leibovitz-0eede29825aa.json",
+      "sha256": "ea62fee186313e3e18e1c99ae85f8ac2190b8eead48636c3d80c927135fd5dcf",
+      "size": 26714
+    },
+    {
+      "id": "annie-leibovitz-202f7dfb5dea",
+      "output": "annie-leibovitz/annie-leibovitz-202f7dfb5dea.json",
+      "sha256": "f7d22a32d4b944605c39d752ecf68ded1d3f25900b62560f7e8f5b0467ffbaf1",
+      "size": 58479
+    },
+    {
+      "id": "annie-leibovitz-fd5079e0e345",
+      "output": "annie-leibovitz/annie-leibovitz-fd5079e0e345.json",
+      "sha256": "899c1e7c21f489d536677d0aec6c680b6db463eb3f44719d1c7ef4c860449c5a",
+      "size": 41838
+    },
+    {
+      "id": "annie-leibovitz-92fd94596ada",
+      "output": "annie-leibovitz/annie-leibovitz-92fd94596ada.json",
+      "sha256": "1613b0f56f419ee3b4b9aa864933a55f9b0cd7b7a5193f1b24c8ea830c112128",
+      "size": 45002
+    },
+    {
+      "id": "annie-leibovitz-028aaba82fc2",
+      "output": "annie-leibovitz/annie-leibovitz-028aaba82fc2.json",
+      "sha256": "fbdea1de882a006f2c13b61049d627a12690862934f25d1a78ecd9789d0b92e8",
+      "size": 3961
+    },
+    {
+      "id": "annie-leibovitz-4b4cf4b550e7",
+      "output": "annie-leibovitz/annie-leibovitz-4b4cf4b550e7.json",
+      "sha256": "a9807d1986e39d04628b4e612af2537a3b78dbda2bc3d93817d976e0e0bc3215",
+      "size": 2057
+    },
+    {
+      "id": "annie-leibovitz-41db63003abb",
+      "output": "annie-leibovitz/annie-leibovitz-41db63003abb.json",
+      "sha256": "527d91a63dd495ed5d05d46fe9f0556dc2a6ad8cc65ca27d5587eda6ad1a6f85",
+      "size": 2183
+    },
+    {
+      "id": "annie-leibovitz-44bd0eb5a7ec",
+      "output": "annie-leibovitz/annie-leibovitz-44bd0eb5a7ec.json",
+      "sha256": "3c7ab4ae67a4f4e4e3d6e7d7c27a22581acc229a4a79ca6ada32fad36daf79f1",
+      "size": 3498
+    },
+    {
+      "id": "annie-leibovitz-864c4f60a3ab",
+      "output": "annie-leibovitz/annie-leibovitz-864c4f60a3ab.json",
+      "sha256": "3c7ab4ae67a4f4e4e3d6e7d7c27a22581acc229a4a79ca6ada32fad36daf79f1",
+      "size": 3498
+    },
+    {
+      "id": "magnum-street-0201daad9f85",
+      "output": "magnum-street/magnum-street-0201daad9f85.json",
+      "sha256": "b5ac6866ddaecad5d191b351c7083aa8769a22692ff8362daece79e6294ab631",
+      "size": 43755
+    },
+    {
+      "id": "magnum-street-3b06930ae199",
+      "output": "magnum-street/magnum-street-3b06930ae199.json",
+      "sha256": "6064c5ee0a3952cb7582e59e0a061047e796140101662fda94547b8b4cf821b2",
+      "size": 52330
+    },
+    {
+      "id": "magnum-street-6dcb6b13f011",
+      "output": "magnum-street/magnum-street-6dcb6b13f011.json",
+      "sha256": "36d6117cc2f7b572adc93fc030600adea2e80792969795ab115d07d35235e1f0",
+      "size": 94608
+    },
+    {
+      "id": "magnum-street-8ac1d99f32d3",
+      "output": "magnum-street/magnum-street-8ac1d99f32d3.json",
+      "sha256": "42a8cb6ae502dfcd2f9fb74fec68ff934702afce1f4de3ad6cb27e86298132ae",
+      "size": 19815
+    },
+    {
+      "id": "magnum-street-6bbd5be5ffbc",
+      "output": "magnum-street/magnum-street-6bbd5be5ffbc.json",
+      "sha256": "f313667ad7fd9150093df54ea2fc640c063eeb17734766b99fe8f515a171972a",
+      "size": 12789
+    },
+    {
+      "id": "magnum-street-1128638e1330",
+      "output": "magnum-street/magnum-street-1128638e1330.json",
+      "sha256": "72d80ba6fa6b13c11ca7937c669c84f3a521c7806e04cec579ed86feae4e733b",
+      "size": 14442
+    }
+  ],
+  "verifiedAuxiliaryTransfers": [
+    {
+      "path": "materials-course-texts-manifest.json",
+      "sha256": "dc5b4248d8f639edf69fdf2631289be3a167254c7c18c372fe815c5f454255c4",
+      "size": 182405
+    },
+    {
+      "path": "concordance.json",
+      "sha256": "19bc6a297dc115445029f1cc1d82daef3b72f77b2187e7a428c160c34bbfe5c1",
+      "size": 995106
+    }
+  ],
+  "tests": {
+    "python": {
+      "command": "python3 -m unittest discover -s ml/references -p 'test_*.py'",
+      "run": 110,
+      "pass": 105,
+      "skip": 5,
+      "fail": 0
+    },
+    "nodeTargeted": {
+      "command": "node --test test/rules-review.test.js test/courses-review.test.js",
+      "run": 15,
+      "pass": 15,
+      "fail": 0
+    },
+    "nodeFull": {
+      "command": "node --test --test-concurrency=1 --test-skip-pattern='fixture face detection recall|fixture grouping reaches'",
+      "run": 282,
+      "pass": 281,
+      "skip": 1,
+      "fail": 0,
+      "baselineSameCounts": true
+    },
+    "diffCheck": true
+  },
+  "reviewAPI": {
+    "status": 200,
+    "courses": 7,
+    "totalEvidence": 111,
+    "totalCandidates": 7,
+    "newEvidence": 60,
+    "newPages": 11,
+    "linkedRules": 30,
+    "newCandidateIds": [
+      "G-COURSE-EDIT-JUSTIFICATION",
+      "G-COURSE-SELECTION-PURPOSE",
+      "G-COURSE-ITERATIVE-EDIT",
+      "P-COURSE-GROUP-HEAD-LAYERS"
+    ]
+  },
+  "oldEntriesExactlyPreserved": true,
+  "protectedFileSHA256": {
+    "src/rules/portrait.json": "142864680ab0733929173bc4f63e6d3d9ca2abea0cadfeabfe65dc4802f2a2af",
+    "src/rules/street.json": "a96b7fd2f12c0163a3547b94389e9701e6a4d8fda9f4f9fc3a8811f45cd1475e",
+    "src/rules/landscape.json": "19b09bab9286c9c52e3542108ecb74e95c8bacc4114df17d606ff9a616f5edec",
+    "src/rules/general.json": "647272c0f8bee86c3fd4af56b56efe484928dabb2275520b982f9557b2557818",
+    "src/core/signals.js": "109a09e77bff69a8102439c046ae6ff36c172aa942e31d05709ddc252a94dcc6",
+    "src/core/ranking-weights.json": "6955e1582fc351efa386dd0f08f4698140e819380451245464c7f29230937660",
+    "src/core/ranking.js": "0ab88f435745365fa79d6ccac39ca30357796f6af60890af7e408936d7d89c40"
+  },
+  "jobs": [
+    {
+      "submission_id": "w4-mastercourses-check-1791649581",
+      "status": "SUCCEEDED",
+      "start_time": 1791649581815,
+      "end_time": 1791649590661,
+      "cpus": 1,
+      "gpus": 0
+    },
+    {
+      "submission_id": "w4-mastercourses-watch-09ebef15c763",
+      "status": "FAILED",
+      "start_time": 1791649897191,
+      "end_time": 1791649899229,
+      "cpus": 1,
+      "gpus": 0,
+      "failureSummary": "entrypoint command length; no readiness check executed; compressed entrypoint retry succeeded"
+    },
+    {
+      "submission_id": "w4-mastercourses-watch-a61a2e491426",
+      "status": "SUCCEEDED",
+      "start_time": 1791649920921,
+      "end_time": 1791651185631,
+      "cpus": 1,
+      "gpus": 0
+    },
+    {
+      "submission_id": "w4-mastercourses-extract-6ca5deefadbf",
+      "status": "FAILED",
+      "start_time": 1791651285348,
+      "end_time": 1791651296073,
+      "cpus": 1,
+      "gpus": 0,
+      "failureSummary": "source contains zero-duration cues; retained source bounds and counters; full retry succeeded"
+    },
+    {
+      "submission_id": "w4-mastercourses-timing-audit-290ca21e087a",
+      "status": "SUCCEEDED",
+      "start_time": 1791651324987,
+      "end_time": 1791651333242,
+      "cpus": 1,
+      "gpus": 0
+    },
+    {
+      "submission_id": "w4-mastercourses-extract-5bdfd25a528c",
+      "status": "SUCCEEDED",
+      "start_time": 1791651361618,
+      "end_time": 1791651395403,
+      "cpus": 1,
+      "gpus": 0
+    },
+    {
+      "submission_id": "w4-mastercourses-export-e4fc2c63eed1",
+      "status": "SUCCEEDED",
+      "start_time": 1791651402530,
+      "end_time": 1791651404839,
+      "cpus": 1,
+      "gpus": 0
+    },
+    {
+      "submission_id": "w4-mastercourses-search-de7fb53f694d",
+      "status": "SUCCEEDED",
+      "start_time": 1791651405305,
+      "end_time": 1791651441654,
+      "cpus": 1,
+      "gpus": 0
+    },
+    {
+      "submission_id": "w4-mastercourses-priority-292490814a78",
+      "status": "SUCCEEDED",
+      "start_time": 1791651437684,
+      "end_time": 1791651440805,
+      "cpus": 1,
+      "gpus": 0
+    },
+    {
+      "submission_id": "w4-mastercourses-posing-selected-eb2e3d674922",
+      "status": "SUCCEEDED",
+      "start_time": 1791651643092,
+      "end_time": 1791651646210,
+      "cpus": 1,
+      "gpus": 0
+    }
+  ],
+  "ownActiveJobs": 0,
+  "peakOwnConcurrentJobs": 2,
+  "readinessIntervalSeconds": 300,
+  "privacy": {
+    "rawCourseTextInRepository": false,
+    "noUploadsOrOtherJobsModified": true,
+    "noOriginalsModified": true,
+    "temporaryDirectory": "/tmp/w4-mastercourses",
+    "removed": true,
+    "removedAtUTC": "2026-10-10T17:08:49.261272+00:00"
+  },
+  "pending": [
+    "Joel Meyerowitz ASR after videos arrive",
+    "photographer review of hints and exceptions",
+    "real browser visual review"
+  ],
+  "git": {
+    "committed": false,
+    "pushed": false
+  },
+  "finalRayStatusVerifiedAtUTC": "2026-10-10T17:08:49.242104+00:00",
+  "validationAfterTemporaryCleanup": {
+    "evidence": 111,
+    "candidates": 7,
+    "passed": true
+  }
+}

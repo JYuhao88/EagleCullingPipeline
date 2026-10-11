@@ -1,0 +1,243 @@
+{
+  "contractVersion": 1,
+  "library": "xhs-comments",
+  "version": "0.1.0",
+  "genres": [
+    "portrait",
+    "landscape",
+    "street",
+    "general"
+  ],
+  "rules": [
+    {
+      "id": "P-COLOR-INTENT",
+      "genre": "portrait",
+      "aspect": "color",
+      "title": "肤色与配色符合意图",
+      "statement": "检查偏黄、偏红或绿色处理是否干扰肤色和预期气氛；记录具体偏色及个人接受度，不强制统一肤色。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "有意暖调、冷调、彩色灯光与胶片模拟"
+      ],
+      "sources": [
+        "xiaohongshu-comments"
+      ],
+      "status": "proposed",
+      "source": "xiaohongshu-comments",
+      "learningLayer": "personalized",
+      "frequency": {
+        "notes": 2,
+        "points": 5,
+        "likes": 5
+      },
+      "evidence": [
+        {
+          "noteId": "N05",
+          "paraphrase": "调色气氛被认为阴沉怪异"
+        },
+        {
+          "noteId": "N14",
+          "paraphrase": "默认肤色偏红令人不满意"
+        },
+        {
+          "noteId": "N05",
+          "paraphrase": "偏黄过重让画面显得腻"
+        },
+        {
+          "noteId": "N05",
+          "paraphrase": "绿色处理被认为不理想"
+        }
+      ]
+    },
+    {
+      "id": "P-LIGHT-SHAPE",
+      "genre": "portrait",
+      "aspect": "light",
+      "title": "受光位置与明暗层次",
+      "statement": "描述面部和发丝的受光位置、明暗层次；提示下巴或鼻孔异常抢光、缺少层次等观感问题，不按光线时段或固定光比拒绝。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "平光、高调、低调、逆光和有意下方照明"
+      ],
+      "sources": [
+        "xiaohongshu-comments"
+      ],
+      "status": "proposed",
+      "source": "xiaohongshu-comments",
+      "learningLayer": "personalized",
+      "frequency": {
+        "notes": 2,
+        "points": 7,
+        "likes": 7
+      },
+      "evidence": [
+        {
+          "noteId": "N05",
+          "paraphrase": "画面平且缺少层次与质感"
+        },
+        {
+          "noteId": "N14",
+          "paraphrase": "发丝光泽受到关注"
+        },
+        {
+          "noteId": "N05",
+          "paraphrase": "下方反光让下巴亮度最突出"
+        },
+        {
+          "noteId": "N05",
+          "paraphrase": "画面发灰且明暗对比不足"
+        }
+      ]
+    },
+    {
+      "id": "P-STYLING-READABLE",
+      "genre": "portrait",
+      "aspect": "styling",
+      "title": "造型轮廓有交代",
+      "statement": "检查领口、头发、服饰轮廓是否出现无意翻起或凌乱；把造型呈现与人物长相评价分开，穿搭风格由拍摄意图决定。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "有意凌乱、夸张造型、纪实现场"
+      ],
+      "sources": [
+        "xiaohongshu-comments"
+      ],
+      "status": "proposed",
+      "source": "xiaohongshu-comments",
+      "learningLayer": "personalized",
+      "frequency": {
+        "notes": 3,
+        "points": 4,
+        "likes": 452
+      },
+      "evidence": [
+        {
+          "noteId": "N16",
+          "paraphrase": "穿搭与摆姿降低拍摄难度"
+        },
+        {
+          "noteId": "N02",
+          "paraphrase": "脖颈附近造型难辨且奇怪"
+        },
+        {
+          "noteId": "N05",
+          "paraphrase": "头发未整理影响呈现"
+        },
+        {
+          "noteId": "N02",
+          "paraphrase": "猜测领子翻起造成奇怪轮廓"
+        }
+      ]
+    },
+    {
+      "id": "G-SUBJECT-HIERARCHY",
+      "genre": "general",
+      "aspect": "background",
+      "title": "主体与干扰的层级",
+      "statement": "指出哪些背景或画内元素抢走主体注意力、导致画面混乱或内容不突出；结合题材与意图提示，而非强制背景虚化。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "密集纪实、多主体、开放式构图、有意混乱"
+      ],
+      "sources": [
+        "xiaohongshu-comments"
+      ],
+      "status": "proposed",
+      "source": "xiaohongshu-comments",
+      "learningLayer": "review",
+      "frequency": {
+        "notes": 3,
+        "points": 5,
+        "likes": 2
+      },
+      "evidence": [
+        {
+          "noteId": "N05",
+          "paraphrase": "背景欠美感且缺少表达"
+        },
+        {
+          "noteId": "N09",
+          "paraphrase": "岗亭破坏画面美感"
+        },
+        {
+          "noteId": "N02",
+          "paraphrase": "画面元素显得混乱"
+        },
+        {
+          "noteId": "N09",
+          "paraphrase": "剪影主体未突出且像凑数"
+        }
+      ]
+    },
+    {
+      "id": "G-FRAMING-BALANCE",
+      "genre": "general",
+      "aspect": "framing",
+      "title": "画幅分配与环境交代",
+      "statement": "比较当前取景是否支持主体与环境关系，说明留白、宽窄或景物交代对观感的影响；信息不足时仅记录构图关注，不生成裁切阈值。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "压迫感、极简留白、开放式构图和刻意碎片化"
+      ],
+      "sources": [
+        "xiaohongshu-comments"
+      ],
+      "status": "proposed",
+      "source": "xiaohongshu-comments",
+      "learningLayer": "personalized",
+      "frequency": {
+        "notes": 5,
+        "points": 9,
+        "likes": 288
+      },
+      "evidence": [
+        {
+          "noteId": "N16",
+          "paraphrase": "构图受到肯定"
+        },
+        {
+          "noteId": "N02",
+          "paraphrase": "询问替代构图是否更好"
+        },
+        {
+          "noteId": "N04",
+          "paraphrase": "建议调整构图但未说明位置"
+        },
+        {
+          "noteId": "N09",
+          "paraphrase": "画幅过宽使画面不够干净"
+        }
+      ]
+    }
+  ]
+}

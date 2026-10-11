@@ -1,0 +1,22 @@
+{
+  "contractVersion": 1,
+  "rules": [],
+  "reasons": [
+    { "id": "R-G-BLUR", "label": "模糊失焦", "ruleIds": ["G-PROXY-BLUR", "P-FACE-FOCUS", "L-FOCUS-REQUIRED", "L-BLUR-CAMERA", "S-FOCUS-INTENT", "S-MOTION-INTENT"], "genre": "general", "hotkey": "1" },
+    { "id": "R-P-EYES", "label": "闭眼", "ruleIds": ["P-FACE-EYES", "S-EYES-EXPRESSION"], "genre": "portrait", "hotkey": "2" },
+    { "id": "R-P-EXPRESSION", "label": "表情不好", "ruleIds": ["P-FACE-EXPRESSION"], "genre": "portrait", "hotkey": "3" },
+    { "id": "R-P-JOINT", "label": "切到关节", "ruleIds": ["P-CROP-HAIRLINE", "P-CROP-NECK", "P-CROP-WRIST", "P-CROP-ELBOW", "P-CROP-KNEE", "P-CROP-ANKLE-FOOT"], "genre": "portrait", "hotkey": "4" },
+    { "id": "R-G-TILT", "label": "构图歪", "ruleIds": ["L-HORIZON-LEVEL", "L-VERTICAL-LEVEL", "S-TILT-INTENT"], "genre": "general", "hotkey": "5" },
+    { "id": "R-L-HIGHLIGHT", "label": "曝光过度", "ruleIds": ["L-EXPOSURE-DETAIL", "P-EXPOSURE-INTENT", "S-EXPOSURE-CONTENT"], "genre": "general", "hotkey": "6" },
+    { "id": "R-L-SHADOW", "label": "曝光不足", "ruleIds": ["L-SHADOW-RECOVERY", "P-EXPOSURE-INTENT", "S-EXPOSURE-CONTENT"], "genre": "general", "hotkey": "7" },
+    { "id": "R-G-SUBJECT", "label": "主体不突出", "ruleIds": ["G-SUBJECT-HIERARCHY", "P-SUBJECT-PLACEMENT"], "genre": "general", "hotkey": "8" },
+    { "id": "R-G-CLUTTER", "label": "背景杂乱", "ruleIds": ["G-SUBJECT-HIERARCHY", "P-BG-MERGER", "S-BACKGROUND-MERGER", "L-EDGE-DISTRACTION", "G-EDGE-GRADIENT"], "genre": "general", "hotkey": "9" },
+    { "id": "R-P-COLOR", "label": "偏色", "ruleIds": ["P-COLOR-CAST", "P-COLOR-INTENT", "L-NATURAL-COLOR"], "genre": "general" },
+    { "id": "R-G-DUPLICATE", "label": "重复多余", "ruleIds": [], "genre": "general" },
+    { "id": "R-P-FLAT", "label": "光影太平", "ruleIds": ["P-LIGHT-SHAPE", "P-YD-TONAL-GRAY"], "genre": "portrait" },
+    { "id": "R-P-LIGHT", "label": "面部抢光", "ruleIds": ["P-LIGHT-SHAPE"], "genre": "portrait" },
+    { "id": "R-P-STYLING", "label": "造型没整理", "ruleIds": ["P-STYLING-READABLE"], "genre": "portrait" },
+    { "id": "R-L-RETOUCH", "label": "修图违和", "ruleIds": ["L-NATURAL-COLOR"], "genre": "general" },
+    { "id": "R-G-OTHER", "label": "其他", "ruleIds": [], "genre": "general" }
+  ]
+}

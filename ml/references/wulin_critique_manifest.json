@@ -1,0 +1,371 @@
+{
+  "schema_version": 1,
+  "source": "wulin",
+  "use": "private internal research only",
+  "publication_date_note": "pubdate is Unix seconds; null means absent from candidates, fill from downloaded info.json",
+  "publication_dates_missing": 0,
+  "video_count": 40,
+  "duration_seconds": 105696,
+  "videos": [
+    {
+      "bvid": "BV1Cy4y157vi",
+      "title": "影友们的摄影作品点评第①集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1224,
+      "duration_seconds": 1224,
+      "pubdate": 1627692311,
+      "url": "https://www.bilibili.com/video/BV1Cy4y157vi",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1dL41147Kf",
+      "title": "影友们的摄影作品点评第②集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1300,
+      "duration_seconds": 1300,
+      "pubdate": 1630636309,
+      "url": "https://www.bilibili.com/video/BV1dL41147Kf",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1yXpjzhEFn",
+      "title": "摄影作品点评第③集，找问题挑毛病解决方案，武林说实话",
+      "duration": 1319,
+      "duration_seconds": 1319,
+      "pubdate": 1757756565,
+      "url": "https://www.bilibili.com/video/BV1yXpjzhEFn",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1VU4y1w74y",
+      "title": "摄影作品点评第④集，找问题挑毛病解决方案，武林说实话",
+      "duration": 1774,
+      "duration_seconds": 1774,
+      "pubdate": 1633787162,
+      "url": "https://www.bilibili.com/video/BV1VU4y1w74y",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1g3411C7xy",
+      "title": "摄影作品点评第⑤集，找问题挑毛病解决方案，武林说实话",
+      "duration": 1707,
+      "duration_seconds": 1707,
+      "pubdate": 1634023774,
+      "url": "https://www.bilibili.com/video/BV1g3411C7xy",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1nP4y1t7JY",
+      "title": "影友们的摄影作品点评第⑥集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1511,
+      "duration_seconds": 1511,
+      "pubdate": 1634370539,
+      "url": "https://www.bilibili.com/video/BV1nP4y1t7JY",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1FP4y157Cb",
+      "title": "影友们的摄影作品点评第⑦集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1558,
+      "duration_seconds": 1558,
+      "pubdate": 1636349896,
+      "url": "https://www.bilibili.com/video/BV1FP4y157Cb",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV18F411h7nA",
+      "title": "影友们的摄影作品点评第⑧集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1814,
+      "duration_seconds": 1814,
+      "pubdate": 1637130575,
+      "url": "https://www.bilibili.com/video/BV18F411h7nA",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1XL41177FF",
+      "title": "影友们的摄影作品点评第⑨集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1901,
+      "duration_seconds": 1901,
+      "pubdate": 1638795783,
+      "url": "https://www.bilibili.com/video/BV1XL41177FF",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1tS4y137bx",
+      "title": "影友们的摄影作品点评第⑩集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1919,
+      "duration_seconds": 1919,
+      "pubdate": 1646786672,
+      "url": "https://www.bilibili.com/video/BV1tS4y137bx",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1ni4y1Q7Uf",
+      "title": "影友们的摄影作品点评第⑪集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1103,
+      "duration_seconds": 1103,
+      "pubdate": 1648539984,
+      "url": "https://www.bilibili.com/video/BV1ni4y1Q7Uf",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1R541127yp",
+      "title": "影友们的摄影作品点评第12集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 971,
+      "duration_seconds": 971,
+      "pubdate": 1650424567,
+      "url": "https://www.bilibili.com/video/BV1R541127yp",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1G54y1o7Fx",
+      "title": "摄影作品点评第13集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 3190,
+      "duration_seconds": 3190,
+      "pubdate": 1653454230,
+      "url": "https://www.bilibili.com/video/BV1G54y1o7Fx",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1sT411J7xb",
+      "title": "摄影作品点评第14集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 4663,
+      "duration_seconds": 4663,
+      "pubdate": 1657900012,
+      "url": "https://www.bilibili.com/video/BV1sT411J7xb",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1Yd4y1X7wg",
+      "title": "摄影作品点评第16集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 6827,
+      "duration_seconds": 6827,
+      "pubdate": 1662697691,
+      "url": "https://www.bilibili.com/video/BV1Yd4y1X7wg",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1qd4y1z7P1",
+      "title": "摄影作品点评第17集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 3590,
+      "duration_seconds": 3590,
+      "pubdate": 1664113135,
+      "url": "https://www.bilibili.com/video/BV1qd4y1z7P1",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1tW4y1H7i1",
+      "title": "摄影点评，一个小小的改变，让拍摄的“主角”更突出！",
+      "duration": 115,
+      "duration_seconds": 115,
+      "pubdate": 1665241443,
+      "url": "https://www.bilibili.com/video/BV1tW4y1H7i1",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1X8411Y7f5",
+      "title": "摄影作品点评第18集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 5755,
+      "duration_seconds": 5755,
+      "pubdate": 1665919191,
+      "url": "https://www.bilibili.com/video/BV1X8411Y7f5",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1F14y1T7C5",
+      "title": "摄影作品点评第19集上，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1849,
+      "duration_seconds": 1849,
+      "pubdate": 1670827739,
+      "url": "https://www.bilibili.com/video/BV1F14y1T7C5",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1dA41197xn",
+      "title": "摄影点评第19集下，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1914,
+      "duration_seconds": 1914,
+      "pubdate": 1671344140,
+      "url": "https://www.bilibili.com/video/BV1dA41197xn",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1KR4y1e77x",
+      "title": "摄影作品点评第20集上，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1444,
+      "duration_seconds": 1444,
+      "pubdate": 1673671579,
+      "url": "https://www.bilibili.com/video/BV1KR4y1e77x",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1324y1a7Aa",
+      "title": "学会通俗易懂的两点式摄影思维，摄影作品点评第20集下",
+      "duration": 1640,
+      "duration_seconds": 1640,
+      "pubdate": 1674040878,
+      "url": "https://www.bilibili.com/video/BV1324y1a7Aa",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1kv4y1L7G5",
+      "title": "我们好好聊聊，拍摄思路与美学解析，如何让作品变得更好（上集）",
+      "duration": 1621,
+      "duration_seconds": 1621,
+      "pubdate": 1679066019,
+      "url": "https://www.bilibili.com/video/BV1kv4y1L7G5",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1kM4y1B73s",
+      "title": "我们接着聊，拍摄思路与美学解析，如何让作品变得更好（下集）",
+      "duration": 2159,
+      "duration_seconds": 2159,
+      "pubdate": 1679452053,
+      "url": "https://www.bilibili.com/video/BV1kM4y1B73s",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV15V4y1a7Mo",
+      "title": "摄影作品点评第21集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1675,
+      "duration_seconds": 1675,
+      "pubdate": 1688395682,
+      "url": "https://www.bilibili.com/video/BV15V4y1a7Mo",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV15p421y71E",
+      "title": "摄影作品点评第22集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 2783,
+      "duration_seconds": 2783,
+      "pubdate": 1712327336,
+      "url": "https://www.bilibili.com/video/BV15p421y71E",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1mt421M7fq",
+      "title": "摄影作品点评第23集上，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 2048,
+      "duration_seconds": 2048,
+      "pubdate": 1715608245,
+      "url": "https://www.bilibili.com/video/BV1mt421M7fq",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1bS421o71m",
+      "title": "摄影作品点评第23集下，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1374,
+      "duration_seconds": 1374,
+      "pubdate": 1718947297,
+      "url": "https://www.bilibili.com/video/BV1bS421o71m",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1Cs421T7B1",
+      "title": "这届参赛作品太精彩！明基SW后期武林大会摄影作品点评",
+      "duration": 2645,
+      "duration_seconds": 2645,
+      "pubdate": 1719235952,
+      "url": "https://www.bilibili.com/video/BV1Cs421T7B1",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1jUDtYrE54",
+      "title": "【摄影点评】第24集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 4514,
+      "duration_seconds": 4514,
+      "pubdate": 1730786604,
+      "url": "https://www.bilibili.com/video/BV1jUDtYrE54",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV174XXYDEqo",
+      "title": "【摄影点评】第25集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 2521,
+      "duration_seconds": 2521,
+      "pubdate": 1740828189,
+      "url": "https://www.bilibili.com/video/BV174XXYDEqo",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1jhVBzXECm",
+      "title": "【摄影点评】第26集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 5028,
+      "duration_seconds": 5028,
+      "pubdate": 1746427832,
+      "url": "https://www.bilibili.com/video/BV1jhVBzXECm",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV13PT2zQEfF",
+      "title": "【摄影点评】第27集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 3647,
+      "duration_seconds": 3647,
+      "pubdate": 1749308304,
+      "url": "https://www.bilibili.com/video/BV13PT2zQEfF",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1gCuFz4E5f",
+      "title": "【摄影点评】第28集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 3937,
+      "duration_seconds": 3937,
+      "pubdate": 1752392547,
+      "url": "https://www.bilibili.com/video/BV1gCuFz4E5f",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1vth3zQEAp",
+      "title": "【摄影点评】第29集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 6160,
+      "duration_seconds": 6160,
+      "pubdate": 1754213755,
+      "url": "https://www.bilibili.com/video/BV1vth3zQEAp",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1stYVz7E4L",
+      "title": "【摄影点评】第30集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 4163,
+      "duration_seconds": 4163,
+      "pubdate": 1757221798,
+      "url": "https://www.bilibili.com/video/BV1stYVz7E4L",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1iEkfBYE3a",
+      "title": "【摄影点评】第31集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 3794,
+      "duration_seconds": 3794,
+      "pubdate": 1762770170,
+      "url": "https://www.bilibili.com/video/BV1iEkfBYE3a",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1XM3D6FEf5",
+      "title": "【摄影点评】第32集上，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1774,
+      "duration_seconds": 1774,
+      "pubdate": 1785641095,
+      "url": "https://www.bilibili.com/video/BV1XM3D6FEf5",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1oKuJ6GERh",
+      "title": "【摄影点评】第32集下，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 1412,
+      "duration_seconds": 1412,
+      "pubdate": 1785989497,
+      "url": "https://www.bilibili.com/video/BV1oKuJ6GERh",
+      "page_count": 1
+    },
+    {
+      "bvid": "BV1NZhw6cEpS",
+      "title": "【摄影点评】第33集，找问题挑毛病提供解决方案，武林说实话",
+      "duration": 5353,
+      "duration_seconds": 5353,
+      "pubdate": 1787810411,
+      "url": "https://www.bilibili.com/video/BV1NZhw6cEpS",
+      "page_count": 1
+    }
+  ]
+}

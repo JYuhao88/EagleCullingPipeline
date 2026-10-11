@@ -1,0 +1,362 @@
+{
+  "run": {
+    "contractVersion": 1,
+    "id": "review-fixture",
+    "status": "completed",
+    "libraryPath": "/fake.library",
+    "itemCount": 8,
+    "unitCount": 7,
+    "groupCount": 4
+  },
+  "units": [
+    {
+      "contractVersion": 1,
+      "id": "unit:jpg-1",
+      "primaryItemId": "jpg-1",
+      "itemIds": [
+        "jpg-1",
+        "raw-1"
+      ],
+      "formats": [
+        "jpg",
+        "arw"
+      ],
+      "pairing": "paired"
+    },
+    {
+      "contractVersion": 1,
+      "id": "unit:jpg-2",
+      "primaryItemId": "jpg-2",
+      "itemIds": [
+        "jpg-2"
+      ],
+      "formats": [
+        "jpg"
+      ],
+      "pairing": "single"
+    },
+    {
+      "contractVersion": 1,
+      "id": "unit:jpg-3",
+      "primaryItemId": "jpg-3",
+      "itemIds": [
+        "jpg-3"
+      ],
+      "formats": [
+        "jpg"
+      ],
+      "pairing": "single"
+    },
+    {
+      "contractVersion": 1,
+      "id": "unit:jpg-4",
+      "primaryItemId": "jpg-4",
+      "itemIds": [
+        "jpg-4"
+      ],
+      "formats": [
+        "jpg"
+      ],
+      "pairing": "single"
+    },
+    {
+      "contractVersion": 1,
+      "id": "unit:jpg-5",
+      "primaryItemId": "jpg-5",
+      "itemIds": [
+        "jpg-5"
+      ],
+      "formats": [
+        "jpg"
+      ],
+      "pairing": "single"
+    },
+    {
+      "contractVersion": 1,
+      "id": "unit:jpg-6",
+      "primaryItemId": "jpg-6",
+      "itemIds": [
+        "jpg-6"
+      ],
+      "formats": [
+        "jpg"
+      ],
+      "pairing": "single"
+    },
+    {
+      "contractVersion": 1,
+      "id": "unit:jpg-7",
+      "primaryItemId": "jpg-7",
+      "itemIds": [
+        "jpg-7"
+      ],
+      "formats": [
+        "jpg"
+      ],
+      "pairing": "single"
+    }
+  ],
+  "results": [
+    {
+      "contractVersion": 1,
+      "unitId": "unit:jpg-1",
+      "metrics": {
+        "sharpness": 0.91,
+        "exposure": 0.82,
+        "faces": 1,
+        "eyesClosed": 0
+      },
+      "flags": [
+        "blurry"
+      ],
+      "score": 0.71
+    },
+    {
+      "contractVersion": 1,
+      "unitId": "unit:jpg-2",
+      "metrics": {
+        "sharpness": 0.88,
+        "exposure": 0.76,
+        "faces": 1,
+        "eyesClosed": 1
+      },
+      "flags": [
+        "eyes-closed"
+      ],
+      "score": 0.62
+    },
+    {
+      "contractVersion": 1,
+      "unitId": "unit:jpg-3",
+      "metrics": {
+        "sharpness": 0.84,
+        "exposure": 0.65,
+        "faces": 0,
+        "eyesClosed": 0
+      },
+      "flags": [
+        "overexposed"
+      ],
+      "score": 0.59
+    },
+    {
+      "contractVersion": 1,
+      "unitId": "unit:jpg-4",
+      "metrics": {
+        "sharpness": 0.96,
+        "exposure": 0.91,
+        "faces": 1,
+        "eyesClosed": 0
+      },
+      "flags": [],
+      "score": 0.93
+    },
+    {
+      "contractVersion": 1,
+      "unitId": "unit:jpg-5",
+      "metrics": {
+        "sharpness": 0.73,
+        "exposure": 0.55,
+        "faces": 1,
+        "eyesClosed": 0
+      },
+      "flags": [
+        "blurry"
+      ],
+      "score": 0.48
+    },
+    {
+      "contractVersion": 1,
+      "unitId": "unit:jpg-6",
+      "metrics": {
+        "sharpness": 0.89,
+        "exposure": 0.86,
+        "faces": 0,
+        "eyesClosed": 0
+      },
+      "flags": [],
+      "score": 0.81
+    },
+    {
+      "contractVersion": 1,
+      "unitId": "unit:jpg-7",
+      "metrics": {
+        "sharpness": 0.68,
+        "exposure": 0.42,
+        "faces": 1,
+        "eyesClosed": 1
+      },
+      "flags": [
+        "eyes-closed",
+        "overexposed"
+      ],
+      "score": 0.39
+    }
+  ],
+  "groups": [
+    {
+      "contractVersion": 1,
+      "id": "group:three",
+      "unitIds": [
+        "unit:jpg-1",
+        "unit:jpg-2",
+        "unit:jpg-3"
+      ],
+      "ranking": [
+        {
+          "unitId": "unit:jpg-1",
+          "rank": 1,
+          "score": 0.71,
+          "reasons": [
+            "构图稳定"
+          ]
+        },
+        {
+          "unitId": "unit:jpg-2",
+          "rank": 2,
+          "score": 0.62,
+          "reasons": [
+            "人物闭眼"
+          ]
+        },
+        {
+          "unitId": "unit:jpg-3",
+          "rank": 3,
+          "score": 0.59,
+          "reasons": [
+            "高光过曝"
+          ]
+        }
+      ],
+      "suggested": {
+        "unit:jpg-1": "selected",
+        "unit:jpg-2": "candidate",
+        "unit:jpg-3": "rejected"
+      }
+    },
+    {
+      "contractVersion": 1,
+      "id": "group:two",
+      "unitIds": [
+        "unit:jpg-4",
+        "unit:jpg-5"
+      ],
+      "ranking": [
+        {
+          "unitId": "unit:jpg-4",
+          "rank": 1,
+          "score": 0.93,
+          "reasons": [
+            "最清晰"
+          ]
+        },
+        {
+          "unitId": "unit:jpg-5",
+          "rank": 2,
+          "score": 0.48,
+          "reasons": [
+            "画面模糊"
+          ]
+        }
+      ],
+      "suggested": {
+        "unit:jpg-4": "selected",
+        "unit:jpg-5": "rejected"
+      }
+    },
+    {
+      "contractVersion": 1,
+      "id": "group:single-1",
+      "unitIds": [
+        "unit:jpg-6"
+      ],
+      "ranking": [
+        {
+          "unitId": "unit:jpg-6",
+          "rank": 1,
+          "score": 0.81,
+          "reasons": [
+            "曝光正常"
+          ]
+        }
+      ],
+      "suggested": {
+        "unit:jpg-6": "selected"
+      }
+    },
+    {
+      "contractVersion": 1,
+      "id": "group:single-2",
+      "unitIds": [
+        "unit:jpg-7"
+      ],
+      "ranking": [
+        {
+          "unitId": "unit:jpg-7",
+          "rank": 1,
+          "score": 0.39,
+          "reasons": [
+            "闭眼且过曝"
+          ]
+        }
+      ],
+      "suggested": {
+        "unit:jpg-7": "rejected"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "jpg-1",
+      "name": "旅拍-01",
+      "ext": "jpg",
+      "tags": [
+        "人工标签"
+      ]
+    },
+    {
+      "id": "raw-1",
+      "name": "旅拍-01",
+      "ext": "arw",
+      "tags": [
+        "人工标签"
+      ]
+    },
+    {
+      "id": "jpg-2",
+      "name": "旅拍-02",
+      "ext": "jpg",
+      "tags": []
+    },
+    {
+      "id": "jpg-3",
+      "name": "旅拍-03",
+      "ext": "jpg",
+      "tags": []
+    },
+    {
+      "id": "jpg-4",
+      "name": "室内-01",
+      "ext": "jpg",
+      "tags": []
+    },
+    {
+      "id": "jpg-5",
+      "name": "室内-02",
+      "ext": "jpg",
+      "tags": []
+    },
+    {
+      "id": "jpg-6",
+      "name": "风景-01",
+      "ext": "jpg",
+      "tags": []
+    },
+    {
+      "id": "jpg-7",
+      "name": "人像-01",
+      "ext": "jpg",
+      "tags": []
+    }
+  ]
+}

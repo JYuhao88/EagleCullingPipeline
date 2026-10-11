@@ -1,0 +1,439 @@
+{
+  "contractVersion": 1,
+  "library": "street",
+  "version": "0.1.0",
+  "genres": [
+    "street",
+    "documentary",
+    "street-portrait"
+  ],
+  "rules": [
+    {
+      "id": "S-SEQUENCE-PRESERVE",
+      "aspect": "sequence",
+      "title": "识别序列用途",
+      "statement": "街头全景、包围曝光、焦点堆栈、延时及有意叙事序列须保留完整成员；普通连拍在确认不承担这些用途后才比较。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "sequenceType",
+          "sequenceConfidence",
+          "captureIntervals"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "摄影师明确标为普通连拍或确认源帧有备份"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-FOCUS-INTENT",
+      "aspect": "focus",
+      "title": "焦点服务于内容",
+      "statement": "关键内容因非故意失焦而不可辨且失去叙事作用时提示拒绝；不把焦点必须落在人眼作为街拍通用条件。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "subjectSharpnessNative",
+          "afPoint"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "gate",
+      "exceptions": [
+        "Saul Leiter式遮挡与虚焦、剪影、反射和抽象街头"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-MOTION-INTENT",
+      "aspect": "motion",
+      "title": "模糊有方向和用途",
+      "statement": "区分整机抖动与主体运动，比较模糊是否表达速度、气氛或事件；无意模糊破坏关键内容时扣分。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "staticRegionBlur",
+          "subjectMotionBlur",
+          "exposureTime"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "penalty",
+      "exceptions": [
+        "追随摇摄、有意相机运动和森山大道式粗粝影像"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-EXPOSURE-CONTENT",
+      "aspect": "exposure",
+      "title": "关键内容可读",
+      "statement": "曝光导致关键人物动作或事件信息不可恢复时提示拒绝；整体暗、背光、剪影和灯牌高光不直接触发拒绝。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "subjectClippedHighlights",
+          "subjectClippedShadows",
+          "rawRecoverability"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ],
+        "measure": {
+          "version": "measure-v3",
+          "scope": "image",
+          "mode": "thresholds",
+          "conditions": [
+            {
+              "signal": "clippedHighlights",
+              "op": "gt",
+              "threshold": 0.08,
+              "units": "ratio",
+              "min": 0,
+              "max": 1
+            },
+            {
+              "signal": "clippedShadows",
+              "op": "gt",
+              "threshold": 0.25,
+              "units": "ratio",
+              "min": 0,
+              "max": 1
+            }
+          ],
+          "outcome": "warn",
+          "intent": "unknown; proxy hint only"
+        }
+      },
+      "severity": "gate",
+      "exceptions": [
+        "剪影、高反差、低调和有意眩光"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-MOMENT-ACTION",
+      "aspect": "moment",
+      "title": "动作与关系在这一帧成立",
+      "statement": "同组比较手势、步态、视线、物体位置和相互关系，保留动作最清楚或张力最强的帧，允许多个不同瞬间。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "penalty",
+      "exceptions": [
+        "静态观察、无人物街头和反决定性瞬间的系列"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-PERSON-GEOMETRY",
+      "aspect": "composition",
+      "title": "人物与几何形成关系",
+      "statement": "人物和门窗、标线、阴影、招牌之间应产生明确关系；位置巧合本身不保证画面有意义。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "personBoxes",
+          "lineSegments",
+          "shadowRegions"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "自由形式纪实、密集人群和有意破坏秩序"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-LAYERS-SEPARATION",
+      "aspect": "composition",
+      "title": "层次可读",
+      "statement": "多人物和前中后景之间应能读出关系，非故意粘连导致事件难理解时扣分；不强制三层齐全。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "personOverlap",
+          "relativeDepthMap",
+          "saliencyMap"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "penalty",
+      "exceptions": [
+        "平面图案、拥挤场景、反射叠层和有意混乱"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-OCCLUSION-INTENT",
+      "aspect": "composition",
+      "title": "遮挡服务于观看",
+      "statement": "关键动作完全被无意义遮挡时扣分；前景遮挡、玻璃和反射构成层次或悬念时可以保留。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "personVisibility",
+          "keypointVisibility",
+          "occluderMask"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "penalty",
+      "exceptions": [
+        "Saul Leiter式窥视、碎片化和反射"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-BACKGROUND-MERGER",
+      "aspect": "background",
+      "title": "背景粘连是否损害关系",
+      "statement": "杆线、招牌、高亮和另一人物与主体重合，若破坏动作或轮廓可读性则扣分；幽默呼应也可能正是主题。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "personBoxes",
+          "lineSegments",
+          "saliencyMap"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "penalty",
+      "exceptions": [
+        "有意视觉错位、幽默并置和复杂纪实现场"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-EDGE-CONTENT",
+      "aspect": "framing",
+      "title": "画面边缘有交代",
+      "statement": "检查边缘半个人、半只手或高亮物是否无意干扰；街拍不直接沿用摆拍人像的关节裁切门槛。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "edgePersons",
+          "edgeSaliency",
+          "keypointVisibility"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "penalty",
+      "exceptions": [
+        "开放式构图、现场紧迫感和有意碎片化"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-EYES-EXPRESSION",
+      "aspect": "face",
+      "title": "表情属于瞬间",
+      "statement": "记录可信闭眼与表情，但仅在该瞬间明显不符合摄影师意图时扣分；街拍不要求每个人都睁眼或看镜头。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "eyesClosedByPerson",
+          "eyesAssessedByPerson"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "自然眨眼、情绪闭眼、背影、纪实事件和小脸不可评估"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-NARRATIVE-EVIDENCE",
+      "aspect": "story",
+      "title": "关系有画面证据",
+      "statement": "叙事理由应指向可见人物、动作和空间关系，避免仅凭想象编造身份、情绪、冲突或事件。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "抽象、含混、超现实和非叙事街头"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-NOISE-STYLE",
+      "aspect": "quality",
+      "title": "颗粒与粗粝是风格变量",
+      "statement": "噪点和颗粒只有破坏必要内容时才扣分，不把高ISO、黑白高反差或粗颗粒直接当废片。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "noiseNative",
+          "iso",
+          "detailRetention"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "森山大道式粗颗粒与高反差、胶片模拟"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-TILT-INTENT",
+      "aspect": "geometry",
+      "title": "倾斜有视觉作用",
+      "statement": "检查建筑水平垂直线是否因无意倾斜失衡；不把水平校正作为所有街拍的硬门槛。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "lineSegments",
+          "rollAngle"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ],
+        "measure": {
+          "version": "measure-v3",
+          "scope": "image",
+          "mode": "thresholds",
+          "conditions": [
+            {
+              "signal": "verticalTiltDegrees",
+              "op": "absGt",
+              "threshold": 3,
+              "units": "degrees",
+              "min": -20,
+              "max": 20
+            }
+          ],
+          "outcome": "warn-or-violate",
+          "intent": "unknown; severe proxy measurements affect group preference only",
+          "requires": [
+            {
+              "signal": "verticalLineConfidence",
+              "min": 0.65
+            }
+          ],
+          "violateConditions": [
+            {
+              "signal": "verticalTiltDegrees",
+              "op": "absGt",
+              "threshold": 5
+            }
+          ]
+        }
+      },
+      "severity": "hint",
+      "exceptions": [
+        "动态、急促现场、斜构图和透视本身"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "S-UNIQUE-COVERAGE",
+      "aspect": "coverage",
+      "title": "不丢独特信息",
+      "statement": "相似画面中承载不同关键动作、人物关系或时间发展的帧可并存；不以相似度或每组只留一张限制纪实覆盖。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "摄影师指定单张交付时，可在确认完整覆盖后收窄候选"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "version": "2.2",
+  "source": "T-syn leave-one-source-out calibration; no photographer preference truth",
+  "weights": {
+    "sharpness": 0.3,
+    "exposure": 0.2,
+    "eyes": 0.15,
+    "quality": 0.2,
+    "aesthetic": 0
+  },
+  "gates": {
+    "sharpnessBelow": 0.005,
+    "highlightFraction": 0.1,
+    "shadowFraction": 0.85,
+    "faceHighlightFraction": 0.08,
+    "faceShadowFraction": 0.25,
+    "faceDarkMean": 18,
+    "darkMean": 60,
+    "darkShadowFraction": 0.02,
+    "detailVarianceBelow": 400,
+    "detailQualityBelow": 0.2,
+    "noiseSigmaAbove": 10,
+    "noiseQualityBelow": 0.4,
+    "darkVarianceBelow": 1000
+  },
+  "exposure": {
+    "highlightThreshold": 250,
+    "shadowThreshold": 5,
+    "midtoneLow": 24,
+    "midtoneHigh": 232,
+    "intentMean": 112,
+    "intentTolerance": 34,
+    "intentScale": 150,
+    "brightnessWeight": 0.05,
+    "midtoneWeight": 0.15,
+    "globalHighlightPenalty": 2,
+    "globalShadowPenalty": 0.3,
+    "faceHighlightPenalty": 4,
+    "faceShadowPenalty": 2
+  },
+  "rulePenalties": {
+    "jointCrop": 0.01,
+    "headCrop": 0.05,
+    "faceHighlight": 0.01,
+    "severeTilt": 0.005
+  },
+  "sky": {
+    "brightLuma": 232,
+    "maxGradient": 12,
+    "maxDepth": 0.65,
+    "minArea": 0.01,
+    "minSubjectArea": 0.35,
+    "hintClippedFraction": 0.1
+  },
+  "eyes": {
+    "confidence": 0.6,
+    "minEyePixels": 6,
+    "closedEar": 0.3,
+    "extremeEar": 0.1,
+    "downwardRatio": 0.48,
+    "upwardRatio": 0.15,
+    "yawRatio": 0.3,
+    "obviousBlinkMin": 0.6,
+    "obviousBlinkMax": 0.8
+  }
+}

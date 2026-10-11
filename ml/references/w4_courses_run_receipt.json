@@ -1,0 +1,1432 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-10-10T16:45:11.862083+00:00",
+  "scope": "HanJing complete; LiQiang 34-episode resume; LinHaiYin arrival snapshot only, no processing; no uploads, official rule edits or push",
+  "processing": [
+    {
+      "source": "hanjing",
+      "manifest_episodes": 80,
+      "manifest_duration_seconds": 44192.178514,
+      "arrived_episodes": 80,
+      "probe_id": "w4-courses-liqiang-probe-resume-01",
+      "count_only_arrived": 0,
+      "asr_episodes": 80,
+      "asr_duration_seconds": 44188.2478125,
+      "asr_sentences": 17599,
+      "topics_episodes": 80,
+      "topic_segments": 2829,
+      "frames": 4009,
+      "topics": {
+        "姿势部位": 942,
+        "手位": 699,
+        "坐靠": 427,
+        "表情": 71,
+        "视线": 167,
+        "用光方向": 1,
+        "光质": 2,
+        "背景": 4,
+        "构图": 92,
+        "服装造型": 326,
+        "后期": 1,
+        "营销": 4,
+        "闲聊": 93
+      },
+      "completed": [
+        {
+          "id": "hanjing-d0b1947053bd",
+          "episode": 10,
+          "duration": 440.6450625,
+          "sentences": 155,
+          "source_sha256": "c548f01d2c21c2c90a0576e800b18c03594661811b7c2bfea6b4b5fd5f7a9243"
+        },
+        {
+          "id": "hanjing-7f1daa9d3f91",
+          "episode": 11,
+          "duration": 550.638,
+          "sentences": 183,
+          "source_sha256": "983e2facb00be8f0dc2f59cbebb6642fd42115325dd34e15debbcee591286205"
+        },
+        {
+          "id": "hanjing-bc73556c21c4",
+          "episode": 12,
+          "duration": 1516.959625,
+          "sentences": 550,
+          "source_sha256": "7be3b6e6406e8d4bd41b2a63e2dfbfbb09955da5a0a1f5c671d28429ce5c48b9"
+        },
+        {
+          "id": "hanjing-368a4ca4e373",
+          "episode": 13,
+          "duration": 565.6613125,
+          "sentences": 197,
+          "source_sha256": "71e4c4aec5ff636b736c260c3395c658b6ff20e86a518a71f9ec1c48c2dc3f9a"
+        },
+        {
+          "id": "hanjing-bed82554ed70",
+          "episode": 14,
+          "duration": 444.7318125,
+          "sentences": 172,
+          "source_sha256": "20c4cfadd089cd20cfeb84734da0ea72294fa0d479a98bdb684c15815daa5127"
+        },
+        {
+          "id": "hanjing-d59a3972aa1c",
+          "episode": 15,
+          "duration": 1237.8558125,
+          "sentences": 470,
+          "source_sha256": "6817f2d3bfcd2c990d7162dc03d0d404efccb84330f487f69fbe9f95fb9cc656"
+        },
+        {
+          "id": "hanjing-c42a96ca6ee1",
+          "episode": 16,
+          "duration": 447.2163125,
+          "sentences": 166,
+          "source_sha256": "64609fbbeb5d08f13fb0d464cb4e0c81ab20f57f86ef0fe6a21ed37a031404f8"
+        },
+        {
+          "id": "hanjing-a517d29f7050",
+          "episode": 17,
+          "duration": 1257.314125,
+          "sentences": 492,
+          "source_sha256": "f15381c43b5ecea08db5f8e30b16ce8ec2314453142227ad329e7ae3aefc9bac"
+        },
+        {
+          "id": "hanjing-6ba00dd5dfc2",
+          "episode": 18,
+          "duration": 598.099625,
+          "sentences": 233,
+          "source_sha256": "a8c34d3b7bb439e6ed8d3ca9a30e80ab86cbdcb4660b83538f66f4c061f4b1e4"
+        },
+        {
+          "id": "hanjing-bafb755c1967",
+          "episode": 19,
+          "duration": 845.6243125,
+          "sentences": 338,
+          "source_sha256": "cf4f69fa568cf54e9eda0cc69a98a6335c7c957d0f515155408114f09db465e4"
+        },
+        {
+          "id": "hanjing-c04af2f71930",
+          "episode": 1,
+          "duration": 168.5536875,
+          "sentences": 43,
+          "source_sha256": "c4a881b6a4b33971510c6f95fc59e81e871661ddfd9b7cf7f94c64b2731a9c40"
+        },
+        {
+          "id": "hanjing-9155a572435d",
+          "episode": 20,
+          "duration": 288.3221875,
+          "sentences": 113,
+          "source_sha256": "dec07c4d9322548720dae93aa413c6a46bcc390bf513fc4b0b20c13ab37779ad"
+        },
+        {
+          "id": "hanjing-8dc4c12ddd4d",
+          "episode": 21,
+          "duration": 680.5304375,
+          "sentences": 247,
+          "source_sha256": "f6c02ff324d53af3db2bbf849f5d2fbc1d97a50e00851aa5de3939b6cbc85b9e"
+        },
+        {
+          "id": "hanjing-a0ee87de9205",
+          "episode": 22,
+          "duration": 510.8158125,
+          "sentences": 193,
+          "source_sha256": "cb6dac65673fb4757264de3e6e61fca31503804b5b33bb2db94836f82a1ca6c4"
+        },
+        {
+          "id": "hanjing-16d4b98cdc4a",
+          "episode": 23,
+          "duration": 374.63075,
+          "sentences": 141,
+          "source_sha256": "0498e379e54ca1a7f466c00b372d70787680987eef8f4abf45260ceed6af4890"
+        },
+        {
+          "id": "hanjing-6aa07585af24",
+          "episode": 24,
+          "duration": 408.369375,
+          "sentences": 151,
+          "source_sha256": "a2e40496a38bb08ce9d32ca8233728c0acd0851352fbc5b34802a403144cf231"
+        },
+        {
+          "id": "hanjing-5926ef21bb66",
+          "episode": 25,
+          "duration": 753.7429375,
+          "sentences": 304,
+          "source_sha256": "3aa45a11ba08877321d85546eb72d00b4fec689082727e152c0262a84ea0f410"
+        },
+        {
+          "id": "hanjing-9d7f0cb93126",
+          "episode": 26,
+          "duration": 1039.65025,
+          "sentences": 414,
+          "source_sha256": "5a8a3af76a0159834f6ba5bc21298e9dda73d258e6b93bf40f8ceba5c7b1b229"
+        },
+        {
+          "id": "hanjing-94decfad9711",
+          "episode": 27,
+          "duration": 945.261125,
+          "sentences": 379,
+          "source_sha256": "d9e4ad9b5a5f508cb4cc5f6b77c0684a1ee52cac31cc69e0a32eec34df7e3576"
+        },
+        {
+          "id": "hanjing-68b33faa29e0",
+          "episode": 28,
+          "duration": 1083.1644375,
+          "sentences": 453,
+          "source_sha256": "f2f6b557340ed7ecf844751ba06ec6c17aba4b29e5241d5a2502760719cad508"
+        },
+        {
+          "id": "hanjing-26ebbe66531b",
+          "episode": 29,
+          "duration": 950.857125,
+          "sentences": 446,
+          "source_sha256": "6015770b9cf607e5e4ab46cc0401852b6131bb1dfffc8515944c289c13c066e8"
+        },
+        {
+          "id": "hanjing-68e18241ee95",
+          "episode": 2,
+          "duration": 636.900125,
+          "sentences": 286,
+          "source_sha256": "fba0037bd9f132fbc26c508c2d8d249fbff90110ddec894f1ed19125b1ded2c3"
+        },
+        {
+          "id": "hanjing-07bb893a6150",
+          "episode": 30,
+          "duration": 802.5513125,
+          "sentences": 344,
+          "source_sha256": "57721d6967319a320e8ada1eba01a6517140c9ea308e89a35636d713c9d54912"
+        },
+        {
+          "id": "hanjing-49228e7c834d",
+          "episode": 31,
+          "duration": 746.6144375,
+          "sentences": 290,
+          "source_sha256": "83660e6d4956a3e5f60f0edfd964b84d7c541886381e2e2e058f0cf5275bfdc3"
+        },
+        {
+          "id": "hanjing-472267539367",
+          "episode": 32,
+          "duration": 810.6550625,
+          "sentences": 348,
+          "source_sha256": "c8fb5995a3379a236eca35f771ad7e940840629cce11e11c3186bb3d67e01452"
+        },
+        {
+          "id": "hanjing-3b674d9da042",
+          "episode": 33,
+          "duration": 1316.989375,
+          "sentences": 539,
+          "source_sha256": "8e5f2467029ca78c29d1f6fd17378fe7d5b01787f84a5a7f1259b6a422eafcff"
+        },
+        {
+          "id": "hanjing-bc8f0b313f26",
+          "episode": 34,
+          "duration": 499.4844375,
+          "sentences": 234,
+          "source_sha256": "601c4c2a782eb62dc0dbf0c3c18183364d295db7f8fd5e57ca37860e968415e1"
+        },
+        {
+          "id": "hanjing-1bde8e663e26",
+          "episode": 35,
+          "duration": 512.3483125,
+          "sentences": 207,
+          "source_sha256": "dc79978f6675130faa0a5ac609ceb762f3f937233f0b810569e8c6e0f03c17d5"
+        },
+        {
+          "id": "hanjing-30dcfce5bec1",
+          "episode": 36,
+          "duration": 214.2273125,
+          "sentences": 84,
+          "source_sha256": "c37124c370eed8b40c9af1a02e1b795e00efc41db2840d977f9567c15a6d91ea"
+        },
+        {
+          "id": "hanjing-20e185447919",
+          "episode": 37,
+          "duration": 401.7284375,
+          "sentences": 164,
+          "source_sha256": "79f3292d450845234070b888262ec9f6018a67f7fa50ae10db9e343bec21969f"
+        },
+        {
+          "id": "hanjing-b819edb7ddb9",
+          "episode": 38,
+          "duration": 190.984125,
+          "sentences": 76,
+          "source_sha256": "74f384f81ac20ffc2cca250629016cbf619d315f0f843f5b2b99077e9928b374"
+        },
+        {
+          "id": "hanjing-b9cdea252336",
+          "episode": 39,
+          "duration": 265.380875,
+          "sentences": 104,
+          "source_sha256": "a7a26b6737b49224d6f2e29128f20cce5d0f44463e525e96e50624524da86a35"
+        },
+        {
+          "id": "hanjing-bc407108ba77",
+          "episode": 3,
+          "duration": 762.2646875,
+          "sentences": 311,
+          "source_sha256": "4908bfccbf2fae85b3b1275490c40b6488545046c4f7c16e7a15feedd652c91e"
+        },
+        {
+          "id": "hanjing-754e1f7c7add",
+          "episode": 40,
+          "duration": 189.1961875,
+          "sentences": 77,
+          "source_sha256": "2eeba01e1bd3ee5da93feeb2b3c228308df41deaa63e45f5aeedef3371ab3629"
+        },
+        {
+          "id": "hanjing-82160432a10c",
+          "episode": 41,
+          "duration": 272.1146875,
+          "sentences": 103,
+          "source_sha256": "21cd3ee391de650caa1f3f7d2570b13016029ffd230321cfd062944be7c19830"
+        },
+        {
+          "id": "hanjing-42621edbb9ca",
+          "episode": 42,
+          "duration": 476.4270625,
+          "sentences": 189,
+          "source_sha256": "d34ad6af2f80d09dd103fbd34fca1b990856720a6af374daff0e86f4d00927c9"
+        },
+        {
+          "id": "hanjing-a1faa5192c83",
+          "episode": 43,
+          "duration": 307.1535625,
+          "sentences": 132,
+          "source_sha256": "b9c1085dc93e228951bd0b8d581db90d9545e0598ada06207de4276ca9ed4b16"
+        },
+        {
+          "id": "hanjing-0830afaa339a",
+          "episode": 44,
+          "duration": 257.3235625,
+          "sentences": 113,
+          "source_sha256": "f01eca17e8655c57339cc954dbcb0ded2a662ba47fd8eaa3220566503aa36669"
+        },
+        {
+          "id": "hanjing-70c0a9f11398",
+          "episode": 45,
+          "duration": 586.861125,
+          "sentences": 243,
+          "source_sha256": "5e28236a8e05cc673c38a06dfb2d7a7ef3a361f923cab9c075cf0b86cac233a8"
+        },
+        {
+          "id": "hanjing-01c6f8585c50",
+          "episode": 46,
+          "duration": 790.3608125,
+          "sentences": 327,
+          "source_sha256": "230b2b27e3199ec664469239de3534485b96ae4172d399112cb8604b955e8f85"
+        },
+        {
+          "id": "hanjing-d736919c053c",
+          "episode": 47,
+          "duration": 539.3995625,
+          "sentences": 223,
+          "source_sha256": "44e5fabcf7f3c085434514a77db29ae2347f7e237d01188201800eba6c080aa5"
+        },
+        {
+          "id": "hanjing-6de27ea25e70",
+          "episode": 48,
+          "duration": 522.449,
+          "sentences": 201,
+          "source_sha256": "d066d38f51d877284ba87499d3d5ca6f980c55c9e2645098a3c20ad3352fa89d"
+        },
+        {
+          "id": "hanjing-77d87a7efa2d",
+          "episode": 49,
+          "duration": 464.8403125,
+          "sentences": 168,
+          "source_sha256": "cfc3ce0c0278f9644c1fb4bb2c5ab5bd30a45deb3d26656ed007fe93531103c8"
+        },
+        {
+          "id": "hanjing-891c4160f030",
+          "episode": 4,
+          "duration": 473.060125,
+          "sentences": 193,
+          "source_sha256": "d235ebaec31819964017ac931455f5328e2ac4801582adffe56a33f75480823a"
+        },
+        {
+          "id": "hanjing-eaf0ddf99fe9",
+          "episode": 50,
+          "duration": 400.4978125,
+          "sentences": 147,
+          "source_sha256": "6512217425dba8b69d4fe876f4dc7892cf187cc8e56d60f061ab64e385001d65"
+        },
+        {
+          "id": "hanjing-86a70d315f74",
+          "episode": 51,
+          "duration": 489.290875,
+          "sentences": 214,
+          "source_sha256": "e9427880fe41644404705d530847998aa7288805b5c5ab9b2c54c6cf0e380f8c"
+        },
+        {
+          "id": "hanjing-b0d84654bf58",
+          "episode": 52,
+          "duration": 619.06725,
+          "sentences": 267,
+          "source_sha256": "21789fbfa08f43136518381f0efbe799754ccb4007c31006fa5953e283bc1067"
+        },
+        {
+          "id": "hanjing-4cd3b787f82d",
+          "episode": 53,
+          "duration": 383.524,
+          "sentences": 159,
+          "source_sha256": "73b900bed0aaea18987bcaeced194a8894c801137d6997f8cde1b8808d96d8bb"
+        },
+        {
+          "id": "hanjing-b5b49ad715d1",
+          "episode": 54,
+          "duration": 506.3343125,
+          "sentences": 213,
+          "source_sha256": "a7d1356baf070ce23e146c400c0e813ed2963a66c8867cea6ba7a5babb5868a0"
+        },
+        {
+          "id": "hanjing-157d693101b7",
+          "episode": 55,
+          "duration": 418.191375,
+          "sentences": 176,
+          "source_sha256": "a0ed7591eca7154a3828db04aba39faa899e07ef539875cd1fdc5d33c57723f2"
+        },
+        {
+          "id": "hanjing-e81f0567aa1c",
+          "episode": 56,
+          "duration": 319.0654375,
+          "sentences": 143,
+          "source_sha256": "b6ed0f29401acecaf897d4a5d0baa4c78cdb18d5458eb8b556e582528d4e3ef2"
+        },
+        {
+          "id": "hanjing-b793a21daad3",
+          "episode": 57,
+          "duration": 370.5905,
+          "sentences": 165,
+          "source_sha256": "3a372afcece762b43e21299a1ea4c0c49e8803957c83ab7b6cbfeed19c7a05de"
+        },
+        {
+          "id": "hanjing-ebfcc07ed30c",
+          "episode": 58,
+          "duration": 414.453,
+          "sentences": 166,
+          "source_sha256": "ec1fadfc4fbafbce1accb2b423b071e6ee3143d820211086f4b3fc7054212c76"
+        },
+        {
+          "id": "hanjing-cb7e2b20af62",
+          "episode": 59,
+          "duration": 388.4001875,
+          "sentences": 158,
+          "source_sha256": "91e71f52dcde38f1964c527c21ecd7c4ffd323a009986948728f00893c5f3236"
+        },
+        {
+          "id": "hanjing-7806a43cf59f",
+          "episode": 5,
+          "duration": 696.0645625,
+          "sentences": 259,
+          "source_sha256": "3dbd8d80bda6b631fbbee1f37b36b3673f07d2cd07f2c74d66af339aa9ddf3f9"
+        },
+        {
+          "id": "hanjing-4a152b77997e",
+          "episode": 60,
+          "duration": 301.5343125,
+          "sentences": 129,
+          "source_sha256": "605e6ec50d243de641a6bd098488ba37e77d5a51e5ec0872eaee9f42e6a4c218"
+        },
+        {
+          "id": "hanjing-e9aaa5a2ab71",
+          "episode": 61,
+          "duration": 558.1148125,
+          "sentences": 259,
+          "source_sha256": "b156060a833e03ebfd7e4d404823ea4d2f3813ac28d8d78af8f0224e78409f02"
+        },
+        {
+          "id": "hanjing-33d70c3bc64a",
+          "episode": 62,
+          "duration": 318.4849375,
+          "sentences": 139,
+          "source_sha256": "3796382c2eb7153f0c57a46ea4bdb23af83e960b971d3af036af63c5fd6bc476"
+        },
+        {
+          "id": "hanjing-835a42141415",
+          "episode": 63,
+          "duration": 649.2531875,
+          "sentences": 261,
+          "source_sha256": "d728962e1df4ab1c4aedb2fa21ba63ef0bf0d2617a85fa7efa0985c6e87c4dea"
+        },
+        {
+          "id": "hanjing-f4961b5a10bc",
+          "episode": 64,
+          "duration": 243.182625,
+          "sentences": 108,
+          "source_sha256": "6d3d47a4a3177ce9f12f27210330d634c003ac4eb105a68c64e3a96cfd78ada8"
+        },
+        {
+          "id": "hanjing-4b8f09b3f537",
+          "episode": 65,
+          "duration": 180.3958125,
+          "sentences": 66,
+          "source_sha256": "b41ca67a6d9ee9a62f75f5436401b9a50e0e3cff867551373a0925ffa6c76469"
+        },
+        {
+          "id": "hanjing-8beab84757fa",
+          "episode": 66,
+          "duration": 337.5949375,
+          "sentences": 146,
+          "source_sha256": "45e0504da82957f09a83afaeaaeb7cee0c69307dc8931348493f09853a70eca0"
+        },
+        {
+          "id": "hanjing-90669102da08",
+          "episode": 67,
+          "duration": 479.8868125,
+          "sentences": 212,
+          "source_sha256": "7cbe361db64ed9450ff2c723ead62de0daac0c36a1829a7d06342f00bd6ac24a"
+        },
+        {
+          "id": "hanjing-4fb3166f882c",
+          "episode": 68,
+          "duration": 395.6680625,
+          "sentences": 185,
+          "source_sha256": "726e594fe7819d6f67c2c3e123b48e128b8faf2f0a303e9e4eb66e7c98acb118"
+        },
+        {
+          "id": "hanjing-568cb24dd59b",
+          "episode": 69,
+          "duration": 365.2034375,
+          "sentences": 167,
+          "source_sha256": "b712ca216ffd97157dbb0887df440bf26a525e64ea839df09e334e82abadcc8c"
+        },
+        {
+          "id": "hanjing-2deb8a065a09",
+          "episode": 6,
+          "duration": 496.9535,
+          "sentences": 152,
+          "source_sha256": "8b96c9df29704646eec189ecea56362fa6a4337ecfdf5127235d82d91a815699"
+        },
+        {
+          "id": "hanjing-e2c65dc839e0",
+          "episode": 70,
+          "duration": 352.2699375,
+          "sentences": 111,
+          "source_sha256": "3103d7d5102b924477ca2bac99b52038a7e9f6c17544a695ce8df38f3e0f7632"
+        },
+        {
+          "id": "hanjing-23d6c8ff6054",
+          "episode": 71,
+          "duration": 344.9091875,
+          "sentences": 154,
+          "source_sha256": "f465614207f7a9088d3065f9854e82c2d4b823bf5b23d656155ae4878580f66b"
+        },
+        {
+          "id": "hanjing-5982d21af4bd",
+          "episode": 72,
+          "duration": 344.9556875,
+          "sentences": 152,
+          "source_sha256": "322e7e784b3c4ac3a45590dba200232bbf822e16d550730471095c1b35f452c0"
+        },
+        {
+          "id": "hanjing-f275de81c6a6",
+          "episode": 73,
+          "duration": 311.8208125,
+          "sentences": 122,
+          "source_sha256": "cee485d9ecf3a89377442d52624346c95b0dc6c34482fdd7c78789cdc8d6e208"
+        },
+        {
+          "id": "hanjing-644de923f910",
+          "episode": 74,
+          "duration": 321.596375,
+          "sentences": 125,
+          "source_sha256": "958fe83079a61e48dcd1aa8d75fd9b9f81ed9b3c621ccc1e2be4ca902aaeb2cd"
+        },
+        {
+          "id": "hanjing-e79c533fec0d",
+          "episode": 75,
+          "duration": 380.0874375,
+          "sentences": 161,
+          "source_sha256": "d0f58fa5929f2c2fd8933f1d664dd12c7f79288805931c13cda986c2f29c8e1e"
+        },
+        {
+          "id": "hanjing-42083fc99ec7",
+          "episode": 76,
+          "duration": 633.9511875,
+          "sentences": 195,
+          "source_sha256": "18645ebcfbb8ac430472b331af70e0b8d13f489f6f8828a925ed4350ed1aa4ea"
+        },
+        {
+          "id": "hanjing-73c77c0ecebc",
+          "episode": 77,
+          "duration": 686.9159375,
+          "sentences": 276,
+          "source_sha256": "03cea8ae3862816f4ed10ab6b7b85afc50404ff58539034a19a98b67448f543b"
+        },
+        {
+          "id": "hanjing-46eb6824834b",
+          "episode": 78,
+          "duration": 856.677,
+          "sentences": 322,
+          "source_sha256": "b5d5271e308610248114f1e51a020188ce0d039d8e19c0d917143a3d96d21dae"
+        },
+        {
+          "id": "hanjing-608ee33bd3fe",
+          "episode": 79,
+          "duration": 1306.3314375,
+          "sentences": 538,
+          "source_sha256": "fa08c03e5931cd58052f7576157f50850927a0d228ab7997c3e84d449de02198"
+        },
+        {
+          "id": "hanjing-924f134236b3",
+          "episode": 7,
+          "duration": 484.1825,
+          "sentences": 167,
+          "source_sha256": "8fd6441279b060c7af198cf715ff7778d289947257021113d5d942f0c710a7fb"
+        },
+        {
+          "id": "hanjing-5c0b0ebed734",
+          "episode": 80,
+          "duration": 651.389375,
+          "sentences": 254,
+          "source_sha256": "3b4bed6b33b06c2d4d1b05eefd9f706502eac6e1d0d865a3e48b04654af31605"
+        },
+        {
+          "id": "hanjing-abf648949d62",
+          "episode": 8,
+          "duration": 452.3711875,
+          "sentences": 152,
+          "source_sha256": "4a0e0934eff7be3d43d9a9129a7b1f87990cd0cc4639ae4aae7d5feed681f629"
+        },
+        {
+          "id": "hanjing-8a79502d54f4",
+          "episode": 9,
+          "duration": 581.079375,
+          "sentences": 183,
+          "source_sha256": "84c4438ec03b27d0b4c6d4813da2aa23c3d3aaa06082d84dc0c76d54e1722397"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "source": "liqiang",
+      "manifest_episodes": 34,
+      "manifest_duration_seconds": 11157.953628,
+      "arrived_episodes": 34,
+      "probe_id": "w4-courses-liqiang-probe-resume-01",
+      "count_only_arrived": 0,
+      "asr_episodes": 34,
+      "asr_duration_seconds": 11155.5863125,
+      "asr_sentences": 5698,
+      "topics_episodes": 34,
+      "topic_segments": 615,
+      "frames": 997,
+      "topics": {
+        "姿势部位": 21,
+        "手位": 28,
+        "坐靠": 21,
+        "表情": 12,
+        "视线": 24,
+        "用光方向": 81,
+        "光质": 134,
+        "背景": 135,
+        "构图": 57,
+        "服装造型": 21,
+        "后期": 38,
+        "营销": 0,
+        "闲聊": 43
+      },
+      "completed": [
+        {
+          "id": "liqiang-a3dffb816350",
+          "episode": 1,
+          "duration": 614.4,
+          "sentences": 291,
+          "source_sha256": "dabef4d8884fcb1ba4333e7525020af08a362d12516ab6d6e8072d93f825141b"
+        },
+        {
+          "id": "liqiang-fb640c97c38f",
+          "episode": 10,
+          "duration": 437.4639375,
+          "sentences": 218,
+          "source_sha256": "076601c85becdeb0a8d619b9489aec6385b4ae422f2593cfaaf49256b6efb580"
+        },
+        {
+          "id": "liqiang-c0dea89ba63c",
+          "episode": 11,
+          "duration": 515.6223125,
+          "sentences": 258,
+          "source_sha256": "f60fc91531b05ee0986994779ee996f9c47d4a408a1a0527ea660689a36c181f"
+        },
+        {
+          "id": "liqiang-55529a4dac9f",
+          "episode": 12,
+          "duration": 606.992875,
+          "sentences": 299,
+          "source_sha256": "611557e05a9222d9d60df0a68672572df2cada62dfed4e7e9663dabce2e18a73"
+        },
+        {
+          "id": "liqiang-8ca4028a90a6",
+          "episode": 13,
+          "duration": 209.7923125,
+          "sentences": 106,
+          "source_sha256": "99ddc940fd7f077a7b497f20b7a83fa1f1a8a4e8122f40400e4f8bb96cd4cb50"
+        },
+        {
+          "id": "liqiang-78a8ce7b578c",
+          "episode": 14,
+          "duration": 168.4608125,
+          "sentences": 85,
+          "source_sha256": "e2a257eac7809abb361935c3db750e8c3c372640f7eb8d56f5ae99598d86ffbd"
+        },
+        {
+          "id": "liqiang-13685e82fa94",
+          "episode": 15,
+          "duration": 313.98025,
+          "sentences": 171,
+          "source_sha256": "4682283e833e191f4dae241cc24f084f54b39ea6ab78621e3845a0b84e68e942"
+        },
+        {
+          "id": "liqiang-01a22b04222c",
+          "episode": 16,
+          "duration": 124.1803125,
+          "sentences": 62,
+          "source_sha256": "452b100b7fb1d568682e52acfc3178b1595f7e41f3c37d668f17908add8b7954"
+        },
+        {
+          "id": "liqiang-0f4777e5b8f0",
+          "episode": 17,
+          "duration": 172.73325,
+          "sentences": 96,
+          "source_sha256": "ca4574ab3c3167244a712145ff08f7f0d23cdeeb5f1f7326282965088923164b"
+        },
+        {
+          "id": "liqiang-71f74f73c206",
+          "episode": 18,
+          "duration": 157.3151875,
+          "sentences": 84,
+          "source_sha256": "90edf254a03e9bcddccae04c0eb8ec871381f2becda345682eeb61fbd09d597b"
+        },
+        {
+          "id": "liqiang-7005dd2cf33c",
+          "episode": 19,
+          "duration": 167.92675,
+          "sentences": 82,
+          "source_sha256": "bec11adab63ae02cec6460656d5f41dcc475a2ad6c21b53e9b047d7f18cea07b"
+        },
+        {
+          "id": "liqiang-bb3c038634b6",
+          "episode": 2,
+          "duration": 510.4675,
+          "sentences": 275,
+          "source_sha256": "55f4a1fef8034d89925b78716d2a6549af9ceafc3ff4a25a2818864fa48f4690"
+        },
+        {
+          "id": "liqiang-4934593415e4",
+          "episode": 20,
+          "duration": 209.0028125,
+          "sentences": 97,
+          "source_sha256": "6e6c1331c6ab7aa3574a144f582b9a3a7528ea597edf6262d150cc7b03f20162"
+        },
+        {
+          "id": "liqiang-0c57c736d72d",
+          "episode": 21,
+          "duration": 165.2564375,
+          "sentences": 86,
+          "source_sha256": "681bcdcd01f23111d3c10ce298a85f9e0ff112337d955a3a886964b32b6bd2b2"
+        },
+        {
+          "id": "liqiang-c94be96e9ba9",
+          "episode": 22,
+          "duration": 147.9343125,
+          "sentences": 79,
+          "source_sha256": "3c7a3d2d016fb4213e7099fe00f83b02d3877a2ca9fdb5d827094163e70cd2bb"
+        },
+        {
+          "id": "liqiang-ae418c6d5dd7",
+          "episode": 23,
+          "duration": 184.250375,
+          "sentences": 85,
+          "source_sha256": "2096dfe88833f2719604fdbb56f5e29272b91c328c8dfa245f4089a25b6fc535"
+        },
+        {
+          "id": "liqiang-2f4637aa2358",
+          "episode": 24,
+          "duration": 174.776625,
+          "sentences": 87,
+          "source_sha256": "c4ee04fdbf18ea6a566a1e2d29892db20b7adb41ac2ec865120a9b69e6538067"
+        },
+        {
+          "id": "liqiang-3443c72b139a",
+          "episode": 25,
+          "duration": 355.985125,
+          "sentences": 170,
+          "source_sha256": "2f9b08a6dd77d0bdb08a8a8c40623aab5f538de1b29f17c62d4290b93081b458"
+        },
+        {
+          "id": "liqiang-3affc6adc66e",
+          "episode": 26,
+          "duration": 558.3238125,
+          "sentences": 270,
+          "source_sha256": "a129b35bc71fbf970ac6f15eeb85005ae483412e6d4ba64065d259de5d30f02e"
+        },
+        {
+          "id": "liqiang-ae75a1bde325",
+          "episode": 27,
+          "duration": 461.56625,
+          "sentences": 255,
+          "source_sha256": "f592df72b78ca702c73ab56d936c48a55ac7b69e6780b27d8f45532265dc707b"
+        },
+        {
+          "id": "liqiang-d7813e265414",
+          "episode": 28,
+          "duration": 392.2546875,
+          "sentences": 204,
+          "source_sha256": "81fde8be73c4458f7c1c3b78f3c3726b4b44f18451ed8cdf9f09c4ee4a1a6639"
+        },
+        {
+          "id": "liqiang-5bb2b71e6398",
+          "episode": 29,
+          "duration": 386.890875,
+          "sentences": 234,
+          "source_sha256": "6bbfa3cccf1adf2f1d9000d001c8e2d4a5c3c55f779098f52304355c48d5ba7a"
+        },
+        {
+          "id": "liqiang-adac4fd7925b",
+          "episode": 3,
+          "duration": 576.830125,
+          "sentences": 322,
+          "source_sha256": "33626e2328d997451c06d210700a83e0d7e551ce6874811da392427b6356b0c6"
+        },
+        {
+          "id": "liqiang-8bb6eb690c2b",
+          "episode": 30,
+          "duration": 137.067375,
+          "sentences": 58,
+          "source_sha256": "7ee28741107639138978f32f9c1ee77dce74128f0ec1f59a7a283233eb981a8f"
+        },
+        {
+          "id": "liqiang-a6376f05e424",
+          "episode": 31,
+          "duration": 78.3905625,
+          "sentences": 40,
+          "source_sha256": "5904943d815dc24774db4e9aa9cdced510f1096acccdcaf6bcf44fd6731a8732"
+        },
+        {
+          "id": "liqiang-4f2919e8bc12",
+          "episode": 32,
+          "duration": 147.516375,
+          "sentences": 66,
+          "source_sha256": "7d4818c6510518b5b676f49974ae499578887627464cce5ed557ddd58e6d4f99"
+        },
+        {
+          "id": "liqiang-55aee9e0c6ed",
+          "episode": 33,
+          "duration": 83.4525,
+          "sentences": 37,
+          "source_sha256": "0ebb542194d69e79ccc5d17ce1a45f6df9507e8e33079bcd7b616bb2770612fe"
+        },
+        {
+          "id": "liqiang-34065b0d67f6",
+          "episode": 34,
+          "duration": 120.5348125,
+          "sentences": 52,
+          "source_sha256": "4c360aab2892d9ec3e5fd4c669e4542e067eeacbd33af002b864f55e138966b6"
+        },
+        {
+          "id": "liqiang-629043450c34",
+          "episode": 4,
+          "duration": 614.9340625,
+          "sentences": 304,
+          "source_sha256": "911a42a246c90f092cbfb02b16e79655552a8400b5aa3e6c0b5ac3dd31100838"
+        },
+        {
+          "id": "liqiang-3f45fb4af44a",
+          "episode": 5,
+          "duration": 438.9500625,
+          "sentences": 215,
+          "source_sha256": "e47af6086758ca98b59dada303676997f1627413610c7d92e7b3ec1fe2fc31dd"
+        },
+        {
+          "id": "liqiang-cf104927be8b",
+          "episode": 6,
+          "duration": 428.826125,
+          "sentences": 211,
+          "source_sha256": "df98b2b581b1aa72c12c7db8587b291d483af465a679ea0505f6ab10deab9c50"
+        },
+        {
+          "id": "liqiang-c3fd3ea9a2cc",
+          "episode": 7,
+          "duration": 421.9994375,
+          "sentences": 219,
+          "source_sha256": "32c064543ab2baf6b74741c6dadaf2e06866031d77ab02f915f8c0a642b1c46d"
+        },
+        {
+          "id": "liqiang-1c3b15073b80",
+          "episode": 8,
+          "duration": 591.8534375,
+          "sentences": 308,
+          "source_sha256": "66948bc0a3c1c26c487300a0c717732f71aa729da815205de0f478b62501b717"
+        },
+        {
+          "id": "liqiang-e73d5ff4487e",
+          "episode": 9,
+          "duration": 479.654625,
+          "sentences": 272,
+          "source_sha256": "179936a11671947d3acb4a7017279a9171175e026e178225f6fbbad66bf7c065"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "source": "linhaiyin",
+      "manifest_episodes": 37,
+      "manifest_duration_seconds": 84512.945864,
+      "arrived_episodes": 4,
+      "probe_id": "w4-courses-liqiang-probe-resume-01",
+      "count_only_arrived": 0,
+      "asr_episodes": 0,
+      "asr_duration_seconds": 0,
+      "asr_sentences": 0,
+      "topics_episodes": 0,
+      "topic_segments": 0,
+      "frames": 0,
+      "topics": {},
+      "completed": [],
+      "errors": []
+    }
+  ],
+  "owned_jobs": [
+    {
+      "submission_id": "w4-courses-arrivals-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791640103329,
+      "end_time": 1791640123857
+    },
+    {
+      "submission_id": "w4-courses-probe-02",
+      "status": "SUCCEEDED",
+      "start_time": 1791640176128,
+      "end_time": 1791640183745
+    },
+    {
+      "submission_id": "w4-courses-path-check",
+      "status": "SUCCEEDED",
+      "start_time": 1791640184886,
+      "end_time": 1791640187093
+    },
+    {
+      "submission_id": "w4-courses-watch-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791640254693,
+      "end_time": 1791640561744
+    },
+    {
+      "submission_id": "w4-courses-hanjing-asr-pilot-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791640578806,
+      "end_time": 1791640637451
+    },
+    {
+      "submission_id": "w4-courses-hanjing-topics-pilot-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791640695884,
+      "end_time": 1791640803827
+    },
+    {
+      "submission_id": "w4-courses-hanjing-text-pilot-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791640698461,
+      "end_time": 1791640701689
+    },
+    {
+      "submission_id": "w4-courses-hanjing-text-pilot-02",
+      "status": "SUCCEEDED",
+      "start_time": 1791640815508,
+      "end_time": 1791640818635
+    },
+    {
+      "submission_id": "w4-courses-hanjing-qa-pilot-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791640817969,
+      "end_time": 1791640821907
+    },
+    {
+      "submission_id": "w4-courses-probe-03",
+      "status": "SUCCEEDED",
+      "start_time": 1791640896282,
+      "end_time": 1791640900820
+    },
+    {
+      "submission_id": "w4-courses-hanjing-asr-batch-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791640944627,
+      "end_time": 1791641029828
+    },
+    {
+      "submission_id": "w4-courses-hanjing-topics-pilot-02",
+      "status": "SUCCEEDED",
+      "start_time": 1791640946610,
+      "end_time": 1791641034705
+    },
+    {
+      "submission_id": "w4-courses-hanjing-topics-batch-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791641054407,
+      "end_time": 1791641273269
+    },
+    {
+      "submission_id": "w4-courses-hanjing-text-batch-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791641063211,
+      "end_time": 1791641068742
+    },
+    {
+      "submission_id": "w4-courses-watch-02",
+      "status": "SUCCEEDED",
+      "start_time": 1791641198154,
+      "end_time": 1791641505575
+    },
+    {
+      "submission_id": "w4-courses-hanjing-text-batch-02",
+      "status": "SUCCEEDED",
+      "start_time": 1791641306475,
+      "end_time": 1791641311136
+    },
+    {
+      "submission_id": "w4-courses-hanjing-qa-hands-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791641332205,
+      "end_time": 1791641336138
+    },
+    {
+      "submission_id": "w4-courses-hanjing-topics-batch-02",
+      "status": "SUCCEEDED",
+      "start_time": 1791641394512,
+      "end_time": 1791641612439
+    },
+    {
+      "submission_id": "w4-courses-hanjing-asr-batch-02",
+      "status": "SUCCEEDED",
+      "start_time": 1791641544976,
+      "end_time": 1791641736751
+    },
+    {
+      "submission_id": "w4-courses-watch-03",
+      "status": "SUCCEEDED",
+      "start_time": 1791641663564,
+      "end_time": 1791641971148
+    },
+    {
+      "submission_id": "w4-courses-hanjing-text-batch-03",
+      "status": "SUCCEEDED",
+      "start_time": 1791641752580,
+      "end_time": 1791641764317
+    },
+    {
+      "submission_id": "w4-courses-hanjing-topics-batch-03",
+      "status": "SUCCEEDED",
+      "start_time": 1791641794945,
+      "end_time": 1791642326446
+    },
+    {
+      "submission_id": "w4-courses-hanjing-asr-batch-03",
+      "status": "SUCCEEDED",
+      "start_time": 1791641980847,
+      "end_time": 1791642139948
+    },
+    {
+      "submission_id": "w4-courses-hanjing-text-batch-04",
+      "status": "SUCCEEDED",
+      "start_time": 1791642182959,
+      "end_time": 1791642197435
+    },
+    {
+      "submission_id": "w4-courses-watch-04",
+      "status": "SUCCEEDED",
+      "start_time": 1791642211284,
+      "end_time": 1791642518532
+    },
+    {
+      "submission_id": "w4-courses-hanjing-qa-expression-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791642344997,
+      "end_time": 1791642348347
+    },
+    {
+      "submission_id": "w4-courses-hanjing-topics-batch-04",
+      "status": "SUCCEEDED",
+      "start_time": 1791642360326,
+      "end_time": 1791642888512
+    },
+    {
+      "submission_id": "w4-courses-hanjing-asr-batch-04",
+      "status": "SUCCEEDED",
+      "start_time": 1791642548181,
+      "end_time": 1791642698927
+    },
+    {
+      "submission_id": "w4-courses-hanjing-text-batch-05",
+      "status": "SUCCEEDED",
+      "start_time": 1791642718263,
+      "end_time": 1791642730492
+    },
+    {
+      "submission_id": "w4-courses-hanjing-topics-batch-05",
+      "status": "SUCCEEDED",
+      "start_time": 1791642919039,
+      "end_time": 1791643426989
+    },
+    {
+      "submission_id": "w4-courses-hanjing-qa-pairs-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791643167232,
+      "end_time": 1791643170521
+    },
+    {
+      "submission_id": "w4-courses-probe-final-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791643294030,
+      "end_time": 1791643298821
+    },
+    {
+      "submission_id": "w4-courses-hanjing-text-final-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791643480526,
+      "end_time": 1791643496257
+    },
+    {
+      "submission_id": "w4-courses-liqiang-probe-resume-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791649850333,
+      "end_time": 1791649852565
+    },
+    {
+      "submission_id": "w4-courses-liqiang-asr-resume-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791649876562,
+      "end_time": 1791650088755
+    },
+    {
+      "submission_id": "w4-courses-liqiang-topics-resume-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791650094529,
+      "end_time": 1791650674603
+    },
+    {
+      "submission_id": "w4-courses-liqiang-text-early-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791650175398,
+      "end_time": 1791650181588
+    },
+    {
+      "submission_id": "w4-courses-liqiang-text-resume-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791650692833,
+      "end_time": 1791650700338
+    }
+  ],
+  "resources": {
+    "observed_max_active_owned_jobs": 2,
+    "observed_max_active_owned_gpu_jobs": 1,
+    "active_owned_jobs_at_completion": 0
+  },
+  "code_sha256": {
+    "ml/references/asr_job.py": "5ad1c7654aa0bd5a3581d6588867be48965a7fb18ce4bac693811befaef8a4e4",
+    "ml/references/course_topics_job.py": "a665c99f2d565596cff215584926c7fe5a8299fda42c3e3bd0388d3d67976849",
+    "ml/references/courses.py": "3c02e946a491867b151b60dea7a43f4f58fd8b1336de4b0d404d9272da64e6a9"
+  },
+  "evidence": {
+    "records": 72,
+    "kinds": {
+      "source": 46,
+      "counterpoint": 7,
+      "exception": 19
+    },
+    "candidate_rules": 3,
+    "located_episodes": 59,
+    "reviewed_episode_ids": [
+      "hanjing-01c6f8585c50",
+      "hanjing-07bb893a6150",
+      "hanjing-0830afaa339a",
+      "hanjing-16d4b98cdc4a",
+      "hanjing-1bde8e663e26",
+      "hanjing-30dcfce5bec1",
+      "hanjing-368a4ca4e373",
+      "hanjing-3b674d9da042",
+      "hanjing-42621edbb9ca",
+      "hanjing-472267539367",
+      "hanjing-49228e7c834d",
+      "hanjing-4a152b77997e",
+      "hanjing-4fb3166f882c",
+      "hanjing-5926ef21bb66",
+      "hanjing-68b33faa29e0",
+      "hanjing-68e18241ee95",
+      "hanjing-6aa07585af24",
+      "hanjing-6ba00dd5dfc2",
+      "hanjing-754e1f7c7add",
+      "hanjing-7f1daa9d3f91",
+      "hanjing-82160432a10c",
+      "hanjing-8a79502d54f4",
+      "hanjing-8beab84757fa",
+      "hanjing-9155a572435d",
+      "hanjing-924f134236b3",
+      "hanjing-94decfad9711",
+      "hanjing-9d7f0cb93126",
+      "hanjing-a0ee87de9205",
+      "hanjing-a1faa5192c83",
+      "hanjing-a517d29f7050",
+      "hanjing-b0d84654bf58",
+      "hanjing-b5b49ad715d1",
+      "hanjing-b819edb7ddb9",
+      "hanjing-b9cdea252336",
+      "hanjing-bafb755c1967",
+      "hanjing-bc73556c21c4",
+      "hanjing-bc8f0b313f26",
+      "hanjing-bed82554ed70",
+      "hanjing-c42a96ca6ee1",
+      "hanjing-cb7e2b20af62",
+      "hanjing-d0b1947053bd",
+      "hanjing-d59a3972aa1c",
+      "hanjing-ebfcc07ed30c",
+      "liqiang-1c3b15073b80",
+      "liqiang-3443c72b139a",
+      "liqiang-3affc6adc66e",
+      "liqiang-3f45fb4af44a",
+      "liqiang-55529a4dac9f",
+      "liqiang-5bb2b71e6398",
+      "liqiang-629043450c34",
+      "liqiang-adac4fd7925b",
+      "liqiang-ae75a1bde325",
+      "liqiang-bb3c038634b6",
+      "liqiang-c0dea89ba63c",
+      "liqiang-c3fd3ea9a2cc",
+      "liqiang-cf104927be8b",
+      "liqiang-d7813e265414",
+      "liqiang-e73d5ff4487e",
+      "liqiang-fb640c97c38f"
+    ],
+    "max_paraphrase_characters": 21
+  },
+  "manual_review": {
+    "full_primary_episodes": [
+      1,
+      2,
+      3,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41
+    ],
+    "additional_full_episodes": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      52,
+      54,
+      60,
+      65,
+      66,
+      67,
+      68
+    ],
+    "additional_sampling": "other garment/scene lessons and final arrived batch; see report; no full-corpus semantic accuracy claim"
+  },
+  "qa": [
+    {
+      "episodes": [
+        10,
+        11,
+        12
+      ],
+      "sheets_viewed": 7,
+      "version": "initial pilot"
+    },
+    {
+      "episodes": [
+        17,
+        18,
+        19
+      ],
+      "sheets_viewed": 4,
+      "version": "initial hand batch"
+    },
+    {
+      "episodes": [
+        26,
+        27,
+        34
+      ],
+      "sheets_viewed": 3,
+      "version": "corrected final topics"
+    },
+    {
+      "episodes": [
+        65,
+        66,
+        68
+      ],
+      "sheets_viewed": 2,
+      "version": "corrected final topics"
+    }
+  ],
+  "segment_duration_seconds": {
+    "median": 8.04000000000002,
+    "under_5_seconds": 907
+  },
+  "local_private_data_bytes": 47232601,
+  "validation": {
+    "python": {
+      "run": 61,
+      "pass": 56,
+      "skip": 5,
+      "fail": 0
+    },
+    "node_review": {
+      "pass": 11,
+      "fail": 0
+    },
+    "node_full": {
+      "run": 273,
+      "pass": 272,
+      "skip": 1,
+      "fail": 0
+    },
+    "browser_visual_review": false,
+    "real_repository_rules_data_handler": {
+      "status": 200,
+      "candidates": 3,
+      "evidence": 51,
+      "attached_rules": 17
+    }
+  },
+  "known_deviations": [
+    "First two arrival probes were about 73 seconds apart; corrected to >=300 seconds and Ray watchers."
+  ],
+  "liqiang_resume": {
+    "job_ids": [
+      "w4-courses-liqiang-probe-resume-01",
+      "w4-courses-liqiang-text-early-01",
+      "w4-courses-liqiang-asr-resume-01",
+      "w4-courses-liqiang-text-resume-01",
+      "w4-courses-liqiang-topics-resume-01"
+    ],
+    "pipeline_note": "early text export overlaps CPU topics for manual reading; final export received only after topics succeeded",
+    "manual_review": {
+      "all_transcript_episodes": 34,
+      "source_evidence_episodes": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "excluded_postprocessing_episodes": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        30,
+        31,
+        32,
+        33,
+        34
+      ],
+      "external_model_used": false,
+      "nested_codex_exec_used": false,
+      "images_viewed": 0,
+      "non_selection_method": "manual broad-window review; mixed windows overinclude operations; non-selection share is a conservative lower bound, not heuristic topic labels",
+      "non_selection_lower_bound_sentences": 3922,
+      "non_selection_lower_bound_ratio": 0.6883116883116883,
+      "private_audit_sha256": "c84c5b978d5ddeb22eae76f1a4423098dfdf962361b4592f6933cf3610b1fba6"
+    },
+    "new_evidence": 21,
+    "new_kinds": {
+      "source": 12,
+      "exception": 6,
+      "counterpoint": 3
+    },
+    "new_candidates": 0,
+    "max_paraphrase_characters": 17,
+    "rule_ids": [
+      "P-COLOR-CAST",
+      "P-EXPOSURE-INTENT",
+      "P-LIGHT-SHAPE",
+      "P-YD-BG-SEPARATION",
+      "P-YD-CATCHLIGHT",
+      "P-YD-COLOR-LAYERS",
+      "P-YD-LIGHT-DIRECTION",
+      "P-YD-LIGHT-FLAT",
+      "P-YD-NONFACE-HIGHLIGHTS",
+      "P-YD-TONAL-GRAY"
+    ],
+    "validation": {
+      "python": {
+        "run": 81,
+        "pass": 76,
+        "skip": 5,
+        "fail": 0
+      },
+      "node_full": {
+        "run": 280,
+        "pass": 279,
+        "skip": 1,
+        "fail": 0
+      },
+      "review_api": {
+        "status": 200,
+        "total_evidence": 72,
+        "candidates": 3,
+        "liqiang_linked_rule_ids": 10,
+        "missing": []
+      }
+    },
+    "completed_utc": "2026-10-10T16:45:11.862501+00:00",
+    "git": {
+      "committed": false,
+      "pushed": false,
+      "reason": "sandbox denied creation of .git/worktrees/w4-courses/index.lock during git add",
+      "changes_retained": true
+    }
+  }
+}

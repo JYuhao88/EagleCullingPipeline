@@ -1,0 +1,128 @@
+{
+  "contractVersion": 1,
+  "reasons": [
+    {
+      "id": "R-P-COLOR",
+      "label": "偏色太重",
+      "genre": "portrait",
+      "ruleIds": [
+        "P-COLOR-INTENT"
+      ],
+      "examples": [
+        "偏黄过重让画面显腻",
+        "肤色偏红不符合预期",
+        "绿色处理显得不协调"
+      ]
+    },
+    {
+      "id": "R-G-CLUTTER",
+      "label": "画面太乱",
+      "genre": "general",
+      "ruleIds": [
+        "G-SUBJECT-HIERARCHY"
+      ],
+      "examples": [
+        "画面元素混乱难以集中注意",
+        "云景杂乱且缺少明确内容",
+        "背景欠美感也缺少表达"
+      ]
+    },
+    {
+      "id": "R-G-SUBJECT",
+      "label": "主体不突出",
+      "genre": "general",
+      "ruleIds": [
+        "G-SUBJECT-HIERARCHY"
+      ],
+      "examples": [
+        "剪影没有突出且像凑数",
+        "背景内容缺少表达意图"
+      ]
+    },
+    {
+      "id": "R-P-FLAT",
+      "label": "光影太平",
+      "genre": "portrait",
+      "ruleIds": [
+        "P-LIGHT-SHAPE"
+      ],
+      "examples": [
+        "画面平且缺乏层次质感",
+        "画面发灰且明暗对比不足"
+      ]
+    },
+    {
+      "id": "R-P-LIGHT",
+      "label": "面部抢光",
+      "genre": "portrait",
+      "ruleIds": [
+        "P-LIGHT-SHAPE"
+      ],
+      "examples": [
+        "下方反光使下巴最亮",
+        "鼻孔受光影响面部观感"
+      ]
+    },
+    {
+      "id": "R-P-STYLING",
+      "label": "造型没整理",
+      "genre": "portrait",
+      "ruleIds": [
+        "P-STYLING-READABLE"
+      ],
+      "examples": [
+        "领子疑似翻起导致脖颈轮廓怪",
+        "头发未整理影响呈现"
+      ]
+    },
+    {
+      "id": "R-L-SHADOW",
+      "label": "暗部死黑",
+      "genre": "landscape",
+      "ruleIds": [
+        "L-SHADOW-RECOVERY"
+      ],
+      "examples": [
+        "暗部死黑使画面显暗脏",
+        "整体偏暗且山体质感不足"
+      ]
+    },
+    {
+      "id": "R-L-HIGHLIGHT",
+      "label": "高光没细节",
+      "genre": "landscape",
+      "ruleIds": [
+        "L-EXPOSURE-DETAIL"
+      ],
+      "examples": [
+        "太阳入画显得过曝",
+        "太阳取景造成过亮观感"
+      ]
+    },
+    {
+      "id": "R-L-RETOUCH",
+      "label": "修图违和",
+      "genre": "landscape",
+      "ruleIds": [
+        "L-NATURAL-COLOR"
+      ],
+      "examples": [
+        "云景调色奇怪且不自然",
+        "合成效果引起不自然感",
+        "处理强度被认为过重"
+      ]
+    },
+    {
+      "id": "R-L-EDGE",
+      "label": "边缘有杂物",
+      "genre": "landscape",
+      "ruleIds": [
+        "L-EDGE-DISTRACTION"
+      ],
+      "examples": [
+        "边侧杂草与房屋干扰画面",
+        "无意收入大块物体造成干扰"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1216 @@
+{
+  "version": 1,
+  "seed": 42,
+  "generatedAt": "2026-10-11T02:55:47.061Z",
+  "provenance": {
+    "tsynReport": "2026-10-11T00:38:44.385Z",
+    "cacheSignature": "83c7ee068079c5596be40153fe9485c8c48d62daacfdbbc954ae7e27d2bd19ef",
+    "tsynImages": 388,
+    "shantouRun": "run-1791589678002",
+    "shantouUnits": 291,
+    "modelsInvoked": 0
+  },
+  "hiddenPreferences": [
+    "dark tone / tight crop / stronger closed-eye penalty",
+    "switch: bright tone / loose crop"
+  ],
+  "methodology": "200 initial + 200 switched actions per corpus; complete source-disjoint heldout groups; fixed local features only",
+  "results": [
+    {
+      "name": "T-syn",
+      "result": {
+        "actionCount": 400,
+        "independentSources": 20,
+        "trainSources": 14,
+        "holdoutSources": 6,
+        "curve": [
+          {
+            "groups": 10,
+            "independentTrainingSources": 8,
+            "sampleCount": 6,
+            "before": {
+              "estimate": 0,
+              "lower": 0,
+              "upper": 0,
+              "n": 6
+            },
+            "after": {
+              "estimate": 0.6666666666666666,
+              "lower": 0.3333333333333333,
+              "upper": 1,
+              "n": 6
+            },
+            "improvement": {
+              "estimate": 0.6666666666666666,
+              "lower": 0.3333333333333333,
+              "upper": 1,
+              "n": 6
+            },
+            "pairCount": 106,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.6396800825593395,
+                  "lower": 0.49281045751633984,
+                  "upper": 0.7675438596491229,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 0.13625489421798911,
+                  "lower": 0,
+                  "upper": 0.27981374690912014,
+                  "n": 6
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 0.9796296296296297,
+                  "lower": 0.9574074074074074,
+                  "upper": 1,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 0.8769765845238192,
+                  "lower": 0.7539531690476383,
+                  "upper": 1,
+                  "n": 6
+                }
+              }
+            }
+          },
+          {
+            "groups": 25,
+            "independentTrainingSources": 12,
+            "sampleCount": 6,
+            "before": {
+              "estimate": 0,
+              "lower": 0,
+              "upper": 0,
+              "n": 6
+            },
+            "after": {
+              "estimate": 0.6666666666666666,
+              "lower": 0.3333333333333333,
+              "upper": 1,
+              "n": 6
+            },
+            "improvement": {
+              "estimate": 0.6666666666666666,
+              "lower": 0.3333333333333333,
+              "upper": 1,
+              "n": 6
+            },
+            "pairCount": 106,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.6396800825593395,
+                  "lower": 0.49281045751633984,
+                  "upper": 0.7675438596491229,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 0.13625489421798911,
+                  "lower": 0,
+                  "upper": 0.27981374690912014,
+                  "n": 6
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 0.9796296296296297,
+                  "lower": 0.9574074074074074,
+                  "upper": 1,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 0.8769765845238192,
+                  "lower": 0.7539531690476383,
+                  "upper": 1,
+                  "n": 6
+                }
+              }
+            }
+          },
+          {
+            "groups": 50,
+            "independentTrainingSources": 14,
+            "sampleCount": 6,
+            "before": {
+              "estimate": 0,
+              "lower": 0,
+              "upper": 0,
+              "n": 6
+            },
+            "after": {
+              "estimate": 0.8333333333333334,
+              "lower": 0.5,
+              "upper": 1,
+              "n": 6
+            },
+            "improvement": {
+              "estimate": 0.8333333333333334,
+              "lower": 0.5,
+              "upper": 1,
+              "n": 6
+            },
+            "pairCount": 106,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.6396800825593395,
+                  "lower": 0.49281045751633984,
+                  "upper": 0.7675438596491229,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 0.13625489421798911,
+                  "lower": 0,
+                  "upper": 0.27981374690912014,
+                  "n": 6
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 0.9907407407407408,
+                  "lower": 0.9722222222222223,
+                  "upper": 1,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 0.9384882922619097,
+                  "lower": 0.8154648767857289,
+                  "upper": 1,
+                  "n": 6
+                }
+              }
+            }
+          },
+          {
+            "groups": 100,
+            "independentTrainingSources": 14,
+            "sampleCount": 6,
+            "before": {
+              "estimate": 0,
+              "lower": 0,
+              "upper": 0,
+              "n": 6
+            },
+            "after": {
+              "estimate": 0.8333333333333334,
+              "lower": 0.5,
+              "upper": 1,
+              "n": 6
+            },
+            "improvement": {
+              "estimate": 0.8333333333333334,
+              "lower": 0.5,
+              "upper": 1,
+              "n": 6
+            },
+            "pairCount": 106,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.6396800825593395,
+                  "lower": 0.49281045751633984,
+                  "upper": 0.7675438596491229,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 0.13625489421798911,
+                  "lower": 0,
+                  "upper": 0.27981374690912014,
+                  "n": 6
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 0.9907407407407408,
+                  "lower": 0.9722222222222223,
+                  "upper": 1,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 0.9384882922619097,
+                  "lower": 0.8154648767857289,
+                  "upper": 1,
+                  "n": 6
+                }
+              }
+            }
+          },
+          {
+            "groups": 200,
+            "independentTrainingSources": 14,
+            "sampleCount": 6,
+            "before": {
+              "estimate": 0,
+              "lower": 0,
+              "upper": 0,
+              "n": 6
+            },
+            "after": {
+              "estimate": 1,
+              "lower": 1,
+              "upper": 1,
+              "n": 6
+            },
+            "improvement": {
+              "estimate": 1,
+              "lower": 1,
+              "upper": 1,
+              "n": 6
+            },
+            "pairCount": 106,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.6396800825593395,
+                  "lower": 0.49281045751633984,
+                  "upper": 0.7675438596491229,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 0.13625489421798911,
+                  "lower": 0,
+                  "upper": 0.27981374690912014,
+                  "n": 6
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 1,
+                  "lower": 1,
+                  "upper": 1,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 1,
+                  "lower": 1,
+                  "upper": 1,
+                  "n": 6
+                }
+              }
+            }
+          }
+        ],
+        "stableAtActions": null,
+        "drift": {
+          "detected": true,
+          "reason": "recent-top1-agreement",
+          "recentGroups": 6,
+          "previous": {
+            "estimate": 1,
+            "lower": 1,
+            "upper": 1,
+            "n": 6
+          },
+          "current": {
+            "estimate": 0.16666666666666666,
+            "lower": 0,
+            "upper": 0.5,
+            "n": 6
+          },
+          "drop": 0.8333333333333334,
+          "uncertaintyOnly": true
+        },
+        "preferenceSwitch": {
+          "noDecay": {
+            "sampleCount": 6,
+            "before": {
+              "estimate": 0.16666666666666666,
+              "lower": 0,
+              "upper": 0.5,
+              "n": 6
+            },
+            "after": {
+              "estimate": 0.6666666666666666,
+              "lower": 0.3333333333333333,
+              "upper": 1,
+              "n": 6
+            },
+            "improvement": {
+              "estimate": 0.5,
+              "lower": 0.16666666666666666,
+              "upper": 0.8333333333333334,
+              "n": 6
+            },
+            "pairCount": 106,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.7217463593624585,
+                  "lower": 0.5583075335397316,
+                  "upper": 0.8811890838206629,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 0.2718216255952429,
+                  "lower": 0,
+                  "upper": 0.6051549589285763,
+                  "n": 6
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 0.8824561403508772,
+                  "lower": 0.6824561403508772,
+                  "upper": 1,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 0.75,
+                  "lower": 0.4166666666666667,
+                  "upper": 1,
+                  "n": 6
+                }
+              }
+            }
+          },
+          "halfLife20Days": {
+            "sampleCount": 6,
+            "before": {
+              "estimate": 0.16666666666666666,
+              "lower": 0,
+              "upper": 0.5,
+              "n": 6
+            },
+            "after": {
+              "estimate": 0.8333333333333334,
+              "lower": 0.5,
+              "upper": 1,
+              "n": 6
+            },
+            "improvement": {
+              "estimate": 0.6666666666666666,
+              "lower": 0.3333333333333333,
+              "upper": 1,
+              "n": 6
+            },
+            "pairCount": 106,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.7217463593624585,
+                  "lower": 0.5583075335397316,
+                  "upper": 0.8811890838206629,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 0.2718216255952429,
+                  "lower": 0,
+                  "upper": 0.6051549589285763,
+                  "n": 6
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 0.9888888888888889,
+                  "lower": 0.9666666666666667,
+                  "upper": 1,
+                  "n": 6
+                },
+                "ndcgAt5": {
+                  "estimate": 0.9384882922619097,
+                  "lower": 0.8154648767857288,
+                  "upper": 1,
+                  "n": 6
+                }
+              }
+            }
+          }
+        },
+        "productionEvaluation": {
+          "ready": false,
+          "reason": "no-stable-heldout-improvement",
+          "method": "temporal-group-and-content-disjoint-paired-bootstrap",
+          "confidenceLevel": 0.95,
+          "splits": [
+            {
+              "fraction": 0.6,
+              "trainingGroups": 4,
+              "purgedGroups": 119,
+              "cutoff": 1777852800000,
+              "sampleCount": 78,
+              "before": {
+                "estimate": 0.5641025641025641,
+                "lower": 0.46153846153846156,
+                "upper": 0.6666666666666666,
+                "n": 78
+              },
+              "after": {
+                "estimate": 0.6666666666666666,
+                "lower": 0.5641025641025641,
+                "upper": 0.782051282051282,
+                "n": 78
+              },
+              "improvement": {
+                "estimate": 0.10256410256410256,
+                "lower": 0,
+                "upper": 0.20512820512820512,
+                "n": 78
+              },
+              "pairCount": 303,
+              "tieGroups": 0,
+              "tieRate": 0,
+              "metrics": {
+                "before": {
+                  "pairwise": {
+                    "estimate": 0.7757018866925987,
+                    "lower": 0.7099057976766956,
+                    "upper": 0.8341251885369533,
+                    "n": 78
+                  },
+                  "ndcgAt5": {
+                    "estimate": 0.7782619884188646,
+                    "lower": 0.7246177408356084,
+                    "upper": 0.8366150766383594,
+                    "n": 78
+                  }
+                },
+                "after": {
+                  "pairwise": {
+                    "estimate": 0.8423872967990615,
+                    "lower": 0.7790765879001172,
+                    "upper": 0.9006410256410257,
+                    "n": 78
+                  },
+                  "ndcgAt5": {
+                    "estimate": 0.8513421575919166,
+                    "lower": 0.8039559496630238,
+                    "upper": 0.9054721397566987,
+                    "n": 78
+                  }
+                }
+              }
+            },
+            {
+              "fraction": 0.8,
+              "trainingGroups": 48,
+              "purgedGroups": 116,
+              "cutoff": 1781395200000,
+              "sampleCount": 41,
+              "before": {
+                "estimate": 0.4634146341463415,
+                "lower": 0.3170731707317073,
+                "upper": 0.6097560975609756,
+                "n": 41
+              },
+              "after": {
+                "estimate": 0.6829268292682927,
+                "lower": 0.5365853658536586,
+                "upper": 0.8292682926829268,
+                "n": 41
+              },
+              "improvement": {
+                "estimate": 0.21951219512195122,
+                "lower": 0.0975609756097561,
+                "upper": 0.36585365853658536,
+                "n": 41
+              },
+              "pairCount": 204,
+              "tieGroups": 0,
+              "tieRate": 0,
+              "metrics": {
+                "before": {
+                  "pairwise": {
+                    "estimate": 0.731823101512749,
+                    "lower": 0.6347881899871631,
+                    "upper": 0.8160034231921266,
+                    "n": 41
+                  },
+                  "ndcgAt5": {
+                    "estimate": 0.7055261879396206,
+                    "lower": 0.6106682615254362,
+                    "upper": 0.7947640323397728,
+                    "n": 41
+                  }
+                },
+                "after": {
+                  "pairwise": {
+                    "estimate": 0.8529013231308785,
+                    "lower": 0.7588075880758808,
+                    "upper": 0.9375896700143471,
+                    "n": 41
+                  },
+                  "ndcgAt5": {
+                    "estimate": 0.8702040922473931,
+                    "lower": 0.8124218911149897,
+                    "upper": 0.9274077808362398,
+                    "n": 41
+                  }
+                }
+              }
+            }
+          ],
+          "before": {
+            "estimate": 0.4634146341463415,
+            "lower": 0.3170731707317073,
+            "upper": 0.6097560975609756,
+            "n": 41
+          },
+          "after": {
+            "estimate": 0.6829268292682927,
+            "lower": 0.5365853658536586,
+            "upper": 0.8292682926829268,
+            "n": 41
+          },
+          "improvement": {
+            "estimate": 0.21951219512195122,
+            "lower": 0.0975609756097561,
+            "upper": 0.36585365853658536,
+            "n": 41
+          },
+          "sampleCount": 41,
+          "pairCount": 204,
+          "metrics": {
+            "before": {
+              "pairwise": {
+                "estimate": 0.731823101512749,
+                "lower": 0.6347881899871631,
+                "upper": 0.8160034231921266,
+                "n": 41
+              },
+              "ndcgAt5": {
+                "estimate": 0.7055261879396206,
+                "lower": 0.6106682615254362,
+                "upper": 0.7947640323397728,
+                "n": 41
+              }
+            },
+            "after": {
+              "pairwise": {
+                "estimate": 0.8529013231308785,
+                "lower": 0.7588075880758808,
+                "upper": 0.9375896700143471,
+                "n": 41
+              },
+              "ndcgAt5": {
+                "estimate": 0.8702040922473931,
+                "lower": 0.8124218911149897,
+                "upper": 0.9274077808362398,
+                "n": 41
+              }
+            }
+          },
+          "tieRate": 0,
+          "labeledGroups": 206
+        },
+        "caveat": "Repeated simulated actions share source bursts. Holdout source groups/content never train. Intervals resample independent held-out source groups; this does not establish a real-user sample threshold."
+      }
+    },
+    {
+      "name": "Shantou",
+      "result": {
+        "actionCount": 400,
+        "independentSources": 42,
+        "trainSources": 29,
+        "holdoutSources": 13,
+        "curve": [
+          {
+            "groups": 10,
+            "independentTrainingSources": 9,
+            "sampleCount": 13,
+            "before": {
+              "estimate": 0.38461538461538464,
+              "lower": 0.15384615384615385,
+              "upper": 0.6923076923076923,
+              "n": 13
+            },
+            "after": {
+              "estimate": 0.6923076923076923,
+              "lower": 0.46153846153846156,
+              "upper": 0.9230769230769231,
+              "n": 13
+            },
+            "improvement": {
+              "estimate": 0.3076923076923077,
+              "lower": -0.07692307692307693,
+              "upper": 0.6153846153846154,
+              "n": 13
+            },
+            "pairCount": 32,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.4762820512820513,
+                  "lower": 0.23397435897435898,
+                  "upper": 0.7435897435897435,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.6604096404562062,
+                  "lower": 0.47575530268727323,
+                  "upper": 0.8426458132584019,
+                  "n": 13
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 0.7634615384615385,
+                  "lower": 0.5423076923076923,
+                  "upper": 0.9692307692307692,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.837906866208798,
+                  "lower": 0.6639176733516506,
+                  "upper": 0.9716099810439582,
+                  "n": 13
+                }
+              }
+            }
+          },
+          {
+            "groups": 25,
+            "independentTrainingSources": 18,
+            "sampleCount": 13,
+            "before": {
+              "estimate": 0.38461538461538464,
+              "lower": 0.15384615384615385,
+              "upper": 0.6923076923076923,
+              "n": 13
+            },
+            "after": {
+              "estimate": 0.6923076923076923,
+              "lower": 0.38461538461538464,
+              "upper": 0.9230769230769231,
+              "n": 13
+            },
+            "improvement": {
+              "estimate": 0.3076923076923077,
+              "lower": -0.07692307692307693,
+              "upper": 0.6923076923076923,
+              "n": 13
+            },
+            "pairCount": 32,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.4762820512820513,
+                  "lower": 0.23397435897435898,
+                  "upper": 0.7435897435897435,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.6604096404562062,
+                  "lower": 0.47575530268727323,
+                  "upper": 0.8426458132584019,
+                  "n": 13
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 0.7435897435897437,
+                  "lower": 0.46153846153846156,
+                  "upper": 0.9487179487179488,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.8864399241758332,
+                  "lower": 0.7728798483516663,
+                  "upper": 0.9716099810439582,
+                  "n": 13
+                }
+              }
+            }
+          },
+          {
+            "groups": 50,
+            "independentTrainingSources": 23,
+            "sampleCount": 13,
+            "before": {
+              "estimate": 0.38461538461538464,
+              "lower": 0.15384615384615385,
+              "upper": 0.6923076923076923,
+              "n": 13
+            },
+            "after": {
+              "estimate": 0.6923076923076923,
+              "lower": 0.46153846153846156,
+              "upper": 0.9230769230769231,
+              "n": 13
+            },
+            "improvement": {
+              "estimate": 0.3076923076923077,
+              "lower": -0.07692307692307693,
+              "upper": 0.6153846153846154,
+              "n": 13
+            },
+            "pairCount": 32,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.4762820512820513,
+                  "lower": 0.23397435897435898,
+                  "upper": 0.7435897435897435,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.6604096404562062,
+                  "lower": 0.47575530268727323,
+                  "upper": 0.8426458132584019,
+                  "n": 13
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 0.7538461538461539,
+                  "lower": 0.5230769230769231,
+                  "upper": 0.9846153846153847,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.8864399241758332,
+                  "lower": 0.8012698673077079,
+                  "upper": 0.9716099810439582,
+                  "n": 13
+                }
+              }
+            }
+          },
+          {
+            "groups": 100,
+            "independentTrainingSources": 27,
+            "sampleCount": 13,
+            "before": {
+              "estimate": 0.38461538461538464,
+              "lower": 0.15384615384615385,
+              "upper": 0.6923076923076923,
+              "n": 13
+            },
+            "after": {
+              "estimate": 0.6923076923076923,
+              "lower": 0.46153846153846156,
+              "upper": 0.9230769230769231,
+              "n": 13
+            },
+            "improvement": {
+              "estimate": 0.3076923076923077,
+              "lower": 0,
+              "upper": 0.6153846153846154,
+              "n": 13
+            },
+            "pairCount": 32,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.4762820512820513,
+                  "lower": 0.23397435897435898,
+                  "upper": 0.7435897435897435,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.6604096404562062,
+                  "lower": 0.47575530268727323,
+                  "upper": 0.8426458132584019,
+                  "n": 13
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 0.7179487179487178,
+                  "lower": 0.48717948717948717,
+                  "upper": 0.9230769230769231,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.8763684046703364,
+                  "lower": 0.7710553087912178,
+                  "upper": 0.9716099810439582,
+                  "n": 13
+                }
+              }
+            }
+          },
+          {
+            "groups": 200,
+            "independentTrainingSources": 29,
+            "sampleCount": 13,
+            "before": {
+              "estimate": 0.38461538461538464,
+              "lower": 0.15384615384615385,
+              "upper": 0.6923076923076923,
+              "n": 13
+            },
+            "after": {
+              "estimate": 0.7692307692307693,
+              "lower": 0.5384615384615384,
+              "upper": 1,
+              "n": 13
+            },
+            "improvement": {
+              "estimate": 0.38461538461538464,
+              "lower": 0.15384615384615385,
+              "upper": 0.6923076923076923,
+              "n": 13
+            },
+            "pairCount": 32,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.4762820512820513,
+                  "lower": 0.23397435897435898,
+                  "upper": 0.7435897435897435,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.6604096404562062,
+                  "lower": 0.47575530268727323,
+                  "upper": 0.8426458132584019,
+                  "n": 13
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 0.8205128205128206,
+                  "lower": 0.6153846153846154,
+                  "upper": 1,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.9148299431318748,
+                  "lower": 0.8296598862637498,
+                  "upper": 1,
+                  "n": 13
+                }
+              }
+            }
+          }
+        ],
+        "stableAtActions": null,
+        "drift": {
+          "detected": false,
+          "reason": "recent-top1-agreement",
+          "recentGroups": 13,
+          "previous": {
+            "estimate": 0.7692307692307693,
+            "lower": 0.5384615384615384,
+            "upper": 1,
+            "n": 13
+          },
+          "current": {
+            "estimate": 0.46153846153846156,
+            "lower": 0.23076923076923078,
+            "upper": 0.6923076923076923,
+            "n": 13
+          },
+          "drop": 0.3076923076923077,
+          "uncertaintyOnly": true
+        },
+        "preferenceSwitch": {
+          "noDecay": {
+            "sampleCount": 13,
+            "before": {
+              "estimate": 0.8461538461538461,
+              "lower": 0.6153846153846154,
+              "upper": 1,
+              "n": 13
+            },
+            "after": {
+              "estimate": 0.6153846153846154,
+              "lower": 0.3076923076923077,
+              "upper": 0.8461538461538461,
+              "n": 13
+            },
+            "improvement": {
+              "estimate": -0.23076923076923078,
+              "lower": -0.5384615384615384,
+              "upper": 0.07692307692307693,
+              "n": 13
+            },
+            "pairCount": 32,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.8461538461538461,
+                  "lower": 0.6153846153846154,
+                  "upper": 1,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.9432199620879166,
+                  "lower": 0.8580499052197914,
+                  "upper": 1,
+                  "n": 13
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 0.7256410256410256,
+                  "lower": 0.49999999999999994,
+                  "upper": 0.9102564102564104,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.810428086277846,
+                  "lower": 0.6588610607495512,
+                  "upper": 0.9432199620879166,
+                  "n": 13
+                }
+              }
+            }
+          },
+          "halfLife20Days": {
+            "sampleCount": 13,
+            "before": {
+              "estimate": 0.8461538461538461,
+              "lower": 0.6153846153846154,
+              "upper": 1,
+              "n": 13
+            },
+            "after": {
+              "estimate": 0.6153846153846154,
+              "lower": 0.38461538461538464,
+              "upper": 0.8461538461538461,
+              "n": 13
+            },
+            "improvement": {
+              "estimate": -0.23076923076923078,
+              "lower": -0.5384615384615384,
+              "upper": 0.07692307692307693,
+              "n": 13
+            },
+            "pairCount": 32,
+            "tieGroups": 0,
+            "tieRate": 0,
+            "metrics": {
+              "before": {
+                "pairwise": {
+                  "estimate": 0.8461538461538461,
+                  "lower": 0.6153846153846154,
+                  "upper": 1,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.9432199620879166,
+                  "lower": 0.8580499052197914,
+                  "upper": 1,
+                  "n": 13
+                }
+              },
+              "after": {
+                "pairwise": {
+                  "estimate": 0.6923076923076923,
+                  "lower": 0.46153846153846156,
+                  "upper": 0.9230769230769231,
+                  "n": 13
+                },
+                "ndcgAt5": {
+                  "estimate": 0.8084665715787879,
+                  "lower": 0.6737131810696593,
+                  "upper": 0.9432199620879166,
+                  "n": 13
+                }
+              }
+            }
+          }
+        },
+        "productionEvaluation": {
+          "ready": false,
+          "reason": "no-stable-heldout-improvement",
+          "method": "temporal-group-and-content-disjoint-paired-bootstrap",
+          "confidenceLevel": 0.95,
+          "splits": [
+            {
+              "fraction": 0.6,
+              "trainingGroups": 15,
+              "purgedGroups": 112,
+              "cutoff": 1778198400000,
+              "sampleCount": 81,
+              "before": {
+                "estimate": 0.4074074074074074,
+                "lower": 0.2962962962962963,
+                "upper": 0.5185185185185185,
+                "n": 81
+              },
+              "after": {
+                "estimate": 0.6790123456790124,
+                "lower": 0.5679012345679012,
+                "upper": 0.7777777777777778,
+                "n": 81
+              },
+              "improvement": {
+                "estimate": 0.2716049382716049,
+                "lower": 0.14814814814814814,
+                "upper": 0.3950617283950617,
+                "n": 81
+              },
+              "pairCount": 169,
+              "tieGroups": 0,
+              "tieRate": 0,
+              "metrics": {
+                "before": {
+                  "pairwise": {
+                    "estimate": 0.5219135802469135,
+                    "lower": 0.4288065843621399,
+                    "upper": 0.6148148148148148,
+                    "n": 81
+                  },
+                  "ndcgAt5": {
+                    "estimate": 0.7186465623475465,
+                    "lower": 0.662900460365281,
+                    "upper": 0.7713573850318017,
+                    "n": 81
+                  }
+                },
+                "after": {
+                  "pairwise": {
+                    "estimate": 0.7499999999999999,
+                    "lower": 0.6594650205761319,
+                    "upper": 0.8353909465020577,
+                    "n": 81
+                  },
+                  "ndcgAt5": {
+                    "estimate": 0.8580473284065538,
+                    "lower": 0.8094251841058733,
+                    "upper": 0.9025807943236605,
+                    "n": 81
+                  }
+                }
+              }
+            },
+            {
+              "fraction": 0.8,
+              "trainingGroups": 82,
+              "purgedGroups": 88,
+              "cutoff": 1781913600000,
+              "sampleCount": 39,
+              "before": {
+                "estimate": 0.38461538461538464,
+                "lower": 0.23076923076923078,
+                "upper": 0.5384615384615384,
+                "n": 39
+              },
+              "after": {
+                "estimate": 0.48717948717948717,
+                "lower": 0.3333333333333333,
+                "upper": 0.6666666666666666,
+                "n": 39
+              },
+              "improvement": {
+                "estimate": 0.10256410256410256,
+                "lower": -0.07692307692307693,
+                "upper": 0.3076923076923077,
+                "n": 39
+              },
+              "pairCount": 82,
+              "tieGroups": 0,
+              "tieRate": 0,
+              "metrics": {
+                "before": {
+                  "pairwise": {
+                    "estimate": 0.4878205128205128,
+                    "lower": 0.3450854700854701,
+                    "upper": 0.6271367521367522,
+                    "n": 39
+                  },
+                  "ndcgAt5": {
+                    "estimate": 0.7000405232162262,
+                    "lower": 0.603384712000209,
+                    "upper": 0.780320773307802,
+                    "n": 39
+                  }
+                },
+                "after": {
+                  "pairwise": {
+                    "estimate": 0.6074786324786324,
+                    "lower": 0.47393162393162397,
+                    "upper": 0.7457264957264957,
+                    "n": 39
+                  },
+                  "ndcgAt5": {
+                    "estimate": 0.7785432491558378,
+                    "lower": 0.7065245334565041,
+                    "upper": 0.851500973056933,
+                    "n": 39
+                  }
+                }
+              }
+            }
+          ],
+          "before": {
+            "estimate": 0.38461538461538464,
+            "lower": 0.23076923076923078,
+            "upper": 0.5384615384615384,
+            "n": 39
+          },
+          "after": {
+            "estimate": 0.48717948717948717,
+            "lower": 0.3333333333333333,
+            "upper": 0.6666666666666666,
+            "n": 39
+          },
+          "improvement": {
+            "estimate": 0.10256410256410256,
+            "lower": -0.07692307692307693,
+            "upper": 0.3076923076923077,
+            "n": 39
+          },
+          "sampleCount": 39,
+          "pairCount": 82,
+          "metrics": {
+            "before": {
+              "pairwise": {
+                "estimate": 0.4878205128205128,
+                "lower": 0.3450854700854701,
+                "upper": 0.6271367521367522,
+                "n": 39
+              },
+              "ndcgAt5": {
+                "estimate": 0.7000405232162262,
+                "lower": 0.603384712000209,
+                "upper": 0.780320773307802,
+                "n": 39
+              }
+            },
+            "after": {
+              "pairwise": {
+                "estimate": 0.6074786324786324,
+                "lower": 0.47393162393162397,
+                "upper": 0.7457264957264957,
+                "n": 39
+              },
+              "ndcgAt5": {
+                "estimate": 0.7785432491558378,
+                "lower": 0.7065245334565041,
+                "upper": 0.851500973056933,
+                "n": 39
+              }
+            }
+          },
+          "tieRate": 0,
+          "labeledGroups": 213
+        },
+        "caveat": "Repeated simulated actions share source bursts. Holdout source groups/content never train. Intervals resample independent held-out source groups; this does not establish a real-user sample threshold."
+      }
+    }
+  ]
+}
