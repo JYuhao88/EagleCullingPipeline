@@ -1,37 +1,44 @@
-import { mkdir, appendFile, readFile } from "node:fs/promises";
-import path from "node:path";
+import path from 'node:path';
+import { createHash, randomUUID } from 'node:crypto';
+import { mkdir, readFile, readdir, rename, writeFile } from 'node:fs/promises';
+import { OffsetJournal } from './offset-journal.js';
 export class ResultsStore {
-  constructor(root = "data/cache") {
+  constructor(root = 'data/cache') {
     this.root = path.resolve(root);
-    this.file = path.join(this.root, "results.jsonl");
-    this.index = new Map();
-    this.ready = this.load();
+    this.file = path.join(this.root, 'results.jsonl');
+    // Shared legacy cache is read-only: another service may be appending it.
+    this.journal = new OffsetJournal(this.file, row => row.fingerprint, { repairTail: false });
+    this.ready = this.journal.ready;
   }
-  async load() {
-    await mkdir(this.root, { recursive: true });
-    try {
-      for (const line of (await readFile(this.file, "utf8")).split("\n")) {
-        if (!line.trim()) continue;
-        const x = JSON.parse(line);
-        if (x.fingerprint) this.index.set(x.fingerprint, x.result);
-      }
-    } catch (e) {
-      if (e.code !== "ENOENT") throw e;
-    }
+  key(fingerprint) { return createHash('sha256').update(fingerprint).digest('hex'); }
+  location(fingerprint) {
+    const key = this.key(fingerprint);
+    return path.join(this.root, 'results-v2', key.slice(0, 2), `${key}.json`);
   }
   async get(fingerprint) {
-    await this.ready;
-    return this.index.get(fingerprint);
+    try { return JSON.parse(await readFile(this.location(fingerprint), 'utf8')).result; }
+    catch (error) { if (error.code !== 'ENOENT') throw error; }
+    return (await this.journal.get(fingerprint))?.result || null;
   }
   async put(fingerprint, result) {
-    await this.ready;
-    const row = { fingerprint, result, storedAt: new Date().toISOString() };
-    await appendFile(this.file, JSON.stringify(row) + "\n");
-    this.index.set(fingerprint, result);
+    const file = this.location(fingerprint);
+    await mkdir(path.dirname(file), { recursive: true });
+    const temporary = `${file}.${randomUUID()}.tmp`;
+    await writeFile(temporary, JSON.stringify({ fingerprint, result }));
+    await rename(temporary, file);
     return result;
   }
   async size() {
     await this.ready;
-    return this.index.size;
+    const keys = new Set([...this.journal.index.keys()].map(key => this.key(key)));
+    try {
+      for (const directory of await readdir(path.join(this.root, 'results-v2'), { withFileTypes: true })) {
+        if (!directory.isDirectory()) continue;
+        for (const name of await readdir(path.join(this.root, 'results-v2', directory.name))) {
+          if (/^[a-f0-9]{64}\.json$/.test(name)) keys.add(name.slice(0, -5));
+        }
+      }
+    } catch (error) { if (error.code !== 'ENOENT') throw error; }
+    return keys.size;
   }
 }

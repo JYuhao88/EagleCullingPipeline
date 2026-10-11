@@ -8,8 +8,8 @@ import { hammingDistance } from "./metrics.js";
 import { enrichCaptureMetadata, assignCaptureSessions } from "./capture-metadata.js";
 
 /** Backward-compatible late enrichment for callers that bypass the scanner. */
-export async function readCaptureTimes(records) {
-  await enrichCaptureMetadata(records.filter(record => !record.captureTime && !record.exif));
+export async function readCaptureTimes(records, { signal } = {}) {
+  await enrichCaptureMetadata(records.filter(record => !record.captureTime && !record.exif), { signal });
   assignCaptureSessions(records);
   return new Map(records.filter(record => record.captureTime).map(record => [record.filePath, record.captureTime]));
 }

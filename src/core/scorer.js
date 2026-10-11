@@ -78,8 +78,9 @@ async function tensorFor(filePath) {
 }
 export async function score(
   previewPaths,
-  { root = process.cwd(), onTiming } = {},
+  { root = process.cwd(), onTiming, signal } = {},
 ) {
+  signal?.throwIfAborted();
   const model = modelPath(root);
   const validation = await validateModels(root);
   let session;
@@ -93,6 +94,7 @@ export async function score(
   }
   const results = [];
   for (let index = 0; index < previewPaths.length; index += 1) {
+    signal?.throwIfAborted();
     if (!session || !previewPaths[index]) {
       results.push({
         quality: null,
@@ -108,8 +110,10 @@ export async function score(
       const decodeStarted = performance.now();
       const input = await tensorFor(previewPaths[index]);
       const decodeMilliseconds = performance.now() - decodeStarted;
+      signal?.throwIfAborted();
       const inferenceStarted = performance.now();
       const output = await session.run({ [session.inputNames[0]]: input });
+      signal?.throwIfAborted();
       onTiming?.({
         index,
         decodeMilliseconds,
@@ -126,6 +130,7 @@ export async function score(
         calibrated: true,
       });
     } catch (error) {
+      signal?.throwIfAborted();
       results.push({
         quality: null,
         aesthetic: null,

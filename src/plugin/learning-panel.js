@@ -1,3 +1,4 @@
+import { reviewPageQuery } from "./state.js";
 import { rankedUnitIds } from './selection.js';
 
 // Stable allocation prevents a rerender from changing the treatment mid-review.
@@ -69,7 +70,8 @@ export function createLearningPanel({ root, api, state, setState, render }) {
     profileId = q('Profile').value.trim() || 'default';
     const response = await post('select');
     try { localStorage.setItem(profileKey(), profileId); } catch { /* Storage may be unavailable in an embedded plugin. */ }
-    const data = await api(`/runs/${state().runId}/results`);
+    const query = reviewPageQuery(state());
+    const data = await api(`/runs/${state().runId}/results${query}`);
     setState({ ...state(), data }); display(response);
   }
   function bind(id, fn) { q(id).addEventListener('click', () => fn().catch(error => {
@@ -80,7 +82,8 @@ export function createLearningPanel({ root, api, state, setState, render }) {
     enabled: q('Enabled').checked, halfLifeDays: Number(q('HalfLife').value),
     debiasEnabled: q('Debias').checked, pixelTier: q('Pixels').checked ? 1 : 0
   } });
-    const data = await api(`/runs/${state().runId}/results`);
+    const query = reviewPageQuery(state());
+    const data = await api(`/runs/${state().runId}/results${query}`);
     setState({ ...state(), data }); display(response);
   });
   bind('Train', async () => { display(await post('train')); });
@@ -92,7 +95,8 @@ export function createLearningPanel({ root, api, state, setState, render }) {
   });
   bind('Apply', async () => {
     const report = await post('apply');
-    const data = await api(`/runs/${state().runId}/results`);
+    const query = reviewPageQuery(state());
+    const data = await api(`/runs/${state().runId}/results${query}`);
     setState({ ...state(), data }); decorate(); render();
     q('Status').textContent = `已按验证快照更新 ${report.changedGroups} 个未审组。`;
   });

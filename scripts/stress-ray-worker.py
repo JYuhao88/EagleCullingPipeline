@@ -35,11 +35,11 @@ def main():
         raise TimeoutError('Ray worker terminated')
     signal.signal(signal.SIGTERM, terminate)
     job = os.environ['STRESS_JOB_ID']
-    env = dict(os.environ, UV_THREADPOOL_SIZE='2', OMP_NUM_THREADS='2',
+    env = dict(os.environ, UV_THREADPOOL_SIZE='2', OMP_NUM_THREADS='2', ONNXRUNTIME_NODE_INSTALL='skip',
                OPENBLAS_NUM_THREADS='2', EAGLE_SHARP_CONCURRENCY='1')
     cpus = sorted(os.sched_getaffinity(0))
     os.sched_setaffinity(0, cpus[:2])
-    os.nice(10)
+    os.nice(15)
     with tempfile.TemporaryDirectory(prefix='w6-node-') as temporary:
         tmp = Path(temporary)
         (tmp / 'synthetic').mkdir()
@@ -74,10 +74,10 @@ def main():
                    if line.startswith('model name'))
         host = {'cpu': cpu, 'logicalCores': len(cpus), 'affinity': cpus[:2], 'reservedCpus': 2,
                 'reservedMemoryGiB': 8, 'gpu': 0, 'nodeVersion': NODE, 'nodeSha256': expected}
-        for units in (200, 5000, 10000, 25000):
+        for units in (10000, 50000, 100000):
             output = tmp / f'{units}.json'
-            command = ['node', '--max-old-space-size=2048', 'scripts/stress.mjs', '--units', str(units),
-                       '--index-units', str(200 if units == 200 else 100000), '--output', str(output)]
+            command = ['node', '--max-old-space-size=2048', 'scripts/stress-results.mjs', '--units', str(units),
+                       '--output', str(output)]
             process = subprocess.Popen(command, env=env, stdout=subprocess.DEVNULL, start_new_session=True)
             started = time.monotonic()
             peak = 0
@@ -95,7 +95,7 @@ def main():
                         except (OSError, ValueError, ProcessLookupError):
                             pass
                     peak = max(peak, group_rss)
-                    if peak > 8 * 1024 ** 3 or time.monotonic() - started > 1200:
+                    if peak > 3 * 1024 ** 3 or time.monotonic() - started > 1200:
                         raise RuntimeError('memory or 1200s stage timeout exceeded')
                     time.sleep(.2)
                 if process.returncode:
@@ -113,7 +113,7 @@ def main():
             result = json.dumps(report)
             (destination / output.name).write_text(result + '\n')
             print('W6_RESULT ' + result, flush=True)
-        print('W6_COMPLETE ' + str(destination), flush=True)
+        print('W6_COMPLETE', flush=True)
 
 
 if __name__ == '__main__':

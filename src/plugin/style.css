@@ -126,3 +126,5 @@ dialog { color: #eee; background: #22252d; border: 1px solid #555; border-radius
 .native-unavailable .native-error { display: block; color: #d99; }
 
 #review > header { flex-wrap: wrap; gap: 10px; }
+
+.unit textarea[data-decision-reason] { width: 100%; min-height: 3em; box-sizing: border-box; resize: vertical; }

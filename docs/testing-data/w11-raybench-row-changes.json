@@ -1,0 +1,85 @@
+{
+  "fields": [
+    "credit",
+    "gateRejected",
+    "standaloneGateRejected",
+    "sourceRejected",
+    "pairDecision",
+    "sourceScore",
+    "degradedScore",
+    "flags",
+    "sourceFlags"
+  ],
+  "rows": [
+    {
+      "id": "s006-motion-blur-41",
+      "changes": {
+        "degradedScore": {
+          "before": 0.3265,
+          "after": 0.3365
+        }
+      }
+    },
+    {
+      "id": "s006-excess-headroom-0.5",
+      "changes": {
+        "gateRejected": {
+          "before": true,
+          "after": false
+        },
+        "standaloneGateRejected": {
+          "before": true,
+          "after": false
+        },
+        "pairDecision": {
+          "before": "rejected",
+          "after": "selected"
+        }
+      }
+    },
+    {
+      "id": "s007-noise-50",
+      "changes": {
+        "degradedScore": {
+          "before": 0.3948,
+          "after": 0.4048
+        }
+      }
+    },
+    {
+      "id": "s007-face-highlight-clipping-2.5",
+      "changes": {
+        "degradedScore": {
+          "before": 0.5684,
+          "after": 0.5784
+        }
+      }
+    },
+    {
+      "id": "s013-defocus-blur-1",
+      "changes": {
+        "degradedScore": {
+          "before": 0.5743,
+          "after": 0.5843
+        }
+      }
+    },
+    {
+      "id": "s014-horizon-tilt-8",
+      "changes": {
+        "credit": {
+          "before": 1,
+          "after": 0
+        },
+        "pairDecision": {
+          "before": "candidate",
+          "after": "selected"
+        },
+        "degradedScore": {
+          "before": 0.5718,
+          "after": 0.5918
+        }
+      }
+    }
+  ]
+}

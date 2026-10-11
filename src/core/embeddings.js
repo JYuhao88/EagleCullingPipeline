@@ -25,13 +25,14 @@ async function getSession(model) {
   return sessionPromise;
 }
 
-async function embedRaw(filePath, model) {
+async function embedRaw(filePath, model, signal) {
   const { data } = await sharp(filePath)
     .resize(256, 256, { fit: "cover" })
     .extract({ left: 16, top: 16, width: 224, height: 224 })
     .removeAlpha()
     .raw()
     .toBuffer({ resolveWithObject: true });
+  signal?.throwIfAborted();
   const input = new Float32Array(3 * 224 * 224);
   for (let index = 0; index < 224 * 224; index += 1) {
     for (let channel = 0; channel < 3; channel += 1) {
@@ -40,9 +41,11 @@ async function embedRaw(filePath, model) {
     }
   }
   const session = await getSession(model);
+  signal?.throwIfAborted();
   const output = await session.run({
     [session.inputNames[0]]: new ort.Tensor("float32", input, [1, 3, 224, 224]),
   });
+  signal?.throwIfAborted();
   const tensor = output[session.outputNames[0]];
   const [, tokens, hidden] = tensor.dims;
   const vector = new Float32Array(hidden);
@@ -59,8 +62,9 @@ async function embedRaw(filePath, model) {
 
 export async function embedImage(
   filePath,
-  { model, cacheDir = "data/cache/embeddings", fingerprint } = {},
+  { model, cacheDir = "data/cache/embeddings", fingerprint, signal } = {},
 ) {
+  signal?.throwIfAborted();
   const selectedModel = modelPath(model);
   try {
     await access(selectedModel);
@@ -73,7 +77,8 @@ export async function embedImage(
   try {
     return JSON.parse(await readFile(cachePath, "utf8"));
   } catch {
-    const vector = await embedRaw(filePath, selectedModel);
+    signal?.throwIfAborted();
+    const vector = await embedRaw(filePath, selectedModel, signal);
     await mkdir(path.dirname(cachePath), { recursive: true });
     await writeFile(cachePath, JSON.stringify(vector));
     return vector;

@@ -17,6 +17,11 @@ export const initialState = {
   candidateMode: false
 };
 
+export function reviewPageQuery(state) {
+  const page = state.data?.page;
+  return page ? `?limit=20&cursor=${page.cursor || 0}&filter=${encodeURIComponent(state.filter || 'all')}` : '';
+}
+
 export async function resolveBase({ locationRef = globalThis.location,
   storage = globalThis.localStorage, fetchImpl = globalThis.fetch } = {}) {
   const origin = locationRef?.protocol === "http:" ? locationRef.origin : "";
@@ -60,6 +65,7 @@ export function isIssue(result) {
 }
 
 function groupMatchesFilter(group, state) {
+  if (state.filter === "confirm") return group.confidence === "low";
   if (state.filter === "multi" || state.filter === "low-first") return group.unitIds.length > 1;
   if (state.filter === "unreviewed") {
     return group.unitIds.some(unitId => !reviewIndex(state).human.has(unitId));

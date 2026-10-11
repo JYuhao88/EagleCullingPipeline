@@ -85,10 +85,10 @@ test('decisions retain their storage contract while exposure/bulk/profile persis
   for (const item of items) await rm(item.path);
   const reloaded = new LearningData(dataStore.root);
   assert.deepEqual(fitPreferenceHead(await learningGroups(reloaded, 'client')), headBefore);
-  const before = await readFile(path.join(runStore.dir('one'), 'results.json'), 'utf8');
+  const before = await readFile(path.join(runStore.dir('one'), 'results-index.json'), 'utf8');
   const refused = await call('learning/apply', { profileId: 'client' });
   assert.equal(refused.status, 409);
-  assert.equal(await readFile(path.join(runStore.dir('one'), 'results.json'), 'utf8'), before);
+  assert.equal(await readFile(path.join(runStore.dir('one'), 'results-index.json'), 'utf8'), before);
 });
 
 test('L1 apply preserves severe gate strata, reviewed groups and defaults', async () => {

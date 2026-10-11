@@ -17,6 +17,7 @@ class PackagingTest(unittest.TestCase):
             with zipfile.ZipFile(target) as archive:
                 names = archive.namelist()
                 self.assertIn('scripts/stress.mjs', names)
+                self.assertIn('scripts/stress-results.mjs', names)
                 self.assertIn('src/server/runs-routes.js', names)
                 self.assertIn('src/core/capture-metadata.js', names)
                 self.assertIn('package.json', names)

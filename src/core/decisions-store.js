@@ -39,6 +39,11 @@ export class DecisionsStore {
   }
 
   async update(decisions) {
+    // Validate the entire batch before any persistent update.
+    for (const decision of decisions) {
+      if (decision.reason !== undefined && (typeof decision.reason !== "string" || decision.reason.length > 500))
+        throw new Error("Decision reason must be a string of at most 500 characters");
+    }
     const current = new Map((await this.read()).map(item => [item.unitId, item]));
     for (const decision of decisions) {
       if (decision.clear === true) {

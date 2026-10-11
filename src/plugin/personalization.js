@@ -1,3 +1,4 @@
+import { reviewPageQuery } from "./state.js";
 import { labeledGroupCount } from "./batch.js";
 
 export function personalizationText(report) {
@@ -54,8 +55,9 @@ export function createPersonalization({ root, api, state, setState, render }) {
     version += 1;
     try {
       await api(`/runs/${runId}/personalize/apply`, { method: "POST" });
+      const query = reviewPageQuery(state());
       const [data, response] = await Promise.all([
-        api(`/runs/${runId}/results`), api(`/runs/${runId}/decisions`)
+        api(`/runs/${runId}/results${query}`), api(`/runs/${runId}/decisions${query}`)
       ]);
       if (state().runId !== runId) return;
       setState({ ...state(), data, decisions: response.decisions });

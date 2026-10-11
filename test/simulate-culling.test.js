@@ -54,7 +54,7 @@ test('injected service clock timestamps exposure and decisions without wall-time
   assert.equal((await store.learningData.events.read()).at(-1).timestamp, '2026-01-02T00:00:00.000Z');
 });
 
-test('image unit index coalesces reads, isolates callers and invalidates after atomic replacement', async t => {
+test('image offset index avoids full reads, isolates callers and invalidates after atomic replacement', async t => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'w8-images-'));
   t.after(() => rm(root, { recursive: true, force: true }));
   const store = new RunStore(root), run = { id: 'images', status: 'completed' };
@@ -69,14 +69,14 @@ test('image unit index coalesces reads, isolates callers and invalidates after a
   const read = store.results.bind(store);
   store.results = async id => { reads++; return read(id); };
   const rows = await Promise.all(Array.from({ length: 10 }, () => store.unitData(run.id, 'a')));
-  assert.equal(reads, 1);
+  assert.equal(reads, 0);
   assert.equal(rows[0].results.length, 1); assert.equal(rows[0].items[0].id, 'ia');
   rows[0].results[0].embedding[0] = 9;
   assert.equal((await store.unitData(run.id, 'a')).results[0].embedding[0], 0.1);
   fixture.results[0].previewPath = '/tmp/updated.jpg';
   await store.save(run, fixture);
   assert.equal((await store.unitData(run.id, 'a')).results[0].previewPath, '/tmp/updated.jpg');
-  assert.equal(reads, 2);
+  assert.equal(reads, 0);
   assert.equal((await store.unitData(run.id, 'missing')).results.length, 0);
   await store.mutateGroups(run.id, 'split', { groupId: 'g', unitIds: ['a'] });
   const indexed = await store.unitData(run.id, 'a');

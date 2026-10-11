@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import { createReadStream } from "node:fs";
 import { readdir, readFile, stat } from "node:fs/promises";
-import { enrichCaptureMetadata } from "./capture-metadata.js";
+import { enrichCaptureMetadata, assignCaptureSessions } from "./capture-metadata.js";
 import path from "node:path";
 import sharp from "sharp";
 import { createRequire } from "node:module";
@@ -142,11 +142,12 @@ const sharpConcurrency = Math.max(
 sharp.concurrency(sharpConcurrency);
 sharp.cache({ memory: 128, files: 0, items: 100 });
 
-export async function listEagleImages(libraryPath, { limit, metadataReader } = {}) {
+export async function listEagleImages(libraryPath, { limit, metadataReader, signal, checkpoint } = {}) {
   const imagesPath = path.join(libraryPath, "images");
   const entries = [];
   async function walk(directory) {
     for (const entry of await readdir(directory, { withFileTypes: true })) {
+      signal?.throwIfAborted();
       const fullPath = path.join(directory, entry.name);
       if (entry.isDirectory()) {
         if (entry.name.endsWith(".info")) entries.push({ entry, fullPath });
@@ -156,7 +157,11 @@ export async function listEagleImages(libraryPath, { limit, metadataReader } = {
   }
   await walk(imagesPath);
   const records = [];
+  const restored = new Set();
   for (const { entry, fullPath: infoPath } of entries) {
+    signal?.throwIfAborted();
+    const saved = checkpoint ? await checkpoint.get(`scan:${entry.name.replace(/\.info$/, "")}`) : null;
+    if (saved) { records.push(saved); restored.add(saved.id); if (limit && records.length >= limit) break; continue; }
     let metadata;
     try {
       metadata = JSON.parse(
@@ -213,7 +218,9 @@ export async function listEagleImages(libraryPath, { limit, metadataReader } = {
     });
     if (limit && records.length >= limit) break;
   }
-  return enrichCaptureMetadata(records, { reader: metadataReader });
+  await enrichCaptureMetadata(records.filter(record => !restored.has(record.id)), { reader: metadataReader, signal, checkpoint });
+  assignCaptureSessions(records);
+  return records;
 }
 
 function grayscaleLuma(r, g, b) {

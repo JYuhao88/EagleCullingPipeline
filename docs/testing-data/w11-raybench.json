@@ -1,0 +1,234 @@
+{
+  "report": "data/cache/bench/reports/2026-10-11T14-39-30-841Z/report.json",
+  "baseline": "data/cache/bench/reports/2026-10-11T03-11-11-048Z/report.json",
+  "rayJobId": "w11-raybench-ddcc847bce36",
+  "rayStatus": "SUCCEEDED",
+  "rayWallSeconds": 720.207,
+  "reservedCpu": 2,
+  "gpu": 0,
+  "verifiedCaches": 388,
+  "localColdImages": 0,
+  "analysisSignature": "85c08e66e3aca776001b685ee8d3d114957d63d477de69b73e18f53741c8fe63",
+  "manifestSha256": "64fae9780400401ccfac34051101cdac4b0514aa69c5da919f2f9d1246828c48",
+  "modelSha256": {
+    "models/scorer/topiq_nr_512.onnx": "bc1f59ca097afadb7c9343fa370d0fe47b0cfe5e21b623957f597a6f2bea08eb",
+    "models/scorer/topiq_nr_512.onnx.data": "0ab4e4c4da5eb6461357379178e96b06ebfc11105a02c0854598d56b910b2582",
+    "models/mediapipe/face_landmarker.task": "64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff",
+    "models/pose/rtmw-dw-x-l_simcc-cocktail14_270e-256x192_20231122.onnx": "9a9bc17c13ff0a1e37507f45a037a21bc410cd08374b0e664c57d0080843aa58",
+    "models/pose/yolox_m_8xb8-300e_humanart-c2c7a14a.onnx": "3dea6513388889f0fff4b77bf7a26013600321b9eb9ceb0e9a400a82572f5f23"
+  },
+  "pythonDependencies": {
+    "mediapipe": "1.1.0",
+    "numpy": "2.5.3",
+    "Pillow": "12.3.0",
+    "onnxruntime": "1.31.0",
+    "rtmlib": "0.0.16",
+    "opencv-contrib-python": {
+      "versionSegments": [
+        5,
+        0,
+        0,
+        93
+      ]
+    }
+  },
+  "nodeVersion": "22.9.0",
+  "npmDependencies": {
+    "sharp": "0.33.5",
+    "onnxruntime-node": "1.24.3"
+  },
+  "accuracy": 0.9619565217391305,
+  "gate": {
+    "hits": 101,
+    "total": 112,
+    "rate": 0.9017857142857143
+  },
+  "sourceFalseReject": {
+    "hits": 1,
+    "total": 20,
+    "rate": 0.05
+  },
+  "comparison": {
+    "matchedPairs": 368,
+    "additionalPairs": 0,
+    "syntheticAccuracyDelta": -0.0027173913043477826,
+    "severeGateDelta": 0,
+    "sourceFalseRejectDelta": 0,
+    "byDegradation": {
+      "defocus-blur": {
+        "pairs": 60,
+        "accuracyDelta": 0
+      },
+      "motion-blur": {
+        "pairs": 60,
+        "accuracyDelta": 0
+      },
+      "underexposure": {
+        "pairs": 40,
+        "accuracyDelta": 0
+      },
+      "overexposure": {
+        "pairs": 40,
+        "accuracyDelta": 0
+      },
+      "noise": {
+        "pairs": 40,
+        "accuracyDelta": 0
+      },
+      "horizon-tilt": {
+        "pairs": 40,
+        "accuracyDelta": -0.025000000000000022
+      },
+      "excess-headroom": {
+        "pairs": 20,
+        "accuracyDelta": 0
+      },
+      "joint-crop-wrist": {
+        "pairs": 16,
+        "accuracyDelta": 0
+      },
+      "joint-crop-knee": {
+        "pairs": 7,
+        "accuracyDelta": 0
+      },
+      "joint-crop-ankle": {
+        "pairs": 3,
+        "accuracyDelta": 0
+      },
+      "head-top-crop": {
+        "pairs": 13,
+        "accuracyDelta": 0
+      },
+      "face-highlight-clipping": {
+        "pairs": 13,
+        "accuracyDelta": 0
+      },
+      "joint-crop-neck": {
+        "pairs": 16,
+        "accuracyDelta": 0
+      }
+    },
+    "unchangedRows": false,
+    "triageTop1Delta": null
+  },
+  "warnings": [],
+  "qualityGatePassed": false,
+  "activeOwnJobsAtFinish": 0,
+  "nodeTests": {
+    "pass": 369,
+    "fail": 0,
+    "skip": 0
+  },
+  "pythonTests": {
+    "pass": 4,
+    "fail": 0
+  },
+  "limitations": [
+    "Cross-platform bitwise inference equivalence not verified",
+    "T-triage unavailable",
+    "Initial upload overlapped Node regression execution; no local benchmark cold inference"
+  ],
+  "outcomeChangedRows": [
+    {
+      "id": "s006-excess-headroom-0.5",
+      "gateRejectedBefore": true,
+      "gateRejectedAfter": false,
+      "leftEarBefore": 0.2828427124746184,
+      "leftEarAfter": 0.32879797461071575,
+      "gateThreshold": 0.3
+    },
+    {
+      "id": "s014-horizon-tilt-8",
+      "creditBefore": 1,
+      "creditAfter": 0,
+      "degradedScoreBefore": 0.5718,
+      "degradedScoreAfter": 0.5918,
+      "sourceScore": 0.5865,
+      "rulePenaltyBefore": 0.035,
+      "rulePenaltyAfter": 0.015,
+      "removedViolations": [
+        "P-CROP-KNEE",
+        "P-CROP-ANKLE-FOOT"
+      ]
+    }
+  ],
+  "changedRows": [
+    {
+      "id": "s006-motion-blur-41",
+      "changes": {
+        "degradedScore": {
+          "before": 0.3265,
+          "after": 0.3365
+        }
+      }
+    },
+    {
+      "id": "s006-excess-headroom-0.5",
+      "changes": {
+        "gateRejected": {
+          "before": true,
+          "after": false
+        },
+        "standaloneGateRejected": {
+          "before": true,
+          "after": false
+        },
+        "pairDecision": {
+          "before": "rejected",
+          "after": "selected"
+        }
+      }
+    },
+    {
+      "id": "s007-noise-50",
+      "changes": {
+        "degradedScore": {
+          "before": 0.3948,
+          "after": 0.4048
+        }
+      }
+    },
+    {
+      "id": "s007-face-highlight-clipping-2.5",
+      "changes": {
+        "degradedScore": {
+          "before": 0.5684,
+          "after": 0.5784
+        }
+      }
+    },
+    {
+      "id": "s013-defocus-blur-1",
+      "changes": {
+        "degradedScore": {
+          "before": 0.5743,
+          "after": 0.5843
+        }
+      }
+    },
+    {
+      "id": "s014-horizon-tilt-8",
+      "changes": {
+        "credit": {
+          "before": 1,
+          "after": 0
+        },
+        "pairDecision": {
+          "before": "candidate",
+          "after": "selected"
+        },
+        "degradedScore": {
+          "before": 0.5718,
+          "after": 0.5918
+        }
+      }
+    }
+  ],
+  "runtimeLibrarySha256": {
+    "libglvnd": "6eb77601a44b78c4631d886d54ef54f321c2bdc69fdefc4065a1e0491f030c76",
+    "libegl": "13d3fde9c1dcf254968cc70652222a43f25d04e69555ccf855553110e753288e",
+    "libgles": "ec0854956418ca7e486ae9e74ca7a00798ca447f2db9c3f4fbe719f9f76225dc"
+  },
+  "comparisonKind": "Ray merged code versus historical Mac baseline; not the same-platform quality gate",
+  "samePlatformControl": "docs/testing-data/w11-ray-same-platform.json"
+}

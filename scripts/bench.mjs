@@ -66,7 +66,7 @@ export function markdown(report) {
   if (report.comparison) lines.push(`与指定报告比较：${JSON.stringify(report.comparison)}`, '');
   return lines.join('\n');
 }
-async function analysisSignature() {
+export async function analysisSignature() {
   const files = ['metrics.js', 'scorer.js', 'ranking.js', 'ranking-weights.json', 'faces.js', 'pose.js', 'signals.js', 'rules-engine.js',
     'candidate-measurements.js', 'candidate-config.json'];
   const chunks = await Promise.all(files.map(file => readFile(path.join('src/core', file))));
@@ -87,6 +87,8 @@ async function analyze(images, directory, warnings, signature) {
     try { results[i] = { ...await readJSON(cache), unitId: image.id }; }
     catch { pending.push({ i, image, file, cache }); }
   }
+  if (process.env.EAGLE_BENCH_CACHE_ONLY === '1' && pending.length)
+    throw new Error(`Cache-only benchmark refuses ${pending.length} cold images`);
   // Revalidate TOPIQ even on a fully cached replay: unavailable models must expose quality=null.
   if (results.some(Boolean)) {
     const preflight = (await score([path.resolve(directory, images[0].path)]))[0];
@@ -289,5 +291,6 @@ export async function main(argv = process.argv.slice(2)) {
   return report;
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
-  main().catch(error => { console.error(error); process.exitCode = 1; });
+  // All artifacts are awaited by main; native ONNX handles may otherwise retain the CLI.
+  main().then(() => process.exit(0)).catch(error => { console.error(error); process.exit(1); });
 }

@@ -40,6 +40,7 @@
         <span id="nativeControls" hidden></span>
         <select id="filter">
           <option value="multi" selected>多张组（默认）</option>
+          <option value="confirm">仅需确认</option>
           <option value="low-first">先看需确认</option>
           <option value="all">全部（含单张组）</option>
           <option value="unreviewed">未审阅</option>
@@ -51,7 +52,8 @@
       </header>
       <aside id="groupSidebar">
         <div class="sidebar-actions"><button id="bulkEyes">闭眼照片标记淘汰（0）</button>
-          <button id="bulkBlurry">模糊照片标记淘汰（0）</button></div><nav id="groupList"></nav>
+          <button id="bulkBlurry">模糊照片标记淘汰（0）</button></div><div><button id="previousPage">上一页</button> <span id="pageStatus"></span>
+          <button id="nextPage">下一页</button></div><nav id="groupList"></nav>
       </aside>
       <section class="review-main">
         <details id="learningPanel"><summary>个性化 L1（默认关闭）与本地存储</summary>
@@ -85,7 +87,7 @@
         M/Shift+M 移组 · G 新建组 · Cmd/Shift 点击多选 · F 人脸对比 · 空格全屏 · Z 同步放大 · U 撤销 · ? 帮助</div>
       <footer>
         <button id="acceptGroup">设为本组首选（S）</button><button id="acceptUnreviewed">接受所有未审组建议</button>
-        <button id="acceptHighConfidence">接受所有把握高的组</button><button id="acceptSingles">接受未审单张组建议</button>
+        <button id="acceptHighConfidence">接受本页把握高的组</button><button id="acceptSingles">接受本页未审单张组建议</button>
         <button id="dryRun">写回 Eagle</button>
         <a id="reportCsv" target="_blank">CSV 报告</a>
         <a id="reportJson" target="_blank">JSON 报告</a>

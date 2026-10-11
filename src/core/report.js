@@ -4,7 +4,7 @@ const columns = [
   "itemId", "fileName", "ext", "unitId", "pairing", "groupId", "groupSize",
   "rank", "score", "sharpness", "exposure", "clippedHighlights",
   "clippedShadows", "faces", "eyesClosed", "quality", "aesthetic", "flags",
-  "reasons", "suggested", "decision", "decisionSource", "tags", "tagsSource"
+  "reasons", "suggested", "decision", "decisionSource", "decisionReason", "tags", "tagsSource"
 ];
 
 export function buildReport({ units = [], results = [], groups = [], items = [], decisions = [], applied = [] }) {
@@ -58,6 +58,7 @@ function makeRow(item, unit, result, group, entry, decision, appliedMap) {
     suggested: group.suggested?.[result.unitId] || "",
     decision: decision.action || "",
     decisionSource: decision.source || "suggested",
+    decisionReason: decision.reason || "",
     tags: tags.join("；"),
     tagsSource: hasApplied ? "applied" : "planned"
   };

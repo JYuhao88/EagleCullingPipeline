@@ -5,13 +5,17 @@ import { alignFaces, renderFace, renderFaceStrip, renderNativeFace } from "./fac
 
 import { renderRuleReasons } from "./feedback.js";
 
+const escapeReason = value => String(value ?? "").replace(/[&<>"']/g, c =>
+  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const flagLabels = { "eyes-closed": "闭眼", blurry: "模糊", "possibly-blurry": "模糊",
   overexposed: "过曝", underexposed: "欠曝" };
 const actionLabels = { selected: "保留", candidate: "候选", rejected: "淘汰" };
 const confidenceLabel = group => ({ high: "把握高", low: "需确认", single: "单张" })[group.confidence] || "";
 
 export function createReviewView({ root, state, setState, runId, getRunId = () => runId,
-  onBack, onDecision, onPreview, getCatalog = () => ({}), onExposure = () => {}, getPresentation = () => null }) {
+  onFilter, onBack, onDecision, onPreview, getCatalog = () => ({}), onExposure = () => {}, getPresentation = () => null }) {
+  const reasonDrafts = new Map();
+  let reasonRunId;
   let lastExposure = "";
   let exposurePending = Promise.resolve();
   function expose() {
@@ -45,6 +49,7 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     markup.set(container, rows);
   }
   function render() {
+    if (reasonRunId !== getRunId()) { reasonDrafts.clear(); reasonRunId = getRunId(); }
     const viewState = state();
     const candidateToggle = root.querySelector("#candidateToggle");
     candidateToggle.setAttribute("aria-pressed", String(Boolean(viewState.candidateMode)));
@@ -53,7 +58,8 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     const group = currentGroup(viewState);
     if (group.id !== magnifierGroup) { magnifier = false; magnifierFace = 0; magnifierGroup = group.id; }
     const progress = reviewProgress(viewState);
-    root.querySelector("#reviewProgress").textContent = `已审阅 ${progress.reviewed} / ${progress.total} 组`;
+    root.querySelector("#reviewProgress").textContent =
+      `已审阅 ${progress.reviewed} / ${progress.total} 组${viewState.data?.page ? "（本页）" : ""}`;
     root.querySelector("#reviewTitle").textContent = groupTitle(viewState, group);
     renderList(root.querySelector("#groupList"), filteredGroups(viewState)
       .map(item => renderGroupList(viewState, item)));
@@ -200,6 +206,8 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
         <strong class="${actionClass(group.suggested?.[unitId] || "candidate")}">${suggestion}</strong> ·
       当前：<strong class="${sourceClass} ${decision.source === "human"
         ? actionClass(decision.action) : "unconfirmed"}">${current}</strong></p>
+      <label>自由理由（最多 500 字符）<textarea data-decision-reason maxlength="500"
+        aria-label="自由理由">${escapeReason(reasonDrafts.get(unitId) ?? decision.reason ?? "")}</textarea></label>
       <div class="decision-buttons">${Object.entries(actionLabels).map(([action, label]) =>
         `<button data-action="${action}" class="${decision.source === "human" && decision.action === action ? "active" : ""}"
           >${label}</button>`).join("")}
@@ -208,6 +216,7 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
   }
 
   root.querySelector("#filter").addEventListener("change", event => {
+    if (onFilter) { onFilter(event.target.value); return; }
     setState(reduceState(state(), { type: "filter", value: event.target.value })); render();
   });
   root.querySelector("#back").addEventListener("click", onBack);
@@ -247,13 +256,18 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     const button = event.target.closest("[data-unit-index]"); if (!button) return;
     setState(reduceState(state(), { type: "unit", index: Number(button.dataset.unitIndex) })); render();
   });
+  root.querySelector("#group").addEventListener("input", event => {
+    if (event.target.matches?.("[data-decision-reason]"))
+      reasonDrafts.set(event.target.closest(".unit").dataset.unitId, event.target.value);
+  });
   root.querySelector("#group").addEventListener("click", event => {
     const card = event.target.closest(".unit"); if (!card) return;
-    if (event.target.closest("details")) return;
+    if (event.target.closest("details, textarea, input")) return;
     const viewState = state(); const group = currentGroup(viewState);
     const ids = rankedUnitIds(group); const unitId = card.dataset.unitId;
     if (event.target.closest("[data-action]")) {
-      onDecision(unitId, event.target.closest("[data-action]").dataset.action); return;
+      onDecision(unitId, event.target.closest("[data-action]").dataset.action,
+        { reason: card.querySelector("[data-decision-reason]")?.value.trim() || "" }); return;
     }
     if (event.target.closest("[data-tie]")) {
       onDecision(unitId, "candidate", { category: "candidate", tie: true, reason: "各有所长" }); return;
@@ -284,5 +298,9 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     if (!magnifier) return false;
     magnifier = false; render(); return true;
   }
-  return { render, expose, toggleFaces, nativeAction, closeNativeMagnifier };
+  function decisionReason(unitId) {
+    const card = [...(root.querySelectorAll("#group .unit") || [])].find(c => c.dataset.unitId === unitId);
+    return card?.querySelector("[data-decision-reason]")?.value.trim();
+  }
+  return { decisionReason, render, expose, toggleFaces, nativeAction, closeNativeMagnifier };
 }

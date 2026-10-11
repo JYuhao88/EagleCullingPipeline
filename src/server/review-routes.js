@@ -1,3 +1,5 @@
+import { streamReport } from "./stream-report.js";
+import { pageOptions } from "./pagination.js";
 import { handleLearningRoute, learningServices } from "./learning-routes.js";
 import { handleFeedbackRoute } from "./feedback-routes.js";
 import { DecisionsStore } from "../core/decisions-store.js";
@@ -20,10 +22,24 @@ export async function handleReviewRoute(req, res, ctx) {
   // and status only need the run identity; neither should parse all embeddings.
   const metadataOnly = req.method === "POST" && action === "decisions" ||
     action === "learning" && (req.method === "GET" || /\/learning\/(train|rollback)$/.test(url.pathname));
+  if (req.method === 'GET' && action === 'report' && ctx.runStore.page) {
+    return streamReport(req, res, ctx.runStore, runId, url, ctx.json);
+  }
+  if (req.method === 'GET' && action === 'decisions' && ctx.runStore.page && url.searchParams.has('limit')) {
+    let options;
+    try { options = pageOptions(url); } catch (error) { ctx.json(res, 400, { error: error.message }); return true; }
+    const page = await ctx.runStore.page(runId, options);
+    if (!page) { ctx.json(res, 404, { error: 'run not found' }); return true; }
+    const decisions = await new DecisionsStore(ctx.runStore.dir(runId)).effective(page.results, page.groups);
+    ctx.json(res, 200, { decisions, page: page.page });
+    return true;
+  }
   let data;
   if (metadataOnly && ctx.runStore.getRun) {
     const run = await ctx.runStore.getRun(runId);
     data = run ? { run } : null;
+  } else if (url.searchParams.has('groupId') && ctx.runStore.page) {
+    data = await ctx.runStore.page(runId, { groupId: url.searchParams.get('groupId') });
   } else data = await ctx.runStore.get(runId, { readOnly: true });
   if (!data) {
     ctx.json(res, 404, { error: "run not found" });
@@ -56,9 +72,9 @@ export async function handleReviewRoute(req, res, ctx) {
   }
   if (req.method === "POST" && action === "decisions") {
     // Keep the persisted decision and its learning snapshot in request order.
+    const body = await ctx.readBody(req);
+    const decisions = Array.isArray(body) ? body : body.decisions || [body];
     return serializeWriteback(ctx, runId, async data => {
-      const body = await ctx.readBody(req);
-      const decisions = Array.isArray(body) ? body : body.decisions || [body];
       const timestamp = ctx.clock?.().toISOString();
       const writeStart = performance.now();
       const saved = await store.upsert(decisions.map(row => ({ ...row,
@@ -88,7 +104,7 @@ export async function handleReviewRoute(req, res, ctx) {
         + `run;dur=${(data.readDurationMs || 0).toFixed(2)}`);
       ctx.json(res, 200, { decisions: saved, ...(learningWarning ? { learningWarning } : {}) });
       return true;
-    });
+    }, decisions.map(row => row.unitId));
   }
   if (req.method === "POST" && url.pathname === `/runs/${runId}/writeback/revert`) {
     return serializeWriteback(ctx, runId, fresh => revertRun(req, res, ctx, fresh));
@@ -110,12 +126,13 @@ export async function handleReviewRoute(req, res, ctx) {
   return false;
 }
 
-async function serializeWriteback(ctx, runId, operation) {
+async function serializeWriteback(ctx, runId, operation, unitIds) {
   const pending = ctx.writebackPending ||= new Map();
   const previous = pending.get(runId) || Promise.resolve();
   const task = previous.then(async () => {
     const readStart = performance.now();
-    const data = await ctx.runStore.get(runId, { readOnly: true });
+    const data = unitIds && ctx.runStore.selection ? await ctx.runStore.selection(runId, unitIds)
+      : await ctx.runStore.get(runId, { readOnly: true });
     if (data) data.readDurationMs = performance.now() - readStart;
     if (!data) throw new Error("run not found");
     return operation(data);

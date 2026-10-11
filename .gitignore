@@ -12,6 +12,7 @@ src/plugin/window-state.json
 __pycache__/
 .venv/
 python_worker/.venv/
+python_worker/.venv
 .venv-iqa/
 *.pyc
 .env

@@ -8,6 +8,8 @@ import { EventLog } from './event-log.js';
 import { PixelRetention } from './pixel-retention.js';
 
 export const PROTECTED_LEARNING_LIBRARY = localSetting('EAGLE_LEARNING_LIBRARY', '/unconfigured/expected.library');
+const groupIndexPending = new Map();
+
 export class LearningData {
   constructor(root = 'data/learning') {
     this.root = root; this.features = new FeatureStore(root); this.events = new EventLog(root);
@@ -47,10 +49,26 @@ export class LearningData {
     }
     if (changed) await atomicJson(indexFile, Object.fromEntries(cache));
     const groupsFile = path.join(this.root, 'run-index', 'v1', `${runKey}-groups.json`);
-    await atomicJson(groupsFile, (data.groups || []).map(group => ({ id: group.id,
+    const groupRows = (data.groups || []).map(group => ({ id: group.id,
       candidateHashes: group.unitIds.map(id => hashes.get(id) || null),
       ai: { ranking: (group.ranking || []).map(row => ({ ...row, hash: hashes.get(row.unitId) || null })),
-        suggested: group.suggested } })));
+        suggested: group.suggested } }));
+    const update = (groupIndexPending.get(groupsFile) || Promise.resolve()).then(async () => {
+      let rows = groupRows;
+      if (data.partial) {
+        let previous = [];
+        try { previous = JSON.parse(await readFile(groupsFile, 'utf8')); }
+        catch (error) { if (error.code !== 'ENOENT') throw error; }
+        const merged = new Map(previous.map(group => [group.id, group]));
+        for (const group of groupRows) merged.set(group.id, group);
+        rows = [...merged.values()];
+      }
+      await atomicJson(groupsFile, rows);
+    });
+    const pending = update.catch(() => {});
+    groupIndexPending.set(groupsFile, pending);
+    try { await update; }
+    finally { if (groupIndexPending.get(groupsFile) === pending) groupIndexPending.delete(groupsFile); }
     if (Array.isArray(data.results)) this.ingested.set(data.results, { signature, hashes });
     return hashes;
   }

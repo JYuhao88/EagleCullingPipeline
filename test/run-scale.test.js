@@ -12,7 +12,7 @@ test('progress writes preserve result file and snapshot queued metadata', async 
     const store = new RunStore(root);
     const run = { id: 'scale', status: 'running', progress: { completed: 0 } };
     await store.save(run, { units: [{ id: 'u' }], items: [{ id: 'i' }], duplicateCandidates: { u: ['v'] } });
-    const file = path.join(root, 'scale', 'results.json');
+    const file = path.join(root, 'scale', 'results-index.json');
     const before = await stat(file);
     const expected = await readFile(file, 'utf8');
     const pending = store.saveProgress(run);

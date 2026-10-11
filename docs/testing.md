@@ -484,3 +484,306 @@ P95 <300 ms，批量及理由修订的完整脚本耗时 <2 s。Server-Timing �
 第二轮最终 `git diff --check` 通过。尝试暂存本轮源码、脚本、测试和文档时，沙箱无法创建
 主仓库 `.git/worktrees/w8-simulate/index.lock`（Operation not permitted）；改动保留在本
 worktree，未提交、未 push。
+
+## 真实 Eagle 只读验收（W10）
+
+执行 `nice -n 15 node scripts/simulate-culling.mjs --real-eagle`；浏览器路径由
+`W8_BROWSER` 设置，Playwright 可由 `W8_PLAYWRIGHT` 设置。库路径从不入库的
+`config/local.json` 或环境变量读取，先硬校验当前库。
+`W10_EAGLE_URL` 默认本地 Eagle，`W10_FOLDER` 默认既有汕头文件夹；
+`W10_RUN_SOURCE`、`W10_POSE_CACHE` 可指定已存在的分析/姿态缓存。
+
+`eagle-readonly-proxy.mjs` 只转发明确列举的 GET；未知读取、写请求及重定向均不转发。
+真实模式记录全部请求与各方法/路径次数，任何拒绝记录使验收失败。
+先运行实际 CLI doctor，再通过 `AnalysisPipeline.run` 串行迁移并重放已核对原片元数据、
+真实文件夹成员的历史特征缓存；缓存缺失不冷跑模型。代理预览和所有新缓存、run、决定、
+事件、特征、profile 仅写本轮临时目录。原生 focus 单独限制到按单元 ID 排序等距采样的 80 张子集，
+复用既有 RTMW 坐标，记录前后人脸框估算/明确关键点/原生测量覆盖率与已知 AF 命中。
+AF 命中表示点或 AF 框与眼部 ROI 相交，不是人工确认的对焦准确率。
+
+浏览器执行少量保留/淘汰、自由文本与输入焦点检查、学习面板训练、原生脸/眼部 1:1
+图像加载及 CSS 像素核对、读取报告链接导出。少量决定不要求学习获准应用。
+原片操作仅读取，前后 SHA-256 核对所有参与文件；绝不调用 Eagle 写回/删除。
+产物在 `/tmp/w10-real-eagle/execution-*/`，本次汇总为 `/tmp/w10-real-eagle/latest.json`；
+80 张联系表与统计在 `/tmp/w10-eye-qa/`，不入库。
+
+沙箱不能启动服务/浏览器时，向 `/tmp/w10-runner/request` 写入 `--real-eagle`，
+用户的外部代跑器写回 status 和独立结果日志。必须查看实际日志和汇总后报告通过；
+旧结果、未完成步骤及缓存模型分数均不能冒充本轮端到端或视觉质量证据。
+
+### 当前执行证据与未完成项
+
+真实首轮已读取 426 文件 / 213 单元，库硬校验、doctor、缓存特征分组排序、缩略图、
+少量自由理由决定、学习训练与原生眼部 1:1 通过。报告导出因验收脚本误用 Fetch `ok`
+而失败，已修复；首轮不计完整验收通过，最终 Pipeline 回放/80 张前后统计复验待代跑。
+
+第一次完整指定 Node 回归 361 通过 / 1 失败，唯一失败为新增行长超限，已修正。
+沙箱定向执行 `nice -n 15 node --test --test-concurrency=1`
+`--test-skip-pattern='actual proxy' test/w10-eagle.test.js test/style.test.js`，6 通过 / 0 失败；
+真正代理 socket 的新增测试以及完整回归复验仍待外部代跑。
+`nice -n 15 node scripts/check-public-release.mjs` 为 0 命中，`nice -n 15 git diff --check` 通过。
+
+已实际运行 `nice -n 15 node scripts/bench.mjs --compare`
+`data/cache/bench/reports/2026-10-11T03-11-11-048Z/report.json`，
+新报告为 `data/cache/bench/reports/2026-10-11T07-32-57-080Z/report.json`：
+368 对偏好准确率 0.9646739130、严重问题 gate 101/112、源图误淘汰 1/20，三项差值均 0。
+报告实测生成，但 CLI 计算后未退出，代跑器仍被阻塞；不能计为命令成功退出。
+已修正 CLI 在全部文件持久化后退出，并增加 `EAGLE_BENCH_CACHE_ONLY=1` 拒绝冷算。
+必须记录资源约束偏差：首次配置指纹变化使 388 张合成图本机重算，未按要求交给 Ray。
+真实 Eagle 原片未冷跑模型；不把合成基准重算描述成缓存命中或合规 Ray 执行。
+
+## W10：十万单元结果加载、分页与阶段续跑（2026-10-11）
+
+新 run 使用 16 MiB 目标大小的不可变 JSONL 分片及 ID→字节偏移索引；索引只保存偏移、
+组摘要和分析签名。单组/单元、图片、组列表和流式报告无需物化完整结果。
+旧 `results.json` 只读兼容；旧 fingerprint JSONL 流式索引，新缓存原子单记录写入。
+分页/过滤、20 组审阅页、各阶段检查点和取消边界见 [contracts](contracts.md#w10分段结果分页与阶段续跑主契约仍为-v1)。
+局部决定/曝光只加载完整相关组，学习组索引合并其它页的上下文。
+
+### 实际 Ray 测量
+
+最终作业 `w10-scale-stress-fc56a27c1981` **SUCCEEDED**，墙钟 86.48 秒。
+2 CPU、8 GiB、0 GPU，affinity 限 2 核；Node heap 2048 MiB、RSS 3 GiB 守卫，Sharp 并发 1。
+Node 22.14.0 下载通过 SHA-256 校验；worker nice 15，三档串行，无真实照片/模型推理。
+ONNX Runtime 安装显式 `ONNXRUNTIME_NODE_INSTALL=skip`，使用包内 CPU 库，跳过额外组件下载。
+[测量快照](testing-data/w10-scale.json)仅包含公开指标，不包含基础设施路径或原始日志。
+
+| 合成单元 | 结果字节数 | 冷首屏 HTTP ms | 单组 HTTP ms | Node maxRSS MiB | 进程组采样峰值 MiB | 实际 pipeline 续跑 ms |
+|---:|---:|---:|---:|---:|---:|---:|
+| 10,000 | 457,991,545 | 227.97 | 26.15 | 214.80 | 208.05 | 636.50 |
+| 50,000 | 2,290,708,599 | 268.05 | 15.01 | 361.54 | 361.54 | 2,713.40 |
+| 100,000 | 4,581,651,378 | 379.76 | 16.33 | 525.03 | 525.03 | 5,268.06 |
+
+存储负载每单元约 45.8 KB：合成 embedding/measurements/geometry 数值数组，不是模型输出。
+10 个单元一组；首屏 20 组，单组 10 个单元。冷首屏从新 RunStore 的 HTTP 请求开始，
+包括索引读取、响应序列化和客户端 JSON 解码；单组在首屏后的热索引上测量。
+这不是浏览器绘制时间，也不是冷磁盘/隔离 A/B 测试。每档单次观测，不声明 P95。
+
+续跑测量真实调用 AnalysisPipeline：持久化轻量合成特征及已完成的分组检查点，
+在进入排序时通过 AbortSignal 中断；重新打开 Checkpoints，跳过完成的特征阶段并完成排序。
+断言最终单元/组数相符，analyzer 若被调用立即失败。续跑包括检查点索引重建、按单元读取、
+fingerprint 核对和实际排名/候选集计算。它使用轻量合成特征，**不包含上述 45.8 KB 单元载荷、
+真实模型推理、Eagle 扫描或原生 RAW 解码**；不能据此宣称十万真实照片完整分析已满足内存上限。
+Node maxRSS 覆盖该档存储、HTTP、检查点生成、取消及续跑全过程；0.2 秒进程组采样可能遗漏瞬时峰值。
+
+早期两次仅存储/HTTP/日志重放作业分别为 `9b3418c8dcea`、`9fa1919c9733`（同 w10 前缀），均成功；
+不把日志重放替代实际 pipeline 续跑。`0238b6751b4c` 在 npm 准备阶段 FAILED，无压测结果；
+停止请求返回 false，随后加安装 skip 重试成功。最终本线四个作业均终态，**无 RUNNING/PENDING**；未操作其它作业。
+
+可复现入口（当前 stress-ray 脚本测 W10；W6 节保留历史测量）：
+
+```sh
+nice -n 15 node --max-old-space-size=2048 scripts/stress-results.mjs --units 100 --output /tmp/w10-final-smoke.json
+source ~/.config/eagle-culling/env.sh
+nice -n 15 python3 scripts/stress-ray.py submit
+nice -n 15 python3 scripts/stress-ray.py status --id <本线作业ID>
+nice -n 15 python3 scripts/stress-ray.py collect --id <本线作业ID>
+nice -n 15 python3 scripts/stress-ray.py audit
+```
+
+本机仅 100 单元冒烟：首屏 593.97 ms，单组 98.32 ms，实际 pipeline 续跑 151.63 ms，
+maxRSS 133.25 MiB。所有本机入口显式 nice 15；沙箱拒绝调整优先级，实际继承 nice 20。
+没有本机万级压力或冷跑全库模型，未访问/写回 Eagle、未修改原片或保护库。
+
+### 回归与质量
+
+实际执行：
+
+```sh
+nice -n 15 node --max-old-space-size=2048 --test --test-concurrency=1 --test-skip-pattern='fixture face detection recall|fixture grouping reaches'
+nice -n 15 python3 -m unittest scripts/test_stress_ray.py
+PYTHONPATH=/tmp/w2-bench-pose EAGLE_POSE_PROVIDER=CPUExecutionProvider nice -n 15 node --max-old-space-size=2048 scripts/bench.mjs --compare data/cache/bench/reports/2026-10-11T03-11-11-048Z/report.json
+nice -n 15 node scripts/check-public-release.mjs
+nice -n 15 git diff --check
+```
+
+完整 Node：**362 pass / 0 fail / 1 skip，363 项，129.06 秒**；收尾定向回归 29/29。
+Python 打包 unittest 1/1；公开检查 0 命中；diff check 通过。
+新回归覆盖分页/过滤、偏移读取禁止完整结果物化、旧格式、跨实例失效、调用方隔离、
+共享旧缓存尾部不改动/私有检查点尾部修复、取消/重启续跑、HTTP 续跑、报告 backpressure、
+CSV/JSON 分页以及局部学习保留其它组上下文。
+
+本次 bench 报告 `2026-10-11T07-32-57-080Z`，与指定最新同清单基线比较：
+偏好准确率 96.47%、严重 gate 90.18%、源图误淘汰 5%；**三项 delta 均 0，368 对 unchangedRows=true**。
+清单 SHA-256 相同，388 个图像字节均实际核对；扫描/取消钩子改变了代码缓存签名，
+先串行重算像素指标/规则，复用原缓存的人脸/姿态/TOPIQ 输出刷新分析缓存，再真实运行 bench compare。
+bench 显示 0/388 uncached，并实际重验 TOPIQ 文件及一次推理预检；不是复制旧报告或硬写 delta。
+T-triage 仍 unavailable，真实审美效果未验证。
+
+未完成：浏览器首屏渲染测量、十万真实模型全流程及完整重扫描/全阶段计算续跑压测、
+统一生产资源调度、分片 generation/阶段日志自动回收，以及大型全 run 学习/修组物化接口进一步改造。
+Sharp/ONNX 单次调用只在返回边界取消；进程中断可恢复，不提供断电 fsync 保证。
+
+Git 收尾：尝试暂存上述改动时，沙箱拒绝创建 `.git/worktrees/w10-scale/index.lock`。
+改动保留在 w10-scale，未暂存/提交、未 push。
+
+## W11：合并后 Ray 真实冷算 bench（2026-10-11）
+
+入口、环境与采集协议见 [bench-ray.md](bench-ray.md)，公开指标快照见
+[testing-data/w11-raybench.json](testing-data/w11-raybench.json)。没有修改排序、规则或缓存签名算法；
+bench 仅导出原有 analysisSignature，Python 符号链接补充 gitignore。
+
+最终作业 `w11-raybench-ddcc847bce36` SUCCEEDED，720.207 秒；预留 2 CPU、0 GPU、8 GiB。
+全部 388 张合成图在 Ray 冷算像素指标、TOPIQ、人脸、姿态与 signals/rules。
+打包不包含旧分析缓存；五个模型和全部分析源代码逐文件核对 SHA-256。
+两端签名均为 `85c08e66e3aca776001b685ee8d3d114957d63d477de69b73e18f53741c8fe63`。
+388 条缓存按原有键导入；完整传输及每条 JSON 的 SHA-256 均通过，模型警告为空。
+
+实际执行：
+
+```sh
+source ~/.config/eagle-culling/env.sh
+nice -n 15 python3 scripts/bench-ray.py submit
+nice -n 15 python3 scripts/bench-ray.py submit --reuse-assets w11-raybench-2ff9b78efd20
+nice -n 15 python3 scripts/bench-ray.py status --id w11-raybench-ddcc847bce36
+nice -n 15 python3 scripts/bench-ray.py collect --id w11-raybench-ddcc847bce36
+unset PYTHONPATH EAGLE_POSE_MODE EAGLE_POSE_MODEL EAGLE_POSE_DETECTOR
+EAGLE_PYTHON=python_worker/.venv/bin/python EAGLE_POSE_PROVIDER=CPUExecutionProvider EAGLE_BENCH_CACHE_ONLY=1 nice -n 15 node --max-old-space-size=2048 scripts/bench.mjs --compare data/cache/bench/reports/2026-10-11T03-11-11-048Z/report.json
+nice -n 15 python3 scripts/bench-ray.py audit
+nice -n 15 node --max-old-space-size=2048 --test --test-concurrency=1 --test-skip-pattern='fixture face detection recall|fixture grouping reaches'
+nice -n 15 python3 -m unittest scripts/test_bench_ray.py
+nice -n 15 python3 -m py_compile scripts/bench-ray.py scripts/test_bench_ray.py
+nice -n 15 node scripts/check-public-release.mjs
+nice -n 15 git diff --check
+```
+
+本机日志为 **0/388 uncached**，新报告
+`data/cache/bench/reports/2026-10-11T14-39-30-841Z/report.json`。
+清单 SHA-256 相同；368 对，unchangedRows=false。历史跨平台比较出现准确率下降；
+该比较不作为 w10 同平台质量门槛，后续同平台控制见下节：
+
+| 指标 | 新结果 | delta |
+|---|---:|---:|
+| 偏好准确率 | 354/368 = 96.19565% | -1/368 = -0.27174 百分点 |
+| 严重 gate | 101/112 = 90.17857% | 0 |
+| 源图误淘汰 | 1/20 = 5% | 0 |
+
+全部判定变化共两行：
+
+- `s006-excess-headroom-0.5`：gateRejected/standaloneGateRejected 从 true 变 false，
+  pairDecision 从 rejected 变 selected；credit 仍为 1，sourceRejected 仍为 true。
+  RTMW 左眼 EAR 0.282843 → 0.328798，跨过既有 0.30 门槛；右眼 EAR 仍约 0.285714。
+  现有 assessClosedEyes 将闭眼从 gate 降为提示。该行 expectedGate=false，未改变严重 gate 总数。
+- `s014-horizon-tilt-8`：credit 1 → 0，pairDecision candidate → selected，gate/sourceRejected 均未变。
+  新姿态下左膝在图内接近下沿，现有 measurementPoints 压缩小腿有效性检查使膝/脚测量弃权；
+  P-CROP-KNEE、P-CROP-ANKLE-FOOT 两项 violate 消失，罚分 0.035 → 0.015。
+  退化分 0.5718 → 0.5918，超过源图 0.5865；TOPIQ 仅约 3e-7 差异，不解释 0.02 分变化。
+
+另有四行仅退化分变化，credit/gate/sourceRejected/pairDecision 均不变。
+完整六行逐字段差异见 [w11-raybench-row-changes.json](testing-data/w11-raybench-row-changes.json)。
+
+| 行 | 退化分前 → 后 | 不再触发的罚分规则 |
+|---|---:|---|
+| s006-motion-blur-41 | 0.3265 → 0.3365 | P-CROP-ANKLE-FOOT |
+| s007-noise-50 | 0.3948 → 0.4048 | P-CROP-ANKLE-FOOT |
+| s007-face-highlight-clipping-2.5 | 0.5684 → 0.5784 | P-CROP-ANKLE-FOOT |
+| s013-defocus-blur-1 | 0.5743 → 0.5843 | P-CROP-KNEE |
+
+这些行同样是姿态测量/有效性改变后减少既有裁切罚分；没有 w10 排序或规则函数变更。
+P-CROP-TIER 也由 violate 变为不可判定，但该规则不收费。
+
+因果核对：合并后的相同 evaluate/ranking 代码直接读取原基线缓存，仍得到 96.46739%、
+101/112、1/20，并复现两行原判定。因此变化来自新测得的姿态证据，不能据此归因于 w10 排序改动。
+w10-eagle 的眼部 ROI 用于 focus/pipeline/查看器，常规 bench 不调用该路径；其 bench 改动仅
+cache-only 冷算保护和退出行为。w10-scale 在 metrics 的改动是 Eagle 扫描/检查点，在 scorer
+增加可选取消检查；bench 无 Eagle 扫描且未传 AbortSignal。两个提交均未改 ranking、signals、
+eye-assessment 或姿态 worker。旧 PYTHONPATH 与当前本机 rtmlib 的 39 个 Python 文件 SHA-256
+全部一致。跨平台 ORT/OpenCV 数值与姿态离散坐标敏感性是候选原因，底层原因尚未唯一定位；
+没有为追平指标复用旧模型输出、改签名或改规则。
+
+前三个作业依次因 OpenCV 缺 libGL、MediaPipe 缺 EGL 等运行环境问题终态 FAILED，
+未导入不可用结果；用同 release 的 OpenCV headless 和作业临时 EGL/GLES 运行库解决。
+四个作业均终态，audit 确认本线 RUNNING/PENDING 为 0；没有操作其它作业。
+
+回归：Node 369 pass / 0 fail / 0 skip，153.90 秒；Python 4/4，编译通过；公开检查 0 命中，diff check 通过。
+本机命令均请求 nice 15；沙箱拒绝提升优先级，实测继承 nice 20。
+资源约束偏差：首次打包上传与 Node 回归曾重叠执行，未完全串行；bench 图像冷算全部在 Ray。
+该阶段尚未完成同平台质量验收；现已由下节补齐。跨平台模型输出位级等价验证、
+底层数值差异唯一归因仍未完成；T-triage 仍 unavailable。
+
+Git 收尾：实际尝试暂存本轮八个文件，沙箱拒绝创建本 worktree 的 index.lock；
+改动保留，未暂存/提交，未 push。
+
+
+## W11：合并前后 Ray 同平台控制（2026-10-11）
+
+**质量门槛必须同平台比较**。本次未修改当前分支源码，用 `git archive 89701ae`
+打包合并前 v1.0.0 等价树。原成功合并作业 `w11-raybench-ddcc847bce36` 与基线使用
+同一未重启 Ray 节点、相同 runtime_env/资源包、Node/npm 和实际安装的 Python 依赖版本，
+五个模型及 EGL/GLES SHA-256 均一致。完整版本、哈希和逐点证据见
+[同平台公开快照](testing-data/w11-ray-same-platform.json)。
+
+基线作业 `w11-raybench-baseline-078c4c0f6147` SUCCEEDED，721.988 秒，2 CPU、0 GPU、8 GiB。
+388 张图真实冷算，388 条缓存逐条验证后隔离收集，原缓存与 Mac 基线没有覆盖。
+原始报告：`data/cache/bench/ray-baselines/89701ae/w11-raybench-baseline-078c4c0f6147/report.json`。
+基线签名 `9e4f405976d8e2c9a9ae5dadb09827e46cac1d2a36384ed69254e0f1c0c4fb8e`，
+合并后签名 `85c08e66e3aca776001b685ee8d3d114957d63d477de69b73e18f53741c8fe63`；
+两者分别由各自原代码生成并验证，未改签名。按图像摘要关联后，**388 条完整缓存内容全部相同**。
+
+实际执行（driver/compare 位于不入库的隔离缓存目录）：
+
+```sh
+source ~/.config/eagle-culling/env.sh
+nice -n 15 python3 data/cache/bench/ray-baselines/89701ae/driver.py submit
+nice -n 15 python3 data/cache/bench/ray-baselines/89701ae/driver.py status --id w11-raybench-baseline-078c4c0f6147
+nice -n 15 python3 data/cache/bench/ray-baselines/89701ae/driver.py collect --id w11-raybench-baseline-078c4c0f6147
+nice -n 15 node data/cache/bench/ray-baselines/89701ae/compare.mjs w11-raybench-baseline-078c4c0f6147
+nice -n 15 python3 data/cache/bench/ray-baselines/89701ae/driver.py audit
+nice -n 15 python3 -m unittest scripts/test_bench_ray.py
+nice -n 15 node scripts/check-public-release.mjs
+nice -n 15 git diff --check
+```
+
+| 指标 | Ray 基线与 Ray 合并后结果 | 合并后减基线 delta |
+|---|---:|---:|
+| 偏好准确率 | 354/368 = 96.195652% | 0 |
+| 严重 gate | 101/112 = 90.178571% | 0 |
+| 源图误淘汰 | 1/20 = 5% | 0 |
+
+**unchangedRows=true，368 行完整报告全部一致，质量门槛通过**。
+这直接证明 w10 在本清单与受控 Ray 环境中没有改变质量结果，无变化行需要代码二分。
+此前仅用新代码回放旧缓存不足以证明这一结论；本次补上了旧树真实冷算对照。
+
+Ray 基线对历史 Mac 基线仍有六行变化：准确率 delta 为 −0.27173913 百分点，
+严重 gate 和源图误淘汰 delta 为 0，unchangedRows=false。
+下表列每行主体 133 个关键点中绝对差值最大的置信度变化（方向为 Ray 减 Mac）；
+所有 798 组逐点置信度及门槛距离均保存在公开快照中。
+
+| 行 | 点索引 | Mac → Ray 置信度 | delta |
+|---|---:|---:|---:|
+| s006-motion-blur-41 | 55 | 0.908354521 → 0.937454164 | +0.029099643 |
+| s006-excess-headroom-0.5 | 116 | 0.626444936 → 0.621943355 | −0.004501581 |
+| s007-noise-50 | 103 | 0.624356508 → 0.671190739 | +0.046834230 |
+| s007-face-highlight-clipping-2.5 | 14 | 0.698688269 → 0.697839081 | −0.000849187 |
+| s013-defocus-blur-1 | 21 | 0.255619943 → 0.256805331 | +0.001185387 |
+| s014-horizon-tilt-8 | 124 | 0.900618196 → 0.883336425 | −0.017281771 |
+
+相关门槛逐项核对（最大差值点未必是触发规则的点）：
+
+- `s013-defocus-blur-1` 左踝（15）0.299392580986 → 0.300252974033，delta +0.000860393047，
+  相对 0.3 门槛距离 −0.000607419014 → +0.000252974033，确实卡在阈值边缘并跨过门槛。
+  现有压缩小腿有效性分支变化，膝罚分消失；credit 不变。
+- `s006-excess-headroom-0.5` 相关眼部置信度 1 → 1，远离 0.6 门槛；
+  左 EAR 0.282842712475 → 0.328797974611 跨过 0.30 几何门槛，最小眼像素
+  8.673898 → 7.537992 均大于 6。gate 变化由几何证据触发，并非置信度跨阈值。
+- `s014-horizon-tilt-8` 左踝 0.307263463736 → 0.305715441704，
+  左跟（19）0.302376538515 → 0.305691510439，距 0.3 为 +0.002376538515 → +0.005691510439，
+  接近门槛但没有跨过。几何/有效性分支减少膝脚罚分，分数超过源图，credit 1 → 0。
+- 其余三行没有相关置信度门槛跨越；最近腿部置信度分别为
+  0.505007148 → 0.486272723、0.499701917 → 0.492185742、0.526997805 → 0.526815355，
+  均远离 0.3。既有几何/边界/腿有效性分支减少脚罚分，判定和指标不变。
+
+缓存坐标已裁到 [0,1]，无法仅凭缓存重建原始越界坐标并唯一定位全部几何阈值。
+Mac 历史运行环境未重建；本次证明上述差异在没有 w10 的旧树上仍存在，
+不能唯一归因于某个操作系统、ORT/OpenCV 或数值库实现。平台/环境差异与代码质量门槛分别记录。
+
+两次准备失败均终态：`w11-raybench-baseline-59a4a54ce011` 因 OpenCV 共享文件被卸载破坏预检，
+按原成功安装顺序修正；`w11-raybench-baseline-fc1031a26a7b` 因外部 Node runner 缺少参数分隔符，
+在整批分析前退出，修正并检查 argv 后重提。未导入失败结果。
+最终 audit 本线七个作业全部终态，RUNNING/PENDING=0，未操作他人作业。
+947 个原缓存、报告、源码与模型文件 SHA-256 核对无变化；本机仅打包、传输、缓存比较与验证，未冷算。
+
+本轮 Python unittest 4/4，隔离 driver 编译和 compare 语法检查通过；公开检查 0 命中，diff check 通过。
+完整 Node 369/369 为上一阶段实跑记录，本轮仅文档/证据变化，未重复运行模型或完整 Node suite。
+未完成：历史 Mac 环境重建、跨平台底层数值差异唯一归因、T-triage 真实审美验证。
+同平台对照与本清单质量验收已完成；未提交、未 push。

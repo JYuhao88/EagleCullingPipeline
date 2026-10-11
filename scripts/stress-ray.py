@@ -18,7 +18,7 @@ import zipfile
 OPENER = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 LOCAL = Path('/tmp/w6-ray')
 ROOT = Path(__file__).resolve().parents[1]
-PREFIX = 'w6-scale-stress-'
+PREFIX = 'w10-scale-stress-'
 
 
 def request(path, body=None, method=None):
@@ -35,12 +35,12 @@ def package(target):
     # Whitelist source only: no symlinked cache/models, node_modules or credentials.
     files = [p for base in ('src/core', 'src/server', 'src/rules') for p in (ROOT / base).rglob('*')
              if p.is_file() and not p.is_symlink() and p.suffix in ('.js', '.json')]
-    files += [ROOT / 'scripts/stress.mjs', ROOT / 'scripts/stress-ray-worker.py', ROOT / 'ml/common/private_env.py']
+    files += [ROOT / 'scripts/stress.mjs', ROOT / 'scripts/stress-results.mjs', ROOT / 'scripts/stress-ray-worker.py', ROOT / 'ml/common/private_env.py']
     with zipfile.ZipFile(target, 'w', zipfile.ZIP_DEFLATED) as archive:
         for file in files:
             archive.write(file, file.relative_to(ROOT))
         archive.writestr('package.json', json.dumps({'type': 'module', 'private': True,
-            'dependencies': {'sharp': '0.33.5', 'exiftool-vendored.pl': '13.59.3'}}))
+            'dependencies': {'sharp': '0.33.5', 'exiftool-vendored.pl': '13.59.3', 'onnxruntime-node': '1.30.0'}}))
 
 
 def main():
@@ -62,7 +62,7 @@ def main():
             raise RuntimeError('Own stress job is already active; no second submission')
         # Other photography lines use w*- IDs; never stop them or inspect their arguments.
         project_active = [r for r in jobs if r['status'] in ('RUNNING', 'PENDING')
-                          and str(r.get('submission_id', '')).startswith(('w1-', 'w2-', 'w3-', 'w4-', 'w5-', 'w6-'))]
+                          and str(r.get('submission_id', '')).startswith(tuple('w' + str(i) + '-' for i in range(1, 11)))]
         if len(project_active) >= 2:
             raise RuntimeError('Two photography jobs active; wait before submitting')
         with tempfile.TemporaryDirectory(prefix='w6-package-') as folder:

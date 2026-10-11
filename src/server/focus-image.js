@@ -1,4 +1,5 @@
 import path from "node:path";
+import { completeEyeRois } from "../core/eye-roi.js";
 import { nativeCrop, normalizedRect } from "../core/native-image.js";
 
 export function focusRegionBox(face, region) {
@@ -17,7 +18,7 @@ export function focusRegionBox(face, region) {
 export async function focusCropImage(store, id, unitId, faceIndex, region, state) {
   const unit = state.units?.find(item => item.id === unitId);
   const result = state.results?.find(item => item.unitId === unitId);
-  const face = result?.faces?.[faceIndex];
+  const face = completeEyeRois(result?.faces, result?.signals?.persons)[faceIndex];
   const box = focusRegionBox(face, region);
   if (!box) return { available: false, naReason: region === "eyes" ? "eye-landmarks-unavailable" : "face-unavailable" };
   const items = state.items?.filter(item => (unit?.itemIds || [unit?.primaryItemId]).includes(item.id)) || [];

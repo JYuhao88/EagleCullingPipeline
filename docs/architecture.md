@@ -36,15 +36,19 @@ Eagle → capture units → previews → metrics/faces/embeddings → grouping �
 ```text
 data/runs/<id>/
 ├── run.json          # 状态、libraryPath、计数、进度、警告
-├── results.json      # run、units、items、results、groups
+├── results-index.json # 新格式偏移索引和组摘要
+├── results-<generation>/*.jsonl # 不可变分片
+├── checkpoints.jsonl # 阶段/单元续跑日志
+├── results.json      # 旧格式只读兼容
 └── decisions.json    # 人工决定（有过决定时生成）
 data/cache/
-├── results.jsonl     # fingerprint -> 结果
+├── results.jsonl     # 旧 fingerprint 缓存只读偏移索引
+├── results-v2/*/*.json # 新 fingerprint 缓存，原子单记录文件
 ├── previews/*.jpg    # 归一化代理图
 └── embeddings/*.json # embedding 向量
 ```
 
-`results.json` 在保存 units/results/groups/items 时写入；服务重启后可恢复。分析 fingerprint 由路径、size、mtime、itemIds、代理路径和 `analysis-v3` 组成；命中后跳过单元分析。代理缓存按源路径、size、mtime 生成键，损坏或像素近乎全平时重建。
+新 run 在保存 units/results/groups/items 时流式写入不可变 JSONL 分片，并原子发布轻量索引；服务重启后可恢复。分析 fingerprint 由路径、size、mtime、itemIds、代理路径和 `analysis-v3` 组成；命中后跳过单元分析。代理缓存按源路径、size、mtime 生成键，损坏或像素近乎全平时重建。
 
 ## 分组和排序默认值
 
@@ -87,3 +91,10 @@ UI 状态使用只读索引，按卡片内容差异更新 DOM，保留未变化�
 只在停止操作 5 秒后拟合，显式 refresh API 仍可立即等待。L1 面板手动训练／应用不去抖。
 用于 QA 的 `culling:decision-rendered` 事件在收到持久化响应并更新 DOM 后发送；它不替代
 事件日志。模拟器增量读取 JSONL 证据并精简重复响应，避免同进程报告采集制造 GC 延迟。
+
+## W10 结果规模边界
+
+审阅首屏按 20 组加载；组摘要、单组/单元、图像和报告路径不物化新格式的完整结果。
+报告按页读取并服从 HTTP backpressure。扫描与分析检查点独立于终态结果，取消后可续跑。
+分析/分组及全 run 学习、修组的兼容接口仍保留数组；十万单元的完整模型分析内存尚未验证。
+统一生产资源调度和不可变 generation 自动回收仍未完成；详见 contracts/testing 的 W10 节。

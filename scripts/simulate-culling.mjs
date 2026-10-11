@@ -128,6 +128,10 @@ const CHECKS = ['default-baseline', 'candidate-toggle', 'event-actions-exposures
   'gate-allow', 'l0-hard-gates', 'profile-isolation', 'snapshot-rollback', 'ranking-rollback',
   'deletion-tombstones', 'feature-only-retrain', 'drift-after-switch', 'ui-performance', 'no-eagle-writes'];
 export async function main() {
+  if (process.argv.includes('--real-eagle')) {
+    const { mainRealEagle } = await import('./simulate-real-eagle.mjs');
+    return mainRealEagle();
+  }
   const out = path.resolve(process.env.W8_QA_OUT || '/tmp/w8-simulate-qa');
   if (!out.startsWith('/tmp/')) throw new Error('W8_QA_OUT must be under /tmp');
   await mkdir(out, { recursive: true });

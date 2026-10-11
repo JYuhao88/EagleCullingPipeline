@@ -1,3 +1,5 @@
+import { Checkpoints } from "../core/checkpoints.js";
+import { pageOptions } from "./pagination.js";
 import { randomUUID } from "node:crypto";
 import path from "node:path";
 import { spawn } from "node:child_process";
@@ -11,7 +13,7 @@ import { faceImage } from "./face-image.js";
 import { focusCropImage } from "./focus-image.js";
 
 function activeRun(active) {
-  return active.run && ["queued", "running"].includes(active.run.status)
+  return active.run && (active.run.controller || ["queued", "running"].includes(active.run.status))
     ? active.run
     : null;
 }
@@ -113,24 +115,17 @@ export function createRunsRouter({
         return json(res, 409, { error: "已有分析任务运行中" });
       }
       const body = await parseBody(req);
-      let items = Array.isArray(body.items)
-        ? body.items
-        : body.libraryPath
-          ? await listEagleImages(body.libraryPath)
-          : [];
-      if (Array.isArray(body.itemIds)) {
-        const selected = new Set(body.itemIds);
-        items = items.filter((item) => selected.has(item.id));
+      const resumeId = body.resumeRunId;
+      if (resumeId && !/^[a-zA-Z0-9_-]+$/.test(resumeId)) return json(res, 400, { error: 'Invalid resumeRunId' });
+      const previousRun = resumeId ? await store.getRun(resumeId) : null;
+      if (resumeId && (!previousRun || previousRun.status === 'completed')) {
+        return json(res, 409, { error: 'Run missing or already completed' });
       }
-      const units = buildCaptureUnits(items);
-      const byId = new Map(items.map((item) => [item.id, item]));
-      const records = units.map((unit) => ({
-        ...byId.get(unit.primaryItemId),
-        unitId: unit.id,
-        itemIds: unit.itemIds,
-        pairedItems: unit.itemIds.map((itemId) => byId.get(itemId)).filter(Boolean),
-      }));
-      const id = `run-${randomUUID()}`;
+      const id = resumeId || `run-${randomUUID()}`;
+      const checkpoint = store.dir ? new Checkpoints(store.dir(id)) : null;
+      const request = resumeId ? await checkpoint?.get('request') : body;
+      if (!request) return json(res, 409, { error: 'No resumable scan checkpoint' });
+      if (!resumeId && checkpoint) await checkpoint.put('request', body);
       const run = {
         contractVersion: 1,
         id,
@@ -138,16 +133,16 @@ export function createRunsRouter({
         startedAt: new Date().toISOString(),
         progress: {
           completed: 0,
-          total: records.length,
+          total: 0,
           cached: 0,
           stage: "scanning",
         },
-        libraryPath: body.libraryPath || null,
-        itemCount: items.length,
-        unitCount: units.length,
+        libraryPath: request.libraryPath || null,
+        itemCount: 0,
+        unitCount: 0,
         groupCount: 0,
       };
-      const data = { units, items, results: [], groups: [] };
+      const data = { units: [], items: [], results: [], groups: [] };
       const controller = new AbortController();
       run.controller = controller;
       active.run = run;
@@ -156,10 +151,31 @@ export function createRunsRouter({
       let lastProgressAt = 0;
       let lastProgressStage;
       const progressWrites = new Set();
-      pipeline
-        .run(records, {
+      const execute = async () => {
+        controller.signal.throwIfAborted();
+        let scan = checkpoint ? await checkpoint.get('scanning') : null;
+        if (!scan) {
+          let items = Array.isArray(request.items) ? request.items : request.libraryPath
+            ? await listEagleImages(request.libraryPath, { signal: controller.signal, checkpoint }) : [];
+          if (Array.isArray(request.itemIds)) {
+            const selected = new Set(request.itemIds);
+            items = items.filter(item => selected.has(item.id));
+          }
+          controller.signal.throwIfAborted();
+          const units = buildCaptureUnits(items);
+          scan = { items, units };
+          if (checkpoint) await checkpoint.put('scanning', scan);
+        }
+        const { items, units } = scan;
+        Object.assign(data, { items, units });
+        Object.assign(run, { itemCount: items.length, unitCount: units.length });
+        const byId = new Map(items.map(item => [item.id, item]));
+        const records = units.map(unit => ({ ...byId.get(unit.primaryItemId), unitId: unit.id,
+          itemIds: unit.itemIds, pairedItems: unit.itemIds.map(itemId => byId.get(itemId)).filter(Boolean) }));
+        return pipeline.run(records, {
           id,
           signal: controller.signal,
+          checkpoint,
           onProgress: (progress) => {
             run.progress = progress;
             const now = performance.now();
@@ -174,9 +190,11 @@ export function createRunsRouter({
               progressWrites.add(pending);
             }
           },
-        })
+        });
+      };
+      execute()
         .then(async (result) => {
-          if (controller.signal.aborted) return;
+          controller.signal.throwIfAborted();
           const { results: _results, groups: _groups, duplicateCandidates: _duplicates, ...summary } = result;
           Object.assign(run, summary, {
             status: "completed",
@@ -216,12 +234,20 @@ export function createRunsRouter({
         ? json(res, 200, run)
         : json(res, 404, { error: "run not found" });
     }
-    if (req.method === "GET" && sub === "results") {
-      const state = await store.get(id, { readOnly: true });
+    if (req.method === "GET" && ["results", "groups"].includes(sub)) {
+      let options;
+      try { options = pageOptions(url); } catch (error) { return json(res, 400, { error: error.message }); }
+      const paged = sub === 'groups' || (store.manifest && await store.manifest(id)) || [...url.searchParams.keys()].some(key =>
+        ['limit', 'cursor', 'filter', 'groupId', 'unitId'].includes(key));
+      const state = paged && store.page
+        ? await store.page(id, { ...options, summariesOnly: sub === 'groups' }) : await store.get(id, { readOnly: true });
       const run = runFromState(state);
+      if (sub === 'groups') return run ? json(res, 200, { run, groups: state.groups, page: state.page })
+        : json(res, 404, { error: 'run not found' });
       return run
         ? json(res, 200, {
             run,
+            ...(state?.page ? { page: state.page } : {}),
             units: state?.units || [],
             results: state?.results || [],
             groups: reviewGroups(state),
@@ -320,25 +346,14 @@ export function createRunsRouter({
       return true;
     }
     if (req.method === "POST" && sub === "cancel") {
-      const state = await store.get(id, { readOnly: true });
-      const run = runFromState(state);
+      const run = store.getRun ? await store.getRun(id) : runFromState(await store.get(id));
       if (!run) return json(res, 404, { error: "run not found" });
-      if (!["queued", "running"].includes(run.status)) {
-        return json(res, 409, { error: "任务已结束，不能取消" });
-      }
+      if (!["queued", "running"].includes(run.status)) return json(res, 409, { error: "任务已结束，不能取消" });
       if (active.run?.id === id) {
         active.run.controller?.abort(new Error("cancelled"));
-        active.run.status = "cancelled";
-        active.run = null;
       }
       run.status = "cancelled";
-      await store.save(run, {
-        run,
-        units: state?.units || [],
-        results: state?.results || [],
-        groups: state?.groups || [],
-        items: state?.items || [],
-      });
+      await store.saveProgress(run);
       return json(res, 200, run);
     }
     return false;

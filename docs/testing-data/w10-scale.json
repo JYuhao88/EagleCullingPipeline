@@ -1,0 +1,144 @@
+{
+  "contractVersion": 1,
+  "job": "w10-scale-stress-fc56a27c1981",
+  "resources": {
+    "cpus": 2,
+    "memoryGiB": 8,
+    "gpu": 0,
+    "nodeHeapMiB": 2048,
+    "rssGuardGiB": 3
+  },
+  "rows": [
+    {
+      "units": 10000,
+      "synthetic": true,
+      "storageBytes": 457991545,
+      "writeMs": 2942.52594,
+      "firstScreenMs": 227.96804500000007,
+      "singleGroupMs": 26.14620500000001,
+      "checkpointWriteMs": 340.5137730000001,
+      "resumeMs": 636.4976959999999,
+      "resumeScope": "real synthetic pipeline restart at grouping checkpoint through ranking; feature stages skipped, no inference",
+      "firstScreenScope": "cold HTTP headers through JSON decoding; no browser rendering",
+      "maxRSSMiB": 214.8046875,
+      "processGroupPeakMiB": 208.0546875,
+      "node": "v22.14.0"
+    },
+    {
+      "units": 50000,
+      "synthetic": true,
+      "storageBytes": 2290708599,
+      "writeMs": 14188.411247,
+      "firstScreenMs": 268.05169299999943,
+      "singleGroupMs": 15.009148999999525,
+      "checkpointWriteMs": 1430.5558259999998,
+      "resumeMs": 2713.4013059999997,
+      "resumeScope": "real synthetic pipeline restart at grouping checkpoint through ranking; feature stages skipped, no inference",
+      "firstScreenScope": "cold HTTP headers through JSON decoding; no browser rendering",
+      "maxRSSMiB": 361.53515625,
+      "processGroupPeakMiB": 361.53515625,
+      "node": "v22.14.0"
+    },
+    {
+      "units": 100000,
+      "synthetic": true,
+      "storageBytes": 4581651378,
+      "writeMs": 28373.947284,
+      "firstScreenMs": 379.760714,
+      "singleGroupMs": 16.32678400000077,
+      "checkpointWriteMs": 2922.645257,
+      "resumeMs": 5268.063531,
+      "resumeScope": "real synthetic pipeline restart at grouping checkpoint through ranking; feature stages skipped, no inference",
+      "firstScreenScope": "cold HTTP headers through JSON decoding; no browser rendering",
+      "maxRSSMiB": 525.02734375,
+      "processGroupPeakMiB": 525.02734375,
+      "node": "v22.14.0"
+    }
+  ],
+  "localSmoke": {
+    "units": 100,
+    "synthetic": true,
+    "storageBytes": 4575849,
+    "writeMs": 244.12350000000004,
+    "firstScreenMs": 593.974917,
+    "singleGroupMs": 98.31645800000001,
+    "checkpointWriteMs": 79.15495799999985,
+    "resumeMs": 151.63037499999996,
+    "resumeScope": "real synthetic pipeline restart at grouping checkpoint through ranking; feature stages skipped, no inference",
+    "firstScreenScope": "cold HTTP headers through JSON decoding; no browser rendering",
+    "maxRSSMiB": 133.25,
+    "node": "v22.9.0"
+  },
+  "quality": {
+    "baseline": "data/cache/bench/reports/2026-10-11T03-11-11-048Z/report.json",
+    "report": "data/cache/bench/reports/2026-10-11T07-32-57-080Z/report.json",
+    "manifestSha256": "64fae9780400401ccfac34051101cdac4b0514aa69c5da919f2f9d1246828c48",
+    "comparison": {
+      "matchedPairs": 368,
+      "additionalPairs": 0,
+      "syntheticAccuracyDelta": 0,
+      "severeGateDelta": 0,
+      "sourceFalseRejectDelta": 0,
+      "byDegradation": {
+        "defocus-blur": {
+          "pairs": 60,
+          "accuracyDelta": 0
+        },
+        "motion-blur": {
+          "pairs": 60,
+          "accuracyDelta": 0
+        },
+        "underexposure": {
+          "pairs": 40,
+          "accuracyDelta": 0
+        },
+        "overexposure": {
+          "pairs": 40,
+          "accuracyDelta": 0
+        },
+        "noise": {
+          "pairs": 40,
+          "accuracyDelta": 0
+        },
+        "horizon-tilt": {
+          "pairs": 40,
+          "accuracyDelta": 0
+        },
+        "excess-headroom": {
+          "pairs": 20,
+          "accuracyDelta": 0
+        },
+        "joint-crop-wrist": {
+          "pairs": 16,
+          "accuracyDelta": 0
+        },
+        "joint-crop-knee": {
+          "pairs": 7,
+          "accuracyDelta": 0
+        },
+        "joint-crop-ankle": {
+          "pairs": 3,
+          "accuracyDelta": 0
+        },
+        "head-top-crop": {
+          "pairs": 13,
+          "accuracyDelta": 0
+        },
+        "face-highlight-clipping": {
+          "pairs": 13,
+          "accuracyDelta": 0
+        },
+        "joint-crop-neck": {
+          "pairs": 16,
+          "accuracyDelta": 0
+        }
+      },
+      "unchangedRows": true,
+      "triageTop1Delta": null
+    },
+    "syntheticAccuracy": 0.9646739130434783,
+    "severeGateRate": 0.9017857142857143,
+    "sourceFalseRejectRate": 0.05,
+    "triageStatus": "unavailable"
+  }
+}

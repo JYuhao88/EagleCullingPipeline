@@ -63,7 +63,7 @@ gate 理由沿用 `ranking[].reasons`，未新增主结构字段。score 仍表�
 ## AnalysisRun
 ```json
 { "contractVersion": 1, "id": "run-...", "status": "queued|running|completed|cancelled|failed",
-  "progress": { "completed": 0, "total": 0, "cached": 0, "stage": "scanning|pairing|metrics|faces|grouping|ranking|done" },
+  "progress": { "completed": 0, "total": 0, "cached": 0, "stage": "scanning|pairing|metrics|embedding|faces|pose|grouping|ranking|done" },
   "startedAt": "ISO", "error": null, "libraryPath": "/abs/x.library", "itemCount": 76, "unitCount": 38, "groupCount": 0 }
 ```
 
@@ -73,6 +73,7 @@ gate 理由沿用 `ranking[].reasons`，未新增主结构字段。score 仍表�
   "source": "human|suggested", "updatedAt": "ISO", "category": "candidate|group|null",
   "tie": false, "reason": "各有所长或整组拒绝的简短理由" }
 ```
+- 自由理由 `reason` 为最多 500 个 UTF-16 code units 的字符串；审阅卡片输入随保留/候选/淘汰提交，数字键在输入框焦点内不触发决定。服务端整批校验后原子写入，学习事件保存同一理由，报告新增 `decisionReason`。预设 feedback 理由仍保留。
 - `category`、`tie`、`reason` 是可选新增字段；旧决定缺失时按普通单张决定读取。`tie:true` 表示用户明确接受并列候选，`category:"group"` 可表示整组拒绝。
 
 Group 可新增 `candidateSet`，不改变旧 `ranking`、`suggested` 字段：
@@ -105,7 +106,7 @@ Group 可新增 `candidateSet`，不改变旧 `ranking`、`suggested` 字段：
 | POST | /runs/:id/groups/undo | `{}`，撤销最近一次修正；空历史无操作 | 审阅 |
 | GET | /runs/:id/report?format=json|csv | 每个文件一行：分组、排名、分数、理由、决定、写回标签和 tagsSource | 审阅 |
 
-分析结果持久化到 `data/runs/<id>/results.json`；结果缓存放在 `data/cache/`，按 fingerprint 命中。服务重启后仍能读取已有 run。成功写回后，最终标签按 `{id, fileName, tags, previousTags}` 持久化到 `data/runs/<id>/applied.json`，报告优先使用这些标签；没有该文件时使用 planned 标签。
+新分析结果持久化到 `data/runs/<id>/results-index.json` 与 JSONL 分片；旧 `results.json` 可读。结果缓存放在 `data/cache/`，按 fingerprint 命中。服务重启后仍能读取已有 run。成功写回后，最终标签按 `{id, fileName, tags, previousTags}` 持久化到 `data/runs/<id>/applied.json`，报告优先使用这些标签；没有该文件时使用 planned 标签。
 
 ## 偏好学习：旧四指标与跨 run L1（向后兼容新增）
 
@@ -355,3 +356,59 @@ EXIF/exiftool 不可用时保留无时间退化；有时间与无时间的同名
 run.json 仅包含轻量状态；进度默认每250ms或阶段变化持久化一次，进度读取不加载全 results。
 扫描/配对完成后先保存轻量 run；终态一次写入完整 items/units/results/groups，并原子替换文件，
 结果写完后再发布终态。未完成 run 不提供 partial groups；结果读取仍为完整 payload，尚无分页。
+
+## 眼部 ROI 补全（W10）
+
+`completeEyeRois` 使用已旋转代理图上的 RTMW WholeBody 68 点脸部索引 59–70，
+两眼各六点置信度至少 0.5；优先保留现有有效 `eyes`/`eyeBoxes`。
+空间匹配多个脸时弃权。无脸检测时需要完整 68 点均可靠及眼部中心位于人体框内，
+新增 `roiSource:"rtmw-face"`、`eyesAssessed:false`，不生成闭眼分数。
+新增 `eyeRoiSource:"rtmw-68"`、`eyeRoiConfidence` 仅说明定位来源。
+原生 focus 与 focus-crop 共用补全函数；focus 缓存升级为 `focus-v3` 并包含 ROI 版本。
+`AnalysisPipeline.run` 可传 `nativeFocus:false` 跳过原生 focus；默认保持启用，
+用于把只读验收的原生解码限制到独立 80 张 QA，不改变评分模型。
+
+## W10：分段结果、分页与阶段续跑（主契约仍为 v1）
+
+新 run 使用 `results-index.json` + `results-<generation>/{units,results,items,groups}-<shard>.jsonl`。
+每片目标上限 16 MiB；一条超限记录仍保持完整，不切断 JSON 行。
+索引的 `storageVersion:1` 包含各类 ID 的 `[shard,byteOffset,byteLength]`、组摘要及分析签名。
+先写不可变片，再原子发布索引，最后发布 run 终态。旧 generation 保留供在途读者使用，尚无自动回收。
+旧 `results.json` 只读兼容；重新保存生成新格式，不修改旧文件。
+旧格式兼容读取仍会物化完整旧 JSON；新格式的单元、组页、图片、报告路径按偏移读取。
+内部 `get/results` 为旧学习/修组调用保留物化接口；仅 ≤64 MiB 的完整载荷可缓存，最多两个 run。
+新 fingerprint 缓存放 `data/cache/results-v2/<hash-prefix>/<hash>.json`，原子替换；
+旧 `data/cache/results.jsonl` 流式建立偏移索引，仅读取，不截断共享日志。
+
+HTTP 新增/扩展：
+
+| 请求 | 行为 |
+|---|---|
+| `GET /runs/:id/groups` | 仅组摘要：`id,unitIds,size,confidence,margin,flags,previewUnitId`，附 `run,page` |
+| `GET /runs/:id/results?limit=20&cursor=0&filter=multi` | 返回本页完整组及其 units/results/items，附 `page` |
+| `GET /runs/:id/results?groupId=<encoded-id>` | 按需加载一组 |
+| `GET /runs/:id/results?unitId=<encoded-id>` | 返回该单元及其所属组；单元载荷只包含目标单元 |
+| `GET /runs/:id/decisions?limit=20&cursor=0&filter=multi` | 与组页对应的有效决定，附 `page` |
+| `GET /runs/:id/report?format=json\|csv&limit=20&cursor=0` | 按组分页报告；JSON `{rows,page}`；CSV 一文件一行 |
+| `GET /runs/:id/report?format=json\|csv` | 流式导出全部报告；JSON 保留数组，CSV 保留 BOM/表头/转义 |
+| `POST /runs` body `{resumeRunId:"run-..."}` | 使用原始输入及扫描检查点续跑同一 run；完成的 run 拒绝续跑 |
+
+`limit` 默认 40，范围 1–200；`cursor` 为非负整数组偏移的字符串。
+`page={total,cursor,limit,nextCursor}`，末页 `nextCursor:null`。
+过滤值：`all,multi,confirm,singles,low-first,unreviewed,reviewed,issues,eyes-closed,blurry`；
+`confirm` 指低把握组。过滤先于分页；游标仅在分组/决定和过滤条件不变时稳定。
+新格式 `/results` 无查询时也默认分页；旧格式无分页查询保持旧完整响应。
+报告分页单位是组，输出行数取决于该页组内单元和 RAW/JPG 成员数。
+审阅页每次读取 20 组，并提供上一页/下一页；进度与批量操作显示/作用于当前页。
+按单组审阅、决定、曝光保留完整组上下文；局部学习索引更新合并其它页的记录。
+
+`checkpoints.jsonl` 为 run 私有追加日志；恢复时只索引偏移，忽略/修复未提交的末行。
+扫描按 EXIF 批保存已发现文件，扫描/配对完成后保存 items/units；指标、嵌入、人脸、姿态、
+原生焦点按单元保存；分组完成后保存组边界/重复候选；排序按组保存。
+分组/排序检查点绑定单元 fingerprint 序列签名；输入变化不复用陈旧分组。
+阶段 `progress.stage` 向后兼容增加 `embedding,pose`。
+取消请求先发送 AbortSignal；扫描/EXIF、人脸/姿态 worker、异步分组、排序循环及各单元边界检查信号。
+Sharp/ONNX 的单次原生调用无法抢占，取消在该调用返回后生效；不会启动下一批。
+取消后的活动任务在 worker 全部退出/终态保存前继续占用本服务的分析槽位。
+完成阶段可跳过；未完成的扫描枚举/分组从上一阶段边界重做；不承诺任意计算指令位置恢复。
+检查点用于进程中断恢复，不提供断电时 fsync 事务保证。

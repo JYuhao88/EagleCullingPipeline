@@ -107,10 +107,10 @@ test("personalize routes report metrics and apply only to this run without chang
 test("personalize apply returns 409 without enough independent temporal holdout groups", async t => {
   const { data, call, runStore, decisionStore } = await routeFixture(t);
   await decisionStore.write((await decisionStore.read()).slice(0, 4));
-  const before = await readFile(path.join(runStore.dir(data.run.id), "results.json"), "utf8");
+  const before = await readFile(path.join(runStore.dir(data.run.id), "results-index.json"), "utf8");
   const response = await call("POST", "personalize/apply");
   assert.equal(response.status, 409);
   assert.equal(response.body.ready, false);
   assert.equal(response.body.neededGroups, null);
-  assert.equal(await readFile(path.join(runStore.dir(data.run.id), "results.json"), "utf8"), before);
+  assert.equal(await readFile(path.join(runStore.dir(data.run.id), "results-index.json"), "utf8"), before);
 });

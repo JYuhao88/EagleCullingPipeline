@@ -160,7 +160,32 @@ function movePreview(delta) {
   renderPreview();
 }
 
+let reviewRequest = 0;
+async function loadReviewPage(cursor = 0, filter = viewState.filter) {
+  const requestVersion = ++reviewRequest;
+  const query = `limit=20&cursor=${cursor}&filter=${encodeURIComponent(filter)}`;
+  const runId = viewState.runId;
+  const data = await api(`/runs/${runId}/results?${query}`);
+  const response = await api(`/runs/${runId}/decisions?${query}`);
+  if (reviewRequest !== requestVersion || viewState.runId !== runId) return;
+  setState({ ...viewState, data, decisions: response.decisions, filter,
+    groupIndex: 0, unitIndex: 0, selected: [] });
+  reviewView.render();
+  renderPageControls();
+}
+
+function renderPageControls() {
+  const page = viewState.data?.page;
+  const label = root.querySelector('#pageStatus');
+  if (!label || !page) return;
+  label.textContent = page.total
+    ? `组 ${page.cursor + 1}–${Math.min(page.cursor + page.limit, page.total)} / ${page.total}` : "没有符合条件的组";
+  root.querySelector('#previousPage').disabled = page.cursor === 0;
+  root.querySelector('#nextPage').disabled = page.nextCursor === null;
+}
+
 async function openRun(runId) {
+  const requestVersion = ++reviewRequest;
   root.querySelector("#loading").hidden = false;
   try {
     closeReasons();
@@ -168,8 +193,10 @@ async function openRun(runId) {
       root.querySelector('#feedbackStatus').textContent = `理由词表加载失败（仍可选片）：${error.message}`;
       return { reasons: [], rules: [] };
     });
-    const data = await api(`/runs/${runId}/results`);
-    const response = await api(`/runs/${runId}/decisions`);
+    const query = `limit=20&filter=${encodeURIComponent(viewState.filter)}`;
+    const data = await api(`/runs/${runId}/results?${query}`);
+    const response = await api(`/runs/${runId}/decisions?${query}`);
+    if (reviewRequest !== requestVersion) return;
     setState(reduceState(viewState, { type: "load", runId, data, decisions: response.decisions }));
     root.querySelector("#start").hidden = true;
     root.querySelector("#review").hidden = false;
@@ -178,6 +205,7 @@ async function openRun(runId) {
     root.querySelector("#revertWriteback").hidden = !data.writebackAvailable;
     await learningPanel?.refresh();
     renderDecisions();
+    renderPageControls();
   } catch (error) {
     root.querySelector("#health").textContent = `加载失败：${error.message}`;
     throw error;
@@ -192,6 +220,10 @@ function closeReview() {
 }
 
 async function saveDecision(unitId, action, metadata = {}, explicitTargets = null) {
+  if (metadata.reason === undefined && !explicitTargets) {
+    const reason = reviewView.decisionReason(unitId);
+    if (reason !== undefined) metadata = { ...metadata, reason };
+  }
   const targets = explicitTargets || selectionTargets(viewState.selected, unitId);
   const before = viewState;
   const decisions = decisionRequests(targets, action, metadata);
@@ -282,7 +314,8 @@ async function correctGroup(action, body, focusUnitId = null) {
     method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body)
   });
   const [data, response] = await Promise.all([
-    api(`/runs/${runId}/results`), api(`/runs/${runId}/decisions`)
+    api(`/runs/${runId}/results?limit=20&filter=${encodeURIComponent(viewState.filter)}`),
+    api(`/runs/${runId}/decisions?limit=20&filter=${encodeURIComponent(viewState.filter)}`)
   ]);
   setState(refreshGroups(viewState, data, response.decisions, focusUnitId));
   reviewView.render();
@@ -372,6 +405,18 @@ root.addEventListener("keydown", async event => {
       scrollFocusedCard();
     }
     if (action.type === "group") {
+      const page = viewState.data?.page;
+      const next = viewState.groupIndex + action.delta;
+      if (page && next >= filteredGroups(viewState).length && page.nextCursor !== null) {
+        await loadReviewPage(Number(page.nextCursor));
+        return;
+      }
+      if (page && next < 0 && page.cursor > 0) {
+        await loadReviewPage(Math.max(0, page.cursor - page.limit));
+        setState(reduceState(viewState, { type: 'group', index: filteredGroups(viewState).length - 1 }));
+        reviewView.render();
+        return;
+      }
       setState(reduceState(viewState, {
         type: "group",
         index: viewState.groupIndex + action.delta
@@ -416,9 +461,11 @@ root.querySelector("#base").addEventListener("change", event => {
 
 const startView = createStartView({ root, api, getApi: () => api, onRun: openRun, autoCheck: false });
 reviewView = createReviewView({ root, state, setState,
+  onFilter: filter => loadReviewPage(0, filter).catch(error => {
+    root.querySelector("#health").textContent = `加载失败：${error.message}`; }),
   getRunId: () => viewState.runId, onBack: closeReview, onDecision: saveDecision,
   onPreview: openPreview, getCatalog: () => catalog,
-  onExposure: exposure => api(`/runs/${viewState.runId}/learning/exposure`, {
+  onExposure: exposure => api(`/runs/${viewState.runId}/learning/exposure?groupId=${encodeURIComponent(exposure.groupId)}`, {
     method: "POST", headers: { "content-type": "application/json" },
     body: JSON.stringify({ ...exposure, ...learningPanel?.context() })
   }).catch(error => { root.querySelector("#learningStatus").textContent = `曝光记录失败：${error.message}`; }),
@@ -435,6 +482,13 @@ learningPanel = createLearningPanel({ root, api: (...args) => api(...args), stat
   render: () => reviewView.render() });
 writebackDialog = createWritebackDialog({ root, api: (...args) => api(...args),
   getRunId: () => viewState.runId });
+for (const [id, direction] of [['previousPage', -1], ['nextPage', 1]]) {
+  root.querySelector(`#${id}`)?.addEventListener('click', () => {
+    const page = viewState.data.page;
+    const cursor = direction < 0 ? Math.max(0, page.cursor - page.limit) : Number(page.nextCursor);
+    loadReviewPage(cursor).catch(error => { root.querySelector('#health').textContent = error.message; });
+  });
+}
 window.loadRun = openRun;
 
 root.querySelector("#acceptGroup").addEventListener("click", () => selectBest().catch(error => {

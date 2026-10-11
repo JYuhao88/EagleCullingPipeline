@@ -55,7 +55,7 @@ test("persisted edits serialize, undo replays original results and retains human
   const store = new RunStore(root);
   const run = { id: "test", status: "completed" };
   await store.save(run, { run, groups, results });
-  const original = await readFile(path.join(store.dir(run.id), "results.json"), "utf8");
+  const original = await readFile(path.join(store.dir(run.id), "results-index.json"), "utf8");
   const decisions = new DecisionsStore(store.dir(run.id));
   await decisions.upsert([{ unitId: "b", action: "rejected" }]);
   await Promise.all([
@@ -73,7 +73,7 @@ test("persisted edits serialize, undo replays original results and retains human
   assert.deepEqual(data.groups, groups);
   assert.equal((await decisions.effective(data.results, data.groups)).find(item => item.unitId === "b").source, "human");
   await store.saveApplied(run.id, [{ id: "a", previousTags: ["user"] }]);
-  assert.equal(await readFile(path.join(store.dir(run.id), "results.json"), "utf8"), original);
+  assert.equal(await readFile(path.join(store.dir(run.id), "results-index.json"), "utf8"), original);
   assert.equal((await store.applied(run.id))[0].id, "a");
   await assert.rejects(store.mutateGroups(run.id, "split", { groupId: "g1", unitIds: ["c"] }));
   assert.equal((await store.groupOverrides(run.id)).operations.length, 0);

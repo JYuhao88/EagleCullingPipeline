@@ -30,11 +30,11 @@ export function parseCaptureMetadata(row = {}) {
     device: Object.keys(device).length ? device : null };
 }
 
-function runExiftool(paths) {
+function runExiftool(paths, { signal } = {}) {
   return new Promise((resolve, reject) => {
     const child = execFile('exiftool', ['-json', '-DateTimeOriginal', '-SubSecDateTimeOriginal',
       '-SubSecTimeOriginal', '-OffsetTimeOriginal', '-Make', '-Model', '-SerialNumber',
-      '-BodySerialNumber', '-@', '-'], { maxBuffer: 4 * 1024 * 1024, timeout: 30_000 },
+      '-BodySerialNumber', '-@', '-'], { maxBuffer: 4 * 1024 * 1024, timeout: 30_000, signal },
     (error, stdout) => {
       // exiftool may return 1 for one unreadable file alongside valid rows.
       try { resolve(JSON.parse(stdout)); } catch { reject(error || new Error('Invalid EXIF response')); }
@@ -45,16 +45,19 @@ function runExiftool(paths) {
 }
 
 /** Serial bounded batches avoid argv/output growth and concurrent RAW readers. */
-export async function enrichCaptureMetadata(records, { batchSize = 256, reader = runExiftool } = {}) {
+export async function enrichCaptureMetadata(records, { batchSize = 256, reader = runExiftool, signal, checkpoint } = {}) {
   if (!Number.isInteger(batchSize) || batchSize < 1) throw new Error('batchSize must be positive');
   const candidates = records.filter(record => record.filePath && !/[\r\n]/.test(record.filePath));
   for (let start = 0; start < candidates.length; start += batchSize) {
+    signal?.throwIfAborted();
     const batch = candidates.slice(start, start + batchSize);
     try {
-      const rows = await reader(batch.map(record => record.filePath));
+      const rows = await reader(batch.map(record => record.filePath), { signal });
+      signal?.throwIfAborted();
       const byPath = new Map(rows.map(row => [row.SourceFile, parseCaptureMetadata(row)]));
       for (const record of batch) Object.assign(record, byPath.get(record.filePath) || {});
-    } catch { /* Missing EXIF/tool: preserve legacy same-stem pairing and grouping. */ }
+    } catch { signal?.throwIfAborted(); /* Missing EXIF preserves legacy grouping. */ }
+    if (checkpoint) for (const record of batch) await checkpoint.put(`scan:${record.id}`, record);
   }
   assignCaptureSessions(records);
   return records;

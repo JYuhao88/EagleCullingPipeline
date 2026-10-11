@@ -1,4 +1,5 @@
 import sharp from "sharp";
+import { completeEyeRois } from "./eye-roi.js";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 const execFileAsync = promisify(execFile);
@@ -22,7 +23,7 @@ function clampBox(box) {
 }
 
 function eyeBoxes(face) {
-  const explicit = face?.eyes || face?.eyeBoxes;
+  const explicit = face?.eyes || face?.eyeBoxes || (face?.eyeBox || face?.eyesBox ? [face.eyeBox || face.eyesBox] : null);
   if (Array.isArray(explicit)) return explicit.map((x) => clampBox(x?.box || x)).filter(Boolean);
   const b = clampBox(face?.box);
   if (!b) return [];
@@ -134,7 +135,8 @@ function frameBox(makerFocus, orientation = 1) {
 }
 
 /** Analyze native-resolution eye/face crops. Native source is decoded on demand. */
-export async function analyzeFocus({ nativePath, nativeBuffer, proxySize, faces = [], groupFocus = [], makerFocus, nativeSize } = {}) {
+export async function analyzeFocus({ nativePath, nativeBuffer, proxySize, faces = [], persons = [],
+  groupFocus = [], makerFocus, nativeSize } = {}) {
   const source = nativePath || nativeBuffer;
   if (!source) return { status: "na", naReason: "native-source-unavailable" };
   const rawMeta = nativeSize || await sharp(source).metadata();
@@ -143,6 +145,7 @@ export async function analyzeFocus({ nativePath, nativeBuffer, proxySize, faces 
   const transposed = !nativeSize && [5, 6, 7, 8].includes(rawMeta.orientation);
   const meta = { ...rawMeta, width: transposed ? rawMeta.height : rawMeta.width, height: transposed ? rawMeta.width : rawMeta.height };
   if (!meta.width || !meta.height) return { status: "na", naReason: "native-dimensions-unavailable" };
+  faces = completeEyeRois(faces, persons);
   const all = [];
   for (const [faceIndex, face] of faces.entries()) {
     const fb = clampBox(face?.box); if (!fb) continue;

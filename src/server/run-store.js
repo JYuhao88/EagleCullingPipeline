@@ -1,3 +1,6 @@
+import { groupConfidence } from "../core/ranking.js";
+import { DecisionsStore } from "../core/decisions-store.js";
+import { writeSegmented, readManifest, readRow, readRows } from "../core/segmented-results.js";
 import { LearningData } from "../core/learning-data.js";
 import path from "node:path";
 import { mkdir, readFile, rename, writeFile, stat } from "node:fs/promises";
@@ -11,6 +14,7 @@ export class RunStore {
     this.overridePending = new Map();
     this.unitIndexes = new Map();
     this.resultSnapshots = new Map();
+    this.manifests = new Map();
     this.learningData = new LearningData(path.join(path.dirname(this.root), "learning"));
   }
 
@@ -45,7 +49,7 @@ export class RunStore {
         ...(state.duplicateCandidates ? { duplicateCandidates: state.duplicateCandidates } : {}),
       };
       if (!metadataOnly && (state.results || state.units || state.groups || state.items)) {
-        await this.writeAtomic(run.id, "results.json", resultData);
+        await writeSegmented(directory, resultData);
         if (run.status === "completed") {
           try { await this.learningData.ingestRun(resultData); }
           catch (error) { runJson.learningWarning = error.message; }
@@ -105,6 +109,31 @@ export class RunStore {
   }
 
   async results(id, { readOnly = false } = {}) {
+    const manifest = await this.manifest(id);
+    if (manifest) {
+      const load = async () => {
+        const data = {};
+        for (const kind of ["units", "results", "groups", "items"]) {
+          data[kind] = [];
+          for await (const row of readRows(this.dir(id), manifest, kind)) data[kind].push(row);
+        }
+        try { data.duplicateCandidates = JSON.parse(await readFile(
+          path.join(this.dir(id), manifest.generation, "duplicates.json"), "utf8")); }
+        catch (error) { if (error.code !== "ENOENT") throw error; }
+        return data;
+      };
+      const bytes = Object.values(manifest.indexes).reduce((sum, index) =>
+        sum + Object.values(index).reduce((total, location) => total + location[2], 0), 0);
+      if (bytes > 64 * 1024 ** 2) return load();
+      let entry = this.resultSnapshots.get(id);
+      if (entry?.signature !== manifest.generation) {
+        entry = { signature: manifest.generation, promise: load() };
+        this.resultSnapshots.set(id, entry);
+        while (this.resultSnapshots.size > 2) this.resultSnapshots.delete(this.resultSnapshots.keys().next().value);
+      }
+      const data = await entry.promise;
+      return readOnly ? data : structuredClone(data);
+    }
     const file = path.join(this.dir(id), "results.json");
     try {
       const metadata = await stat(file);
@@ -130,6 +159,21 @@ export class RunStore {
   async unitData(id, unitId) {
     const run = await this.getRun(id);
     if (!run) return null;
+    const manifest = await this.manifest(id);
+    if (manifest) {
+      const unit = await readRow(this.dir(id), manifest, 'units', unitId);
+      const result = await readRow(this.dir(id), manifest, 'results', unitId);
+      const groups = (await this.groupIndex(id, manifest)).filter(group => group.unitIds.includes(unitId));
+      const fullGroups = [];
+      for (const group of groups) fullGroups.push(await this.loadGroup(id, manifest, group));
+      const items = [];
+      for (const itemId of unit?.itemIds || [unit?.primaryItemId]) {
+        const item = await readRow(this.dir(id), manifest, 'items', itemId);
+        if (item) items.push(item);
+      }
+      return { run, units: unit ? [unit] : [], results: result ? [result] : [], items,
+        groups: fullGroups, analysisSignature: manifest.analysisSignature };
+    }
     const file = path.join(this.dir(id), "results.json");
     let metadata;
     try { metadata = await stat(file); }
@@ -158,6 +202,115 @@ export class RunStore {
     return structuredClone({ run, units: unit ? [unit] : [], results: result ? [result] : [],
       groups: groups.filter(group => group.unitIds.includes(unitId)), analysisSignature: index.analysisSignature,
       items: (unit?.itemIds || [unit?.primaryItemId]).map(itemId => index.items.get(itemId)).filter(Boolean) });
+  }
+
+  async selection(id, unitIds) {
+    const pages = [];
+    const seen = new Set();
+    for (const unitId of unitIds) {
+      const single = await this.unitData(id, unitId);
+      for (const group of single?.groups || []) {
+        if (seen.has(group.id)) continue;
+        seen.add(group.id);
+        pages.push(await this.page(id, { groupId: group.id }));
+      }
+    }
+    const run = await this.getRun(id);
+    if (!run) return null;
+    return { run, partial: true, ...Object.fromEntries(['units', 'results', 'items', 'groups'].map(kind =>
+      [kind, pages.flatMap(page => page[kind])])) };
+  }
+
+  async manifest(id) {
+    const file = path.join(this.dir(id), 'results-index.json');
+    try {
+      const metadata = await stat(file);
+      const signature = [metadata.ino, metadata.size, metadata.mtimeMs, metadata.ctimeMs].join(':');
+      let entry = this.manifests.get(id);
+      if (entry?.signature !== signature) {
+        entry = { signature, promise: readManifest(this.dir(id)) };
+        this.manifests.set(id, entry);
+        while (this.manifests.size > 2) this.manifests.delete(this.manifests.keys().next().value);
+      }
+      return await entry.promise;
+    } catch (error) { if (error.code === 'ENOENT') return null; throw error; }
+  }
+
+  async groupIndex(id, manifest) {
+    const overrides = await this.groupOverrides(id);
+    if (!overrides.operations.length) return manifest.groups;
+    // Load only units touched by corrections; unaffected groups stay summaries.
+    let groups = manifest.groups;
+    const results = new Map();
+    for (const operation of overrides.operations) {
+      const affected = groups.filter(group => group.unitIds.includes(operation.unitId) ||
+        group.id === operation.targetGroupId || group.id === operation.groupId || operation.groupIds?.includes(group.id));
+      for (const unitId of affected.flatMap(group => group.unitIds)) {
+        if (!results.has(unitId)) results.set(unitId, await readRow(this.dir(id), manifest, 'results', unitId));
+      }
+      groups = applyGroupOverrides(groups, [...results.values()], [operation]).map(group =>
+        group.ranking ? { ...group, ...groupConfidence(group, results),
+          flags: [...new Set(group.unitIds.flatMap(key => results.get(key)?.flags || []))] } : group);
+    }
+    return groups;
+  }
+
+  async loadGroup(id, manifest, group) {
+    return group.ranking ? group : await readRow(this.dir(id), manifest, 'groups', group.id);
+  }
+
+  async page(id, { limit = 40, cursor = 0, filter = 'all', groupId, unitId, summariesOnly = false } = {}) {
+    const run = await this.getRun(id);
+    if (!run) return null;
+    const manifest = await this.manifest(id);
+    let base, groups;
+    if (manifest) groups = await this.groupIndex(id, manifest);
+    else {
+      base = await this.get(id, { readOnly: true });
+      const byId = new Map(base.results.map(row => [row.unitId || row.id, row]));
+      groups = base.groups.map(group => ({ ...group, ...groupConfidence(group, byId),
+        flags: [...new Set(group.unitIds.flatMap(key => byId.get(key)?.flags || []))] }));
+    }
+    const reviewed = new Set(['reviewed', 'unreviewed'].includes(filter)
+      ? (await new DecisionsStore(this.dir(id)).read()).filter(row => row.source === 'human').map(row => row.unitId) : []);
+    groups = groups.filter(group => (!groupId || group.id === groupId) &&
+      (!unitId || group.unitIds.includes(unitId)) &&
+      (!['multi', 'low-first'].includes(filter) || group.unitIds.length > 1) &&
+      (filter !== 'confirm' || group.confidence === 'low') &&
+      (filter !== 'singles' || group.unitIds.length === 1) &&
+      (filter !== 'reviewed' || group.unitIds.every(key => reviewed.has(key))) &&
+      (filter !== 'unreviewed' || group.unitIds.some(key => !reviewed.has(key))) &&
+      (filter !== 'issues' || group.flags?.length > 0) &&
+      (filter !== 'eyes-closed' || group.flags?.includes('eyes-closed')) &&
+      (filter !== 'blurry' || group.flags?.some(flag => ['blurry', 'possibly-blurry'].includes(flag))));
+    if (filter === 'low-first') groups.sort((a, b) => Number(b.confidence === 'low') - Number(a.confidence === 'low'));
+    const selected = groups.slice(cursor, cursor + limit);
+    const data = { run, partial: true, units: [], results: [], items: [], groups: [],
+      page: { total: groups.length, cursor, limit, nextCursor: cursor + limit < groups.length ? String(cursor + limit) : null },
+      groupOverrides: await this.groupOverrides(id), writebackAvailable: Boolean((await this.applied(id)).length) };
+    if (summariesOnly) {
+      data.groups = selected.map(group => ({ id: group.id, unitIds: group.unitIds, size: group.unitIds.length,
+        confidence: group.confidence, margin: group.margin, flags: group.flags || [], previewUnitId: group.unitIds[0] }));
+      return data;
+    }
+    const seenItems = new Set();
+    for (const group of selected) {
+      data.groups.push(manifest ? await this.loadGroup(id, manifest, group) : group);
+      for (const key of group.unitIds) {
+        if (unitId && key !== unitId) continue;
+        const unit = manifest ? await readRow(this.dir(id), manifest, 'units', key) : base.units.find(row => row.id === key);
+        const result = manifest ? await readRow(this.dir(id), manifest, 'results', key) : base.results.find(row => row.unitId === key);
+        if (unit) data.units.push(unit);
+        if (result) data.results.push(result);
+        for (const itemId of unit?.itemIds || [unit?.primaryItemId]) {
+          if (seenItems.has(itemId)) continue;
+          seenItems.add(itemId);
+          const item = manifest ? await readRow(this.dir(id), manifest, 'items', itemId) : base.items.find(row => row.id === itemId);
+          if (item) data.items.push(item);
+        }
+      }
+    }
+    return data;
   }
 
   async applied(id) {
