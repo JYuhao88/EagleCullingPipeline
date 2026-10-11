@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "T-triage",
+  "status": "unavailable",
+  "groupCount": 0,
+  "groups": [],
+  "checkedAt": "2026-10-10",
+  "license": {
+    "status": "unverified",
+    "reason": "Official benchmark/download site returns HTTP 503 through the requested Ray proxy; accessible official publication page has no dataset terms."
+  },
+  "reason": "Official dataset licensing and downloads could not be verified (HTTP/HTTPS homepage and download.html all 503 through the requested Ray proxy). Actual released splits and current test-label availability are unverified.",
+  "reasonZh": "官网及下载页经指定Ray代理均503，许可未核实；当前实际发布划分及test标签可用性亦未核实。",
+  "sourceUrls": [
+    "https://pixl.cs.princeton.edu/pubs/Chang_2016_ATF/index.php",
+    "https://gfx.cs.princeton.edu/gfx/pubs/Chang_2016_ATF/chang2016-triage-preprint.pdf",
+    "http://phototriage.cs.princeton.edu/download.html"
+  ],
+  "officialSplit": {
+    "totalStated": 5953,
+    "trainStated": 4560,
+    "validationStated": 195,
+    "testStated": 967,
+    "testLabelsPublic": null,
+    "note": "Original preprint statements only, not verified released counts. Printed split counts sum to 5722 rather than 5953; do not infer a correction or current validation limit.",
+    "currentReleasedCountsVerified": false,
+    "preprintSaysTestLabelsPublic": false
+  },
+  "rayJobs": [
+    {
+      "id": "w2-bench-triage-probe-20261010",
+      "status": "SUCCEEDED"
+    },
+    {
+      "id": "w2-bench-triage-probe-20261010-v2",
+      "status": "SUCCEEDED"
+    },
+    {
+      "id": "w2-bench-triage-paper-20261010",
+      "status": "FAILED",
+      "reason": "Official PDF URL timed out via proxy after 30 seconds; no dataset images downloaded."
+    }
+  ],
+  "probeRecords": [
+    {
+      "url": "https://phototriage.cs.princeton.edu/",
+      "error": "<urlopen error Tunnel connection failed: 503 Service Unavailable>"
+    },
+    {
+      "url": "http://phototriage.cs.princeton.edu/",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "url": "http://phototriage.cs.princeton.edu/download.html",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "url": "https://phototriage.cs.princeton.edu/download.html",
+      "error": "<urlopen error Tunnel connection failed: 503 Service Unavailable>"
+    },
+    {
+      "url": "https://gfx.cs.princeton.edu/pubs/Chang_2016_ATF/index.php",
+      "status": 200,
+      "finalUrl": "https://gfx.cs.princeton.edu/pubs/Chang_2016_ATF/index.php",
+      "sha256": "0fd359b64de78bbfc3ca4936d428b1d286fc4688f040458357badcd22645639f"
+    },
+    {
+      "url": "https://pixl.cs.princeton.edu/pubs/Chang_2016_ATF/index.php",
+      "status": 200,
+      "finalUrl": "https://pixl.cs.princeton.edu/pubs/Chang_2016_ATF/index.php",
+      "sha256": "0fd359b64de78bbfc3ca4936d428b1d286fc4688f040458357badcd22645639f"
+    }
+  ],
+  "alternativesDocument": "ml/bench/phototriage-provenance.md"
+}

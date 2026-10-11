@@ -1,0 +1,361 @@
+{
+  "contractVersion": 1,
+  "collected_at": "2026-10-10T10:44:41+0800",
+  "search_request_count": 12,
+  "relation_to_primary": "Supplemental named-expert search; not merged into the primary 1474-video unique count.",
+  "request_delay_seconds": 1.2,
+  "downloaded_video_count": 0,
+  "searches": [
+    {
+      "keyword": "鲍昆 摄影 点评",
+      "code": 0,
+      "num_results": 1000,
+      "long_critique_title_matches": [
+        {
+          "bvid": "BV1TG411t73D",
+          "mid": 85514191,
+          "author": "金叔影像社",
+          "title": "【网友人像摄影点评】22年8月",
+          "duration_seconds": 1163,
+          "views": 38274,
+          "description": "感谢热心网友提供人像摄影素材",
+          "url": "https://www.bilibili.com/video/BV1TG411t73D"
+        },
+        {
+          "bvid": "BV15V4y1a7Mo",
+          "mid": 474457011,
+          "author": "风光人文摄影师武林",
+          "title": "摄影作品点评第21集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1675,
+          "views": 63495,
+          "description": "如果您也有作品需要点评，或者交流，请看个人主页！\n【武林说实话，摄影点评21集】点评的宗旨：找问题，挑毛病，提出建议和解决方案，优点学习，问题避免！摄影不是一家之言，我的点评仅仅是建议，如果对您有帮助我很高兴，如果有分歧或者不同的意见，欢迎留言讨论。",
+          "url": "https://www.bilibili.com/video/BV15V4y1a7Mo"
+        },
+        {
+          "bvid": "BV1MDEzz4ERu",
+          "mid": 18241328,
+          "author": "衣刀君叨逼叨",
+          "title": "【衣刀】人像摄影点评-狗屎投稿最多的一期-250509",
+          "duration_seconds": 2305,
+          "views": 51848,
+          "description": "vlog315，如果我的摄影点评对你有所启发，请务必不要吝啬手中的点赞\n想要参与点评，直接在红薯发图并且at我即可\n不出意外的话，每周日晚上7点30在双平台点评",
+          "url": "https://www.bilibili.com/video/BV1MDEzz4ERu"
+        },
+        {
+          "bvid": "BV12Ge36YEXY",
+          "mid": 18241328,
+          "author": "衣刀君叨逼叨",
+          "title": "【衣刀】人像摄影点评-历届最夯投稿来了-260912",
+          "duration_seconds": 3439,
+          "views": 9800,
+          "description": "vlog423，最纯正最直接最不饶弯子的人像写真摄影点评。\n如果我的摄影点评对你有所启发，请务必不要吝啬手中的点赞\n视频最后有投稿方法",
+          "url": "https://www.bilibili.com/video/BV12Ge36YEXY"
+        },
+        {
+          "bvid": "BV1Uy4y1U7o7",
+          "mid": 488063197,
+          "author": "卓仑-Jollon",
+          "title": "【真知卓见】含金量超高的干货摄影评片教学群公开直播回放",
+          "duration_seconds": 3379,
+          "views": 1645,
+          "description": "本次是摄影交流群的第一次直播回放，大家都深藏不露的不敢把自己大作拿出来公开处刑，那我们就看看普通的照片应该怎么理解。\n想加群的朋友请准备好你的学费再加微 minifashionista",
+          "url": "https://www.bilibili.com/video/BV1Uy4y1U7o7"
+        },
+        {
+          "bvid": "BV1kf4y1F7Aa",
+          "mid": 406112955,
+          "author": "狼族摄影",
+          "title": "【照片点评】人像摄影不是妹子漂亮就赢了吗？粉丝摄影作品讲解、直播回顾",
+          "duration_seconds": 8686,
+          "views": 2919,
+          "description": "本期摄影作者名单见评论区！\n关注“狼族摄影”，提交摄影作品，老师固定时间直播点评。\n直播内容全程录播回放，交流学习。",
+          "url": "https://www.bilibili.com/video/BV1kf4y1F7Aa"
+        }
+      ]
+    },
+    {
+      "keyword": "严明 摄影 点评",
+      "code": 0,
+      "num_results": 1000,
+      "long_critique_title_matches": []
+    },
+    {
+      "keyword": "吴家林 作品 点评",
+      "code": 0,
+      "num_results": 1000,
+      "long_critique_title_matches": []
+    },
+    {
+      "keyword": "张千里 街拍 点评",
+      "error": "invalid literal for int() with base 10: ''"
+    },
+    {
+      "keyword": "阮义忠 照片点评",
+      "code": 0,
+      "num_results": 1000,
+      "long_critique_title_matches": [
+        {
+          "bvid": "BV1sa4y1d7d1",
+          "mid": 446337665,
+          "author": "摄影师聿铭",
+          "title": "【照片点评01】怎样的照片才是好作品？不管了，取长补短就是了",
+          "duration_seconds": 620,
+          "views": 30997,
+          "description": "欢迎大家参与「照片点评投稿」，我会选择大家的作品来做点评。",
+          "url": "https://www.bilibili.com/video/BV1sa4y1d7d1"
+        }
+      ]
+    },
+    {
+      "keyword": "许佳 街拍 点评",
+      "code": 0,
+      "num_results": 1000,
+      "long_critique_title_matches": []
+    },
+    {
+      "keyword": "王福春 摄影 点评",
+      "error": "invalid literal for int() with base 10: ''"
+    },
+    {
+      "keyword": "刘涛 街拍 点评",
+      "code": 0,
+      "num_results": 1000,
+      "long_critique_title_matches": []
+    },
+    {
+      "keyword": "苏鲁克 街拍 点评",
+      "code": 0,
+      "num_results": 1000,
+      "long_critique_title_matches": [
+        {
+          "bvid": "BV1TG411t73D",
+          "mid": 85514191,
+          "author": "金叔影像社",
+          "title": "【网友人像摄影点评】22年8月",
+          "duration_seconds": 1163,
+          "views": 38274,
+          "description": "感谢热心网友提供人像摄影素材",
+          "url": "https://www.bilibili.com/video/BV1TG411t73D"
+        }
+      ]
+    },
+    {
+      "keyword": "徐老瞎 婚礼 点评",
+      "code": 0,
+      "num_results": 1000,
+      "long_critique_title_matches": [
+        {
+          "bvid": "BV1MV4y1e72w",
+          "mid": 3494375885637746,
+          "author": "bili_36700395039",
+          "title": "徐老瞎望远镜婚礼摄影教程课程百度云网盘——婚礼点评@奇祥",
+          "duration_seconds": 8514,
+          "views": 288,
+          "description": "",
+          "url": "https://www.bilibili.com/video/BV1MV4y1e72w"
+        }
+      ]
+    },
+    {
+      "keyword": "宋仁杰 婚礼 点评",
+      "code": 0,
+      "num_results": 1000,
+      "long_critique_title_matches": []
+    },
+    {
+      "keyword": "陈海汶 摄影 点评",
+      "code": 0,
+      "num_results": 1000,
+      "long_critique_title_matches": []
+    }
+  ],
+  "named_expert_search_note": "API results frequently generalize and are not guaranteed to mention the queried expert.",
+  "additional_candidate_checks": [
+    {
+      "endpoint": "https://api.bilibili.com/x/web-interface/view",
+      "params": {
+        "bvid": "BV1Uy4y1U7o7"
+      },
+      "code": 0,
+      "data": {
+        "bvid": "BV1Uy4y1U7o7",
+        "aid": 798430288,
+        "videos": 1,
+        "tid": 95,
+        "tid_v2": 2102,
+        "tname": "",
+        "tname_v2": "",
+        "copyright": 1,
+        "pic": "http://i2.hdslb.com/bfs/archive/d1cea6ca3b542d29724ae5acb70fab7810a7d38f.jpg",
+        "title": "【真知卓见】含金量超高的干货摄影评片教学群公开直播回放",
+        "pubdate": 1609551001,
+        "ctime": 1609551003,
+        "desc": "本次是摄影交流群的第一次直播回放，大家都深藏不露的不敢把自己大作拿出来公开处刑，那我们就看看普通的照片应该怎么理解。\n想加群的朋友请准备好你的学费再加微 minifashionista",
+        "desc_v2": [
+          {
+            "raw_text": "本次是摄影交流群的第一次直播回放，大家都深藏不露的不敢把自己大作拿出来公开处刑，那我们就看看普通的照片应该怎么理解。\n想加群的朋友请准备好你的学费再加微 minifashionista",
+            "type": 1,
+            "biz_id": 0
+          }
+        ],
+        "state": 0,
+        "duration": 3379,
+        "rights": {
+          "bp": 0,
+          "elec": 0,
+          "download": 1,
+          "movie": 0,
+          "pay": 0,
+          "hd5": 1,
+          "no_reprint": 1,
+          "autoplay": 1,
+          "ugc_pay": 0,
+          "is_cooperation": 0,
+          "ugc_pay_preview": 0,
+          "no_background": 0,
+          "clean_mode": 0,
+          "is_stein_gate": 0,
+          "is_360": 0,
+          "no_share": 0,
+          "arc_pay": 0,
+          "free_watch": 0
+        },
+        "owner": {
+          "mid": 488063197,
+          "name": "卓仑-Jollon",
+          "face": "https://i1.hdslb.com/bfs/face/2e6cba95f43b108f5f7306fc9ba54126ca5f3c4c.jpg"
+        },
+        "stat": {
+          "aid": 798430288,
+          "view": 1645,
+          "danmaku": 7,
+          "reply": 18,
+          "favorite": 78,
+          "coin": 79,
+          "share": 6,
+          "now_rank": 0,
+          "his_rank": 0,
+          "like": 115,
+          "dislike": 0,
+          "evaluation": "",
+          "vt": 0
+        },
+        "argue_info": {
+          "argue_msg": "",
+          "argue_type": 0,
+          "argue_link": ""
+        },
+        "dynamic": "第一次直播回放来了，我觉得含金量有点高！下次不打算公开了，播放不过万就删",
+        "cid": 275660803,
+        "dimension": {
+          "width": 1920,
+          "height": 1080,
+          "rotate": 0
+        },
+        "premiere": null,
+        "teenage_mode": 0,
+        "is_chargeable_season": false,
+        "is_story": false,
+        "is_upower_exclusive": false,
+        "is_upower_play": false,
+        "is_upower_preview": false,
+        "enable_vt": 0,
+        "vt_display": "",
+        "is_upower_exclusive_with_qa": false,
+        "is_hua_sheng": false,
+        "no_cache": false,
+        "pages": [
+          {
+            "cid": 275660803,
+            "page": 1,
+            "from": "vupload",
+            "part": "【摄影干货】含金量超高的摄影评片教学群公开直播回放",
+            "duration": 3379,
+            "vid": "",
+            "weblink": "",
+            "dimension": {
+              "width": 1920,
+              "height": 1080,
+              "rotate": 0
+            },
+            "ctime": 1609551003
+          }
+        ],
+        "subtitle": {
+          "allow_submit": false,
+          "list": []
+        },
+        "is_season_display": false,
+        "user_garb": {
+          "url_image_ani_cut": ""
+        },
+        "honor_reply": {},
+        "like_icon": "",
+        "need_jump_bv": false,
+        "disable_show_up_info": false,
+        "is_story_play": 1,
+        "is_view_self": false
+      }
+    },
+    {
+      "endpoint": "https://api.bilibili.com/x/polymer/web-space/seasons_series_list",
+      "params": {
+        "mid": 488063197,
+        "page_num": 1,
+        "page_size": 20
+      },
+      "code": 0,
+      "data": {
+        "items_lists": {
+          "page": {
+            "page_num": 1,
+            "page_size": 20,
+            "total": 1
+          },
+          "seasons_list": [
+            {
+              "archives": [
+                {
+                  "aid": 116345765106024,
+                  "bvid": "BV1ycDMBHEwt",
+                  "ctime": 1775295616,
+                  "duration": 403,
+                  "enable_vt": false,
+                  "interactive_video": false,
+                  "pic": "http://i1.hdslb.com/bfs/archive/0ac2a4c85c7976afdf518cc667e168160ce7848f.jpg",
+                  "playback_position": 0,
+                  "pubdate": 1775295616,
+                  "stat": {
+                    "view": 504,
+                    "vt": 0,
+                    "danmaku": 0
+                  },
+                  "state": 0,
+                  "title": "索尼价格终于崩啦！中画幅党居然穷玩A7CII 视频图片同时双修的配件选择",
+                  "ugc_pay": 0,
+                  "vt_display": "",
+                  "is_lesson_video": 0
+                }
+              ],
+              "meta": {
+                "category": 0,
+                "cover": "https://archive.biliimg.com/bfs/archive/90526279bba5c3cd6d25e3a4d38ee686610deda0.jpg",
+                "description": "",
+                "mid": 488063197,
+                "name": "合集·器材军火库",
+                "ptime": 1775295616,
+                "season_id": 134813,
+                "total": 1,
+                "title": "器材军火库"
+              },
+              "recent_aids": [
+                116345765106024
+              ]
+            }
+          ],
+          "series_list": []
+        }
+      }
+    }
+  ]
+}

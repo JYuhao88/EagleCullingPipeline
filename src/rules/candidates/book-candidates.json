@@ -1,0 +1,767 @@
+{
+  "contractVersion": 1,
+  "books": [
+    {
+      "slug": "photography-aesthetics-six-lectures",
+      "title": "摄影美学六讲",
+      "author": "细草穿沙",
+      "format": "epub"
+    },
+    {
+      "slug": "ansel-camera",
+      "title": "The Camera",
+      "author": "Ansel Adams",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "The Ansel Adams Photography Series I The Camera",
+        "year": 1980
+      }
+    },
+    {
+      "slug": "ansel-negative",
+      "title": "The Negative",
+      "author": "Ansel Adams",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "The Ansel Adams Photography Series 2 **The Negative** **The Negative",
+        "year": 1981
+      }
+    },
+    {
+      "slug": "freeman-vision",
+      "title": "The Photographer's Vision",
+      "author": "Michael Freeman",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "MICHAEL FREEMAN THE PHOTOGRAPHER'S VISION MICHAEL FREEMAN THE PHOTOGRAPHER'S[VISION]",
+        "year": 2019
+      }
+    },
+    {
+      "slug": "digital-portrait",
+      "title": "Digital Portrait Photography For Dummies",
+      "author": "Doug Sahlin",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Digital Portrait Photography",
+        "year": 2010
+      }
+    },
+    {
+      "slug": "portrait-candid",
+      "title": "Portrait and Candid Photography, 2nd Edition",
+      "author": "Erin Manning",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "PORTRAIT AND CANDID PHOTOGRAPHY",
+        "year": 2012
+      }
+    },
+    {
+      "slug": "master-guide",
+      "title": "Master Guide for Professional Photographers",
+      "author": "Patrick Rice",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Master Guide FOR PROFESSIONAL PHOTOGRAPHERS",
+        "year": 2006
+      }
+    },
+    {
+      "slug": "children-portrait",
+      "title": "Children’s Portrait Photography Handbook",
+      "author": "Bill Hurter",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Children's Portrait PHOTOGRAPHY HANDBOOK",
+        "year": 2010
+      }
+    },
+    {
+      "slug": "digital-composition",
+      "title": "Digital Photography Composition For Dummies",
+      "author": "Tom Clark",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Digital Photography Composition",
+        "year": 2011
+      }
+    },
+    {
+      "slug": "understanding-exposure",
+      "title": "Understanding Exposure, 3rd Edition",
+      "author": "Bryan Peterson",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Understanding EXPOSURE",
+        "year": 1990
+      }
+    },
+    {
+      "slug": "street-atlas",
+      "title": "The World Atlas of Street Photography",
+      "author": "Jackie Higgins",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "THE WORLD ATLAS OF STREET PHOTOGRAPHY STOP THE WORLD ATLAS OF STREET PHOTOGRAPHY",
+        "year": 2012
+      }
+    },
+    {
+      "slug": "corrective-posing",
+      "title": "Corrective Lighting, Posing & Retouching",
+      "author": "Jeff Smith",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "CORRECTIVE LIGHTING, POSING & RETOUCHING #ABOUT THE AUTHOR",
+        "year": 2010
+      }
+    },
+    {
+      "slug": "freeman-capturing-light",
+      "title": "Capturing Light",
+      "author": "Michael Freeman",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "MICHAEL FREEMAN CAPTURING LIGHT",
+        "year": 2013
+      }
+    },
+    {
+      "slug": "photographing-children-babies",
+      "title": "Photographing Children and Babies",
+      "author": "Michal Heron",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Photographing Children and Babies",
+        "year": 2005
+      }
+    },
+    {
+      "slug": "digital-wedding",
+      "title": "Digital Wedding Photography For Dummies",
+      "author": "Amber Murphy",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Digital Wedding Photography",
+        "year": 2013
+      }
+    },
+    {
+      "slug": "wedding-secrets",
+      "title": "Digital Wedding Photography Secrets",
+      "author": "Rick Sammon",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Digital Wedding Photography Secrets",
+        "year": 2009
+      }
+    },
+    {
+      "slug": "moment-clicks",
+      "title": "The Moment It Clicks",
+      "author": "Joe McNally",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "THE MOMENT IT CLICKS",
+        "year": 2008
+      }
+    },
+    {
+      "slug": "posing",
+      "title": "拍照姿势",
+      "author": "未知",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "kelby-natural-portrait",
+      "title": "斯科特·凯尔比的自然光人像摄影手册",
+      "author": "Scott Kelby",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "kelby-landscape",
+      "title": "斯科特·凯尔比的风光摄影手册",
+      "author": "Scott Kelby",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "street-52",
+      "title": "街头摄影 52个任务清单",
+      "author": "未知",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "photographic-techniques-7",
+      "title": "摄影技艺教程第7版",
+      "author": "未知",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "nyip-upper",
+      "title": "美国纽约摄影学院摄影教材（上册）",
+      "author": "美国纽约摄影学院",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "nyip-lower",
+      "title": "美国纽约摄影学院摄影教材（下册）",
+      "author": "美国纽约摄影学院",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "photography-required-course",
+      "title": "摄影必修课（套装4册）",
+      "author": "未知",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "magnum-streetwise",
+      "title": "此时此地：玛格南街头摄影经典（Magnum Streetwise）",
+      "author": "Stephen McLaren",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "2fb2aab3d040bf62101d5b171e1145cbb48cac48f01d2bc8ac85f5e58e14a303",
+      "inputLabel": "Magnum Contact Sheets（来料标签与实际书目不符）"
+    },
+    {
+      "slug": "decisive-moment",
+      "title": "决定性瞬间",
+      "author": "Henri Cartier-Bresson",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "5c7bf5bc4cc4bfb2a582a89362f70091ffcb9aab385203fe5a12bf4090b6668c"
+    },
+    {
+      "slug": "hurn-jay",
+      "title": "On Being a Photographer, 3rd edition",
+      "author": "David Hurn / Bill Jay",
+      "format": "pdf",
+      "scope": "full-book",
+      "sourceSha256": "8ad990a20c3c3d4a8db7b66b19ff17a824a85644a47951b998d87935f93b8298"
+    },
+    {
+      "slug": "why-focus-sample",
+      "title": "Why It Does Not Have to Be in Focus",
+      "author": "Jackie Higgins",
+      "format": "pdf",
+      "scope": "sample",
+      "sourceSha256": "f6d48b8923b1e867aa31c5329f11216233c27118625c5fb7b5d8acf1a67e1380"
+    },
+    {
+      "slug": "posing-sample",
+      "title": "Picture Perfect Posing",
+      "author": "Roberto Valenzuela",
+      "format": "pdf",
+      "scope": "sample",
+      "sourceSha256": "91c0478105270248c19a7f24d15a7a786a994b1f1a3b95004fb8b29ce27befd1"
+    },
+    {
+      "slug": "photographers-eye-press",
+      "title": "The Photographer’s Eye: 1966 MoMA press release",
+      "author": "MoMA / John Szarkowski",
+      "format": "pdf",
+      "scope": "press-release",
+      "sourceSha256": "24999c1edc96a2748adfa5048550cde0ce47600a11779a3021186d5cc9ed6fa4"
+    },
+    {
+      "slug": "photographers-eye-excerpt",
+      "title": "The Photographer’s Eye: introduction excerpt",
+      "author": "John Szarkowski",
+      "format": "excerpt",
+      "scope": "intro-excerpt",
+      "sourceSha256": "4f399c457502587df0f81a39992df2fd6c96c06b0507cd2eed58ff5e3942e25a"
+    },
+    {
+      "slug": "photographers-eye-zh",
+      "title": "摄影师之眼（The Photographer’s Eye，中文版）",
+      "author": "John Szarkowski",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "d3ae934152d54ba88028cee746a5431fa9b00844ce2ec62508e515a43047acc7"
+    },
+    {
+      "slug": "adler-posing",
+      "title": "The Photographer’s Guide to Posing: Techniques to Flatter Everyone",
+      "author": "Lindsay Adler",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "84e7166f07e2135e6909254e2a3c91cb0cf50eb3b4cc4ffd15b41d6ce2a385c1"
+    },
+    {
+      "slug": "adler-pitfalls",
+      "title": "Posing Pitfalls Checklist",
+      "author": "Lindsay Adler",
+      "format": "pdf",
+      "scope": "checklist",
+      "sourceSha256": "6191036702c30247307d0a56e030e1635aaa314e8aac26582abdb31613c33bdc"
+    },
+    {
+      "slug": "adler-pocket",
+      "title": "Posing Pocket Checklist",
+      "author": "Lindsay Adler",
+      "format": "pdf",
+      "scope": "checklist",
+      "sourceSha256": "8f6e8285b36f7bf7d6a90de53823d93ea9de04a2987128a3828d291f79596024"
+    },
+    {
+      "slug": "adler-hands",
+      "title": "Posing Hands: Hand Poses Reference Guide",
+      "author": "Lindsay Adler",
+      "format": "pdf",
+      "scope": "full-book",
+      "sourceSha256": "fa2336dbb4d514742b93d13f456799faf8847b014464fcd97f6b526a364ae1ad"
+    },
+    {
+      "slug": "adler-couples",
+      "title": "Couples Posing Guide",
+      "author": "Lindsay Adler",
+      "format": "pdf",
+      "scope": "full-book",
+      "sourceSha256": "2d4dbf64619289a67d586fc5d89648672821f91342c063d837d17a95c7e58f84"
+    },
+    {
+      "slug": "adler-teens",
+      "title": "Tweens, Teens & Seniors Posing Guide",
+      "author": "Lindsay Adler",
+      "format": "pdf",
+      "scope": "full-book",
+      "sourceSha256": "e249c5a937065cc9dd4ac1cf44bd332998052f848a4186c7ee13e121238e0215"
+    },
+    {
+      "slug": "adler-50-poses",
+      "title": "Fine Art Nude Posing Guide（来料：50个美术摄影摆姿势实例）",
+      "author": "Lindsay Adler",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "99eb8df2c11daf81b3e658d48b29698bad2d466f3b74fcc28074d38f2366de49"
+    },
+    {
+      "slug": "valenzuela-posing-zh",
+      "title": "拍出绝世美姿（Picture Perfect Posing 中文全书）",
+      "author": "Roberto Valenzuela",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "0defb639d94892ef804ffa5e1c94522a082f6dea772a25a1598776561d0bd3b9"
+    },
+    {
+      "slug": "valenzuela-practice-zh",
+      "title": "拍出绝世佳作（Picture Perfect Practice 中文全书）",
+      "author": "Roberto Valenzuela",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "eb43f167943d4ea494f213b18c2cdbcc6ab25ad75b79702f1c1cb175b0b01f0e"
+    },
+    {
+      "slug": "adler-boudoir",
+      "title": "Boudoir Posing Guide",
+      "author": "Lindsay Adler",
+      "format": "pdf",
+      "scope": "full-book",
+      "sourceSha256": "fac29bdf3aed691a6538b55054b0319d492f78e4039808c1f56207b08f4c5edc"
+    }
+  ],
+  "rules": [
+    {
+      "id": "L-BOOK-TREE-FORM",
+      "library": "landscape",
+      "genre": "landscape",
+      "aspect": "shape",
+      "title": "树木形态支持画面表达",
+      "statement": "树木作为主角时，描述枝干的曲折、疏密及轮廓变化，比较是否支持画面表达；不以树种、稀有程度或景区名气优选。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "规则只适用于树木形态是主要内容的照片",
+        "规整树形、人工修剪、类型学或抽象表达同样可成立"
+      ],
+      "sources": [
+        "book:photography-aesthetics-six-lectures"
+      ],
+      "source": "book:photography-aesthetics-six-lectures",
+      "status": "proposed",
+      "evidence": [
+        {
+          "bookSlug": "photography-aesthetics-six-lectures",
+          "paraphrase": "以树为主角时，曲折而多变的形态可增加耐看度",
+          "locator": "第六讲／一树一世界"
+        }
+      ]
+    },
+    {
+      "id": "P-BOOK-EXPRESSION-VARIETY",
+      "library": "portrait",
+      "genre": "portrait",
+      "aspect": "coverage",
+      "title": "保留互补的表情变化",
+      "statement": "同组不同神态可组成表情序列；确认各帧有独特变化后允许并存。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "仅适用于表情组照或蒙太奇用途",
+        "单张交付仍按指定表达选择"
+      ],
+      "sources": [
+        "book:children-portrait"
+      ],
+      "source": "book:children-portrait",
+      "status": "proposed",
+      "evidence": [
+        {
+          "bookSlug": "children-portrait",
+          "paraphrase": "不同婴儿表情可组成有意义的序列或蒙太奇",
+          "locator": "章节37／POSING TIPS BY AGE／段落8"
+        }
+      ]
+    },
+    {
+      "id": "P-BOOK-GROUP-READINESS",
+      "library": "portrait",
+      "genre": "portrait",
+      "aspect": "expression",
+      "title": "合影逐人状态复核",
+      "statement": "正式合影逐人复核眨眼、神态与视线，比较全组状态更齐的一帧。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "互动抓拍不要求统一看镜头",
+        "有意闭眼、睡眠或不同视线按用途判断",
+        "无人全部到位时记录各帧不足，交人工选择"
+      ],
+      "sources": [
+        "book:digital-wedding"
+      ],
+      "source": "book:digital-wedding",
+      "status": "proposed",
+      "evidence": [
+        {
+          "bookSlug": "digital-wedding",
+          "paraphrase": "合影选片不应以好构图掩盖某人的眨眼或尴尬神态",
+          "locator": "章节91／#Culling the Shoot／段落13"
+        },
+        {
+          "bookSlug": "digital-wedding",
+          "paraphrase": "正式合影中视线分散可能来自看向不同相机",
+          "locator": "章节80／#*Getting the Key Images*／段落70"
+        }
+      ]
+    },
+    {
+      "id": "P-BOOK-EVENT-COVERAGE",
+      "library": "portrait",
+      "genre": "portrait",
+      "aspect": "coverage",
+      "title": "保留互补的事件镜头",
+      "statement": "事件交付复核全景、近景、正式与抓拍的互补，去重前检查叙事变化。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "客户用途与必要人物名单需人工确认",
+        "不把相似度或固定张数当作去重门槛"
+      ],
+      "sources": [
+        "book:wedding-secrets"
+      ],
+      "source": "book:wedding-secrets",
+      "status": "proposed",
+      "evidence": [
+        {
+          "bookSlug": "wedding-secrets",
+          "paraphrase": "全景、远摄及特写可共同交代事件",
+          "locator": "章节119／#Tell the Whole Story／段落3"
+        },
+        {
+          "bookSlug": "wedding-secrets",
+          "paraphrase": "正式与抓拍、不同视角应有互补而非千篇一律",
+          "locator": "章节119／#Tell the Whole Story／段落4"
+        },
+        {
+          "bookSlug": "wedding-secrets",
+          "paraphrase": "画心序列从开始到完成，以多帧讲述动作进程",
+          "locator": "章节137／#Shoot a Sequence／段落4"
+        }
+      ]
+    },
+    {
+      "id": "P-BOOK-RED-EYE",
+      "library": "portrait",
+      "genre": "portrait",
+      "aspect": "lighting",
+      "title": "红眼成片复核",
+      "statement": "眼部出现明显红眼时提示修复或比较邻帧，勿由使用闪光直接判差。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "有意色彩表达由人工判断",
+        "红眼可修复，提示不等于自动淘汰"
+      ],
+      "sources": [
+        "book:photographing-children-babies"
+      ],
+      "source": "book:photographing-children-babies",
+      "status": "proposed",
+      "evidence": [
+        {
+          "bookSlug": "photographing-children-babies",
+          "paraphrase": "机顶闪光可能形成红眼，成片可再修复",
+          "locator": "章节117／#**Red-Eye and Its Cure**／段落2"
+        }
+      ]
+    },
+    {
+      "id": "P-BOOK-ENVIRONMENT-CONTEXT",
+      "library": "portrait",
+      "genre": "portrait",
+      "aspect": "composition",
+      "title": "环境人像保留叙事背景",
+      "statement": "当背景承担地点或情境信息且主体仍清晰时，允许保留环境背景；以主体可辨和背景不喧宾夺主为条件。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "特写或交付要求突出面部时不适用"
+      ],
+      "sources": [
+        "book:kelby-natural-portrait"
+      ],
+      "source": "book:kelby-natural-portrait",
+      "status": "proposed",
+      "evidence": [
+        {
+          "bookSlug": "kelby-natural-portrait",
+          "paraphrase": "环境人像可保留场景以承载叙事",
+          "locator": "[p.120] 第6章 环境人像"
+        }
+      ]
+    },
+    {
+      "id": "G-BOOK-SEQUENCE-PACE",
+      "library": "general",
+      "genre": "general",
+      "aspect": "sequence",
+      "title": "组照观看节奏",
+      "statement": "组照并列比较景别变化与相邻关系，复核观看节奏。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "类型学或有意重复可保持统一景别",
+        "叙事覆盖需结合交付用途，不能固定张数",
+        "不把照片暗示当作事件事实"
+      ],
+      "sources": [
+        "book:hurn-jay",
+        "book:magnum-streetwise"
+      ],
+      "source": "book:hurn-jay",
+      "status": "proposed",
+      "evidence": [
+        {
+          "bookSlug": "hurn-jay",
+          "locator": "PDF第52页／Creating Contacts",
+          "paraphrase": "并列或按序观看作品，才能复核组照节奏"
+        },
+        {
+          "bookSlug": "hurn-jay",
+          "locator": "PDF第56–57页／The Picture Essay",
+          "paraphrase": "全景、关系镜头与近景的变化减少组照单调"
+        }
+      ]
+    },
+    {
+      "id": "G-BOOK-DETAIL-AUTONOMY",
+      "library": "general",
+      "genre": "general",
+      "aspect": "composition",
+      "title": "片段细节独立成立",
+      "statement": "片段特写复核可见纹理、痕迹与形状是否独立承载主题。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "事件交付仍需另行检查必要覆盖",
+        "不把局部象征推断为完整事件事实",
+        "片段失去可读形状或必要信息时不适用"
+      ],
+      "sources": [
+        "book:photographers-eye-zh"
+      ],
+      "source": "book:photographers-eye-zh",
+      "status": "proposed",
+      "evidence": [
+        {
+          "bookSlug": "photographers-eye-zh",
+          "paraphrase": "局部痕迹可独立承载主题，不必补齐事件全貌",
+          "locator": "PDF第45页／细节·主题说明"
+        },
+        {
+          "bookSlug": "photographers-eye-zh",
+          "paraphrase": "鼓面磨损痕迹使细节超出物体外形的展示",
+          "locator": "PDF第47页／细节·霍姆斯鼓面评论"
+        }
+      ]
+    },
+    {
+      "id": "G-BOOK-STORY-FUNCTION",
+      "library": "general",
+      "genre": "documentary",
+      "aspect": "sequence",
+      "title": "检查组照各帧的叙事功能",
+      "statement": "并列检查开篇、发展与收尾的可见作用，再筛去不增加主题或细节的重复帧。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "抽象或开放序列可采用其他结构",
+        "不强制固定张数或按拍摄时间排序"
+      ],
+      "sources": [
+        "book:nyip-lower"
+      ],
+      "source": "book:nyip-lower",
+      "status": "proposed",
+      "evidence": [
+        {
+          "bookSlug": "nyip-lower",
+          "paraphrase": "开篇确定主题，中段补充细节，收尾结束报道",
+          "locator": "PDF第433页／第30课／图片故事的结构"
+        }
+      ]
+    },
+    {
+      "id": "P-BOOK-EYE-WHITES",
+      "library": "portrait",
+      "genre": "portrait",
+      "aspect": "expression",
+      "title": "眼白与眼神形态复核",
+      "statement": "在面部细节足够时，复核瞳孔偏向眼角或上方、下侧或单侧眼白大量暴露是否使眼神紧绷；同组比较更符合情境的眼位，不设固定比例。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "有意夸张、惊讶或侧看动作可保留",
+        "不得从眼位推断心理状态或疾病",
+        "分辨率不足、闭眼或完整侧脸不作判断"
+      ],
+      "sources": [
+        "book:adler-posing"
+      ],
+      "source": "book:adler-posing",
+      "status": "proposed",
+      "evidence": [
+        {
+          "bookSlug": "adler-posing",
+          "paraphrase": "过度侧看或上看会露出大量眼白，眼神可能显紧绷",
+          "locator": "PDF第61–62页／眼睛／图2.18–2.21"
+        }
+      ]
+    },
+    {
+      "id": "P-BOOK-GROUP-HEAD-LAYERS",
+      "library": "portrait",
+      "genre": "portrait",
+      "aspect": "composition",
+      "title": "群像头位层次",
+      "statement": "群像比较头位是否无意排成横线或竖直堆叠、单侧拥挤；错开高度与横向位置可形成层次，同时逐人确认面部可读、肩颈未为凑齐而塌陷。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "正式队列、对称设计或有意线性组织可保留",
+        "不要求固定三角数、头高差或所有人等高",
+        "不从站位推断真实亲疏关系"
+      ],
+      "sources": [
+        "book:adler-posing"
+      ],
+      "source": "book:adler-posing",
+      "status": "proposed",
+      "evidence": [
+        {
+          "bookSlug": "adler-posing",
+          "paraphrase": "群体头位错开形成层次，比横竖堆成直线更有变化",
+          "locator": "PDF第297–298页／家庭／图9.1–9.2"
+        },
+        {
+          "bookSlug": "adler-posing",
+          "paraphrase": "缩小头位距离同时保留高低差，避免靠塌肩凑齐",
+          "locator": "PDF第310页／家庭／图9.23–9.27"
+        }
+      ]
+    }
+  ]
+}

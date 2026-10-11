@@ -1,0 +1,36 @@
+{
+  "token": "03e9de8a7e97480b936de40ec46ef111",
+  "remote": "<CEPH_ROOT>/references/wulin/extracted",
+  "files": 2591,
+  "bytes": 2894175,
+  "manifest_sha256": "c05020975f5b8cebc923dcfead2f014c7604e05aa5e0a061359f9e5e6755f48d",
+  "jobs": [
+    {
+      "id": "w4-wulin-backup-c39aeffb518247dcbed3612888d75faf",
+      "deleted": true,
+      "status": "SUCCEEDED"
+    },
+    {
+      "id": "w4-wulin-backup-8f0e632333404b439f9f9e5736e5654f",
+      "deleted": true,
+      "status": "SUCCEEDED"
+    }
+  ],
+  "package_cleaned": true,
+  "status": "complete",
+  "package_sha256": "ac1e69ee5effe986dd4cc2805d810891ba325ca716199d29a2e7c733c6dc822a",
+  "package_uri": "<RAY_PACKAGE>",
+  "verification": {
+    "files": 2591,
+    "bytes": 2894175,
+    "manifest_sha256": "c05020975f5b8cebc923dcfead2f014c7604e05aa5e0a061359f9e5e6755f48d",
+    "remote": "<CEPH_ROOT>/references/wulin/extracted"
+  },
+  "cleanup": {
+    "uri": "<RAY_PACKAGE>",
+    "exists_after": false
+  },
+  "owned_jobs_remaining": [],
+  "verified_at": "2026-10-10T22:53:45+08:00",
+  "note": "Serial CPU-only jobs; isolated temporary package; no /tmp/ceph-upload state accessed."
+}

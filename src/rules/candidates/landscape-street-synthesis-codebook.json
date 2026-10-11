@@ -1,0 +1,540 @@
+{
+  "method": "codex-semantic",
+  "description": "阅读全量短转述后保守合并候选；文本检索辅助建立宽主题观察编码，精确索引冻结归属。宽主题不直接生成规则；生成器不调用模型、不进行关键词归类。",
+  "rules": [
+    {
+      "id": "L-WL-SKY-ROLE",
+      "library": "landscape",
+      "theme": "framing",
+      "subtheme": "sky-role",
+      "title": "天空留白有内容作用",
+      "aspect": "framing",
+      "statement": "天空留白与地景重点相称；天空无有效内容却挤压主体时提示，不固定比例。",
+      "exceptions": [
+        "云层、星空是主题或留白表达宁静时可多留天空",
+        "镜面对称可居中"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-HORIZON-PLACEMENT"
+      ]
+    },
+    {
+      "id": "L-WL-FOREGROUND-ORDER",
+      "library": "landscape",
+      "theme": "composition",
+      "subtheme": "foreground-order",
+      "title": "前景纹理有秩序",
+      "aspect": "composition",
+      "statement": "细碎前景的方向、疏密与重复应形成可读秩序，避免杂物堆叠削弱主题。",
+      "exceptions": [
+        "自然杂乱承担现场信息时保留",
+        "不要求每张有前景"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-FOREGROUND-ROLE"
+      ]
+    },
+    {
+      "id": "L-WL-NEAR-TEXTURE",
+      "library": "landscape",
+      "theme": "composition",
+      "subtheme": "near-texture",
+      "title": "近景质感承接远景气势",
+      "aspect": "composition",
+      "statement": "近处纹理、形态与远景形成尺度和观看入口；质感不足或过重时结合主题复核。",
+      "exceptions": [
+        "平面化、远景压缩或极简可无近景"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-FOREGROUND-ROLE"
+      ]
+    },
+    {
+      "id": "L-WL-DEPTH-BUFFER",
+      "library": "landscape",
+      "theme": "composition",
+      "subtheme": "depth-buffer",
+      "title": "前中后景留有空间缓冲",
+      "aspect": "composition",
+      "statement": "前景与主体间的间距和中景过渡应支持纵深，避免重叠拥堵或空白割裂观看路径。",
+      "exceptions": [
+        "长焦压缩、平面图案可有意减少纵深"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-FOREGROUND-ROLE",
+        "L-LEADING-LINES"
+      ]
+    },
+    {
+      "id": "L-WL-ANCHOR",
+      "library": "landscape",
+      "theme": "composition",
+      "subtheme": "anchor",
+      "title": "观看路径有停留点",
+      "aspect": "composition",
+      "statement": "大场景、重复元素或引导线应承接到可见兴趣点；不以壮观场景替代内容。",
+      "exceptions": [
+        "类型学、抽象或留白不强求单一主体"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-VISUAL-INTENT",
+        "L-LEADING-LINES"
+      ]
+    },
+    {
+      "id": "L-WL-TONE-DEPTH",
+      "library": "landscape",
+      "theme": "light",
+      "subtheme": "tone-depth",
+      "title": "影调层级服务空间与重点",
+      "aspect": "light",
+      "statement": "亮度层级应支持空间与重点；各处同亮或细节全显导致平淡时提示，也允许柔和低反差。",
+      "exceptions": [
+        "雾景、高调、低调和刻意平面化可成立",
+        "不要求暗部全部可见"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-LIGHT-INTENT",
+        "L-SHADOW-RECOVERY"
+      ]
+    },
+    {
+      "id": "L-WL-LIGHT-COHERENCE",
+      "library": "landscape",
+      "theme": "light",
+      "subtheme": "light-coherence",
+      "title": "局部光线关系自洽",
+      "aspect": "light",
+      "statement": "局部亮度、倒影与受光方向应形成可信关系，突兀光斑或逆光暗面异常抢亮时提示。",
+      "exceptions": [
+        "超现实、拼贴或舞台补光有明确意图时人工判断",
+        "不能仅凭成片推断真实现场"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-LIGHT-INTENT",
+        "L-NATURAL-COLOR"
+      ]
+    },
+    {
+      "id": "L-WL-REFLECTION-ROLE",
+      "library": "landscape",
+      "theme": "framing",
+      "subtheme": "reflection-role",
+      "title": "倒影与影子保留叙事作用",
+      "aspect": "framing",
+      "statement": "倒影或影子承担对称、尺度和内容时检查其边界完整性，避免无意截断；不强求镜面。",
+      "exceptions": [
+        "涟漪、碎片倒影或开放构图可有意不完整"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-HORIZON-PLACEMENT",
+        "L-EDGE-DISTRACTION"
+      ]
+    },
+    {
+      "id": "L-WL-MOTION-STATIC",
+      "library": "landscape",
+      "theme": "motion",
+      "subtheme": "motion-static",
+      "title": "动静对照有形态与方向",
+      "aspect": "motion",
+      "statement": "流云、流水和光轨的方向、节奏与静景相互配合；动感不足或混杂时按意图比较。",
+      "exceptions": [
+        "平静水面、冻结浪花与弱动感都可成立",
+        "不据成片倒推出快门时长"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-BLUR-CAMERA",
+        "L-LIGHT-INTENT"
+      ]
+    },
+    {
+      "id": "L-WL-COLOR-COHERENCE",
+      "library": "landscape",
+      "theme": "color",
+      "subtheme": "color-coherence",
+      "title": "色彩分区与环境相互呼应",
+      "aspect": "color",
+      "statement": "局部色块与整体光色呼应；突兀偏色、断层或多色抢眼时提示，不规定自然色或低饱和。",
+      "exceptions": [
+        "协调的粉紫、青蓝和高饱和风格可成立",
+        "无法仅凭成片证明现场色彩真假"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "L-NATURAL-COLOR"
+      ]
+    },
+    {
+      "id": "S-WL-INTERACTION",
+      "library": "street",
+      "theme": "narrative",
+      "subtheme": "interaction",
+      "title": "可见细节与互动支撑人文表达",
+      "aspect": "narrative",
+      "statement": "人物视线、手势、物件细节与可见互动支撑人文表达；避免只靠想象解释身份和故事。",
+      "exceptions": [
+        "静态观察、孤独人物也可成立",
+        "不据表情推断身份和事件"
+      ],
+      "polarity": "negative",
+      "relatedRules": [
+        "S-NARRATIVE-EVIDENCE",
+        "S-MOMENT-ACTION"
+      ]
+    }
+  ],
+  "nonSelection": [
+    {
+      "id": "NS:POSTPROCESS",
+      "theme": "non-selection",
+      "subtheme": "postprocess",
+      "title": "后期操作与方案",
+      "statement": "仅涉及处理方案、工具或操作评价，不能作为单张选片门槛。"
+    },
+    {
+      "id": "NS:CAPTURE-PLAN",
+      "theme": "non-selection",
+      "subtheme": "capture-plan",
+      "title": "拍摄时段与机位计划",
+      "statement": "仅描述时段、曝光时长或机位建议，不从成片反推参数。"
+    },
+    {
+      "id": "NS:DELIVERY",
+      "theme": "non-selection",
+      "subtheme": "delivery",
+      "title": "投稿尺寸与交付",
+      "statement": "投稿像素不足或显示条件限制，需索取原图而非认定原片质量。"
+    },
+    {
+      "id": "NS:SERIES",
+      "theme": "non-selection",
+      "subtheme": "series",
+      "title": "组照与创作用途",
+      "statement": "系列数量、统一性和比赛用途需要组照语境，单张成片不能判断。"
+    },
+    {
+      "id": "NS:GEAR",
+      "theme": "non-selection",
+      "subtheme": "gear",
+      "title": "器材与拍摄条件",
+      "statement": "器材潜力、获取难度或运气不能由单张成片验证。"
+    }
+  ],
+  "unresolvedPolicy": "未提供足够具体语境、语义重复不明、暂未纳入子主题均保留unresolved，不能当作无问题。",
+  "observations": [
+    {
+      "id": "OBS:FOCUS",
+      "theme": "technical",
+      "title": "焦点观察",
+      "notCandidateReason": "现有焦点规则已覆盖；题材与故意失焦语境未核验"
+    },
+    {
+      "id": "OBS:QUALITY",
+      "theme": "technical",
+      "title": "画质与交付细节",
+      "notCandidateReason": "现有噪声规则已覆盖；需原图和交付尺寸"
+    },
+    {
+      "id": "OBS:EXPOSURE",
+      "theme": "technical",
+      "title": "必要明暗细节",
+      "notCandidateReason": "现有曝光规则已覆盖；不从代理图认定RAW不可恢复"
+    },
+    {
+      "id": "OBS:GEOMETRY",
+      "theme": "framing",
+      "title": "水平垂直与透视",
+      "notCandidateReason": "现有规则已覆盖；需确认意图和可靠参照"
+    },
+    {
+      "id": "OBS:COLOR",
+      "theme": "color",
+      "title": "色彩观感",
+      "notCandidateReason": "宽主题含偏色、配色、饱和及风格，不能合成单一规则"
+    },
+    {
+      "id": "OBS:EDGE",
+      "theme": "framing",
+      "title": "边界观察",
+      "notCandidateReason": "现有边缘规则已覆盖；成片干扰与处理边痕需区分"
+    },
+    {
+      "id": "OBS:COMPOSITION",
+      "theme": "composition",
+      "title": "构图与内容观察",
+      "notCandidateReason": "宽主题混合主体、线条和空间，仅具体子主题生成候选"
+    },
+    {
+      "id": "OBS:ATMOSPHERE",
+      "theme": "light",
+      "title": "光影与氛围观察",
+      "notCandidateReason": "宽主题含主观氛围及柔和偏好，不直接设通用约束"
+    }
+  ],
+  "crossEvidence": [
+    {
+      "theme": "天空占比",
+      "relation": "agreement-with-exceptions",
+      "summary": "分配服务内容；居中与大天空都可成立，不能固化为少天空。",
+      "candidateIds": [
+        "L-WL-SKY-ROLE"
+      ],
+      "ruleIds": [
+        "L-HORIZON-PLACEMENT"
+      ],
+      "references": [
+        {
+          "source": "book",
+          "ruleId": "L-HORIZON-PLACEMENT",
+          "kind": "source",
+          "paraphrase": "天空与地面分配看视觉平衡，比例可变",
+          "locator": "第四讲／构图法则之结构平衡",
+          "bookSlug": "photography-aesthetics-six-lectures"
+        },
+        {
+          "source": "book",
+          "ruleId": "L-HORIZON-PLACEMENT",
+          "kind": "counterpoint",
+          "paraphrase": "传统构图偏好三分线，应限于其表达目的",
+          "locator": "章节43／Common Problems in Composition／段落16",
+          "bookSlug": "master-guide"
+        }
+      ]
+    },
+    {
+      "theme": "自然色彩",
+      "relation": "tension",
+      "summary": "武林常批评紫色与浓艳；书籍允许调色，论文强调主次。只提示不协调，不认定现场失真。",
+      "candidateIds": [
+        "L-WL-COLOR-COHERENCE",
+        "L-WL-LIGHT-COHERENCE"
+      ],
+      "ruleIds": [
+        "L-NATURAL-COLOR"
+      ],
+      "references": [
+        {
+          "source": "book",
+          "ruleId": "L-NATURAL-COLOR",
+          "kind": "exception",
+          "paraphrase": "少量调色可协调场景，不必照搬自然色",
+          "locator": "第三讲／光对画面的影响",
+          "bookSlug": "photography-aesthetics-six-lectures"
+        },
+        {
+          "source": "paper",
+          "ruleId": "L-NATURAL-COLOR",
+          "kind": "source",
+          "paraphrase": "色彩应有主次，避免杂色干扰主体",
+          "locator": "段落7／画面色彩的和谐统一",
+          "paperSlug": "paper-7709fb61f58e199b",
+          "supportCount": 3
+        },
+        {
+          "source": "paper",
+          "ruleId": "L-NATURAL-COLOR",
+          "kind": "exception",
+          "paraphrase": "雨雪雾中的淡雅色彩也可形成有效表达",
+          "locator": "段落6／柔和色彩的运用",
+          "paperSlug": "paper-49f7f3d08a286c19",
+          "supportCount": 1
+        }
+      ]
+    },
+    {
+      "theme": "前景与层次",
+      "relation": "agreement-with-exceptions",
+      "summary": "前景支持尺度和空间；枝干可框景，也可形成干扰，不强求干净或有前景。",
+      "candidateIds": [
+        "L-WL-FOREGROUND-ORDER",
+        "L-WL-DEPTH-BUFFER",
+        "L-WL-NEAR-TEXTURE"
+      ],
+      "ruleIds": [
+        "L-FOREGROUND-ROLE",
+        "L-LEADING-LINES"
+      ],
+      "references": [
+        {
+          "source": "book",
+          "ruleId": "L-FOREGROUND-ROLE",
+          "kind": "exception",
+          "paraphrase": "枝干前景可遮挡部分建筑并引导观看",
+          "locator": "第一讲／知识之外的无言之美",
+          "bookSlug": "photography-aesthetics-six-lectures"
+        },
+        {
+          "source": "paper",
+          "ruleId": "L-FOREGROUND-ROLE",
+          "kind": "source",
+          "paraphrase": "前景可交代尺度与空间，不以有无作门槛",
+          "locator": "段落13／风光摄影的技巧掌握五、利用前景增强空间感",
+          "paperSlug": "paper-b7bc16c4801a55d3",
+          "supportCount": 3
+        },
+        {
+          "source": "paper",
+          "ruleId": "L-LEADING-LINES",
+          "kind": "source",
+          "paraphrase": "线条可组织观看路径并勾勒主体",
+          "locator": "段落18／(二)摄影构图中线的作用",
+          "paperSlug": "paper-0a66b2043073515a",
+          "supportCount": 1
+        },
+        {
+          "source": "paper",
+          "ruleId": "L-FOREGROUND-ROLE",
+          "kind": "counterpoint",
+          "paraphrase": "前景柳枝若令画面杂乱，反而削弱构图",
+          "locator": "段落6",
+          "paperSlug": "paper-5f14b6d264dad77a",
+          "supportCount": 1
+        }
+      ]
+    },
+    {
+      "theme": "边缘干扰",
+      "relation": "tension",
+      "summary": "点评强调完整和精简；论文允许陪体不完整、意义完整。无意干扰与有意开放构图需区分。",
+      "candidateIds": [
+        "L-WL-REFLECTION-ROLE"
+      ],
+      "ruleIds": [
+        "S-EDGE-CONTENT"
+      ],
+      "references": [
+        {
+          "source": "paper",
+          "ruleId": "S-EDGE-CONTENT",
+          "kind": "exception",
+          "paraphrase": "陪体不必完整，不能为完整而削弱主体",
+          "locator": "段落7",
+          "paperSlug": "paper-3cbe84f8cab60c5a",
+          "supportCount": 2
+        },
+        {
+          "source": "paper",
+          "ruleId": "S-EDGE-CONTENT",
+          "kind": "exception",
+          "paraphrase": "新闻画面完整可指意义完整，而非外形全貌",
+          "locator": "段落9",
+          "paperSlug": "paper-ea232b406161d1a4",
+          "supportCount": 1
+        }
+      ]
+    },
+    {
+      "theme": "光影层次",
+      "relation": "agreement-with-exceptions",
+      "summary": "光影应支持地形和气氛；书籍论文允许阴雨、顶光，不限定黄金时段或全部细节可见。",
+      "candidateIds": [
+        "L-WL-TONE-DEPTH",
+        "L-WL-MOTION-STATIC"
+      ],
+      "ruleIds": [
+        "L-LIGHT-INTENT"
+      ],
+      "references": [
+        {
+          "source": "book",
+          "ruleId": "L-LIGHT-INTENT",
+          "kind": "source",
+          "paraphrase": "阴雨柔光也可表达空气、层次与情绪",
+          "locator": "第三讲／摄影用光的误区",
+          "bookSlug": "photography-aesthetics-six-lectures"
+        },
+        {
+          "source": "paper",
+          "ruleId": "L-LIGHT-INTENT",
+          "kind": "source",
+          "paraphrase": "比较光影是否呈现地形、质感与气氛",
+          "locator": "段落11／5-2-3 上午和下午的光线",
+          "paperSlug": "paper-09e3480ff75dbc24",
+          "supportCount": 7
+        },
+        {
+          "source": "paper",
+          "ruleId": "L-LIGHT-INTENT",
+          "kind": "exception",
+          "paraphrase": "顶光或柔和光仍可有用途，不限定黄金时段",
+          "locator": "段落15／5-2-4 中午的光线",
+          "paperSlug": "paper-09e3480ff75dbc24",
+          "supportCount": 3
+        }
+      ]
+    },
+    {
+      "theme": "街拍瞬间",
+      "relation": "agreement-with-exceptions",
+      "summary": "可见手势和人物关系支撑内容；好瞬间可有多个，不把单一自然表情当硬门槛。",
+      "candidateIds": [
+        "S-WL-INTERACTION"
+      ],
+      "ruleIds": [
+        "S-MOMENT-ACTION",
+        "S-NARRATIVE-EVIDENCE"
+      ],
+      "references": [
+        {
+          "source": "book",
+          "ruleId": "S-MOMENT-ACTION",
+          "kind": "source",
+          "paraphrase": "跨门槛的步态可同时建立人物与场景关系",
+          "locator": "第六讲／禅意摄影的美",
+          "bookSlug": "photography-aesthetics-six-lectures"
+        },
+        {
+          "source": "book",
+          "ruleId": "S-NARRATIVE-EVIDENCE",
+          "kind": "counterpoint",
+          "paraphrase": "轮廓可引发联想，人物身份仍需另行核验",
+          "locator": "第六讲／禅意摄影的美",
+          "bookSlug": "photography-aesthetics-six-lectures"
+        },
+        {
+          "source": "book",
+          "ruleId": "S-MOMENT-ACTION",
+          "kind": "counterpoint",
+          "paraphrase": "好瞬间可有多个，不把某一峰值当唯一答案",
+          "locator": "章节55／A Watch Tower, Koje Do Island, Korea, 1952, by Werner Bischof／段落16",
+          "bookSlug": "freeman-vision"
+        },
+        {
+          "source": "book",
+          "ruleId": "S-MOMENT-ACTION",
+          "kind": "source",
+          "paraphrase": "邻帧的手势与神态差异可改变单张首选",
+          "locator": "章节55／A Watch Tower, Koje Do Island, Korea, 1952, by Werner Bischof／段落24",
+          "bookSlug": "freeman-vision"
+        },
+        {
+          "source": "book",
+          "ruleId": "S-MOMENT-ACTION",
+          "kind": "source",
+          "paraphrase": "邻帧优选轮廓清楚且人物落在树间的一张",
+          "locator": "章节54／BACKLIGHT   The Silhouette／段落2",
+          "bookSlug": "freeman-capturing-light"
+        },
+        {
+          "source": "paper",
+          "ruleId": "S-MOMENT-ACTION",
+          "kind": "source",
+          "paraphrase": "比较动作、神态与物件关系是否清楚",
+          "locator": "段落5／一、时间的把握",
+          "paperSlug": "paper-4eef298928e340c4",
+          "supportCount": 11
+        }
+      ]
+    }
+  ]
+}

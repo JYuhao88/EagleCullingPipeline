@@ -1,0 +1,353 @@
+{
+  "identity": "508ed069cc4cf45150482adb43184897188c44196878d871cae2a285631a19fa",
+  "source": "ref-books",
+  "offsets": {
+    "reference-books/49.布列松《决定性瞬间》.pdf": 348870510,
+    "reference-books/Magnum Contact Sheets 此时此地 玛格南街头摄影经典.pdf": 49361831,
+    "reference-books/On-Being-a-Photographer_Hurn-Jay_3rd-ed.pdf": 900313,
+    "reference-books/Picture-Perfect-Posing_Pearson-sample.pdf": 3108035,
+    "reference-books/The-Photographers-Eye_1966_MOMA-press-release.pdf": 2958784,
+    "reference-books/The-Photographers-Eye_Szarkowski-intro-excerpt.txt": 20826,
+    "reference-books/Why-It-Does-Not-Have-To-Be-In-Focus_Prestel-sample.pdf": 434868
+  },
+  "jobs": [
+    {
+      "id": "w4-upload-ref-books-7aba113484824e629aac148bb0bd797d",
+      "action": "inspect",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-ref-books-26567b58790c4f3fa240491523e115d9",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-ref-books-d63f3acd53cf4992a3244dd75c633a44",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-ref-books-aa1d2e1806a842b0a35c369055bf6a51",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-ref-books-8b120376e912435cb6f39767b0bf00fa",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-ref-books-09f7945d730343ae81d973c8f46374f4",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-ref-books-d3346eccf91249c4be23c1239af9aa69",
+      "action": "audit",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-ref-books-5f4e4b1a5f124b2494e75291262a4958",
+      "action": "cleanup",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    }
+  ],
+  "batches": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "reference-books/49.布列松《决定性瞬间》.pdf",
+          "offset": 94371840,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "reference-books/49.布列松《决定性瞬间》.pdf",
+          "offset": 188743680,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "reference-books/49.布列松《决定性瞬间》.pdf",
+          "offset": 283115520,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "reference-books/49.布列松《决定性瞬间》.pdf",
+          "offset": 348870510,
+          "complete": true
+        },
+        {
+          "remote_rel": "reference-books/Magnum Contact Sheets 此时此地 玛格南街头摄影经典.pdf",
+          "offset": 28616850,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 28167807,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "reference-books/Magnum Contact Sheets 此时此地 玛格南街头摄影经典.pdf",
+          "offset": 49361831,
+          "complete": true
+        },
+        {
+          "remote_rel": "reference-books/On-Being-a-Photographer_Hurn-Jay_3rd-ed.pdf",
+          "offset": 900313,
+          "complete": true
+        },
+        {
+          "remote_rel": "reference-books/Picture-Perfect-Posing_Pearson-sample.pdf",
+          "offset": 3108035,
+          "complete": true
+        },
+        {
+          "remote_rel": "reference-books/The-Photographers-Eye_1966_MOMA-press-release.pdf",
+          "offset": 2958784,
+          "complete": true
+        },
+        {
+          "remote_rel": "reference-books/The-Photographers-Eye_Szarkowski-intro-excerpt.txt",
+          "offset": 20826,
+          "complete": true
+        },
+        {
+          "remote_rel": "reference-books/Why-It-Does-Not-Have-To-Be-In-Focus_Prestel-sample.pdf",
+          "offset": 434868,
+          "complete": true
+        }
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "started_at": "2026-10-10T23:18:32+0800",
+      "uploaded_bytes": 405681037,
+      "put_seconds": 61.92588991599041,
+      "elapsed_seconds": 219.47620937498868,
+      "finished_at": "2026-10-10T23:22:11+0800",
+      "effective_MBps": 1.8484055203763285,
+      "put_MBps": 6.551073186842417
+    }
+  ],
+  "status": "complete",
+  "ray_version": "2.51.1",
+  "audit": [
+    {
+      "source": "ref-books",
+      "remote_rel": "reference-books/49.布列松《决定性瞬间》.pdf",
+      "size": 348870510,
+      "sha256": "5c7bf5bc4cc4bfb2a582a89362f70091ffcb9aab385203fe5a12bf4090b6668c",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/ref-books/raw/reference-books": "0o700",
+        "<CEPH_ROOT>/references/ref-books/raw": "0o700",
+        "<CEPH_ROOT>/references/ref-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "ref-books",
+      "remote_rel": "reference-books/Magnum Contact Sheets 此时此地 玛格南街头摄影经典.pdf",
+      "size": 49361831,
+      "sha256": "2fb2aab3d040bf62101d5b171e1145cbb48cac48f01d2bc8ac85f5e58e14a303",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/ref-books/raw/reference-books": "0o700",
+        "<CEPH_ROOT>/references/ref-books/raw": "0o700",
+        "<CEPH_ROOT>/references/ref-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "ref-books",
+      "remote_rel": "reference-books/On-Being-a-Photographer_Hurn-Jay_3rd-ed.pdf",
+      "size": 900313,
+      "sha256": "8ad990a20c3c3d4a8db7b66b19ff17a824a85644a47951b998d87935f93b8298",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/ref-books/raw/reference-books": "0o700",
+        "<CEPH_ROOT>/references/ref-books/raw": "0o700",
+        "<CEPH_ROOT>/references/ref-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "ref-books",
+      "remote_rel": "reference-books/Picture-Perfect-Posing_Pearson-sample.pdf",
+      "size": 3108035,
+      "sha256": "91c0478105270248c19a7f24d15a7a786a994b1f1a3b95004fb8b29ce27befd1",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/ref-books/raw/reference-books": "0o700",
+        "<CEPH_ROOT>/references/ref-books/raw": "0o700",
+        "<CEPH_ROOT>/references/ref-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "ref-books",
+      "remote_rel": "reference-books/The-Photographers-Eye_1966_MOMA-press-release.pdf",
+      "size": 2958784,
+      "sha256": "24999c1edc96a2748adfa5048550cde0ce47600a11779a3021186d5cc9ed6fa4",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/ref-books/raw/reference-books": "0o700",
+        "<CEPH_ROOT>/references/ref-books/raw": "0o700",
+        "<CEPH_ROOT>/references/ref-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "ref-books",
+      "remote_rel": "reference-books/The-Photographers-Eye_Szarkowski-intro-excerpt.txt",
+      "size": 20826,
+      "sha256": "4f399c457502587df0f81a39992df2fd6c96c06b0507cd2eed58ff5e3942e25a",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/ref-books/raw/reference-books": "0o700",
+        "<CEPH_ROOT>/references/ref-books/raw": "0o700",
+        "<CEPH_ROOT>/references/ref-books": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "ref-books",
+      "remote_rel": "reference-books/Why-It-Does-Not-Have-To-Be-In-Focus_Prestel-sample.pdf",
+      "size": 434868,
+      "sha256": "f6d48b8923b1e867aa31c5329f11216233c27118625c5fb7b5d8acf1a67e1380",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/ref-books/raw/reference-books": "0o700",
+        "<CEPH_ROOT>/references/ref-books/raw": "0o700",
+        "<CEPH_ROOT>/references/ref-books": "0o700"
+      },
+      "part_exists": false
+    }
+  ],
+  "package_verification": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    }
+  ],
+  "redeleted_job_records": [
+    "w4-upload-ref-books-09f7945d730343ae81d973c8f46374f4",
+    "w4-upload-ref-books-26567b58790c4f3fa240491523e115d9",
+    "w4-upload-ref-books-8b120376e912435cb6f39767b0bf00fa"
+  ],
+  "cleanup_stable_empty_checks": 3,
+  "owned_jobs_remaining": [],
+  "dashboard": "<RAY_DASHBOARD>",
+  "files": [
+    {
+      "source": "ref-books",
+      "local": "<LOCAL_PATH>",
+      "remote_rel": "reference-books/49.布列松《决定性瞬间》.pdf",
+      "size": 348870510,
+      "sha256": "5c7bf5bc4cc4bfb2a582a89362f70091ffcb9aab385203fe5a12bf4090b6668c"
+    },
+    {
+      "source": "ref-books",
+      "local": "<LOCAL_PATH> Contact Sheets 此时此地 玛格南街头摄影经典.pdf",
+      "remote_rel": "reference-books/Magnum Contact Sheets 此时此地 玛格南街头摄影经典.pdf",
+      "size": 49361831,
+      "sha256": "2fb2aab3d040bf62101d5b171e1145cbb48cac48f01d2bc8ac85f5e58e14a303"
+    },
+    {
+      "source": "ref-books",
+      "local": "<LOCAL_PATH>",
+      "remote_rel": "reference-books/On-Being-a-Photographer_Hurn-Jay_3rd-ed.pdf",
+      "size": 900313,
+      "sha256": "8ad990a20c3c3d4a8db7b66b19ff17a824a85644a47951b998d87935f93b8298"
+    },
+    {
+      "source": "ref-books",
+      "local": "<LOCAL_PATH>",
+      "remote_rel": "reference-books/Picture-Perfect-Posing_Pearson-sample.pdf",
+      "size": 3108035,
+      "sha256": "91c0478105270248c19a7f24d15a7a786a994b1f1a3b95004fb8b29ce27befd1"
+    },
+    {
+      "source": "ref-books",
+      "local": "<LOCAL_PATH>",
+      "remote_rel": "reference-books/The-Photographers-Eye_1966_MOMA-press-release.pdf",
+      "size": 2958784,
+      "sha256": "24999c1edc96a2748adfa5048550cde0ce47600a11779a3021186d5cc9ed6fa4"
+    },
+    {
+      "source": "ref-books",
+      "local": "<LOCAL_PATH>",
+      "remote_rel": "reference-books/The-Photographers-Eye_Szarkowski-intro-excerpt.txt",
+      "size": 20826,
+      "sha256": "4f399c457502587df0f81a39992df2fd6c96c06b0507cd2eed58ff5e3942e25a"
+    },
+    {
+      "source": "ref-books",
+      "local": "<LOCAL_PATH>",
+      "remote_rel": "reference-books/Why-It-Does-Not-Have-To-Be-In-Focus_Prestel-sample.pdf",
+      "size": 434868,
+      "sha256": "f6d48b8923b1e867aa31c5329f11216233c27118625c5fb7b5d8acf1a67e1380"
+    }
+  ],
+  "payload_cap_bytes": 94371840,
+  "http_limit_bytes": 104857600,
+  "nice": 10
+}

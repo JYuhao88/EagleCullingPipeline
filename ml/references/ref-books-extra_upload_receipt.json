@@ -1,0 +1,100 @@
+{
+  "identity": "6959d659117dcda05ada0f8e4438e7309459b0facae0f9c7f415cd8d76c81b02",
+  "source": "ref-books-extra",
+  "offsets": {
+    "reference-books/摄影之眼.pdf": 46981664
+  },
+  "jobs": [
+    {
+      "id": "w4-upload-ref-books-extra-af76ec50a062429ca03c4b404cbc864d",
+      "action": "inspect",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-ref-books-extra-92803149aae648b98492551519cc2cbf",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-ref-books-extra-36a9696e878e497a88a2eb04474c99a9",
+      "action": "audit",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-ref-books-extra-997da69f88eb4ada9fde549513bc97ca",
+      "action": "cleanup",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    }
+  ],
+  "batches": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 46981664,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "reference-books/摄影之眼.pdf",
+          "offset": 46981664,
+          "complete": true
+        }
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "started_at": "2026-10-10T23:52:13+0800",
+      "uploaded_bytes": 46986730,
+      "put_seconds": 6.972318165993784,
+      "elapsed_seconds": 51.82022287498694,
+      "finished_at": "2026-10-10T23:53:04+0800",
+      "effective_MBps": 0.9067257412873843,
+      "put_MBps": 6.73903985465971
+    }
+  ],
+  "status": "complete",
+  "ray_version": "2.51.1",
+  "audit": [
+    {
+      "source": "ref-books-extra",
+      "remote_rel": "reference-books/摄影之眼.pdf",
+      "size": 46981664,
+      "sha256": "d3ae934152d54ba88028cee746a5431fa9b00844ce2ec62508e515a43047acc7",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/ref-books-extra/raw/reference-books": "0o700",
+        "<CEPH_ROOT>/references/ref-books-extra/raw": "0o700",
+        "<CEPH_ROOT>/references/ref-books-extra": "0o700"
+      },
+      "part_exists": false
+    }
+  ],
+  "package_verification": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    }
+  ],
+  "cleanup_stable_empty_checks": 3,
+  "owned_jobs_remaining": [],
+  "dashboard": "<RAY_DASHBOARD>",
+  "files": [
+    {
+      "source": "ref-books-extra",
+      "local": "<LOCAL_PATH>",
+      "remote_rel": "reference-books/摄影之眼.pdf",
+      "size": 46981664,
+      "sha256": "d3ae934152d54ba88028cee746a5431fa9b00844ce2ec62508e515a43047acc7"
+    }
+  ],
+  "payload_cap_bytes": 94371840,
+  "http_limit_bytes": 104857600,
+  "nice": 10
+}

@@ -1,0 +1,2153 @@
+{
+  "schema_version": 1,
+  "collected_at_utc": "2026-10-10T02:28:41.572709+00:00",
+  "purpose": "其他题材专家来源候选；公开元数据检索，不下载视频。",
+  "downloaded_video_count": 0,
+  "license_note": "公开可观看不代表可下载/训练/再分发；后续用户确认下载范围时应核实UP授权、视频与投稿照片权利。仓库仅存元数据与抽象规则。",
+  "method": {
+    "search_endpoint": "https://api.bilibili.com/x/web-interface/search/type",
+    "collection_endpoint": "https://api.bilibili.com/x/polymer/web-space/seasons_series_list",
+    "season_endpoint": "https://api.bilibili.com/x/polymer/web-space/seasons_archives_list",
+    "detail_endpoint": "https://api.bilibili.com/x/web-interface/view",
+    "user_agent": "ordinary Chrome browser UA",
+    "referer": "https://search.bilibili.com",
+    "cookie": "random buvid3 (not persisted)",
+    "request_delay_seconds": 1.2,
+    "search_request_count": 41,
+    "search_unique_videos": 1474,
+    "searches": [
+      {
+        "keyword": "风光 照片点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "风光 作品点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "街拍 照片点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "街头摄影 点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "纪实 摄影 点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "婚礼 摄影 点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "风光 投稿 点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "街拍 投稿 点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "照片点评 摄影师",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "摄影 作品点评 等级",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "风光点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "街拍点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "纪实点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "婚礼照片点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "摄影作品点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "摄影评片",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "风光人文摄影师武林",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "Thomas看看世界 点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "金叔影像社 点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "照片点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "摄影点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "街头摄影作品点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "街拍照片点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "风光照片点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "婚礼摄影点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "纪实照片点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "摄影 投稿 评片",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "刘君武 摄影点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "摄影师韩松 点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 1,
+        "page_size": 50
+      },
+      {
+        "keyword": "照片点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 2,
+        "page_size": 50
+      },
+      {
+        "keyword": "照片点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 3,
+        "page_size": 50
+      },
+      {
+        "keyword": "照片点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 4,
+        "page_size": 50
+      },
+      {
+        "keyword": "风光摄影点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 2,
+        "page_size": 50
+      },
+      {
+        "keyword": "风光摄影点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 3,
+        "page_size": 50
+      },
+      {
+        "keyword": "风光摄影点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 4,
+        "page_size": 50
+      },
+      {
+        "keyword": "街拍点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 2,
+        "page_size": 50
+      },
+      {
+        "keyword": "街拍点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 3,
+        "page_size": 50
+      },
+      {
+        "keyword": "街拍点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 4,
+        "page_size": 50
+      },
+      {
+        "keyword": "婚礼摄影点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 2,
+        "page_size": 50
+      },
+      {
+        "keyword": "婚礼摄影点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 3,
+        "page_size": 50
+      },
+      {
+        "keyword": "婚礼摄影点评",
+        "code": 0,
+        "numResults": 1000,
+        "page": 4,
+        "page_size": 50
+      }
+    ],
+    "season_page_log": [
+      {
+        "mid": 474457011,
+        "season_id": 296178,
+        "page": 1,
+        "code": 0,
+        "page_info": {
+          "page_num": 1,
+          "page_size": 30,
+          "total": 40
+        }
+      },
+      {
+        "mid": 474457011,
+        "season_id": 296178,
+        "page": 2,
+        "code": 0,
+        "page_info": {
+          "page_num": 2,
+          "page_size": 30,
+          "total": 40
+        }
+      },
+      {
+        "mid": 201206952,
+        "season_id": 1604009,
+        "page": 1,
+        "code": 0,
+        "page_info": {
+          "page_num": 1,
+          "page_size": 30,
+          "total": 129
+        }
+      },
+      {
+        "mid": 201206952,
+        "season_id": 1604009,
+        "page": 2,
+        "code": 0,
+        "page_info": {
+          "page_num": 2,
+          "page_size": 30,
+          "total": 129
+        }
+      },
+      {
+        "mid": 201206952,
+        "season_id": 1604009,
+        "page": 3,
+        "code": 0,
+        "page_info": {
+          "page_num": 3,
+          "page_size": 30,
+          "total": 129
+        }
+      },
+      {
+        "mid": 201206952,
+        "season_id": 1604009,
+        "page": 4,
+        "code": 0,
+        "page_info": {
+          "page_num": 4,
+          "page_size": 30,
+          "total": 129
+        }
+      },
+      {
+        "mid": 201206952,
+        "season_id": 1604009,
+        "page": 5,
+        "code": 0,
+        "page_info": {
+          "page_num": 5,
+          "page_size": 30,
+          "total": 129
+        }
+      }
+    ],
+    "statistics_definition": "合集全量以season分页为准；搜索样本按bvid去重。views_sum为当次公开单视频累计播放量相加，不是独立观众，不混加合集总播放。时长用秒，未播放内容。"
+  },
+  "limitations": [
+    "本次检索为41个关键词/页组合、每页50；不是全站或UP全部投稿普查。B站相关性搜索存在泛化和分页重复，搜索样本为下界。",
+    "只有武林40期和潘庆华129期点评合集完成全页统计；其他账号数字严格为已命中视频，不声称全集。",
+    "逐张点评/等级状态来自标题和描述，未观看视频；人工抽样应确认点评密度、讲师资历、题材和尺度一致性。",
+    "没有确认合格的原作者婚礼长篇逐张点评系列；唯一长命中疑似课程转载，排除。街拍/纪实专项仍缺稳定、明确评级的长合集。"
+  ],
+  "candidates": [
+    {
+      "rank": 1,
+      "recommended": true,
+      "mid": 474457011,
+      "uploader": "风光人文摄影师武林",
+      "uploader_url": "https://space.bilibili.com/474457011",
+      "genres": [
+        "landscape",
+        "documentary",
+        "mixed"
+      ],
+      "reason": "最接近衣刀的长视频投稿点评；标题持续强调找问题、挑毛病和解决方案；唯一确认完整长点评合集。",
+      "account_collection_count": 5,
+      "account_collection_inventory_complete": true,
+      "relevant_series_count_confirmed": 1,
+      "relevant_series_count_note": "摄影点评合集40视频，已读全2页。其他合集为摄影教程/存储等。",
+      "statistics": {
+        "scope": "complete_season_296178",
+        "video_count": 40,
+        "duration_seconds": 105696,
+        "views_sum": 339739,
+        "complete": true
+      },
+      "photo_by_photo": {
+        "status": "inferred_from_public_title_description",
+        "evidence": [
+          "摄影作品点评第21集，找问题挑毛病提供解决方案，武林说实话；如果您也有作品需要点评，或者交流，请看个人主页！\n【武林说实话，摄影点评21集】点评的宗旨：找问题，挑毛病，提出建议和解决方案，优点学习，问题避免！摄影不是一家之言，我的点评仅仅是建议，如果对您有帮助我很高兴，如果有分歧或者不同的意见，欢迎留言讨论。"
+        ],
+        "requires_manual_review": true
+      },
+      "grading": {
+        "status": "unknown",
+        "requires_manual_review": true
+      },
+      "videos": [
+        {
+          "bvid": "BV1Cy4y157vi",
+          "url": "https://www.bilibili.com/video/BV1Cy4y157vi",
+          "title": "影友们的摄影作品点评第①集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1224,
+          "views": 14402
+        },
+        {
+          "bvid": "BV1dL41147Kf",
+          "url": "https://www.bilibili.com/video/BV1dL41147Kf",
+          "title": "影友们的摄影作品点评第②集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1300,
+          "views": 8830
+        },
+        {
+          "bvid": "BV1yXpjzhEFn",
+          "url": "https://www.bilibili.com/video/BV1yXpjzhEFn",
+          "title": "摄影作品点评第③集，找问题挑毛病解决方案，武林说实话",
+          "duration_seconds": 1319,
+          "views": 4207
+        },
+        {
+          "bvid": "BV1VU4y1w74y",
+          "url": "https://www.bilibili.com/video/BV1VU4y1w74y",
+          "title": "摄影作品点评第④集，找问题挑毛病解决方案，武林说实话",
+          "duration_seconds": 1774,
+          "views": 5098
+        },
+        {
+          "bvid": "BV1g3411C7xy",
+          "url": "https://www.bilibili.com/video/BV1g3411C7xy",
+          "title": "摄影作品点评第⑤集，找问题挑毛病解决方案，武林说实话",
+          "duration_seconds": 1707,
+          "views": 3655
+        },
+        {
+          "bvid": "BV1nP4y1t7JY",
+          "url": "https://www.bilibili.com/video/BV1nP4y1t7JY",
+          "title": "影友们的摄影作品点评第⑥集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1511,
+          "views": 3793
+        },
+        {
+          "bvid": "BV1FP4y157Cb",
+          "url": "https://www.bilibili.com/video/BV1FP4y157Cb",
+          "title": "影友们的摄影作品点评第⑦集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1558,
+          "views": 3274
+        },
+        {
+          "bvid": "BV18F411h7nA",
+          "url": "https://www.bilibili.com/video/BV18F411h7nA",
+          "title": "影友们的摄影作品点评第⑧集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1814,
+          "views": 3157
+        },
+        {
+          "bvid": "BV1XL41177FF",
+          "url": "https://www.bilibili.com/video/BV1XL41177FF",
+          "title": "影友们的摄影作品点评第⑨集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1901,
+          "views": 3786
+        },
+        {
+          "bvid": "BV1tS4y137bx",
+          "url": "https://www.bilibili.com/video/BV1tS4y137bx",
+          "title": "影友们的摄影作品点评第⑩集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1919,
+          "views": 8440
+        },
+        {
+          "bvid": "BV1ni4y1Q7Uf",
+          "url": "https://www.bilibili.com/video/BV1ni4y1Q7Uf",
+          "title": "影友们的摄影作品点评第⑪集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1103,
+          "views": 6316
+        },
+        {
+          "bvid": "BV1R541127yp",
+          "url": "https://www.bilibili.com/video/BV1R541127yp",
+          "title": "影友们的摄影作品点评第12集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 971,
+          "views": 4573
+        },
+        {
+          "bvid": "BV1G54y1o7Fx",
+          "url": "https://www.bilibili.com/video/BV1G54y1o7Fx",
+          "title": "摄影作品点评第13集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 3190,
+          "views": 8708
+        },
+        {
+          "bvid": "BV1sT411J7xb",
+          "url": "https://www.bilibili.com/video/BV1sT411J7xb",
+          "title": "摄影作品点评第14集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 4663,
+          "views": 16527
+        },
+        {
+          "bvid": "BV1Yd4y1X7wg",
+          "url": "https://www.bilibili.com/video/BV1Yd4y1X7wg",
+          "title": "摄影作品点评第16集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 6827,
+          "views": 12551
+        },
+        {
+          "bvid": "BV1qd4y1z7P1",
+          "url": "https://www.bilibili.com/video/BV1qd4y1z7P1",
+          "title": "摄影作品点评第17集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 3590,
+          "views": 4879
+        },
+        {
+          "bvid": "BV1tW4y1H7i1",
+          "url": "https://www.bilibili.com/video/BV1tW4y1H7i1",
+          "title": "摄影点评，一个小小的改变，让拍摄的“主角”更突出！",
+          "duration_seconds": 115,
+          "views": 2511
+        },
+        {
+          "bvid": "BV1X8411Y7f5",
+          "url": "https://www.bilibili.com/video/BV1X8411Y7f5",
+          "title": "摄影作品点评第18集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 5755,
+          "views": 7959
+        },
+        {
+          "bvid": "BV1F14y1T7C5",
+          "url": "https://www.bilibili.com/video/BV1F14y1T7C5",
+          "title": "摄影作品点评第19集上，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1849,
+          "views": 13822
+        },
+        {
+          "bvid": "BV1dA41197xn",
+          "url": "https://www.bilibili.com/video/BV1dA41197xn",
+          "title": "摄影点评第19集下，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1914,
+          "views": 13770
+        },
+        {
+          "bvid": "BV1KR4y1e77x",
+          "url": "https://www.bilibili.com/video/BV1KR4y1e77x",
+          "title": "摄影作品点评第20集上，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1444,
+          "views": 6685
+        },
+        {
+          "bvid": "BV1324y1a7Aa",
+          "url": "https://www.bilibili.com/video/BV1324y1a7Aa",
+          "title": "学会通俗易懂的两点式摄影思维，摄影作品点评第20集下",
+          "duration_seconds": 1640,
+          "views": 18053
+        },
+        {
+          "bvid": "BV1kv4y1L7G5",
+          "url": "https://www.bilibili.com/video/BV1kv4y1L7G5",
+          "title": "我们好好聊聊，拍摄思路与美学解析，如何让作品变得更好（上集）",
+          "duration_seconds": 1621,
+          "views": 18074
+        },
+        {
+          "bvid": "BV1kM4y1B73s",
+          "url": "https://www.bilibili.com/video/BV1kM4y1B73s",
+          "title": "我们接着聊，拍摄思路与美学解析，如何让作品变得更好（下集）",
+          "duration_seconds": 2159,
+          "views": 11602
+        },
+        {
+          "bvid": "BV15V4y1a7Mo",
+          "url": "https://www.bilibili.com/video/BV15V4y1a7Mo",
+          "title": "摄影作品点评第21集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1675,
+          "views": 63495
+        },
+        {
+          "bvid": "BV15p421y71E",
+          "url": "https://www.bilibili.com/video/BV15p421y71E",
+          "title": "摄影作品点评第22集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 2783,
+          "views": 20094
+        },
+        {
+          "bvid": "BV1mt421M7fq",
+          "url": "https://www.bilibili.com/video/BV1mt421M7fq",
+          "title": "摄影作品点评第23集上，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 2048,
+          "views": 11210
+        },
+        {
+          "bvid": "BV1bS421o71m",
+          "url": "https://www.bilibili.com/video/BV1bS421o71m",
+          "title": "摄影作品点评第23集下，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1374,
+          "views": 3843
+        },
+        {
+          "bvid": "BV1Cs421T7B1",
+          "url": "https://www.bilibili.com/video/BV1Cs421T7B1",
+          "title": "这届参赛作品太精彩！明基SW后期武林大会摄影作品点评",
+          "duration_seconds": 2645,
+          "views": 4216
+        },
+        {
+          "bvid": "BV1jUDtYrE54",
+          "url": "https://www.bilibili.com/video/BV1jUDtYrE54",
+          "title": "【摄影点评】第24集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 4514,
+          "views": 4062
+        },
+        {
+          "bvid": "BV174XXYDEqo",
+          "url": "https://www.bilibili.com/video/BV174XXYDEqo",
+          "title": "【摄影点评】第25集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 2521,
+          "views": 2794
+        },
+        {
+          "bvid": "BV1jhVBzXECm",
+          "url": "https://www.bilibili.com/video/BV1jhVBzXECm",
+          "title": "【摄影点评】第26集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 5028,
+          "views": 4532
+        },
+        {
+          "bvid": "BV13PT2zQEfF",
+          "url": "https://www.bilibili.com/video/BV13PT2zQEfF",
+          "title": "【摄影点评】第27集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 3647,
+          "views": 3478
+        },
+        {
+          "bvid": "BV1gCuFz4E5f",
+          "url": "https://www.bilibili.com/video/BV1gCuFz4E5f",
+          "title": "【摄影点评】第28集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 3937,
+          "views": 2937
+        },
+        {
+          "bvid": "BV1vth3zQEAp",
+          "url": "https://www.bilibili.com/video/BV1vth3zQEAp",
+          "title": "【摄影点评】第29集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 6160,
+          "views": 2299
+        },
+        {
+          "bvid": "BV1stYVz7E4L",
+          "url": "https://www.bilibili.com/video/BV1stYVz7E4L",
+          "title": "【摄影点评】第30集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 4163,
+          "views": 5555
+        },
+        {
+          "bvid": "BV1iEkfBYE3a",
+          "url": "https://www.bilibili.com/video/BV1iEkfBYE3a",
+          "title": "【摄影点评】第31集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 3794,
+          "views": 2887
+        },
+        {
+          "bvid": "BV1XM3D6FEf5",
+          "url": "https://www.bilibili.com/video/BV1XM3D6FEf5",
+          "title": "【摄影点评】第32集上，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1774,
+          "views": 1436
+        },
+        {
+          "bvid": "BV1oKuJ6GERh",
+          "url": "https://www.bilibili.com/video/BV1oKuJ6GERh",
+          "title": "【摄影点评】第32集下，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 1412,
+          "views": 1075
+        },
+        {
+          "bvid": "BV1NZhw6cEpS",
+          "url": "https://www.bilibili.com/video/BV1NZhw6cEpS",
+          "title": "【摄影点评】第33集，找问题挑毛病提供解决方案，武林说实话",
+          "duration_seconds": 5353,
+          "views": 1154
+        }
+      ],
+      "relevant_series": [
+        {
+          "season_id": 296178,
+          "title": "摄影点评",
+          "listed_video_count": 40,
+          "pages_read": [
+            1,
+            2
+          ],
+          "page_size": 30,
+          "url": "https://space.bilibili.com/474457011/lists/296178?type=season"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "recommended": true,
+      "mid": 277329684,
+      "uploader": "Thomas看看世界",
+      "uploader_url": "https://space.bilibili.com/277329684",
+      "genres": [
+        "landscape"
+      ],
+      "reason": "风光针对性高：投稿裁图/明暗简化案例 + 哈苏风光奖入围点评；适合建立构图层次与风格比较标签。",
+      "account_collection_count": 3,
+      "account_collection_inventory_complete": true,
+      "relevant_series_count_confirmed": 0,
+      "relevant_series_count_note": "标题中编号不证明已存在连续系列；账号其他器材/教程合集不计点评系列。",
+      "statistics": {
+        "scope": "search_sample",
+        "video_count": 2,
+        "duration_seconds": 1265,
+        "views_sum": 148444,
+        "complete": false
+      },
+      "photo_by_photo": {
+        "status": "inferred_from_public_title_description",
+        "evidence": [
+          "摄影要拍好真的需要减法！评论区投稿照片点评~；摄影要拍好，真的需要学会减法！\n\n在今天的摄影教程中，Thomas精选了一些大家发表在评论区的投稿照片，他们有一个共性就是因为取入细节太多而显得杂乱。\n\n我们不仅可以通过二次裁图的方式，还可以通过后期明暗的调整，让照片更加简洁好看！",
+          "从夯到拉，点评2026哈苏大师赛入围作品（风光摄影类）；从夯到拉，点评2026哈苏大师赛入围作品（风光摄影类）"
+        ],
+        "requires_manual_review": true
+      },
+      "grading": {
+        "status": "qualitative_tier_in_title_从夯到拉",
+        "requires_manual_review": true
+      },
+      "videos": [
+        {
+          "bvid": "BV1Ni421a7RM",
+          "url": "https://www.bilibili.com/video/BV1Ni421a7RM",
+          "title": "摄影要拍好真的需要减法！评论区投稿照片点评~",
+          "duration_seconds": 708,
+          "views": 111676
+        },
+        {
+          "bvid": "BV1qtRrB2Eba",
+          "url": "https://www.bilibili.com/video/BV1qtRrB2Eba",
+          "title": "从夯到拉，点评2026哈苏大师赛入围作品（风光摄影类）",
+          "duration_seconds": 557,
+          "views": 36768
+        }
+      ],
+      "relevant_series": []
+    },
+    {
+      "rank": 3,
+      "recommended": true,
+      "mid": 319841852,
+      "uploader": "赵钢的摄影课",
+      "uploader_url": "https://space.bilibili.com/319841852",
+      "genres": [
+        "mixed",
+        "documentary"
+      ],
+      "reason": "22分54秒看照片学摄影，适合补观察和画面组织规则；仅确认点评（一），后续是否连载待核。",
+      "account_collection_count": 9,
+      "account_collection_inventory_complete": true,
+      "relevant_series_count_confirmed": 0,
+      "relevant_series_count_note": "标题中编号不证明已存在连续系列；账号其他器材/教程合集不计点评系列。",
+      "statistics": {
+        "scope": "search_sample",
+        "video_count": 1,
+        "duration_seconds": 1374,
+        "views_sum": 23360,
+        "complete": false
+      },
+      "photo_by_photo": {
+        "status": "inferred_from_public_title_description",
+        "evidence": [
+          "看照片学摄影——照片点评（一）【赵钢讲摄影】；从别人的照片能看到什么，能学到什么？让你开窍的东西就藏在我的字里行间。"
+        ],
+        "requires_manual_review": true
+      },
+      "grading": {
+        "status": "unknown",
+        "requires_manual_review": true
+      },
+      "videos": [
+        {
+          "bvid": "BV1GB4y1A7cD",
+          "url": "https://www.bilibili.com/video/BV1GB4y1A7cD",
+          "title": "看照片学摄影——照片点评（一）【赵钢讲摄影】",
+          "duration_seconds": 1374,
+          "views": 23360
+        }
+      ],
+      "relevant_series": []
+    },
+    {
+      "rank": 4,
+      "recommended": true,
+      "mid": 446337665,
+      "uploader": "摄影师聿铭",
+      "uploader_url": "https://space.bilibili.com/446337665",
+      "genres": [
+        "mixed",
+        "street_candidate"
+      ],
+      "reason": "明确征集观众照片、10分20秒点评；适合投稿偏好比较。街拍覆盖需先人工核实，不能从账号审美日记数量推断。",
+      "account_collection_count": 5,
+      "account_collection_inventory_complete": true,
+      "relevant_series_count_confirmed": 0,
+      "relevant_series_count_note": "标题中编号不证明已存在连续系列；账号其他器材/教程合集不计点评系列。",
+      "statistics": {
+        "scope": "search_sample",
+        "video_count": 1,
+        "duration_seconds": 620,
+        "views_sum": 30997,
+        "complete": false
+      },
+      "photo_by_photo": {
+        "status": "inferred_from_public_title_description",
+        "evidence": [
+          "【照片点评01】怎样的照片才是好作品？不管了，取长补短就是了；欢迎大家参与「照片点评投稿」，我会选择大家的作品来做点评。"
+        ],
+        "requires_manual_review": true
+      },
+      "grading": {
+        "status": "unknown",
+        "requires_manual_review": true
+      },
+      "videos": [
+        {
+          "bvid": "BV1sa4y1d7d1",
+          "url": "https://www.bilibili.com/video/BV1sa4y1d7d1",
+          "title": "【照片点评01】怎样的照片才是好作品？不管了，取长补短就是了",
+          "duration_seconds": 620,
+          "views": 30997
+        }
+      ],
+      "relevant_series": []
+    },
+    {
+      "rank": null,
+      "recommended": false,
+      "mid": 201206952,
+      "uploader": "摄影读书潘庆华",
+      "uploader_url": "https://space.bilibili.com/201206952",
+      "genres": [
+        "landscape",
+        "mixed"
+      ],
+      "reason": "完整129条照片点评可作定向补充，但短视频比例高，单次论证和逐张偏好信息较少，优先级低于长点评。",
+      "account_collection_count": 3,
+      "account_collection_inventory_complete": true,
+      "relevant_series_count_confirmed": 1,
+      "statistics": {
+        "scope": "complete_season_1604009",
+        "video_count": 129,
+        "duration_seconds": 19398,
+        "views_sum": 207168,
+        "complete": true,
+        "at_most_120_seconds": 60
+      },
+      "photo_by_photo": {
+        "status": "inferred_from_titles",
+        "requires_manual_review": true
+      },
+      "grading": {
+        "status": "unknown",
+        "requires_manual_review": true
+      },
+      "relevant_series": [
+        {
+          "season_id": 1604009,
+          "title": "照片点评",
+          "listed_video_count": 129,
+          "pages_read": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "page_size": 30
+        }
+      ],
+      "videos": [
+        {
+          "bvid": "BV19p4y137fk",
+          "url": "https://www.bilibili.com/video/BV19p4y137fk",
+          "title": "照片点评之如何拍好小朋友？",
+          "duration_seconds": 245,
+          "views": 1854
+        },
+        {
+          "bvid": "BV1Gu4y1B75v",
+          "url": "https://www.bilibili.com/video/BV1Gu4y1B75v",
+          "title": "照片点评之如何利用裁切进行二次构图?",
+          "duration_seconds": 78,
+          "views": 1352
+        },
+        {
+          "bvid": "BV1oV4y1i7WC",
+          "url": "https://www.bilibili.com/video/BV1oV4y1i7WC",
+          "title": "照片点评之风景照如何构图更好看？",
+          "duration_seconds": 70,
+          "views": 1200
+        },
+        {
+          "bvid": "BV1Ph4y1c7W5",
+          "url": "https://www.bilibili.com/video/BV1Ph4y1c7W5",
+          "title": "照片点评之拍照构图千万不要做这点",
+          "duration_seconds": 92,
+          "views": 1939
+        },
+        {
+          "bvid": "BV18V4y1v7us",
+          "url": "https://www.bilibili.com/video/BV18V4y1v7us",
+          "title": "照片点评之出游如何构图拍出好照片？",
+          "duration_seconds": 73,
+          "views": 1134
+        },
+        {
+          "bvid": "BV11m4y1p7qN",
+          "url": "https://www.bilibili.com/video/BV11m4y1p7qN",
+          "title": "照片点评之闪光灯如何拍出质感宠物照？",
+          "duration_seconds": 96,
+          "views": 1342
+        },
+        {
+          "bvid": "BV1uu4y1d7pp",
+          "url": "https://www.bilibili.com/video/BV1uu4y1d7pp",
+          "title": "照片点评之纵深感照片如何拍才好看？",
+          "duration_seconds": 121,
+          "views": 2629
+        },
+        {
+          "bvid": "BV1Ym4y1p73q",
+          "url": "https://www.bilibili.com/video/BV1Ym4y1p73q",
+          "title": "照片点评之荷花拍摄应该注意哪些？",
+          "duration_seconds": 64,
+          "views": 1738
+        },
+        {
+          "bvid": "BV1eX4y1j78W",
+          "url": "https://www.bilibili.com/video/BV1eX4y1j78W",
+          "title": "照片点评之主体与陪体的关系",
+          "duration_seconds": 36,
+          "views": 1925
+        },
+        {
+          "bvid": "BV1kN411z7bu",
+          "url": "https://www.bilibili.com/video/BV1kN411z7bu",
+          "title": "照片点评之海边风景照拍摄",
+          "duration_seconds": 34,
+          "views": 1109
+        },
+        {
+          "bvid": "BV1kX4y1x7TN",
+          "url": "https://www.bilibili.com/video/BV1kX4y1x7TN",
+          "title": "照片点评之闪光灯星云大片拍摄技巧",
+          "duration_seconds": 99,
+          "views": 1424
+        },
+        {
+          "bvid": "BV1r84y1f7xY",
+          "url": "https://www.bilibili.com/video/BV1r84y1f7xY",
+          "title": "照片点评之闪光灯梦想光人像拍摄技巧",
+          "duration_seconds": 58,
+          "views": 1048
+        },
+        {
+          "bvid": "BV1cG411f7mw",
+          "url": "https://www.bilibili.com/video/BV1cG411f7mw",
+          "title": "照片点评之风光人像摄影技巧",
+          "duration_seconds": 71,
+          "views": 1700
+        },
+        {
+          "bvid": "BV1Yp4y1J7Fr",
+          "url": "https://www.bilibili.com/video/BV1Yp4y1J7Fr",
+          "title": "照片点评之微距摄影注意主体重量",
+          "duration_seconds": 73,
+          "views": 1250
+        },
+        {
+          "bvid": "BV1Vz4y1u7su",
+          "url": "https://www.bilibili.com/video/BV1Vz4y1u7su",
+          "title": "照片点评之人物拍照姿势很重要",
+          "duration_seconds": 67,
+          "views": 1129
+        },
+        {
+          "bvid": "BV1Wu4y1v7Ey",
+          "url": "https://www.bilibili.com/video/BV1Wu4y1v7Ey",
+          "title": "照片点评之闪光灯人像组图点评",
+          "duration_seconds": 69,
+          "views": 1192
+        },
+        {
+          "bvid": "BV1Tm4y1H7N8",
+          "url": "https://www.bilibili.com/video/BV1Tm4y1H7N8",
+          "title": "照片点评之闪光灯人像一定要注意这一点",
+          "duration_seconds": 53,
+          "views": 1231
+        },
+        {
+          "bvid": "BV1tF411C7BT",
+          "url": "https://www.bilibili.com/video/BV1tF411C7BT",
+          "title": "照片点评之拍照注意光影很重要",
+          "duration_seconds": 27,
+          "views": 24680
+        },
+        {
+          "bvid": "BV1Uu41177Dp",
+          "url": "https://www.bilibili.com/video/BV1Uu41177Dp",
+          "title": "照片点评之构图调整一点照片高级小技巧",
+          "duration_seconds": 44,
+          "views": 3416
+        },
+        {
+          "bvid": "BV13p4y1K7Mr",
+          "url": "https://www.bilibili.com/video/BV13p4y1K7Mr",
+          "title": "照片点评之构图对比与相似",
+          "duration_seconds": 55,
+          "views": 1406
+        },
+        {
+          "bvid": "BV14P411p76m",
+          "url": "https://www.bilibili.com/video/BV14P411p76m",
+          "title": "照片点评之阴天拍摄人像技巧",
+          "duration_seconds": 257,
+          "views": 1521
+        },
+        {
+          "bvid": "BV1sG411o7qH",
+          "url": "https://www.bilibili.com/video/BV1sG411o7qH",
+          "title": "照片点评之运用光线选景拍出好照片",
+          "duration_seconds": 186,
+          "views": 1123
+        },
+        {
+          "bvid": "BV1qz4y1u7zL",
+          "url": "https://www.bilibili.com/video/BV1qz4y1u7zL",
+          "title": "照片点评之人像摄影构图巧用视觉灭点",
+          "duration_seconds": 262,
+          "views": 1252
+        },
+        {
+          "bvid": "BV12h4y1U7k9",
+          "url": "https://www.bilibili.com/video/BV12h4y1U7k9",
+          "title": "照片点评之人像摆姿小技巧",
+          "duration_seconds": 150,
+          "views": 864
+        },
+        {
+          "bvid": "BV1eN411i7qh",
+          "url": "https://www.bilibili.com/video/BV1eN411i7qh",
+          "title": "照片点评之拍摄人像要注意可识别图形",
+          "duration_seconds": 98,
+          "views": 853
+        },
+        {
+          "bvid": "BV1dj411q7Sk",
+          "url": "https://www.bilibili.com/video/BV1dj411q7Sk",
+          "title": "照片点评之风景照加上人像如何突出主体",
+          "duration_seconds": 135,
+          "views": 940
+        },
+        {
+          "bvid": "BV1Yu4y1e7ww",
+          "url": "https://www.bilibili.com/video/BV1Yu4y1e7ww",
+          "title": "照片点评之风光照突出主体很重要",
+          "duration_seconds": 115,
+          "views": 1019
+        },
+        {
+          "bvid": "BV1qF411r7Yp",
+          "url": "https://www.bilibili.com/video/BV1qF411r7Yp",
+          "title": "照片点评之视觉原理在摄影中的重要性",
+          "duration_seconds": 181,
+          "views": 974
+        },
+        {
+          "bvid": "BV1Vw411S7Gs",
+          "url": "https://www.bilibili.com/video/BV1Vw411S7Gs",
+          "title": "照片点评之视觉均衡的重要性",
+          "duration_seconds": 117,
+          "views": 781
+        },
+        {
+          "bvid": "BV1vw411Q7KM",
+          "url": "https://www.bilibili.com/video/BV1vw411Q7KM",
+          "title": "照片点评之摄影摆姿避坑小技巧",
+          "duration_seconds": 182,
+          "views": 1353
+        },
+        {
+          "bvid": "BV1Tr4y197cd",
+          "url": "https://www.bilibili.com/video/BV1Tr4y197cd",
+          "title": "照片点评之培养摄影眼小技巧，视觉重量很重要",
+          "duration_seconds": 147,
+          "views": 845
+        },
+        {
+          "bvid": "BV1zm4y1T76g",
+          "url": "https://www.bilibili.com/video/BV1zm4y1T76g",
+          "title": "照片点评之构图中的色彩呼应",
+          "duration_seconds": 96,
+          "views": 1066
+        },
+        {
+          "bvid": "BV1tz4y1K75j",
+          "url": "https://www.bilibili.com/video/BV1tz4y1K75j",
+          "title": "照片点评之画面故事感的重要性",
+          "duration_seconds": 34,
+          "views": 1013
+        },
+        {
+          "bvid": "BV1rN4y1R7o5",
+          "url": "https://www.bilibili.com/video/BV1rN4y1R7o5",
+          "title": "照片点评之纯色背景静物拍摄技巧",
+          "duration_seconds": 111,
+          "views": 978
+        },
+        {
+          "bvid": "BV1jp4y1N7Tn",
+          "url": "https://www.bilibili.com/video/BV1jp4y1N7Tn",
+          "title": "照片点评之摄影中的减法",
+          "duration_seconds": 37,
+          "views": 899
+        },
+        {
+          "bvid": "BV1Ju4y1y71w",
+          "url": "https://www.bilibili.com/video/BV1Ju4y1y71w",
+          "title": "照片点评之人像摆姿要注意这点",
+          "duration_seconds": 59,
+          "views": 803
+        },
+        {
+          "bvid": "BV1r34y1T7Dp",
+          "url": "https://www.bilibili.com/video/BV1r34y1T7Dp",
+          "title": "照片点评之人像摄影摆姿提升高级感的技巧",
+          "duration_seconds": 80,
+          "views": 991
+        },
+        {
+          "bvid": "BV1Qm4y1N739",
+          "url": "https://www.bilibili.com/video/BV1Qm4y1N739",
+          "title": "照片点评之人像摄影摆姿视觉重点",
+          "duration_seconds": 45,
+          "views": 883
+        },
+        {
+          "bvid": "BV1ip4y1L7WM",
+          "url": "https://www.bilibili.com/video/BV1ip4y1L7WM",
+          "title": "照片点评之摄影构图视觉平衡很重要",
+          "duration_seconds": 79,
+          "views": 806
+        },
+        {
+          "bvid": "BV1Wp4y1L77n",
+          "url": "https://www.bilibili.com/video/BV1Wp4y1L77n",
+          "title": "运用好光线，自然光用手机也能拍大片",
+          "duration_seconds": 66,
+          "views": 837
+        },
+        {
+          "bvid": "BV1AH4y1Q7jp",
+          "url": "https://www.bilibili.com/video/BV1AH4y1Q7jp",
+          "title": "照片点评之荷花照如何拍的更有层次",
+          "duration_seconds": 279,
+          "views": 878
+        },
+        {
+          "bvid": "BV17p4y1A7oU",
+          "url": "https://www.bilibili.com/video/BV17p4y1A7oU",
+          "title": "照片点评之荷花照如何拍的更有层次",
+          "duration_seconds": 322,
+          "views": 861
+        },
+        {
+          "bvid": "BV1nu411A7mF",
+          "url": "https://www.bilibili.com/video/BV1nu411A7mF",
+          "title": "照片点评之构图中主体在画面中比例",
+          "duration_seconds": 104,
+          "views": 848
+        },
+        {
+          "bvid": "BV1Fz4y1L7ML",
+          "url": "https://www.bilibili.com/video/BV1Fz4y1L7ML",
+          "title": "照片点评之构图画面大小比例",
+          "duration_seconds": 202,
+          "views": 965
+        },
+        {
+          "bvid": "BV1cV411A7uc",
+          "url": "https://www.bilibili.com/video/BV1cV411A7uc",
+          "title": "照片点评之在杂乱的环境下如何拍出好看的人像照？",
+          "duration_seconds": 153,
+          "views": 838
+        },
+        {
+          "bvid": "BV1v34y1P7iv",
+          "url": "https://www.bilibili.com/video/BV1v34y1P7iv",
+          "title": "照片点评之人像摆姿技巧，人像摄影跟着学，照片自然不尴尬",
+          "duration_seconds": 189,
+          "views": 11603
+        },
+        {
+          "bvid": "BV1Xh4y1h7fG",
+          "url": "https://www.bilibili.com/video/BV1Xh4y1h7fG",
+          "title": "照片点评之拍照要注意可识别图形",
+          "duration_seconds": 86,
+          "views": 896
+        },
+        {
+          "bvid": "BV1iw411e7i8",
+          "url": "https://www.bilibili.com/video/BV1iw411e7i8",
+          "title": "照片点评之风光照蓝色时间",
+          "duration_seconds": 42,
+          "views": 834
+        },
+        {
+          "bvid": "BV1qH4y1S76F",
+          "url": "https://www.bilibili.com/video/BV1qH4y1S76F",
+          "title": "照片点评之摄影构图学可识别图形",
+          "duration_seconds": 138,
+          "views": 757
+        },
+        {
+          "bvid": "BV1bN411J7W7",
+          "url": "https://www.bilibili.com/video/BV1bN411J7W7",
+          "title": "照片点评之主陪背的层次是什么？",
+          "duration_seconds": 104,
+          "views": 1661
+        },
+        {
+          "bvid": "BV1KV411w7qb",
+          "url": "https://www.bilibili.com/video/BV1KV411w7qb",
+          "title": "照片点评之自然光人像轮廓光技巧",
+          "duration_seconds": 100,
+          "views": 1227
+        },
+        {
+          "bvid": "BV1Tp4y1F79y",
+          "url": "https://www.bilibili.com/video/BV1Tp4y1F79y",
+          "title": "照片点评之乱序秩序变化变异",
+          "duration_seconds": 28,
+          "views": 1619
+        },
+        {
+          "bvid": "BV1MG411m72o",
+          "url": "https://www.bilibili.com/video/BV1MG411m72o",
+          "title": "照片点评之人像摄影细致布光技巧",
+          "duration_seconds": 349,
+          "views": 748
+        },
+        {
+          "bvid": "BV1oH4y1d7Fw",
+          "url": "https://www.bilibili.com/video/BV1oH4y1d7Fw",
+          "title": "摄影小知识，什么是曝光正确？",
+          "duration_seconds": 229,
+          "views": 981
+        },
+        {
+          "bvid": "BV11m4y1u71U",
+          "url": "https://www.bilibili.com/video/BV11m4y1u71U",
+          "title": "照片点评之人像曝光正确如何调整",
+          "duration_seconds": 159,
+          "views": 1903
+        },
+        {
+          "bvid": "BV1Zw411y7dS",
+          "url": "https://www.bilibili.com/video/BV1Zw411y7dS",
+          "title": "照片点评之街景人像如何调整构图？",
+          "duration_seconds": 143,
+          "views": 1740
+        },
+        {
+          "bvid": "BV1su411K7Cd",
+          "url": "https://www.bilibili.com/video/BV1su411K7Cd",
+          "title": "照片点评之人物纪实如何更突出主体？",
+          "duration_seconds": 141,
+          "views": 892
+        },
+        {
+          "bvid": "BV18m4y1g76V",
+          "url": "https://www.bilibili.com/video/BV18m4y1g76V",
+          "title": "照片点评之人像布光的宽光和窄光？",
+          "duration_seconds": 98,
+          "views": 1193
+        },
+        {
+          "bvid": "BV1aw411r7oZ",
+          "url": "https://www.bilibili.com/video/BV1aw411r7oZ",
+          "title": "照片点评之视觉引导有故事的好照片",
+          "duration_seconds": 75,
+          "views": 1078
+        },
+        {
+          "bvid": "BV1Kw41167q1",
+          "url": "https://www.bilibili.com/video/BV1Kw41167q1",
+          "title": "照片点评之光源颜色统一画面更和谐",
+          "duration_seconds": 77,
+          "views": 1033
+        },
+        {
+          "bvid": "BV1Lh4y1q7Jt",
+          "url": "https://www.bilibili.com/video/BV1Lh4y1q7Jt",
+          "title": "照片点评之视觉均衡在构图中的重要性",
+          "duration_seconds": 156,
+          "views": 3729
+        },
+        {
+          "bvid": "BV1xB4y1f7dG",
+          "url": "https://www.bilibili.com/video/BV1xB4y1f7dG",
+          "title": "照片点评之有故事的照片是等出来的",
+          "duration_seconds": 91,
+          "views": 682
+        },
+        {
+          "bvid": "BV1Rp4y1T7Hw",
+          "url": "https://www.bilibili.com/video/BV1Rp4y1T7Hw",
+          "title": "照片点评，花卉拍摄有技巧，帮你随手拍美小花朵",
+          "duration_seconds": 44,
+          "views": 874
+        },
+        {
+          "bvid": "BV1JH4y1d7rm",
+          "url": "https://www.bilibili.com/video/BV1JH4y1d7rm",
+          "title": "关于人像布光，你要知道这点",
+          "duration_seconds": 327,
+          "views": 5412
+        },
+        {
+          "bvid": "BV18h4y1B7Tp",
+          "url": "https://www.bilibili.com/video/BV18h4y1B7Tp",
+          "title": "控光利器，反光板的妙用，玩摄影的你必须掌握",
+          "duration_seconds": 273,
+          "views": 1510
+        },
+        {
+          "bvid": "BV1QM41197nm",
+          "url": "https://www.bilibili.com/video/BV1QM41197nm",
+          "title": "照片点评，自然光人像摄影中，利用窗户拍照技巧",
+          "duration_seconds": 214,
+          "views": 1467
+        },
+        {
+          "bvid": "BV1cy4y1P7LS",
+          "url": "https://www.bilibili.com/video/BV1cy4y1P7LS",
+          "title": "照片点评，画面呼应统一",
+          "duration_seconds": 57,
+          "views": 1334
+        },
+        {
+          "bvid": "BV1Gu4y1Y7yS",
+          "url": "https://www.bilibili.com/video/BV1Gu4y1Y7yS",
+          "title": "照片点评之人像布光技巧眼神光",
+          "duration_seconds": 170,
+          "views": 1245
+        },
+        {
+          "bvid": "BV1jh4y1i7Dq",
+          "url": "https://www.bilibili.com/video/BV1jh4y1i7Dq",
+          "title": "照片点评，自然光人像的拍照技巧",
+          "duration_seconds": 78,
+          "views": 1200
+        },
+        {
+          "bvid": "BV19N411x7DW",
+          "url": "https://www.bilibili.com/video/BV19N411x7DW",
+          "title": "照片点评，人像摄影中巧用柔光板",
+          "duration_seconds": 253,
+          "views": 1008
+        },
+        {
+          "bvid": "BV1vM411X7He",
+          "url": "https://www.bilibili.com/video/BV1vM411X7He",
+          "title": "照片点评，广角纪实，让照片充满故事感",
+          "duration_seconds": 55,
+          "views": 764
+        },
+        {
+          "bvid": "BV1WB4y1d7Ma",
+          "url": "https://www.bilibili.com/video/BV1WB4y1d7Ma",
+          "title": "照片点评如何让纪实黑白照片更有层次？",
+          "duration_seconds": 88,
+          "views": 1347
+        },
+        {
+          "bvid": "BV1MG411C7yT",
+          "url": "https://www.bilibili.com/video/BV1MG411C7yT",
+          "title": "照片点评，拍照中，如何去除人物面部油光？",
+          "duration_seconds": 218,
+          "views": 1252
+        },
+        {
+          "bvid": "BV17u4y1E7TD",
+          "url": "https://www.bilibili.com/video/BV17u4y1E7TD",
+          "title": "照片点评，动态如何突出主体？",
+          "duration_seconds": 57,
+          "views": 1081
+        },
+        {
+          "bvid": "BV1x94y157GT",
+          "url": "https://www.bilibili.com/video/BV1x94y157GT",
+          "title": "照片点评，摄影构图要注意主体完整",
+          "duration_seconds": 153,
+          "views": 723
+        },
+        {
+          "bvid": "BV1JH4y1r7X8",
+          "url": "https://www.bilibili.com/video/BV1JH4y1r7X8",
+          "title": "照片点评，花卉的摄影技巧，你都了解吗？",
+          "duration_seconds": 227,
+          "views": 981
+        },
+        {
+          "bvid": "BV1HM411Q7LY",
+          "url": "https://www.bilibili.com/video/BV1HM411Q7LY",
+          "title": "照片点评，微距花草昆虫如何拍才好看？",
+          "duration_seconds": 215,
+          "views": 769
+        },
+        {
+          "bvid": "BV1NC4y1J7aB",
+          "url": "https://www.bilibili.com/video/BV1NC4y1J7aB",
+          "title": "手机摄影微距拍摄技巧",
+          "duration_seconds": 122,
+          "views": 1112
+        },
+        {
+          "bvid": "BV1PN411G7C9",
+          "url": "https://www.bilibili.com/video/BV1PN411G7C9",
+          "title": "如何拍出黑背景的花卉摄影作品？",
+          "duration_seconds": 86,
+          "views": 1125
+        },
+        {
+          "bvid": "BV17N4y1r72Q",
+          "url": "https://www.bilibili.com/video/BV17N4y1r72Q",
+          "title": "照片点评之花卉摄影技巧",
+          "duration_seconds": 102,
+          "views": 967
+        },
+        {
+          "bvid": "BV17N411T7Zw",
+          "url": "https://www.bilibili.com/video/BV17N411T7Zw",
+          "title": "照片点评之儿童摄影的拍摄技巧",
+          "duration_seconds": 225,
+          "views": 843
+        },
+        {
+          "bvid": "BV1fj41177jv",
+          "url": "https://www.bilibili.com/video/BV1fj41177jv",
+          "title": "照片点评之主次虚实关系",
+          "duration_seconds": 274,
+          "views": 796
+        },
+        {
+          "bvid": "BV1FQ4y1t7LJ",
+          "url": "https://www.bilibili.com/video/BV1FQ4y1t7LJ",
+          "title": "照片点评之国画风拍照技巧",
+          "duration_seconds": 224,
+          "views": 678
+        },
+        {
+          "bvid": "BV1wM411o7Kn",
+          "url": "https://www.bilibili.com/video/BV1wM411o7Kn",
+          "title": "照片点评，画有法画无定法，你真的理解吗？",
+          "duration_seconds": 135,
+          "views": 788
+        },
+        {
+          "bvid": "BV1464y1775r",
+          "url": "https://www.bilibili.com/video/BV1464y1775r",
+          "title": "照片点评之如何表现虚实关系？",
+          "duration_seconds": 51,
+          "views": 1081
+        },
+        {
+          "bvid": "BV1WN411775g",
+          "url": "https://www.bilibili.com/video/BV1WN411775g",
+          "title": "照片点评之手机摄影技巧——抽色法",
+          "duration_seconds": 68,
+          "views": 883
+        },
+        {
+          "bvid": "BV1U94y177N8",
+          "url": "https://www.bilibili.com/video/BV1U94y177N8",
+          "title": "照片点评之手机摄影看亮不看暗",
+          "duration_seconds": 96,
+          "views": 6141
+        },
+        {
+          "bvid": "BV1a64y1L7xR",
+          "url": "https://www.bilibili.com/video/BV1a64y1L7xR",
+          "title": "照片点评之花卉摄影如何拍出层次感？",
+          "duration_seconds": 127,
+          "views": 738
+        },
+        {
+          "bvid": "BV1P94y1J7E6",
+          "url": "https://www.bilibili.com/video/BV1P94y1J7E6",
+          "title": "照片点评之人像摄影光线如何运用？",
+          "duration_seconds": 208,
+          "views": 768
+        },
+        {
+          "bvid": "BV1GM411d7rU",
+          "url": "https://www.bilibili.com/video/BV1GM411d7rU",
+          "title": "照片点评之剪影人像拍照技巧",
+          "duration_seconds": 139,
+          "views": 662
+        },
+        {
+          "bvid": "BV1Za4y1o7dh",
+          "url": "https://www.bilibili.com/video/BV1Za4y1o7dh",
+          "title": "照片点评之人像摄影如何营造故事感？",
+          "duration_seconds": 117,
+          "views": 604
+        },
+        {
+          "bvid": "BV1yw411h7g5",
+          "url": "https://www.bilibili.com/video/BV1yw411h7g5",
+          "title": "照片点评之旅行出游拍摄技巧",
+          "duration_seconds": 154,
+          "views": 782
+        },
+        {
+          "bvid": "BV11N4y1a7kC",
+          "url": "https://www.bilibili.com/video/BV11N4y1a7kC",
+          "title": "照片点评之两种逆光人像拍照技巧",
+          "duration_seconds": 225,
+          "views": 759
+        },
+        {
+          "bvid": "BV1ci4y1e7it",
+          "url": "https://www.bilibili.com/video/BV1ci4y1e7it",
+          "title": "摄影原理分享，什么是白加黑减？",
+          "duration_seconds": 183,
+          "views": 707
+        },
+        {
+          "bvid": "BV1mg4y1Z7oi",
+          "url": "https://www.bilibili.com/video/BV1mg4y1Z7oi",
+          "title": "照片点评之如何体现道路延伸感？",
+          "duration_seconds": 161,
+          "views": 896
+        },
+        {
+          "bvid": "BV1Ui4y1Y7CS",
+          "url": "https://www.bilibili.com/video/BV1Ui4y1Y7CS",
+          "title": "照片点评之不同光位对人物的影响",
+          "duration_seconds": 260,
+          "views": 759
+        },
+        {
+          "bvid": "BV1sG411Y76W",
+          "url": "https://www.bilibili.com/video/BV1sG411Y76W",
+          "title": "照片点评之男性人像用光技巧",
+          "duration_seconds": 80,
+          "views": 677
+        },
+        {
+          "bvid": "BV1264y1p7ar",
+          "url": "https://www.bilibili.com/video/BV1264y1p7ar",
+          "title": "照片点评之戴帽子如何拍出好照片？",
+          "duration_seconds": 145,
+          "views": 736
+        },
+        {
+          "bvid": "BV1Yp4y1Z7mA",
+          "url": "https://www.bilibili.com/video/BV1Yp4y1Z7mA",
+          "title": "照片点评之慢门摄影小技巧",
+          "duration_seconds": 238,
+          "views": 749
+        },
+        {
+          "bvid": "BV1Lk4y197cu",
+          "url": "https://www.bilibili.com/video/BV1Lk4y197cu",
+          "title": "摄影作品点评：纪实人像的意义，摄影不仅是技术和设备",
+          "duration_seconds": 261,
+          "views": 669
+        },
+        {
+          "bvid": "BV1gK4y1z7FC",
+          "url": "https://www.bilibili.com/video/BV1gK4y1z7FC",
+          "title": "照片点评之夜景手机摄影技巧",
+          "duration_seconds": 176,
+          "views": 1687
+        },
+        {
+          "bvid": "BV1fK4y1B7nY",
+          "url": "https://www.bilibili.com/video/BV1fK4y1B7nY",
+          "title": "照片点评之夜景拍摄必备神器三脚架",
+          "duration_seconds": 259,
+          "views": 793
+        },
+        {
+          "bvid": "BV17g4y1m7D1",
+          "url": "https://www.bilibili.com/video/BV17g4y1m7D1",
+          "title": "照片点评之人像拍照这些地方要注意",
+          "duration_seconds": 101,
+          "views": 825
+        },
+        {
+          "bvid": "BV1ET4y1b7QU",
+          "url": "https://www.bilibili.com/video/BV1ET4y1b7QU",
+          "title": "照片点评之眼睛是心灵的窗户提升人像层次好技巧 照片来源于会员",
+          "duration_seconds": 225,
+          "views": 928
+        },
+        {
+          "bvid": "BV1gp421f7vM",
+          "url": "https://www.bilibili.com/video/BV1gp421f7vM",
+          "title": "照片点评之逆光人像也好看的底层逻辑",
+          "duration_seconds": 243,
+          "views": 1086
+        },
+        {
+          "bvid": "BV1ST4m1U7qa",
+          "url": "https://www.bilibili.com/video/BV1ST4m1U7qa",
+          "title": "照片点评之学会摄影原理视觉漩涡 提升照片质感",
+          "duration_seconds": 94,
+          "views": 30051
+        },
+        {
+          "bvid": "BV1e2421A7XR",
+          "url": "https://www.bilibili.com/video/BV1e2421A7XR",
+          "title": "照片点评之经典视觉漩涡在人像中的体现",
+          "duration_seconds": 158,
+          "views": 969
+        },
+        {
+          "bvid": "BV1Fm411R7Ld",
+          "url": "https://www.bilibili.com/video/BV1Fm411R7Ld",
+          "title": "照片点评之在光线杂乱的背景中，如何拍出有效果的照片",
+          "duration_seconds": 205,
+          "views": 897
+        },
+        {
+          "bvid": "BV1bu4m1K7mj",
+          "url": "https://www.bilibili.com/video/BV1bu4m1K7mj",
+          "title": "照片点评之人像纪实照片拍摄技巧",
+          "duration_seconds": 108,
+          "views": 838
+        },
+        {
+          "bvid": "BV1YK421C7uV",
+          "url": "https://www.bilibili.com/video/BV1YK421C7uV",
+          "title": "照片点评之人像拍摄时注意抓取的要点",
+          "duration_seconds": 159,
+          "views": 867
+        },
+        {
+          "bvid": "BV1dw4m1Q7nm",
+          "url": "https://www.bilibili.com/video/BV1dw4m1Q7nm",
+          "title": "照片点评之花卉手机摄影技巧，怎样拍出好看的花朵图片!",
+          "duration_seconds": 239,
+          "views": 450
+        },
+        {
+          "bvid": "BV1fw4m1Q7Lh",
+          "url": "https://www.bilibili.com/video/BV1fw4m1Q7Lh",
+          "title": "照片点评之视觉原理斜向花卉更有生命力",
+          "duration_seconds": 283,
+          "views": 629
+        },
+        {
+          "bvid": "BV19w4m1D73Y",
+          "url": "https://www.bilibili.com/video/BV19w4m1D73Y",
+          "title": "照片点评之拍花朵的基础视觉原理",
+          "duration_seconds": 115,
+          "views": 613
+        },
+        {
+          "bvid": "BV11x4y1H79N",
+          "url": "https://www.bilibili.com/video/BV11x4y1H79N",
+          "title": "照片点评之花卉摄影虚化的重要性",
+          "duration_seconds": 60,
+          "views": 697
+        },
+        {
+          "bvid": "BV1hf421R7FA",
+          "url": "https://www.bilibili.com/video/BV1hf421R7FA",
+          "title": "构图时，怎样平衡摄影作品当中的视觉重量？",
+          "duration_seconds": 162,
+          "views": 658
+        },
+        {
+          "bvid": "BV1ri421S76u",
+          "url": "https://www.bilibili.com/video/BV1ri421S76u",
+          "title": "亮彩实、暗淡虚——视觉的底层逻辑，你都了解吗？",
+          "duration_seconds": 238,
+          "views": 561
+        },
+        {
+          "bvid": "BV1Yw4m1S7uj",
+          "url": "https://www.bilibili.com/video/BV1Yw4m1S7uj",
+          "title": "单一光源拍照技巧，掌握这1点，用光布局恰到好处",
+          "duration_seconds": 86,
+          "views": 508
+        },
+        {
+          "bvid": "BV1Rs421g7xY",
+          "url": "https://www.bilibili.com/video/BV1Rs421g7xY",
+          "title": "如何明确“照片主体”，拍出有故事感的照片？",
+          "duration_seconds": 136,
+          "views": 597
+        },
+        {
+          "bvid": "BV1CT421v7tC",
+          "url": "https://www.bilibili.com/video/BV1CT421v7tC",
+          "title": "想要拍出好照片，需要注意哪些问题？",
+          "duration_seconds": 205,
+          "views": 444
+        },
+        {
+          "bvid": "BV1DM4m1U7KX",
+          "url": "https://www.bilibili.com/video/BV1DM4m1U7KX",
+          "title": "暗背景花朵如何拍出高级感？",
+          "duration_seconds": 408,
+          "views": 432
+        },
+        {
+          "bvid": "BV1Vb421H77v",
+          "url": "https://www.bilibili.com/video/BV1Vb421H77v",
+          "title": "摄影秘籍，怎么拍出黑背景的花，这样拍很有高级感",
+          "duration_seconds": 107,
+          "views": 676
+        },
+        {
+          "bvid": "BV1An4y1X7Z7",
+          "url": "https://www.bilibili.com/video/BV1An4y1X7Z7",
+          "title": "照片点评之以天空为背景如何拍花朵照？",
+          "duration_seconds": 368,
+          "views": 687
+        },
+        {
+          "bvid": "BV16J4m1g7aj",
+          "url": "https://www.bilibili.com/video/BV16J4m1g7aj",
+          "title": "照片点评之练就摄影眼的重要性",
+          "duration_seconds": 281,
+          "views": 657
+        },
+        {
+          "bvid": "BV1gH4y1w7s4",
+          "url": "https://www.bilibili.com/video/BV1gH4y1w7s4",
+          "title": "照片点评之儿童摄影技巧 干货分享",
+          "duration_seconds": 363,
+          "views": 573
+        },
+        {
+          "bvid": "BV1sy411q7td",
+          "url": "https://www.bilibili.com/video/BV1sy411q7td",
+          "title": "照片点评之逆光人像拍照技巧",
+          "duration_seconds": 365,
+          "views": 831
+        },
+        {
+          "bvid": "BV1H1421r7mT",
+          "url": "https://www.bilibili.com/video/BV1H1421r7mT",
+          "title": "照片点评之人物纪实照片如何拍出故事感？",
+          "duration_seconds": 362,
+          "views": 710
+        },
+        {
+          "bvid": "BV1Qi421e77f",
+          "url": "https://www.bilibili.com/video/BV1Qi421e77f",
+          "title": "照片点评之故事感照片怎样营造氛围感",
+          "duration_seconds": 128,
+          "views": 568
+        },
+        {
+          "bvid": "BV1bZ421M7V8",
+          "url": "https://www.bilibili.com/video/BV1bZ421M7V8",
+          "title": "照片点评之闪光灯人像摄影技巧",
+          "duration_seconds": 225,
+          "views": 729
+        },
+        {
+          "bvid": "BV1wx4y187yN",
+          "url": "https://www.bilibili.com/video/BV1wx4y187yN",
+          "title": "照片点评之——人像照片主体和陪体的关系",
+          "duration_seconds": 202,
+          "views": 855
+        }
+      ]
+    },
+    {
+      "rank": null,
+      "recommended": false,
+      "mid": 537836502,
+      "uploader": "NiSi耐司光学",
+      "uploader_url": "https://space.bilibili.com/537836502",
+      "genres": [
+        "landscape"
+      ],
+      "reason": "官方账号32分12秒作品点评解析可补风光专家规则；仅一条课程章节，讲师身份、逐张格式和转载权仍待核实。",
+      "account_collection_count": null,
+      "account_collection_inventory_complete": false,
+      "relevant_series_count_confirmed": 0,
+      "relevant_series_count_note": "标题中编号不证明已存在连续系列；账号其他器材/教程合集不计点评系列。",
+      "statistics": {
+        "scope": "search_sample",
+        "video_count": 1,
+        "duration_seconds": 1932,
+        "views_sum": 1085,
+        "complete": false
+      },
+      "photo_by_photo": {
+        "status": "inferred_from_public_title_description",
+        "evidence": [
+          "风光摄影第五课：作品点评解析；"
+        ],
+        "requires_manual_review": true
+      },
+      "grading": {
+        "status": "unknown",
+        "requires_manual_review": true
+      },
+      "videos": [
+        {
+          "bvid": "BV1QA411e7uT",
+          "url": "https://www.bilibili.com/video/BV1QA411e7uT",
+          "title": "风光摄影第五课：作品点评解析",
+          "duration_seconds": 1932,
+          "views": 1085
+        }
+      ],
+      "relevant_series": []
+    },
+    {
+      "rank": null,
+      "recommended": false,
+      "mid": 485507802,
+      "uploader": "摄影师老盖",
+      "uploader_url": "https://space.bilibili.com/485507802",
+      "genres": [
+        "street_candidate",
+        "mixed"
+      ],
+      "reason": "有明确1–5分标尺，但本次仅发现4分32秒一条；作为评级补充候选，不足以替代长点评系列。",
+      "account_collection_count": null,
+      "account_collection_inventory_complete": false,
+      "relevant_series_count_confirmed": 0,
+      "relevant_series_count_note": "标题中编号不证明已存在连续系列；账号其他器材/教程合集不计点评系列。",
+      "statistics": {
+        "scope": "search_sample",
+        "video_count": 1,
+        "duration_seconds": 272,
+        "views_sum": 20274,
+        "complete": false
+      },
+      "photo_by_photo": {
+        "status": "inferred_from_public_title_description",
+        "evidence": [
+          "老盖点评评论区作品，今天给作品打个分，1分到5分满分；-"
+        ],
+        "requires_manual_review": true
+      },
+      "grading": {
+        "status": "numeric_1_to_5_in_title",
+        "requires_manual_review": true
+      },
+      "videos": [
+        {
+          "bvid": "BV1rx4y127ex",
+          "url": "https://www.bilibili.com/video/BV1rx4y127ex",
+          "title": "老盖点评评论区作品，今天给作品打个分，1分到5分满分",
+          "duration_seconds": 272,
+          "views": 20274
+        }
+      ],
+      "relevant_series": []
+    },
+    {
+      "rank": null,
+      "recommended": false,
+      "mid": 3494375885637746,
+      "uploader": "bili_36700395039",
+      "genres": [
+        "wedding"
+      ],
+      "reason": "婚礼点评长视频命中，但标题宣传课程百度网盘且匿名账号，原创/授权不明；不推荐采集。",
+      "statistics": {
+        "scope": "single_search_result",
+        "video_count": 1,
+        "duration_seconds": 8514,
+        "views_sum": 288,
+        "complete": false
+      },
+      "photo_by_photo": {
+        "status": "unknown"
+      },
+      "grading": {
+        "status": "unknown"
+      },
+      "videos": [
+        {
+          "bvid": "BV1MV4y1e72w",
+          "url": "https://www.bilibili.com/video/BV1MV4y1e72w",
+          "title": "徐老瞎望远镜婚礼摄影教程课程百度云网盘——婚礼点评@奇祥",
+          "duration_seconds": 8514,
+          "views": 288
+        }
+      ]
+    },
+    {
+      "rank": null,
+      "recommended": false,
+      "mid": 85514191,
+      "uploader": "金叔影像社",
+      "reason": "17–19分钟网友点评，但本次命中人像，非本任务题材；不重复衣刀已有主源。",
+      "statistics": {
+        "scope": "deduplicated_search_sample",
+        "video_count": 2,
+        "duration_seconds": 2214,
+        "views_sum": 93093,
+        "complete": false
+      },
+      "videos": [
+        {
+          "bvid": "BV1TG411t73D",
+          "url": "https://www.bilibili.com/video/BV1TG411t73D",
+          "title": "【网友人像摄影点评】22年8月",
+          "duration_seconds": 1163,
+          "views": 38274
+        },
+        {
+          "bvid": "BV1jb411U7gw",
+          "url": "https://www.bilibili.com/video/BV1jb411U7gw",
+          "title": "【人像照片点评 金叔开喷了 你准备好没】摄影日志vlog",
+          "duration_seconds": 1051,
+          "views": 54819
+        }
+      ],
+      "grading": {
+        "status": "unknown"
+      },
+      "photo_by_photo": {
+        "status": "metadata_only"
+      }
+    },
+    {
+      "rank": null,
+      "recommended": false,
+      "mid": 3546917311088783,
+      "uploader": "王守义收音机",
+      "reason": "大量评论区投稿锐评/打分，但普遍约2–3分钟，偏娱乐，长论证信号弱，播放量高不等于规则来源价值。",
+      "statistics": {
+        "scope": "deduplicated_search_sample",
+        "video_count": 17,
+        "duration_seconds": 2536,
+        "views_sum": 34502910,
+        "complete": false
+      },
+      "videos": [
+        {
+          "bvid": "BV18Pg46DERT",
+          "url": "https://www.bilibili.com/video/BV18Pg46DERT",
+          "title": "评论区摄影作品锐评，Live图上大分了！普通照片拼画质拼构图，Live图直接杀穿评论区，动态氛围感拉满，静态照片瞬间黯淡无光，这波Live图稳稳上分。",
+          "duration_seconds": 166,
+          "views": 6678894
+        },
+        {
+          "bvid": "BV1GGHj6dEoa",
+          "url": "https://www.bilibili.com/video/BV1GGHj6dEoa",
+          "title": "评论区摄影大赛，这一期每一张都藏着故事！记录普通人镜头里的人间万象，不刻意寻找风景，风景自会奔赴镜头，请在评论区留下你的大作，下期点评！",
+          "duration_seconds": 141,
+          "views": 370415
+        },
+        {
+          "bvid": "BV1D5Hx65E4f",
+          "url": "https://www.bilibili.com/video/BV1D5Hx65E4f",
+          "title": "评论区摄影作品锐评每张都藏着不一样的意境， 能看懂的都是高人，别藏图了，把你的大作分享在评论区，下期点评的就是你！",
+          "duration_seconds": 147,
+          "views": 384795
+        },
+        {
+          "bvid": "BV1YGHj6REeu",
+          "url": "https://www.bilibili.com/video/BV1YGHj6REeu",
+          "title": "评论区摄影大赛之live动图篇！欢迎投稿 普通人镜头下世间万象，有感悟、有笑点，还有难得一见的自然奇观。欢迎把你的随手拍留在评论区，下期随机翻牌点评！#",
+          "duration_seconds": 138,
+          "views": 479966
+        },
+        {
+          "bvid": "BV1y8aA6wEjH",
+          "url": "https://www.bilibili.com/video/BV1y8aA6wEjH",
+          "title": "平凡人的镜头里，也藏着最动人的光影！ 评论区摄影大赛！请在评论区留下你的大作，每期随机抽取照片点评打分！",
+          "duration_seconds": 217,
+          "views": 1138793
+        },
+        {
+          "bvid": "BV1HEYc6RECw",
+          "url": "https://www.bilibili.com/video/BV1HEYc6RECw",
+          "title": "评论区摄影作品锐评高端局，看看哪张最强！欢迎投稿！风光、人像、纪实、生活随拍全都收，下期翻牌！",
+          "duration_seconds": 167,
+          "views": 1550535
+        },
+        {
+          "bvid": "BV1dkdgBfE7c",
+          "url": "https://www.bilibili.com/video/BV1dkdgBfE7c",
+          "title": "评论区摄影作品毒辣点评，这期神了！",
+          "duration_seconds": 107,
+          "views": 1188298
+        },
+        {
+          "bvid": "BV1jZQUBbEbQ",
+          "url": "https://www.bilibili.com/video/BV1jZQUBbEbQ",
+          "title": "评论区摄影作品毒辣点评！",
+          "duration_seconds": 201,
+          "views": 1422962
+        },
+        {
+          "bvid": "BV1dz5Y6REFU",
+          "url": "https://www.bilibili.com/video/BV1dz5Y6REFU",
+          "title": "评论区摄影作品毒辣点评，第七张是我见过的最封神的“毕业照”，马上毕业了，请在评论区留下你的毕业照！",
+          "duration_seconds": 223,
+          "views": 6458973
+        },
+        {
+          "bvid": "BV1CA97BXEnU",
+          "url": "https://www.bilibili.com/video/BV1CA97BXEnU",
+          "title": "评论区摄影大赛之摄影作品毒辣点评，杀伤力最强的一期！千万别看评论区，我怕你笑晕！",
+          "duration_seconds": 189,
+          "views": 7230207
+        },
+        {
+          "bvid": "BV17Ug56AECi",
+          "url": "https://www.bilibili.com/video/BV17Ug56AECi",
+          "title": "评论区摄影作品锐评，live封神篇！其实评论区投稿的每张作品都拥有独属于自己的价值。这么善良有趣的摄影博主，屏幕前的你确定不留个关注吗？",
+          "duration_seconds": 164,
+          "views": 3985624
+        },
+        {
+          "bvid": "BV1mkgC6fEAu",
+          "url": "https://www.bilibili.com/video/BV1mkgC6fEAu",
+          "title": "评论区摄影作品毒辣点评，第一张阴的没边了！纪实摄影最高的境界，就是剥离所有解说，让观众一眼就能读懂画面里的心酸与温柔！所有情绪都藏在这一个瞬间里，直击人心！",
+          "duration_seconds": 115,
+          "views": 140451
+        },
+        {
+          "bvid": "BV1bgUSBzEF1",
+          "url": "https://www.bilibili.com/video/BV1bgUSBzEF1",
+          "title": "评论区摄影作品毒辣点评，看完不笑的可以确诊抑郁症了！",
+          "duration_seconds": 57,
+          "views": 231690
+        },
+        {
+          "bvid": "BV1ohqnBGEVR",
+          "url": "https://www.bilibili.com/video/BV1ohqnBGEVR",
+          "title": "吃饭的时候别看，我怕你笑喷！评论区摄影作品毒辣点评！",
+          "duration_seconds": 110,
+          "views": 324195
+        },
+        {
+          "bvid": "BV1kk4k6ZEJ5",
+          "url": "https://www.bilibili.com/video/BV1kk4k6ZEJ5",
+          "title": "评论区摄影大赛来了！你的照片会被毒舌还是封神？普通快门，也能拍出诗词里的壮阔山海，评论区直接发图，下期随机翻牌点评！",
+          "duration_seconds": 131,
+          "views": 1398962
+        },
+        {
+          "bvid": "BV1rDQzBGEdF",
+          "url": "https://www.bilibili.com/video/BV1rDQzBGEdF",
+          "title": "评论区摄影作品毒辣点评！看完不笑的绝对是高手！",
+          "duration_seconds": 157,
+          "views": 690267
+        },
+        {
+          "bvid": "BV16b9NBjEFK",
+          "url": "https://www.bilibili.com/video/BV16b9NBjEFK",
+          "title": "评论区摄影作品毒辣点评，请在评论区留下你的大作！",
+          "duration_seconds": 106,
+          "views": 827883
+        }
+      ],
+      "grading": {
+        "status": "unknown"
+      },
+      "photo_by_photo": {
+        "status": "metadata_only"
+      }
+    },
+    {
+      "rank": null,
+      "recommended": false,
+      "mid": 488063197,
+      "uploader": "卓仑-Jollon",
+      "uploader_url": "https://space.bilibili.com/488063197",
+      "discovered_in": "12-query named-expert followup; view and account collections checked separately",
+      "genres": [
+        "mixed_unverified"
+      ],
+      "reason": "56分钟首次公开评片群直播，有长论证潜力；账号仅确认器材合集1个，未确认持续点评系列，题材与逐张方式需核验，暂列补充。",
+      "account_collection_count": 1,
+      "account_collection_inventory_complete": true,
+      "relevant_series_count_confirmed": 0,
+      "statistics": {
+        "scope": "single_public_livestream",
+        "video_count": 1,
+        "duration_seconds": 3379,
+        "views_sum": 1645,
+        "complete": false
+      },
+      "photo_by_photo": {
+        "status": "inferred_from_title_description",
+        "requires_manual_review": true
+      },
+      "grading": {
+        "status": "unknown",
+        "requires_manual_review": true
+      },
+      "videos": [
+        {
+          "bvid": "BV1Uy4y1U7o7",
+          "url": "https://www.bilibili.com/video/BV1Uy4y1U7o7",
+          "title": "【真知卓见】含金量超高的干货摄影评片教学群公开直播回放",
+          "duration_seconds": 3379,
+          "views": 1645
+        }
+      ],
+      "relevant_series": []
+    }
+  ],
+  "supplementary_search_manifest": "genre_sources_followup.json"
+}

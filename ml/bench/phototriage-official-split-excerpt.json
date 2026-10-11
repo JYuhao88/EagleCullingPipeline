@@ -1,0 +1,8 @@
+{
+  "sourceUrl": "https://pixl.cs.princeton.edu/pubs/Chang_2016_ATF/chang2016-triage-preprint.pdf",
+  "section": "3.4 Benchmark",
+  "evidenceMethod": "web search service indexed extraction from official Princeton preprint URL",
+  "checkedAt": "2026-10-10",
+  "interpretationLimit": "These are original preprint statements, not currently verified released dataset counts. The printed split counts sum to 5722, not 5953; do not infer a correction or treat 195 as a verified current limit. Official website/license failure independently blocks this run.",
+  "paraphrase": "论文列出训练、验证、测试划分；数字有矛盾，发布状态待核验。"
+}

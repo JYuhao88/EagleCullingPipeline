@@ -1,0 +1,128 @@
+{
+  "identity": "0a5ab061725e909e8c44bfe71d7ad5cc9e1190119516f69febfcd67f9135b753",
+  "source": "photo-books-extra",
+  "offsets": {
+    "photography-books/摄影/摄影必修课（套装4册）.pdf": 97301970
+  },
+  "jobs": [
+    {
+      "id": "w4-upload-photo-books-extra-a82584b33a664c9ba9270d0cd6eed9ad",
+      "action": "inspect",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-extra-a657c64cdb6c426a8ed9a96c3f81202b",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-extra-788d0b732d2745ad97f1866c3a59b0ef",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-extra-29f06334fe9a4038ae56a2316999e6af",
+      "action": "audit",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-photo-books-extra-48a696b0a2e545bbbd49e88a6c1e0548",
+      "action": "cleanup",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    }
+  ],
+  "batches": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "photography-books/摄影/摄影必修课（套装4册）.pdf",
+          "offset": 94371840,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 2930130,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "photography-books/摄影/摄影必修课（套装4册）.pdf",
+          "offset": 97301970,
+          "complete": true
+        }
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "started_at": "2026-10-10T22:34:08+0800",
+      "uploaded_bytes": 97312102,
+      "put_seconds": 15.048832916974789,
+      "elapsed_seconds": 58.39198137499625,
+      "finished_at": "2026-10-10T22:35:06+0800",
+      "effective_MBps": 1.6665319399774563,
+      "put_MBps": 6.466421850576456
+    }
+  ],
+  "status": "complete",
+  "ray_version": "2.51.1",
+  "audit": [
+    {
+      "source": "photo-books-extra",
+      "remote_rel": "photography-books/摄影/摄影必修课（套装4册）.pdf",
+      "size": 97301970,
+      "sha256": "4cb70da905bfccb7ac2205ff23029cc98bed14f415204f732cef35f9e6cbd821",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/photo-books-extra/raw/photography-books/摄影": "0o700",
+        "<CEPH_ROOT>/references/photo-books-extra/raw/photography-books": "0o700",
+        "<CEPH_ROOT>/references/photo-books-extra/raw": "0o700",
+        "<CEPH_ROOT>/references/photo-books-extra": "0o700"
+      },
+      "part_exists": false
+    }
+  ],
+  "package_verification": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    }
+  ],
+  "redeleted_job_records": [
+    "w4-upload-photo-books-extra-788d0b732d2745ad97f1866c3a59b0ef",
+    "w4-upload-photo-books-extra-a657c64cdb6c426a8ed9a96c3f81202b"
+  ],
+  "cleanup_stable_empty_checks": 3,
+  "owned_jobs_remaining": [],
+  "dashboard": "<RAY_DASHBOARD>",
+  "files": [
+    {
+      "source": "photo-books-extra",
+      "local": "<LOCAL_PATH> 摄影素材/摄影/摄影必修课（套装4册）.pdf",
+      "remote_rel": "photography-books/摄影/摄影必修课（套装4册）.pdf",
+      "size": 97301970,
+      "sha256": "4cb70da905bfccb7ac2205ff23029cc98bed14f415204f732cef35f9e6cbd821"
+    }
+  ],
+  "payload_cap_bytes": 94371840,
+  "http_limit_bytes": 104857600,
+  "nice": 15
+}

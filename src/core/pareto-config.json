@@ -1,0 +1,8 @@
+{
+  "version": "1.0",
+  "epsilon": { "sharpness": 0.03, "exposure": 0.03, "eyes": 0.05, "composition": 0.04, "quality": 0.03, "aesthetic": 0.04, "penalty": 0.02 },
+  "dimensions": { "sharpness": true, "exposure": true, "eyes": true, "composition": true, "quality": true, "aesthetic": true, "penalty": true },
+  "seriousFlags": ["blurry", "eyes-closed", "overexposed", "underexposed", "noisy"],
+  "cropPenalty": 0.08,
+  "cropPenalties": { "P-CROP-HAIRLINE": 0.2, "P-CROP-NECK": 0.1, "P-CROP-WRIST": 0.08, "P-CROP-ELBOW": 0.08, "P-CROP-KNEE": 0.08, "P-CROP-ANKLE-FOOT": 0.08 }
+}

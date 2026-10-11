@@ -1,0 +1,149 @@
+:root {
+  font:
+    15px/1.6 system-ui,
+    sans-serif;
+  color: #243246;
+  background: #f4f6f9;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+header {
+  padding: 20px 30px;
+  background: #fff;
+  border-bottom: 1px solid #dce3ea;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+h1 {
+  font-size: 23px;
+  margin: 0;
+}
+header button {
+  margin-left: auto;
+}
+button,
+select,
+input,
+textarea {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid #becbdd;
+  border-radius: 6px;
+  padding: 7px 12px;
+}
+button:hover {
+  background: #eaf0fb;
+}
+#message {
+  min-height: 24px;
+  margin: 10px 30px;
+  color: #345b90;
+}
+main {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 25px;
+  margin: 0 30px 30px;
+}
+aside,
+article {
+  background: #fff;
+  border: 1px solid #dce3ea;
+  border-radius: 9px;
+  padding: 20px;
+}
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+label {
+  display: block;
+}
+select {
+  display: block;
+  padding: 6px;
+  width: 100%;
+  border: 1px solid #becbdd;
+  border-radius: 5px;
+}
+#list {
+  max-height: 75vh;
+  overflow: auto;
+}
+#list button {
+  display: block;
+  text-align: left;
+  width: 100%;
+  margin: 5px 0;
+}
+#list button.selected {
+  background: #e5edff;
+  border-color: #3f6ab0;
+}
+small {
+  display: block;
+  color: #66768b;
+}
+h2 {
+  margin: 0 0 15px;
+}
+textarea {
+  width: 100%;
+  min-height: 90px;
+  resize: vertical;
+  padding: 10px;
+  border: 1px solid #becbdd;
+  border-radius: 6px;
+}
+article label {
+  margin: 12px 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+  margin: 18px 0;
+}
+.evidence {
+  padding: 15px 0;
+  border-top: 1px solid #e2e8f0;
+}
+.evidence a {
+  color: #315f9e;
+}
+.evidence img {
+  max-width: 240px;
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+  margin: 8px 0;
+}
+.disabled {
+  opacity: 0.6;
+}
+@media (max-width: 750px) {
+  main {
+    grid-template-columns: 1fr;
+    margin: 0 15px;
+  }
+  header {
+    padding: 15px;
+    flex-wrap: wrap;
+  }
+  #list {
+    max-height: 300px;
+  }
+}

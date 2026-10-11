@@ -1,0 +1,2022 @@
+{
+  "identity": "0a1137046629606d45a8df082743edfd62a92c205d31815f78f5d93ad123e656",
+  "source": "materials-courses-meyerowitz",
+  "offsets": {
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/01-Photography-JoelMeyerowitz-MeetYourMaster-HD.mp4": 76526121,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/02-Photography-JoelMeyerowitz-Influences-HD.mp4": 219339872,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/03-Photography-JoelMeyerowitz-LookingAtPictures-HD.mp4": 102471031,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/04-Photography-JoelMeyerowitz-TheStreetisOurs-HD.mp4": 183849124,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/05-Photography-JoelMeyerowitz-TheMagiciansTrick-HD.mp4": 142712265,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/06-Photography-JoelMeyerowitz-Aftermath-HD.mp4": 118208302,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/07-Photography-JoelMeyerowitz-Composition-HD.mp4": 94909108,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/08-Photography-JoelMeyerowitz-IdeasForComposition-HD.mp4": 143759570,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/09-Photography-JoelMeyerowitz-StreetPhotography-HD.mp4": 70488378,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/10-Photography-JoelMeyerowitz-CapeLight-HD.mp4": 192792409,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/11-Photography-JoelMeyerowitz-BlackAndWhiteVSColor-HD.mp4": 87712945,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/12-Photography-JoelMeyerowitz-TheMeyerowitzColorZoneSystem-HD.mp4": 83562107,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/13-Photography-JoelMeyerowitz-FindingYourSubject-HD.mp4": 66071885,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/14-Photography-JoelMeyerowitz-Observation-HD.mp4": 69577403,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/15-Photography-JoelMeyerowitz-LetLightBeTheSubject-HD.mp4": 113267665,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/16-Photography-JoelMeyerowitz-SeeingYourNeighborhoodInAFreshWay-HD.mp4": 81424167,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/17-Photography-JoelMeyerowitz-Portraiture-HD.mp4": 143192636,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/18-Photography-JoelMeyerowitz-WorkshopRachel-HD.mp4": 196067634,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/19-Photography-JoelMeyerowitz-WorkshopAlex-HD.mp4": 134643353,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/20-Photography-JoelMeyerowitz-WorkshopHeather-HD.mp4": 150513154,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/21-Photography-JoelMeyerowitz-WorkshopOlivia-HD.mp4": 141396264,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/22-Photography-JoelMeyerowitz-WorkshopSteve-HD.mp4": 164673440,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/23-Photography-JoelMeyerowitz-Landscape-HD.mp4": 187055369,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/24-Photography-JoelMeyerowitz-HowToSeeWhenYouTravel-HD.mp4": 109278802,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/25-Photography-JoelMeyerowitz-FollowYourCuriosity-HD.mp4": 69654467,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/27-Photography-JoelMeyerowitz-ConversationsBetweenObjects-HD.mp4": 98656882,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/28-Photography-JoelMeyerowitz-LetsMakeAStillLife-HD.mp4": 130755028,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/29-Photography-JoelMeyerowitz-TuscanyInsideTheLight-HD.mp4": 239872390,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/30-Photography-JoelMeyerowitz-EditingIsAWayToGiveFormToYourWork-HD.mp4": 181197136,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/31-Photography-JoelMeyerowitz-MakeAPrint-HD.mp4": 124225946,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/32-Photography-JoelMeyerowitz-EveryoneCanMakeABookNow-HD.mp4": 105067669,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/33-Photography-JoelMeyerowitz-LifeAsAPhotographer-HD.mp4": 117231761,
+    "courses/04-大师课/Joel Meyerowitz-Masters of Photography/34-Photography-JoelMeyerowitz-Farewell-HD.mp4": 31158489
+  },
+  "jobs": [
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-d4cbb57595ba4a7c879c21ba59f6eaeb",
+      "action": "inspect",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-b4b0c69553224661a04a1bea6897cdf4",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-eb9d71501aea408ebd74ae2a98b5e316",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-64913d0298a34871ad720e8bbebca1e3",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-49147463ded843d3a989fe4acb07aa03",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-6d376bf7979044d5a69278c3e0a29af3",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-bb98bf2908134f7cbdb0de26a86199e0",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-d0a340acc7a4497fb2a2e7b20826b1af",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-3635398b13a34a318b97358f37db14d9",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-4d3ccb1327574ab5a269c0a5725a0327",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-bce2bdcc4ad64fecadc6121f47783f2b",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-e2f7db630c1049f488f6b3bb30762cda",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-eba32be0163d458c815102624e3ff9ef",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-93744d82de1d449a99503e9eac76e462",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-1028d80cdbeb45839f41b3a6e04a1222",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-fe8b6fd832e9455c9d99fe8df788100c",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-f5a4704587a0477fbc35ddae1c255bd1",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-39e56f8a017c4866b79ade8deb64f27b",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-26b98a5f2c6d465896fc54e921c2ea94",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-d756a609ea58424a9e9671ec8314f14e",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-cde5cf999ef24e6084758e3701ea9fbd",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-e4fa3869e43d4331ae3c5796e78564f3",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-c278bbe3cc5e4cf1904f4a42de76c548",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-59f4f3c48e2f49f68697dbbc058ba1c5",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-74675f3b1c4944578ff97bada6ac804c",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-a02cc742fe1b49bf9469835cf90f5681",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-6dea4be2fe064bb6927fd0a3cf80a483",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-9d1cd0d8a737487fa44464df1a06df6c",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-3e1a3befaeef45e383d6608ce0ef3e0a",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-2b5c7b8eefa8471cb893e067f21668db",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-47d15c462e0b4b83941090cd4f4d273e",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-1a546076572e4497b20f3439895365f1",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-e1827e45572f4dd7b09a186d7e97a9ea",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-2f179ddc5975477ea1afbe33f337f3cd",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-51b586b2551a4331845a11374d53fe7e",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-704cd70ab2794456b3523077d8db8479",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-a850589099aa43468515000e22383b24",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-f1f5cf233a4e4fedbb2be9912b19872a",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-9737362d32e44ce8a5adac98aff110b2",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-77131ec27f1d4ed3a986f5feecd6770e",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-793468762925475bb55a187e9e363f90",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-0e05d40c2f9449aaa9e489b466e218a9",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-ff993f3f9c704e9c9846b3a954a98b76",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-7740bec0cd2c4484b245f1140ef8c6fb",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-aef714c8eed540ef9130091ebc04ba23",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-a3c0e5da4c4f43c8a914b0d0bd42f7e4",
+      "action": "write",
+      "uri": "<RAY_PACKAGE>",
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-e19668f85ff14409a5ee115befa65249",
+      "action": "audit",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    },
+    {
+      "id": "w4-upload-materials-courses-meyerowitz-3ead14b7a17146cbb932e4c535a58f14",
+      "action": "cleanup",
+      "uri": null,
+      "status": "SUCCEEDED",
+      "deleted": true
+    }
+  ],
+  "batches": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/01-Photography-JoelMeyerowitz-MeetYourMaster-HD.mp4",
+          "offset": 76526121,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/02-Photography-JoelMeyerowitz-Influences-HD.mp4",
+          "offset": 17845719,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/02-Photography-JoelMeyerowitz-Influences-HD.mp4",
+          "offset": 112217559,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/02-Photography-JoelMeyerowitz-Influences-HD.mp4",
+          "offset": 206589399,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/02-Photography-JoelMeyerowitz-Influences-HD.mp4",
+          "offset": 219339872,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/03-Photography-JoelMeyerowitz-LookingAtPictures-HD.mp4",
+          "offset": 81621367,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/03-Photography-JoelMeyerowitz-LookingAtPictures-HD.mp4",
+          "offset": 102471031,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/04-Photography-JoelMeyerowitz-TheStreetisOurs-HD.mp4",
+          "offset": 73522176,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/04-Photography-JoelMeyerowitz-TheStreetisOurs-HD.mp4",
+          "offset": 167894016,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/04-Photography-JoelMeyerowitz-TheStreetisOurs-HD.mp4",
+          "offset": 183849124,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/05-Photography-JoelMeyerowitz-TheMagiciansTrick-HD.mp4",
+          "offset": 78416732,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/05-Photography-JoelMeyerowitz-TheMagiciansTrick-HD.mp4",
+          "offset": 142712265,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/06-Photography-JoelMeyerowitz-Aftermath-HD.mp4",
+          "offset": 30076307,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/06-Photography-JoelMeyerowitz-Aftermath-HD.mp4",
+          "offset": 118208302,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/07-Photography-JoelMeyerowitz-Composition-HD.mp4",
+          "offset": 6239845,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/07-Photography-JoelMeyerowitz-Composition-HD.mp4",
+          "offset": 94909108,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/08-Photography-JoelMeyerowitz-IdeasForComposition-HD.mp4",
+          "offset": 5702577,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/08-Photography-JoelMeyerowitz-IdeasForComposition-HD.mp4",
+          "offset": 100074417,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/08-Photography-JoelMeyerowitz-IdeasForComposition-HD.mp4",
+          "offset": 143759570,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/09-Photography-JoelMeyerowitz-StreetPhotography-HD.mp4",
+          "offset": 50686687,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/09-Photography-JoelMeyerowitz-StreetPhotography-HD.mp4",
+          "offset": 70488378,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/10-Photography-JoelMeyerowitz-CapeLight-HD.mp4",
+          "offset": 74570149,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/10-Photography-JoelMeyerowitz-CapeLight-HD.mp4",
+          "offset": 168941989,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/10-Photography-JoelMeyerowitz-CapeLight-HD.mp4",
+          "offset": 192792409,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/11-Photography-JoelMeyerowitz-BlackAndWhiteVSColor-HD.mp4",
+          "offset": 70521420,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/11-Photography-JoelMeyerowitz-BlackAndWhiteVSColor-HD.mp4",
+          "offset": 87712945,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/12-Photography-JoelMeyerowitz-TheMeyerowitzColorZoneSystem-HD.mp4",
+          "offset": 77180315,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/12-Photography-JoelMeyerowitz-TheMeyerowitzColorZoneSystem-HD.mp4",
+          "offset": 83562107,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/13-Photography-JoelMeyerowitz-FindingYourSubject-HD.mp4",
+          "offset": 66071885,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/14-Photography-JoelMeyerowitz-Observation-HD.mp4",
+          "offset": 21918163,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/14-Photography-JoelMeyerowitz-Observation-HD.mp4",
+          "offset": 69577403,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/15-Photography-JoelMeyerowitz-LetLightBeTheSubject-HD.mp4",
+          "offset": 46712600,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/15-Photography-JoelMeyerowitz-LetLightBeTheSubject-HD.mp4",
+          "offset": 113267665,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/16-Photography-JoelMeyerowitz-SeeingYourNeighborhoodInAFreshWay-HD.mp4",
+          "offset": 27816775,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/16-Photography-JoelMeyerowitz-SeeingYourNeighborhoodInAFreshWay-HD.mp4",
+          "offset": 81424167,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/17-Photography-JoelMeyerowitz-Portraiture-HD.mp4",
+          "offset": 40764448,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/17-Photography-JoelMeyerowitz-Portraiture-HD.mp4",
+          "offset": 135136288,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/17-Photography-JoelMeyerowitz-Portraiture-HD.mp4",
+          "offset": 143192636,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/18-Photography-JoelMeyerowitz-WorkshopRachel-HD.mp4",
+          "offset": 86315492,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/18-Photography-JoelMeyerowitz-WorkshopRachel-HD.mp4",
+          "offset": 180687332,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/18-Photography-JoelMeyerowitz-WorkshopRachel-HD.mp4",
+          "offset": 196067634,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/19-Photography-JoelMeyerowitz-WorkshopAlex-HD.mp4",
+          "offset": 78991538,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/19-Photography-JoelMeyerowitz-WorkshopAlex-HD.mp4",
+          "offset": 134643353,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/20-Photography-JoelMeyerowitz-WorkshopHeather-HD.mp4",
+          "offset": 38720025,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/20-Photography-JoelMeyerowitz-WorkshopHeather-HD.mp4",
+          "offset": 133091865,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/20-Photography-JoelMeyerowitz-WorkshopHeather-HD.mp4",
+          "offset": 150513154,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/21-Photography-JoelMeyerowitz-WorkshopOlivia-HD.mp4",
+          "offset": 76950551,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/21-Photography-JoelMeyerowitz-WorkshopOlivia-HD.mp4",
+          "offset": 141396264,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/22-Photography-JoelMeyerowitz-WorkshopSteve-HD.mp4",
+          "offset": 29926127,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/22-Photography-JoelMeyerowitz-WorkshopSteve-HD.mp4",
+          "offset": 124297967,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/22-Photography-JoelMeyerowitz-WorkshopSteve-HD.mp4",
+          "offset": 164673440,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/23-Photography-JoelMeyerowitz-Landscape-HD.mp4",
+          "offset": 53996367,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/23-Photography-JoelMeyerowitz-Landscape-HD.mp4",
+          "offset": 148368207,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/23-Photography-JoelMeyerowitz-Landscape-HD.mp4",
+          "offset": 187055369,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/24-Photography-JoelMeyerowitz-HowToSeeWhenYouTravel-HD.mp4",
+          "offset": 55684678,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/24-Photography-JoelMeyerowitz-HowToSeeWhenYouTravel-HD.mp4",
+          "offset": 109278802,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/25-Photography-JoelMeyerowitz-FollowYourCuriosity-HD.mp4",
+          "offset": 40777716,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/25-Photography-JoelMeyerowitz-FollowYourCuriosity-HD.mp4",
+          "offset": 69654467,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/27-Photography-JoelMeyerowitz-ConversationsBetweenObjects-HD.mp4",
+          "offset": 65495089,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/27-Photography-JoelMeyerowitz-ConversationsBetweenObjects-HD.mp4",
+          "offset": 98656882,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/28-Photography-JoelMeyerowitz-LetsMakeAStillLife-HD.mp4",
+          "offset": 61210047,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/28-Photography-JoelMeyerowitz-LetsMakeAStillLife-HD.mp4",
+          "offset": 130755028,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/29-Photography-JoelMeyerowitz-TuscanyInsideTheLight-HD.mp4",
+          "offset": 24826859,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/29-Photography-JoelMeyerowitz-TuscanyInsideTheLight-HD.mp4",
+          "offset": 119198699,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/29-Photography-JoelMeyerowitz-TuscanyInsideTheLight-HD.mp4",
+          "offset": 213570539,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/29-Photography-JoelMeyerowitz-TuscanyInsideTheLight-HD.mp4",
+          "offset": 239872390,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/30-Photography-JoelMeyerowitz-EditingIsAWayToGiveFormToYourWork-HD.mp4",
+          "offset": 68069989,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/30-Photography-JoelMeyerowitz-EditingIsAWayToGiveFormToYourWork-HD.mp4",
+          "offset": 162441829,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/30-Photography-JoelMeyerowitz-EditingIsAWayToGiveFormToYourWork-HD.mp4",
+          "offset": 181197136,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/31-Photography-JoelMeyerowitz-MakeAPrint-HD.mp4",
+          "offset": 75616533,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/31-Photography-JoelMeyerowitz-MakeAPrint-HD.mp4",
+          "offset": 124225946,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/32-Photography-JoelMeyerowitz-EveryoneCanMakeABookNow-HD.mp4",
+          "offset": 45762427,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/32-Photography-JoelMeyerowitz-EveryoneCanMakeABookNow-HD.mp4",
+          "offset": 105067669,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/33-Photography-JoelMeyerowitz-LifeAsAPhotographer-HD.mp4",
+          "offset": 35066598,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 94371840,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/33-Photography-JoelMeyerowitz-LifeAsAPhotographer-HD.mp4",
+          "offset": 117231761,
+          "complete": true
+        },
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/34-Photography-JoelMeyerowitz-Farewell-HD.mp4",
+          "offset": 12206677,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "payload_bytes": 18951812,
+      "cleaned": true,
+      "completed_chunks": [
+        {
+          "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/34-Photography-JoelMeyerowitz-Farewell-HD.mp4",
+          "offset": 31158489,
+          "complete": true
+        }
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "started_at": "2026-10-11T00:50:46+0800",
+      "uploaded_bytes": 4171543622,
+      "put_seconds": 625.7206487119838,
+      "elapsed_seconds": 1209.9110905000125,
+      "finished_at": "2026-10-11T01:10:56+0800",
+      "effective_MBps": 3.4478100537751515,
+      "put_MBps": 6.666782741766513
+    }
+  ],
+  "status": "complete",
+  "ray_version": "2.51.1",
+  "audit": [
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/01-Photography-JoelMeyerowitz-MeetYourMaster-HD.mp4",
+      "size": 76526121,
+      "sha256": "dd3c2dbbf910fd0c6ca4948d62e15d8552c10abbe7e5a1c6707faf61e92b80ca",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/02-Photography-JoelMeyerowitz-Influences-HD.mp4",
+      "size": 219339872,
+      "sha256": "deea84efe41169252eb08717fb275633dd3374bf110164019f8d763ae29b50ca",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/03-Photography-JoelMeyerowitz-LookingAtPictures-HD.mp4",
+      "size": 102471031,
+      "sha256": "520c239ad68829a5794fc0e41fc726b50a4c8281d6b9cd193a47c9f167d91615",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/04-Photography-JoelMeyerowitz-TheStreetisOurs-HD.mp4",
+      "size": 183849124,
+      "sha256": "166411f873cc55e9839032c54abd668fe4c890d3bb5140cc7e1fce7971676473",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/05-Photography-JoelMeyerowitz-TheMagiciansTrick-HD.mp4",
+      "size": 142712265,
+      "sha256": "09f6e6933070365ce13f086c89e821c0a0c85520f4d6b23280dd8c1d58673ae9",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/06-Photography-JoelMeyerowitz-Aftermath-HD.mp4",
+      "size": 118208302,
+      "sha256": "fd5022f3a6a5da943194e91c09397aed1290756fca7e4c91eda37c6b8b624d83",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/07-Photography-JoelMeyerowitz-Composition-HD.mp4",
+      "size": 94909108,
+      "sha256": "43553a5791a8de85850a59167b1247715a38acce12e923ed118e08a3e7ea07a7",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/08-Photography-JoelMeyerowitz-IdeasForComposition-HD.mp4",
+      "size": 143759570,
+      "sha256": "7de5046d44b1d9f6d8e8d101a3ab585968027f19a3370022e797c57fe8640a03",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/09-Photography-JoelMeyerowitz-StreetPhotography-HD.mp4",
+      "size": 70488378,
+      "sha256": "b1b3eb15bfdd9c37c12966478a665c70d5b88c77f65497fe531ec097ad3266c7",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/10-Photography-JoelMeyerowitz-CapeLight-HD.mp4",
+      "size": 192792409,
+      "sha256": "279bc7ef241b97848108707e40080d010f62259c4d202d2841e23216ddf77a91",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/11-Photography-JoelMeyerowitz-BlackAndWhiteVSColor-HD.mp4",
+      "size": 87712945,
+      "sha256": "6ce8ec36d7cfa305ba2088291889d5fb04ea224eafcac8624fc3d17b4bc4b215",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/12-Photography-JoelMeyerowitz-TheMeyerowitzColorZoneSystem-HD.mp4",
+      "size": 83562107,
+      "sha256": "7edddf1de3c065f3c774e6079f98390e88af1834b9f24c2c834bf4d9d687527e",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/13-Photography-JoelMeyerowitz-FindingYourSubject-HD.mp4",
+      "size": 66071885,
+      "sha256": "b93dd1ff0e69350c2868eab4d395c2b31845aa516c30a179b39a1478760ee9f1",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/14-Photography-JoelMeyerowitz-Observation-HD.mp4",
+      "size": 69577403,
+      "sha256": "57dafd4951bdb722f0dbe6338f69f55a808a5611bd4ae8a8046ee13b231e3ef3",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/15-Photography-JoelMeyerowitz-LetLightBeTheSubject-HD.mp4",
+      "size": 113267665,
+      "sha256": "c433b2c379d37a1a71540b57432cc18dd996518e7b203b2ca0a587aa35fef1bc",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/16-Photography-JoelMeyerowitz-SeeingYourNeighborhoodInAFreshWay-HD.mp4",
+      "size": 81424167,
+      "sha256": "d2e9e3ae7a20d28a86f20ef92ba8e94a6b3f3e5b1b63bc15300869636c490133",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/17-Photography-JoelMeyerowitz-Portraiture-HD.mp4",
+      "size": 143192636,
+      "sha256": "aae6d46b9a8dd1f16cf83422189d0028632aeb103b532a4c8888be8e64f0d1dd",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/18-Photography-JoelMeyerowitz-WorkshopRachel-HD.mp4",
+      "size": 196067634,
+      "sha256": "a1c9a5c6c1ef7aaad2540482d2e46beb42a96a2cd73c21285555c7595333b963",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/19-Photography-JoelMeyerowitz-WorkshopAlex-HD.mp4",
+      "size": 134643353,
+      "sha256": "3ceace372f57f31d7075918667ce3ccb218c0f21fcac4a75e6a5cb7500376155",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/20-Photography-JoelMeyerowitz-WorkshopHeather-HD.mp4",
+      "size": 150513154,
+      "sha256": "a983a09ecbd63244c9f5443ff24e935cc4504c8a031149b2e7e663e9635f3633",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/21-Photography-JoelMeyerowitz-WorkshopOlivia-HD.mp4",
+      "size": 141396264,
+      "sha256": "7d4d757646e4cc54b6c0303a529b3438f7f63e7b920bc29d003ef4f0a1a5c85b",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/22-Photography-JoelMeyerowitz-WorkshopSteve-HD.mp4",
+      "size": 164673440,
+      "sha256": "93ab5ee6b76c75e99fa32ea9685c6c24d4da3aebc4f0fd0948ce35c714deb08f",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/23-Photography-JoelMeyerowitz-Landscape-HD.mp4",
+      "size": 187055369,
+      "sha256": "ba1e90f1a7f86bb9e6a8ff0ec3c7e33c03b63c3c2dafd856627586509e8cb354",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/24-Photography-JoelMeyerowitz-HowToSeeWhenYouTravel-HD.mp4",
+      "size": 109278802,
+      "sha256": "3da56f05c346fa07ad99819e32e1b275d87a884486116148dde9b9ece1231569",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/25-Photography-JoelMeyerowitz-FollowYourCuriosity-HD.mp4",
+      "size": 69654467,
+      "sha256": "0200239b9f0bce060980635bfe7b6663f7f1dfce20c335f3b011b0eab643e246",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/27-Photography-JoelMeyerowitz-ConversationsBetweenObjects-HD.mp4",
+      "size": 98656882,
+      "sha256": "762e753ef25734a5d9fa71d4da5b9c21f88bc6b1b393878b7b9488a8bc2dad72",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/28-Photography-JoelMeyerowitz-LetsMakeAStillLife-HD.mp4",
+      "size": 130755028,
+      "sha256": "9d2362f6e8fe4f9e22742f9c489e470a11f05973512b783ae644b65e5444768b",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/29-Photography-JoelMeyerowitz-TuscanyInsideTheLight-HD.mp4",
+      "size": 239872390,
+      "sha256": "3fe8f7be936aa0560614316ff1a038aeae5325483fc4aa6862588ca83ec79610",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/30-Photography-JoelMeyerowitz-EditingIsAWayToGiveFormToYourWork-HD.mp4",
+      "size": 181197136,
+      "sha256": "0d53467dbebc040cd8dd0fe34661ca59d7a1eaf8d6fec08fddf6a37551d2fb1e",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/31-Photography-JoelMeyerowitz-MakeAPrint-HD.mp4",
+      "size": 124225946,
+      "sha256": "431251e30de70f07cd0f66413b648e3754b5dc2407ee5e0c35243bc5eb39992c",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/32-Photography-JoelMeyerowitz-EveryoneCanMakeABookNow-HD.mp4",
+      "size": 105067669,
+      "sha256": "b5f55755693c1349424666c03d3182932698ab89043b3f5cbaca5a8aeea7fb0c",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/33-Photography-JoelMeyerowitz-LifeAsAPhotographer-HD.mp4",
+      "size": 117231761,
+      "sha256": "3b4528727fc8c86b39901d68f1e6a99c73a0f2afecc827f8aad72286268a61fb",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/34-Photography-JoelMeyerowitz-Farewell-HD.mp4",
+      "size": 31158489,
+      "sha256": "287e9fa5a66a4aff42d20c4309b460af4003aa4accc1a0b975ce803440781e68",
+      "mode": "0o600",
+      "directory_modes": {
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课/Joel Meyerowitz-Masters of Photography": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses/04-大师课": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw/courses": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz/raw": "0o700",
+        "<CEPH_ROOT>/references/materials-courses-meyerowitz": "0o700"
+      },
+      "part_exists": false
+    }
+  ],
+  "package_verification": [
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    },
+    {
+      "uri": "<RAY_PACKAGE>",
+      "exists_after": false
+    }
+  ],
+  "redeleted_job_records": [
+    "w4-upload-materials-courses-meyerowitz-3e1a3befaeef45e383d6608ce0ef3e0a",
+    "w4-upload-materials-courses-meyerowitz-a02cc742fe1b49bf9469835cf90f5681",
+    "w4-upload-materials-courses-meyerowitz-704cd70ab2794456b3523077d8db8479",
+    "w4-upload-materials-courses-meyerowitz-793468762925475bb55a187e9e363f90",
+    "w4-upload-materials-courses-meyerowitz-74675f3b1c4944578ff97bada6ac804c",
+    "w4-upload-materials-courses-meyerowitz-a850589099aa43468515000e22383b24",
+    "w4-upload-materials-courses-meyerowitz-93744d82de1d449a99503e9eac76e462",
+    "w4-upload-materials-courses-meyerowitz-59f4f3c48e2f49f68697dbbc058ba1c5",
+    "w4-upload-materials-courses-meyerowitz-39e56f8a017c4866b79ade8deb64f27b",
+    "w4-upload-materials-courses-meyerowitz-2b5c7b8eefa8471cb893e067f21668db"
+  ],
+  "cleanup_stable_empty_checks": 3,
+  "owned_jobs_remaining": [],
+  "dashboard": "<RAY_DASHBOARD>",
+  "files": [
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/01-Photography-JoelMeyerowitz-MeetYourMaster-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/01-Photography-JoelMeyerowitz-MeetYourMaster-HD.mp4",
+      "size": 76526121,
+      "sha256": "dd3c2dbbf910fd0c6ca4948d62e15d8552c10abbe7e5a1c6707faf61e92b80ca"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/02-Photography-JoelMeyerowitz-Influences-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/02-Photography-JoelMeyerowitz-Influences-HD.mp4",
+      "size": 219339872,
+      "sha256": "deea84efe41169252eb08717fb275633dd3374bf110164019f8d763ae29b50ca"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/03-Photography-JoelMeyerowitz-LookingAtPictures-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/03-Photography-JoelMeyerowitz-LookingAtPictures-HD.mp4",
+      "size": 102471031,
+      "sha256": "520c239ad68829a5794fc0e41fc726b50a4c8281d6b9cd193a47c9f167d91615"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/04-Photography-JoelMeyerowitz-TheStreetisOurs-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/04-Photography-JoelMeyerowitz-TheStreetisOurs-HD.mp4",
+      "size": 183849124,
+      "sha256": "166411f873cc55e9839032c54abd668fe4c890d3bb5140cc7e1fce7971676473"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/05-Photography-JoelMeyerowitz-TheMagiciansTrick-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/05-Photography-JoelMeyerowitz-TheMagiciansTrick-HD.mp4",
+      "size": 142712265,
+      "sha256": "09f6e6933070365ce13f086c89e821c0a0c85520f4d6b23280dd8c1d58673ae9"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/06-Photography-JoelMeyerowitz-Aftermath-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/06-Photography-JoelMeyerowitz-Aftermath-HD.mp4",
+      "size": 118208302,
+      "sha256": "fd5022f3a6a5da943194e91c09397aed1290756fca7e4c91eda37c6b8b624d83"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/07-Photography-JoelMeyerowitz-Composition-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/07-Photography-JoelMeyerowitz-Composition-HD.mp4",
+      "size": 94909108,
+      "sha256": "43553a5791a8de85850a59167b1247715a38acce12e923ed118e08a3e7ea07a7"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/08-Photography-JoelMeyerowitz-IdeasForComposition-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/08-Photography-JoelMeyerowitz-IdeasForComposition-HD.mp4",
+      "size": 143759570,
+      "sha256": "7de5046d44b1d9f6d8e8d101a3ab585968027f19a3370022e797c57fe8640a03"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/09-Photography-JoelMeyerowitz-StreetPhotography-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/09-Photography-JoelMeyerowitz-StreetPhotography-HD.mp4",
+      "size": 70488378,
+      "sha256": "b1b3eb15bfdd9c37c12966478a665c70d5b88c77f65497fe531ec097ad3266c7"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/10-Photography-JoelMeyerowitz-CapeLight-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/10-Photography-JoelMeyerowitz-CapeLight-HD.mp4",
+      "size": 192792409,
+      "sha256": "279bc7ef241b97848108707e40080d010f62259c4d202d2841e23216ddf77a91"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/11-Photography-JoelMeyerowitz-BlackAndWhiteVSColor-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/11-Photography-JoelMeyerowitz-BlackAndWhiteVSColor-HD.mp4",
+      "size": 87712945,
+      "sha256": "6ce8ec36d7cfa305ba2088291889d5fb04ea224eafcac8624fc3d17b4bc4b215"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/12-Photography-JoelMeyerowitz-TheMeyerowitzColorZoneSystem-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/12-Photography-JoelMeyerowitz-TheMeyerowitzColorZoneSystem-HD.mp4",
+      "size": 83562107,
+      "sha256": "7edddf1de3c065f3c774e6079f98390e88af1834b9f24c2c834bf4d9d687527e"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/13-Photography-JoelMeyerowitz-FindingYourSubject-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/13-Photography-JoelMeyerowitz-FindingYourSubject-HD.mp4",
+      "size": 66071885,
+      "sha256": "b93dd1ff0e69350c2868eab4d395c2b31845aa516c30a179b39a1478760ee9f1"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/14-Photography-JoelMeyerowitz-Observation-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/14-Photography-JoelMeyerowitz-Observation-HD.mp4",
+      "size": 69577403,
+      "sha256": "57dafd4951bdb722f0dbe6338f69f55a808a5611bd4ae8a8046ee13b231e3ef3"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/15-Photography-JoelMeyerowitz-LetLightBeTheSubject-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/15-Photography-JoelMeyerowitz-LetLightBeTheSubject-HD.mp4",
+      "size": 113267665,
+      "sha256": "c433b2c379d37a1a71540b57432cc18dd996518e7b203b2ca0a587aa35fef1bc"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/16-Photography-JoelMeyerowitz-SeeingYourNeighborhoodInAFreshWay-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/16-Photography-JoelMeyerowitz-SeeingYourNeighborhoodInAFreshWay-HD.mp4",
+      "size": 81424167,
+      "sha256": "d2e9e3ae7a20d28a86f20ef92ba8e94a6b3f3e5b1b63bc15300869636c490133"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/17-Photography-JoelMeyerowitz-Portraiture-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/17-Photography-JoelMeyerowitz-Portraiture-HD.mp4",
+      "size": 143192636,
+      "sha256": "aae6d46b9a8dd1f16cf83422189d0028632aeb103b532a4c8888be8e64f0d1dd"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/18-Photography-JoelMeyerowitz-WorkshopRachel-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/18-Photography-JoelMeyerowitz-WorkshopRachel-HD.mp4",
+      "size": 196067634,
+      "sha256": "a1c9a5c6c1ef7aaad2540482d2e46beb42a96a2cd73c21285555c7595333b963"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/19-Photography-JoelMeyerowitz-WorkshopAlex-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/19-Photography-JoelMeyerowitz-WorkshopAlex-HD.mp4",
+      "size": 134643353,
+      "sha256": "3ceace372f57f31d7075918667ce3ccb218c0f21fcac4a75e6a5cb7500376155"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/20-Photography-JoelMeyerowitz-WorkshopHeather-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/20-Photography-JoelMeyerowitz-WorkshopHeather-HD.mp4",
+      "size": 150513154,
+      "sha256": "a983a09ecbd63244c9f5443ff24e935cc4504c8a031149b2e7e663e9635f3633"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/21-Photography-JoelMeyerowitz-WorkshopOlivia-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/21-Photography-JoelMeyerowitz-WorkshopOlivia-HD.mp4",
+      "size": 141396264,
+      "sha256": "7d4d757646e4cc54b6c0303a529b3438f7f63e7b920bc29d003ef4f0a1a5c85b"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/22-Photography-JoelMeyerowitz-WorkshopSteve-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/22-Photography-JoelMeyerowitz-WorkshopSteve-HD.mp4",
+      "size": 164673440,
+      "sha256": "93ab5ee6b76c75e99fa32ea9685c6c24d4da3aebc4f0fd0948ce35c714deb08f"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/23-Photography-JoelMeyerowitz-Landscape-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/23-Photography-JoelMeyerowitz-Landscape-HD.mp4",
+      "size": 187055369,
+      "sha256": "ba1e90f1a7f86bb9e6a8ff0ec3c7e33c03b63c3c2dafd856627586509e8cb354"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/24-Photography-JoelMeyerowitz-HowToSeeWhenYouTravel-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/24-Photography-JoelMeyerowitz-HowToSeeWhenYouTravel-HD.mp4",
+      "size": 109278802,
+      "sha256": "3da56f05c346fa07ad99819e32e1b275d87a884486116148dde9b9ece1231569"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/25-Photography-JoelMeyerowitz-FollowYourCuriosity-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/25-Photography-JoelMeyerowitz-FollowYourCuriosity-HD.mp4",
+      "size": 69654467,
+      "sha256": "0200239b9f0bce060980635bfe7b6663f7f1dfce20c335f3b011b0eab643e246"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/27-Photography-JoelMeyerowitz-ConversationsBetweenObjects-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/27-Photography-JoelMeyerowitz-ConversationsBetweenObjects-HD.mp4",
+      "size": 98656882,
+      "sha256": "762e753ef25734a5d9fa71d4da5b9c21f88bc6b1b393878b7b9488a8bc2dad72"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/28-Photography-JoelMeyerowitz-LetsMakeAStillLife-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/28-Photography-JoelMeyerowitz-LetsMakeAStillLife-HD.mp4",
+      "size": 130755028,
+      "sha256": "9d2362f6e8fe4f9e22742f9c489e470a11f05973512b783ae644b65e5444768b"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/29-Photography-JoelMeyerowitz-TuscanyInsideTheLight-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/29-Photography-JoelMeyerowitz-TuscanyInsideTheLight-HD.mp4",
+      "size": 239872390,
+      "sha256": "3fe8f7be936aa0560614316ff1a038aeae5325483fc4aa6862588ca83ec79610"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/30-Photography-JoelMeyerowitz-EditingIsAWayToGiveFormToYourWork-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/30-Photography-JoelMeyerowitz-EditingIsAWayToGiveFormToYourWork-HD.mp4",
+      "size": 181197136,
+      "sha256": "0d53467dbebc040cd8dd0fe34661ca59d7a1eaf8d6fec08fddf6a37551d2fb1e"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/31-Photography-JoelMeyerowitz-MakeAPrint-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/31-Photography-JoelMeyerowitz-MakeAPrint-HD.mp4",
+      "size": 124225946,
+      "sha256": "431251e30de70f07cd0f66413b648e3754b5dc2407ee5e0c35243bc5eb39992c"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/32-Photography-JoelMeyerowitz-EveryoneCanMakeABookNow-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/32-Photography-JoelMeyerowitz-EveryoneCanMakeABookNow-HD.mp4",
+      "size": 105067669,
+      "sha256": "b5f55755693c1349424666c03d3182932698ab89043b3f5cbaca5a8aeea7fb0c"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/33-Photography-JoelMeyerowitz-LifeAsAPhotographer-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/33-Photography-JoelMeyerowitz-LifeAsAPhotographer-HD.mp4",
+      "size": 117231761,
+      "sha256": "3b4528727fc8c86b39901d68f1e6a99c73a0f2afecc827f8aad72286268a61fb"
+    },
+    {
+      "source": "materials-courses-meyerowitz",
+      "local": "<LOCAL_PATH> Meyerowitz-Masters of Photography/34-Photography-JoelMeyerowitz-Farewell-HD.mp4",
+      "remote_rel": "courses/04-大师课/Joel Meyerowitz-Masters of Photography/34-Photography-JoelMeyerowitz-Farewell-HD.mp4",
+      "size": 31158489,
+      "sha256": "287e9fa5a66a4aff42d20c4309b460af4003aa4accc1a0b975ce803440781e68"
+    }
+  ],
+  "payload_cap_bytes": 94371840,
+  "http_limit_bytes": 104857600,
+  "nice": 10
+}

@@ -1,0 +1,730 @@
+{
+  "contractVersion": 1,
+  "extractionStatus": "partial-manual",
+  "library": "portrait",
+  "rules": [
+    {
+      "id": "P-COURSE-CLOTHING-LINES",
+      "library": "portrait",
+      "aspect": "pose",
+      "title": "服装与手位保留体态线条",
+      "statement": "结合服装意图，复核手位是否保留可读的身体侧线与上下身转角。",
+      "exceptions": [
+        "宽松廓形或有意遮掩身形的照片可以保留，不要求一律露腰线"
+      ],
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "course:hanjing",
+      "evidence": [
+        {
+          "ruleId": "P-COURSE-CLOTHING-LINES",
+          "kind": "source",
+          "paraphrase": "宽松衣服自拍时换手，让身体侧面线条可见",
+          "locator": {
+            "source": "hanjing",
+            "course": "hanjing-posing",
+            "episode": 11,
+            "episodeId": "hanjing-7f1daa9d3f91",
+            "start": 499.1,
+            "end": 515.2
+          },
+          "courseSlug": "hanjing",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "P-COURSE-CLOTHING-LINES",
+          "kind": "source",
+          "paraphrase": "厚重上衣配合手臂展开，可减轻拥挤感",
+          "locator": {
+            "source": "hanjing",
+            "course": "hanjing-posing",
+            "episode": 16,
+            "episodeId": "hanjing-c42a96ca6ee1",
+            "start": 327.4,
+            "end": 367.9
+          },
+          "courseSlug": "hanjing",
+          "supportCount": 2,
+          "supports": [
+            {
+              "locator": {
+                "source": "hanjing",
+                "course": "hanjing-posing",
+                "episode": 16,
+                "episodeId": "hanjing-c42a96ca6ee1",
+                "start": 327.4,
+                "end": 367.9
+              }
+            },
+            {
+              "locator": {
+                "source": "hanjing",
+                "course": "hanjing-posing",
+                "episode": 19,
+                "episodeId": "hanjing-bafb755c1967",
+                "start": 359.0,
+                "end": 397.8
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "P-COURSE-CLOTHING-LINES",
+          "kind": "exception",
+          "paraphrase": "宽松衣物与C形内收可有意弱化身形线条",
+          "locator": {
+            "source": "hanjing",
+            "course": "hanjing-posing",
+            "episode": 16,
+            "episodeId": "hanjing-c42a96ca6ee1",
+            "start": 232.8,
+            "end": 250.0
+          },
+          "courseSlug": "hanjing",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "P-COURSE-CLOTHING-LINES",
+          "kind": "source",
+          "paraphrase": "宽松毛衣可抬手或收衣摆，调整腰线与视觉重心",
+          "locator": {
+            "source": "hanjing",
+            "course": "hanjing-posing",
+            "episode": 44,
+            "episodeId": "hanjing-0830afaa339a",
+            "start": 42.3,
+            "end": 153.3
+          },
+          "courseSlug": "hanjing",
+          "supportCount": 1
+        }
+      ]
+    },
+    {
+      "id": "P-COURSE-ARM-PROJECTION",
+      "library": "portrait",
+      "aspect": "pose",
+      "title": "手臂投影保留结构",
+      "statement": "肘尖直指镜头导致手臂结构压缩难辨时提示复核；结合动作意图，不设固定肘角。",
+      "exceptions": [
+        "冲镜动作或压缩视角有意成立时可保留"
+      ],
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "status": "proposed",
+      "source": "course:hanjing",
+      "evidence": [
+        {
+          "ruleId": "P-COURSE-ARM-PROJECTION",
+          "kind": "source",
+          "paraphrase": "避免肘尖直指镜头，以免手臂结构消失",
+          "locator": {
+            "source": "hanjing",
+            "course": "hanjing-posing",
+            "episode": 16,
+            "episodeId": "hanjing-c42a96ca6ee1",
+            "start": 271.9,
+            "end": 280.7
+          },
+          "courseSlug": "hanjing",
+          "supportCount": 4,
+          "supports": [
+            {
+              "locator": {
+                "source": "hanjing",
+                "course": "hanjing-posing",
+                "episode": 16,
+                "episodeId": "hanjing-c42a96ca6ee1",
+                "start": 271.9,
+                "end": 280.7
+              }
+            },
+            {
+              "locator": {
+                "source": "hanjing",
+                "course": "hanjing-posing",
+                "episode": 17,
+                "episodeId": "hanjing-a517d29f7050",
+                "start": 883.2,
+                "end": 913.5
+              }
+            },
+            {
+              "locator": {
+                "source": "hanjing",
+                "course": "hanjing-posing",
+                "episode": 42,
+                "episodeId": "hanjing-42621edbb9ca",
+                "start": 321.6,
+                "end": 357
+              }
+            },
+            {
+              "locator": {
+                "source": "hanjing",
+                "course": "hanjing-posing",
+                "episode": 44,
+                "episodeId": "hanjing-0830afaa339a",
+                "start": 153.9,
+                "end": 172
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P-COURSE-POSE-SERIES",
+      "library": "portrait",
+      "aspect": "coverage",
+      "title": "按角位复核组内变化",
+      "statement": "同组按角位比较手位、肩部与脚位的有效变化；有互补用途时可留不同角位的代表帧。",
+      "exceptions": [
+        "课程讲拍摄组织，并未验证连拍择优；单张交付按指定用途选择"
+      ],
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "status": "proposed",
+      "source": "course:hanjing",
+      "evidence": [
+        {
+          "ruleId": "P-COURSE-POSE-SERIES",
+          "kind": "source",
+          "paraphrase": "按角位组织小幅姿势变化，提高整组出片率",
+          "locator": {
+            "source": "hanjing",
+            "course": "hanjing-posing",
+            "episode": 18,
+            "episodeId": "hanjing-6ba00dd5dfc2",
+            "start": 513.1,
+            "end": 598.0
+          },
+          "courseSlug": "hanjing",
+          "supportCount": 1
+        }
+      ],
+      "proposalBasis": "selection extrapolation from capture guidance"
+    },
+    {
+      "id": "G-COURSE-EDIT-JUSTIFICATION",
+      "library": "general",
+      "aspect": "coverage",
+      "title": "说明相邻帧入选理由",
+      "statement": "并看相邻帧并说明可见差异，区分拍摄记忆与成片贡献。",
+      "exceptions": [
+        "私人纪念用途可保留个人意义，专业选片仍需说明用途。",
+        "同伴偏好可作复核线索，不以票数替代作者判断。"
+      ],
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "status": "proposed",
+      "source": "course:magnum-street",
+      "sources": [
+        "course:magnum-street"
+      ],
+      "evidence": [
+        {
+          "ruleId": "G-COURSE-EDIT-JUSTIFICATION",
+          "kind": "source",
+          "paraphrase": "区分拍摄时的情绪与照片实际呈现的结果",
+          "locator": {
+            "source": "materials-course-texts",
+            "course": "magnum-street",
+            "episode": 9,
+            "episodeId": "magnum-street-6dcb6b13f011",
+            "start": 728.74,
+            "end": 748.405
+          },
+          "courseSlug": "magnum-street",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "G-COURSE-EDIT-JUSTIFICATION",
+          "kind": "source",
+          "paraphrase": "相似帧并看强弱，并向他人说明选择理由",
+          "locator": {
+            "source": "materials-course-texts",
+            "course": "magnum-street",
+            "episode": 9,
+            "episodeId": "magnum-street-1128638e1330",
+            "page": 13
+          },
+          "courseSlug": "magnum-street",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "G-COURSE-EDIT-JUSTIFICATION",
+          "kind": "exception",
+          "paraphrase": "同伴意见用来追问理由，最终仍由作者取舍",
+          "locator": {
+            "source": "materials-course-texts",
+            "course": "magnum-street",
+            "episode": 9,
+            "episodeId": "magnum-street-6dcb6b13f011",
+            "start": 880.4,
+            "end": 907.815
+          },
+          "courseSlug": "magnum-street",
+          "supportCount": 1
+        }
+      ],
+      "proposalBasis": "direct text guidance; no selection-outcome validation"
+    },
+    {
+      "id": "G-COURSE-SELECTION-PURPOSE",
+      "library": "general",
+      "aspect": "coverage",
+      "title": "按呈现用途选片",
+      "statement": "先明确呈现用途，再比较单张和整批照片的入选价值。",
+      "exceptions": [
+        "不同用途可以有不同首选，不设统一永久优胜帧。"
+      ],
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "status": "proposed",
+      "source": "course:annie-leibovitz",
+      "sources": [
+        "course:annie-leibovitz"
+      ],
+      "evidence": [
+        {
+          "ruleId": "G-COURSE-SELECTION-PURPOSE",
+          "kind": "source",
+          "paraphrase": "入选取决于照片将用于怎样的呈现",
+          "locator": {
+            "source": "materials-course-texts",
+            "course": "annie-leibovitz",
+            "episode": 9,
+            "episodeId": "annie-leibovitz-0eede29825aa",
+            "start": 145.82,
+            "end": 152.88
+          },
+          "courseSlug": "annie-leibovitz",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "G-COURSE-SELECTION-PURPOSE",
+          "kind": "source",
+          "paraphrase": "编辑既比较拍摄帧，也审视整批作品",
+          "locator": {
+            "source": "materials-course-texts",
+            "course": "annie-leibovitz",
+            "episode": 9,
+            "episodeId": "annie-leibovitz-41db63003abb",
+            "page": 1
+          },
+          "courseSlug": "annie-leibovitz",
+          "supportCount": 1
+        }
+      ],
+      "proposalBasis": "direct text guidance; no selection-outcome validation"
+    },
+    {
+      "id": "G-COURSE-ITERATIVE-EDIT",
+      "library": "general",
+      "aspect": "coverage",
+      "title": "分轮复核大量候选片",
+      "statement": "大量候选片分轮缩小，逐轮复核画面贡献，不设留片配额。",
+      "exceptions": [
+        "可以全部保留或全部不选，平均删片比例不是规则。"
+      ],
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "status": "proposed",
+      "source": "course:magnum-street",
+      "sources": [
+        "course:magnum-street"
+      ],
+      "evidence": [
+        {
+          "ruleId": "G-COURSE-ITERATIVE-EDIT",
+          "kind": "source",
+          "paraphrase": "逐轮缩小候选范围，不以平均删片比例作配额",
+          "locator": {
+            "source": "materials-course-texts",
+            "course": "magnum-street",
+            "episode": 9,
+            "episodeId": "magnum-street-1128638e1330",
+            "page": 7
+          },
+          "courseSlug": "magnum-street",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "G-COURSE-ITERATIVE-EDIT",
+          "kind": "source",
+          "paraphrase": "回看已标记照片，逐轮寻找更有意思的画面",
+          "locator": {
+            "source": "materials-course-texts",
+            "course": "magnum-street",
+            "episode": 9,
+            "episodeId": "magnum-street-6dcb6b13f011",
+            "start": 395.515,
+            "end": 429.16
+          },
+          "courseSlug": "magnum-street",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "G-COURSE-ITERATIVE-EDIT",
+          "kind": "source",
+          "paraphrase": "整次拍摄联系表先分轮筛选，再确认最终帧",
+          "locator": {
+            "source": "materials-course-texts",
+            "course": "annie-leibovitz",
+            "episode": 13,
+            "episodeId": "annie-leibovitz-fd5079e0e345",
+            "start": 16.63,
+            "end": 36.15
+          },
+          "courseSlug": "annie-leibovitz",
+          "supportCount": 1
+        }
+      ],
+      "proposalBasis": "direct text guidance; no selection-outcome validation"
+    },
+    {
+      "id": "P-COURSE-GROUP-HEAD-LAYERS",
+      "library": "portrait",
+      "aspect": "pose",
+      "title": "合影头部层次可读",
+      "statement": "复核合影头部高低与错位形成的层次，不强求固定图形。",
+      "exceptions": [
+        "正式队列或小群体可同高，不以三角形单判成败。"
+      ],
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "status": "proposed",
+      "source": "course:michele-celentano",
+      "sources": [
+        "course:michele-celentano"
+      ],
+      "evidence": [
+        {
+          "ruleId": "P-COURSE-GROUP-HEAD-LAYERS",
+          "kind": "source",
+          "paraphrase": "头部高低错落可形成三角、菱形等群体层次",
+          "locator": {
+            "source": "materials-course-texts",
+            "course": "michele-celentano",
+            "episode": 4,
+            "episodeId": "michele-celentano-821114d53372",
+            "start": 51.04,
+            "end": 100.645
+          },
+          "courseSlug": "michele-celentano",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "P-COURSE-GROUP-HEAD-LAYERS",
+          "kind": "source",
+          "paraphrase": "避免头部无意排成同一直线，层次可以很微妙",
+          "locator": {
+            "source": "materials-course-texts",
+            "course": "lindsay-adler",
+            "episode": 8,
+            "episodeId": "lindsay-adler-8e441278778a",
+            "start": 57.2,
+            "end": 84.21
+          },
+          "courseSlug": "lindsay-adler",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "P-COURSE-GROUP-HEAD-LAYERS",
+          "kind": "exception",
+          "paraphrase": "小群体头部同排不一定失败，不只凭图形判断",
+          "locator": {
+            "source": "materials-course-texts",
+            "course": "lindsay-adler",
+            "episode": 8,
+            "episodeId": "lindsay-adler-8e441278778a",
+            "start": 148.28,
+            "end": 175.76
+          },
+          "courseSlug": "lindsay-adler",
+          "supportCount": 1
+        }
+      ],
+      "proposalBasis": "direct text guidance; no selection-outcome validation"
+    },
+    {
+      "id": "G-COURSE-COLOR-ROLE",
+      "library": "general",
+      "aspect": "color",
+      "title": "色彩承担画面关系",
+      "statement": "比较色彩与明暗图形各自贡献，复核色彩是否服务表达。",
+      "exceptions": [
+        "黑白表达可只依靠明暗形态，不要求彩色。",
+        "不凭色彩推断人物真实情绪。"
+      ],
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "status": "proposed",
+      "source": "course:joel-meyerowitz",
+      "sources": [
+        "course:joel-meyerowitz"
+      ],
+      "evidence": [
+        {
+          "ruleId": "G-COURSE-COLOR-ROLE",
+          "kind": "source",
+          "paraphrase": "并看彩色与黑白，比较色彩和明暗图形的贡献",
+          "locator": {
+            "source": "materials-courses-meyerowitz",
+            "course": "joel-meyerowitz",
+            "episode": 11,
+            "episodeId": "materials-courses-meyerowitz-c1926c43001a",
+            "start": 150.72,
+            "end": 175.84
+          },
+          "courseSlug": "joel-meyerowitz",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "G-COURSE-COLOR-ROLE",
+          "kind": "source",
+          "paraphrase": "相邻肖像的背景色可共同组织组照",
+          "locator": {
+            "source": "materials-courses-meyerowitz",
+            "course": "joel-meyerowitz",
+            "episode": 22,
+            "episodeId": "materials-courses-meyerowitz-f3c358b0f8b6",
+            "start": 348.01,
+            "end": 377.99
+          },
+          "courseSlug": "joel-meyerowitz",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "G-COURSE-COLOR-ROLE",
+          "kind": "source",
+          "paraphrase": "古典空间与现代电梯的光色反差可构成对照",
+          "locator": {
+            "source": "materials-courses-meyerowitz",
+            "course": "joel-meyerowitz",
+            "episode": 25,
+            "episodeId": "materials-courses-meyerowitz-07ca4df9eaa6",
+            "start": 214.46,
+            "end": 239.8
+          },
+          "courseSlug": "joel-meyerowitz",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "G-COURSE-COLOR-ROLE",
+          "kind": "source",
+          "paraphrase": "暖黄室内与淡蓝海景相邻可形成色彩与空间转折",
+          "locator": {
+            "source": "materials-courses-meyerowitz",
+            "course": "joel-meyerowitz",
+            "episode": 32,
+            "episodeId": "materials-courses-meyerowitz-e68781c2ac0b",
+            "start": 131.58,
+            "end": 199.3
+          },
+          "courseSlug": "joel-meyerowitz",
+          "supportCount": 1
+        }
+      ],
+      "proposalBasis": "direct ASR guidance; manually read; no selection-outcome validation"
+    },
+    {
+      "id": "G-COURSE-EDIT-DISCOVERY",
+      "library": "general",
+      "aspect": "coverage",
+      "title": "编辑回看发现主题",
+      "statement": "回看整批照片的重复线索，让编辑发现主题并检验系列联系。",
+      "exceptions": [
+        "共同物件只是检索入口，不保证组照成立。",
+        "既定委托主题仍应按呈现用途选片。"
+      ],
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "status": "proposed",
+      "source": "course:joel-meyerowitz",
+      "sources": [
+        "course:joel-meyerowitz"
+      ],
+      "evidence": [
+        {
+          "ruleId": "G-COURSE-EDIT-DISCOVERY",
+          "kind": "source",
+          "paraphrase": "编辑回看中的重复线索可揭示跨题材主题",
+          "locator": {
+            "source": "materials-courses-meyerowitz",
+            "course": "joel-meyerowitz",
+            "episode": 13,
+            "episodeId": "materials-courses-meyerowitz-3ba22f7c5bcc",
+            "start": 155.67,
+            "end": 212.37
+          },
+          "courseSlug": "joel-meyerowitz",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "G-COURSE-EDIT-DISCOVERY",
+          "kind": "source",
+          "paraphrase": "同组并看可检验反复出现的主题是否成立",
+          "locator": {
+            "source": "materials-courses-meyerowitz",
+            "course": "joel-meyerowitz",
+            "episode": 18,
+            "episodeId": "materials-courses-meyerowitz-b43a754501aa",
+            "start": 267.46,
+            "end": 289.1
+          },
+          "courseSlug": "joel-meyerowitz",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "G-COURSE-EDIT-DISCOVERY",
+          "kind": "counterpoint",
+          "paraphrase": "项目概念须由照片证明，口头标签不能替代",
+          "locator": {
+            "source": "materials-courses-meyerowitz",
+            "course": "joel-meyerowitz",
+            "episode": 19,
+            "episodeId": "materials-courses-meyerowitz-3594faba33a3",
+            "start": 514.12,
+            "end": 527.82
+          },
+          "courseSlug": "joel-meyerowitz",
+          "supportCount": 1
+        },
+        {
+          "ruleId": "G-COURSE-EDIT-DISCOVERY",
+          "kind": "source",
+          "paraphrase": "整批联系表可帮助识别反复出现的题材线索",
+          "locator": {
+            "source": "materials-courses-meyerowitz",
+            "course": "joel-meyerowitz",
+            "episode": 30,
+            "episodeId": "materials-courses-meyerowitz-328492b528f3",
+            "start": 523.52,
+            "end": 546.08
+          },
+          "courseSlug": "joel-meyerowitz",
+          "supportCount": 1
+        }
+      ],
+      "proposalBasis": "direct ASR guidance; manually read; no selection-outcome validation"
+    },
+    {
+      "id": "P-COURSE-FACE-CONTACT",
+      "library": "portrait",
+      "aspect": "pose",
+      "title": "手脸接触保留预期脸形",
+      "statement": "托腮或手贴脸时，复核接触挤压是否使脸形偏离预期表现。",
+      "exceptions": [
+        "有意挤脸或夸张表情可成立，不把接触本身当作错误。"
+      ],
+      "severity": "hint",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "sequenceContactSheet"
+        ]
+      },
+      "status": "proposed",
+      "source": "course:linhaiyin",
+      "sources": [
+        "course:linhaiyin"
+      ],
+      "evidence": [
+        {
+          "ruleId": "P-COURSE-FACE-CONTACT",
+          "kind": "source",
+          "paraphrase": "托腮或贴脸手位需复核接触是否挤压脸形",
+          "locator": {
+            "source": "linhaiyin",
+            "course": "commercial-portrait",
+            "episode": 4,
+            "episodeId": "linhaiyin-94a36533b542",
+            "start": 1037.44,
+            "end": 1063.84
+          },
+          "courseSlug": "linhaiyin",
+          "supportCount": 1,
+          "supports": [
+            {
+              "locator": {
+                "source": "linhaiyin",
+                "course": "commercial-portrait",
+                "episode": 4,
+                "episodeId": "linhaiyin-94a36533b542",
+                "start": 1037.44,
+                "end": 1063.84
+              }
+            },
+            {
+              "locator": {
+                "source": "linhaiyin",
+                "course": "commercial-portrait",
+                "episode": 4,
+                "episodeId": "linhaiyin-94a36533b542",
+                "start": 1089.15,
+                "end": 1101.88
+              }
+            }
+          ]
+        }
+      ],
+      "proposalBasis": "direct ASR guidance; manually read; no image or selection-outcome validation"
+    }
+  ]
+}

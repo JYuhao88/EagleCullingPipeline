@@ -1,0 +1,573 @@
+{
+  "contractVersion": 1,
+  "library": "portrait",
+  "version": "0.1.0",
+  "genres": [
+    "portrait",
+    "street-portrait",
+    "fashion",
+    "wedding"
+  ],
+  "rules": [
+    {
+      "id": "P-CROP-HEADROOM",
+      "aspect": "framing",
+      "title": "头顶留白",
+      "statement": "头顶到画面上沿留一到两拳空间（约 0.3–0.6 个头高）；顶天或留白过多都扣分。",
+      "check": {
+        "by": "measure",
+        "signal": "headroomHeads",
+        "pass": [
+          0.3,
+          0.6
+        ],
+        "warn": [
+          0.1,
+          1.2
+        ],
+        "measure": {
+          "version": "measure-v3",
+          "scope": "person",
+          "mode": "relative-headroom",
+          "signal": "headroomHeads",
+          "warn": [
+            0.1,
+            1.2
+          ],
+          "units": "head heights",
+          "pass": [
+            0.3,
+            0.6
+          ],
+          "calibration": "W2: same-group same-framing median; conservative review margin, no aesthetic truth",
+          "outcome": "warn",
+          "minGroupSamples": 3,
+          "absoluteAbove": 1.2,
+          "deltaHeads": 0.75,
+          "ratioAbove": 1.5
+        }
+      },
+      "severity": "penalty",
+      "exceptions": [
+        "特写刻意切头顶时，按 P-CROP-HAIRLINE 判定"
+      ],
+      "sources": [
+        "user-ref:portrait-framing-chart"
+      ]
+    },
+    {
+      "id": "P-CROP-HAIRLINE",
+      "aspect": "framing",
+      "title": "不切发际线",
+      "statement": "画面上沿不可落在发际线附近；特写要切就切在额头中部以上的头发区域。",
+      "check": {
+        "by": "measure",
+        "signal": "edgeAtJoint",
+        "joint": "hairline",
+        "edge": "top",
+        "measure": {
+          "version": "measure-v3",
+          "scope": "person",
+          "mode": "legacy",
+          "signal": "edgeAtJoint",
+          "thresholdHeads": 0.15,
+          "requires": "jointObservability or reliable keypoints",
+          "thresholds": {
+            "edgeHeads": 0.15,
+            "compressedShinRatio": 0.8,
+            "kneeBorderConfidence": 0.75,
+            "neckEdgeHeads": 0.15,
+            "coherentBentLegConfidence": 0.8,
+            "coherentBentLegShinHeads": 0.8,
+            "shoulderHeadRatio": 0.6,
+            "shoulderNeckOffsetHeads": 0.35,
+            "adjacentOutsideToleranceHeads": 0.005
+          },
+          "calibration": "joint-calibration-v3: 48 real pixel crops, 24 source-separated exploratory evaluation; NA not pass"
+        }
+      },
+      "severity": "gate",
+      "sources": [
+        "user-ref:portrait-framing-chart"
+      ]
+    },
+    {
+      "id": "P-CROP-NECK",
+      "aspect": "framing",
+      "title": "不切脖颈",
+      "statement": "画面下沿不可落在脖颈；头像至少带到锁骨或胸口。",
+      "check": {
+        "by": "measure",
+        "signal": "edgeAtJoint",
+        "joint": "neck",
+        "edge": "bottom",
+        "measure": {
+          "version": "measure-v3",
+          "scope": "person",
+          "mode": "legacy",
+          "signal": "edgeAtJoint",
+          "thresholdHeads": 0.15,
+          "requires": "jointObservability or reliable keypoints",
+          "thresholds": {
+            "edgeHeads": 0.15,
+            "compressedShinRatio": 0.8,
+            "kneeBorderConfidence": 0.75,
+            "neckEdgeHeads": 0.15,
+            "coherentBentLegConfidence": 0.8,
+            "coherentBentLegShinHeads": 0.8,
+            "shoulderHeadRatio": 0.6,
+            "shoulderNeckOffsetHeads": 0.35,
+            "adjacentOutsideToleranceHeads": 0.005
+          },
+          "calibration": "joint-calibration-v3: 48 real pixel crops, 24 source-separated exploratory evaluation; NA not pass"
+        }
+      },
+      "severity": "gate",
+      "sources": [
+        "user-ref:portrait-framing-chart"
+      ]
+    },
+    {
+      "id": "P-CROP-WRIST",
+      "aspect": "framing",
+      "title": "不切手腕和手指",
+      "statement": "任何画面边缘不可落在手腕、手指上；手是人的第二表情，要么完整入画，要么在前臂中段以上出画。",
+      "check": {
+        "by": "measure",
+        "signal": "edgeAtJoint",
+        "joint": [
+          "wrist",
+          "fingers"
+        ],
+        "edge": "any",
+        "measure": {
+          "version": "measure-v3",
+          "scope": "person",
+          "mode": "legacy",
+          "signal": "edgeAtJoint",
+          "thresholdHeads": 0.15,
+          "requires": "jointObservability or reliable keypoints",
+          "thresholds": {
+            "edgeHeads": 0.15,
+            "compressedShinRatio": 0.8,
+            "kneeBorderConfidence": 0.75,
+            "neckEdgeHeads": 0.15,
+            "coherentBentLegConfidence": 0.8,
+            "coherentBentLegShinHeads": 0.8,
+            "shoulderHeadRatio": 0.6,
+            "shoulderNeckOffsetHeads": 0.35,
+            "adjacentOutsideToleranceHeads": 0.005
+          },
+          "calibration": "joint-calibration-v3: 48 real pixel crops, 24 source-separated exploratory evaluation; NA not pass"
+        }
+      },
+      "severity": "gate",
+      "sources": [
+        "user-ref:portrait-framing-chart"
+      ]
+    },
+    {
+      "id": "P-CROP-KNEE",
+      "aspect": "framing",
+      "title": "不切膝盖",
+      "statement": "画面下沿不可落在膝盖；七分像切在大腿中段，全身像带完整的脚。",
+      "check": {
+        "by": "measure",
+        "signal": "edgeAtJoint",
+        "joint": "knee",
+        "edge": "bottom",
+        "measure": {
+          "version": "measure-v3",
+          "scope": "person",
+          "mode": "legacy",
+          "signal": "edgeAtJoint",
+          "thresholdHeads": 0.15,
+          "requires": "jointObservability or reliable keypoints",
+          "thresholds": {
+            "edgeHeads": 0.15,
+            "compressedShinRatio": 0.8,
+            "kneeBorderConfidence": 0.75,
+            "neckEdgeHeads": 0.15,
+            "coherentBentLegConfidence": 0.8,
+            "coherentBentLegShinHeads": 0.8,
+            "shoulderHeadRatio": 0.6,
+            "shoulderNeckOffsetHeads": 0.35,
+            "adjacentOutsideToleranceHeads": 0.005
+          },
+          "calibration": "joint-calibration-v3: 48 real pixel crops, 24 source-separated exploratory evaluation; NA not pass"
+        }
+      },
+      "severity": "gate",
+      "sources": [
+        "user-ref:portrait-framing-chart"
+      ]
+    },
+    {
+      "id": "P-CROP-ANKLE-FOOT",
+      "aspect": "framing",
+      "title": "不切脚踝和半只脚",
+      "statement": "全身像不可切在脚踝，也不可只切掉半只脚；脚下最好留少量空间。",
+      "check": {
+        "by": "measure",
+        "signal": "edgeAtJoint",
+        "joint": [
+          "ankle",
+          "foot"
+        ],
+        "edge": "bottom",
+        "measure": {
+          "version": "measure-v3",
+          "scope": "person",
+          "mode": "legacy",
+          "signal": "edgeAtJoint",
+          "thresholdHeads": 0.15,
+          "requires": "jointObservability or reliable keypoints",
+          "thresholds": {
+            "edgeHeads": 0.15,
+            "compressedShinRatio": 0.8,
+            "kneeBorderConfidence": 0.75,
+            "neckEdgeHeads": 0.15,
+            "coherentBentLegConfidence": 0.8,
+            "coherentBentLegShinHeads": 0.8,
+            "shoulderHeadRatio": 0.6,
+            "shoulderNeckOffsetHeads": 0.35,
+            "adjacentOutsideToleranceHeads": 0.005
+          },
+          "calibration": "joint-calibration-v3: 48 real pixel crops, 24 source-separated exploratory evaluation; NA not pass"
+        }
+      },
+      "severity": "gate",
+      "sources": [
+        "user-ref:portrait-framing-chart"
+      ]
+    },
+    {
+      "id": "P-CROP-TIER",
+      "aspect": "framing",
+      "title": "景别档位",
+      "statement": "合格的切点：胸口上下（三分像）、臀部以上（半身像）、大腿上（七分像）、全身。不落在这些档位时提示。",
+      "check": {
+        "by": "measure",
+        "signal": "framingTier",
+        "pass": [
+          "chest",
+          "waist",
+          "thigh",
+          "full"
+        ]
+      },
+      "severity": "hint",
+      "sources": [
+        "user-ref:portrait-framing-chart"
+      ]
+    },
+    {
+      "id": "P-HAND-NATURAL",
+      "aspect": "hands",
+      "title": "手自然、有交代",
+      "statement": "手不应僵硬攥拳、只露半截或手指粘连；手的位置（扶物、叉腰、近脸、插兜）应有意图。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "handCrops",
+          "handKeypoints"
+        ]
+      },
+      "severity": "penalty",
+      "sources": [
+        "user-ref:portrait-framing-chart",
+        "todo:book"
+      ]
+    },
+    {
+      "id": "P-HAND-WIDEANGLE",
+      "aspect": "hands",
+      "title": "广角近距离的手脚放大",
+      "statement": "广角近拍时伸向镜头的手、脚会被明显放大变形，除非刻意。",
+      "check": {
+        "by": "measure",
+        "signal": "limbForeshortening",
+        "requires": [
+          "focalLength35mm<=35"
+        ]
+      },
+      "severity": "penalty",
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "P-POSE-WEIGHT",
+      "aspect": "pose",
+      "title": "重心与肩髋",
+      "statement": "双肩水平、正对镜头、重心平均的站姿显得呆板；重心落在一条腿、肩髋形成相对角度更自然。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "shoulderTilt",
+          "hipTilt",
+          "shoulderHipAngle"
+        ]
+      },
+      "severity": "hint",
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "P-POSE-LIMB-HIDDEN",
+      "aspect": "pose",
+      "title": "避免断肢",
+      "statement": "手臂或腿被身体、道具遮挡到只剩一截，看起来像缺失。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": "limbOcclusion"
+      },
+      "severity": "penalty",
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "P-FACE-EYES",
+      "aspect": "face",
+      "title": "睁眼",
+      "statement": "主体人物不可闭眼或半闭眼，刻意闭眼的情绪片除外。",
+      "check": {
+        "by": "measure",
+        "signal": "eyesClosed"
+      },
+      "severity": "gate",
+      "sources": [
+        "existing:faces.js"
+      ]
+    },
+    {
+      "id": "P-FACE-FOCUS",
+      "aspect": "face",
+      "title": "焦点在眼睛",
+      "statement": "原图 100% 下靠近镜头一侧的眼睛应清晰；相机记录的对焦点应落在眼睛附近。",
+      "check": {
+        "by": "measure",
+        "signal": [
+          "eyeSharpnessNative",
+          "afPointOnEye"
+        ]
+      },
+      "severity": "gate",
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "P-FACE-EXPRESSION",
+      "aspect": "face",
+      "title": "表情自然",
+      "statement": "避免说话中途、眨眼过程、假笑、表情僵硬；同组优先保留情绪到位的一帧。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "faceCrops"
+        ]
+      },
+      "severity": "penalty",
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "P-BG-MERGER",
+      "aspect": "background",
+      "title": "背景不穿头",
+      "statement": "头后不应有杆子、线条、树枝「长」出来，也不应与高亮或杂乱元素重叠。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048"
+        ]
+      },
+      "severity": "penalty",
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "P-EXPOSURE-INTENT",
+      "aspect": "exposure",
+      "title": "曝光服务于氛围",
+      "statement": "只惩罚人脸严重过曝或死黑；整体偏暗或偏亮的氛围片不扣分。",
+      "check": {
+        "by": "measure",
+        "signal": [
+          "faceClippedHighlights",
+          "faceClippedShadows"
+        ],
+        "measure": {
+          "version": "measure-v3",
+          "scope": "person",
+          "mode": "thresholds",
+          "conditions": [
+            {
+              "signal": "faceClippedHighlights",
+              "op": "gt",
+              "threshold": 0.03,
+              "units": "ratio",
+              "min": 0,
+              "max": 1
+            },
+            {
+              "signal": "faceClippedShadows",
+              "op": "gt",
+              "threshold": 0.25,
+              "units": "ratio",
+              "min": 0,
+              "max": 1
+            }
+          ],
+          "outcome": "warn-or-violate",
+          "intent": "unknown; severe proxy measurements affect group preference only",
+          "requires": [
+            {
+              "signal": "faceExposurePixels",
+              "min": 64
+            }
+          ],
+          "violateConditions": [
+            {
+              "signal": "faceClippedHighlights",
+              "op": "gt",
+              "threshold": 0.08
+            }
+          ]
+        }
+      },
+      "severity": "gate",
+      "sources": [
+        "eval:shantou-20260718"
+      ]
+    },
+    {
+      "id": "P-CROP-ELBOW",
+      "aspect": "framing",
+      "title": "不切肘关节",
+      "statement": "画框落在可靠测得的肘关节附近时提示关节裁切。",
+      "check": {
+        "by": "measure",
+        "signal": "edgeAtJoint",
+        "measure": {
+          "version": "measure-v3",
+          "scope": "person",
+          "mode": "legacy",
+          "signal": "edgeAtJoint",
+          "thresholdHeads": 0.15,
+          "thresholds": {
+            "edgeHeads": 0.15,
+            "compressedShinRatio": 0.8,
+            "kneeBorderConfidence": 0.75,
+            "neckEdgeHeads": 0.15,
+            "coherentBentLegConfidence": 0.8,
+            "coherentBentLegShinHeads": 0.8,
+            "shoulderHeadRatio": 0.6,
+            "shoulderNeckOffsetHeads": 0.35,
+            "adjacentOutsideToleranceHeads": 0.005
+          },
+          "calibration": "joint-calibration-v3: 48 real pixel crops, 24 source-separated exploratory evaluation; NA not pass"
+        },
+        "joint": "elbow",
+        "edge": "any"
+      },
+      "severity": "gate",
+      "sources": [
+        "research:portrait-body-section8"
+      ]
+    },
+    {
+      "id": "P-SUBJECT-PLACEMENT",
+      "aspect": "composition",
+      "title": "主体大小与位置",
+      "statement": "记录主体框面积和距中心或三分点的距离，只提示复核，不把构图位置当作错误。",
+      "check": {
+        "by": "measure",
+        "signal": [
+          "subjectAreaRatio",
+          "subjectAnchorDistance"
+        ],
+        "measure": {
+          "version": "measure-v3",
+          "scope": "person",
+          "mode": "thresholds",
+          "conditions": [
+            {
+              "signal": "subjectAreaRatio",
+              "op": "lt",
+              "threshold": 0.02,
+              "units": "ratio",
+              "min": 0,
+              "max": 1
+            },
+            {
+              "signal": "subjectAnchorDistance",
+              "op": "gt",
+              "threshold": 0.25,
+              "units": "ratio",
+              "min": 0,
+              "max": 1
+            }
+          ],
+          "outcome": "warn",
+          "intent": "unknown; proxy hint only"
+        }
+      },
+      "severity": "hint",
+      "sources": [
+        "research:portrait-body-section8"
+      ]
+    },
+    {
+      "id": "P-COLOR-CAST",
+      "aspect": "color",
+      "title": "偏色需复核",
+      "statement": "灰世界通道偏离只提示复核偏色，纯色场景及有意调色可保留。",
+      "check": {
+        "by": "measure",
+        "signal": [
+          "grayWorldDeviation"
+        ],
+        "measure": {
+          "version": "measure-v3",
+          "scope": "image",
+          "mode": "relative-color",
+          "conditions": [
+            {
+              "signal": "grayWorldDeviation",
+              "op": "gt",
+              "threshold": 0.25,
+              "units": "relative channel deviation",
+              "min": 0
+            }
+          ],
+          "outcome": "warn",
+          "intent": "unknown; proxy hint only",
+          "requires": [
+            {
+              "signal": "grayWorldPixels",
+              "min": 64
+            }
+          ],
+          "minGroupSamples": 3,
+          "minPixels": 64,
+          "minLuma": 60,
+          "warmRedRatio": 1.12,
+          "warmBlueRatio": 0.9,
+          "absoluteAbove": 0.25,
+          "deltaAbove": 0.18,
+          "calibration": "W2: same-group max-normalized RGB median; abstain on warm/dark light, no aesthetic truth"
+        }
+      },
+      "severity": "hint",
+      "sources": [
+        "research:portrait-body-section8"
+      ]
+    }
+  ]
+}

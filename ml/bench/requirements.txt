@@ -1,0 +1,3 @@
+# Additional pose dependencies used for this CPU baseline; existing Python env supplies numpy/ort/Pillow/OpenCV.
+rtmlib==0.0.16
+tqdm==4.70.1

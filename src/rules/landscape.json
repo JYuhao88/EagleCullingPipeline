@@ -1,0 +1,506 @@
+{
+  "contractVersion": 1,
+  "library": "landscape",
+  "version": "0.1.0",
+  "genres": [
+    "landscape",
+    "nature",
+    "architecture"
+  ],
+  "rules": [
+    {
+      "id": "L-SEQUENCE-PRESERVE",
+      "aspect": "sequence",
+      "title": "合成序列整组保留",
+      "statement": "包围曝光、全景、焦点堆栈和延时的源帧作为完整序列保留，不按相似废片淘汰；类型未知的疑似序列交人工确认。",
+      "check": {
+        "by": "measure",
+        "signal": [
+          "sequenceType",
+          "sequenceConfidence",
+          "sequenceComplete"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "摄影师确认合成完成且源帧另有可验证备份后，可手动改变保留策略"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-FOCUS-REQUIRED",
+      "aspect": "focus",
+      "title": "需要的焦平面清晰",
+      "statement": "在原生分辨率检查摄影师需要的前景、中景和远景；焦点打偏且不能由堆栈补足时，提示技术拒绝。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "sharpnessByDepth",
+          "focusDistance",
+          "afPoint"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "gate",
+      "exceptions": [
+        "浅景深、雾、柔焦和抽象风光",
+        "焦点堆栈成员不要求单帧全景清晰"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-BLUR-CAMERA",
+      "aspect": "focus",
+      "title": "区分相机抖动与长曝光",
+      "statement": "静止建筑或山体出现同方向重影、细节明显不可用时提示相机抖动；流水、云和树叶的局部运动模糊单独评估。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "staticRegionBlur",
+          "blurDirectionConsistency",
+          "exposureTime"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "gate",
+      "exceptions": [
+        "有意摇摄、相机运动或柔焦",
+        "长曝光中静止部分清晰"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-EXPOSURE-DETAIL",
+      "aspect": "exposure",
+      "title": "关键细节未不可恢复地裁切",
+      "statement": "天空云层或主体的关键色彩通道发生不可恢复的高光裁切，且无可用包围帧时，提示拒绝；代理图裁切只作为待核验信号。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "skyClippedHighlights",
+          "subjectClippedHighlights",
+          "rawRecoverability",
+          "sequenceType"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ],
+        "measure": {
+          "version": "measure-v3",
+          "scope": "image",
+          "mode": "thresholds",
+          "conditions": [
+            {
+              "signal": "clippedHighlights",
+              "op": "gt",
+              "threshold": 0.02,
+              "units": "ratio",
+              "min": 0,
+              "max": 1
+            }
+          ],
+          "outcome": "warn",
+          "intent": "unknown; proxy hint only"
+        }
+      },
+      "severity": "gate",
+      "exceptions": [
+        "太阳、反光点、剪影和高调风格",
+        "包围曝光成员由整组判断"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-SHADOW-RECOVERY",
+      "aspect": "exposure",
+      "title": "暗部可恢复性",
+      "statement": "暗部承载必要细节却提亮后仍被噪声或黑位吞没时扣分，不要求天空与地面同样明亮。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "subjectClippedShadows",
+          "shadowNoiseNative",
+          "rawRecoverability"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ],
+        "measure": {
+          "version": "measure-v3",
+          "scope": "image",
+          "mode": "thresholds",
+          "conditions": [
+            {
+              "signal": "clippedShadows",
+              "op": "gt",
+              "threshold": 0.1,
+              "units": "ratio",
+              "min": 0,
+              "max": 1
+            }
+          ],
+          "outcome": "warn",
+          "intent": "unknown; proxy hint only"
+        }
+      },
+      "severity": "penalty",
+      "exceptions": [
+        "剪影、夜景和低调风格",
+        "HDR包围曝光源帧"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-HORIZON-LEVEL",
+      "aspect": "geometry",
+      "title": "地平线倾斜有依据",
+      "statement": "有可信海平线或水平参照时检查倾斜；轻微可修正倾斜提示校正，不把山脊或斜坡当作水平线。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "horizonAngle",
+          "horizonConfidence"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ],
+        "measure": {
+          "version": "measure-v3",
+          "scope": "image",
+          "mode": "thresholds",
+          "conditions": [
+            {
+              "signal": "horizontalTiltDegrees",
+              "op": "absGt",
+              "threshold": 2,
+              "units": "degrees",
+              "min": -20,
+              "max": 20
+            }
+          ],
+          "outcome": "warn-or-violate",
+          "intent": "unknown; severe proxy measurements affect group preference only",
+          "requires": [
+            {
+              "signal": "horizontalLineConfidence",
+              "min": 0.65
+            }
+          ],
+          "violateConditions": [
+            {
+              "signal": "horizontalTiltDegrees",
+              "op": "absGt",
+              "threshold": 5
+            }
+          ]
+        }
+      },
+      "severity": "penalty",
+      "exceptions": [
+        "刻意倾斜、抽象取景和自然斜坡",
+        "校正裁切不会损失重要内容"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-HORIZON-PLACEMENT",
+      "aspect": "framing",
+      "title": "地平线位置服务于内容",
+      "statement": "天空与地面的画幅分配应突出本张内容；居中和偏离三分线本身都不是错误。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "horizonY",
+          "skyAreaRatio"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "镜面倒影、对称画面、极简和类型学摄影"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-FOREGROUND-ROLE",
+      "aspect": "composition",
+      "title": "前景有作用",
+      "statement": "出现前景时判断它是否建立尺度、层次或观看入口；大面积杂乱前景遮住主题时扣分，不强制每张有前景。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "saliencyMap",
+          "relativeDepthMap",
+          "foregroundAreaRatio"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "penalty",
+      "exceptions": [
+        "平面化图案、远景压缩、极简和新地形摄影"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-LEADING-LINES",
+      "aspect": "composition",
+      "title": "引导线指向有意义",
+      "statement": "线条应支持观看路径；醒目线条把注意力带出画面或冲突时提示，不要求所有风光都有引导线。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "lineSegments",
+          "saliencyMap"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "抽象纹理、平面化构图和刻意不稳定的画面"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-EDGE-DISTRACTION",
+      "aspect": "framing",
+      "title": "边缘干扰有交代",
+      "statement": "检查边缘的半截高亮物、树枝和杂物是否无意抢走主题注意力；容易通过小幅裁切修复的问题只提示。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "edgeSaliency",
+          "subjectMask"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "penalty",
+      "exceptions": [
+        "框景、复杂生态环境和刻意开放式构图"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-LIGHT-INTENT",
+      "aspect": "light",
+      "title": "光线服务于意图",
+      "statement": "比较光线是否表现地形、空气或情绪，EXIF时间和色温只能辅助描述，不因未在黄金时段拍摄而扣分。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "captureTime",
+          "utcOffset",
+          "gps",
+          "whiteBalance",
+          "estimatedColorTemperature"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "阴天、正午、平淡光线和新地形摄影"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-NOISE-DETAIL",
+      "aspect": "quality",
+      "title": "噪声是否破坏必要细节",
+      "statement": "在原图平坦区估计噪声并检查交付尺寸；仅当噪声或降噪涂抹破坏必要细节时扣分。",
+      "check": {
+        "by": "measure+teacher",
+        "signal": [
+          "noiseNative",
+          "iso",
+          "detailRetention"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "penalty",
+      "exceptions": [
+        "颗粒风格、胶片模拟和高感夜空",
+        "不把星点或岩石纹理当成噪声"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-SENSOR-DUST",
+      "aspect": "quality",
+      "title": "重复灰尘是可修复问题",
+      "statement": "天空等平坦区域反复出现在相同传感器坐标的暗斑提示传感器灰尘；记录修复成本，通常不淘汰整张。",
+      "check": {
+        "by": "measure",
+        "signal": [
+          "dustSpotCandidates",
+          "dustPersistence",
+          "aperture"
+        ],
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "鸟、月亮、云和移动物不作为灰尘",
+        "构图变换后需回到传感器坐标确认"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-NATURAL-COLOR",
+      "aspect": "color",
+      "title": "色彩与处理痕迹",
+      "statement": "检查明显光晕、色带、通道断层及不符合意图的偏色，评价其是否干扰内容而非强制自然色。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "penalty",
+      "exceptions": [
+        "有意非自然色、红外、双色调和抽象处理"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-VISUAL-INTENT",
+      "aspect": "intent",
+      "title": "平淡不等于废片",
+      "statement": "没有戏剧光线或醒目前景的照片，也可能通过空间关系、类型学和环境观察成立；保留其风格意图再比较同组。",
+      "check": {
+        "by": "teacher",
+        "evidence": [
+          "wholeImage2048",
+          "nativeDetailCrops",
+          "sequenceContactSheet"
+        ]
+      },
+      "severity": "hint",
+      "exceptions": [
+        "仅有意图标签不能证明照片成功，仍需摄影师判断"
+      ],
+      "sources": [
+        "todo:book"
+      ]
+    },
+    {
+      "id": "L-VERTICAL-LEVEL",
+      "aspect": "geometry",
+      "title": "建筑竖线倾斜需复核",
+      "statement": "代理图中可信竖线共识发生倾斜时提示复核，透视和刻意斜构图不直接拒绝。",
+      "check": {
+        "by": "measure",
+        "signal": "verticalTiltDegrees",
+        "measure": {
+          "version": "measure-v3",
+          "scope": "image",
+          "mode": "thresholds",
+          "conditions": [
+            {
+              "signal": "verticalTiltDegrees",
+              "op": "absGt",
+              "threshold": 3,
+              "units": "degrees",
+              "min": -20,
+              "max": 20
+            }
+          ],
+          "outcome": "warn-or-violate",
+          "intent": "unknown; severe proxy measurements affect group preference only",
+          "requires": [
+            {
+              "signal": "verticalLineConfidence",
+              "min": 0.65
+            }
+          ],
+          "violateConditions": [
+            {
+              "signal": "verticalTiltDegrees",
+              "op": "absGt",
+              "threshold": 5
+            }
+          ]
+        }
+      },
+      "severity": "hint",
+      "sources": [
+        "research:portrait-body-section8"
+      ]
+    }
+  ]
+}

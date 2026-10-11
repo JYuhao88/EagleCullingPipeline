@@ -1,0 +1,21 @@
+{
+  "EAGLE_LIBRARY_PATH": "<EAGLE_LIBRARY>",
+  "EAGLE_LEARNING_LIBRARY": "<EAGLE_LIBRARY>",
+  "EAGLE_PYTHON": "<PYTHON_EXECUTABLE>",
+  "ECP_EVAL_RUN": "<LOCAL_RESULTS_JSON>",
+  "ECP_EVAL_CACHE": "<LOCAL_RESULTS_JSONL>",
+  "ECP_SCORER_FIXTURE": "<LOCAL_FIXTURE_DIRECTORY>",
+  "EAGLE_EXPECTED_LIBRARY": "<EAGLE_LIBRARY>",
+  "RAY_DASHBOARD": "<RAY_DASHBOARD>",
+  "RAY_JOBS_URL": "<RAY_JOBS_URL>",
+  "ECP_CEPH_ROOT": "<CEPH_PROJECT_ROOT>",
+  "ECP_CORPUS_ROOT": "<INTERNAL_CORPUS_ROOT>",
+  "ECP_HTTP_PROXY": "",
+  "ECP_CORPUS_INDEX_PATTERN": "index/zh/*.parquet",
+  "ECP_CORPUS_TEXT_PATTERN": "papers/zh/**/*.parquet",
+  "ECP_CORPUS_INDEX_TEMPLATE": "index/{lang}/*.parquet",
+  "ECP_CORPUS_TEXT_TEMPLATE": "papers/{lang}/**/*.parquet",
+  "ECP_CORPUS_ZH_PATTERN": "papers/zh/*.parquet",
+  "ECP_CORPUS_EN_PATTERN": "papers/en/*.parquet",
+  "ECP_CORPUS_FACET_PATTERNS": "[\"index/en/*.parquet\", \"*.parquet\"]"
+}

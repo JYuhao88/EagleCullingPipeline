@@ -1,0 +1,846 @@
+{
+  "source": "materials-courses-meyerowitz",
+  "courseSlug": "joel-meyerowitz",
+  "manifest_sha256": "753b9399021843d94b7b224d9b7a44f84135eff44c7f8cfe0294e34db7080cbe",
+  "manifest_episodes": 33,
+  "manifest_bytes": 4171312772,
+  "arrival_probe": "w4-courses-meyerowitz-probe-01",
+  "verified_arrivals": [
+    {
+      "id": "materials-courses-meyerowitz-3b62d8747aed",
+      "source": "materials-courses-meyerowitz",
+      "size": 76526121,
+      "sha256": "dd3c2dbbf910fd0c6ca4948d62e15d8552c10abbe7e5a1c6707faf61e92b80ca",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-49899891a9e2",
+      "source": "materials-courses-meyerowitz",
+      "size": 219339872,
+      "sha256": "deea84efe41169252eb08717fb275633dd3374bf110164019f8d763ae29b50ca",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-df06f789ad55",
+      "source": "materials-courses-meyerowitz",
+      "size": 102471031,
+      "sha256": "520c239ad68829a5794fc0e41fc726b50a4c8281d6b9cd193a47c9f167d91615",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-b8cced06dde3",
+      "source": "materials-courses-meyerowitz",
+      "size": 183849124,
+      "sha256": "166411f873cc55e9839032c54abd668fe4c890d3bb5140cc7e1fce7971676473",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-61994656d745",
+      "source": "materials-courses-meyerowitz",
+      "size": 142712265,
+      "sha256": "09f6e6933070365ce13f086c89e821c0a0c85520f4d6b23280dd8c1d58673ae9",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-c10ec043f87e",
+      "source": "materials-courses-meyerowitz",
+      "size": 118208302,
+      "sha256": "fd5022f3a6a5da943194e91c09397aed1290756fca7e4c91eda37c6b8b624d83",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-4bf07c660f3e",
+      "source": "materials-courses-meyerowitz",
+      "size": 94909108,
+      "sha256": "43553a5791a8de85850a59167b1247715a38acce12e923ed118e08a3e7ea07a7",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-2a8dfdd4cae1",
+      "source": "materials-courses-meyerowitz",
+      "size": 143759570,
+      "sha256": "7de5046d44b1d9f6d8e8d101a3ab585968027f19a3370022e797c57fe8640a03",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-d820fab77759",
+      "source": "materials-courses-meyerowitz",
+      "size": 70488378,
+      "sha256": "b1b3eb15bfdd9c37c12966478a665c70d5b88c77f65497fe531ec097ad3266c7",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-762e28e145e2",
+      "source": "materials-courses-meyerowitz",
+      "size": 192792409,
+      "sha256": "279bc7ef241b97848108707e40080d010f62259c4d202d2841e23216ddf77a91",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-c1926c43001a",
+      "source": "materials-courses-meyerowitz",
+      "size": 87712945,
+      "sha256": "6ce8ec36d7cfa305ba2088291889d5fb04ea224eafcac8624fc3d17b4bc4b215",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-1115ed258b88",
+      "source": "materials-courses-meyerowitz",
+      "size": 83562107,
+      "sha256": "7edddf1de3c065f3c774e6079f98390e88af1834b9f24c2c834bf4d9d687527e",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-3ba22f7c5bcc",
+      "source": "materials-courses-meyerowitz",
+      "size": 66071885,
+      "sha256": "b93dd1ff0e69350c2868eab4d395c2b31845aa516c30a179b39a1478760ee9f1",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-ce758eacd3b3",
+      "source": "materials-courses-meyerowitz",
+      "size": 69577403,
+      "sha256": "57dafd4951bdb722f0dbe6338f69f55a808a5611bd4ae8a8046ee13b231e3ef3",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-f4f76da6901c",
+      "source": "materials-courses-meyerowitz",
+      "size": 113267665,
+      "sha256": "c433b2c379d37a1a71540b57432cc18dd996518e7b203b2ca0a587aa35fef1bc",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-b85f61eb5570",
+      "source": "materials-courses-meyerowitz",
+      "size": 81424167,
+      "sha256": "d2e9e3ae7a20d28a86f20ef92ba8e94a6b3f3e5b1b63bc15300869636c490133",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-f633146a2a5e",
+      "source": "materials-courses-meyerowitz",
+      "size": 143192636,
+      "sha256": "aae6d46b9a8dd1f16cf83422189d0028632aeb103b532a4c8888be8e64f0d1dd",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-b43a754501aa",
+      "source": "materials-courses-meyerowitz",
+      "size": 196067634,
+      "sha256": "a1c9a5c6c1ef7aaad2540482d2e46beb42a96a2cd73c21285555c7595333b963",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-3594faba33a3",
+      "source": "materials-courses-meyerowitz",
+      "size": 134643353,
+      "sha256": "3ceace372f57f31d7075918667ce3ccb218c0f21fcac4a75e6a5cb7500376155",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-18abf9978780",
+      "source": "materials-courses-meyerowitz",
+      "size": 150513154,
+      "sha256": "a983a09ecbd63244c9f5443ff24e935cc4504c8a031149b2e7e663e9635f3633",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-cde50d6eb843",
+      "source": "materials-courses-meyerowitz",
+      "size": 141396264,
+      "sha256": "7d4d757646e4cc54b6c0303a529b3438f7f63e7b920bc29d003ef4f0a1a5c85b",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-f3c358b0f8b6",
+      "source": "materials-courses-meyerowitz",
+      "size": 164673440,
+      "sha256": "93ab5ee6b76c75e99fa32ea9685c6c24d4da3aebc4f0fd0948ce35c714deb08f",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-a592a161d63b",
+      "source": "materials-courses-meyerowitz",
+      "size": 187055369,
+      "sha256": "ba1e90f1a7f86bb9e6a8ff0ec3c7e33c03b63c3c2dafd856627586509e8cb354",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-520c2ffd37c1",
+      "source": "materials-courses-meyerowitz",
+      "size": 109278802,
+      "sha256": "3da56f05c346fa07ad99819e32e1b275d87a884486116148dde9b9ece1231569",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-07ca4df9eaa6",
+      "source": "materials-courses-meyerowitz",
+      "size": 69654467,
+      "sha256": "0200239b9f0bce060980635bfe7b6663f7f1dfce20c335f3b011b0eab643e246",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-4d9ad5b61eca",
+      "source": "materials-courses-meyerowitz",
+      "size": 98656882,
+      "sha256": "762e753ef25734a5d9fa71d4da5b9c21f88bc6b1b393878b7b9488a8bc2dad72",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-8ac6d14615b3",
+      "source": "materials-courses-meyerowitz",
+      "size": 130755028,
+      "sha256": "9d2362f6e8fe4f9e22742f9c489e470a11f05973512b783ae644b65e5444768b",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-3b5932161b9b",
+      "source": "materials-courses-meyerowitz",
+      "size": 239872390,
+      "sha256": "3fe8f7be936aa0560614316ff1a038aeae5325483fc4aa6862588ca83ec79610",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-328492b528f3",
+      "source": "materials-courses-meyerowitz",
+      "size": 181197136,
+      "sha256": "0d53467dbebc040cd8dd0fe34661ca59d7a1eaf8d6fec08fddf6a37551d2fb1e",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-39a6ce441540",
+      "source": "materials-courses-meyerowitz",
+      "size": 124225946,
+      "sha256": "431251e30de70f07cd0f66413b648e3754b5dc2407ee5e0c35243bc5eb39992c",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-e68781c2ac0b",
+      "source": "materials-courses-meyerowitz",
+      "size": 105067669,
+      "sha256": "b5f55755693c1349424666c03d3182932698ab89043b3f5cbaca5a8aeea7fb0c",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-a4518fc7be1c",
+      "source": "materials-courses-meyerowitz",
+      "size": 117231761,
+      "sha256": "3b4528727fc8c86b39901d68f1e6a99c73a0f2afecc827f8aad72286268a61fb",
+      "ready": true
+    },
+    {
+      "id": "materials-courses-meyerowitz-cc08bfea64cd",
+      "source": "materials-courses-meyerowitz",
+      "size": 31158489,
+      "sha256": "287e9fa5a66a4aff42d20c4309b460af4003aa4accc1a0b975ce803440781e68",
+      "ready": true
+    }
+  ],
+  "private_data": "/tmp/w4-meyerowitz-data",
+  "asr": {
+    "backend": "whisper",
+    "model": "large-v3",
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true,
+    "vad_filter": true,
+    "compute_type": "float16",
+    "gpu": 1,
+    "cpu": 2
+  },
+  "owned_job_ids": [
+    "w4-courses-meyerowitz-text-early-04",
+    "w4-courses-meyerowitz-asr-01",
+    "w4-courses-meyerowitz-text-early-08",
+    "w4-courses-meyerowitz-text-early-01",
+    "w4-courses-meyerowitz-text-early-09",
+    "w4-courses-meyerowitz-audit-01",
+    "w4-courses-meyerowitz-text-early-02",
+    "w4-courses-meyerowitz-text-early-07",
+    "w4-courses-meyerowitz-probe-01",
+    "w4-courses-meyerowitz-asr-02",
+    "w4-courses-meyerowitz-text-early-13",
+    "w4-courses-meyerowitz-inspect-runtime-01",
+    "w4-courses-meyerowitz-text-early-05",
+    "w4-courses-meyerowitz-text-early-14",
+    "w4-courses-meyerowitz-text-early-12",
+    "w4-courses-meyerowitz-text-early-03",
+    "w4-courses-meyerowitz-topics-01",
+    "w4-courses-meyerowitz-text-early-06",
+    "w4-courses-meyerowitz-text-early-11",
+    "w4-courses-meyerowitz-inspect-01",
+    "w4-courses-meyerowitz-text-final-01",
+    "w4-courses-meyerowitz-text-early-10",
+    "w4-courses-meyerowitz-topics-early-01",
+    "w4-courses-meyerowitz-inspect-cuda-01"
+  ],
+  "processing": {
+    "source": "materials-courses-meyerowitz",
+    "manifest_episodes": 33,
+    "manifest_duration_seconds": 19228.82125,
+    "arrived_episodes": 33,
+    "probe_id": "w4-courses-meyerowitz-probe-01",
+    "count_only_arrived": 0,
+    "asr_episodes": 33,
+    "asr_duration_seconds": 19228.82125,
+    "asr_sentences": 4280,
+    "topics_episodes": 33,
+    "topic_segments": 303,
+    "frames": 751,
+    "topics": {
+      "姿势部位": 0,
+      "手位": 0,
+      "坐靠": 0,
+      "表情": 0,
+      "视线": 0,
+      "用光方向": 54,
+      "光质": 4,
+      "背景": 13,
+      "构图": 24,
+      "服装造型": 0,
+      "后期": 6,
+      "营销": 0,
+      "闲聊": 51,
+      "观看评判": 24,
+      "画面边缘": 14,
+      "多重事件": 3,
+      "色彩": 35,
+      "瞬间": 53,
+      "选片编辑": 22
+    },
+    "completed": [
+      {
+        "id": "materials-courses-meyerowitz-3b62d8747aed",
+        "episode": 1,
+        "duration": 393.152,
+        "sentences": 76,
+        "source_sha256": "dd3c2dbbf910fd0c6ca4948d62e15d8552c10abbe7e5a1c6707faf61e92b80ca"
+      },
+      {
+        "id": "materials-courses-meyerowitz-49899891a9e2",
+        "episode": 2,
+        "duration": 1058.304,
+        "sentences": 187,
+        "source_sha256": "deea84efe41169252eb08717fb275633dd3374bf110164019f8d763ae29b50ca"
+      },
+      {
+        "id": "materials-courses-meyerowitz-df06f789ad55",
+        "episode": 3,
+        "duration": 503.1466875,
+        "sentences": 164,
+        "source_sha256": "520c239ad68829a5794fc0e41fc726b50a4c8281d6b9cd193a47c9f167d91615"
+      },
+      {
+        "id": "materials-courses-meyerowitz-b8cced06dde3",
+        "episode": 4,
+        "duration": 842.112,
+        "sentences": 292,
+        "source_sha256": "166411f873cc55e9839032c54abd668fe4c890d3bb5140cc7e1fce7971676473"
+      },
+      {
+        "id": "materials-courses-meyerowitz-61994656d745",
+        "episode": 5,
+        "duration": 642.8373125,
+        "sentences": 138,
+        "source_sha256": "09f6e6933070365ce13f086c89e821c0a0c85520f4d6b23280dd8c1d58673ae9"
+      },
+      {
+        "id": "materials-courses-meyerowitz-c10ec043f87e",
+        "episode": 6,
+        "duration": 616.0426875,
+        "sentences": 143,
+        "source_sha256": "fd5022f3a6a5da943194e91c09397aed1290756fca7e4c91eda37c6b8b624d83"
+      },
+      {
+        "id": "materials-courses-meyerowitz-4bf07c660f3e",
+        "episode": 7,
+        "duration": 466.368,
+        "sentences": 135,
+        "source_sha256": "43553a5791a8de85850a59167b1247715a38acce12e923ed118e08a3e7ea07a7"
+      },
+      {
+        "id": "materials-courses-meyerowitz-2a8dfdd4cae1",
+        "episode": 8,
+        "duration": 804.1173125,
+        "sentences": 241,
+        "source_sha256": "7de5046d44b1d9f6d8e8d101a3ab585968027f19a3370022e797c57fe8640a03"
+      },
+      {
+        "id": "materials-courses-meyerowitz-d820fab77759",
+        "episode": 9,
+        "duration": 253.9733125,
+        "sentences": 36,
+        "source_sha256": "b1b3eb15bfdd9c37c12966478a665c70d5b88c77f65497fe531ec097ad3266c7"
+      },
+      {
+        "id": "materials-courses-meyerowitz-762e28e145e2",
+        "episode": 10,
+        "duration": 876.544,
+        "sentences": 141,
+        "source_sha256": "279bc7ef241b97848108707e40080d010f62259c4d202d2841e23216ddf77a91"
+      },
+      {
+        "id": "materials-courses-meyerowitz-c1926c43001a",
+        "episode": 11,
+        "duration": 464.768,
+        "sentences": 88,
+        "source_sha256": "6ce8ec36d7cfa305ba2088291889d5fb04ea224eafcac8624fc3d17b4bc4b215"
+      },
+      {
+        "id": "materials-courses-meyerowitz-1115ed258b88",
+        "episode": 12,
+        "duration": 377.8133125,
+        "sentences": 71,
+        "source_sha256": "7edddf1de3c065f3c774e6079f98390e88af1834b9f24c2c834bf4d9d687527e"
+      },
+      {
+        "id": "materials-courses-meyerowitz-3ba22f7c5bcc",
+        "episode": 13,
+        "duration": 369.28,
+        "sentences": 54,
+        "source_sha256": "b93dd1ff0e69350c2868eab4d395c2b31845aa516c30a179b39a1478760ee9f1"
+      },
+      {
+        "id": "materials-courses-meyerowitz-ce758eacd3b3",
+        "episode": 14,
+        "duration": 281.3013125,
+        "sentences": 46,
+        "source_sha256": "57dafd4951bdb722f0dbe6338f69f55a808a5611bd4ae8a8046ee13b231e3ef3"
+      },
+      {
+        "id": "materials-courses-meyerowitz-f4f76da6901c",
+        "episode": 15,
+        "duration": 691.3493125,
+        "sentences": 98,
+        "source_sha256": "c433b2c379d37a1a71540b57432cc18dd996518e7b203b2ca0a587aa35fef1bc"
+      },
+      {
+        "id": "materials-courses-meyerowitz-b85f61eb5570",
+        "episode": 16,
+        "duration": 314.0693125,
+        "sentences": 95,
+        "source_sha256": "d2e9e3ae7a20d28a86f20ef92ba8e94a6b3f3e5b1b63bc15300869636c490133"
+      },
+      {
+        "id": "materials-courses-meyerowitz-f633146a2a5e",
+        "episode": 17,
+        "duration": 582.08,
+        "sentences": 142,
+        "source_sha256": "aae6d46b9a8dd1f16cf83422189d0028632aeb103b532a4c8888be8e64f0d1dd"
+      },
+      {
+        "id": "materials-courses-meyerowitz-b43a754501aa",
+        "episode": 18,
+        "duration": 883.648,
+        "sentences": 189,
+        "source_sha256": "a1c9a5c6c1ef7aaad2540482d2e46beb42a96a2cd73c21285555c7595333b963"
+      },
+      {
+        "id": "materials-courses-meyerowitz-3594faba33a3",
+        "episode": 19,
+        "duration": 609.344,
+        "sentences": 135,
+        "source_sha256": "3ceace372f57f31d7075918667ce3ccb218c0f21fcac4a75e6a5cb7500376155"
+      },
+      {
+        "id": "materials-courses-meyerowitz-18abf9978780",
+        "episode": 20,
+        "duration": 678.72,
+        "sentences": 143,
+        "source_sha256": "a983a09ecbd63244c9f5443ff24e935cc4504c8a031149b2e7e663e9635f3633"
+      },
+      {
+        "id": "materials-courses-meyerowitz-cde50d6eb843",
+        "episode": 21,
+        "duration": 680.8746875,
+        "sentences": 198,
+        "source_sha256": "7d4d757646e4cc54b6c0303a529b3438f7f63e7b920bc29d003ef4f0a1a5c85b"
+      },
+      {
+        "id": "materials-courses-meyerowitz-f3c358b0f8b6",
+        "episode": 22,
+        "duration": 699.1786875,
+        "sentences": 159,
+        "source_sha256": "93ab5ee6b76c75e99fa32ea9685c6c24d4da3aebc4f0fd0948ce35c714deb08f"
+      },
+      {
+        "id": "materials-courses-meyerowitz-a592a161d63b",
+        "episode": 23,
+        "duration": 630.8693125,
+        "sentences": 127,
+        "source_sha256": "ba1e90f1a7f86bb9e6a8ff0ec3c7e33c03b63c3c2dafd856627586509e8cb354"
+      },
+      {
+        "id": "materials-courses-meyerowitz-520c2ffd37c1",
+        "episode": 24,
+        "duration": 392.8106875,
+        "sentences": 55,
+        "source_sha256": "3da56f05c346fa07ad99819e32e1b275d87a884486116148dde9b9ece1231569"
+      },
+      {
+        "id": "materials-courses-meyerowitz-07ca4df9eaa6",
+        "episode": 25,
+        "duration": 274.176,
+        "sentences": 51,
+        "source_sha256": "0200239b9f0bce060980635bfe7b6663f7f1dfce20c335f3b011b0eab643e246"
+      },
+      {
+        "id": "materials-courses-meyerowitz-4d9ad5b61eca",
+        "episode": 27,
+        "duration": 517.9093125,
+        "sentences": 141,
+        "source_sha256": "762e753ef25734a5d9fa71d4da5b9c21f88bc6b1b393878b7b9488a8bc2dad72"
+      },
+      {
+        "id": "materials-courses-meyerowitz-8ac6d14615b3",
+        "episode": 28,
+        "duration": 578.5813125,
+        "sentences": 90,
+        "source_sha256": "9d2362f6e8fe4f9e22742f9c489e470a11f05973512b783ae644b65e5444768b"
+      },
+      {
+        "id": "materials-courses-meyerowitz-3b5932161b9b",
+        "episode": 29,
+        "duration": 1154.6666875,
+        "sentences": 223,
+        "source_sha256": "3fe8f7be936aa0560614316ff1a038aeae5325483fc4aa6862588ca83ec79610"
+      },
+      {
+        "id": "materials-courses-meyerowitz-328492b528f3",
+        "episode": 30,
+        "duration": 768.704,
+        "sentences": 188,
+        "source_sha256": "0d53467dbebc040cd8dd0fe34661ca59d7a1eaf8d6fec08fddf6a37551d2fb1e"
+      },
+      {
+        "id": "materials-courses-meyerowitz-39a6ce441540",
+        "episode": 31,
+        "duration": 611.776,
+        "sentences": 110,
+        "source_sha256": "431251e30de70f07cd0f66413b648e3754b5dc2407ee5e0c35243bc5eb39992c"
+      },
+      {
+        "id": "materials-courses-meyerowitz-e68781c2ac0b",
+        "episode": 32,
+        "duration": 500.352,
+        "sentences": 184,
+        "source_sha256": "b5f55755693c1349424666c03d3182932698ab89043b3f5cbaca5a8aeea7fb0c"
+      },
+      {
+        "id": "materials-courses-meyerowitz-a4518fc7be1c",
+        "episode": 33,
+        "duration": 608.384,
+        "sentences": 132,
+        "source_sha256": "3b4528727fc8c86b39901d68f1e6a99c73a0f2afecc827f8aad72286268a61fb"
+      },
+      {
+        "id": "materials-courses-meyerowitz-cc08bfea64cd",
+        "episode": 34,
+        "duration": 101.568,
+        "sentences": 8,
+        "source_sha256": "287e9fa5a66a4aff42d20c4309b460af4003aa4accc1a0b975ce803440781e68"
+      }
+    ],
+    "errors": []
+  },
+  "jobs": [
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-04",
+      "status": "SUCCEEDED",
+      "start_time": 1791652948293,
+      "end_time": 1791652951582,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-asr-01",
+      "status": "STOPPED",
+      "start_time": 1791652306915,
+      "end_time": 1791652460483,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": null
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-08",
+      "status": "SUCCEEDED",
+      "start_time": 1791653173038,
+      "end_time": 1791653175514,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791652758387,
+      "end_time": 1791652760846,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-09",
+      "status": "SUCCEEDED",
+      "start_time": 1791653236945,
+      "end_time": 1791653239399,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-audit-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791653897328,
+      "end_time": 1791653942450,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-02",
+      "status": "SUCCEEDED",
+      "start_time": 1791652787135,
+      "end_time": 1791652789513,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-07",
+      "status": "SUCCEEDED",
+      "start_time": 1791653120714,
+      "end_time": 1791653123253,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-probe-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791652283654,
+      "end_time": 1791652289873,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-asr-02",
+      "status": "SUCCEEDED",
+      "start_time": 1791652483207,
+      "end_time": 1791653550821,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-13",
+      "status": "SUCCEEDED",
+      "start_time": 1791653510903,
+      "end_time": 1791653513606,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-inspect-runtime-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791652651562,
+      "end_time": 1791652653806,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-05",
+      "status": "SUCCEEDED",
+      "start_time": 1791653005432,
+      "end_time": 1791653008028,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-14",
+      "status": "SUCCEEDED",
+      "start_time": 1791653592059,
+      "end_time": 1791653594825,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-12",
+      "status": "SUCCEEDED",
+      "start_time": 1791653445452,
+      "end_time": 1791653448202,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-03",
+      "status": "SUCCEEDED",
+      "start_time": 1791652825553,
+      "end_time": 1791652827924,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-topics-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791653591089,
+      "end_time": 1791653768466,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-06",
+      "status": "SUCCEEDED",
+      "start_time": 1791653071504,
+      "end_time": 1791653074353,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-11",
+      "status": "SUCCEEDED",
+      "start_time": 1791653352681,
+      "end_time": 1791653355834,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-inspect-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791652363796,
+      "end_time": 1791652366281,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-final-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791653834719,
+      "end_time": 1791653843067,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-text-early-10",
+      "status": "SUCCEEDED",
+      "start_time": 1791653289432,
+      "end_time": 1791653292011,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-topics-early-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791652881057,
+      "end_time": 1791652910422,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    },
+    {
+      "submission_id": "w4-courses-meyerowitz-inspect-cuda-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791652460941,
+      "end_time": 1791652464786,
+      "entrypoint_num_cpus": null,
+      "entrypoint_num_gpus": null,
+      "driver_exit_code": 0
+    }
+  ],
+  "ray_audit": {
+    "active": [],
+    "peak_jobs_by_submission_times": 2,
+    "peak_gpu_jobs_by_submission_times": 1,
+    "terminal_status_counts": {
+      "STOPPED": 1,
+      "SUCCEEDED": 23
+    }
+  },
+  "ceph_final_audit": {
+    "verified_sources": 33,
+    "verified_artifacts": 840,
+    "partial_outputs": [],
+    "error_outputs": [],
+    "sentence_coverage": 1.0
+  },
+  "evidence": {
+    "added": 59,
+    "support": 39,
+    "exception": 17,
+    "counter": 3,
+    "candidates_added": 2,
+    "referenced_files": 25,
+    "manual_read_episodes": 33,
+    "maximum_paraphrase_characters": 21
+  },
+  "quality": {
+    "method": "full transcript reading and selected-window semantic review",
+    "audio_reference_checked": false,
+    "wer_measured": false,
+    "video_visual_checked": false,
+    "excluded_garbled_windows": [
+      {
+        "episode": 1,
+        "start": 230.49,
+        "end": 253.67
+      },
+      {
+        "episode": 20,
+        "start": 183.34,
+        "end": 213.32
+      },
+      {
+        "episode": 28,
+        "start": 135.97,
+        "end": 175.07
+      }
+    ],
+    "proper_names_not_repaired": true,
+    "gpu_memory_metric": "torch allocator does not measure CTranslate2 allocations"
+  },
+  "tests": {
+    "python": {
+      "run": 120,
+      "passed": 115,
+      "skipped": 5,
+      "failed": 0
+    },
+    "node": {
+      "run": 283,
+      "passed": 282,
+      "skipped": 1,
+      "failed": 0
+    }
+  },
+  "cleanup": {
+    "local_full_transcripts_deleted": true,
+    "ceph_retained": true,
+    "uploads_untouched": true,
+    "other_jobs_untouched": true,
+    "deleted_source_output_files": 134,
+    "deleted_source_output_bytes": 5741719,
+    "deleted_source_output_path": "/tmp/w4-meyerowitz-data/materials-courses-meyerowitz"
+  },
+  "git": {
+    "branch": "w4-meyerowitz",
+    "committed": false,
+    "pushed": false,
+    "reason": "sandbox denied index.lock creation in shared Git metadata"
+  }
+}

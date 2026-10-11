@@ -1,19 +1,20 @@
 {
-  "id": "EAGLECULLING001",
-  "version": "0.4.0",
-  "platform": "win",
-  "arch": "x64",
-  "name": "摄影筛选助手",
+  "id": "com.eagle.culling",
+  "version": "1.0.0",
+  "platform": "all",
+  "arch": "all",
+  "name": "Eagle照片筛选",
   "logo": "/logo.png",
-  "keywords": ["photography", "culling", "duplicate", "quality"],
-  "devTools": false,
+  "keywords": ["photo", "culling"],
+  "devTools": true,
   "main": {
     "url": "index.html",
-    "width": 980,
-    "height": 720,
-    "minWidth": 680,
-    "minHeight": 560,
+    "width": 1280,
+    "height": 800,
+    "minWidth": 960,
+    "minHeight": 600,
     "resizable": true,
-    "backgroundColor": "#111111"
+    "frame": true,
+    "fullscreenable": true
   }
 }

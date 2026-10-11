@@ -1,66 +1,89 @@
-# 技术架构与实现边界
+# Eagle Culling v1.0 架构
+
+服务默认绑定 `127.0.0.1:43125`，Eagle API 默认 `127.0.0.1:41595`。Node 服务、CLI 和插件共享 `src/core` 的分析合同。
+
+## 模块图
+
+```mermaid
+flowchart LR
+  E[Eagle API] --> C[capture-units.js\n拍摄单元]
+  C --> P[previews.js\n代理预览]
+  P --> F[metrics/faces/embeddings\n特征]
+  F --> G[grouping.js\n相似分组]
+  G --> R[ranking.js\n组内排序与理由]
+  R --> S[RunStore + ResultsStore\nrun 与缓存]
+  S --> PL[src/plugin\n审阅/决定]
+  PL --> W[writeback.js\n标签/回收站]
+```
+
+## 模块职责
+
+- `eagle-api.js`：探测 Eagle v1/v2、读取 library/items、更新标签、移入回收站并校验 library。
+- `metrics.js`：遍历 Eagle `.info` 目录，读取 `metadata.json`，计算 SHA-256、pHash、清晰度、曝光、尺寸和启发式质量指标。sharp 并发默认 2，由 `EAGLE_SHARP_CONCURRENCY` 覆盖到 1–8。
+- `capture-units.js`：按文件名主干分组；可预览扩展名为 jpg/jpeg/heic/png，RAW 为 arw/dng/3fr/cr2/cr3/nef/raf/orf/rw2。唯一候选按拍摄时间和尺寸配对，否则标记 ambiguous。
+- `previews.js`：缓存归一化代理图；macOS HEIC 使用 `sips`，普通图像使用 sharp，RAW 只使用 Eagle 缩略图。
+- `faces.js` / `embeddings.js`：调用本地 MediaPipe worker 和 DINOv2 ONNX embedding。
+- `grouping.js` / `ranking.js`：相似分组、质量排序、中文理由和 suggested 决定。
+- `run-store.js` / `decisions-store.js`：持久化 run 和人工决定；`writeback.js`：幂等标签写回和可选回收站。
+- `src/plugin/`：分析启动、逐组审阅、快捷键、dry-run/写回对话框和报告链接。
 
 ## 数据流
 
-```text
-Eagle Window Plugin（src/plugin）
-  ├─ 概览 / 审阅 / 任务 / 设置四区
-  ├─ 读取 Eagle Item 元数据和预览图路径
-  ├─ 创建任务、显示进度、暂停/继续/重试
-  ├─ 通过官方 Item API 写回标签或登记过的自定义缩略图
-  └─ 不直接写资源库内部文件、不自动删除
+Eagle → capture units → previews → metrics/faces/embeddings → grouping → ranking → run store → plugin → writeback。HTTP 入口在 `src/server.js`、`src/server/runs-routes.js` 和 `src/server/review-routes.js`；合同细节见 `docs/contracts.md`。
 
-本地服务（127.0.0.1:43125）
-  ├─ pHash / 相似聚类 / 清晰度 / 曝光 / 构图代理评分
-  ├─ 本地人脸与闭眼 worker
-  ├─ PNG 角标生成（左下角）
-  ├─ data/tasks.json 旧基线 + data/tasks.json.journal 增量任务日志
-  ├─ data/thumbnail-badges.json 清单
-  └─ 结果和模型缓存
-```
-
-插件只负责 Eagle API 和审阅交互；所有长任务由任务服务登记、持久化和恢复。这样 Eagle 重启、插件关闭或单项失败都不会丢失整个全库进度。
-
-## 任务记录
+## run 与缓存目录
 
 ```text
-taskId, taskType, createdAt, updatedAt,
-libraryPath, manifestVersion, status, attempts, outputPath, error,
-items[]: { id, modifiedAt, status, attempts, outputPath, error }
+data/runs/<id>/
+├── run.json          # 状态、libraryPath、计数、进度、警告
+├── results.json      # run、units、items、results、groups
+└── decisions.json    # 人工决定（有过决定时生成）
+data/cache/
+├── results.jsonl     # fingerprint -> 结果
+├── previews/*.jpg    # 归一化代理图
+└── embeddings/*.json # embedding 向量
 ```
 
-结果的增量键为 `item.id + modifiedAt + manifestVersion`。写回前应重新获取当前 Item；若 `modifiedAt` 已变化，任务实现应标记为 `skipped` 并留在失败/跳过清单中供人工复核。
+`results.json` 在保存 units/results/groups/items 时写入；服务重启后可恢复。分析 fingerprint 由路径、size、mtime、itemIds、代理路径和 `analysis-v3` 组成；命中后跳过单元分析。代理缓存按源路径、size、mtime 生成键，损坏或像素近乎全平时重建。
 
-## 目录约定
+## 分组和排序默认值
 
-- `src/plugin/`：唯一推荐加载的 Eagle Window Plugin，包含审阅、任务、角标和诊断。
-- `src/thumbnail-bridge/`：旧版兼容目录，保留一段迁移周期，不再作为新入口。
-- `src/server.js`：本地 HTTP 服务和任务 API。
-- `src/task-store.js`：串行化的增量任务日志，记录校验与同步落盘；旧快照不覆盖。
-- `src/task-queue.js`：Node 端可测试的有界并发、限速、重试队列。
-- `src/plugin/task-queue.js`：插件浏览器端同构队列。
-- `src/image-analyzer.js`：Node 基线分析器和 pHash 聚类。
-- `data/results.sqlite`、`data/cache/`：结果、代理图和模型缓存，不提交 Git。
-- `scripts/start-service.ps1`：固定服务启动入口。
+`grouping.js` 默认 pHash/dHash 距离 10、embedding 相似度 0.78、时间窗 3 秒、序号窗 4、时间 bonus 0.08、序号 bonus 0.06、最小配对分 0.52、平均相似度 0.5、组大小上限 100。`ranking.js` 权重为清晰度 0.30、曝光 0.20、眼睛 0.15、quality 0.20、aesthetic 0.15。
 
-任务进度通过 `/tasks/:id/checkpoint` 每 25 项增量写入，失败项立即写入；响应默认仅含摘要，不再每次重写并传输所有历史任务。
+## 进程模型
 
-## 资源策略
+Node CLI 或 HTTP 服务负责 Eagle 访问、文件发现、代理、指标、分组和写回。可选 Python worker 是独立 JSONL 子进程；人脸 worker 默认池大小 2、空闲 30 秒退出、超时 60 秒。缺少 worker 或模型时人脸结果不可用，其余分析继续。
 
-任务总张数不限；默认并发 8、间隔 0ms，可输入其他正整数并发；单项最多重试 3 次；每 25 项保存断点。每项分析独立发送，服务分析请求上限是协议批次限制而非任务总数限制；完成后聚类从持久化任务中读取结果，不传输整个结果集。Eagle 预览图优先于 RAW 原片。高并发会提高 CPU、内存及 Eagle API 压力，模拟调度测试不代表真实资源峰值或吞吐量。
+## 扩展点
 
-## 写回安全
+`AnalysisPipeline` 可注入 `analyzer` 和 `ResultsStore`。`src/core/scorer.js` 是 scorer 适配器边界：只有 `ml/scorer/infer.py` 与 `models/scorer` 都存在且推理成功才返回 calibrated 分数，否则 quality/aesthetic 固定 0.5、`calibrated=false`。模型评测见 `docs/model-eval.md`。
 
-1. 只使用 Eagle 官方 Item API，不编辑 `metadata.json`、缩略图库或其他私有文件。
-2. 标签写回只替换 AI 状态标签，保留人工标签、配对标签、星级和文件夹。
-3. 日常角标通过插件 CSS 显示层即时切换，不调用缩略图 API；兼容维护中的网格角标写入需明确确认，且只写任务生成并登记的 PNG。旧缩略图恢复与显示开关是独立操作。
-4. 恢复只对本工具清单登记的项目调用 `refreshThumbnail()`，不覆盖未知人工缩略图。
-5. 本版本没有自动删除能力；“待复核”必须由用户在 Eagle 中最终决定。
+## L1 本地学习基础设施（2026-10-11）
 
-## 可验证目标
+`RunStore.save` 在 completed run 保存后复用结果建立 `LearningData` 特征索引；
+审阅决定仍通过 `DecisionsStore` 原子更新，独立追加事件，失败不破坏选片。
+`feature-store.js` 以内容 SHA-256 留住 DINO/指标/人脸/EXIF；`event-log.js` 保存不可变快照和曝光；
+`preference-head.js` 只在特征上训练 signed BT；`preference-store.js` 保存 profile/快照/验证证据。
+`server/learning-routes.js` 接入默认关闭的审阅面板；删除检测只读取完整受保护 Eagle 库存。
+档 1 像素复制由 `pixel-retention.js` 串行执行，默认档 0，不运行额外视觉模型。
+学习文件放 runs 根目录同级的 `learning/`，生命周期与 Eagle/run 原片解耦；协议见 contracts。
+L0 与旧四指标路径保留；L1 需两窗口时间留出 bootstrap 稳定提升并显式应用，不跨硬门槛层重排。
 
-- 8,000 项队列：并发 1/2/4、失败重试、暂停后继续、重复执行自动跳过。
-- Eagle 重启后任务不丢，失败项可以单独重试。
-- JPG/RAW/HEIC/3FR 配对结果可审阅，人工元数据不变。
-- 原生模式清晰度恢复，角标模式显示左下角中文角标。
-- 原片 SHA-256 不变，任务清单和诊断报告可导出。
+## W8 第二轮：审阅热路径
+
+RunStore 按 results 文件的 inode、size、mtime、ctime 缓存并合并读取，最多保留两个 run；
+内部只读审阅路由共享分析数组，默认 get/results 仍返回脱离缓存的副本。原子替换或其它实例
+保存后失效，单元图像索引仍叠加最新分组覆盖。LearningData 按分析数组身份及 run、库、
+分组／AI 排序、照片路径／元数据、unit 映射和 fingerprint 复用特征映射，避免每次决定
+重新遍历提特征并写 groups 索引。不同 run 不能因共享数组而丢失特征上下文。
+
+决定仍按 run 串行，decisions 原子替换及学习事件追加完成后才返回 200；没有异步丢弃
+事件或把未持久化状态提前确认。Server-Timing 分别记录 run 读取、decisions 写入、learning
+阶段（含 profile 读取）。decisions.json 仍全量原子写入，实测阶段耗时用于判断是否有必要
+进一步引入 journal，本轮没有改变文件格式。feedback 对日志／词表按文件版本缓存，追加
+按路径跨实例串行，返回副本，保留理由修订、undo 和损坏日志报错。学习组先按 profile 过滤。
+
+UI 状态使用只读索引，按卡片内容差异更新 DOM，保留未变化的图片节点；旧版偏好横幅
+只在停止操作 5 秒后拟合，显式 refresh API 仍可立即等待。L1 面板手动训练／应用不去抖。
+用于 QA 的 `culling:decision-rendered` 事件在收到持久化响应并更新 DOM 后发送；它不替代
+事件日志。模拟器增量读取 JSONL 证据并精简重复响应，避免同进程报告采集制造 GC 延迟。

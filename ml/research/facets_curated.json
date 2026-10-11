@@ -1,0 +1,6874 @@
+{
+ "aesthetic_attributes": {
+  "kept": 140,
+  "top": [
+   {
+    "score": 8,
+    "title": "Aesthetic Attribute Assessment of Images Numerically on Mixed Multi-attribute Datasets",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute",
+     "multi-attribute"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "A Study of Aesthetic Attributes in English Documentary Commentaries from the Perspective of Systemic-Functional Grammar 系统功能语法视域下英语纪录片解说词的美学属性研究",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute",
+     "美学属性"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Image Composition Assessment with Saliency-augmented Multi-pattern Pooling**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "cadb",
+     "composition assessment"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Aesthetic Attributes Assessment of Images",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute",
+     "aesthetic caption"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Aesthetic Attributes Assessment of Images with AMANv2 and DPC-CaptionsV2",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute",
+     "aesthetic caption"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Image Composition Assessment with Saliency-augmented Multi-pattern Pooling",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "cadb",
+     "composition assessment"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Assessment Method for Agricultural Landscapes through the Objective Quantification of Aesthetic Attributes",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Recognizing Human Identity, Age, and Aesthetic Attributes from Gait",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "EVALUATING LANDSCAPE AESTHETICS: A MULTI-ATTRIBUTE UTILITY APPROACH",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Predicting Scores of Various Aesthetic AttributeSets by Learning from Overall Score Labels",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A120   Comparing Decomposition Assessments From Digital Images to In Situ Observations",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "composition assessment"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A Comprehensive Survey on Image Aesthetic Caption",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic caption"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "FILLING THE GAPS: REDUCING THE COMPLEXITY OF NETWORKS FOR MULTI-ATTRIBUTE IMAGE AESTHETIC PREDICTION**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Methods of Handling of In—Bulk Agglomeration Layer Image Representation for Granulometric Composition Assessment$^{1}$",
+    "arxiv": [],
+    "dois": "['10.1134/s1054661809010180']",
+    "terms": [
+     "composition assessment"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Corrigendum to “What determines preferences for semi-natural habitats in agrarian landscapes? A choice-modelling approach across two countries using aesthetic attributes” [Landscape Urban Plan. 206 (2021) 1–12/103954]",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "QFD and Fuzzy Kano model based approach for classification of aesthetic attributes of SUV car profile",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Personalized Image Aesthetics Assessment via Multi-Attribute Interactive Reasoning",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Do executives’ aesthetic attributes matter to career and organizational outcomes? A critical review and theoretical integration",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Data Covariance Learning in Aesthetic Attributes Assessment",
+    "arxiv": [],
+    "dois": "['10.4236/jamp.2020.812212']",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Natural attributes or aesthetic attributes: Which is more valuable in recreational ecosystem services of nature-based parks considering tourists' environmental knowledge and attitude impacts?",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Clinical practice guideline for body composition assessment based on upper abdominal magnetic resonance images annotated using artificial intelligence",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "composition assessment"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Aesthetic attributes of nightie preferred by ladies",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "AttriCtrl: Fine-Grained Control of Aesthetic Attribute Intensity in Diffusion Models",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Consumers' WTP on Sustainability Turfgrass Attributes with Consideration of Aesthetic Attributes and Water Conservation Policies",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Filling the GAPs: Reducing the Complexity of Networks for Multi-attribute Image Aesthetic Prediction",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Scoring Photographic Rule of Thirds in a Large MIRFLICKR Dataset: A Showdown Between Machine Perception and Human Perception of Image Aesthetics",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "rule of thirds"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Image Recomposition Using Seam Carving and Insertion Considering the Rule of Thirds",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "rule of thirds"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "THE EFFECTS OF AESTHETIC ATTRIBUTES ON RESPONSE TIME AND AESTHETIC JUDGEMENT IN A MULTIATTRIBUTE BINARY AESTHETIC CHOICE TASK",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Aesthetic Attributes of Museum Environmental Experience: A Pilot Study With Children as Visitors",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Relationship between density and aesthetic attributes of wood and preference of Malagasy consumers**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Adenium: Attaining popularity for its unique aesthetic attributes",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Body Composition Assessment with Limited Field-of-view Computed Tomography: A Semantic Image Extension Perspective",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "composition assessment"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Expert assisted exploration of photographs Supporting Users in Exploring Visual Media through Subjective Aesthetic Attributes and Crowd-sourced Tags",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A Study of Aesthetic Attributes in English Prose Texts from the Perspective of Functional Linguistics",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Multiple Aesthetic Attribute Assessment by Exploiting Relations Among Aesthetic Attributes**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Using Expert-Derived Aesthetic Attributes to Help Users in Exploring Image Databases**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Prioritization of aesthetic attributes of car profile",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Identifying attractive and unattractive urban places: categories, restorativeness and aesthetic attributes",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "FORMULATION AND USE OF CRITERIA FOR THE EVALUATION OF AESTHETIC ATTRIBUTES OF PRODUCTS IN ENGINEERING DESIGN",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Aesthetics (EVA) dataset [14]. These datasets are unique in that they provide both overall aesthetic scores and attribute scores, making them valuable resources for evaluating image aesthetic assessment models.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aadb",
+     "eva dataset"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Learning Photography Aesthetics with Deep CNNs",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "‘Selfies’ Reveal Systematic Deviations from Known Principles of Photographic Composition",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "rule of thirds"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Exploring the Aesthetic Connotations of Sight-singing and Ear-training",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "The aesthetic characteristics of a novel 6% benzoyl peroxide foaming cloth may improve adherence to acne therapy",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "On the Aesthetics of Leftist Politics",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Photo Aesthetics Analysis via DCNN Feature Encoding",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "The Problem of Particularity in Kant's Aesthetic Theory",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Rule of Thirds Detection from Photograph",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "rule of thirds"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "INSTINCTIVE FEATURE FUSION PERFORMANCES FOR AESTHETIC ANALYSIS OF INTERPLANETARY AND TERRAIN IMAGES**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Aesthetics, Body Cathexis, Body Image, Body Size, Clothing Comfort",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Reactions to Imagery Generated Using Computational Aesthetic Measures",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "An Analysis of Aesthetic Evaluation on Interior Design Works",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Practical and Decorative Aesthetic Function of Clothes Edge in Chinese Traditional Costumes",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Aesthetic-Aware Text to Image Synthesis",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "rule of thirds"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Multi-Stage Image Aesthetic Assessment via Chain-of-Thought Reasoning",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Myth, Imagination and Digital Imaging: On the Aesthetic Expression of Nationality in Chinese Fantasy Films",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "An Aesthetic-Driven Approach to Unsupervised Video Summarization",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "The Technical and Aesthetic Characteristics of The Pirouette as Applied in Classical Dance**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic attribute"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Photographic composition classification and dominant geometric element detection for outdoor scenes$^{\\star}$",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "rule of thirds"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Learning Perceptual Aesthetics of 3D Shapes from Multiple Views",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "rule of thirds"
+    ]
+   }
+  ]
+ },
+ "album_curation": {
+  "kept": 622,
+  "top": [
+   {
+    "score": 7,
+    "title": "Stimulating Photo Curation on Smartphones",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection",
+     "photo curation"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Summarization of Archived and Shared Personal Photo Collections**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Joint Noise Level Estimation from Personal Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Managing and Searching Personal Photo Collections**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Person Recognition in Personal Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Search-and-Replace Editing for Personal Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "MediAssist: Using Content-Based Analysis and Context to Manage Personal Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Photo Tourism: Exploring Photo Collections in 3D",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Image Annotation Within the Context of Personal Photo Collections Using Hierarchical Event and Scene Models",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "EVENT CLASSIFICATION FOR PERSONAL PHOTO COLLECTIONS",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Using Text Search for Personal Photo Collections with the MediAssist System",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Travel Photo Album Summarization based on Aesthetic quality, Interestingness, and Memorableness",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "album summarization",
+     "personal photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Color features comparison for retrieval in personal photo collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "SOCIAL RELATIONSHIP DISCOVERY AND FACE ANNOTATION IN PERSONAL PHOTO COLLECTION**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Event Recognition in Personal Photo Collections Using Hierarchical Model and Multiple Features",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Annotating Photo Collections by Label Propagation According to Multiple Similarity Cues**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Context-Aware Person Identification in Personal Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "“Three backups is a minimum”: A first look at norms and practices in the digital photo collections of amateur photographers",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Audience Dependent Photo Collection Summarization",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo book",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Generating Visual Story Graphs with Application to Photo Album Summarization",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "album summarization",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Event Recognition from Photo Collections via PageRank",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Personal Photo Album Summarization for Global and Local Photo Annotation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "album summarization",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "WEB-BASED PERSONAL DIGITAL PHOTO COLLECTIONS: MULTIMODAL RETRIEVAL",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "PHOTO COLLECTION CONTEXTUALIZATION",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Event Recognition in Photo Collections with a Stopwatch HMM",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "FreeEye - Intuitive Summarisation of Photo Collections**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Event-Centric Twitter Photo Summarization",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection",
+     "photo summarization"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "CALIFORNIA-ND: AN ANNOTATED DATASET FOR NEAR-DUPLICATE DETECTION IN PERSONAL PHOTO COLLECTIONS**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Lost in Memories: Interacting With Photo Collections On PDAs",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection",
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Photo: MFO Photo Collection Author: Gerd-Martin Greuel",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "MediaEval 2013: Social Event Detection, Retrieval and Classification in Collaborative Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Estimating Heights from Photo Collections: A Data-Driven Approach",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Creating Animation with Personal Photo Collections and Map for Storytelling",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Finding Images with Similar Lighting Conditions in Large Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Photo Stream Alignment for Collaborative Photo Collection and Sharing in Social Media",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Automatic Creation of Photo Books from Stories in Social Media**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo book"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Qualitative Organization of Photo Collections via Quartet Analysis and Active Learning",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Radiometric Calibration using Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "从布拉吉裙、列宁装到军便服、制服装，从喇叭裤、花衬衫到蝙蝠衫、踢脚裤，从连衣裙、牛仔裤到露脐装、贝贝裙……相册里的服装，不仅记录了家庭生活的变化，更折射着中国社会生活的变迁，甚至是政治和外交的趋势。",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "相册"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A Tangible Interface for Browsing Digital Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A Diverse Legacy: The CN Photo Collection at the Canada Science and Technology Museum**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Understanding Still Life Photographic Genre as A Visual Strength in the Design of Gunung Padang Prehistorical Sites Photo Book**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo book"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Family Member Identification from Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "SHARING, PRIVACY AND TRUST ISSUES FOR PHOTO COLLECTIONS**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Measures for Improving Outdoor Crowdsourcing Photo Collection on Smart Phones**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Transductive Learning for Near-Duplicate Image Detection in Scanned Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "LEARNING PERSONALIZED EXPECTATION–ORIENTED PHOTO SELECTION MODELS FOR PERSONAL PHOTO COLLECTIONS",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Monitoring Changes of 3D Building Elements from Unordered Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Protecting Geolocation Privacy of Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "QMUL @ MediaEval 2012: Social Event Detection in Collaborative Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Unsupervised Clustering in Personal Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "To Keep or not to Keep: An Expectation-oriented Photo Selection Method for Personal Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Context-aware clustering and assessment of photo collections",
+    "arxiv": [],
+    "dois": "['10.1145/3092912.3092916']",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Design of Multifunctional Electronic Album Based on STM32 基于 STM32 的多功能电子相册设计",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "相册"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Through the Eyes of the Machine: Exploring Historical Photo Collections with Convolutional Neural Networks",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Automatic Face Annotation in Personal Photo Collections Using Context-Based Unsupervised Clustering and Face Information Fusion",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Joint People, Event, and Location Recognition in Personal Photo Collections using Cross-Domain Context *",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personal photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Understanding social relationships from photo collection tags",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An Aesthetic Solution for Photo Collection Page Layout",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Social Event Mining in Large Photo Collections**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo collection"
+    ]
+   }
+  ]
+ },
+ "blur_defocus": {
+  "kept": 4325,
+  "top": [
+   {
+    "score": 10,
+    "title": "FOCUSING ON OUT-OF-FOCUS: ASSESSING DEFOCUS ESTIMATION ALGORITHMS FOR THE BENEFIT OF AUTOMATED IMAGE MASKING",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "depth of field",
+     "motion blur",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 9,
+    "title": "根据波前编码系统的设计理论,在兼顾图像恢复能力的基础上,提出利用不同离焦距离的点扩散函数与焦面处的点扩散函数之间的希尔伯特空间角作为成像特性一致性的评价函数,结合遗传算法,对扩大景深的波相位板参数进行优化。分别在空间域和频率域上分析应用波前编码技术前后光学系统的成像特性,并利用最小二乘数字滤波器对中间模糊图像进行复原。仿真实验结果表明:在三次相位板上应用此方法获得的最佳相位板参数使波前编码系统焦深扩展了10倍。",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "景深",
+     "离焦"
+    ]
+   },
+   {
+    "score": 9,
+    "title": "Layer-Output Guided Complementary Attention Learning for Image Defocus Blur Detection",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "defocus",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Bokeh Diffusion: Defocus Blur Control in Text-to-Image Diffusion Models",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "bokeh",
+     "defocus"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "On-line particle size and velocity measurements by the analysis of defocused images :  extended depth of field",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "depth of field"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Spatially variant defocus blur map estimation and deblurring from a single image*",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur map",
+     "defocus"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Identifying Image Composites by Detecting Discrepancies in Defocus and Motion Blur",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Defocus Blur Detection via Depth Distillation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "bokeh",
+     "defocus",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "An Iterative Frequency-Domain Technique to Reduce Image Degradation Caused by Lens Defocus and Linear Motion Blur",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Parameter Estimation for Blur Image Combining Defocus and Motion Blur using Cepstrum Analysis",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "A Single Image Deblurring Algorithm for Nonuniform Motion Blur Using Uniform Defocus Map Estimation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "PERFORMANCE ENHANCEMENT OF BLUR DETECTION FOR MOBILE IMAGE USING DEFOCUSED BLUR BASED PSF TECHNIQUE**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "defocus"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "A Single Image Deblurring Algorithm for Nonuniform Motion Blur Using Uniform Defocus Map Estimation**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Simultaneous Estimation of Defocus and Motion Blurs from Single Image using Equivalent Gaussian Representation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Wavelet Based Intentional Blurring Variance Scheme for Blur Detection in Barcode Images",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "intentional blur"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Non-parametric Blur Map Regression for Depth of Field Extension",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur map",
+     "defocus",
+     "depth of field",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "IMAGE RETARGETING BASED ON SPATIALLY VARYING DEFOCUS BLUR MAP",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur map",
+     "defocus"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "EFFICIENT PERCEPTUAL-BASED SPATIALLY VARYING OUT-OF-FOCUS BLUR DETECTION**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "blur map",
+     "defocus",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Simultaneous Blur Map Estimation and Deblurring of A Single Space-variantly Defocused Image",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur map",
+     "defocus"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "水下图像运动模糊去除方法 Motion blur removal of underwater image #摘要",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "motion blur",
+     "运动模糊"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Augmented Reality Based on Estimation of Defocusing and Motion Blurring from Captured Images**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "SPATIALLY-VARYING OUT-OF-FOCUS IMAGE DEBLURRING WITH L1-2 OPTIMIZATION AND A GUIDED BLUR MAP**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur map",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "A Teacher-Learning-Based Optimization Approach for Blur Detection in Defocused Images",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "defocus"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Out-of-focus: Learning Depth from Image Bokeh for Robotic Perception",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "bokeh",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Defocus to focus: photo-realistic bokeh rendering by fusing defocus and radiance priors",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "bokeh",
+     "defocus"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "REMOVAL OF IMAGE DEFOCUS AND MOTION BLUR EFFECTS WITH A NONLINEAR INTERPOLATIVE VECTOR QUANTIZER",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Bokeh Diffusion: Defocus Blur Control in Text-to-Image Diffusion Models",
+    "arxiv": null,
+    "dois": "",
+    "terms": [
+     "bokeh",
+     "defocus"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "PHOTO MAGICIAN: CONTROLLING POINT OF FOCUS AND DEPTH OF FIELD ON AN ALL-FOCUSED IMAGE**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "depth of field",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "DEFOCUS MAP DETECTION USING A SINGLE IMAGE",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur map",
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Defocus and Motion Blur Detection with Deep Contextual Features",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Motion Blur Detection and Removal in Images",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "motion blur",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "R$^{2}$MRF: Defocus Blur Detection via Recurrently Refining Multi-Scale Residual Features",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "defocus",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "SINGLE IMAGE DEFOCUS MAP ESTIMATION USING LOCAL CONTRAST PRIOR",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur map",
+     "defocus",
+     "depth of field"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Adjust Your Focus: Defocus Deblurring From Dual-Pixel Images Using Explicit Multi-Scale Cross-Correlation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "depth of field",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Defocus Image Deblurring Network with Defocus Map Estimation as Auxiliary Task",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "depth of field",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Defocus Blur Detection via Multi-stream Bottom-Top-Bottom Fully Convolutional Network",
+    "arxiv": [],
+    "dois": "['10.1109/cvpr.2018.00325']",
+    "terms": [
+     "blur detection",
+     "defocus",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "REDUCING SPATIALLY VARYING OUT-OF-FOCUS BLUR FROM NATURAL IMAGE",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur map",
+     "defocus",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Backface Culling for Motion Blur and Depth of Field",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "depth of field",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "A Review over Different Blur Detection Techniques in Image Processing**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "defocus",
+     "depth of field"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Defocus Blur Detection via Salient Region Detection Prior",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "defocus",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Practical Layered Reconstruction for Defocus and Motion Blur",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "depth of field",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Estimation of Defocus Blur from a Single Image for High Quality Image Processing**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur map",
+     "defocus",
+     "depth of field"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Image Destabilization: Programmable Defocus using Lens and Sensor Motion",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "bokeh",
+     "defocus",
+     "depth of field"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Automatic Segmentation of Background Defocused Nature Image",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "bokeh",
+     "defocus",
+     "depth of field"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Defocus Blur Detection by Fusing Multiscale Deep Features With Conv-LSTM**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "defocus",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Automatic Blur Detection in Mobile Captured Document Images*",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Iris Image Blur Detection wi th Multiple Kernel Learning",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "motion blur",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Survey of Blur Detection Techniques of Digital Images",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Layered Reconstruction for Defocus and Motion Blur",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "depth of field",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "DeFusionNET: Defocus Blur Detection via Recurrently Fusing and Refining Multi-scale Deep Features",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "defocus",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "LEARNING BASED SINGLE IMAGE BLUR DETECTION AND SEGMENTATION",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur detection",
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Data-Parallel Rasterization of Micropolygons with Defocus and Motion Blur",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "motion blur"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Removing out-of-focus blur from a single image",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Adaptive image acquisition by autodefocusing",
+    "arxiv": [],
+    "dois": "['10.1117/1.3624489']",
+    "terms": [
+     "defocus",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Theory of bokeh image structure in camera lenses with an aspheric surface",
+    "arxiv": [],
+    "dois": "['10.1117/1.oe.53.6.065103']",
+    "terms": [
+     "bokeh",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Stereo-based bokeh effects for photography",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "bokeh",
+     "out-of-focus"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Defocus Deblurring and Superresolution for Time-of-Flight Depth Cameras",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "depth of field"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "An MRF Model-Based Approach to Simultaneous Recovery of Depth and Restoration from Defocused Images",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "depth of field"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Extending Depth of Field in Noisy Light Field Photography",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "defocus",
+     "depth of field"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Reblurring-Guided Single Image Defocus Deblurring: A Learning Framework with Misaligned Training Pairs",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blur map",
+     "defocus"
+    ]
+   }
+  ]
+ },
+ "efficient_distillation": {
+  "kept": 2826,
+  "top": [
+   {
+    "score": 9,
+    "title": "Efficient Face Image Quality Assessment via Self-training and Knowledge Distillation**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient",
+     "knowledge distillation",
+     "lightweight"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Image quality of lightweight equipment for mobile radiography compared with that of stationary equipment: a phantom study",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lightweight",
+     "mobile"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "MobileIQA: Exploiting Mobile-level Diverse Opinion Network For No-Reference Image Quality Assessment Using Knowledge Distillation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "knowledge distillation",
+     "mobile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "LIGHTWEIGHT HIGH-PERFORMANCE BLIND IMAGE QUALITY ASSESSMENT",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lightweight",
+     "mobile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Intelligent Photographing Interface with On-Device Aesthetic Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient",
+     "on-device"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "GREENBIQA: A LIGHTWEIGHT BLIND IMAGE QUALITY ASSESSMENT METHOD",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lightweight",
+     "mobile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Semi-Supervised Blind Image Quality Assessment through Knowledge Distillation and Incremental Learning",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient",
+     "knowledge distillation"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "A Mobile Image Aesthetics Processing System with Intelligent Scene Perception**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient",
+     "mobile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Optimizing Deep Learning-Based Crack Detection Using No-Reference Image Quality Assessment in a Mobile Tunnel Scanning System**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient",
+     "mobile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Fast and Efficient Image Quality Enhancement via Desubpixel Convolutional Neural Networks",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient",
+     "mobile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Adaptive and Energy Efficient Wavelet Image Compression For Mobile Multimedia Data Services",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient",
+     "mobile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "DeepMSE: A Lightweight Image Quality Assessment Model Based on SqueezeNet and MSE for Resource-Constrained Systems",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lightweight",
+     "mobile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "An Efficient Image Quality Enhancement using Wavelet Transform",
+    "arxiv": [],
+    "dois": "['10.1016/j.matpr.2020.03.629']",
+    "terms": [
+     "efficient",
+     "mobile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "QA-HFL: Quality-Aware Hierarchical Federated Learning for Resource-Constrained Mobile Devices with Heterogeneous Image Quality",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient",
+     "mobile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "A Lightweight Ensemble-Based Face Image Quality Assessment Method with Correlation-Aware Loss",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient",
+     "lightweight"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "An Energy-Efficient GAN Processor for Mobile Image Translation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient",
+     "mobile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Backlight Power Reduction Using Efficient Image Compensation for Mobile Devices**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient",
+     "mobile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "LAR-IQA: A Lightweight, Accurate, and Robust No-Reference Image Quality Assessment Model",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lightweight",
+     "mobile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "An Energy-Efficient Image Representation for Secure Mobile Systems",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient",
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Aesthetic Inference for Smart Mobile Devices",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "NoR-VDPNet++: Efficient Training and Architecture for Deep No-Reference Image Quality Metrics",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Knowing Male Subjects: Globally Mobile Chinese Professionals and the Aesthetics of the Confucian Sublime",
+    "arxiv": [],
+    "dois": "['10.4000/chinaperspectives.10323']",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Research on Mobile Marketing Recommendation Method Incorporating Layout Aesthetic Preference for Sustainable m-Commerce",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Image Sensors and Image Quality in Mobile Phones",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Effects of high ambient illuminations on image quality in mobile displays",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Image quality difference modelling of a mobile display",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Exploring the privacy paradox in mobile app adoption: The roles of an app’s aesthetic quality and privacy threats",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An efficient no-reference image quality analysis based on statistical perceptual features",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Evaluation of mobile phone camera benchmarking using objective camera speed and image quality metrics**",
+    "arxiv": [],
+    "dois": "['10.1117/1.jei.23.6.061102']",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Efficient Generative Methods for Assisting Aesthetic Design in Conceptual Stage",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Commentary on: Reduced Pain and Accelerated Recovery Following Primary Breast Augmentation With Lightweight Breast Implants Aesthetic Surgery Journal",
+    "arxiv": [],
+    "dois": "['10.1093/asj/sjy102']",
+    "terms": [
+     "lightweight"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Design aesthetics leading to m-loyalty in mobile commerce ${ }^{\\star}$",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Comparison of the perceived image quality of intraoral orthodontic photographs taken with DSLR camera and mobile phone camera: A double-blinded prospective study",
+    "arxiv": [],
+    "dois": "['10.31436/ijoh', '10.31436/ijohs.y5i2.258']",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An image quality index based on coefficients of spatial association with an application to image fusion",
+    "arxiv": [],
+    "dois": "['10.1016/j.spasta.2017.11.003']",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Image Quality-aware Deep Networks Ensemble for Efficient Gender Recognition in the Wild",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "On the Detection of Structura Mobile User Interfaces with a I Aesthetic Defects of Android Metrics-based Tool On the Detection of Structural Aesthetic Defects of Android Mobile User Interfaces with a Metrics-based Tool",
+    "arxiv": [],
+    "dois": "['10.1145/3410468']",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Image Quality Assessment Based on the Correlation coefficient and the 2-D Discrete Wavelet Transform*",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Automobile Advertisement—the Collision between Culture and Aesthetics",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Perceived Image Quality Assessment for Color Images on Mobile Displays**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Lightweight transformer and multi-head prediction network for no-reference image quality assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lightweight"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Influence of Curvature and Expertise on Aesthetic Preferences for Mobile Device Designs",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Scalable aesthetic transparent wood for energy efficient buildings",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An Efficient Blind Method for Image Quality Measurement",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Aesthetic Design for Automobile Interiors: Critical Issues and Conceptual Framework*",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Light Field Image Quality Enhancement by a Lightweight Deformable Deep Learning Framework for Intelligent Transportation Systems",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lightweight"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "| Mean square root of absorption coefficient is an indicator of the quality of imaging system. An increase in the mean square root of absorption coefficient indicates better image quality. 图 7.5 结合实验数据验证了上述两个机制的有效性。 |",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "MSPT: A Lightweight Face Image Quality Assessment Method with Multi-stage Progressive Training",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lightweight"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "eDifFIQA: Towards Efficient Face Image Quality Assessment based on Denoising Diffusion Probabilistic Models",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Mobile aesthetics: how lone practitioners can stay safe while working",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Despeckling Filter Evaluation Using Image Quality Metrics and Coefficient of Variation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "TEAPOT: A Toolset for Evaluating Performance, Power and Image Quality on Mobile Graphics Systems",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Gradient Magnitude Similarity Deviation: A Highly Efficient Perceptual Image Quality Index",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Materials for Aesthetic, Energy-Efficient, and Self-Diagnostic Buildings",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Going Mobile: Aesthetic Design Considerations from Calder and the Constructivists Author(s): David Barry and  Claus Rerup",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Sliced Maximal Information Coefficient: A Training-Free Approach for Image Quality Assessment Enhancement",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "MOSAIC MODULE CONCEPT FOR COST-EFFICIENT AND AESTHETIC BIPV MODULES",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "What Drives the Perceived Credibility of Mobile Websites: Classical or Expressive Aesthetics?",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Perceptual Error Logarithm: An Efficient and Effective Analytical Method for Full-Reference Image Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "efficient"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The aesthetic of the automobile in the age of sustainability",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A Luminance Adjusting Algorithm for High Resolution and High Image Quality AMOLED Displays of Mobile Phone Applications**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mobile"
+    ]
+   }
+  ]
+ },
+ "feedback_continual": {
+  "kept": 1836,
+  "top": [
+   {
+    "score": 6,
+    "title": "Active Learning Techniques for User Interactive Systems:Application to Image Retrieval",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "active learning",
+     "interactive"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Applying iterative Logistic regression and active learning to relevance feedback in image retrieval system",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "active learning",
+     "relevance feedback"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "An User Preference Information Based Kernel for SVM Active Learning in Content-based Image Retrieval *",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "active learning",
+     "relevance feedback"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Efficient labeling of retinal fundus photographs using deep active learning",
+    "arxiv": [],
+    "dois": "['10.1117/1.jmi.9.6.064001']",
+    "terms": [
+     "active learning",
+     "主动学习"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Revisiting Relevance Feedback for CLIP-based Interactive Image Retrieval",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive",
+     "relevance feedback"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Photography: An Interactive Process",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "On the perceptual aesthetics of interactive objects",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "GPU Accelerated Interactive Integral Photography System",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Traveling through Space-Time: An Interactive Photo Browsing System",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on “Do we miss the hot spots? – The use of very high resolution aerial photographs to quantify carbon fluxes in peatlands” by T. Becker et al.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "sLab: Smart Labeling of Family Photos Through an Interactive Interface**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Measure: An Interactive Tool for Accurate Forensic Photo/Videogrammetry",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Aesthetic Response to Lyric Poetry: An Interactive Approach",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on“Analysis of the electronic asymmetry of the primary electron donor of photosystem I of Spirodela oligorrhiza by photo-CIDNP solid-state NMR”* *byGeertje J. Janssen et al.*",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive $ G^{1} $ and $ G^{2} $ Hermite Interpolation Using Extended Log-aesthetic Curves",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Is there an author behind this text? A literary aesthetic driven approach to interactive media",
+    "arxiv": [],
+    "dois": "['10.1177/1461444813481296']",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An Autopoietic Aesthetic for Interactive Robotic Installation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "SAMPLING STRATEGIES FOR ACTIVE LEARNING IN PERSONAL PHOTO RETRIEVAL",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "active learning"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "I can't stop looking at them: Interactive effects of body mass index and weight dissatisfaction on attention towards body shape photographs",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A dynamic flexible and interactive display method of digital photographs$^{☆}$",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Qualitative Organization of Photo Collections via Quartet Analysis and Active Learning",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "active learning"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Supplementary Material: Toward Interactive Modulation for Photo-Realistic Image Restoration",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An Aesthetic Perspective to Explore Aesthetic Components of Interactive System: A Case Study on Music Player",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Interactive Spatial Aesthetics between Holographic Display Technology and Dancing Body Language $^{\\dagger}$",
+    "arxiv": [],
+    "dois": "['10.3390/proceedings2022081155']",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive Holographic Pyramid Using Two-Layer Integral Photography",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on“Observations of VOC emissions and photo chemical products over US oil- and gas-producing regions using high-resolution H$ _{3} $O$ ^{+} $ CIMS (PTR-ToF-MS)” by Abigail Koss et al.*",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Large-Scale Painting of Photographs by Interactive Optimization",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Dominican SnapGuide: An interactive e-manual for basic and digital photography class",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Developing Aesthetic Reading in Ordinary Literature-based Interactive EFL Classroom**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Media Gallery TV — View and Shop your Photos on Interactive Digital Television**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on“Production of HONO from heterogeneous uptake of NO$_{2}$ on illuminated TiO$_{2}$ aerosols measured by Photo-Fragmentation Laser Induced Fluorescence”* *by* Joanna E. Dysonet al.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on* “Enhanced secondary organic aerosol formation from the photo-oxidation of mixed anthropogenic volatile organic compounds” *by* Junling Li et al.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Digital Interactive Literature: Between Terminological Challenge and Aesthetics of Reception, and the Interplay of Literary Genres",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive Sonification: Aesthetics, Functionality and Performance",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "BPGI: A Brain-Perception Guided Interactive Network for Stereoscopic Omnidirectional Image Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive photographic online guide to the identification of Caribbean sponges",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive Coffee Table for Exploration of Personal Photos and Videos**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An Interactive Electronic Program Based on the Aesthetic Approach for Developing Reflective Writing Skills among Secondary School Students",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on“Production of HONO from heterogeneous uptake of NO$_{2}$ on illuminated TiO$_{2}$ aerosols measured by Photo-Fragmentation Laser Induced Fluorescence”* *by* Joanna E. Dyson et al.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Chapter 18 An Autopoietic Aesthetic in Interactive Art**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on “Digital photography for assessing vegetation phenology in two contrasting northern ecosystems” by M. Linkosalmi et al.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive Digital Scrapbook Generation for Travel Photos Based on Design Principles of Typography**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An Interface and Framework Design for Interactive Aesthetic Sonification**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on* “Digital photography for assessing vegetation phenology in two contrasting northern ecosystems” *by* M. Linkosalmi et al.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An interactive video system for displaying maps, plans, or photographs on a TV screen and overlaying extra details by computer has been launched by British Telecom.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on “Subgrid parameterization of snow distribution at a Mediterranean site using terrestrial photography” by Rafael Pimentel et al.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Research on the Experience of Interactive Art From the Perspective of Reception Aesthetics**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on “PRACTISE – Photo Rectification And ClassificaTlon SoftwarE (V.1.0)” by S. Härer et al.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on “Livestock exclosure with consequent vegetation changes alters photo-assimilated carbon cycling in a Kobresia meadow” by J. Zou et al.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An investigation on the influence of interactive aesthetics in virtual industrial design",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Supplementary Materials for** **CaricatureBooth: Data-Free Interactive Caricature Generation in a Photo Booth**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on “Monitoring of riparian vegetation response to flood disturbances using terrestrial photography” by K. Džubáková et al.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Picture Proposal: Planning for the Interactive Use of Photos in the Higher Education Classroom**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Blind Image Quality Assessment Based on Active Learning",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "active learning"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on “ Constraining the response of phytoplankton to zooplankton grazing and photo-acclimation in a temperate shelf sea with a 1-D model - towards S2P3 v8.0” by Angela A. Bahamondes Dominguez et al.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on* “The effects of a solar eclipse on photo-oxidants in different areas of China” *by* J.-B. Wu et al.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive Photo Viewing on Ubiquitous Displays*",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive comment on “PRACTISE – Photo Rectification And ClassificaTlon SoftwarE (V.2.0)” by S. Härer et al.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive High-Relief Reconstruction for Organic and Double-Sided Objects from a Photo",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Aesthetic Experience and Creativity in Interactive Art",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "interactive"
+    ]
+   }
+  ]
+ },
+ "iqa_aesthetic_models": {
+  "kept": 574,
+  "top": [
+   {
+    "score": 6,
+    "title": "Figure 6. After the creation of the facial models, edge enhancing was applied to the depth buffer of the rendered image. This Figure is from an animated sequence of the music video. *Musique Non-Slip* by Kraftwerk",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "musiq",
+     "nima"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "MAMIQA: No-Reference Image Quality Assessment Based on Multiscale Attention Mechanism With 基于多尺度注意机制的无参考图像质量评估 Natural Scene Statistics 自然场景统计",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "no-reference image quality",
+     "无参考图像质量"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "AM-BQA: Enhancing blind image quality assessment using attention retractable features and multi-dimensional learning",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality",
+     "无参考图像质量"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Feature Maps-Driven No-Reference Image Quality Prediction of Authentically Distorted Images",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Retina inspired no-reference image quality assessment for blur and noise",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Unsupervised blind image quality assessment via joint spatial and transform features",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "BIQ2021: a large-scale blind image quality assessment database**",
+    "arxiv": [],
+    "dois": "['10.1117/1.je1.31.5.053010']",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Defining a no-reference image quality assessment by means of the self-affine analysis**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "No-reference image quality assessment based on natural scene statistics and gradient magnitude similarity",
+    "arxiv": [],
+    "dois": "['10.1117/1.oe.53.11.113110']",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Blind Image Quality Assessment via Transformer Predicted Error Map and Perceptual Quality Token",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Content-Distortion High-Order Interaction for Blind Image Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "A Two-Step Framework for Constructing Blind Image Quality Indices",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "IMAGE AESTHETIC ASSESSMENT VIA DEEP SEMANTIC AGGREGATION",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic quality assessment",
+     "image aesthetic assessment"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Defining a no-reference image quality assessment by means of the self-affine analysis",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Learning to integrate local and global features for a blind image quality measure",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Totally Blind Image Quality Assessment Evaluator",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "ATTENTION DOWN-SAMPLING TRANSFORMER, RELATIVE RANKING AND SELF-CONSISTENCY FOR BLIND IMAGE QUALITY ASSESSMENT",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Anisotropic blind image quality assessment: Survey and analysis with current methods",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "DEEP BLIND IMAGE QUALITY ASSESSMENT BY LEARNING SENSITIVITY MAP",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Blind Image Quality Assessment by Pairwise Ranking Image Series",
+    "arxiv": [],
+    "dois": "['10.23919/icc.2023.00.102']",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "No-Reference Image Quality Metric Based on Features Evaluation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Blind Image Quality Assessment Based on Natural Statistics of Double-Opponency**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Blind Image Quality Assessment Using a CNN and Edge Distortion",
+    "arxiv": [],
+    "dois": "['10.18280/ria.350406']",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Which Has Better Visual Quality: The Clear Blue Sky or a Blurry Animal?",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "nima",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Research on Image Aesthetic Assessment based on Graph Convolutional Network基于图卷积网络的图像审美评价研究",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic quality assessment",
+     "image aesthetic assessment"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "DEEP BLIND IMAGE QUALITY ASSESSMENT BY EMPLOYING FR-IQA",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "PCANet for Blind Image Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Entirely Blind Image Quality Assessment Estimator",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Blind Image Quality Assessment Using Multiscale Local Binary Patterns**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Fast and efficient blind image quality index in spatial domain**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "A Visual Saliency-Based Neural Network Architecture for No-Reference Image Quality Assessment**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "LEARNING A BLIND IMAGE QUALITY INDEX BASED ON VISUAL SALIENCY GUIDED SAMPLING AND GABOR FILTERING",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Fully Deep Blind Image Quality Predictor",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "MULTIPLE LEVEL FEATURE-BASED UNIVERSAL BLIND IMAGE QUALITY ASSESSMENT MODEL**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "GSBIQA: GREEN SALIENCY-GUIDED BLIND IMAGE QUALITY ASSESSMENT METHOD",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "nima"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Fusion global and local deep representations with neural attention for aesthetic quality assessment$^{\\#} $",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic quality assessment",
+     "image aesthetic assessment"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "BLIND IMAGE QUALITY ASSESSMENT USING SINGULAR VALUE DECOMPOSITION BASED DOMINANT EIGENVECTORS FOR FEATURE SELECTION",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Pair-Comparing Based Convolutional Neural Network for Blind Image Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "\"Speech Melody and the Evolution of the Minimalist Aesthetic in Steve Reich's The Cave\"",
+    "arxiv": [],
+    "dois": "['10.7202/902250ar']",
+    "terms": [
+     "musiq",
+     "nima"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Blind Image Quality Assessment Based on Hybrid Fuzzy-Genetic Technique",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "No-Reference Image Quality Assessment Based on MLBP Using Distortion Aggravation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "BIQABSF: Blind Image Quality Assessment Based on Statistical Features",
+    "arxiv": [],
+    "dois": "['10.21203/rs.3.rs-7860040/v1']",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Blind image quality assessment method based on a particle swarm optimization support vector regression fusion scheme",
+    "arxiv": [],
+    "dois": "['10.1117/1.jei.25.6.061623']",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Blind Image Quality Assessment via A Two-Stage Non-Parametric Framework",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "NO-REFERENCE IMAGE QUALITY ASSESSMENT BASED ON HIGH ORDER DERIVATIVES**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "No-reference image quality assessment with center-surround based natural scene statistics",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Performance Evaluation of Blind Image Quality** **Assessment on Deconvolving Images**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "A Deep Blind Image Quality Assessment with Visual Importance Based Patch Score",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Blind Image Quality Assessment Using Natural Scene Statistics in the Gradient Domain**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Blind Image Quality Assessment Based on Natural Scene Statistics",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Blind Image Quality Metric for Blurry and Noisy Image",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 4,
+    "title": "Blind Image Quality Assessment Using a General Regression Neural Network",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality",
+     "no-reference image quality"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Picture atlas of small animal clinical signs",
+    "arxiv": [],
+    "dois": "['10.1136/vr.e8426']",
+    "terms": [
+     "nima"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Cadastral mapping of Agricultural lands and Natural Resources by using image and nonimage data",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "nima"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "AN ORDER-COMPLEXITY MODEL FOR AESTHETIC QUALITY ASSESSMENT OF SYMBOLIC HOMOPHONY MUSIC SCORES",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "aesthetic quality assessment"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Using Online Media To Study Animal Cognition:Domestic Cat Responses To Reflective Images**",
+    "arxiv": [],
+    "dois": "['10.26451/abc.12.02.05.2025']",
+    "terms": [
+     "nima"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Nonmetallic Guide Sheath with Negative Pressure Shapelocking Mechanism for Minimally Invasive Image-Guided Surgery**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "nima"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "DEEP LEARNING NETWORK FOR BLIND IMAGE QUALITY ASSESSMENT",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "blind image quality"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Suspended Animation: Children's Picture Books and the Fairy Tale of Modernity* (review)",
+    "arxiv": [],
+    "dois": "['10.1353/hcy.2012.0030*']",
+    "terms": [
+     "nima"
+    ]
+   },
+   {
+    "score": 3,
+    "title": "Efficient Quantification of the Left Ventricular Volume Using 3-Dimensional Echocardiography: The Minimal Number of Equiangular Long-axis Images for Accurate Quantification of the Left Ventricular Volume",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "nima"
+    ]
+   }
+  ]
+ },
+ "lora_vlm_ranking": {
+  "kept": 4115,
+  "top": [
+   {
+    "score": 6,
+    "title": "Building Reasonable Inference for Vision-Language Models in Blind Image Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "vision-language",
+     "vlm"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Listener-Rewarded Thinking in VLMs for Image Preferences",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "reward model",
+     "vlm"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "A Comprehensive Study of Multimodal Large Language Models for Image Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mllm",
+     "multimodal large language model"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "VLM-as-a-Judge Approaches for Evaluating Visual Narrative Coherence in Historical Photographical Records",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "vision-language",
+     "vlm"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "CameraBench: Benchmarking Visual Reasoning in MLLMs via Photography",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mllm",
+     "multimodal large language model"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Dog-IQA: Standard-guided Zero-shot MLLM for Mix-grained Image Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mllm",
+     "multimodal large language model"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "IQAGPT: computed tomography image quality assessment with vision-language and ChatGPT models",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "vision-language",
+     "vlm"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "iDETEX: Empowering MLLMs for Intelligent DETailed EXplainable IQA",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mllm",
+     "multimodal large language model"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Listener-Rewarded Thinking in VLMs for Image Preferences**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "reward model",
+     "vlm"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "IQAGPT: Image Quality Assessment with Vision-language and ChatGPT Models*",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "vision-language",
+     "vlm"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Aesthetic Image Captioning with Saliency Enhanced MLLMs",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "mllm",
+     "multimodal large language model"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Photo-oxidation of ABS: Part 2—Origin of the photodiscoloration on irradiation at long wavelengths",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Bruce Curtis, center, helped dedicate the building named for him in 2002. As a student, President Bruce Benson (with wife Marcy, right) was mentored by Curtis. (File photo by Larry Harwood/University of Colorado)",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Studies on Photo-polarography. VI. Photo-catalytic Current of Chloranil at DME*",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Exploration on and Thinking about Aesthetic Infiltration in the Aerobics Teaching in Colleges and Universities",
+    "arxiv": [],
+    "dois": "['10.4236/oalib.1106965']",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Prime Aesthetic: Exploratory Research on the Relationship between the Imprinting of Aesthetic Dress Preferences and the Sensitive Period of Emerging Adulthood",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Figure 1. (A) Photograph of black hairy tongue (BHT) showing discoloration of the dorsum of the tongue that had been present for 4 years. (B) Resolution of BHT after antibiotic therapy.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Paleozoic to Mesozoic sedimentary formations in the Colorado Front Range, Roxborough State Park: Documenting geologic landscapes and features through geo-photography",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Waves__as Exploration of (An)aesthetic of Absence$^{1}$_",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An Exploration of the Path Leading to University Students' Aesthetic View",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Exploratory survey of initial image quality in new digital mammography units prior to use in patients in Mexico",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Exploration and Research on the Cultivation of Students' Aesthetic Consciousness in College Interior Design Teaching",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Exploring Aesthetic Elements of Spring Imagery and Floral Design from Consumer’s Perspective",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Describing and mapping where people experience tranquillity. An exploration based on interviews and Flickr photographs",
+    "arxiv": [],
+    "dois": "['10.1080/01426397.2020.1749250']",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Rapid progress on the photographic documentation of Australia's flora",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Photographer's Eye: Teaching Multimodal Large Language Models to See and Critique like Photographers",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multimodal large language model"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Exploration Aesthetic Values and Meaning Local Wisdom of Tongkonan Traditional Houses as Identity Toraja Tribe Society",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Photo-Realistic Image Restoration in the Wild with Controlled Vision-Language Models",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "vision-language"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "(A 90-minute television documentary film produced, written, directed and edited by Linda Moulton Howe, Director, Special Projects, KMGHTV7, Denver, Colorado. Photography by Richard Lerner.)",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "THE MICRODENSITOMETER AS AN AID TO THE INTERPRETATION OF MULTISPECTRAL PHOTOGRAPHS FOR MINERAL EXPLORATION PURPOSES",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Hierarchical Prompt Engineering and Task-Differentiated Low-Rank Adaptation for Artificial Intelligence-Generated Content Image Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "low-rank adaptation"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Analysis and Exploration of Popular Photography Concept under Visual Culture",
+    "arxiv": [],
+    "dois": "['10.6007/ijarbss/v14-i5/21438']",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Can AI Models Appreciate Document Aesthetics? An Exploration of Legibility and Layout Quality in Relation to Prediction Confidence",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Pairwise comparison and rank learning for image quality assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "pairwise comparison"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An Exploration on the Method of Quantitative Photographing Posed Smile",
+    "arxiv": [],
+    "dois": "['10.29011/2574-7347.100064']",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Exploration of the optimal skin-camera distance for facial photoplethysmographic imaging measurement using cameras of different types",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "ISLANDS IN THE FOREST: A PHOTO EXPLORATION OF CONGO’S BAI ECOSYSTEM",
+    "arxiv": [],
+    "dois": "['10.1002/ecy.4419']",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Photo transistor adapter for timing systems",
+    "arxiv": [],
+    "dois": "['10.1063/1.1717553', '10.1063/1.1752885', '10.1063/1.4848520', '10.1119/1.11077', '10.1121/1.2142551', '10.1121/1.49001",
+    "terms": [
+     "adapter"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Mineral Exploration with Skylab Photography in Central Colorado",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Merriman, John M. The Margins of City Life: Explorations on the French Urban Frontier, 1815-1851. New York and Oxford: Oxford University Press, 1991. Pp. 318. Illustrations, maps, black and white photographs. $63.00",
+    "arxiv": [],
+    "dois": "['10.7202/1019252ar']",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Polyethene: The Exploration and Experimentation Extrinsic Property of the Material in Environmental Concern in Aesthetic Process",
+    "arxiv": [],
+    "dois": "['10.6007/ijarbss/v11-i9/11111']",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Experimental investigation of hydrogen production in a photo-electrochemical chloralkali processes reactor",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Vulnerable: A new study finds the grass species in a Colorado plot threatened by woody plants under conditions of raised atmospheric carbon dioxide. (Photograph: © David Crockett/Alamy.)",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "PICNIQ: Pairwise Comparisons for Natural Image Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "pairwise comparison"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Aesthetic Exploration and Identity Perception of Body Hair**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Vision-Language Consistency Guided Multi-modal Prompt Learning for Blind AI Generated Image Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "vision-language"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An Exploration of the Reproduction of Female Images in English Translations of \"Dream of the Red Mansions\" from a Translation Aesthetics Perspective",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Brain Correlates of Aesthetic Processing of Active Fingertip Exploration of Material Surfaces**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A century of vegetation change in the San Juan Mountains, Colorado: An analysis using repeat photography",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Aesthetic Turn in Mental Health: Reflections on an Explorative Study into Practices in the Arts Therapies**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Cover Photo: Group of spruce and fir trees in Routt National Forest near the Colorado-Wyoming Border in January near sunset. Photo by Chris Hiemstra, Department of Atmospheric Science, Colorado State University .",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Exploration of Age Exchange Center’s Aesthetic Strategies in British Reminiscence Theatre**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Maternity, Sexuality, and Capability: An Exploration of the Aesthetics of the Rural Moroccan Female Body",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Innovative Exploration of Aesthetic Education Teaching in Colleges and Universities in the Era of Digital Media",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Synthesis of a Magnetic Fe$_{3}$O$_{4}$/RGO Composite for the Rapid Photo-Fenton Discoloration of Indigo Carmine Dye",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "McClelland, Tom. (2010) What is it like to be John Malkovich? The exploration of subjectivity in being John Malkovich. Postgraduate Journal of Aesthetics, 7 (2). pp. 10-25.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Cover Photo: Temperature contour plots and other data from Sandia instrumentation were used to evaluate an in situ burn of rubblized oil shale at an Occidental Oil Shale, Inc., site near Debeque, Colorado (see page 9).",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Authenticity and Virtuality of Images: A Philosophical Exploration of Contemporary Western Photography in the Post-Truth Era**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Using computer vision techniques on Instagram to link users’ personalities and genders to the features of their photos: An exploratory study",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "lora"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "STEREOSCOPIC FUNDUS PHOTOGRAPHY ADAPTER",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "adapter"
+    ]
+   }
+  ]
+ },
+ "multi_objective_selection": {
+  "kept": 5967,
+  "top": [
+   {
+    "score": 9,
+    "title": "Classifier Ensembles for Image Identification Using Multi-objective Pareto Features",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Consistency-diversity-realism Pareto fronts of conditional image generative models",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "pareto"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Taking the Big Picture: representative skylines based on significance and diversity",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "skyline"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Multi-Objective and Multi-Level Image Thresholding Based on Dominance and Diversity Criteria",
+    "arxiv": [],
+    "dois": "['10.1016/j.asoc.2017.01.019']",
+    "terms": [
+     "diversity",
+     "multi-objective"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "MS-DPPs: Multi-Source Determinantal Point Processes for Contextual Diversity Refinement of Composite Attributes in Text to Image Retrieval",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "determinantal point process",
+     "diversity"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Classifer Ensembles for Image Identifcation Using Multi-objective Pareto Features**",
+    "arxiv": [],
+    "dois": "['10.1016/j.neucom.2017.01.067']",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "An adaptive Multi-Objective Image Watermarking scheme for QIM Using NSGA-II",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "non-dominated",
+     "pareto"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Construction of Image Feature Extractors Based on Multi-objective Genetic Programming with Redundancy Regulations",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "multi-objective",
+     "non-dominated"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "A multi-objective approach for designing optimized operation sequence on binary image processing",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "non-dominated",
+     "pareto"
+    ]
+   },
+   {
+    "score": 7,
+    "title": "Neural Network Ensembles For Image Identification Using Pareto-optimal Features",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "EVOLVING QUANTIZED NEURAL NETWORKS FOR IMAGE CLASSIFICATION USING A MULTI-OBJECTIVE GENETIC ALGORITHM**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "non-dominated"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "A novel model-based evolutionary algorithm for multi-objective deformable image registration with content mismatch and large deformations: benchmarking efficiency and quality",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Application of Multi-objective Optimization in 3D Image Reconstruction",
+    "arxiv": [],
+    "dois": "['10.18280/ts.410330']",
+    "terms": [
+     "diversity",
+     "multi-objective"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "SAR Image Segmentation by Cooperative Populations and Multi-objective Kernel Clustering Indices",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Improved multi-objective particle swarm optimization algorithm for optimizing watermark strength in color image watermarking",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "A Novel Multi-objective Genetic Algorithm Optimization for Blind RGB Color Image Watermarking",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "non-dominated"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Noisy Submodular Maximization via Adaptive Sampling with Applications to Crowdsourced Image Collection Summarization",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "submodular"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "衡量生物多样性的标准之一是一个地区不同物种的数量。这张照片展示了一只美洲豹在非洲坦桑尼亚的塞伦盖蒂平原上俯瞰迁徙的角马和斑马。",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "多样性"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "A multi-criteria context-sensitive approach for social image collection summarization",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "multi-criteria"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Multi-objective Blind Image Fusion Multi-objective Blind Image Fusion",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Learning Multi-Objective Binary Features for Image Representation*",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "multi-objective"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Determinantal Point Processes for Image Processing*",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "determinantal point process",
+     "diversity"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "camera trap, biodiversity, data gaps, convention on biological diversity",
+    "arxiv": [],
+    "dois": "['10.1098/rstb.2022.0232', '10.6084/m9.figshare']",
+    "terms": [
+     "diversity",
+     "多样性"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "RONA: Pragmatically Diverse Image Captioning with Coherence Relations**RONA: 具有连贯关系的语用多样性图像字幕",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "多样性"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "A Pareto-optimal evolutionary approach of image encryption using coupled map lattice and DNA",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Multi-Objective Genetic Programming with Redundancy-Regulations for Automatic Construction of Image Feature Extractors**$ ^{**} $*",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "multi-objective"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Image Thresholding Based on Bacterial Foraging and Pareto Multiobjective Optimization**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Figure-ground image segmentation using feature-based multi-objective genetic programming techniques",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Evolving Deep Neural Networks by Multi-objective Particle Swarm Optimization for Image Classification",
+    "arxiv": [],
+    "dois": "['10.1145/3321707.3321735']",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Multiple-relations-constrained image classification with limited training samples via Pareto optimization",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "3D camera sensor scheduling algorithms for indoor multi-objective tracking",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "multi-objective"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "APPLICATION OF COMPROMISING EVOLUTION IN MULTI-OBJECTIVE IMAGE ERROR CONCEALMENT**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Multi-objective optimization for deformable image registration: proof of concept",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "PARETO OPTIMAL NONLINEAR FILTERS FOR IMAGE ENHANCEMENT",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Towards Diverse and Accurate Image Captions via Reinforcing Determinantal Point Process**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "determinantal point process",
+     "diversity"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Supervised leukocyte segmentation in tissue images using multi-objective optimization technique",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "non-dominated"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "A Segmentation Approach for Tissue Images Using Non-dominated Sorting GA",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "non-dominated",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Tea leaf disease detection using multi-objective image segmentation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "non-dominated"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "封面:入侵种喜旱莲子草(Alternanthera philoxeroides)在水体边缘形成分枝稠密的单种优势群落(见本期232-240页潘晓云等的文章)。(摄影者:潘晓云) #BIODIVERSITY SCIENCE",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "多样性"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Pareto Optimal Camera Placement for Automated Visual Inspection",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "A NEW MULTI-CRITERIA FUSION MODEL FOR COLOR TEXTURED IMAGE SEGMENTATION",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-criteria",
+     "multi-objective"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "A NOVEL APPROACH TO IMAGE DENOISING USING THE PARETO OPTIMAL CURVELET THRESHOLDS**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "EFA-BMFM: A multi-criteria framework for the fusion of colour image segmentation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-criteria",
+     "multi-objective"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "A New Image Watermarking Scheme Using Non-dominated Sorting Genetic Algorithm II",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "non-dominated"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Auxiliary Objectives for the Evolutionary Multi-objective Principal Color Extraction from Logo Images**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Continuous Cartesian Genetic Programming based representation for Multi-Objective Neural Architecture Search for Image Classification",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "non-dominated"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "A Computationally-Aware Multi-Objective Framework for Camera–LiDAR Calibration",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Learning Mixtures of Submodular Functions for Image Collection Summarization",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity",
+     "submodular"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Evolutionary Multi-objective Image Feature Extraction in the Presence of Noise",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective",
+     "pareto"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Neural network multi-criteria optimization image reconstruction technique (NN-MOIRT) for linear and non-linear process tomography",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-criteria",
+     "multi-objective"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Virtual Photography Using Multi-Objective Particle Swarm Optimization",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "RANDOM NETWORK DISTILLATION AS A DIVERSITY METRIC FOR BOTH IMAGE AND TEXT GENERATION",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Adaptive Local Thresholding for Detection of Nuclei in Diversity Stained Cytology Images",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Metaheuristic Algorithms based Multi-objective Optimization for Image Segmentation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "On the Lower Limit of Monocular Depth Diversity Required for ControlNet-Based Conditional Image Generation**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Multi-objective Particle Swarm Optimization Based Image Watermarking Scheme",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Block ICA for Image Suppression and Carrier Frequency OffsetCorrection in Diversity BPSK Receivers",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Adaptive wireless network multi-objective optimization algorithm based on image synthesis",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "multi-objective"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Insects: Their Natural History and Diversity: With a Photographic Guide to Insects of Eastern North America, Second Edition, Revised and Updated",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Diversity of Aesthetic Features of Contemporary Watercolor Painting Based on Big Data Analysis",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "diversity"
+    ]
+   }
+  ]
+ },
+ "personalized_aesthetics": {
+  "kept": 376,
+  "top": [
+   {
+    "score": 7,
+    "title": "User-Guided Personalized Image Aesthetic Assessment based on Deep Reinforcement Learning",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized aesthetic",
+     "personalized image aesthetic",
+     "piaa"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Personalized Image Aesthetics Assessment with Rich Attributes",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized image aesthetic",
+     "piaa"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Towards Personalized Aesthetic Image Caption",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized aesthetic",
+     "user preference"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "ACTIVE LEARNING BASED CLOTHING IMAGE RECOMMENDATION WITH IMPLICIT USER PREFERENCES**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference",
+     "user-specific"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "LAPIS: A novel dataset for personalized image aesthetic assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized image aesthetic",
+     "piaa"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Transductive Aesthetic Preference Propagation for Personalized Image Aesthetics Assessment",
+    "arxiv": [],
+    "dois": "['10.1145/3503161.3548244']",
+    "terms": [
+     "personalized image aesthetic",
+     "piaa"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Learning Personalized Image Aesthetics from Subjective and Objective Attributes",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized image aesthetic",
+     "piaa"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Personalized Image Aesthetics Assessment via Meta-Learning With Bilevel Gradient Optimization",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized image aesthetic",
+     "piaa"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "META-LEARNING PERSPECTIVE FOR PERSONALIZED IMAGE AESTHETICS ASSESSMENT**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized aesthetic",
+     "personalized image aesthetic"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "AesBiasBench: Evaluating Bias and Alignment in Multimodal Language Models for Personalized Image Aesthetic Assessment**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized image aesthetic",
+     "piaa"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Graph Layout Aesthetics in UML Diagrams: User Preferences",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "LOTUS: A Leaderboard for Detailed Image Captioning from Quality to Societal Bias and User Preferences**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Personality-Assisted Multi-Task Learning for Generic and Personalized Image Aesthetics Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized image aesthetic"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "FERGI: Automatic Scoring of User Preferences for Text-to-Image Generation from Spontaneous Facial Expression Reaction",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A Survey on Learning Crowdsourced User Preferences for Visual Summarization of Image Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Anatomical Mirroring: Real-time User-specific Anatomy in Motion Using a Commodity Depth Camera",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user-specific"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Dealing with landscape *fuzziness* in user preference studies: Photo-based questionnaires in the Mediterranean context",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Automatic Image Enhancement Taking into Account User Preference**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Partial Image Active Annotation (PIAA): An Efficient Active Learning Technique Using Edge Information in Limited Data Scenarios**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "piaa"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "USAR: an interactive user-specific aesthetic ranking framework for images",
+    "arxiv": [
+     "1805.01091"
+    ],
+    "dois": "",
+    "terms": [
+     "user-specific"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Partial Image Active Annotation (PIAA): An Efficient Active Learning Technique Using Edge Information in Limited Data Scenarios",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "piaa"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A fuzzy decision support system for digital camera selection based on user preferences",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Socially Shared Images with Automated Annotation Process by Using Improved User Preferences**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Preference Learning for Text-to-Image Prompt Tuning using RL",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "preference learning"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Personalized Image Aesthetics (Supplementary Material)",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized image aesthetic"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "FERGI: Automatic Annotation of User Preferences for Text-to-Image Generation from Spontaneous Facial Expression Reaction",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "COMPARISON OF TWO TOPICAL GEL VEHICLES: AESTHETIC PARAMETERS AND USER PREFERENCE**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Modeling user preferences in content-based image retrieval: a novel attempt to bridge the semantic gap",
+    "arxiv": [],
+    "dois": "['10.1016/j.neucom.2015.05.041']",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A Sparse Image Recommendation Model Using Content and User Preference Information",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An User Preference Information Based Kernel for SVM Active Learning in Content-based Image Retrieval *",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Dealing with landscape fuzziness in user preference studies: photo based questionnaires in the Mediterranean context",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Understanding user preferences based on usability and aesthetics before and after actual use",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Joint regression and learning from pairwise rankings for personalized image aesthetic assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized image aesthetic"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Personalized Image Aesthetic Quality Assessment by Joint Regression and Ranking**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized image aesthetic"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Personalized Image Aesthetics Assessment via Multi-Attribute Interactive Reasoning",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized image aesthetic"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Preference Learning for Document Image Analysis",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "preference learning"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "VisionReward: Fine-Grained Multi-Dimensional Human Preference Learning for Image and Video Generation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "preference learning"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A picture-flavour paradigm for studying complex conditioning processes in food preference learning",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "preference learning"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "USAR: An Interactive User-specific Aesthetic Ranking Framework for Images",
+    "arxiv": [],
+    "dois": "['10.1145/3240508.3240635']",
+    "terms": [
+     "user-specific"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "User Preferences Modeling and Learning for Pleasing Photo Collage Generation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Supplementary: Pick-a-Pic: An Open Dataset of User Preferences for Text-to-Image Generation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Personalized aesthetic management of skeletal Class II malocclusion with a combined approach of orthodontic, orthognathic, and prosthodontic treatment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized aesthetic"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Rethinking Personalized Aesthetics Assessment: Employing Physique Aesthetics Assessment as An Exemplification",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized aesthetic"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "SmartEye: Assisting Instant Photo Taking via Integrating User Preference with Deep View Proposal Network**",
+    "arxiv": [],
+    "dois": "['10.1145/3290605.3300701']",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Suggestive Painterly Style Image Generation System to Satisfy User Preferences",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "INVESTIGATION OF USER PREFERENCES OF PHOTO GALLERY IN E-COMMERCE SITES USING EYE-TRACKER**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Content-based Image Search System Design for Capturing User Preferences during Query Formulation**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Use of image manipulation to elicit user preferences in mountain resorts",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Analyzing User Preference for Social Image Recommendation**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "USER PREFERENCES IN IMAGE MAP USING",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Scaling Up Personalized Image Aesthetic Assessment via Task Vector Customization",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized image aesthetic"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Using Monetary Incentives and Auctions to Elicit User Preferences between Usability and Aesthetics**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Three-dimensional facial volume analysis using algorithm-based personalized aesthetic templates",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized aesthetic"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Eliciting User Preferences Using Image-Based Experience Sampling and Reflection**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Learning Crowdsourced User Preferences for Visual Summarization of Image Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Show, Prefer and Tell: Incorporating User Preferences into Image Captioning",
+    "arxiv": [],
+    "dois": "['10.1145/3555776.3577794']",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Personalized Image Aesthetics Assessment",
+    "arxiv": [],
+    "dois": "['10.1145/3132847.3133052']",
+    "terms": [
+     "personalized image aesthetic"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Data-Driven Auto-Photo Enhancement Based On User Preference",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "SmartEye: Assisting Instant Photo Taking via Integrating User Preference with Deep View Proposal Network",
+    "arxiv": [],
+    "dois": "['10.1145/3290605.3300701']",
+    "terms": [
+     "user preference"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Collaborative and Attentive Learning for Personalized Image Aesthetic Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "personalized image aesthetic"
+    ]
+   }
+  ]
+ },
+ "portrait_face_quality": {
+  "kept": 2590,
+  "top": [
+   {
+    "score": 8,
+    "title": "Towards recognizing facial expressions at deeper level: Discriminating genuine and fake smiles from a sequence of images",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "All Smiles: Automatic Photo Enhancement by Facial Expression Analysis**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 8,
+    "title": "Scoring facial attractiveness with deep convolutional neural networks: How training on standardized images reduces the bias of facial expressions",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial attractiveness",
+     "facial expression"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "SER-FIQ: Unsupervised Estimation of Face Image Quality Based on Stochastic Embedding Robustness",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "MSPT: A Lightweight Face Image Quality Assessment Method with Multi-stage Progressive Training",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Contrasting perceptions of male and female dental students regarding smile aesthetics based on their gingival display",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Comparison of perceptions of laypersons, dentists and orthodontists to altered smile aesthetics",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Evaluation of Face Image Quality Metrics in Person Identification Problem",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "RankCORE: Self-Supervised Ranking-Aware Correlation Optimized Regression for Face Image Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Classification of Spontaneous and Posed Smiles by Photo-reflective Sensors Embedded with Smart Eyewear",
+    "arxiv": [],
+    "dois": "['10.1145/3374920.3374936']",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Automatic Face Image Quality Prediction",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Shades of Smiles: Creating Variants of Smiles from Neutral Images of Real Individuals - Method and Validation**",
+    "arxiv": [],
+    "dois": "['10.21203/rs.3.rs-6908842/v1']",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "The Mystery of the European Smile: A Comparison Based on Individual Photographs Provided by Internet Users",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Upper canine inclination influences the aesthetics of a smile",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial attractiveness",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Influence of Maxillary Incisor Edge Asymmetries on the Perception of Smile Aesthetics among Orthodontists and Laypersons**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial attractiveness",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "The Influence of Bilateral – Buccal Corridors on the Smile Aesthetics of the Faces**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial attractiveness",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Face Anti-spoofing via Interaction Learning with Face Image Quality Alignment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Face Image Quality Assessment Based on Learning to Rank",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "The uncatchable smile in Leonardo da Vinci's La Bella Principessa portrait",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "What’s in a Smile? Initial Results of Multilevel Principal Components Analysis of Facial Shape and Image Texture",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "DFQA: Deep Face Image Quality Assessment",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Smile Detection from Still Images Using KNN Algorithm**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Development of Face Image Quality Assessment Algorithms for Biometric Identification Tasks",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "It's a look that's been painted and photographed untold times: a mother gazing deep into her infant's eyes while the two smile and kiss. Now, scien-",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Facial expression synthesis images using hybrid neural network with particle swarm optimisation techniques",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "随着和机器学习技术的快速发展，深度学习在计算机视觉领域的应用越来越广泛。其中，卷积神经网络（CNN）作为一种重要的深度学习模型，已被广泛应用于图像识别、分类和特征提取等任务中。面部表情识别作为计算机视觉领域的一个重要研究方向，具有广泛的应用前景，如人机交互、情感分析、安全监控等。因此，本文将探究CNN深度学习模型在表情特征提取方面的应用，旨在提高表情识别的准确性和鲁棒性。",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "表情"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Saudi Children’s and Their Parents’ Perception of a Digitally Modified Photograph Model of Different Smiles with Different Anterior Teeth Alignments and Dental Appearances",
+    "arxiv": [],
+    "dois": "['10.5005/jp-journals-10024-3463']",
+    "terms": [
+     "facial attractiveness",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Do Facial Photographs Help In The Evaluation of Self Perception of Patients Towards Dentofacial Attractiveness?",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial attractiveness",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Exploitation of Nasolabial Folds for Happy Smile Recognition on an Image Using ANN",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Face Image Quality Assessment: A Literature Survey",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Put on your sunglasses and smile: The secret of Airbnb hosts’ profile photos?",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Machine Learning Approach for Smile Detection in Real Time Images",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Say cheese? The connections between positive facial expressions in student identification photographs and health care seeking behavior",
+    "arxiv": [],
+    "dois": "['10.1177/1359105318790066']",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Unsupervised Face Image Quality Assessment Based on Face Recognition",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "SmileAtMe – Rating and Recommending Funny Images via Smile Detection**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Face Image Quality Assessment for Face Selection in Surveillance Video using Convolutional Neural Networks",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "REALISTIC FACIAL EXPRESSION SYNTHESIS FOR AN IMAGE-BASED TALKING HEAD",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression",
+     "smile"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Learning Face Image Quality from Human Assessments",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Face Image Quality Vector Assessment for Biometrics Applications",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality",
+     "face quality"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "FACIAL EXPRESSION IN PAIN: A STUDY OF CANDID PHOTOGRAPHS**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "closed eye",
+     "facial expression"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Comparison of Aesthetic Perception of Smile Between Dentists and General Population",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "smile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "PHOTOGRAPHIC ASSESSMENT OF SMILES:** **PRE AND POST-ORTHODONTIC TREATMENT** (*PENILAIAN FOTOGRAFI SENYUMAN: PERAWATAN PRA* DAN PASCA-ORTODONTIK*)",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "smile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Smile intensity in social networking profile photographs is related to greater scientific achievements",
+    "arxiv": [],
+    "dois": "['10.1080/17439760.2017.1326519']",
+    "terms": [
+     "smile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Demographic Differentials in Face Image Quality: Evaluation and Comparison on Real and Synthetic Data",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "THE INFLUENCE OF VARYING GINGIVAL DISPLAY OF MAXILLARY ANTERIOR TEETH ON THE PERCEPTIONS OF SMILE AESTHETICS.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "smile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Assessing Face Image Quality for Smartphone based Face Recognition System",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "face image quality"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Perception of Smile Aesthetics of Patients with Anterior Malocclusions and Lips Influence: A Comparison of Dental Professionals', Dental Students,' and Laypersons' Opinions**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "smile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "FACIAL EXPRESSION RECOGNITION METHOD ON STATIC AND DYNAMIC IMAGE",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Facial Expression Understanding in Image Sequences Using Dynamic and Active Visual Information Fusion",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Emotion Recognition of a Speaker Using Facial Expression Intensity of Thermal Image and Utterance Time",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Processing facial expressions of emotion: upright vs inverted images",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "α-CYCLODEXTRIN COMPLEXATION AS A PROBE OF HETEROLYTIC GENERAL BASE-CATALYZED PHOTO-SMILES REARRANGEMENTS",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "smile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Automatic Facial Expression Recognition** **in an Image Sequence of Non-manual Indian** **Sign Language Using Support Vector Machine**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "U-Net Conditional GANs for Photo-Realistic and Identity-Preserving Facial Expression Synthesis",
+    "arxiv": [],
+    "dois": "['10.1145/3355397']",
+    "terms": [
+     "facial expression"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "FACIAL EXPRESSION    RECOGNITIONUSING    IMAGE PROCESSING** **FACIAL EXPRESSION RECOGNITIONUSING    IMAGE PROCESSING**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Emotion Recognition Using Facial Expression Images for a Robotic Companion",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interactive 3D Facial Expression Posing through 2D Portrait Manipulation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Complex Emotion Estimation Using Analysis-by-Synthesis of Facial Expression Images**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "facial expression"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Aesthetic Excellence through Digital Smile Designing: Transforming Anterior Rehabilitation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "smile"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A Narrative Review of the Conventional and Contemporary Components of an Aesthetically Pleasing Smile",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "smile"
+    ]
+   }
+  ]
+ },
+ "series_selection": {
+  "kept": 621,
+  "top": [
+   {
+    "score": 9,
+    "title": "Automatic Triage for a Photo Series",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo series",
+     "photo triage",
+     "triage"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Internet-Based Gynecologic Telecytology With Remote Automated Image Selection**",
+    "arxiv": [],
+    "dois": "['10.1309/grav16qp8jr5xtpf']",
+    "terms": [
+     "image selection",
+     "triage"
+    ]
+   },
+   {
+    "score": 6,
+    "title": "Automatic Selection of Representative Photo and Smart Thumbnailing Using Near-Duplicate Detection**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "near-duplicate photo",
+     "representative photo"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A novel coverless steganography method based on image selection and StarGAN",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A Sub-Aperture Image Selection Refinement Method for Progressive Light Field Transmission",
+    "arxiv": [],
+    "dois": "['10.1109/mmsp.2018.8547069']",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Choosing face: The curse of self in profile image selection",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Reference image selection for difference imaging analysis $ ^{\\star} $**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Coherent Image Selection Using a Fast Approximation to the Generalized Traveling Salesman Problem**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "EFFICIENT PLANAR CAMERA CALIBRATION VIA AUTOMATIC   IMAGE SELECTION**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Photo Summary: Automated Selection of Representative Photos from a Digital Collection",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "representative photo"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "LEARNING PERSONALIZED EXPECTATION–ORIENTED PHOTO SELECTION MODELS FOR PERSONAL PHOTO COLLECTIONS",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "On–line image selection for the Italian Telescopio Nazionale Galileo (TNG): numerical simulation and performance evaluation",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Real-time Burst Photo Selection Using a Light-Head Adversarial Network",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "burst photo"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Emerging Triage Support Environment for Dementia Care with Camera System",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "triage"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "To Keep or not to Keep: An Expectation-oriented Photo Selection Method for Personal Photo Collections",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A Real-Time Image Selection Algorithm: Fingerprint Recognition using Mobile Devices with Embedded Camera**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Collaborative Image Triage with Humans and Computer Vision",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "triage"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Multi-Atlas based Image Selection with Label Image Constraint",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Perceptual Deep Portrait Image Selection: Subjective and Objective Approaches**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Series photo-thermoelectric coupling between two composite materials for a freely attachable broadband imaging sheet",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "series photo"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Binary Image Selection (BISON): Interpretable Evaluation of Visual Grounding",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Overweight and Body Image Perception in Adolescents with Triage of Eating Disorders**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "triage"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Towards Aesthetics: a Photo Quality Assessment and Photo Selection System",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Input gray image User input Candidate image selection Image colorization",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Burst photography for high dynamic range and low-light imaging on mobile cameras Supplemental Material",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "burst photo"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Smart image selection algorithm in analysis plane of the optical-electronic angle measuring sensor",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "RoundImage: Toward Secure Graphical Password Authentication via Rounded Image Selection in IoT",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Patient Image Selection Criteria for Cone Beam Computed Tomography Imaging**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A Fusion Approach for Image Triage using Single Trial ERP Detection",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "triage"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A new photo series of Neurology Now readers.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo series"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "ROBUST FACE DETECTION IN PATIENT TRIAGE IMAGES",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "triage"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "An Optimal Image Selection from Multiple Cameras Under the Limitation of Communication Capacity**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Shape features for candidate photo selection in sketch recognition",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "2. *Culling and clipping,* that is, efficiently determining which objects are visible from the virtual camera",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "culling"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Ophthalmic digital image transfer: benefits to triage, patient care and resource**",
+    "arxiv": [],
+    "dois": "['10.1111/opo.12154']",
+    "terms": [
+     "triage"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Figure S1. Representative photograph of the developed in situ perfusion model for assessing HDL production in mouse small intestine (SI).",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "representative photo"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "To cite this article: Natalie Sopinka (2016) Back Page Photo Series: Boundaries, Fisheries, 41:11, 659-660, DOI: 10.1080/03632415.2016.1232940",
+    "arxiv": [],
+    "dois": "['10.1080/03632415.2016.1232940']",
+    "terms": [
+     "photo series"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A photo series of Neurology Now readers.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo series"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Reservoir Characterization: Efficient Random-Walk Methods for Upscaling and Image Selection**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "ActiveInitSplat: How Active Image Selection Helps Gaussian Splatting",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "To cite this article:** Natalie Sopinka (2016) Back Page Photo Series: Reflector, Fisheries, 41:8, 499-500, DOI: 10.1080/03632415.2016.1199837",
+    "arxiv": [],
+    "dois": "['10.1080/03632415.2016.1199837']",
+    "terms": [
+     "photo series"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "High-Speed Clustering of Regional Photos Using Representative Photos of Different Regions",
+    "arxiv": [],
+    "dois": "['10.1109/wi.2018.00-43']",
+    "terms": [
+     "representative photo"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Image selection by using an on-line fast shutter driven by Tip–Tilt signal",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Training Image Selection using Recurrent Neural Networks: An Application in Hydrogeology",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Back Page Photo Series: Intertidal After Dark",
+    "arxiv": [],
+    "dois": "['10.1080/03632415.2016.1135692']",
+    "terms": [
+     "photo series"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "IMAGE REGISTRATION BY AUTOMATIC SUBIMAGE SELECTION AND MAXIMIZATION OF COMBINED MUTUAL INFORMATION AND SPATIAL INFORMATION**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Artificial Intelligence and Earth Observation: On-Board Preprocessing, Data Compression and Image Selection",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "GRAIN-BASED FOODS 24-HOUR PORTION SIZE RECALL COMPARED TO PORTION PHOTO SELECTION BY UNIVERSITY STUDENTS",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A Novel Approach for Secure overlay Image Selection in Steganography",
+    "arxiv": [],
+    "dois": "['10.26438/ijcse/v11i6.1014']",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Sentiment-based sub-event segmentation and key photo selection $^{\\star}$",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "key photo"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Everyday Life Activities Photo Series.* Jacqueline Stark. Vienna, Austria",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "photo series"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Three dimension reconstruction through measure-based image selection",
+    "arxiv": [],
+    "dois": "['10.1080/13682199.2015.1104069']",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Burst Photography for Learning to Enhance Extremely Dark Images",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "burst photo"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Culling Double Counting in Sequence Images for Fruit Yield Estimation**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "culling"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Similarity based image selection with frame rate adaptation and local event detection in wireless video sensor networks**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Recognizable-Image Selection for Fingerprint Recognition With a Mobile-Device Camera",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Automated Crack Width Measurement in 3D Models: A Photogrammetric Approach with Image Selection",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Image Selection For Improved Multi-View Stereo",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Filmmaker's Triage: The Doctor Figure and Images of Trauma",
+    "arxiv": [],
+    "dois": "['10.1080/02500167.2018.1508045', '10.1080/02500167.2018.1508045$']",
+    "terms": [
+     "triage"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Image selection based on autoencoder neural network and application to the semi-supervised image classification",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "image selection"
+    ]
+   }
+  ]
+ },
+ "theme_aesthetics": {
+  "kept": 839,
+  "top": [
+   {
+    "score": 5,
+    "title": "Mechanic/Aesthetic Videogame Genres: Adventure and Adventure",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "This collection has value, but aesthetically, it lacks the vision of many other current transcriptions within and without the solo instrument genre. I suppose one should fault Mozart, not Arnold, for this. [M.A.]",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The global aesthetics of genre: Mikhail Bakhtin and the borders of modernity_",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "From genre mineur to critical aesthetic: Pastiche",
+    "arxiv": [],
+    "dois": "['10.1080/13825579908574431']",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Automatic Classification of Artist Visual Aesthetics: Linking Fashion and Genre",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Female Agency, Genres and Aesthetics of Sorrow in Persian Classical Music**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Demystifying the Hamburg Hydra and the Origin of Genre: Carl Linnaeus and the Politics of the Aesthetic Commodity-Form",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "New television: the aesthetics and politics of a genre",
+    "arxiv": [],
+    "dois": "['10.1080/1472586x.2019.1655264']",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "\"TIME TO SAY ‘YES’ TO SEX”: GENRE MIXING AND AESTHETIC REBELLION IN FIVE MULTI MEDIA RESOURCE CENTER FILMS",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Digital Interactive Literature: Between Terminological Challenge and Aesthetics of Reception, and the Interplay of Literary Genres",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "International Scientific Congress «KNOWLEDGE, MAN AND CIVILIZATION» SONG GENRE OF THE DARGINS’ TRADITIONAL FOLKLORE: IDEOLOGIC, AESTHETIC AND ARTISTIC DISTINCTNESS",
+    "arxiv": [],
+    "dois": "['10.15405/epsbs.2021.05.19']",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "CHAPTER 32 CANDY AND DRUGS FOR DINNER Rat Queens, Genre, and Our Aesthetic Categories",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Theme Aware Aesthetic Distribution Prediction with Full Resolution Photos",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "theme aware"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Popular Music Fanzines: Genre, Aesthetics, and the “Democratic Conversation”",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Theme-Aware Semi-Supervised Image Aesthetic Quality Assessment",
+    "arxiv": [],
+    "dois": "['10.3390/math10152609']",
+    "terms": [
+     "theme-aware"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "POV Horror: The Trauma Aesthetic of the Found Footage Subgenre by Duncan Hubber, McFarland, 2023, 245 pp., $65 USD (pbk.)",
+    "arxiv": [],
+    "dois": "['10.7202/1112936ar']",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "4** **Genres and Poetology: The Novel and the Way towards Aesthetic Self-Consciousness**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "History, Genre and \"Ursprung\" in Benjamin's Early Aesthetics",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Showing progress Defining self-tracking as an aesthetic audio-visual genre",
+    "arxiv": [],
+    "dois": "['10.2478/tjcp-2022-0004']",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Aesthetic Tone and Value System in Film Genre",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Key words: Lyotard, differend, genre, aesthetics, Derrida, deconstruction, transmediality, binding of Isaac, Steve Reich",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Factors affecting aesthetic success and improvement in creativity: a case study of the musical genres of Mozart* Psychology of Music",
+    "arxiv": [],
+    "dois": "['10.1177/0305735605053732']",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Genres of Nationhood: The “Musico-Literary” Aesthetics of Attachment and Resistance$^{1}$",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Genre, Gender, and Mestizaje: The Politics of Aesthetics in the Work of Gloria Anzaldúa",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Beyond the romance genre: the aesthetics of uncertainty in Wong Kar-wai's films: taking In the Mood for Love and 2046 as examples",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Warp’s music videos: affective communities, genre, and gender in electronic/dance music’s visual aesthetic",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Aesthetic Tensions in Metal Production: Genre Expectations, Technological Mediation, and Creative Freedom",
+    "arxiv": [],
+    "dois": "['10.1080/03007766.2025.2530807', '10.1080/03007766.2025.2530807*']",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Surfin' U.S.A. or Surfin' California? An analysis of place-based aesthetics in the genre of surf music.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Natalia Kowalska-Elkader Radio Experiments: Aesthetic, Structure, Genre",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Bildung and Flânerie: Aesthetics, Genre, and Modes of Development in The Moviegoer",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "(De)Constructing Paradigms of Genre: Aesthetics, Identity and Form in Franz Schubert’s Four-Hand Fantasias",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Chapter 15 Papal Tastes and Musical Genres: Francesco da Milano “Il Divino” (1497– 1543) and the Clementine Aesthetic",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Climaxing VR Character with Scene-Aware Aesthetic Dress Synthesis",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "scene-aware aesthetic"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "FACTORS OF FORMATION OF AESTHETIC OUTLOOK OF YOUNG PEOPLE THROUGH TEACHING OF GENRES OF FINE ART AND COMPOSITION",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Introduction: Contemporary German-Language Illness Writing as Literature; Analyzing Narrative Strategies, Aesthetic Forms, and Experimentations with Genre through the Lens of Disability Theory",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Warp’s Music Videos: Affective Communities, Genre and Gender in Electronic/Dance Music’s Visual Aesthetic",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Wilde Words: The Aesthetics of Crime and the Play of Genre in E. W. Hornung's Raffles Stories",
+    "arxiv": [],
+    "dois": "['10.1080/0013838x.2015.1045731']",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "WHAT KIND OF NATION? WHAT KIND OF MUSIC?: GENRE, AESTHETICS, AND NATIONALISM IN PUERTO RICAN HIP HOP",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Songlines: Blurring the Edges of Traditional Genres in Search of a New Nomadic Aesthetics",
+    "arxiv": [],
+    "dois": "['10.4000/123zr']",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Production design for traditional cut-out animation: Digital remediation of genre-specific aesthetics",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The process genre: Cinema and the aesthetic of labor",
+    "arxiv": [],
+    "dois": "['10.1080/01439685.2021.1907663']",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Review of Salomé Aguilera Skvirsky’s The Process Genre: Cinema and the Aesthetic of Labor**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Asian Filmmakers Moving into Hollywood: Genre Regulation and Auteur Aesthetics",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "THE RETURN OF THE EPIC FILM: GENRE, AESTHETICS AND HISTORY IN THE 21ST CENTURY Ed. Andrew B. R. Elliott. Edinburgh UP, 2015. 224 pp. £19.99 paper.",
+    "arxiv": [],
+    "dois": "['10.1080/01956051.2017.1377033']",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Process Genre: Cinema and the Aesthetic of Labor* by Salomé Aguilera Skvirsky (review)",
+    "arxiv": [],
+    "dois": "['10.1353/cj.2021.0038*']",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Beauty Mystique: Ethics and Aesthetics in the Bond Genre**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Interests: ancient drama, ancient philosophy (particularly Aristotle, interactions between philosophy and dramatic genres, aesthetic, ethics, philosophy of emotions), reception studies.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Psychology of Aesthetics, Creativity, and the Arts Young Children Distinguish Between Different Unrealistic Fictional Genres",
+    "arxiv": [],
+    "dois": "['10.1037/aca0000115', '10.1037/aca0000115.supp']",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "A New Aesthetic Ideas and the “Memory of Genre” in the 20th and 21st Century Polish Instrumental Concertos $^1$",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Aesthetics, Genre, and Large-Scale Form",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The Aesthetics and Origins of Taepyeong-seong-si-do as an Urban Genre Masterpiece**",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "MUSIFEAST-17: MUsic Stimuli for imagination, familiarity, emotion, and Aesthetic STudies across 17 genres",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Photo Filter Recommendation by Category-Aware Aesthetic Learning",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "category-aware"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Aesthetic Image Statistics Vary with Artistic Genre",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Transgressing Genre and Aesthetics: A Socio-historical Critique of Oscar Wilde’s The Picture of Dorian Gray",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Steampunk Aesthetics, Countercultural Ethics, and Victorian Genres: Subverting Steampunk Ethos in Margaret Killjoy’s “A Country of Ghosts” (2014)",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "not extend beyond the first paragraph, disappointing those who expected a theoretical reflection on this important genre, and eschewing aesthetic investigation.",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Chapter Title: The legacy of Hegel’s and Jean Paul’s aesthetics: The idyllic in seventeenth-century Dutch genre painting",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "The politics of happily-ever-after: romance genre fiction as aesthetic public sphere",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   },
+   {
+    "score": 5,
+    "title": "Renewal in African cinema: genres and aesthetics Issue 2: Aesthetics and ideology",
+    "arxiv": [],
+    "dois": "",
+    "terms": [
+     "genre"
+    ]
+   }
+  ]
+ }
+}

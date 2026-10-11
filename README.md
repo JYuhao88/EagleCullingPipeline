@@ -1,94 +1,176 @@
-# Eagle Culling Pipeline
+# Eagle Culling v1.0
 
-面向 Eagle 摄影资源库的本地 AI 自动筛选工具。目标是在 Windows 上对约 1 万张、约 410GB 的照片执行：重复检测、相似聚类、清晰度/闭眼/曝光/主体质量评分，并将结果以可审阅方式回写 Eagle。
+Eagle Culling 是一个本地运行的 Eagle 照片筛选工具：把同一拍摄的 JPG/HEIC 与 RAW 组成拍摄单元，
+在代理预览上分析并分组排序，交由 Eagle 插件审阅后幂等写回 AI 标签。
 
-## 统一插件运行（当前实现）
+## 功能
 
-只加载固定目录 `D:/Photography/PhotographyOperations/EagleCullingPipeline/src/plugin`；旧 `thumbnail-bridge` 不再作为推荐入口。运行 `npm run start-service` 后，在插件“任务”页创建分析或角标任务。
+- 配对 RAW+JPG/HEIC 拍摄单元；RAW 跟随所属单元。
+- 生成最长边 1024、JPEG quality 88 的代理预览；支持 Eagle 缩略图回退。
+- 计算清晰度、曝光、人脸/闭眼（可选 MediaPipe）和基础质量指标。
+- 可选 DINOv2 embedding 做相似分组；缺模型时退回 hash + 时间分组。
+- 组内排序并给出中文理由；结果按 SHA-256 指纹缓存，支持断点续跑。
+- Eagle 插件并排审阅、快捷键、人工决定记录。
+- 只写 AI 标签且幂等；保留人工标签和星级；配对 RAW 跟随。
+- 可选二次确认移入 Eagle 回收站；导出 CSV/JSON 报告。
 
-- 队列支持暂停、取消、断点续跑和失败重试。任务总张数不限，默认并发 8、间隔 0ms，可自定义 16/32 等正整数并发；每 25 项批量保存。已有任务暂停后继续会应用新设置。
-- 写回前重新读取项目，`modifiedAt` 变化或切换资源库时不沿用旧快照写回。
-- 日常角标仅在插件内显示；“审阅”复选框和“设置 → 显示/隐藏角标”同步、即时生效，不创建任务，不改 Eagle 缩略图。
-- Eagle 网格里的历史角标需单独恢复：选中照片后使用“任务 → 移除所选旧网格角标（重建预览）”，确认后执行。兼容缩略图写入/备份恢复工具默认折叠，需明确确认，不再是日常显示模式。备份恢复仍是自定义缩略图，不等同于原生高清预览。详见 [历史角标恢复](docs/thumbnail-fast-restore.md)。
-- 旧生成清单仅展示迁移提示，不证明角标已写入，不自动恢复；历史角标的归属确认迁移仍待实现。
-- 自动测试不等于真实 Eagle 全库压测；20 / 500 / 全库真实验收仍需完成。不会自动删除照片。
+当前 `models/scorer` 不可用时，`src/core/scorer.js` 返回 `quality=null`、`aesthetic=null`、`calibrated=false`，
+并在结果中保留警告；可用时使用已校验的 TOPIQ-NR ONNX。模型评测见 `docs/model-eval.md`。
 
-详细流程和限制见 [统一插件使用说明](docs/plugin-review.md)。
+## 环境要求
 
-可用性优化仍在进行，已测量的改进和未达标项见 [稳定化工作单](docs/stabilization-plan.md)。目前已加入增量断点日志、模型进程复用、8,000 项分页审阅，并关闭默认调试面板；真实 Eagle 验收尚未完成。
+- macOS；Node.js ≥ 20。
+- Eagle 4 已启动，并开启本地 API，默认 `http://127.0.0.1:41595/api/v2`。
+- 可选：`python_worker` 虚拟环境和 MediaPipe，用于人脸/闭眼检测。
 
-## 研究结论（背景）
+## 安装
 
-- 推荐采用 **Eagle Plugin + 本地 Python/ONNX worker** 的混合架构。
-- Eagle Plugin API 负责读取 `filePath`、展示审阅界面，并通过 `save()`、`moveToTrash()` 安全写回。
-- Web API V2 适合外部元数据查询和批量更新，但公开 Item 属性未列出本地 `filePath`，不建议单独用于读取原图。
-- 默认只写入 `ai/*` 标签、备注和审阅文件夹；人工确认后才修改评分或移入回收桶。
-
-## 文档
-
-- [研究报告](docs/research.md)
-- [SOTA 模型评估与本地部署](docs/model-research.md)
-- [预处理与照片留存决策方案](docs/preprocessing-and-retention.md)
-- [Eagle 中文审阅插件](docs/plugin-review.md)
-- [测试集合与验收标准](docs/testing.md)
-- [技术架构与数据流](docs/architecture.md)
-- [可选 GPU 模型 worker](python_worker/README.md)
-
-## 目录
-
-```text
-EagleCullingPipeline/
-├─ docs/
-├─ src/       # 后续插件与 worker 源码
-├─ data/      # 本地结果数据库/缓存（默认不提交）
-└─ README.md
+```bash
+npm install
+uv venv --python 3.12 python_worker/.venv
+uv pip install --python python_worker/.venv/bin/python -r python_worker/requirements.txt
 ```
 
-## 当前状态
+模型文件按代码读取的路径放置：`models/mediapipe/face_landmarker.task`（MediaPipe）和
+`models/dinov2-small/model.onnx`（DINOv2）。来源、SHA-256 和下载校验见
+`python_worker/model-manifest.json`；程序不会隐式下载照片或模型。
 
-仓库已包含只读分析、可选本地模型和带显式确认的回写代码：
+## 快速开始
 
-```powershell
-npm test
-npm run doctor
-npm run inventory
-npm run analyze -- --limit 100
-npm run analyze -- --limit 100 --embeddings
-npm run analyze -- --limit 100 --faces
-npm run models
-npm run recommend
-npm run pairs
-node src/cli.js apply --review data/review.json
+```bash
+node src/cli.js doctor --library "/path/to/example.library"
+node src/cli.js serve
 ```
 
-- `doctor` 检查 Eagle Web API 和当前资源库。
-- `inventory` 分页导出只读元数据到 `data/inventory.json`。
-- `src/plugin` 是可直接在 Eagle 开发者模式加载的中文审阅插件：自动读取当前选择、展示中文质量与配对原因、按相似组排序，并允许逐张写入 `AI精选`、`AI候选`、`待复核`。插件仍兼容旧的 `ai:selected`、`ai:candidate`、`ai:rejected` 标签，用户下一次操作该照片时会自动转换为中文标签。每次写入前都会重新读取该项目，只替换审阅状态标签，不修改人工标签、配对标签、星级、文件夹或原片，也不提供自动删除动作。插件还可按当前选择生成可撤销的原生网格缩略图角标，或恢复 Eagle 原缩略图；角标只写入 Eagle 的 custom thumbnail，不烧录原图。详见 [Eagle 中文审阅插件](docs/plugin-review.md)。
+`doctor` 检查 Eagle、library、`sips`、`sharp`、Python、MediaPipe 模型和 DINOv2 模型。
+服务默认监听 `127.0.0.1:43125`，可用 `--port` 或 `CULLING_PORT` 覆盖。插件打开时先请求当前页面同源 `/health`；
+不可用时回退到已保存地址，默认值为该地址，并在界面显示连接状态。
 
-- `npm run pairs -- --apply --confirm APPLY_PAIRS` 写入配对关系；`node src/cli.js sync-paired-tags --apply --confirm APPLY_PAIR_REVIEW` 将 JPG 的审阅与质量标签同步到同名、确定的一对一 RAW，保留 RAW 的 `AI原片` / `AI已配对` 标签以及人工标签、星级和文件夹。相同场景的近重复照片按 pHash 相似组排序，组内首选写入 `AI精选`，其余只进入 `待复核`，不会自动删除。
+服务未连接时，启动页显示仓库绝对路径、可复制的完整命令和「重试连接」。仓库路径可编辑并保存在本机。
+默认路径从插件安装位置推导；更换安装位置后请核对。若插件可以调用 Node `require`，
+提供「启动本地服务」：通过 `nice -n 15` detached 启动，分析并发为 1，并每秒轮询健康检查，最多 30 次。
+Node 或 `nice` 不可用时使用复制命令；直接启动仅支持本机 HTTP 地址，使用已填写服务端口。
 
-`analyze` 会读取 Eagle library 的 `.info` 目录，计算 SHA-256、pHash、清晰度/曝光/构图/主体代理指标和可解释质量分，并输出 `data/analysis.json`。它不会修改 Eagle。加入 `--faces` 时，会用本地 MediaPipe worker 检测人脸和闭眼；加入 `--embeddings` 时，会用本地量化 DINOv2 提取 384 维语义向量。
+分析时显示指标、人脸、最终分组阶段；指标阶段显示根据平均耗时估算的剩余秒数，其他阶段显示估算中。
+由于相似分组依赖全量视觉信息，人脸结果也需统一补充，本版本暂不提前审阅；完成后自动进入审阅。
 
-增加 `--embeddings` 会在本地加载 `Xenova/dinov2-small` 的 ONNX 权重（首次运行下载，之后使用本地缓存），生成 384 维归一化向量并以余弦相似度聚类；不加该参数不会触发模型下载。`src/face.js` 对 MediaPipe Face Landmarker 提供显式可用性检测：Eagle 插件/浏览器环境可使用它，纯 Node 环境遇到 DOM 限制时会安全回退并标记为未检测。
+在 Eagle 中选择「插件」→「开发者选项」→「导入本地项目」，选择 `src/plugin`。
+插件默认连接 `http://127.0.0.1:43125`。新建分析后审阅、预览写回、确认写回，最后导出 CSV/JSON 报告。
 
-审阅完成后可创建如下格式的 `data/review.json`：
+纯 CLI 流程：
 
-```json
-{"decisions":[{"id":"ITEM_ID","action":"selected","star":5,"annotation":"人工确认"}]}
+```bash
+node src/cli.js analyze --library "/path/to/example.library" [--concurrency 2] [--out data/run.json]
+node src/cli.js apply --run run-<id>                 # dry-run
+node src/cli.js apply --run run-<id> --apply         # 写回 AI 标签
+node src/cli.js apply --run run-<id> --revert        # 预览撤回上次写回
+node src/cli.js apply --run run-<id> --revert --apply # 撤回上次写回
+node src/cli.js apply --run run-<id> --apply --move-rejected-to-trash --confirm MOVE_TO_TRASH
+node src/cli.js report --run run-<id> --format json --out report.json
+node src/cli.js report --run run-<id> --format csv --out report.csv
 ```
 
-先运行 `node src/cli.js apply --review data/review.json` 查看 dry-run 计划；只有明确传入 `--apply --confirm APPLY_REVIEW` 才会通过 Eagle Web API 写入 `ai:*` 标签、星级和备注。
+`analyze` 输出的 run id 写入 `data/runs/<id>/`。`report --format` 默认 `json`；`apply` 写回前会校验 Eagle 当前 library。
 
-仅写 AI 标签、不修改人工星级时使用：
+## 插件快捷键
 
-```powershell
-npm run apply -- --review data/review.json --tags-only --apply --confirm APPLY_REVIEW
+| 按键 | 操作 |
+|---|---|
+| `1` | 当前单元标记为精选 |
+| `2` | 当前单元标记为候选 |
+| `3` | 当前单元标记为淘汰 |
+| `←` / `→` | 上一个/下一个单元 |
+| `Enter` | 下一组；`Shift+Enter` 上一组 |
+| `M` / `Shift+M` | 当前单元移到当前分组顺序的上一组 / 下一组（包含被筛选隐藏的组） |
+| `G` | 当前单元移到新组 |
+| `S` | 接受本组建议（当前排序首选保留，其余按建议决定） |
+| `Z` | 同步放大/还原当前组全部大图；放大后指针移动可查看局部 |
+| `F` | 打开/关闭组内人脸对比；`Esc` 关闭对比 |
+| `U` / `Cmd/Ctrl+Z` | 撤销最近一次人工决定 |
+| `A` / `Esc` | 全选 / 清除选择 |
+| `Cmd/Shift` 点击 | 多选（Shift 支持范围） |
+| 空格 | 全屏细节预览 |
+
+输入框、文本框和下拉框获得焦点时快捷键不会触发。组内主视图上方显示按排序排列的缩略图条，
+点击缩略图或 `←`/`→` 切换当前项。
+
+卡片图片下方显示按面积从大到小排列的最多 4 张人脸；闭眼红框标「闭眼」，眼睛未评估时显示灰标。
+有可用人脸的组会显示「对比人脸」按钮，也可按 `F`：每张照片占一列，同一位置的人脸占同一行，
+按归一化中心距离最近邻一对一匹配（最大距离 0.18），未匹配留空。此视图按位置辅助比较，不识别人物身份。
+人脸裁剪从细节图取源，每侧外扩脸宽/高的 35%，最长边不超过 320px，按需缓存在 run 的 `face/` 目录。
+旧 run 缺少逐脸数据时正常显示照片；需重新分析得到 `faces` 字段才会出现人脸条和对比按钮。
+
+审阅默认显示「多张组」，标题和已审进度均按当前筛选计数；「全部（含单张组）」可查看单张组。
+「接受未审单张组建议」一键批量确认单张组，保留已有人工决定；接受所有未审组只处理当前筛选范围，
+也保留组内已有人工决定。其他筛选项：先看需确认、未审阅、有问题、闭眼、模糊、已审。
+
+分组工具栏支持移动当前照片到相邻组或新组、与上一组合并、拆分多选照片，以及撤销最近一次分组修正。
+拆分需选择组内部分照片。修正保存到 `group-overrides.json`；排序及建议随之更新，人工决定不丢失，
+原始分析结果保留。写回与报告使用修正后的分组。默认多张组筛选下，新建单张组会暂时隐藏，切换全部可查看。
+侧栏的“闭眼照片标记淘汰”和“模糊照片标记淘汰”
+只针对尚未人工决定的结果，执行前需要确认。
+
+组列表和标题显示“需确认”“把握高”（单张显示“单张”）。第一、二名排序分差小于 `0.03`，
+或首选有模糊、闭眼、过曝、欠曝标记时，需要人工确认；近分首选会提示“与第二名很接近，建议人工确认”。
+下拉项“先看需确认”保留全部组并把需确认组排在前面。旧 run 打开时由服务补算，无需重新分析。
+“接受所有把握高的组”仅处理完全没有人工决定的高把握组，确认框显示组数，可用 `U` 撤销整批。
+
+多张组中恰好有一个人工保留项即计为一组偏好标注。累计至少 5 组且有足够完整指标时，
+提示条显示已标注组上的两两一致率变化和剩余组数，点击“应用”按学习权重重新排序剩余多张组。
+组内任意照片已有人工决定就会保留该组排序和建议；人工决定、全局权重和原片不会改变。
+“忽略”后本次插件会话内不再提示该 run。指标不足或一致率为空时不显示提示。
+一致率是拟合使用的标注组上的对比，不代表未审阅照片的预测准确率。
+
+## 写回边界
+
+写回只管理 `AI精选`、`AI候选`、`AI淘汰`、`AI闭眼`、`AI模糊`、`AI过曝`、`AI欠曝`。
+它重新读取 Eagle 当前标签，移除旧 AI 标签后合并新 AI 标签；人工标签和星级保留。
+一个拍摄单元的决定写到该单元所有 item（包括 RAW）。工具不移动、不重命名、不修改原文件，
+也不修改 Eagle 文件夹或人工星级。
+
+写回对话框按精选、候选、淘汰展示将新增/移除的 AI 标签数量、受影响文件和无变化文件数，
+展开查看每类前 50 条文件名及标签变化；确认后才执行。预览到执行之间如有外部修改，以执行时实时标签为准。
+写回完成后可点击「撤回本次写回」，恢复上次写回前的 AI 标签，同时保留现在的人工标签、星级和文件夹。
+重复撤回不会再改写；失败项可重试。旧 `applied.json` 缺少 `previousTags` 时会明确拒绝撤回。
+撤回不会恢复回收站位置，也不撤销审阅决定或分组修正。
+
+回收站操作必须同时使用 `--move-rejected-to-trash` 与 `--confirm MOVE_TO_TRASH`；插件内勾选后也须输入确认词。
+默认是 dry-run，请先在测试库试用。
+
+## 清理旧缩略图
+
+`restore-thumbnails` 仅用于清理 Windows 资源库中遗留的旧角标，不参与正常分析或写回。
+它读取每行一个 Eagle item ID 的文件，并校验目标资源库；默认只 dry-run。
+确认逐项结果无误后，才使用 `--apply` 和固定确认词调用 Eagle `refreshThumbnail`（兼容 V1/V2）：
+
+```bash
+node src/cli.js restore-thumbnails --library "/path/to/library.library" --ids-file ids.txt
+node src/cli.js restore-thumbnails --library "/path/to/library.library" --ids-file ids.txt \
+  --apply --confirm RESTORE_THUMBNAILS
 ```
 
-该模式会在写入前重新读取当前 Eagle 清单，只处理仍存在的项目，并合并用户标签。2026-09-15 的首次受控写入已验证：2,643 个 JPG 获得标签，非 JPG 项目 0 个，原有 111 个星级保持不变。
+该命令不生成角标、不备份或改写原片；只对明确提供的 ID 逐项刷新缩略图。
 
-`npm run pairs` 根据当前 Eagle 清单生成 RAW/JPG/HEIC capture unit 的 dry-run；只有添加 `--apply --confirm APPLY_PAIRS` 才会写 `AI已配对`、`AI原片`、`AI配对待确认` 和 `AI未配对原片`。首次配对回写已验证 6,880 个确定配对文件、3,440 个配对 RAW 母片、464 个歧义项目和 3 个孤立 RAW。当前 Eagle API 可见的 7,354 个照片项目已全部获得至少一个 AI 标签；8 个 MP4/SRT 未标记，未修改星级、文件夹或文件。
+## 常见问题
 
-若要同时加入审阅文件夹，可提供一个只包含 Eagle 文件夹 ID 的映射，例如 `{"selected":"FOLDER_ID"}`，再加 `--folder-map data/folder-map.json`；系统会合并既有文件夹，不替换用户已有归档。
+- **Eagle 未启动**：`doctor` 的 `eagle` 为 false；启动 Eagle 并确认 41595 本地 API。
+- **资源库不匹配**：写回前会比较 `library.path`；路径不同会拒绝写回。
+- **HEIC 预览失败**：macOS 上先用 `sips` 转 JPEG；失败时尝试 Eagle 缩略图。
+- **RAW 没有预览**：RAW 不直接解码；没有 Eagle 缩略图时带预览警告，分析仍保留结果。
+- **python_worker 缺失**：人脸检测不可用，`faces/eyesClosed` 保持未知；其余 Node 分析继续运行。
 
-当前已完成 JPG 子集 2,655/2,655 张分析：1,916 个 pHash 组，423 张检测到人脸，55 张出现闭眼候选，0 个 worker 错误。按项目名统计，库内有 2,036 个 `JPG+ARW`、547 个 `JPG+DNG` 和 998 个 `3FR+HEIC` 配对；Eagle 中另有 ARW、3FR、HEIC、DNG 等 4,723 个照片项目，尚需按 [预处理与照片留存决策方案](docs/preprocessing-and-retention.md) 生成代理图并建立 capture unit 后纳入全库流程。Eagle 必须正在运行，且当前打开的库应为 `D:\Photography\EagleLibraries\Culling.library` 才能执行 `doctor`、`inventory` 或实际回写；文件分析本身可离线运行。全量回写前仍应先使用资源库副本和 500–1000 张标注基准集进行人工验证。
+## 文档索引
+
+- `docs/product-spec.md`：产品约束；`docs/contracts.md`：HTTP/JSON 合同。
+- `docs/architecture.md`：模块、数据流、缓存和进程模型。
+- `docs/testing.md`：测试、fixture 和端到端验收。
+- `docs/mac-ray-ceph.md`：Mac、Ray、Ceph 运行约束。
+- `docs/model-eval.md`：打分模型评测与部署记录。
+
+## 公开发布与本地配置
+
+[v1.0.0 发布说明](docs/release-notes-v1.0.0.md)包含配置、功能边界与公开检查方法。
+可复制 `config/local.example.json` 为忽略的 `config/local.json`，填入自己的 Eagle/Python 路径及可选研究配置；环境变量优先。
+研究脚本同样读取该文件，Ray 作业会转发 `ECP_*`；缺少必需地址或存储根会报错。
+完整变量含义见 [本地与 Ray 配置](docs/mac-ray-ceph.md)。
+发布前运行 `nice -n 15 node scripts/check-public-release.mjs`。研究资料全文、照片、模型和本地回执不入库。

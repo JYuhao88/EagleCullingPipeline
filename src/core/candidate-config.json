@@ -1,0 +1,78 @@
+{
+  "version": "w5-v1",
+  "basis": "Operational proxy thresholds, not aesthetic labels; fixed before Shantou replay. Severe means stronger measurement only, never gate or penalty.",
+  "sampleSize": 256,
+  "person": {
+    "score": 0.7,
+    "minArea": 0.05,
+    "maxArea": 0.85,
+    "margin": 0.02
+  },
+  "tonal": {
+    "lowMean": 45,
+    "highMean": 210,
+    "qualityProtectAbove": 0.75,
+    "warnRange": 70,
+    "violateRange": 40,
+    "warnLocal": 10,
+    "violateLocal": 5,
+    "tileSize": 16,
+    "lowPercentile": 0.05,
+    "highPercentile": 0.95
+  },
+  "highlights": {
+    "clip": 250,
+    "expandBox": 0.08,
+    "minPixels": 128,
+    "warnFraction": 0.04,
+    "violateFraction": 0.12,
+    "faceConfidence": 0.5
+  },
+  "separation": {
+    "bandWidth": 0.025,
+    "searchWidth": 0.06,
+    "positions": 24,
+    "start": 0.2,
+    "end": 0.8,
+    "minSamples": 24,
+    "weakLuma": 8,
+    "weakColor": 12,
+    "warnWeakFraction": 0.8,
+    "violateWeakFraction": 0.95,
+    "darkSubject": 30,
+    "silhouetteDifference": 30
+  },
+  "tilt": {
+    "confidence": 0.65,
+    "maxDegrees": 20,
+    "warnDegrees": 2,
+    "violateDegrees": 5,
+    "mapping": [
+      "L-HORIZON-LEVEL",
+      "L-VERTICAL-LEVEL",
+      "S-TILT-INTENT"
+    ]
+  },
+  "synthetic": {
+    "tonalCenter": 128,
+    "tonalScale": {
+      "mild": 0.32,
+      "severe": 0.12
+    },
+    "highlightAddition": {
+      "mild": 145,
+      "severe": 255
+    },
+    "highlightPatchStart": 0.48,
+    "highlightPatchEnd": {
+      "mild": 0.62,
+      "severe": 0.86
+    },
+    "edgeMix": {
+      "mild": 0.5,
+      "severe": 0.9
+    },
+    "edgeWidth": 0.1,
+    "verticalMargin": 0.15
+  }
+}

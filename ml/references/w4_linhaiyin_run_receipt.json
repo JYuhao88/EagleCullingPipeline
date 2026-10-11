@@ -1,0 +1,588 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-10-11T00:22:19.692028+00:00",
+  "source": "linhaiyin",
+  "source_bytes": 51497032737,
+  "scope": "37 verified arrivals; 34 ASR/topics; 3 count-only; manually read selected transcript windows; no visual selection labels; no official rules/ranking/signals/uploads/push",
+  "processing": {
+    "source": "linhaiyin",
+    "manifest_episodes": 37,
+    "manifest_duration_seconds": 84506.925595,
+    "arrived_episodes": 37,
+    "probe_id": "w4-courses-linhaiyin-probe-resume-01",
+    "count_only_arrived": 3,
+    "asr_episodes": 34,
+    "asr_duration_seconds": 77832.83725,
+    "asr_sentences": 21880,
+    "topics_episodes": 34,
+    "topic_segments": 2314,
+    "frames": 4330,
+    "topics": {
+      "姿势部位": 207,
+      "手位": 272,
+      "坐靠": 90,
+      "表情": 99,
+      "视线": 94,
+      "用光方向": 206,
+      "光质": 197,
+      "背景": 201,
+      "构图": 307,
+      "服装造型": 186,
+      "后期": 248,
+      "营销": 54,
+      "闲聊": 149,
+      "观看评判": 0,
+      "画面边缘": 2,
+      "多重事件": 2,
+      "色彩": 0,
+      "瞬间": 0,
+      "选片编辑": 0
+    },
+    "completed": [
+      {
+        "id": "linhaiyin-e5e2be10d4dd",
+        "episode": 7,
+        "duration": 2205.4313125,
+        "sentences": 663,
+        "source_sha256": "2954afeb0163272c8f93632ed70dbde1ed9bb660ecdaaa1dec337a4916dcef3c"
+      },
+      {
+        "id": "linhaiyin-afaaa684b1c4",
+        "episode": 8,
+        "duration": 2324.201375,
+        "sentences": 700,
+        "source_sha256": "0cdbe06cddde84a74b98c68f0b2d2df375a6c40e1d42a77621e407849ad1826c"
+      },
+      {
+        "id": "linhaiyin-4448b9cc3de7",
+        "episode": 9,
+        "duration": 3045.0184375,
+        "sentences": 800,
+        "source_sha256": "b7aa9ed6c74f184f28b1b7695bed944690228ce667c82997a33647dda49fbcf7"
+      },
+      {
+        "id": "linhaiyin-990fe665667a",
+        "episode": 10,
+        "duration": 2668.01925,
+        "sentences": 860,
+        "source_sha256": "536b49727e41c4e7efee0548397b7e8fbf7d2f2ef84ea6f1afd23a90f3910855"
+      },
+      {
+        "id": "linhaiyin-ca78d9777c7f",
+        "episode": 11,
+        "duration": 2492.0351875,
+        "sentences": 726,
+        "source_sha256": "579bd3f41344f06ccd3f1f8a7e034adbad710c7fa24b139d05bafe1bb5252998"
+      },
+      {
+        "id": "linhaiyin-45bbb22ed4a1",
+        "episode": 12,
+        "duration": 2475.015,
+        "sentences": 711,
+        "source_sha256": "823749a82ada948be6064c46552f7f3318ecc6dc1956c3f5618704875f442b2e"
+      },
+      {
+        "id": "linhaiyin-7e6ee1240d9f",
+        "episode": 13,
+        "duration": 2521.0369375,
+        "sentences": 740,
+        "source_sha256": "68d52b18752e4f514e9eee54dc1125dd717d7487e1ff847c68a751e4eae8237a"
+      },
+      {
+        "id": "linhaiyin-3e4b6be1a600",
+        "episode": 14,
+        "duration": 2632.0283125,
+        "sentences": 833,
+        "source_sha256": "e9d7cc0a27762789c655b114d756f854885892f8608967081563b94dbfed9c5b"
+      },
+      {
+        "id": "linhaiyin-a8afd4e9bcb9",
+        "episode": 1,
+        "duration": 1843.3625625,
+        "sentences": 545,
+        "source_sha256": "ad33600607a67b36174d258748b178f7ebaaa34c5e6c66655377f8a481e9f76a"
+      },
+      {
+        "id": "linhaiyin-c1adb970a7b5",
+        "episode": 2,
+        "duration": 2760.574,
+        "sentences": 770,
+        "source_sha256": "4e2a0eeb727d8f95bac39b8547c3ab63325c242bb97ea36312b10bf26d098444"
+      },
+      {
+        "id": "linhaiyin-5621751ba8b5",
+        "episode": 3,
+        "duration": 3093.4088125,
+        "sentences": 773,
+        "source_sha256": "6c3fe2e40e586e22a20b280fe5a7adf92925fa7524ed90a5bea116edfbcd1f8f"
+      },
+      {
+        "id": "linhaiyin-94a36533b542",
+        "episode": 4,
+        "duration": 1874.012875,
+        "sentences": 591,
+        "source_sha256": "9ea82d1e62193260476fd489e367307afc39bbf3510ef41ef7854ccb102bb5e9"
+      },
+      {
+        "id": "linhaiyin-bde73eeb0a60",
+        "episode": 5,
+        "duration": 2880.040625,
+        "sentences": 835,
+        "source_sha256": "6cc7b8cc8ee6b5b28188bb90e702badff4692502b501e8bf7e89faac62e74780"
+      },
+      {
+        "id": "linhaiyin-4a3965cdf2f4",
+        "episode": 6,
+        "duration": 793.007875,
+        "sentences": 307,
+        "source_sha256": "40322ba1c9af239774e8541be6b91f22e8f26d0c9d42adb3a5faf34e6793e8b6"
+      },
+      {
+        "id": "linhaiyin-36bf71c33e4e",
+        "episode": 1,
+        "duration": 1258.5386875,
+        "sentences": 523,
+        "source_sha256": "d26c836a79b946c32ec601d8a459025983104b0f42bf0943532569edd6d84f93"
+      },
+      {
+        "id": "linhaiyin-0a01bb4c0e82",
+        "episode": 10,
+        "duration": 3401.2373125,
+        "sentences": 131,
+        "source_sha256": "915afd229ec80637e9dd5e20bb783a7adf1cdaffcf767ac6c1039927726baf02"
+      },
+      {
+        "id": "linhaiyin-4ae49a7b5d16",
+        "episode": 11,
+        "duration": 1907.8613125,
+        "sentences": 698,
+        "source_sha256": "950b96a778be71c05c875d9ac8ff187ee2ddca8bfba6fde76609bb54d4c54243"
+      },
+      {
+        "id": "linhaiyin-6a98fa1989fc",
+        "episode": 12,
+        "duration": 1594.2186875,
+        "sentences": 553,
+        "source_sha256": "bec13b0e47114c9af1db96e227046c4515eecc1efc0fa84f4ede5c193a861442"
+      },
+      {
+        "id": "linhaiyin-313509ae813a",
+        "episode": 13,
+        "duration": 1649.6,
+        "sentences": 557,
+        "source_sha256": "6d09cbced798b4bf48ca2a78912f82a716afa31c031ee5b7269565e0a8d00e34"
+      },
+      {
+        "id": "linhaiyin-bb365c99097e",
+        "episode": 14,
+        "duration": 3407.319375,
+        "sentences": 843,
+        "source_sha256": "4b8369b77d76476f0b77b2ad017331ef86de906a27c79cdf44b039ab1d37265f"
+      },
+      {
+        "id": "linhaiyin-1bd57b1c1b5e",
+        "episode": 2,
+        "duration": 2935.6586875,
+        "sentences": 622,
+        "source_sha256": "040e4b16a528b320e460f81574eb168cbd2a07d5f1e74169ecdb1b352309e246"
+      },
+      {
+        "id": "linhaiyin-3dfe9ebf054f",
+        "episode": 3,
+        "duration": 2059.6693125,
+        "sentences": 739,
+        "source_sha256": "5df91ea9cab6b740c58537de0f2c4da79706bdb802c073aaf57ce66bf32cf132"
+      },
+      {
+        "id": "linhaiyin-efca10e4d92b",
+        "episode": 4,
+        "duration": 1151.7653125,
+        "sentences": 364,
+        "source_sha256": "58c5d472ffc396391a772523fb19853f9ab206fae8654b100b3da7013e65bd10"
+      },
+      {
+        "id": "linhaiyin-41efb1aa7879",
+        "episode": 5,
+        "duration": 1446.272,
+        "sentences": 557,
+        "source_sha256": "0dbff9b7f4682852b1fbc7bf8833b6f08bf2bb8c3bfa083a70e162c7705903e4"
+      },
+      {
+        "id": "linhaiyin-6986ad9315fd",
+        "episode": 6,
+        "duration": 1587.712,
+        "sentences": 625,
+        "source_sha256": "3163f2c26e538abee1c2e0cbf4537f14c42f30c66153e4dbff60ecbc1cd680d2"
+      },
+      {
+        "id": "linhaiyin-2af12f4f7f6c",
+        "episode": 7,
+        "duration": 2546.368,
+        "sentences": 854,
+        "source_sha256": "06444639893051adf3bc8532847748304567f7a34e12735deab9964f4946ee69"
+      },
+      {
+        "id": "linhaiyin-31e6ffeb51ac",
+        "episode": 8,
+        "duration": 3395.2426875,
+        "sentences": 72,
+        "source_sha256": "b767cac9f8f43ebe2a88d225eeadeb570aabb9a0ed603503fbc542cc4ff414c8"
+      },
+      {
+        "id": "linhaiyin-659525c51890",
+        "episode": 9,
+        "duration": 750.6133125,
+        "sentences": 256,
+        "source_sha256": "b32b2a93dfbaf8249032118f35dc507551b37e552f8db9b463dd1a9d07566573"
+      },
+      {
+        "id": "linhaiyin-64449e2c6f4c",
+        "episode": 1,
+        "duration": 3044.3093125,
+        "sentences": 937,
+        "source_sha256": "c809c4135495bb12ab8693f0e70609015ab38105bc9b102daf46c9599a4bea64"
+      },
+      {
+        "id": "linhaiyin-489ceda50949",
+        "episode": 2,
+        "duration": 2904.96,
+        "sentences": 892,
+        "source_sha256": "bf05043cddb2a7e5d6e1d1c761d9b50a8d0e3324023dc8ca73d9a3b51dd88536"
+      },
+      {
+        "id": "linhaiyin-f3dc4b1ea624",
+        "episode": 3,
+        "duration": 2394.496,
+        "sentences": 772,
+        "source_sha256": "78ce5734db93a39773d2552210d3ac0597319610d75bf731fac3e908f2bcd4ae"
+      },
+      {
+        "id": "linhaiyin-073cbd9ebf14",
+        "episode": 4,
+        "duration": 2529.216,
+        "sentences": 718,
+        "source_sha256": "cd250c5f4dee79dddffd5fbf9d4e52fbf07af06d9731469b37ca2cda9883eff4"
+      },
+      {
+        "id": "linhaiyin-f9c15c912023",
+        "episode": 5,
+        "duration": 2270.016,
+        "sentences": 651,
+        "source_sha256": "6c903f2a92360361e6e847a8421c779b3f58cf78ff32a900cfbe1f09502caefd"
+      },
+      {
+        "id": "linhaiyin-a750b7a172eb",
+        "episode": 6,
+        "duration": 1990.5706875,
+        "sentences": 662,
+        "source_sha256": "ace69fab99afbb47f24eecebad732fedaae0ee85c069fc2300645b629549a39a"
+      }
+    ],
+    "errors": []
+  },
+  "seasons": {
+    "commercial-portrait": {
+      "manifest": 17,
+      "arrived": 17,
+      "count_only": 3,
+      "asr": 14,
+      "duration": 33607.1925625,
+      "sentences": 9854,
+      "segments": 1323,
+      "frames": 2309,
+      "topics": {
+        "姿势部位": 123,
+        "手位": 120,
+        "坐靠": 59,
+        "表情": 46,
+        "视线": 51,
+        "用光方向": 166,
+        "光质": 147,
+        "背景": 119,
+        "构图": 175,
+        "服装造型": 111,
+        "后期": 129,
+        "营销": 8,
+        "闲聊": 66,
+        "观看评判": 0,
+        "画面边缘": 1,
+        "多重事件": 2,
+        "色彩": 0,
+        "瞬间": 0,
+        "选片编辑": 0
+      }
+    },
+    "season-2": {
+      "manifest": 6,
+      "arrived": 6,
+      "count_only": 0,
+      "asr": 6,
+      "duration": 15133.568,
+      "sentences": 4632,
+      "segments": 430,
+      "frames": 852,
+      "topics": {
+        "姿势部位": 28,
+        "手位": 60,
+        "坐靠": 8,
+        "表情": 19,
+        "视线": 16,
+        "用光方向": 24,
+        "光质": 26,
+        "背景": 56,
+        "构图": 75,
+        "服装造型": 17,
+        "后期": 61,
+        "营销": 6,
+        "闲聊": 34,
+        "观看评判": 0,
+        "画面边缘": 0,
+        "多重事件": 0,
+        "色彩": 0,
+        "瞬间": 0,
+        "选片编辑": 0
+      }
+    },
+    "season-3": {
+      "manifest": 14,
+      "arrived": 14,
+      "count_only": 0,
+      "asr": 14,
+      "duration": 29092.0766875,
+      "sentences": 7394,
+      "segments": 561,
+      "frames": 1169,
+      "topics": {
+        "姿势部位": 56,
+        "手位": 92,
+        "坐靠": 23,
+        "表情": 34,
+        "视线": 27,
+        "用光方向": 16,
+        "光质": 24,
+        "背景": 26,
+        "构图": 57,
+        "服装造型": 58,
+        "后期": 58,
+        "营销": 40,
+        "闲聊": 49,
+        "观看评判": 0,
+        "画面边缘": 1,
+        "多重事件": 0,
+        "色彩": 0,
+        "瞬间": 0,
+        "选片编辑": 0
+      }
+    }
+  },
+  "count_only": [
+    {
+      "bvid": "linhaiyin-a327c694d062",
+      "course": "commercial-portrait",
+      "episode": 15,
+      "duration_seconds": 2107.048345,
+      "sha256": "965cff7d897b904b2671b91af05979eeb59a9d894e43d2b207983adcba7c111d"
+    },
+    {
+      "bvid": "linhaiyin-091d88c92688",
+      "course": "commercial-portrait",
+      "episode": 16,
+      "duration_seconds": 2099.01424,
+      "sha256": "f7062b2b823fc59d6ba3306f9e1081fa62e1402d51767cb92c52164673c2a6de"
+    },
+    {
+      "bvid": "linhaiyin-aa4a38bff61c",
+      "course": "commercial-portrait",
+      "episode": 17,
+      "duration_seconds": 2468.02576,
+      "sha256": "8a919ed62ec9dbfd3114d5631b266a1d246fe00a35c52379756837222109635a"
+    }
+  ],
+  "owned_jobs": [
+    {
+      "submission_id": "w4-courses-linhaiyin-probe-resume-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791676208033,
+      "end_time": 1791676247839
+    },
+    {
+      "submission_id": "w4-courses-linhaiyin-asr-resume-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791676297829,
+      "end_time": 1791676954512
+    },
+    {
+      "submission_id": "w4-courses-linhaiyin-decode-audit-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791676303347,
+      "end_time": 1791676417527
+    },
+    {
+      "submission_id": "w4-courses-linhaiyin-topics-resume-01",
+      "status": "STOPPED",
+      "start_time": 1791676972549,
+      "end_time": 1791677263837
+    },
+    {
+      "submission_id": "w4-courses-linhaiyin-text-early-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791676983532,
+      "end_time": 1791676999293
+    },
+    {
+      "submission_id": "w4-courses-linhaiyin-tail-audit-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791677055858,
+      "end_time": 1791677069817
+    },
+    {
+      "submission_id": "w4-courses-linhaiyin-tail-inspect-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791677094520,
+      "end_time": 1791677107969
+    },
+    {
+      "submission_id": "w4-courses-linhaiyin-asr-tail-audit-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791677139469,
+      "end_time": 1791677214273
+    },
+    {
+      "submission_id": "w4-courses-linhaiyin-topics-split-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791677265977,
+      "end_time": 1791678076642
+    },
+    {
+      "submission_id": "w4-courses-linhaiyin-topics-split-02",
+      "status": "SUCCEEDED",
+      "start_time": 1791677272585,
+      "end_time": 1791677903204
+    },
+    {
+      "submission_id": "w4-courses-linhaiyin-text-resume-01",
+      "status": "SUCCEEDED",
+      "start_time": 1791678093435,
+      "end_time": 1791678103568
+    }
+  ],
+  "resources": {
+    "observed_max_active_owned_jobs": 2,
+    "observed_max_active_owned_gpu_jobs": 1,
+    "active_w4_courses_jobs_at_completion": 0
+  },
+  "evidence": {
+    "added": 47,
+    "kinds": {
+      "source": 31,
+      "exception": 15,
+      "counterpoint": 1
+    },
+    "new_candidates": 1,
+    "rule_ids": [
+      "G-BOOK-SEQUENCE-PACE",
+      "G-BOOK-STORY-FUNCTION",
+      "G-COURSE-COLOR-ROLE",
+      "G-COURSE-ITERATIVE-EDIT",
+      "G-COURSE-SELECTION-PURPOSE",
+      "P-BOOK-ENVIRONMENT-CONTEXT",
+      "P-COLOR-CAST",
+      "P-COURSE-FACE-CONTACT",
+      "P-CROP-ANKLE-FOOT",
+      "P-CROP-ELBOW",
+      "P-CROP-HAIRLINE",
+      "P-CROP-HEADROOM",
+      "P-CROP-KNEE",
+      "P-CROP-NECK",
+      "P-CROP-WRIST",
+      "P-EXPOSURE-INTENT",
+      "P-FACE-EXPRESSION",
+      "P-FACE-EYES",
+      "P-FACE-FOCUS",
+      "P-HAND-NATURAL",
+      "P-LIGHT-SHAPE",
+      "P-POSE-WEIGHT",
+      "P-SUBJECT-PLACEMENT",
+      "P-YD-BG-BLUR",
+      "P-YD-BG-DEPTH",
+      "P-YD-BG-SEPARATION",
+      "P-YD-BODY-PROPORTION",
+      "P-YD-CATCHLIGHT",
+      "P-YD-FACE-OCCLUDED",
+      "P-YD-GAZE-DIRECTION",
+      "P-YD-HAIR-MOTION",
+      "P-YD-INTERACTION",
+      "P-YD-LIGHT-FLAT",
+      "P-YD-NONFACE-HIGHLIGHTS",
+      "P-YD-NOSE-VIEW",
+      "P-YD-POSE-COMPACT",
+      "P-YD-POSE-RESTRAINED",
+      "P-YD-POSE-THEME",
+      "P-YD-TILT"
+    ],
+    "located_episodes": 17,
+    "max_paraphrase_characters": 20,
+    "prior_evidence_unchanged": true,
+    "prior_candidates_unchanged": true
+  },
+  "manual_review": {
+    "all_transcripts_keyword_scanned": 34,
+    "fully_read_window_sentences": 2336,
+    "non_selection_method": "Manual chapter boundaries verified with introductions, summaries and keyword context; generous mixed result windows remain potential. Entire video editing/marketing chapters excluded. This is a conservative chapter-based lower bound, not exact sentence semantics or keyword-label percentage. Count-only episodes have no sentence denominator.",
+    "non_selection_lower_bound_sentences": 11860,
+    "non_selection_lower_bound_ratio": 0.5420475319926874,
+    "private_audit_sha256": "891f4406a7fc91ece2d17c7a6853b24fad4c88d6b3662adbea957340ad608539",
+    "images_viewed": 0,
+    "external_extraction_model_used": false,
+    "nested_codex_exec_used": false
+  },
+  "decode_audit": {
+    "episode_id": "linhaiyin-36bf71c33e4e",
+    "returncode": 0,
+    "warning_lines": 135,
+    "warning_categories": [
+      "H264 macroblock decode",
+      "invalid NAL size",
+      "NAL split errors"
+    ],
+    "note": "return code zero does not prove undamaged stream"
+  },
+  "tail_audit": {
+    "episodes": [
+      2,
+      8,
+      10,
+      14
+    ],
+    "course": "season-3",
+    "samples": 12,
+    "sample_seconds": 30,
+    "recognized_sentences": 0,
+    "note": "sample non-recognition is not complete speech-coverage proof"
+  },
+  "validation": {
+    "python": {
+      "run": 120,
+      "pass": 115,
+      "skip": 5,
+      "fail": 0
+    },
+    "node": {
+      "run": 283,
+      "pass": 282,
+      "skip": 1,
+      "fail": 0
+    },
+    "baseline_same": true,
+    "course_summary_errors": 0,
+    "git_diff_check": "pass",
+    "private_and_durable_locator_validation": "pass"
+  },
+  "private_data_bytes": 65189383,
+  "git": {
+    "status": "uncommitted",
+    "add_exit_code": 128,
+    "reason": "sandbox cannot create main repository .git/worktrees/w4-courses/index.lock",
+    "pushed": false
+  }
+}

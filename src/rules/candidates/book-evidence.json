@@ -1,0 +1,2972 @@
+{
+  "contractVersion": 1,
+  "books": [
+    {
+      "slug": "photography-aesthetics-six-lectures",
+      "title": "摄影美学六讲",
+      "author": "细草穿沙",
+      "format": "epub"
+    },
+    {
+      "slug": "ansel-camera",
+      "title": "The Camera",
+      "author": "Ansel Adams",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "The Ansel Adams Photography Series I The Camera",
+        "year": 1980
+      }
+    },
+    {
+      "slug": "ansel-negative",
+      "title": "The Negative",
+      "author": "Ansel Adams",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "The Ansel Adams Photography Series 2 **The Negative** **The Negative",
+        "year": 1981
+      }
+    },
+    {
+      "slug": "freeman-vision",
+      "title": "The Photographer's Vision",
+      "author": "Michael Freeman",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "MICHAEL FREEMAN THE PHOTOGRAPHER'S VISION MICHAEL FREEMAN THE PHOTOGRAPHER'S[VISION]",
+        "year": 2019
+      }
+    },
+    {
+      "slug": "digital-portrait",
+      "title": "Digital Portrait Photography For Dummies",
+      "author": "Doug Sahlin",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Digital Portrait Photography",
+        "year": 2010
+      }
+    },
+    {
+      "slug": "portrait-candid",
+      "title": "Portrait and Candid Photography, 2nd Edition",
+      "author": "Erin Manning",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "PORTRAIT AND CANDID PHOTOGRAPHY",
+        "year": 2012
+      }
+    },
+    {
+      "slug": "master-guide",
+      "title": "Master Guide for Professional Photographers",
+      "author": "Patrick Rice",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Master Guide FOR PROFESSIONAL PHOTOGRAPHERS",
+        "year": 2006
+      }
+    },
+    {
+      "slug": "children-portrait",
+      "title": "Children’s Portrait Photography Handbook",
+      "author": "Bill Hurter",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Children's Portrait PHOTOGRAPHY HANDBOOK",
+        "year": 2010
+      }
+    },
+    {
+      "slug": "digital-composition",
+      "title": "Digital Photography Composition For Dummies",
+      "author": "Tom Clark",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Digital Photography Composition",
+        "year": 2011
+      }
+    },
+    {
+      "slug": "understanding-exposure",
+      "title": "Understanding Exposure, 3rd Edition",
+      "author": "Bryan Peterson",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Understanding EXPOSURE",
+        "year": 1990
+      }
+    },
+    {
+      "slug": "street-atlas",
+      "title": "The World Atlas of Street Photography",
+      "author": "Jackie Higgins",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "THE WORLD ATLAS OF STREET PHOTOGRAPHY STOP THE WORLD ATLAS OF STREET PHOTOGRAPHY",
+        "year": 2012
+      }
+    },
+    {
+      "slug": "corrective-posing",
+      "title": "Corrective Lighting, Posing & Retouching",
+      "author": "Jeff Smith",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "CORRECTIVE LIGHTING, POSING & RETOUCHING #ABOUT THE AUTHOR",
+        "year": 2010
+      }
+    },
+    {
+      "slug": "freeman-capturing-light",
+      "title": "Capturing Light",
+      "author": "Michael Freeman",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "MICHAEL FREEMAN CAPTURING LIGHT",
+        "year": 2013
+      }
+    },
+    {
+      "slug": "photographing-children-babies",
+      "title": "Photographing Children and Babies",
+      "author": "Michal Heron",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Photographing Children and Babies",
+        "year": 2005
+      }
+    },
+    {
+      "slug": "digital-wedding",
+      "title": "Digital Wedding Photography For Dummies",
+      "author": "Amber Murphy",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Digital Wedding Photography",
+        "year": 2013
+      }
+    },
+    {
+      "slug": "wedding-secrets",
+      "title": "Digital Wedding Photography Secrets",
+      "author": "Rick Sammon",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "Digital Wedding Photography Secrets",
+        "year": 2009
+      }
+    },
+    {
+      "slug": "moment-clicks",
+      "title": "The Moment It Clicks",
+      "author": "Joe McNally",
+      "format": "corpus",
+      "corpusRef": {
+        "lang": "en",
+        "title": "THE MOMENT IT CLICKS",
+        "year": 2008
+      }
+    },
+    {
+      "slug": "posing",
+      "title": "拍照姿势",
+      "author": "未知",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "kelby-natural-portrait",
+      "title": "斯科特·凯尔比的自然光人像摄影手册",
+      "author": "Scott Kelby",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "kelby-landscape",
+      "title": "斯科特·凯尔比的风光摄影手册",
+      "author": "Scott Kelby",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "street-52",
+      "title": "街头摄影 52个任务清单",
+      "author": "未知",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "photographic-techniques-7",
+      "title": "摄影技艺教程第7版",
+      "author": "未知",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "nyip-upper",
+      "title": "美国纽约摄影学院摄影教材（上册）",
+      "author": "美国纽约摄影学院",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "nyip-lower",
+      "title": "美国纽约摄影学院摄影教材（下册）",
+      "author": "美国纽约摄影学院",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "photography-required-course",
+      "title": "摄影必修课（套装4册）",
+      "author": "未知",
+      "format": "pdf-ocr"
+    },
+    {
+      "slug": "magnum-streetwise",
+      "title": "此时此地：玛格南街头摄影经典（Magnum Streetwise）",
+      "author": "Stephen McLaren",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "2fb2aab3d040bf62101d5b171e1145cbb48cac48f01d2bc8ac85f5e58e14a303",
+      "inputLabel": "Magnum Contact Sheets（来料标签与实际书目不符）"
+    },
+    {
+      "slug": "decisive-moment",
+      "title": "决定性瞬间",
+      "author": "Henri Cartier-Bresson",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "5c7bf5bc4cc4bfb2a582a89362f70091ffcb9aab385203fe5a12bf4090b6668c"
+    },
+    {
+      "slug": "hurn-jay",
+      "title": "On Being a Photographer, 3rd edition",
+      "author": "David Hurn / Bill Jay",
+      "format": "pdf",
+      "scope": "full-book",
+      "sourceSha256": "8ad990a20c3c3d4a8db7b66b19ff17a824a85644a47951b998d87935f93b8298"
+    },
+    {
+      "slug": "why-focus-sample",
+      "title": "Why It Does Not Have to Be in Focus",
+      "author": "Jackie Higgins",
+      "format": "pdf",
+      "scope": "sample",
+      "sourceSha256": "f6d48b8923b1e867aa31c5329f11216233c27118625c5fb7b5d8acf1a67e1380"
+    },
+    {
+      "slug": "posing-sample",
+      "title": "Picture Perfect Posing",
+      "author": "Roberto Valenzuela",
+      "format": "pdf",
+      "scope": "sample",
+      "sourceSha256": "91c0478105270248c19a7f24d15a7a786a994b1f1a3b95004fb8b29ce27befd1"
+    },
+    {
+      "slug": "photographers-eye-press",
+      "title": "The Photographer’s Eye: 1966 MoMA press release",
+      "author": "MoMA / John Szarkowski",
+      "format": "pdf",
+      "scope": "press-release",
+      "sourceSha256": "24999c1edc96a2748adfa5048550cde0ce47600a11779a3021186d5cc9ed6fa4"
+    },
+    {
+      "slug": "photographers-eye-excerpt",
+      "title": "The Photographer’s Eye: introduction excerpt",
+      "author": "John Szarkowski",
+      "format": "excerpt",
+      "scope": "intro-excerpt",
+      "sourceSha256": "4f399c457502587df0f81a39992df2fd6c96c06b0507cd2eed58ff5e3942e25a"
+    },
+    {
+      "slug": "photographers-eye-zh",
+      "title": "摄影师之眼（The Photographer’s Eye，中文版）",
+      "author": "John Szarkowski",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "d3ae934152d54ba88028cee746a5431fa9b00844ce2ec62508e515a43047acc7"
+    },
+    {
+      "slug": "adler-posing",
+      "title": "The Photographer’s Guide to Posing: Techniques to Flatter Everyone",
+      "author": "Lindsay Adler",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "84e7166f07e2135e6909254e2a3c91cb0cf50eb3b4cc4ffd15b41d6ce2a385c1"
+    },
+    {
+      "slug": "adler-pitfalls",
+      "title": "Posing Pitfalls Checklist",
+      "author": "Lindsay Adler",
+      "format": "pdf",
+      "scope": "checklist",
+      "sourceSha256": "6191036702c30247307d0a56e030e1635aaa314e8aac26582abdb31613c33bdc"
+    },
+    {
+      "slug": "adler-pocket",
+      "title": "Posing Pocket Checklist",
+      "author": "Lindsay Adler",
+      "format": "pdf",
+      "scope": "checklist",
+      "sourceSha256": "8f6e8285b36f7bf7d6a90de53823d93ea9de04a2987128a3828d291f79596024"
+    },
+    {
+      "slug": "adler-hands",
+      "title": "Posing Hands: Hand Poses Reference Guide",
+      "author": "Lindsay Adler",
+      "format": "pdf",
+      "scope": "full-book",
+      "sourceSha256": "fa2336dbb4d514742b93d13f456799faf8847b014464fcd97f6b526a364ae1ad"
+    },
+    {
+      "slug": "adler-couples",
+      "title": "Couples Posing Guide",
+      "author": "Lindsay Adler",
+      "format": "pdf",
+      "scope": "full-book",
+      "sourceSha256": "2d4dbf64619289a67d586fc5d89648672821f91342c063d837d17a95c7e58f84"
+    },
+    {
+      "slug": "adler-teens",
+      "title": "Tweens, Teens & Seniors Posing Guide",
+      "author": "Lindsay Adler",
+      "format": "pdf",
+      "scope": "full-book",
+      "sourceSha256": "e249c5a937065cc9dd4ac1cf44bd332998052f848a4186c7ee13e121238e0215"
+    },
+    {
+      "slug": "adler-50-poses",
+      "title": "Fine Art Nude Posing Guide（来料：50个美术摄影摆姿势实例）",
+      "author": "Lindsay Adler",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "99eb8df2c11daf81b3e658d48b29698bad2d466f3b74fcc28074d38f2366de49"
+    },
+    {
+      "slug": "valenzuela-posing-zh",
+      "title": "拍出绝世美姿（Picture Perfect Posing 中文全书）",
+      "author": "Roberto Valenzuela",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "0defb639d94892ef804ffa5e1c94522a082f6dea772a25a1598776561d0bd3b9"
+    },
+    {
+      "slug": "valenzuela-practice-zh",
+      "title": "拍出绝世佳作（Picture Perfect Practice 中文全书）",
+      "author": "Roberto Valenzuela",
+      "format": "pdf-ocr",
+      "scope": "full-book",
+      "sourceSha256": "eb43f167943d4ea494f213b18c2cdbcc6ab25ad75b79702f1c1cb175b0b01f0e"
+    },
+    {
+      "slug": "adler-boudoir",
+      "title": "Boudoir Posing Guide",
+      "author": "Lindsay Adler",
+      "format": "pdf",
+      "scope": "full-book",
+      "sourceSha256": "fac29bdf3aed691a6538b55054b0319d492f78e4039808c1f56207b08f4c5edc"
+    }
+  ],
+  "evidence": [
+    {
+      "ruleId": "G-SUBJECT-HIERARCHY",
+      "kind": "source",
+      "paraphrase": "减少无关元素可突出主题，不必收全场景",
+      "locator": "第二讲／练习驾驭定焦镜头，是训练观察力的基本功",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "G-FRAMING-BALANCE",
+      "kind": "source",
+      "paraphrase": "视觉平衡还取决于色彩、明暗和虚实比重",
+      "locator": "第四讲／构图法则之结构平衡",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "G-FRAMING-BALANCE",
+      "kind": "source",
+      "paraphrase": "亮色面积虽小，也可平衡大面积暗色",
+      "locator": "第四讲／构图法则之色彩平衡",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-SUBJECT-PLACEMENT",
+      "kind": "exception",
+      "paraphrase": "人物可作为小符号，服务整体意境",
+      "locator": "第四讲／构图里的留白",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-CROP-HEADROOM",
+      "kind": "counterpoint",
+      "paraphrase": "环境人像的大面积留白可烘托氛围",
+      "locator": "第四讲／构图里的留白",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-FACE-FOCUS",
+      "kind": "exception",
+      "paraphrase": "表达梳妆动作时，焦点可在手而非眼",
+      "locator": "第六讲／用摄影解读诗词的美",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-YD-EYE-CROP",
+      "kind": "exception",
+      "paraphrase": "梳妆题材可避开眼睛，以手部动作为主",
+      "locator": "第六讲／用摄影解读诗词的美",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "source",
+      "paraphrase": "抓住自然的瞬间神态，并交代环境",
+      "locator": "第二讲／35mm定焦镜头，是一把平衡的尺子",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-EXPOSURE-INTENT",
+      "kind": "exception",
+      "paraphrase": "低调画面中人物可虚化，灯光成为中心",
+      "locator": "第六讲／用光影营造意境美",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-COLOR-CAST",
+      "kind": "exception",
+      "paraphrase": "灰中微青可营造冷意，不必强求中性",
+      "locator": "第五讲／天青色里的“寂寞沙洲冷”",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-COLOR-INTENT",
+      "kind": "source",
+      "paraphrase": "调色应服务表达内容的主次与气氛",
+      "locator": "第五讲／中国风摄影的色彩特点",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-LIGHT-SHAPE",
+      "kind": "source",
+      "paraphrase": "明暗交替能强化立体感与视觉中心",
+      "locator": "第三讲／光对画面的影响",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-YD-TONAL-GRAY",
+      "kind": "exception",
+      "paraphrase": "柔光中间调与灰色背景可衬托主体",
+      "locator": "第三讲／摄影用光的误区；第五讲／给四季打底的烟灰色",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-YD-LIGHT-FLAT",
+      "kind": "exception",
+      "paraphrase": "漫射均匀光线可营造柔和整体氛围",
+      "locator": "第三讲／摄影用光的误区",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-YD-COLOR-LAYERS",
+      "kind": "exception",
+      "paraphrase": "相近色相可统一画面，不必强求撞色",
+      "locator": "第五讲／中国风摄影的色彩特点",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-YD-SATURATION",
+      "kind": "source",
+      "paraphrase": "艳丽背景抢走注意力时，可降低饱和度",
+      "locator": "第五讲／中国风摄影的色彩特点",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-YD-BG-BLUR",
+      "kind": "source",
+      "paraphrase": "虚化过度会失去细节与回味空间",
+      "locator": "第二讲／50mm焦距，进退自如",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-YD-BG-BLACK",
+      "kind": "exception",
+      "paraphrase": "隐藏杂乱枝条的暗部可以服务整体",
+      "locator": "第六讲／用光影营造意境美",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-YD-NONFACE-HIGHLIGHTS",
+      "kind": "source",
+      "paraphrase": "明暗交错场景应保住必要亮部细节",
+      "locator": "第三讲／光对画面的影响",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "L-LIGHT-INTENT",
+      "kind": "source",
+      "paraphrase": "阴雨柔光也可表达空气、层次与情绪",
+      "locator": "第三讲／摄影用光的误区",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "L-HORIZON-PLACEMENT",
+      "kind": "source",
+      "paraphrase": "天空与地面分配看视觉平衡，比例可变",
+      "locator": "第四讲／构图法则之结构平衡",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "L-FOCUS-REQUIRED",
+      "kind": "exception",
+      "paraphrase": "焦点在窗框、窗外虚化可凝聚画面",
+      "locator": "第一讲／知识之外的无言之美",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "G-PROXY-BLUR",
+      "kind": "exception",
+      "paraphrase": "虚实取舍可服务画面，不凭整图锐度拒绝",
+      "locator": "第一讲／知识之外的无言之美",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "G-EDGE-GRADIENT",
+      "kind": "exception",
+      "paraphrase": "框景可组织观看，边缘强线条非必然干扰",
+      "locator": "第二讲／50mm焦距，进退自如",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "L-FOREGROUND-ROLE",
+      "kind": "exception",
+      "paraphrase": "枝干前景可遮挡部分建筑并引导观看",
+      "locator": "第一讲／知识之外的无言之美",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "L-NATURAL-COLOR",
+      "kind": "exception",
+      "paraphrase": "少量调色可协调场景，不必照搬自然色",
+      "locator": "第三讲／光对画面的影响",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "L-SHADOW-RECOVERY",
+      "kind": "source",
+      "paraphrase": "需要层次的画面应保留必要暗部细节",
+      "locator": "第三讲／光对画面的影响",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "L-SEQUENCE-PRESERVE",
+      "kind": "source",
+      "paraphrase": "长焦风景可用多张拼成宽幅，源帧有用途",
+      "locator": "第二讲／85mm定焦镜头，惊鸿一瞥",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "L-VISUAL-INTENT",
+      "kind": "source",
+      "paraphrase": "平凡小景也能通过形态与环境关系成立",
+      "locator": "第六讲／不在花，不在瓶，在当时的心情",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "S-MOMENT-ACTION",
+      "kind": "source",
+      "paraphrase": "跨门槛的步态可同时建立人物与场景关系",
+      "locator": "第六讲／禅意摄影的美",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "S-PERSON-GEOMETRY",
+      "kind": "source",
+      "paraphrase": "等人物到窗边举起手机，使倒影关系成立",
+      "locator": "第四讲／构图，到底是什么",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "S-OCCLUSION-INTENT",
+      "kind": "exception",
+      "paraphrase": "水面反光叠合现实与倒影，可营造虚实层次",
+      "locator": "第三讲／光对画面的影响",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "S-FOCUS-INTENT",
+      "kind": "exception",
+      "paraphrase": "人物可朦胧，灯光与环境成为主要表达",
+      "locator": "第六讲／用光影营造意境美",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "S-EXPOSURE-CONTENT",
+      "kind": "exception",
+      "paraphrase": "略欠曝形成剪影，可统一街道人群画面",
+      "locator": "第六讲／用光影营造意境美",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "S-TILT-INTENT",
+      "kind": "exception",
+      "paraphrase": "倒影可翻转呈现，先辨认意图再检查方向",
+      "locator": "第二讲／练习驾驭定焦镜头，是训练观察力的基本功",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "P-YD-TILT",
+      "kind": "exception",
+      "paraphrase": "倒影翻转画面可成立，不等于无意歪斜",
+      "locator": "第四讲／构图，到底是什么",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "S-NARRATIVE-EVIDENCE",
+      "kind": "counterpoint",
+      "paraphrase": "轮廓可引发联想，人物身份仍需另行核验",
+      "locator": "第六讲／禅意摄影的美",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "S-UNIQUE-COVERAGE",
+      "kind": "source",
+      "paraphrase": "同场景四季对照各有时间信息，可并存",
+      "locator": "第六讲／营造时光流动的感觉",
+      "bookSlug": "photography-aesthetics-six-lectures"
+    },
+    {
+      "ruleId": "L-FOCUS-REQUIRED",
+      "kind": "source",
+      "bookSlug": "ansel-camera",
+      "paraphrase": "检查所需前中后景是否处于可接受清晰范围",
+      "locator": "章节40／FOCUS AND DEPTH OF FIELD／段落3"
+    },
+    {
+      "ruleId": "G-PROXY-BLUR",
+      "kind": "counterpoint",
+      "bookSlug": "ansel-camera",
+      "paraphrase": "清晰度应结合最终尺寸和观看距离复核",
+      "locator": "章节40／FOCUS AND DEPTH OF FIELD／段落10"
+    },
+    {
+      "ruleId": "G-SUBJECT-HIERARCHY",
+      "kind": "source",
+      "bookSlug": "ansel-camera",
+      "paraphrase": "选择性对焦可突出主体并弱化无关环境",
+      "locator": "章节40／FOCUS AND DEPTH OF FIELD／段落18"
+    },
+    {
+      "ruleId": "G-PROXY-BLUR",
+      "kind": "counterpoint",
+      "bookSlug": "ansel-camera",
+      "paraphrase": "边缘锐利感与细节分辨力并不等同",
+      "locator": "章节61／RESOLUTION AND “SHARPNESS”／段落3"
+    },
+    {
+      "ruleId": "P-EXPOSURE-INTENT",
+      "kind": "exception",
+      "bookSlug": "ansel-negative",
+      "paraphrase": "人像肤色明度可随环境与表达目的变化",
+      "locator": "章节17／Visualization and Image Values／段落7"
+    },
+    {
+      "ruleId": "P-YD-EXPOSURE-READABLE",
+      "kind": "exception",
+      "bookSlug": "ansel-negative",
+      "paraphrase": "有意改变明暗不等于曝光失误",
+      "locator": "章节32／Over- and Underexposure／段落2"
+    },
+    {
+      "ruleId": "L-SHADOW-RECOVERY",
+      "kind": "source",
+      "bookSlug": "ansel-negative",
+      "paraphrase": "未记录的必要暗部细节无法凭后期补回",
+      "locator": "章节32／Over- and Underexposure／段落3"
+    },
+    {
+      "ruleId": "L-EXPOSURE-DETAIL",
+      "kind": "exception",
+      "bookSlug": "ansel-negative",
+      "paraphrase": "小面积镜面高光可无细节，先核验其用途",
+      "locator": "章节49／SUBJECT CONTRAST／段落4"
+    },
+    {
+      "ruleId": "L-VISUAL-INTENT",
+      "kind": "source",
+      "bookSlug": "ansel-negative",
+      "paraphrase": "更暗邻帧未改善亮部却损失暗部时不优选",
+      "locator": "章节32／Over- and Underexposure／段落5"
+    },
+    {
+      "ruleId": "S-MOMENT-ACTION",
+      "kind": "counterpoint",
+      "bookSlug": "freeman-vision",
+      "paraphrase": "好瞬间可有多个，不把某一峰值当唯一答案",
+      "locator": "章节55／A Watch Tower, Koje Do Island, Korea, 1952, by Werner Bischof／段落16"
+    },
+    {
+      "ruleId": "S-MOMENT-ACTION",
+      "kind": "source",
+      "bookSlug": "freeman-vision",
+      "paraphrase": "邻帧的手势与神态差异可改变单张首选",
+      "locator": "章节55／A Watch Tower, Koje Do Island, Korea, 1952, by Werner Bischof／段落24"
+    },
+    {
+      "ruleId": "S-UNIQUE-COVERAGE",
+      "kind": "source",
+      "bookSlug": "freeman-vision",
+      "paraphrase": "联系表中不同阶段可共同交代事件发展",
+      "locator": "章节55／A Watch Tower, Koje Do Island, Korea, 1952, by Werner Bischof／段落25"
+    },
+    {
+      "ruleId": "S-TILT-INTENT",
+      "kind": "exception",
+      "bookSlug": "freeman-vision",
+      "paraphrase": "倾斜线条可有构图用途，先区分意图",
+      "locator": "章节58／STYLES OF COMPOSITION／段落3"
+    },
+    {
+      "ruleId": "S-UNIQUE-COVERAGE",
+      "kind": "source",
+      "bookSlug": "freeman-vision",
+      "paraphrase": "组照中的相互关系不能由单张强弱替代",
+      "locator": "章节32／THE PHOTO ESSAY／段落8"
+    },
+    {
+      "ruleId": "G-SUBJECT-HIERARCHY",
+      "kind": "source",
+      "bookSlug": "digital-portrait",
+      "paraphrase": "只保留支持画面内容的环境信息",
+      "locator": "章节82／Composing Your Images／段落4"
+    },
+    {
+      "ruleId": "P-POSE-WEIGHT",
+      "kind": "exception",
+      "bookSlug": "digital-portrait",
+      "paraphrase": "正面平肩可形成稳定有力的肖像",
+      "locator": "章节89／Posing Your Subject／段落2"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "exception",
+      "bookSlug": "digital-portrait",
+      "paraphrase": "轻握拳或持物可有意成立，先看动作用途",
+      "locator": "章节89／Posing Your Subject／段落6"
+    },
+    {
+      "ruleId": "P-YD-GAZE-DIRECTION",
+      "kind": "source",
+      "bookSlug": "digital-portrait",
+      "paraphrase": "比较视线与手持物、同伴的可见关系",
+      "locator": "章节89／Posing Your Subject／段落10"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "source",
+      "bookSlug": "portrait-candid",
+      "paraphrase": "组内比较短暂视线、神态和手势",
+      "locator": "章节35／CAPTURE A SPECIAL MOMENT／段落4"
+    },
+    {
+      "ruleId": "P-BG-MERGER",
+      "kind": "source",
+      "bookSlug": "portrait-candid",
+      "paraphrase": "头后植物与杂物重合会分散主体注意",
+      "locator": "章节116／COMPOSITION BASICS／段落4"
+    },
+    {
+      "ruleId": "P-POSE-WEIGHT",
+      "kind": "exception",
+      "bookSlug": "portrait-candid",
+      "paraphrase": "正式合影可采用整齐静态的排列",
+      "locator": "章节160／EXPLORE POSING TECHNIQUES／段落7"
+    },
+    {
+      "ruleId": "P-FACE-FOCUS",
+      "kind": "source",
+      "bookSlug": "portrait-candid",
+      "paraphrase": "眼睛是主要内容的婴儿人像应检查眼部清晰",
+      "locator": "章节210／FOCUS ON THE EYES／段落2"
+    },
+    {
+      "ruleId": "P-CROP-HEADROOM",
+      "kind": "exception",
+      "bookSlug": "portrait-candid",
+      "paraphrase": "眼睛为主的近景可裁头，不强制头顶留白",
+      "locator": "章节210／FOCUS ON THE EYES／段落3"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "exception",
+      "bookSlug": "portrait-candid",
+      "paraphrase": "婴儿困倦或不笑的表情也可成立",
+      "locator": "章节210／FOCUS ON THE EYES／段落4"
+    },
+    {
+      "ruleId": "G-SUBJECT-HIERARCHY",
+      "kind": "source",
+      "bookSlug": "master-guide",
+      "paraphrase": "树间亮天空可能与人物争夺注意力",
+      "locator": "章节41／Center of Interest／段落6"
+    },
+    {
+      "ruleId": "P-SUBJECT-PLACEMENT",
+      "kind": "exception",
+      "bookSlug": "master-guide",
+      "paraphrase": "对称姿态与场景可支持居中构图",
+      "locator": "章节43／Common Problems in Composition／段落4"
+    },
+    {
+      "ruleId": "L-HORIZON-PLACEMENT",
+      "kind": "counterpoint",
+      "bookSlug": "master-guide",
+      "paraphrase": "传统构图偏好三分线，应限于其表达目的",
+      "locator": "章节43／Common Problems in Composition／段落16"
+    },
+    {
+      "ruleId": "P-HAND-WIDEANGLE",
+      "kind": "source",
+      "bookSlug": "master-guide",
+      "paraphrase": "靠近镜头的手可显大，需看实际透视效果",
+      "locator": "章节49／Posing the Hands and Feet／段落2"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "master-guide",
+      "paraphrase": "手指适度分开、腕部自然弯曲可避免粘连",
+      "locator": "章节50／BREAKING THE RULES／段落2"
+    },
+    {
+      "ruleId": "P-POSE-WEIGHT",
+      "kind": "source",
+      "bookSlug": "master-guide",
+      "paraphrase": "支撑腿与略弯的另一腿可使站姿自然",
+      "locator": "章节50／BREAKING THE RULES／段落4"
+    },
+    {
+      "ruleId": "P-FACE-EYES",
+      "kind": "exception",
+      "bookSlug": "children-portrait",
+      "paraphrase": "睡眠婴儿肖像可保留闭眼状态",
+      "locator": "章节37／POSING TIPS BY AGE／段落3"
+    },
+    {
+      "ruleId": "P-CROP-WRIST",
+      "kind": "source",
+      "bookSlug": "children-portrait",
+      "paraphrase": "婴儿手部完整入画可补充人物表达",
+      "locator": "章节37／POSING TIPS BY AGE／段落5"
+    },
+    {
+      "ruleId": "P-CROP-HEADROOM",
+      "kind": "exception",
+      "bookSlug": "children-portrait",
+      "paraphrase": "近景可仅留帽子与部分脸来突出细节",
+      "locator": "章节38／POSING AIDS／段落9"
+    },
+    {
+      "ruleId": "G-FRAMING-BALANCE",
+      "kind": "source",
+      "bookSlug": "digital-composition",
+      "paraphrase": "小面积高反差元素可平衡较大面积物体",
+      "locator": "章节83／Balancing Your Compositions／段落7"
+    },
+    {
+      "ruleId": "G-SUBJECT-HIERARCHY",
+      "kind": "source",
+      "bookSlug": "digital-composition",
+      "paraphrase": "虚实取舍可明确观看重点",
+      "locator": "章节91／Enhancing Your Message with Selective Focus／段落3"
+    },
+    {
+      "ruleId": "P-SUBJECT-PLACEMENT",
+      "kind": "source",
+      "bookSlug": "digital-composition",
+      "paraphrase": "比较取景如何分配人物和环境的重要性",
+      "locator": "章节165／Selecting a Low Angle to Emphasize the Subject／段落2"
+    },
+    {
+      "ruleId": "L-FOCUS-REQUIRED",
+      "kind": "source",
+      "bookSlug": "understanding-exposure",
+      "paraphrase": "大景深交代环境，浅景深强调单一主题",
+      "locator": "章节23／Seven Creative Exposure Options／段落3"
+    },
+    {
+      "ruleId": "S-MOTION-INTENT",
+      "kind": "exception",
+      "bookSlug": "understanding-exposure",
+      "paraphrase": "主体清楚而背景拖曳可表达追随拍摄动感",
+      "locator": "章节35／MOTOR DRIVES／段落4"
+    },
+    {
+      "ruleId": "L-BLUR-CAMERA",
+      "kind": "exception",
+      "bookSlug": "understanding-exposure",
+      "paraphrase": "移动对象模糊而静物清楚可为有意表现",
+      "locator": "章节35／MOTOR DRIVES／段落14"
+    },
+    {
+      "ruleId": "S-PERSON-GEOMETRY",
+      "kind": "source",
+      "bookSlug": "street-atlas",
+      "paraphrase": "人物与窗内形象呼应可使街头瞬间成立",
+      "locator": "章节85／GUS POWELL／段落5"
+    },
+    {
+      "ruleId": "S-EXPOSURE-CONTENT",
+      "kind": "exception",
+      "bookSlug": "street-atlas",
+      "paraphrase": "暗影与亮光可组织街景，不强求均匀可见",
+      "locator": "章节222／TRENT PARKE／段落2"
+    },
+    {
+      "ruleId": "S-FOCUS-INTENT",
+      "kind": "exception",
+      "bookSlug": "street-atlas",
+      "paraphrase": "朦胧建筑与人物可服务梦境式街头表达",
+      "locator": "章节222／TRENT PARKE／段落2"
+    },
+    {
+      "ruleId": "P-YD-BG-BLUR",
+      "kind": "source",
+      "bookSlug": "corrective-posing",
+      "paraphrase": "背景过虚成无趣色块时，可保留更多细节",
+      "locator": "章节39／DON'T CREATE NEW FLAWS BY CORRECTING EXISTING ONES／段落8"
+    },
+    {
+      "ruleId": "P-POSE-WEIGHT",
+      "kind": "exception",
+      "bookSlug": "corrective-posing",
+      "paraphrase": "正式肖像可保持较直脊背与较方正肩线",
+      "locator": "章节42／CHOOSE THE RIGHT STYLE／段落9"
+    },
+    {
+      "ruleId": "P-YD-POSE-COMPACT",
+      "kind": "source",
+      "bookSlug": "corrective-posing",
+      "paraphrase": "两腿适度分开有助于辨认各自轮廓",
+      "locator": "章节45／CONDENSING A POSE／段落9"
+    },
+    {
+      "ruleId": "P-YD-SCENE-INTEGRATION",
+      "kind": "source",
+      "bookSlug": "corrective-posing",
+      "paraphrase": "坐姿悬脚需看接地关系与有意童趣",
+      "locator": "章节45／CONDENSING A POSE／段落16"
+    },
+    {
+      "ruleId": "P-POSE-LIMB-HIDDEN",
+      "kind": "exception",
+      "bookSlug": "corrective-posing",
+      "paraphrase": "前景遮住部分腿部可为有意构图",
+      "locator": "章节45／CONDENSING A POSE／段落14"
+    },
+    {
+      "ruleId": "P-YD-LIGHT-FLAT",
+      "kind": "exception",
+      "bookSlug": "freeman-capturing-light",
+      "paraphrase": "柔和均匀光可呈现相近色彩的细微差别",
+      "locator": "章节32／GRAY LIGHT In the Japanese Garden／段落3"
+    },
+    {
+      "ruleId": "P-YD-PROFILE",
+      "kind": "source",
+      "bookSlug": "freeman-capturing-light",
+      "paraphrase": "剪影依赖侧脸、手势与分开的腿部轮廓",
+      "locator": "章节54／BACKLIGHT   The Silhouette／段落2"
+    },
+    {
+      "ruleId": "S-MOMENT-ACTION",
+      "kind": "source",
+      "bookSlug": "freeman-capturing-light",
+      "paraphrase": "邻帧优选轮廓清楚且人物落在树间的一张",
+      "locator": "章节54／BACKLIGHT   The Silhouette／段落2"
+    },
+    {
+      "ruleId": "P-LIGHT-SHAPE",
+      "kind": "source",
+      "bookSlug": "freeman-capturing-light",
+      "paraphrase": "窗光可同时形成方向性塑形与柔软阴影",
+      "locator": "章节61／Hoh Rainforest, Olympic Peninsula, Washington, 1984 WINDOW LIGHT Directional with Soft Shadows／段落3"
+    },
+    {
+      "ruleId": "S-EXPOSURE-CONTENT",
+      "kind": "exception",
+      "bookSlug": "freeman-capturing-light",
+      "paraphrase": "画内小点光源溢出可正常，先看内容用途",
+      "locator": "章节78／GLOWING LIGHT Things Burning／段落2"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "source",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "比较眼部与嘴部神态，露齿摆笑不等于自然笑容",
+      "locator": "章节30／#**The Value of Other Moods**／段落12"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "exception",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "认真、沉思、哭泣等神态也值得记录",
+      "locator": "章节30／#**The Value of Other Moods**／段落2"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "exception",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "说话时的独特神态也可保留，不全是过渡废片",
+      "locator": "章节30／#**The Value of Other Moods**／段落9"
+    },
+    {
+      "ruleId": "P-YD-GAZE-DIRECTION",
+      "kind": "exception",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "投入活动的侧脸不必转向镜头",
+      "locator": "章节27／#**Busy Kids**／段落5"
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "kind": "source",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "拍手组照优选喜悦表情清楚且手未遮脸的一帧",
+      "locator": "章节76／#**Why Take So Many?**／段落9"
+    },
+    {
+      "ruleId": "P-YD-ACTION-MOMENT",
+      "kind": "source",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "跨栏邻帧比较各人腾空、排布与遮挡",
+      "locator": "章节76／#**Why Take So Many?**／段落7"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "source",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "同组依表达目标比较表情与泡泡，容许可改善取景",
+      "locator": "章节80／#**Editing Criteria**／段落13"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "source",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "技术合格但重复普通的帧会稀释同组佳作",
+      "locator": "章节80／#**Editing Criteria**／段落20"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "source",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "儿童合影需比较各人同时呈现的神态",
+      "locator": "章节96／#**Group Shots**／段落2"
+    },
+    {
+      "ruleId": "P-FACE-EYES",
+      "kind": "source",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "无表达收益的闭眼、遮脸及模糊帧可列为弃选",
+      "locator": "章节80／#**Editing Criteria**／段落21"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "exception",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "技术欠佳但有纪念价值的快照可单独保留",
+      "locator": "章节80／#**Editing Criteria**／段落22"
+    },
+    {
+      "ruleId": "P-LIGHT-SHAPE",
+      "kind": "source",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "柔和窗光保留面部塑形与可读的眼部神态",
+      "locator": "章节37／#Good Light/Bad Light／段落3"
+    },
+    {
+      "ruleId": "P-FACE-EYES",
+      "kind": "source",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "转背太阳后仍可能眯眼，需复核实际神态",
+      "locator": "章节41／#Avoiding Glare／段落5"
+    },
+    {
+      "ruleId": "P-YD-BG-BLACK",
+      "kind": "source",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "闪光与环境失衡可使本应可见的窗外暗如夜晚",
+      "locator": "章节37／#Good Light/Bad Light／段落4"
+    },
+    {
+      "ruleId": "P-EXPOSURE-INTENT",
+      "kind": "exception",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "熟悉环境中的儿童剪影可按轮廓表达保留",
+      "locator": "章节27／#**Busy Kids**／段落9"
+    },
+    {
+      "ruleId": "G-PROXY-BLUR",
+      "kind": "exception",
+      "bookSlug": "photographing-children-babies",
+      "paraphrase": "有意追随的运动模糊可成立，主体仍需可辨",
+      "locator": "章节73／**Intentional Blur**／段落2"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "source",
+      "bookSlug": "digital-wedding",
+      "paraphrase": "选片需检查眨眼与尴尬神态，不只看构图用光",
+      "locator": "章节91／#Culling the Shoot／段落13"
+    },
+    {
+      "ruleId": "P-CROP-ANKLE-FOOT",
+      "kind": "source",
+      "bookSlug": "digital-wedding",
+      "paraphrase": "检查脚部裁切及人物出框，无法改善时不选",
+      "locator": "章节91／#Culling the Shoot／段落10"
+    },
+    {
+      "ruleId": "P-BG-MERGER",
+      "kind": "source",
+      "bookSlug": "digital-wedding",
+      "paraphrase": "选片检查头后树枝、标牌及抢眼闯入者",
+      "locator": "章节91／#Culling the Shoot／段落11"
+    },
+    {
+      "ruleId": "P-FACE-FOCUS",
+      "kind": "source",
+      "bookSlug": "digital-wedding",
+      "paraphrase": "面向镜头的人像需让眼睛清楚且受光可读",
+      "locator": "章节62／#*Time for Your Close-Up: Catching Quiet Moments and Expressions*／段落24"
+    },
+    {
+      "ruleId": "P-YD-GAZE-DIRECTION",
+      "kind": "source",
+      "bookSlug": "digital-wedding",
+      "paraphrase": "正式家庭合影避免各人看向不同相机",
+      "locator": "章节80／#*Getting the Key Images*／段落70"
+    },
+    {
+      "ruleId": "P-YD-POSE-RESTRAINED",
+      "kind": "source",
+      "bookSlug": "digital-wedding",
+      "paraphrase": "摆姿间隙的自然互动也应纳入比较",
+      "locator": "章节80／#*Getting the Key Images*／段落41"
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "kind": "source",
+      "bookSlug": "digital-wedding",
+      "paraphrase": "同伴起哄与欢呼可提供合影互动瞬间",
+      "locator": "章节80／#*Getting the Key Images*／段落55"
+    },
+    {
+      "ruleId": "G-FRAMING-BALANCE",
+      "kind": "source",
+      "bookSlug": "digital-wedding",
+      "paraphrase": "阶梯层次可压缩长队并让群体完整入框",
+      "locator": "章节80／#*Getting the Key Images*／段落65"
+    },
+    {
+      "ruleId": "P-LIGHT-SHAPE",
+      "kind": "source",
+      "bookSlug": "digital-wedding",
+      "paraphrase": "合影逐人检查受光，闪光需照顾整个群体",
+      "locator": "章节80／#*Getting the Key Images*／段落63"
+    },
+    {
+      "ruleId": "P-YD-BG-BLACK",
+      "kind": "source",
+      "bookSlug": "digital-wedding",
+      "paraphrase": "人物亮而周围死黑的洞穴效果需复核环境用途",
+      "locator": "章节57／#*Lighting: Making Every Hour Magic Hour*／段落65"
+    },
+    {
+      "ruleId": "G-PROXY-BLUR",
+      "kind": "exception",
+      "bookSlug": "digital-wedding",
+      "paraphrase": "舞蹈慢门的运动模糊可用于表达动作",
+      "locator": "章节61／*Fast Moves: Capturing High Action Moments*／段落29"
+    },
+    {
+      "ruleId": "P-FACE-FOCUS",
+      "kind": "exception",
+      "bookSlug": "digital-wedding",
+      "paraphrase": "错落双人照可有意只突出前景一人",
+      "locator": "章节80／#*Getting the Key Images*／段落28"
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "kind": "source",
+      "bookSlug": "wedding-secrets",
+      "paraphrase": "合影各人头部需分离，避免互相融叠",
+      "locator": "章节125／#Separate the Subjects／段落4"
+    },
+    {
+      "ruleId": "P-FACE-FOCUS",
+      "kind": "source",
+      "bookSlug": "wedding-secrets",
+      "paraphrase": "错落合影要检查同伴清晰度，不只看前排主体",
+      "locator": "章节125／#Separate the Subjects／段落3"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "source",
+      "bookSlug": "wedding-secrets",
+      "paraphrase": "退场邻帧比较笑容、位置与用光的共同表现",
+      "locator": "章节208／#Do a Double Check／段落4"
+    },
+    {
+      "ruleId": "P-YD-ACTION-MOMENT",
+      "kind": "source",
+      "bookSlug": "wedding-secrets",
+      "paraphrase": "快速动作比较峰值瞬间，不以帧数代替判断",
+      "locator": "章节143／#Capture Fleeting Moments／段落3"
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "kind": "source",
+      "bookSlug": "wedding-secrets",
+      "paraphrase": "独处间隙可出现自然的双人互动",
+      "locator": "章节209／#Observe Body Language／段落3"
+    },
+    {
+      "ruleId": "P-LIGHT-SHAPE",
+      "kind": "source",
+      "bookSlug": "wedding-secrets",
+      "paraphrase": "平衡闪光与现场光可减轻典型闪光硬阴影",
+      "locator": "章节115／#Master Fill Flash／段落2"
+    },
+    {
+      "ruleId": "P-LIGHT-SHAPE",
+      "kind": "source",
+      "bookSlug": "wedding-secrets",
+      "paraphrase": "正式合影与欢乐合影可有不同柔硬光表现",
+      "locator": "章节131／#Group Shots／段落4"
+    },
+    {
+      "ruleId": "P-EXPOSURE-INTENT",
+      "kind": "exception",
+      "bookSlug": "wedding-secrets",
+      "paraphrase": "氛围肖像不必每张都让面部均匀受光",
+      "locator": "章节108／Create a Mood／段落4"
+    },
+    {
+      "ruleId": "P-YD-NONFACE-HIGHLIGHTS",
+      "kind": "exception",
+      "bookSlug": "wedding-secrets",
+      "paraphrase": "有意洗白的窗光可形成受欢迎的梦幻效果",
+      "locator": "章节142／#Indoor Fill Flash／段落3"
+    },
+    {
+      "ruleId": "P-YD-BG-BLACK",
+      "kind": "exception",
+      "bookSlug": "wedding-secrets",
+      "paraphrase": "背景变暗可突出人物，先看具体内容用途",
+      "locator": "章节139／#Using Fill Flash Creatively／段落4"
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "kind": "source",
+      "bookSlug": "moment-clicks",
+      "paraphrase": "合影可用清楚的相互手势承载内容",
+      "locator": "章节38／How to Get This Type of Shot:／段落66"
+    },
+    {
+      "ruleId": "P-YD-MULTIPLE-SHADOWS",
+      "kind": "source",
+      "bookSlug": "moment-clicks",
+      "paraphrase": "模拟单一窗光时应复核不协调的双重影子",
+      "locator": "章节41／How to Get This Type of Shot:／段落69"
+    },
+    {
+      "ruleId": "P-YD-BG-BLACK",
+      "kind": "source",
+      "bookSlug": "moment-clicks",
+      "paraphrase": "人物与天空亮时，脚下环境仍可能黑到消失",
+      "locator": "章节41／How to Get This Type of Shot:／段落75"
+    },
+    {
+      "ruleId": "P-YD-BG-DEPTH",
+      "kind": "source",
+      "bookSlug": "moment-clicks",
+      "paraphrase": "背景窗口有层次可避免环境成为死黑平面",
+      "locator": "章节38／How to Get This Type of Shot:／段落13"
+    },
+    {
+      "ruleId": "P-EXPOSURE-INTENT",
+      "kind": "source",
+      "bookSlug": "moment-clicks",
+      "paraphrase": "关键人物的脸被阴影吞没会损失成片信息",
+      "locator": "章节44／#\"Do Your Homework.\"／段落232"
+    },
+    {
+      "ruleId": "P-LIGHT-SHAPE",
+      "kind": "counterpoint",
+      "bookSlug": "moment-clicks",
+      "paraphrase": "作者强烈反对直闪，但应复核成片而非设备",
+      "locator": "章节44／#\"Do Your Homework.\"／段落193"
+    },
+    {
+      "ruleId": "P-LIGHT-SHAPE",
+      "kind": "exception",
+      "bookSlug": "moment-clicks",
+      "paraphrase": "直接闪光的欠佳光质仍可能被有效内容补偿",
+      "locator": "章节44／#\"Do Your Homework.\"／段落192"
+    },
+    {
+      "ruleId": "P-EXPOSURE-INTENT",
+      "kind": "exception",
+      "bookSlug": "moment-clicks",
+      "paraphrase": "不佳曝光也可能产生有效成片，不能绝对淘汰",
+      "locator": "章节45／#**Joe's Lighting Tips**／段落9"
+    },
+    {
+      "ruleId": "S-UNIQUE-COVERAGE",
+      "kind": "source",
+      "bookSlug": "moment-clicks",
+      "paraphrase": "批改试卷的神态进程靠序列成立，单帧不足",
+      "locator": "章节41／How to Get This Type of Shot:／段落58"
+    },
+    {
+      "ruleId": "S-UNIQUE-COVERAGE",
+      "kind": "source",
+      "bookSlug": "moment-clicks",
+      "paraphrase": "较小且不够漂亮的细节照片也能补足故事",
+      "locator": "章节37／Chapter One SHOOT WHAT YOU LOVE／段落32"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "paraphrase": "道具或扶物可交代手部动作",
+      "locator": "[p.2] 油纸伞动作图注",
+      "bookSlug": "posing"
+    },
+    {
+      "ruleId": "G-SUBJECT-HIERARCHY",
+      "kind": "source",
+      "paraphrase": "伞面遮挡杂物可突出人物",
+      "locator": "[p.2] 背景遮挡图注",
+      "bookSlug": "posing"
+    },
+    {
+      "ruleId": "P-FACE-FOCUS",
+      "kind": "source",
+      "paraphrase": "双眼错位时优先核验近侧眼清晰度",
+      "locator": "[p.49] 第2章 对准哪只眼睛对焦",
+      "bookSlug": "kelby-natural-portrait"
+    },
+    {
+      "ruleId": "P-CROP-HEADROOM",
+      "kind": "exception",
+      "paraphrase": "紧凑近景有意切去部分头顶可成立",
+      "locator": "[p.109] 第6章 裁剪掉头顶部分",
+      "bookSlug": "kelby-natural-portrait"
+    },
+    {
+      "ruleId": "G-FRAMING-BALANCE",
+      "kind": "source",
+      "paraphrase": "人物望向画外时保留视线方向留白",
+      "locator": "[p.111] 第6章 留出视觉空间",
+      "bookSlug": "kelby-natural-portrait"
+    },
+    {
+      "ruleId": "P-BG-MERGER",
+      "kind": "source",
+      "paraphrase": "杆线杂物会分散人物注意力",
+      "locator": "[p.113] 第6章 背景干扰元素",
+      "bookSlug": "kelby-natural-portrait"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "source",
+      "paraphrase": "换姿势间隙的自然表情可供组内比较",
+      "locator": "[p.131] 姿势切换间隙",
+      "bookSlug": "kelby-natural-portrait"
+    },
+    {
+      "ruleId": "P-EXPOSURE-INTENT",
+      "kind": "exception",
+      "paraphrase": "有意逆光光晕可保留但需核验主体细节",
+      "locator": "[p.189] 逆光光晕示例",
+      "bookSlug": "kelby-natural-portrait"
+    },
+    {
+      "ruleId": "P-YD-BG-SEPARATION",
+      "kind": "source",
+      "paraphrase": "人物与背景色彩明暗对比有助分离",
+      "locator": "[p.101] 第5章 对比鲜明的背景",
+      "bookSlug": "kelby-natural-portrait"
+    },
+    {
+      "ruleId": "P-YD-LIGHT-FLAT",
+      "kind": "exception",
+      "paraphrase": "阴天平光可用，需立体时再增加阴影",
+      "locator": "[p.83] 第4章 阴天反光板",
+      "bookSlug": "kelby-natural-portrait"
+    },
+    {
+      "ruleId": "L-EXPOSURE-DETAIL",
+      "kind": "source",
+      "paraphrase": "高光提醒用于发现水面雪山等细节损失",
+      "locator": "[p.145] 高光提醒与修正",
+      "bookSlug": "kelby-landscape"
+    },
+    {
+      "ruleId": "L-HORIZON-LEVEL",
+      "kind": "source",
+      "paraphrase": "风光画面应检查地平线是否水平",
+      "locator": "[p.36] 保证地平线水平",
+      "bookSlug": "kelby-landscape"
+    },
+    {
+      "ruleId": "L-FOREGROUND-ROLE",
+      "kind": "source",
+      "paraphrase": "前景与背景共同清晰可加强空间层次",
+      "locator": "[p.192] 前景背景合焦示例",
+      "bookSlug": "kelby-landscape"
+    },
+    {
+      "ruleId": "L-VISUAL-INTENT",
+      "kind": "source",
+      "paraphrase": "裁剪与纠偏应保留可回退的编辑空间",
+      "locator": "[p.150] 后期裁剪工具",
+      "bookSlug": "kelby-landscape"
+    },
+    {
+      "ruleId": "S-MOMENT-ACTION",
+      "kind": "source",
+      "paraphrase": "决定性瞬间要求元素在短时形成完整构图",
+      "locator": "[p.79] 决定性瞬间",
+      "bookSlug": "street-52"
+    },
+    {
+      "ruleId": "S-BACKGROUND-MERGER",
+      "kind": "source",
+      "paraphrase": "先确定简洁背景再等待人物进入可减少干扰",
+      "locator": "[p.250] 先确定背景",
+      "bookSlug": "street-52"
+    },
+    {
+      "ruleId": "S-EXPOSURE-CONTENT",
+      "kind": "source",
+      "paraphrase": "夜景需检查曝光补偿避免整体过亮",
+      "locator": "[p.440] 夜景曝光",
+      "bookSlug": "street-52"
+    },
+    {
+      "ruleId": "S-FOCUS-INTENT",
+      "kind": "exception",
+      "paraphrase": "区域手动对焦可用于预判位置的抓拍",
+      "locator": "[p.367] 手动区域对焦",
+      "bookSlug": "street-52"
+    },
+    {
+      "ruleId": "S-UNIQUE-COVERAGE",
+      "kind": "source",
+      "paraphrase": "同一场景等待不同人物时机形成互补瞬间",
+      "locator": "[p.529] 等待合适人物形成构图",
+      "bookSlug": "street-52"
+    },
+    {
+      "ruleId": "P-LIGHT-SHAPE",
+      "kind": "source",
+      "paraphrase": "阴影可强化表面质感与结构起伏",
+      "locator": "[p.130] 阴影与结构",
+      "bookSlug": "photography-required-course"
+    },
+    {
+      "ruleId": "G-SUBJECT-HIERARCHY",
+      "kind": "source",
+      "paraphrase": "阴影作为构图元素时仍需避免干扰主体",
+      "locator": "[p.130] 阴影的构图作用",
+      "bookSlug": "photography-required-course"
+    },
+    {
+      "ruleId": "P-COLOR-CAST",
+      "kind": "source",
+      "paraphrase": "光线方向强弱会改变色彩反差与呈现",
+      "locator": "[p.131] 光之色彩",
+      "bookSlug": "photography-required-course"
+    },
+    {
+      "ruleId": "P-EXPOSURE-INTENT",
+      "kind": "source",
+      "paraphrase": "曝光会影响照片的色彩呈现",
+      "locator": "[p.131] 光之色彩",
+      "bookSlug": "photography-required-course"
+    },
+    {
+      "ruleId": "G-SUBJECT-HIERARCHY",
+      "kind": "source",
+      "paraphrase": "主题明确且主体吸引注意力是选片起点",
+      "locator": "[p.37] 第1课 1.2–1.3",
+      "bookSlug": "nyip-upper"
+    },
+    {
+      "ruleId": "P-BG-MERGER",
+      "kind": "exception",
+      "paraphrase": "有助理解主题的环境不必一律删除",
+      "locator": "[p.38] 第1课 1.4",
+      "bookSlug": "nyip-upper"
+    },
+    {
+      "ruleId": "P-LIGHT-SHAPE",
+      "kind": "source",
+      "paraphrase": "明暗对比可突出主体并增加画面趣味",
+      "locator": "[p.296] 第8课 8.5",
+      "bookSlug": "nyip-upper"
+    },
+    {
+      "ruleId": "P-FACE-FOCUS",
+      "kind": "source",
+      "paraphrase": "精确对焦并让眼睛直视可集中注意力",
+      "locator": "[p.299] 第8课 8.7",
+      "bookSlug": "nyip-upper"
+    },
+    {
+      "ruleId": "S-UNIQUE-COVERAGE",
+      "kind": "source",
+      "bookSlug": "decisive-moment",
+      "paraphrase": "单帧不能包揽事件时，互补画面共同组成故事",
+      "locator": "PDF第5页／前言·图片故事"
+    },
+    {
+      "ruleId": "S-MOMENT-ACTION",
+      "kind": "source",
+      "bookSlug": "decisive-moment",
+      "paraphrase": "移动元素在同一瞬间形成平衡，内容与形式同看",
+      "locator": "PDF第7页／前言·构图"
+    },
+    {
+      "ruleId": "S-PERSON-GEOMETRY",
+      "kind": "source",
+      "bookSlug": "decisive-moment",
+      "paraphrase": "人物进入时补足几何关系，邻帧比较整体组织",
+      "locator": "PDF第7–8页／前言·构图"
+    },
+    {
+      "ruleId": "P-SUBJECT-PLACEMENT",
+      "kind": "counterpoint",
+      "bookSlug": "decisive-moment",
+      "paraphrase": "构图须看元素关系，不能套固定几何模板",
+      "locator": "PDF第8页／前言·构图"
+    },
+    {
+      "ruleId": "G-PROXY-BLUR",
+      "kind": "counterpoint",
+      "bookSlug": "decisive-moment",
+      "paraphrase": "清晰度的执念不能替代对照片表达的判断",
+      "locator": "PDF第9页／前言·技术"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "source",
+      "bookSlug": "decisive-moment",
+      "paraphrase": "肖像神态转瞬变化，须同时看环境与人物状态",
+      "locator": "PDF第7页／前言·主题（肖像）"
+    },
+    {
+      "ruleId": "G-FRAMING-BALANCE",
+      "kind": "counterpoint",
+      "bookSlug": "decisive-moment",
+      "paraphrase": "裁切可能破坏原有比例关系，先复核整体组织",
+      "locator": "PDF第8页／前言·构图"
+    },
+    {
+      "ruleId": "S-UNIQUE-COVERAGE",
+      "kind": "source",
+      "bookSlug": "decisive-moment",
+      "paraphrase": "小图也可能是故事不可缺的一环，勿只留主图",
+      "locator": "PDF第10页／前言·客户"
+    },
+    {
+      "ruleId": "G-FRAMING-BALANCE",
+      "kind": "source",
+      "bookSlug": "hurn-jay",
+      "paraphrase": "静物邻帧的微小视角和距离变化也能改变成片",
+      "locator": "PDF第38页／Shooting the Single Picture·Callahan案例"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "hurn-jay",
+      "paraphrase": "手腕张力和手指变化可决定同卷照片的视觉力量",
+      "locator": "PDF第38页／Shooting the Single Picture·Freed案例"
+    },
+    {
+      "ruleId": "S-BACKGROUND-MERGER",
+      "kind": "source",
+      "bookSlug": "hurn-jay",
+      "paraphrase": "邻帧须看人物轮廓后方的肢体纠缠与边缘杂乱",
+      "locator": "PDF第39页／Shooting the Single Picture·海滩案例"
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "kind": "source",
+      "bookSlug": "hurn-jay",
+      "paraphrase": "亲吻手指的动作发展与几何改善共同影响取舍",
+      "locator": "PDF第39–40页／Shooting the Single Picture·Henley案例"
+    },
+    {
+      "ruleId": "S-LAYERS-SEPARATION",
+      "kind": "source",
+      "bookSlug": "hurn-jay",
+      "paraphrase": "主体都成立时，整体背景排列可能决定放大首选",
+      "locator": "PDF第42–43页／Shooting the Single Picture·Barry Island案例"
+    },
+    {
+      "ruleId": "S-PERSON-GEOMETRY",
+      "kind": "counterpoint",
+      "bookSlug": "hurn-jay",
+      "paraphrase": "几何设计应帮助交代内容，不以花纹巧合为终点",
+      "locator": "PDF第43页／Shooting the Single Picture"
+    },
+    {
+      "ruleId": "G-PROXY-BLUR",
+      "kind": "source",
+      "bookSlug": "hurn-jay",
+      "paraphrase": "先并看相邻小图，再放大检查单帧细节",
+      "locator": "PDF第52页／Creating Contacts"
+    },
+    {
+      "ruleId": "S-UNIQUE-COVERAGE",
+      "kind": "source",
+      "bookSlug": "hurn-jay",
+      "paraphrase": "只选醒目冲突画面可能遗漏事件中其他可见内容",
+      "locator": "PDF第56页／The Picture Essay·游行案例"
+    },
+    {
+      "ruleId": "P-BOOK-EVENT-COVERAGE",
+      "kind": "source",
+      "bookSlug": "hurn-jay",
+      "paraphrase": "全景、关系镜头与近景共同避免组照视觉单调",
+      "locator": "PDF第56–57页／The Picture Essay"
+    },
+    {
+      "ruleId": "G-PROXY-BLUR",
+      "kind": "exception",
+      "bookSlug": "why-focus-sample",
+      "paraphrase": "有意失焦可组织观看方式，不应按锐度直接淘汰",
+      "locator": "样章PDF第6页／Introduction·Uta Barth简介"
+    },
+    {
+      "ruleId": "S-MOTION-INTENT",
+      "kind": "exception",
+      "bookSlug": "why-focus-sample",
+      "paraphrase": "运动模糊可柔化奔跑跳跃的轮廓",
+      "locator": "样章PDF第6页／Introduction·Ryan McGinley简介"
+    },
+    {
+      "ruleId": "P-YD-TILT",
+      "kind": "exception",
+      "bookSlug": "why-focus-sample",
+      "paraphrase": "斜地平线与裁切可属系列表达，不是必然失误",
+      "locator": "样章PDF第7页／Introduction·Ed Ruscha简介"
+    },
+    {
+      "ruleId": "L-EXPOSURE-DETAIL",
+      "kind": "exception",
+      "bookSlug": "why-focus-sample",
+      "paraphrase": "故意过曝可形成风光表达，须先确认细节职责",
+      "locator": "样章PDF第7页／Introduction·Paul Graham简介"
+    },
+    {
+      "ruleId": "P-EXPOSURE-INTENT",
+      "kind": "exception",
+      "bookSlug": "why-focus-sample",
+      "paraphrase": "人物有意隐入暗部可成立，先核对表达用途",
+      "locator": "样章PDF第7页／Introduction·Taryn Simon简介"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "exception",
+      "bookSlug": "why-focus-sample",
+      "paraphrase": "松弛或面无表情的人像不必是过渡废片",
+      "locator": "样章PDF第7页及第18–19页／Introduction、Parr案例"
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "kind": "exception",
+      "bookSlug": "why-focus-sample",
+      "paraphrase": "灯泡有意遮住自画像面部，可构成画面表达",
+      "locator": "样章PDF第12–13页／Friedlander案例"
+    },
+    {
+      "ruleId": "S-MOTION-INTENT",
+      "kind": "exception",
+      "bookSlug": "why-focus-sample",
+      "paraphrase": "有意运动虚化与环境相融可形成幽灵般形态",
+      "locator": "样章PDF第14–15页／Self-Deceit 4"
+    },
+    {
+      "ruleId": "P-FACE-FOCUS",
+      "kind": "exception",
+      "bookSlug": "why-focus-sample",
+      "paraphrase": "柔焦与高反差可突出复合肖像的图形性质",
+      "locator": "样章PDF第17页／Second Beauty Composite"
+    },
+    {
+      "ruleId": "P-FACE-EYES",
+      "kind": "exception",
+      "bookSlug": "why-focus-sample",
+      "paraphrase": "有意闭眼是自画像的核心，不应误作眨眼淘汰",
+      "locator": "样章PDF第20–21页／Gavin Turk案例"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "posing-sample",
+      "paraphrase": "手与臂应有画面职责，避免成为无意义干扰",
+      "locator": "样章PDF第17页／P3S说明"
+    },
+    {
+      "ruleId": "P-YD-POSE-THEME",
+      "kind": "exception",
+      "bookSlug": "posing-sample",
+      "paraphrase": "摆姿系统是选择工具，各点可因表达需要打破",
+      "locator": "样章PDF第21–22页／What It Is、What It Is Not"
+    },
+    {
+      "ruleId": "P-YD-GAZE-DIRECTION",
+      "kind": "source",
+      "bookSlug": "posing-sample",
+      "paraphrase": "锁骨、下巴与眼睛朝向共同分配观看重点",
+      "locator": "样章PDF第24–25页／Three-Point Check Combinations"
+    },
+    {
+      "ruleId": "P-YD-SHOULDER-NECK",
+      "kind": "source",
+      "bookSlug": "posing-sample",
+      "paraphrase": "下颌与颈部的明暗分离支持可读轮廓",
+      "locator": "样章PDF第25页／Flash Card、图4.1"
+    },
+    {
+      "ruleId": "P-POSE-WEIGHT",
+      "kind": "exception",
+      "bookSlug": "posing-sample",
+      "paraphrase": "正面对称姿态可用于直接交流，不必一律判呆板",
+      "locator": "样章PDF第26页／图4.2"
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "kind": "exception",
+      "bookSlug": "posing-sample",
+      "paraphrase": "发丝遮眼可配合有意造型，不能自动拒绝",
+      "locator": "样章PDF第31页／Applying the 3-Point Combinations·图4.8"
+    },
+    {
+      "ruleId": "P-YD-GAZE-DIRECTION",
+      "kind": "exception",
+      "bookSlug": "posing-sample",
+      "paraphrase": "展示服装时，视线离镜头可减少与服装争夺重点",
+      "locator": "样章PDF第31–32页／图4.9–4.11"
+    },
+    {
+      "ruleId": "G-FRAMING-BALANCE",
+      "kind": "source",
+      "bookSlug": "photographers-eye-excerpt",
+      "paraphrase": "边界内外的选择改变画面中人物关系",
+      "locator": "导言摘录／The Frame·第1–2段"
+    },
+    {
+      "ruleId": "P-CROP-TIER",
+      "kind": "counterpoint",
+      "bookSlug": "photographers-eye-excerpt",
+      "paraphrase": "有意截断可归于画面形状，不只按身体档位裁切",
+      "locator": "导言摘录／The Frame·第4段"
+    },
+    {
+      "ruleId": "S-MOMENT-ACTION",
+      "kind": "exception",
+      "bookSlug": "photographers-eye-excerpt",
+      "paraphrase": "决定性时刻可由视觉形式成立，不必是戏剧高潮",
+      "locator": "导言摘录／Time·第5段"
+    },
+    {
+      "ruleId": "S-NARRATIVE-EVIDENCE",
+      "kind": "counterpoint",
+      "bookSlug": "photographers-eye-excerpt",
+      "paraphrase": "照片的片段不能单独证明完整故事和背景事实",
+      "locator": "导言摘录／The Detail·第1–2段"
+    },
+    {
+      "ruleId": "P-FACE-FOCUS",
+      "kind": "exception",
+      "bookSlug": "photographers-eye-excerpt",
+      "paraphrase": "背面或陌生视角可保留场景意义，不强求可见人眼",
+      "locator": "导言摘录／Vantage Point·第1段"
+    },
+    {
+      "ruleId": "G-FRAMING-BALANCE",
+      "kind": "source",
+      "bookSlug": "photographers-eye-press",
+      "paraphrase": "画框决定纳入与排除，边缘是选择的重要界线",
+      "locator": "新闻稿PDF第2页／The Frame简介"
+    },
+    {
+      "ruleId": "S-MOTION-INTENT",
+      "kind": "source",
+      "bookSlug": "photographers-eye-press",
+      "paraphrase": "冻结和累积运动描述不同时间段，均有表现用途",
+      "locator": "新闻稿PDF第2页／Time简介"
+    },
+    {
+      "ruleId": "S-PERSON-GEOMETRY",
+      "kind": "source",
+      "bookSlug": "magnum-streetwise",
+      "paraphrase": "人物、动物与阴影进入既有景框，可补足画面关系",
+      "locator": "PDF第43页／阿巴斯（书内第39页）"
+    },
+    {
+      "ruleId": "S-UNIQUE-COVERAGE",
+      "kind": "source",
+      "bookSlug": "magnum-streetwise",
+      "paraphrase": "持续探索同一主题的作品，比单一标志照片更完整",
+      "locator": "PDF第15页／前言·作品集（书内第11页）"
+    },
+    {
+      "ruleId": "S-MOMENT-ACTION",
+      "kind": "exception",
+      "bookSlug": "magnum-streetwise",
+      "paraphrase": "不同摄影师的必要瞬间不同，不设统一动作峰值",
+      "locator": "PDF第16页／前言·卡尔瓦观点（书内第12页）"
+    },
+    {
+      "ruleId": "G-SUBJECT-HIERARCHY",
+      "kind": "source",
+      "bookSlug": "magnum-streetwise",
+      "paraphrase": "画面元素应有作用，但不把绝对整齐当作完成度",
+      "locator": "PDF第169页／伦纳德·弗里德（书内第165页）"
+    },
+    {
+      "ruleId": "S-NARRATIVE-EVIDENCE",
+      "kind": "counterpoint",
+      "bookSlug": "magnum-streetwise",
+      "paraphrase": "交谈与手势可见，却不足以断言谈话内容",
+      "locator": "PDF第247页／理查德·卡尔瓦（书内第243页）"
+    },
+    {
+      "ruleId": "G-FRAMING-BALANCE",
+      "kind": "exception",
+      "bookSlug": "magnum-streetwise",
+      "paraphrase": "裁切可以服务画面表达，不必一律禁用",
+      "locator": "PDF第339页／格奥尔基·平卡索夫（书内第335页）"
+    },
+    {
+      "ruleId": "G-PROXY-BLUR",
+      "kind": "exception",
+      "bookSlug": "magnum-streetwise",
+      "paraphrase": "模糊且颗粒强烈的人物照片也可经过编辑入选",
+      "locator": "PDF第311页／特伦特·帕克·相机是上帝（书内第307页）"
+    },
+    {
+      "ruleId": "S-NOISE-STYLE",
+      "kind": "exception",
+      "bookSlug": "magnum-streetwise",
+      "paraphrase": "放大颗粒是人物项目的表现方式，不是直接废片",
+      "locator": "PDF第311页／特伦特·帕克·相机是上帝（书内第307页）"
+    },
+    {
+      "ruleId": "G-FRAMING-BALANCE",
+      "kind": "source",
+      "bookSlug": "magnum-streetwise",
+      "paraphrase": "底片印样中的接近与位置变化可改善构图",
+      "locator": "PDF第239页／戴维·赫恩谈威诺格兰德（书内第235页）"
+    },
+    {
+      "ruleId": "G-BOOK-SEQUENCE-PACE",
+      "kind": "source",
+      "bookSlug": "magnum-streetwise",
+      "paraphrase": "多次并看入选照片的联系，可形成连贯作品集",
+      "locator": "PDF第375页／亚历克斯·韦伯·错位（书内第371页）"
+    },
+    {
+      "ruleId": "G-BOOK-DETAIL-AUTONOMY",
+      "kind": "source",
+      "bookSlug": "photographers-eye-zh",
+      "paraphrase": "局部痕迹可独立承载主题，不必补齐事件全貌",
+      "locator": "PDF第45页／细节·主题说明"
+    },
+    {
+      "ruleId": "G-BOOK-DETAIL-AUTONOMY",
+      "kind": "source",
+      "bookSlug": "photographers-eye-zh",
+      "paraphrase": "鼓面磨损痕迹使细节超出物体外形的展示",
+      "locator": "PDF第47页／细节·霍姆斯鼓面评论"
+    },
+    {
+      "ruleId": "P-CROP-WRIST",
+      "kind": "exception",
+      "bookSlug": "photographers-eye-zh",
+      "paraphrase": "手部近景以姿态与纹理成立，不要求手臂同框",
+      "locator": "PDF第51–52页／细节·手与和服、让·考克多的手"
+    },
+    {
+      "ruleId": "P-CROP-NECK",
+      "kind": "exception",
+      "bookSlug": "photographers-eye-zh",
+      "paraphrase": "眼部片段可独立成片，无须补齐锁骨或胸口",
+      "locator": "PDF第59页／细节·洛特的眼睛"
+    },
+    {
+      "ruleId": "S-EDGE-CONTENT",
+      "kind": "source",
+      "bookSlug": "photographers-eye-zh",
+      "paraphrase": "边缘截断提示对象向画外延伸，需复核延续线索",
+      "locator": "PDF第11–12页／导言·边框"
+    },
+    {
+      "ruleId": "S-OCCLUSION-INTENT",
+      "kind": "exception",
+      "bookSlug": "photographers-eye-zh",
+      "paraphrase": "名义主体的局部遮挡可重排观看重点",
+      "locator": "PDF第129页／有利位置·主题说明"
+    },
+    {
+      "ruleId": "P-YD-BODY-PROPORTION",
+      "kind": "exception",
+      "bookSlug": "photographers-eye-zh",
+      "paraphrase": "近处手部放大与躯干压缩可组织人物空间关系",
+      "locator": "PDF第136页／有利位置·莱昂·莱文斯汀无题"
+    },
+    {
+      "ruleId": "P-YD-NOSE-VIEW",
+      "kind": "exception",
+      "bookSlug": "photographers-eye-zh",
+      "paraphrase": "近处面部与远景并置，可使鼻部成为构图重点",
+      "locator": "PDF第138页／有利位置·裸体透视系列第43幅"
+    },
+    {
+      "ruleId": "G-SUBJECT-HIERARCHY",
+      "kind": "exception",
+      "bookSlug": "photographers-eye-zh",
+      "paraphrase": "橱窗实物与街道反射叠合可成为画面主题",
+      "locator": "PDF第144页／有利位置·弗里德兰德无题"
+    },
+    {
+      "ruleId": "P-BG-MERGER",
+      "kind": "exception",
+      "bookSlug": "photographers-eye-zh",
+      "paraphrase": "树影跨越脸部仍可参与群像的明暗节奏",
+      "locator": "PDF第150页／有利位置·莫斯科"
+    },
+    {
+      "ruleId": "S-TILT-INTENT",
+      "kind": "exception",
+      "bookSlug": "photographers-eye-zh",
+      "paraphrase": "斜向车身与背景拖影共同表现速度",
+      "locator": "PDF第88页／边框·巴黎汽车俱乐部大奖赛"
+    },
+    {
+      "ruleId": "P-YD-MOTION-READABLE",
+      "kind": "source",
+      "bookSlug": "photographers-eye-zh",
+      "paraphrase": "重复手位与抛物轨迹使动作过程可见",
+      "locator": "PDF第108页／时间·杂耍艺人"
+    },
+    {
+      "ruleId": "P-YD-ACTION-MOMENT",
+      "kind": "exception",
+      "bookSlug": "photographers-eye-zh",
+      "paraphrase": "冻结运动显露肉眼难辨的步态与衣形",
+      "locator": "PDF第12页／导言·时间"
+    },
+    {
+      "ruleId": "P-EXPOSURE-INTENT",
+      "kind": "exception",
+      "paraphrase": "明暗偏移可服务预期效果，不能只按中灰判曝光",
+      "locator": "PDF第109页／第三章第一节／表现意图",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "P-YD-NONFACE-HIGHLIGHTS",
+      "kind": "counterpoint",
+      "paraphrase": "需要表现雪景亮部时，亮部细节仍应保留",
+      "locator": "PDF第109页／第三章第一节／表现意图",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "G-FRAMING-BALANCE",
+      "kind": "source",
+      "paraphrase": "全景交代环境，中景表现关系，近景刻画神态",
+      "locator": "PDF第137页／第四章第一节／景别",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "G-BOOK-DETAIL-AUTONOMY",
+      "kind": "source",
+      "paraphrase": "局部手眼脚特写可独立传达神态或质感",
+      "locator": "PDF第137页／第四章第一节／特写",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "P-POSE-WEIGHT",
+      "kind": "exception",
+      "paraphrase": "正面构图可表现对称与庄重，不能一概判呆板",
+      "locator": "PDF第137页／第四章第一节／正面方向",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "L-HORIZON-LEVEL",
+      "kind": "source",
+      "paraphrase": "静态风景中的可信水平参照有助于宁静稳定",
+      "locator": "PDF第139页／第四章第二节／画面稳定",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "P-YD-GAZE-DIRECTION",
+      "kind": "source",
+      "paraphrase": "视线或运动前方留白有助观看延伸与动势",
+      "locator": "PDF第140页／第四章第二节／画面空白",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "L-HORIZON-PLACEMENT",
+      "kind": "exception",
+      "paraphrase": "岸景与水中倒影可采用居中地平线",
+      "locator": "PDF第140页／第四章第二节／三分法",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "G-PROXY-BLUR",
+      "kind": "exception",
+      "paraphrase": "主体虚而环境实也能表达动感，不要求全幅清楚",
+      "locator": "PDF第141–142页／第四章第三节／虚实结合",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "P-YD-MOTION-READABLE",
+      "kind": "source",
+      "paraphrase": "脸身较清晰而手脚虚化，可兼顾面貌与动感",
+      "locator": "PDF第141页／第四章第三节／虚实结合",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "L-FOREGROUND-ROLE",
+      "kind": "source",
+      "paraphrase": "前景应服务内容，不为增加前景而抢走主体",
+      "locator": "PDF第142页／第四章第四节／前景",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "P-BOOK-ENVIRONMENT-CONTEXT",
+      "kind": "source",
+      "paraphrase": "地点季节与事件背景可丰富主体含义",
+      "locator": "PDF第143页／第四章第四节／背景",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "L-WL-TONE-DEPTH",
+      "kind": "source",
+      "paraphrase": "近暗远亮的影调变化可表现空间纵深",
+      "locator": "PDF第145页／第四章第五节／影调",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "P-YD-COLOR-LAYERS",
+      "kind": "exception",
+      "paraphrase": "含同色的复色可形成淡雅统一的画面",
+      "locator": "PDF第153页／第四章第六节／色彩基调",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "S-MOTION-INTENT",
+      "kind": "exception",
+      "paraphrase": "冻结擅长表现姿势，模糊擅长表现速度",
+      "locator": "PDF第289–291页／第八章第一节／动体效果",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "G-PROXY-BLUR",
+      "kind": "exception",
+      "paraphrase": "主体较清而背景线状虚化可形成强烈动感",
+      "locator": "PDF第291页／第八章第一节／追随拍摄",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "P-SUBJECT-PLACEMENT",
+      "kind": "exception",
+      "paraphrase": "放射线效果中主体居中可强化视觉表达",
+      "locator": "PDF第294页／第八章第一节／变焦拍摄",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "G-BOOK-SEQUENCE-PACE",
+      "kind": "source",
+      "paraphrase": "剧照组内景别变化有助传神传情",
+      "locator": "PDF第295页／第八章第一节／舞台组照",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "P-YD-LIGHT-FLAT",
+      "kind": "exception",
+      "paraphrase": "高调人像的柔光低反差可支持柔和层次",
+      "locator": "PDF第322–323页／第九章第二节／高调人像",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "counterpoint",
+      "paraphrase": "不应一律选笑脸，神态应因人及表达意图而异",
+      "locator": "PDF第324页／第九章第二节／人像神态",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "S-SEQUENCE-PRESERVE",
+      "kind": "source",
+      "paraphrase": "连续瞬间可形成系列报道，应先确认序列用途",
+      "locator": "PDF第335页／第十章第二节／系列性成组图片",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "S-MOMENT-ACTION",
+      "kind": "source",
+      "paraphrase": "有表现力的瞬间可能在高潮前、当时或过后",
+      "locator": "PDF第339页／第十章第三节／典型瞬间",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "G-FRAMING-BALANCE",
+      "kind": "counterpoint",
+      "paraphrase": "裁切放大主体须保留承担报道内容的部分",
+      "locator": "PDF第345页／第十章第四节／图片编辑",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "G-BOOK-SEQUENCE-PACE",
+      "kind": "exception",
+      "paraphrase": "对比或连续组照可等幅排列以保持连贯",
+      "locator": "PDF第345页／第十章第四节／图片编辑",
+      "bookSlug": "photographic-techniques-7"
+    },
+    {
+      "ruleId": "P-YD-LIGHT-FLAT",
+      "kind": "exception",
+      "paraphrase": "平淡正面光可弱化皮肤瑕疵，适用于婚礼快照",
+      "locator": "PDF第15页／第19课／婚礼快照",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "G-PROXY-BLUR",
+      "kind": "exception",
+      "paraphrase": "婚礼边缘柔化可营造梦幻感，但不宜每张套用",
+      "locator": "PDF第21页／第19课／柔光效果",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-BOOK-EVENT-COVERAGE",
+      "kind": "source",
+      "paraphrase": "宾客对仪式的反应可补充主事件画面",
+      "locator": "PDF第24页／第19课／仪式",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "source",
+      "paraphrase": "连续拍摄后比较新人面对撒纸屑的自然反应",
+      "locator": "PDF第25页／第19课／离开教堂",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-CROP-ANKLE-FOOT",
+      "kind": "source",
+      "paraphrase": "完整礼服纪念全身像须交代头饰到拖裙的细节",
+      "locator": "PDF第27页／第19课／正规人像",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-YD-NONFACE-HIGHLIGHTS",
+      "kind": "source",
+      "paraphrase": "白色礼服仍需呈现褶痕质感与重要部位细节",
+      "locator": "PDF第28页／第19课／布光效果",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "G-BOOK-SEQUENCE-PACE",
+      "kind": "source",
+      "paraphrase": "影集可按叙事调整次序，并检查每场的起止",
+      "locator": "PDF第34页／第19课／影集顺序",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-BG-MERGER",
+      "kind": "exception",
+      "paraphrase": "背景图案有意呼应服装，可强化服装特征",
+      "locator": "PDF第48页／第20课／选择背景",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-BOOK-ENVIRONMENT-CONTEXT",
+      "kind": "source",
+      "paraphrase": "清晰环境与虚化背景均可，保留细节须不抢主体",
+      "locator": "PDF第74页／第21课／户外实景摄影",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-YD-NONFACE-SHADOWS",
+      "kind": "exception",
+      "paraphrase": "现有光下暗影可全黑，前提是不丢必要信息",
+      "locator": "PDF第75页／第21课／现有光",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-YD-SHOULDER-NECK",
+      "kind": "source",
+      "paraphrase": "并列比较肩颈放松与手臂透视，核对局部干扰",
+      "locator": "PDF第83页／第21课／调整姿态",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-COURSE-ARM-PROJECTION",
+      "kind": "source",
+      "paraphrase": "手臂角度不佳可显短粗，应比较相邻姿态",
+      "locator": "PDF第83页／第21课／调整姿态",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-YD-BODY-PROPORTION",
+      "kind": "exception",
+      "paraphrase": "有意放大近侧双腿可强化向观者逼近的感觉",
+      "locator": "PDF第86页／第21课／姿势评析",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-FACE-EYES",
+      "kind": "exception",
+      "paraphrase": "闭眼依偎可支持可见的亲昵关系",
+      "locator": "PDF第89页／第21课／组合魅态摄影",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-FACE-FOCUS",
+      "kind": "exception",
+      "paraphrase": "梦幻表达可用虚焦，清晰轮廓未必适合主题",
+      "locator": "PDF第92页／第21课／特殊效果",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-EXPOSURE-INTENT",
+      "kind": "exception",
+      "paraphrase": "深暗半脸若强化鼻唇与身体轮廓，可保留",
+      "locator": "PDF第99页／第21课／摄影课",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "S-FOCUS-INTENT",
+      "kind": "exception",
+      "paraphrase": "关键比赛动作略糊仍可能胜过清楚的无关画面",
+      "locator": "PDF第353页／第29课／体育摄影",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "G-SUBJECT-HIERARCHY",
+      "kind": "source",
+      "paraphrase": "主题明确、视觉集中、无关信息少是评价线索",
+      "locator": "PDF第354页／第29课／基本要素",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "S-MOTION-INTENT",
+      "kind": "counterpoint",
+      "paraphrase": "体育新闻常优先关键动作清楚，动感模糊非通用",
+      "locator": "PDF第403页／第30课／体育摄影",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "S-MOMENT-ACTION",
+      "kind": "source",
+      "paraphrase": "球类动作画面中的球有助理解动作关系",
+      "locator": "PDF第410页／第30课／体育七项要点",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "S-UNIQUE-COVERAGE",
+      "kind": "source",
+      "paraphrase": "观众教练的反应也属于比赛覆盖内容",
+      "locator": "PDF第411页／第30课／项目要点",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "S-EYES-EXPRESSION",
+      "kind": "exception",
+      "paraphrase": "遭水喷脸时闭眼退缩可成为有效的幽默瞬间",
+      "locator": "PDF第420页／第30课／专题摄影",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "G-BOOK-SEQUENCE-PACE",
+      "kind": "source",
+      "paraphrase": "平稳开头、紧张行动、恢复日常可形成叙事节奏",
+      "locator": "PDF第428页／第30课／急救室图片故事",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "G-BOOK-STORY-FUNCTION",
+      "kind": "source",
+      "paraphrase": "开篇确定主题，中段补充细节，收尾结束报道",
+      "locator": "PDF第433页／第30课／图片故事的结构",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "S-NARRATIVE-EVIDENCE",
+      "kind": "exception",
+      "paraphrase": "无人组照也可借环境与生活遗留细节承载主题",
+      "locator": "PDF第433–434页／第30课／韦尔费尔岛图片故事",
+      "bookSlug": "nyip-lower"
+    },
+    {
+      "ruleId": "P-YD-SHOULDER-NECK",
+      "kind": "source",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "塌肩缩颈使肩颈连接拥挤难辨",
+      "locator": "PDF第2页／姿态／颈部"
+    },
+    {
+      "ruleId": "P-YD-BODY-PROPORTION",
+      "kind": "source",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "塌陷姿态会压缩身高与躯干线条",
+      "locator": "PDF第2页／姿态／身高"
+    },
+    {
+      "ruleId": "P-COURSE-CLOTHING-LINES",
+      "kind": "source",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "坐姿塌陷伴随腹部衣料堆积，需看线条",
+      "locator": "PDF第2页／姿态／坐姿"
+    },
+    {
+      "ruleId": "P-COURSE-ARM-PROJECTION",
+      "kind": "source",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "肘尖迎向镜头使手臂显短或似被截断",
+      "locator": "PDF第3页／透视缩短／手臂"
+    },
+    {
+      "ruleId": "P-YD-BODY-PROPORTION",
+      "kind": "source",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "膝腿朝向镜头时腿与躯干可能显短",
+      "locator": "PDF第3页／透视缩短／腿位"
+    },
+    {
+      "ruleId": "P-POSE-LIMB-HIDDEN",
+      "kind": "source",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "俯卧正面可能隐藏躯干，使脚似从头后伸出",
+      "locator": "PDF第3页／透视缩短／身体"
+    },
+    {
+      "ruleId": "P-YD-POSE-COMPACT",
+      "kind": "source",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "臂身间可见的小空隙有助辨认身体轮廓",
+      "locator": "PDF第4页／粘连／长袖与侧身"
+    },
+    {
+      "ruleId": "P-COURSE-CLOTHING-LINES",
+      "kind": "source",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "宽松衣料填满臂身空隙时，抬肘仍可能显宽",
+      "locator": "PDF第5页／粘连／宽松衣料"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "大面积掌背朝镜头可能比脸更抢眼",
+      "locator": "PDF第7页／手势／掌背"
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "kind": "source",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "近脸手位遮住整个下颌会削弱脸部轮廓",
+      "locator": "PDF第7页／手势／遮下颌"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "手指爪状紧绷、贴脸施压会干扰松弛神态",
+      "locator": "PDF第7页／手势／紧张与挤压"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "腰间攥紧手指会带来紧张感，需结合表达",
+      "locator": "PDF第8页／手势／续页"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "source",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "抬眉瞪眼、紧抿嘴唇需与预期表情比较",
+      "locator": "PDF第9页／弱表情"
+    },
+    {
+      "ruleId": "P-YD-POSE-COMPACT",
+      "kind": "exception",
+      "bookSlug": "adler-pitfalls",
+      "paraphrase": "臂在身体轮廓内形成线条，也可不用留大空隙",
+      "locator": "PDF第5页／粘连／轮廓内造型"
+    },
+    {
+      "ruleId": "P-POSE-WEIGHT",
+      "kind": "source",
+      "bookSlug": "adler-pocket",
+      "paraphrase": "不等重心与关节转折可增加站姿线条变化",
+      "locator": "PDF第1页／基础／站姿"
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "kind": "source",
+      "bookSlug": "adler-pocket",
+      "paraphrase": "手、头与躯干的多点接触可增强画面连接",
+      "locator": "PDF第1页／双人"
+    },
+    {
+      "ruleId": "P-COURSE-CLOTHING-LINES",
+      "kind": "source",
+      "bookSlug": "adler-pocket",
+      "paraphrase": "衣服与手位可共同交代腰部轮廓",
+      "locator": "PDF第1页／曲线"
+    },
+    {
+      "ruleId": "G-SUBJECT-HIERARCHY",
+      "kind": "source",
+      "bookSlug": "adler-pocket",
+      "paraphrase": "手部线条可引导观看重点，需与表达一致",
+      "locator": "PDF第1页／通用手位"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "exception",
+      "bookSlug": "adler-posing",
+      "paraphrase": "掌心迎镜可配合奔放动作，不必一律判错",
+      "locator": "PDF第21页／导言／图I.6"
+    },
+    {
+      "ruleId": "P-YD-POSE-COMPACT",
+      "kind": "exception",
+      "bookSlug": "adler-posing",
+      "paraphrase": "蜷缩与紧绷手势可表达痛苦，不应自动淘汰",
+      "locator": "PDF第22页／导言／规则边界"
+    },
+    {
+      "ruleId": "P-YD-SHOULDER-NECK",
+      "kind": "source",
+      "bookSlug": "adler-posing",
+      "paraphrase": "下巴过度前伸虽显下颌，却可能造成生硬头位",
+      "locator": "PDF第60页／面部／图2.13–2.15"
+    },
+    {
+      "ruleId": "P-YD-SHOULDER-NECK",
+      "kind": "exception",
+      "bookSlug": "adler-posing",
+      "paraphrase": "抬肩可形成有趣线条，前提是肩颈下颌仍可读",
+      "locator": "PDF第66页／面部／图2.27–2.28"
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "kind": "source",
+      "bookSlug": "adler-posing",
+      "paraphrase": "抬头转脸使鼻部挡住远侧眼时需复核",
+      "locator": "PDF第67页／面部／图2.29–2.30"
+    },
+    {
+      "ruleId": "P-YD-PROFILE",
+      "kind": "source",
+      "bookSlug": "adler-posing",
+      "paraphrase": "鼻尖仅略越过面颊轮廓时需复核轮廓粘连",
+      "locator": "PDF第68页／面部／图2.31–2.32"
+    },
+    {
+      "ruleId": "P-YD-NOSE-VIEW",
+      "kind": "exception",
+      "bookSlug": "adler-posing",
+      "paraphrase": "低角位、高角位均可成立，不按鼻孔可见拒绝",
+      "locator": "PDF第70页／面部／图2.34a–c"
+    },
+    {
+      "ruleId": "P-YD-SHOULDER-NECK",
+      "kind": "exception",
+      "bookSlug": "adler-posing",
+      "paraphrase": "倚靠椅背可成立，仍需复核肩颈与躯干线条",
+      "locator": "PDF第77页／姿态／边注"
+    },
+    {
+      "ruleId": "P-YD-POSE-COMPACT",
+      "kind": "source",
+      "bookSlug": "adler-posing",
+      "paraphrase": "实际臂身有空隙但画面不可见时，仍会粘连",
+      "locator": "PDF第87页／粘连／图3.19"
+    },
+    {
+      "ruleId": "P-YD-POSE-COMPACT",
+      "kind": "exception",
+      "bookSlug": "adler-posing",
+      "paraphrase": "贴身手臂顺着腰线塑形，也可形成清楚轮廓",
+      "locator": "PDF第90页／粘连／图3.26"
+    },
+    {
+      "ruleId": "P-COURSE-CLOTHING-LINES",
+      "kind": "source",
+      "bookSlug": "adler-posing",
+      "paraphrase": "手在衣料内标示腰线，胜过只抬肘扩大轮廓",
+      "locator": "PDF第92页／粘连／图3.29–3.30"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "exception",
+      "bookSlug": "adler-posing",
+      "paraphrase": "攥拳与紧抓可表达愤怒，不必强求松弛",
+      "locator": "PDF第95页／手／紧张"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "adler-posing",
+      "paraphrase": "手压脸或紧抓腰部造成可见凹陷时需复核",
+      "locator": "PDF第97页／手／图3.40–3.41"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "counterpoint",
+      "bookSlug": "adler-posing",
+      "paraphrase": "好表情可比姿势与技术更受重视，需并看邻帧",
+      "locator": "PDF第98页／表情／优先关系"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "source",
+      "bookSlug": "adler-posing",
+      "paraphrase": "亲吻时挤压嘴唇不如接近接触的瞬间自然",
+      "locator": "PDF第221–223页／双人／图7.6–7.7"
+    },
+    {
+      "ruleId": "P-YD-POSE-COMPACT",
+      "kind": "source",
+      "bookSlug": "adler-posing",
+      "paraphrase": "上臂紧贴身体会压扁显宽，需看可见挤压",
+      "locator": "PDF第230页／双人／图7.24–7.25"
+    },
+    {
+      "ruleId": "P-YD-POSE-RESTRAINED",
+      "kind": "source",
+      "bookSlug": "adler-posing",
+      "paraphrase": "群体平衡不等于每人镜像复制同一姿态",
+      "locator": "PDF第309页／家庭／平衡"
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "kind": "exception",
+      "bookSlug": "adler-posing",
+      "paraphrase": "正式成人群像可留个人空间，无须全员紧贴",
+      "locator": "PDF第316页／家庭／表情与关系"
+    },
+    {
+      "ruleId": "P-CROP-TIER",
+      "kind": "exception",
+      "bookSlug": "adler-posing",
+      "paraphrase": "收窄处的裁切可保留曲线，不只按固定像幅档位",
+      "locator": "PDF第284–285页／曲线／图8.32–8.35"
+    },
+    {
+      "ruleId": "P-YD-BODY-PROPORTION",
+      "kind": "source",
+      "bookSlug": "adler-posing",
+      "paraphrase": "群体前后距离差可使前排过大，需并看整体",
+      "locator": "PDF第316–318页／家庭／图9.34–9.37"
+    },
+    {
+      "ruleId": "P-BOOK-EYE-WHITES",
+      "kind": "source",
+      "bookSlug": "adler-posing",
+      "paraphrase": "过度侧看或上看会露出大量眼白，眼神可能显紧绷",
+      "locator": "PDF第61–62页／眼睛／图2.18–2.21"
+    },
+    {
+      "ruleId": "P-BOOK-GROUP-HEAD-LAYERS",
+      "kind": "source",
+      "bookSlug": "adler-posing",
+      "paraphrase": "群体头位错开形成层次，比横竖堆成直线更有变化",
+      "locator": "PDF第297–298页／家庭／图9.1–9.2"
+    },
+    {
+      "ruleId": "P-BOOK-GROUP-HEAD-LAYERS",
+      "kind": "source",
+      "bookSlug": "adler-posing",
+      "paraphrase": "缩小头位距离同时保留高低差，避免靠塌肩凑齐",
+      "locator": "PDF第310页／家庭／图9.23–9.27"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "adler-hands",
+      "paraphrase": "指尖松弛微弯与轻触对手，可保留手部层次",
+      "locator": "PDF第5页／姿势2"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "adler-hands",
+      "paraphrase": "手腕平缓延续前臂，比突兀直角更流畅",
+      "locator": "PDF第7–9页／姿势4–6"
+    },
+    {
+      "ruleId": "P-YD-SHOULDER-NECK",
+      "kind": "source",
+      "bookSlug": "adler-hands",
+      "paraphrase": "手臂有支撑时仍需避免肩膀高耸挤压颈部",
+      "locator": "PDF第13页／姿势10"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "adler-hands",
+      "paraphrase": "头倚手臂或托下巴时需看面部受压变形",
+      "locator": "PDF第19–20页／姿势16–17"
+    },
+    {
+      "ruleId": "P-FACE-EYES",
+      "kind": "exception",
+      "bookSlug": "adler-hands",
+      "paraphrase": "闭眼配合倾头与手位可构成有意情绪",
+      "locator": "PDF第30页／姿势27"
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "kind": "exception",
+      "bookSlug": "adler-hands",
+      "paraphrase": "手遮一眼可形成情绪造型，仍需看有效表达",
+      "locator": "PDF第30页／姿势27"
+    },
+    {
+      "ruleId": "P-YD-NOSE-VIEW",
+      "kind": "exception",
+      "bookSlug": "adler-hands",
+      "paraphrase": "抬下巴配闭眼与轻触颈部，也可形成戏剧表达",
+      "locator": "PDF第34页／姿势31"
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "kind": "source",
+      "bookSlug": "adler-couples",
+      "paraphrase": "头部靠近与多点接触可呈现亲近的画面关系",
+      "locator": "PDF第5–7页／五原则／1–2"
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "kind": "exception",
+      "bookSlug": "adler-couples",
+      "paraphrase": "并肩牵手可有连接，无须处处接触",
+      "locator": "PDF第6页／五原则／1边注"
+    },
+    {
+      "ruleId": "P-BOOK-EYE-WHITES",
+      "kind": "source",
+      "bookSlug": "adler-couples",
+      "paraphrase": "近距离互看时需复核眼位，不强求直盯对方双眼",
+      "locator": "PDF第7页／五原则／2提醒"
+    },
+    {
+      "ruleId": "P-YD-POSE-RESTRAINED",
+      "kind": "source",
+      "bookSlug": "adler-couples",
+      "paraphrase": "手位交错可减轻双人镜像摆姿的僵硬感",
+      "locator": "PDF第8页／五原则／3"
+    },
+    {
+      "ruleId": "P-YD-POSE-RESTRAINED",
+      "kind": "exception",
+      "bookSlug": "adler-couples",
+      "paraphrase": "对称牵手可形成环状组织，不必按镜像淘汰",
+      "locator": "PDF第8页／五原则／3例外"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "adler-couples",
+      "paraphrase": "多只手堆在一处可能抢过面部，需看观看重点",
+      "locator": "PDF第8页／五原则／3提醒"
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "kind": "source",
+      "bookSlug": "adler-couples",
+      "paraphrase": "后方人物只剩探头且被前人吞没时需复核",
+      "locator": "PDF第9页／五原则／4"
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "kind": "exception",
+      "bookSlug": "adler-couples",
+      "paraphrase": "越肩突出另一人表情时，可有意弱化前人",
+      "locator": "PDF第9页／五原则／4例外"
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "kind": "exception",
+      "bookSlug": "adler-couples",
+      "paraphrase": "面部局部重叠可组织双人特写，关键表情仍须可读",
+      "locator": "PDF第50页／特写构图"
+    },
+    {
+      "ruleId": "P-FACE-EYES",
+      "kind": "exception",
+      "bookSlug": "adler-couples",
+      "paraphrase": "头部相靠时闭眼也可作为互补双人情绪帧",
+      "locator": "PDF第12页／五原则／5变化"
+    },
+    {
+      "ruleId": "P-YD-POSE-RESTRAINED",
+      "kind": "exception",
+      "bookSlug": "adler-teens",
+      "paraphrase": "简单姿态可成立，无须复杂造型才算有效",
+      "locator": "PDF第7页／十提示／6"
+    },
+    {
+      "ruleId": "P-YD-POSE-COMPACT",
+      "kind": "source",
+      "bookSlug": "adler-teens",
+      "paraphrase": "蹲跪成球导致轮廓拥挤时复核支撑与肢体线条",
+      "locator": "PDF第11页／地面姿势"
+    },
+    {
+      "ruleId": "P-POSE-LIMB-HIDDEN",
+      "kind": "source",
+      "bookSlug": "adler-teens",
+      "paraphrase": "俯卧时脚从头后伸出需复核躯干交代",
+      "locator": "PDF第13页／地面姿势"
+    },
+    {
+      "ruleId": "P-FACE-EXPRESSION",
+      "kind": "exception",
+      "bookSlug": "adler-teens",
+      "paraphrase": "自然坐姿可保留小姿势瑕疵，以神态共同判断",
+      "locator": "PDF第15页／地面姿势"
+    },
+    {
+      "ruleId": "P-BOOK-GROUP-HEAD-LAYERS",
+      "kind": "source",
+      "bookSlug": "adler-teens",
+      "paraphrase": "同伴头位可有高低，但过度拉开会削弱连接",
+      "locator": "PDF第44页／朋友与手足"
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "kind": "exception",
+      "bookSlug": "adler-teens",
+      "paraphrase": "手足可用开放拥抱与单点接触，不套情侣密贴",
+      "locator": "PDF第45–46页／朋友与手足"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "adler-50-poses",
+      "paraphrase": "松弛轻触的双手可在头侧形成脸部框架",
+      "locator": "PDF第8页／姿势4"
+    },
+    {
+      "ruleId": "P-POSE-LIMB-HIDDEN",
+      "kind": "exception",
+      "bookSlug": "adler-50-poses",
+      "paraphrase": "后臂完整藏于身体后可成立，不要求四肢全露",
+      "locator": "PDF第35页／姿势31"
+    },
+    {
+      "ruleId": "P-YD-POSE-COMPACT",
+      "kind": "exception",
+      "bookSlug": "adler-50-poses",
+      "paraphrase": "侧卧时腿位交错与膝部弯曲仍可形成可读线条",
+      "locator": "PDF第43页／姿势39"
+    },
+    {
+      "ruleId": "P-POSE-WEIGHT",
+      "kind": "source",
+      "bookSlug": "adler-boudoir",
+      "paraphrase": "交叉腿与偏向一侧的髋位可形成站姿转折",
+      "locator": "PDF第7页／姿势4／通用体态"
+    },
+    {
+      "ruleId": "P-YD-SHOULDER-NECK",
+      "kind": "exception",
+      "bookSlug": "adler-boudoir",
+      "paraphrase": "回头时下巴靠近肩部可构图，不按近肩拒绝",
+      "locator": "PDF第20页／姿势17／通用肩颈"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "exception",
+      "bookSlug": "adler-boudoir",
+      "paraphrase": "自然张开的手指可轻触头脸，不按张指判爪状",
+      "locator": "PDF第8页／姿势5／通用手部"
+    },
+    {
+      "ruleId": "P-POSE-WEIGHT",
+      "kind": "exception",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "儿童平均承重可显自然，不套成人单腿重心偏好",
+      "locator": "PDF第62–63页／重心／图2.1–2.2"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "突兀直角手腕与大幅张拇指可能产生紧张感",
+      "locator": "PDF第82–83页／关节／图3.11–3.13"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "exception",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "手腕有瑕疵而表情珍贵时，不必直接弃片",
+      "locator": "PDF第82页／关节／图3.11"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "exception",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "双人叠手可遮住一方手指，不必每指全露",
+      "locator": "PDF第149页／手势／图7.15–7.16"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "exception",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "欢快抓拍可保留紧扣手腕的小瑕疵",
+      "locator": "PDF第150页／手势／图7.18"
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "kind": "exception",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "轻触下巴可作局部遮挡，仍需保留主要脸部表达",
+      "locator": "PDF第152–153页／手势／图7.21–7.22"
+    },
+    {
+      "ruleId": "P-POSE-LIMB-HIDDEN",
+      "kind": "source",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "露出的手须有足够手臂线索，能辨认归属",
+      "locator": "PDF第158–160页／手部来源／图8.1–8.2"
+    },
+    {
+      "ruleId": "P-POSE-LIMB-HIDDEN",
+      "kind": "exception",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "后侧手臂可完全藏起，避免只留来源不明的手",
+      "locator": "PDF第161–162页／手部来源／图8.3–8.5"
+    },
+    {
+      "ruleId": "G-SUBJECT-HIERARCHY",
+      "kind": "source",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "近处膝肘抢过脸部时，需复核观看重点",
+      "locator": "PDF第199–202页／第一接触点／图11.1–11.7"
+    },
+    {
+      "ruleId": "P-HAND-WIDEANGLE",
+      "kind": "exception",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "鞋袜承担题材时，近处腿脚可有意成为重点",
+      "locator": "PDF第199页／第一接触点／图11.4说明"
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "kind": "source",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "一方吞没另一方身体时需复核双人表现分配",
+      "locator": "PDF第210–211页／双人比例／图12.1–12.5"
+    },
+    {
+      "ruleId": "P-CROP-TIER",
+      "kind": "exception",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "双人裁成头部重点可改善可见身体比例失衡",
+      "locator": "PDF第211页／双人比例／图12.4–12.5"
+    },
+    {
+      "ruleId": "P-YD-GAZE-DIRECTION",
+      "kind": "exception",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "平行朝向也可能成立，不把鼻尖交错当定律",
+      "locator": "PDF第228页／鼻尖方向／图13.13–13.15"
+    },
+    {
+      "ruleId": "P-BOOK-GROUP-HEAD-LAYERS",
+      "kind": "source",
+      "bookSlug": "valenzuela-posing-zh",
+      "paraphrase": "全员朝镜头时仍可用站坐高低层次丰富群像",
+      "locator": "PDF第231页／群体／传统全家福讨论"
+    },
+    {
+      "ruleId": "P-YD-SHOULDER-NECK",
+      "kind": "exception",
+      "bookSlug": "valenzuela-practice-zh",
+      "paraphrase": "头部倾斜不同于塌背，不按倾头判姿态不良",
+      "locator": "PDF第189页／形体／倾斜与低垂"
+    },
+    {
+      "ruleId": "P-POSE-WEIGHT",
+      "kind": "exception",
+      "bookSlug": "valenzuela-practice-zh",
+      "paraphrase": "双腿直立与左右对称可表达坚定有力的姿态",
+      "locator": "PDF第190–191页／形体／图16.3–16.5"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "source",
+      "bookSlug": "valenzuela-practice-zh",
+      "paraphrase": "爪状弯指可能显紧张，但有支撑的直角臂可成立",
+      "locator": "PDF第193页／手部／图16.7–16.8与边注"
+    },
+    {
+      "ruleId": "P-YD-INTERACTION",
+      "kind": "exception",
+      "bookSlug": "valenzuela-practice-zh",
+      "paraphrase": "群像中够不到同伴的手可自然休息，不强求接触",
+      "locator": "PDF第194页／群体手部／图16.9"
+    },
+    {
+      "ruleId": "P-YD-NOSE-VIEW",
+      "kind": "counterpoint",
+      "bookSlug": "valenzuela-practice-zh",
+      "paraphrase": "作者偏好高于视平线，低位面部拍摄需复核",
+      "locator": "PDF第195页／脸部姿态／低角位偏好"
+    },
+    {
+      "ruleId": "P-FACE-EYES",
+      "kind": "exception",
+      "bookSlug": "valenzuela-practice-zh",
+      "paraphrase": "亲密情绪可用半闭或闭眼，睁闭不一也需看整体",
+      "locator": "PDF第198–199页／眼睛／图16.13–16.14"
+    },
+    {
+      "ruleId": "P-HAND-NATURAL",
+      "kind": "exception",
+      "bookSlug": "valenzuela-practice-zh",
+      "paraphrase": "十指相扣本身可成立，重点看紧抓与手腕扭曲",
+      "locator": "PDF第226页／图17.34"
+    },
+    {
+      "ruleId": "P-YD-FACE-OCCLUDED",
+      "kind": "exception",
+      "bookSlug": "valenzuela-practice-zh",
+      "paraphrase": "嬉戏动作未见脸也可表达关系，须看姿态与整体",
+      "locator": "PDF第224页／图17.31"
+    }
+  ]
+}
