@@ -10,9 +10,9 @@ import numpy as np
 import onnxruntime as ort
 from PIL import Image, ImageOps
 from rtmlib import YOLOX, RTMPose
+from pose_runtime import select_providers
 
 SESSION_FALLBACKS = []
-ORDER = ['DmlExecutionProvider', 'CUDAExecutionProvider', 'CoreMLExecutionProvider', 'CPUExecutionProvider']
 
 
 def session(model):
@@ -20,11 +20,7 @@ def session(model):
         raise FileNotFoundError(f'Missing local model: {model}')
     available = ort.get_available_providers()
     requested = os.environ.get('EAGLE_POSE_PROVIDER')
-    if requested and requested not in available:
-        raise RuntimeError(f'Unavailable provider: {requested}')
-    providers = [requested] if requested else [p for p in ORDER if p in available]
-    if 'CPUExecutionProvider' not in providers:
-        providers.append('CPUExecutionProvider')
+    providers = select_providers(available, requested)
     options = ort.SessionOptions()
     options.intra_op_num_threads = 1
     options.inter_op_num_threads = 1

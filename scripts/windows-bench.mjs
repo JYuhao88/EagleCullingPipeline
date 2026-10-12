@@ -23,7 +23,8 @@ sharp.concurrency(1);
 const manifestBytes = await readFile('test/fixtures/bench-syn-manifest.json');
 const manifest = JSON.parse(manifestBytes);
 const sources = ['src/core/scorer.js', 'src/core/metrics.js', 'src/core/signals.js', 'src/core/ranking.js',
-  'src/core/rules-engine.js', 'python_worker/pose_worker.py', 'python_worker/face_worker.py', 'scripts/windows-bench.mjs'];
+  'src/core/rules-engine.js', 'python_worker/pose_worker.py', 'python_worker/pose_runtime.py',
+  'python_worker/face_worker.py', 'scripts/windows-bench.mjs'];
 const signature = hash(Buffer.concat([manifestBytes, ...await Promise.all(sources.map(file => readFile(file)))]));
 const out = path.resolve('data/cache/windows-validation', mode, signature);
 await mkdir(out, { recursive: true });

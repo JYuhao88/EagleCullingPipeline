@@ -44,6 +44,7 @@ data/runs/<id>/
 data/cache/
 ├── results.jsonl     # 旧 fingerprint 缓存只读偏移索引
 ├── results-v2/*/*.json # 新 fingerprint 缓存，原子单记录文件
+├── native-mid/*.jpg # 本机看图器高清缓存，默认长边 6144、2 GiB LRU
 ├── previews/*.jpg    # 归一化代理图
 └── embeddings/*.json # embedding 向量
 ```

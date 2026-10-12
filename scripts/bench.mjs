@@ -13,7 +13,10 @@ import { evaluateRules } from '../src/core/rules-engine.js';
 import { evaluateSynthetic, evaluateTriage, evaluateCandidateSensitivity, compareSynthetic } from '../ml/bench/evaluate.mjs';
 import { analyzeFocus } from '../src/core/focus.js';
 
-const ROOT = path.resolve('data/cache/bench');
+export function benchmarkRoot(env = process.env) {
+  return path.resolve(env.EAGLE_BENCH_ROOT || 'data/cache/bench');
+}
+const ROOT = benchmarkRoot();
 const SYN = path.resolve('test/fixtures/bench-syn-manifest.json');
 const readJSON = async file => JSON.parse(await readFile(file, 'utf8'));
 const hash = raw => crypto.createHash('sha256').update(raw).digest('hex');
@@ -71,7 +74,7 @@ export async function analysisSignature() {
     'candidate-measurements.js', 'candidate-config.json'];
   const chunks = await Promise.all(files.map(file => readFile(path.join('src/core', file))));
   for (const file of ['portrait', 'landscape', 'street']) chunks.push(await readFile(`src/rules/${file}.json`));
-  for (const file of ['pose_worker.py', 'face_worker.py']) chunks.push(await readFile(`python_worker/${file}`));
+  for (const file of ['pose_worker.py', 'pose_runtime.py', 'face_worker.py']) chunks.push(await readFile(`python_worker/${file}`));
   chunks.push(Buffer.from(JSON.stringify([process.env.EAGLE_PYTHON, process.env.PYTHONPATH, process.env.EAGLE_POSE_MODE,
     process.env.EAGLE_POSE_PROVIDER, process.env.EAGLE_POSE_MODEL, process.env.EAGLE_POSE_DETECTOR,
     process.env.EAGLE_SCORER_PROVIDER])));

@@ -11,7 +11,7 @@ import { buildCaptureUnits } from "../core/capture-units.js";
 import { groupConfidence, CONFIDENCE_MARGIN_THRESHOLD } from "../core/ranking.js";
 import { CORS_HEADERS, json, parseBody } from "./http.js";
 import { faceImage } from "./face-image.js";
-import { focusCropImage, parseRegionBox, regionCropImage } from "./focus-image.js";
+import { focusCropImage, parseRegionBox, regionCropImage, prefetchRegionImage } from "./focus-image.js";
 
 function activeRun(active) {
   return active.run && (active.run.controller || ["queued", "running"].includes(active.run.status))
@@ -112,6 +112,7 @@ export function createRunsRouter({
   progressIntervalMs = 250,
   isUpdating = () => false,
 } = {}) {
+  const prefetchControllers = new Set();
   return async function handleRunsRoute(req, res, url) {
     if (req.method === 'GET' && url.pathname === '/runs/status') {
       const current = activeRun(active);
@@ -169,6 +170,7 @@ export function createRunsRouter({
       const controller = new AbortController();
       run.controller = controller;
       if (isUpdating()) return json(res, 409, { error: "正在更新，请稍后开始分析" });
+      for (const controller of prefetchControllers) controller.abort(new Error("analysis started"));
       active.run = run;
       if (store.saveProgress) await store.saveProgress(run);
       else await store.save(run, { run });
@@ -356,19 +358,53 @@ export function createRunsRouter({
       }
       return true;
     }
+    if (req.method === "POST" && sub?.startsWith("native/") && sub.endsWith("/prefetch")) {
+      const unitId = decodeUnitId(sub.slice("native/".length, -"/prefetch".length));
+      if (!unitId) return json(res, 404, { error: "unit not found" });
+      if (activeRun(active)) return json(res, 200, { available: false, naReason: "analysis-busy" });
+      const controller = new AbortController();
+      const abort = () => { if (!res.writableEnded) controller.abort(new Error("request closed")); };
+      res.on('close', abort); prefetchControllers.add(controller);
+      try {
+        const state = store.unitData ? await store.unitData(id, unitId) : await store.get(id);
+        const result = await prefetchRegionImage(unitId, state || {}, {
+          signal: controller.signal, isBusy: () => Boolean(activeRun(active)),
+        });
+        if (!controller.signal.aborted) return json(res, 200, {
+          available: result.available, cached: result.cached, naReason: result.naReason,
+          width: result.width, height: result.height,
+        });
+      } catch (error) {
+        if (!controller.signal.aborted) return json(res, 400, { error: error.message });
+      } finally { prefetchControllers.delete(controller); res.off('close', abort); }
+      if (!res.destroyed) return json(res, 200, { available: false, naReason: "cancelled" });
+      return true;
+    }
     if (req.method === "GET" && sub?.startsWith("native/")) {
       const unitId = decodeUnitId(sub.slice("native/".length));
       const box = parseRegionBox(url.searchParams?.get("box"));
       if (!unitId || !box) return json(res, 404, { error: "native region not found" });
-      const state = store.unitData ? await store.unitData(id, unitId) : await store.get(id);
-      if (!runFromState(state) || !state?.units?.some(item => item.id === unitId)) {
-        return json(res, 404, { error: "native region not found" });
-      }
-      const crop = await regionCropImage(store, id, unitId, box, state);
+      const width = Number(url.searchParams.get('width')), height = Number(url.searchParams.get('height'));
+      const controller = new AbortController();
+      const abort = () => { if (!res.writableEnded) controller.abort(new Error('request closed')); };
+      res.on('close', abort);
+      let crop;
+      try {
+        const state = store.unitData ? await store.unitData(id, unitId) : await store.get(id);
+        if (res.destroyed) return true;
+        if (!runFromState(state) || !state?.units?.some(item => item.id === unitId)) {
+          return json(res, 404, { error: "native region not found" });
+        }
+        crop = await regionCropImage(store, id, unitId, box, state, {
+          display: { width, height }, signal: controller.signal,
+        });
+      } finally { res.off('close', abort); }
+      if (res.destroyed) return true;
       if (!crop?.available) return json(res, 404, { error: "native region unavailable", naReason: crop?.naReason });
       try {
-        const image = await readFile(crop.path);
-        res.writeHead(200, { "content-type": "image/jpeg", "cache-control": "private, max-age=3600",
+        const image = crop.buffer || await readFile(crop.path);
+        res.writeHead(200, { "content-type": "image/jpeg", "cache-control": "private, no-store",
+          "x-native-tier": crop.tier, "access-control-expose-headers": "x-native-tier, x-native-width, x-native-height",
           "x-native-width": String(crop.rect.width), "x-native-height": String(crop.rect.height), ...CORS_HEADERS });
         res.end(image);
       } catch { return json(res, 404, { error: "native region not found" }); }

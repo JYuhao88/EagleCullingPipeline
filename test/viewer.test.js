@@ -59,3 +59,50 @@ test("region box parser rejects malformed, inverted and oversized boxes", () => 
     assert.equal(parseRegionBox(value), null, value);
   }
 });
+
+test('viewer cancels stale prefetch and delayed region on photo switch and close', async () => {
+  const { createViewer } = await import('../src/plugin/viewer.js');
+  const saved = { window: globalThis.window, fetch: globalThis.fetch, requestAnimationFrame: globalThis.requestAnimationFrame };
+  const elements = new Map();
+  const element = id => {
+    if (!elements.has(id)) elements.set(id, { hidden: true, open: false, src: '', style: {}, dataset: {},
+      clientWidth: 1000, clientHeight: 500, naturalWidth: 2048, naturalHeight: 1024,
+      events: {}, addEventListener(name, fn) { this.events[name] = fn; },
+      classList: { toggle() {}, add() {}, remove() {} },
+      showModal() { this.open = true; }, close() { this.open = false; },
+    });
+    return elements.get(id);
+  };
+  const requests = [];
+  const windowEvents = {};
+  globalThis.window = { devicePixelRatio: 2, addEventListener(name, fn) { windowEvents[name] = fn; } };
+  globalThis.requestAnimationFrame = fn => fn();
+  globalThis.fetch = (url, options) => new Promise((resolve, reject) => {
+    requests.push({ url, ...options });
+    options.signal.addEventListener('abort', () => reject(new Error('cancelled')), { once: true });
+  });
+  try {
+    const viewer = createViewer({ root: { querySelector: element },
+      nativeUrl: id => `native:${id}`, prefetchUrl: id => `prefetch:${id}` });
+    viewer.show('a', 'detail:a', ['b']); element('#previewImage').onload(); viewer.open();
+    assert.equal(requests[0].url, 'prefetch:a');
+    viewer.key({ key: '+' }); viewer.key({ key: '+' }); viewer.key({ key: '+' }); viewer.key({ key: '+' });
+    // Repeated resize with the same crop must preserve the pending region timer.
+    windowEvents.resize(); windowEvents.resize();
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const region = requests.find(row => row.url === 'native:a');
+    assert.ok(region);
+    viewer.show('b', 'detail:b', ['a']);
+    assert.equal(requests[0].signal.aborted, true);
+    assert.equal(region.signal.aborted, true);
+    assert.equal(requests.at(-1).url, 'prefetch:b');
+    viewer.close();
+    assert.equal(requests.at(-1).signal.aborted, true);
+    assert.equal(viewer.isOpen(), false);
+    await Promise.resolve();
+  } finally {
+    for (const [name, value] of Object.entries(saved)) {
+      if (value === undefined) delete globalThis[name]; else globalThis[name] = value;
+    }
+  }
+});

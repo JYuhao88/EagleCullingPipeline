@@ -31,8 +31,10 @@ let api = createApi(viewState.base);
 let reviewView = null;
 let writebackDialog = null;
 let previewUnitId = null;
-const viewer = createViewer({ root: document, nativeUrl: (unitId, box) =>
-  `${viewState.base}/runs/${viewState.runId}/native/${encodeURIComponent(unitId)}?box=${box.map(v => v.toFixed(5)).join(",")}` });
+const viewer = createViewer({ root: document, nativeUrl: (unitId, box, display) =>
+  `${viewState.base}/runs/${viewState.runId}/native/${encodeURIComponent(unitId)}?box=${box.map(v => v.toFixed(5)).join(",")}` +
+  `&width=${display.width}&height=${display.height}`,
+  prefetchUrl: unitId => `${viewState.base}/runs/${viewState.runId}/native/${encodeURIComponent(unitId)}/prefetch` });
 let personalization = null;
 let learningPanel = null;
 let catalog = { reasons: [], rules: [] };
@@ -139,7 +141,8 @@ function renderPreview() {
   const group = currentGroup(viewState);
   const unit = viewState.data?.units?.find(item => item.id === previewUnitId);
   const item = viewState.data?.items?.find(candidate => candidate.id === unit?.primaryItemId);
-  viewer.show(previewUnitId, `${viewState.base}/runs/${viewState.runId}/detail/${encodeURIComponent(previewUnitId)}`);
+  viewer.show(previewUnitId, `${viewState.base}/runs/${viewState.runId}/detail/${encodeURIComponent(previewUnitId)}`,
+    ids.slice(Math.max(0, index - 1), index + 2));
   root.querySelector("#previewImage").alt = item?.name || "大图";
   const decision = decisionFor(viewState, previewUnitId, group);
   const state = decision.source === "human" ? { selected: "精选", candidate: "候选", rejected: "淘汰" }[decision.action] : "未确认";

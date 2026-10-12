@@ -858,3 +858,54 @@ Ray 打包 unittest 4/4；新签名 Ray 冷算 388 张后，Mac cache-only 实�
 与任务前最新同清单报告比较三项 delta=0、368 行完全一致。
 本轮 Ray 作业终态、自身活动作业 0；公开检查 0 命中、diff check 通过。
 项目 Python 的一次 teacher CLI mock 超时及单项/完整复验、Windows 未完成项见上述验证文档。
+
+
+## W22：拍摄元数据缓存
+
+定向命令：`nice -n 15 node --test --test-concurrency=1 test/capture-metadata-cache.test.js`。
+测试使用临时文本文件及模拟 EXIF，不依赖真实照片，覆盖全库冷/热/禁用缓存逐字段相同
+（含 captureTime、exif、device、sessionId）、size/mtime 独立失效、部分命中进度与
+检查点、解析器版本、JSON/校验损坏、大小/条数限制、Windows drive/UNC/大小写路径、
+读取期间文件变化及不可写缓存。缓存位置、键及清理规则见 contracts 的 W22 节。
+真实库计时与 HTTP 证据仅保留在不入库的独立缓存目录；不在公开文档记录库路径或照片 ID。
+
+持全局重负载锁的真实只读扫描（582 张）：冷缓存 45.865 s / 5 次 exiftool，
+热缓存 0.671 s / 0 次，禁用缓存 43.055 s / 5 次；三份完整 records deepEqual。
+Node 峰值 RSS 分别 81.84 / 81.84 / 83.03 MiB（不含 exiftool 子进程）。
+第一次 43311 HTTP 选择 30 张：扫描冷/热 49.300 / 1.129 s，调用 5 / 0 次，
+Node 累计峰值 135.83 MiB；后续因分析缓存缺失拒绝模型冷算，空 groups 不计一致性证据。
+完整 Node 回归 456/456、0 失败/跳过、202.57 s；收尾新增无 EXIF 空值缓存专项后，
+专项 7/7。上述实测脚本在临时目录执行，原始证据保存在独立 capture-metadata 缓存子目录。
+
+补测使用同一组 30 个 itemIds，并按已有分析缓存的预览目录设置实测 pipeline cacheRoot
+（分析指纹包含预览绝对路径；生产配置/代码没有因此改动）。复用已有模型结果、关闭
+原生 focus 计算，并以失败桩拒绝任何未命中的模型推理：冷/热扫描 48.253 / 2.562 s，
+exiftool 5 / 0 次；两次均 completed、8 groups，终态 items/units/groups 全量 deepEqual。
+Node 累计峰值 RSS 144.03 / 168.00 MiB，服务已关闭。Windows 路径规范化由跨平台
+单元测试验证，未实跑 Windows；上述内存不含 exiftool 子进程及其它线进程。
+
+质量验收：当前源码在 Ray 重新冷算 388 张合成图，作业 SUCCEEDED（736.19 s，
+2 CPU / 0 GPU），388 条缓存逐条校验后收集；本机 cache-only 实跑 0/388 未缓存。
+清除其它 Python/provider/mode 覆盖后，实际比较命令为：
+
+```sh
+EAGLE_PYTHON=python_worker/.venv/bin/python EAGLE_POSE_PROVIDER=CPUExecutionProvider EAGLE_BENCH_CACHE_ONLY=1 nice -n 15 node --max-old-space-size=2048 scripts/bench.mjs --compare data/cache/bench/reports/2026-10-12T02-17-07-342Z/report.json
+```
+
+输出报告为
+`data/cache/bench/reports/2026-10-12T04-16-03-720Z/report.json`；
+偏好准确率 96.19565%、严重 gate 90.17857%、源图误淘汰 5%，三项 delta=0，
+368 行 unchangedRows=true，warnings=[]。本线 Ray 作业已终态、活动作业 0。
+公开检查 0 命中、diff check 通过。
+
+W22 姿态 provider 的本机计时、独立缓存、逐点对照、回归及验证限制见
+[pose-provider.md](pose-provider.md)。
+
+## W22 看图器高清缓存
+
+定向测试 `test/native-mid.test.js` 覆盖键/源 stat 失效、参数、原子发布、字节上限/LRU、
+显示像素与 1:1 回退、活动分析跳过、排队取消和前台优先；`test/viewer.test.js` 覆盖切图/关闭取消。
+真实本机接口实测与命令见 [native-mid.md](native-mid.md)。
+最终完整回归 458 pass / 0 fail / 1 skip，148.24 秒；初次新增超长行失败已修正。
+公开检查 0 命中，diff check 通过。三线合并后：完整回归 470 pass / 0 fail / 1 skip；
+Ray 冷算 388 张后 cache-only 比较三项 delta=0、368 行 unchangedRows=true。

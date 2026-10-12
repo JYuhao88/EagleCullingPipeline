@@ -266,6 +266,11 @@ CLI `apply --revert` 默认预览，追加 `--apply` 执行；HTTP 撤回接口�
 
 `UnitResult.pose` 是可选诊断对象：`cacheKey`、`provider`（pose session 首个 provider）、`providers`（detector/pose session 列表）、`mode`、`timingMs`（detection/total），可能另有 `fallbackReason`。provider 列表不意味着每个算子都在首个加速器上执行。无人图也有检测耗时，但不执行 RTMW。
 
+W22：Mac 默认 provider 为 CPU，分析指纹的姿态键明确记录 `CPUExecutionProvider`，不再用 auto；
+显式 provider 覆盖保留。缓存/检查点中的实际 detector/pose provider 不匹配或有回退记录时重新测量，
+不得把回退结果当作请求 provider 的结果复用。Windows/Linux provider 顺序保持；实测边界见
+[pose-provider.md](pose-provider.md)。
+
 ### RuleVerdict（规则结论）
 
 挂在 `UnitResult.verdicts[]`。规则库见 `src/rules/*.json`（`id`、`severity`、`check.by`）。
@@ -444,3 +449,25 @@ faces/pose 的工作项包含推理和后处理；ranking 以组计数，其余�
 且所有阶段都有有效耗时的成功 run 取归一化平均权重。设备/provider、照片内容和缓存命中
 变化仍会影响预测；ETA 是以实际吞吐为输入的估计，不是完成时刻保证。
 旧 run 缺少扩展字段时插件显示估算中/未记录，不按整个 run 的耗时伪造阶段速率。
+
+
+## W22：跨分析拍摄元数据缓存
+
+`data/cache/capture-metadata/metadata.json` 只保存 `parseCaptureMetadata` 的
+`captureTime/exif/device` 输出，不缓存会话边界。键为规范化绝对源文件路径、实际
+size、mtimeMs 的 JSON 数组的 SHA-256；Windows 使用 win32 路径规范化并忽略大小写。
+解析器版本 `capture-v1` 变化、文件大小/mtime 变化、内容校验失败或结构损坏均失效；
+读取期间文件变化、exiftool 失败/缺行/返回 Error 不写入缓存。成功读取但无 EXIF 可缓存。
+文件以唯一临时文件加原子 rename 发布，缓存 I/O 失败不影响分析。
+最多 20,000 条、32 MiB，写入时按最早插入顺序淘汰；可停服务后删除该文件冷启动，
+可同时清理进程中断遗留的 `metadata.json.*.tmp`，不必清理其它缓存。
+多进程同时发布可能丢失新增缓存条目，只导致后续重读。
+扫描仍遍历全库，命中立即计入扫描 completed/cached；`scan:<id>` 检查点保持原行为，
+会话由原有全库逻辑计算，不改变选择范围、分组或排序。
+
+## W22 看图器高清缓存
+
+原生区域 GET 保持 `box` 与面积上限 0.36，新增物理显示像素 `width/height`；
+缺参和接近 1:1 保留原生分辨率，响应 `x-native-tier: mid|original`。
+新增 `POST /runs/:id/native/:unit/prefetch`，可中止的本机串行低优先级预取，活动分析时跳过。
+参数、LRU、取消边界与验证见 [native-mid.md](native-mid.md)，不参与分析/评分。

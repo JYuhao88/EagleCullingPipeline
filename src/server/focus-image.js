@@ -1,3 +1,4 @@
+import { midRegion, prefetchMid } from '../core/native-mid.js';
 import path from "node:path";
 import { completeEyeRois } from "../core/eye-roi.js";
 import { nativeCrop, normalizedRect } from "../core/native-image.js";
@@ -36,11 +37,22 @@ export function parseRegionBox(value) {
   return (box[2] - box[0]) * (box[3] - box[1]) <= MAX_REGION_AREA ? box : null;
 }
 
-export async function regionCropImage(store, id, unitId, box, state) {
+export async function regionCropImage(store, id, unitId, box, state, options = {}) {
   const unit = state.units?.find(item => item.id === unitId);
   const items = state.items?.filter(item => (unit?.itemIds || [unit?.primaryItemId]).includes(item.id)) || [];
   const primary = items.find(item => item.id === unit?.primaryItemId);
   if (!primary) return { available: false, naReason: "native-source-unavailable" };
-  return nativeCrop(primary, box, { pairedItems: items.filter(item => item !== primary),
-    cacheDir: path.join(store.root || path.dirname(store.dir(id)), "focus-crops") });
+  const pairedItems = items.filter(item => item !== primary);
+  const mid = await midRegion(primary, box, options.display, { ...options, pairedItems });
+  if (mid) return mid;
+  return { ...await nativeCrop(primary, box, { pairedItems, signal: options.signal,
+    cacheDir: path.join(store.root || path.dirname(store.dir(id)), "focus-crops") }), tier: 'original' };
+}
+
+export async function prefetchRegionImage(unitId, state, options = {}) {
+  const unit = state.units?.find(item => item.id === unitId);
+  const items = state.items?.filter(item => (unit?.itemIds || [unit?.primaryItemId]).includes(item.id)) || [];
+  const primary = items.find(item => item.id === unit?.primaryItemId);
+  if (!primary) return { available: false, naReason: 'native-source-unavailable' };
+  return prefetchMid(primary, { ...options, pairedItems: items.filter(item => item !== primary) });
 }

@@ -30,7 +30,13 @@ export function visibleBox(view, stage, image, grid = 32) {
   return [snap(raw[0], false), snap(raw[1], false), snap(raw[2], true), snap(raw[3], true)];
 }
 
-export function createViewer({ root, nativeUrl }) {
+/** Demand covers the snapped crop, not only the viewport; dimensions are physical display pixels. */
+export function regionDisplay(view, image, box, dpr = 1) {
+  return { width: Math.ceil((box[2] - box[0]) * image.width * view.scale * dpr),
+    height: Math.ceil((box[3] - box[1]) * image.height * view.scale * dpr) };
+}
+
+export function createViewer({ root, nativeUrl, prefetchUrl }) {
   const dialog = root.querySelector("#previewDialog");
   const stageElement = root.querySelector("#viewerStage");
   const image = root.querySelector("#previewImage");
@@ -40,12 +46,31 @@ export function createViewer({ root, nativeUrl }) {
   let nativeState = "";
   const setNativeState = value => {
     nativeState = value;
-    if (nativeLabel) nativeLabel.textContent = value === "loading" ? "读取原图…" : value === "ready" ? "原图" : "";
+    if (nativeLabel) nativeLabel.textContent = value === "loading" ? "读取原图…" : value === "ready" ? "原图" : value === "mid" ? "高清缓存" : "";
   };
   let view = { scale: 1, x: 0, y: 0 };
   let natural = { width: 0, height: 0 };
   let unitId = null, drag = null, nativeTimer = null, nativeToken = 0, fitted = true;
 
+  let regionController = null, regionObjectUrl = null, requestKey = null;
+  let prefetchController = null, neighbors = [];
+  function cancelRegion() {
+    clearTimeout(nativeTimer); nativeToken++; regionController?.abort(); regionController = null;
+    requestKey = null;
+  }
+  function prefetch() {
+    prefetchController?.abort();
+    if (!prefetchUrl || !unitId) return;
+    prefetchController = new AbortController();
+    const signal = prefetchController.signal;
+    const ids = [...new Set([unitId, ...neighbors])];
+    (async () => {
+      for (const id of ids) {
+        if (signal.aborted) break;
+        await fetch(prefetchUrl(id), { method: 'POST', signal });
+      }
+    })().catch(() => {});
+  }
   const stage = () => ({ width: stageElement.clientWidth, height: stageElement.clientHeight });
   const apply = () => {
     image.style.width = `${natural.width}px`;
@@ -86,44 +111,75 @@ export function createViewer({ root, nativeUrl }) {
       width: `${(x1 - x0) * width}px`, height: `${(y1 - y0) * height}px` });
   }
   function scheduleNative() {
-    clearTimeout(nativeTimer);
-    const box = nativeUrl && unitId && view.scale > 1.05 ? visibleBox(view, stage(), natural) : null;
+    const box = nativeUrl && unitId && view.scale * (window.devicePixelRatio || 1) > 1.05 ? visibleBox(view, stage(), natural) : null;
     if (!box || (box[2] - box[0]) * (box[3] - box[1]) > MAX_NATIVE_AREA) {
-      if (nativeState) { nativeToken++; native.hidden = true; setNativeState(""); }
+      if (nativeState) { cancelRegion(); native.hidden = true; setNativeState(""); }
       return;
     }
-    if (native.dataset.box === box.join(",") && !native.hidden) return;
+    const display = regionDisplay(view, natural, box, window.devicePixelRatio || 1);
+    const key = `${box.join(',')}:${display.width}:${display.height}`;
+    if (requestKey === key) return;
+    cancelRegion(); requestKey = key;
     setNativeState("loading");
-    nativeTimer = setTimeout(() => {
-      const token = ++nativeToken, next = new Image();
-      next.onload = () => {
+    nativeTimer = setTimeout(async () => {
+      const token = ++nativeToken;
+      regionController = new AbortController();
+      let objectUrl;
+      try {
+        const response = await fetch(nativeUrl(unitId, box, display), { signal: regionController.signal });
+        if (!response.ok) throw new Error('region unavailable');
+        const blob = await response.blob();
         if (token !== nativeToken) return;
-        native.src = next.src; native.dataset.box = box.join(","); native.hidden = false; positionNative();
-        setNativeState("ready");
-      };
-      next.onerror = () => { if (token === nativeToken) setNativeState(""); };
-      next.src = nativeUrl(unitId, box);
+        objectUrl = URL.createObjectURL(blob);
+        const next = new Image();
+        next.onload = () => {
+          if (token !== nativeToken) { URL.revokeObjectURL(objectUrl); return; }
+          if (regionObjectUrl) URL.revokeObjectURL(regionObjectUrl);
+          regionObjectUrl = objectUrl;
+          native.src = objectUrl; native.dataset.box = box.join(","); native.hidden = false; positionNative();
+          setNativeState(response.headers.get('x-native-tier') === 'mid' ? 'mid' : 'ready');
+        };
+        next.onerror = () => {
+          URL.revokeObjectURL(objectUrl);
+          if (token === nativeToken) { requestKey = null; setNativeState(''); }
+        };
+        next.src = objectUrl;
+      } catch {
+        if (objectUrl) URL.revokeObjectURL(objectUrl);
+        if (token === nativeToken) { requestKey = null; setNativeState(''); }
+      }
     }, NATIVE_DELAY);
   }
 
-  function show(id, src) {
-    const changed = id !== unitId;
-    unitId = id; nativeToken++; native.hidden = true; delete native.dataset.box; setNativeState("");
-    if (!changed && image.src === src) return;
+  function show(id, src, adjacent = []) {
+    const changed = id !== unitId || image.src !== src;
+    neighbors = adjacent;
+    if (!changed) return;
+    cancelRegion(); prefetchController?.abort();
+    unitId = id; native.hidden = true; delete native.dataset.box; setNativeState("");
+    if (regionObjectUrl) URL.revokeObjectURL(regionObjectUrl);
+    regionObjectUrl = null;
     natural = { width: 0, height: 0 };
     image.onload = () => { natural = { width: image.naturalWidth, height: image.naturalHeight }; fit(); };
     image.src = src;
+    if (dialog.open) prefetch();
   }
+
   function open() {
     if (typeof dialog.showModal === "function" && !dialog.open) dialog.showModal();
     else dialog.hidden = false;
+    prefetch();
     requestAnimationFrame?.(() => natural.width && fit());
   }
   function close() {
-    unitId = null; nativeToken++; clearTimeout(nativeTimer);
+    unitId = null; cancelRegion(); prefetchController?.abort();
+    native.hidden = true; setNativeState('');
+    if (regionObjectUrl) URL.revokeObjectURL(regionObjectUrl);
+    regionObjectUrl = null;
     if (typeof dialog.close === "function") dialog.close(); else dialog.hidden = true;
   }
 
+  dialog.addEventListener("close", () => { if (unitId) close(); });
   stageElement.addEventListener("wheel", event => {
     event.preventDefault();
     const rect = stageElement.getBoundingClientRect();

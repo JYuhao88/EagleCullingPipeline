@@ -142,7 +142,7 @@ const sharpConcurrency = Math.max(
 sharp.concurrency(sharpConcurrency);
 sharp.cache({ memory: 128, files: 0, items: 100 });
 
-export async function listEagleImages(libraryPath, { limit, metadataReader, signal, checkpoint, onProgress } = {}) {
+export async function listEagleImages(libraryPath, { limit, metadataReader, metadataCache, signal, checkpoint, onProgress } = {}) {
   const imagesPath = path.join(libraryPath, "images");
   const entries = [];
   async function walk(directory) {
@@ -219,7 +219,7 @@ export async function listEagleImages(libraryPath, { limit, metadataReader, sign
     if (limit && records.length >= limit) break;
   }
   await enrichCaptureMetadata(records.filter(record => !restored.has(record.id)),
-    { reader: metadataReader, signal, checkpoint, onProgress });
+    { reader: metadataReader, metadataCache, signal, checkpoint, onProgress });
   assignCaptureSessions(records);
   return records;
 }

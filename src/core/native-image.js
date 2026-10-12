@@ -16,12 +16,33 @@ const extension = item => String(item?.ext || path.extname(fileOf(item) || '').s
 let active = 0;
 const waiting = [];
 // Full-resolution buffers stay bounded; two concurrent decodes are opt-in.
-async function serial(fn) {
-  if (active >= workerLimit('EAGLE_NATIVE_CONCURRENCY')) await new Promise(resolve => waiting.push(resolve));
-  else active += 1;
-  try { return await fn(); } finally {
-    const next = waiting.shift();
-    if (next) next(); else active -= 1;
+async function serial(fn, options = {}) {
+  options.signal?.throwIfAborted();
+  if (active >= workerLimit('EAGLE_NATIVE_CONCURRENCY') || (options.background && active > 0)) {
+    await new Promise((resolve, reject) => {
+      const entry = { resolve, reject, background: options.background };
+      const abort = () => {
+        const index = waiting.indexOf(entry);
+        if (index >= 0) waiting.splice(index, 1);
+        reject(options.signal.reason);
+      };
+      entry.resolve = () => { options.signal?.removeEventListener('abort', abort); resolve(); };
+      options.signal?.addEventListener('abort', abort, { once: true });
+      waiting.push(entry);
+    });
+  } else active += 1;
+  try {
+    options.signal?.throwIfAborted();
+    if (options.isBusy?.()) return { available: false, naReason: 'analysis-busy' };
+    return await fn();
+  } finally {
+    active -= 1;
+    const index = waiting.findIndex(entry => !entry.background);
+    // Background generation must not start alongside another native decode.
+    if (index >= 0 || active === 0) {
+      const next = waiting.splice(index < 0 ? 0 : index, 1)[0];
+      if (next) { active += 1; next.resolve(); }
+    }
   }
 }
 
@@ -140,10 +161,10 @@ async function openNative(record, options, callback) {
 }
 
 export async function withNativeImage(record, options = {}, callback) {
-  return serial(() => openNative(record, options, callback));
+  return serial(() => openNative(record, options, callback), options);
 }
 
-async function fingerprint(record, paired) {
+export async function nativeFingerprint(record, paired) {
   const parts = [];
   for (const item of [record, ...paired]) {
     const file = fileOf(item);
@@ -172,7 +193,7 @@ async function trimCache(dir, maxBytes, maxEntries) {
 export async function nativeCrop(record, box, options = {}) {
   if (!normalizedRect(box, 1, 1)) return { available: false, naReason: 'invalid-crop' };
   const paired = options.pairedItems || record.pairedItems || [];
-  const key = crypto.createHash('sha256').update(JSON.stringify(['native-v1', await fingerprint(record, paired), box,
+  const key = crypto.createHash('sha256').update(JSON.stringify(['native-v1', await nativeFingerprint(record, paired), box,
     ...(process.platform === 'win32' ? [localSetting('EAGLE_EXIFTOOL')] : [])])).digest('hex');
   const dir = path.resolve(options.cacheDir || 'data/cache/focus-crops');
   const file = path.join(dir, `${key}.jpg`);
@@ -185,14 +206,18 @@ export async function nativeCrop(record, box, options = {}) {
     } catch { /* cache miss */ }
     const result = await openNative(record, options, async ({ image, source }) => {
       const rect = normalizedRect(box, source.width, source.height);
-      const temporary = `${file}.tmp`;
-      await image().extract(rect).jpeg({ quality: 96, chromaSubsampling: '4:4:4' }).toFile(temporary);
-      await replaceFile(temporary, file);
+      const temporary = `${file}.${crypto.randomUUID()}.tmp`;
+      try {
+        await image().extract(rect).jpeg({ quality: 96, chromaSubsampling: '4:4:4' }).toFile(temporary);
+        options.signal?.throwIfAborted();
+        await replaceFile(temporary, file);
+      } finally { await rm(temporary, { force: true }); }
       const result = { available: true, source, rect };
       await writeFile(`${file}.json`, JSON.stringify(result));
       return { ...result, path: file, cached: false };
     });
     await trimCache(dir, options.maxBytes ?? 256 * 1024 * 1024, options.maxEntries ?? 1000);
+    options.signal?.throwIfAborted();
     return result;
-  });
+  }, options);
 }

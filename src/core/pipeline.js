@@ -3,7 +3,8 @@ import { localSetting } from './local-config.js';
 import { completeEyeRois, EYE_ROI_VERSION } from "./eye-roi.js";
 import { checkCancelled } from "./checkpoints.js";
 import { setImmediate as yieldTurn } from "node:timers/promises";
-import { PoseWorkerPool, detectPose, POSE_CACHE_KEY, POSE_SIGNALS_CACHE_KEY } from "./pose.js";
+import { PoseWorkerPool, detectPose, poseWorkerLimit, poseProviderMatches, POSE_CACHE_KEY,
+  POSE_SIGNALS_CACHE_KEY } from "./pose.js";
 import { computeSignals } from "./signals.js";
 import { evaluateRules } from "./rules-engine.js";
 import crypto from "node:crypto";
@@ -94,6 +95,12 @@ export class AnalysisPipeline {
         }
         if (restored) stages.set(restored.result.unitId, restored.stage);
         let result = restored?.result || (this.store ? await this.store.get(fingerprint) : null);
+        if (result?.pose && !poseProviderMatches(result.pose)) {
+          delete result.signals;
+          delete result.pose;
+          if (["pose-inferred", "pose", "focus"].includes(stages.get(result.unitId)))
+            stages.set(result.unitId, "faces");
+        }
         if (result) {
           cached += 1;
           // Retain model caches while upgrading preview-gradient normalization.
@@ -272,7 +279,7 @@ export class AnalysisPipeline {
     onProgress({ completed: 0, total: poseTotal, cached, stage: 'pose' });
     if (poseTargets.length) {
       if (this.poseDetector === detectPose) posePool = new PoseWorkerPool({
-        cwd: this.root, size: workerLimit('EAGLE_POSE_WORKERS', this.concurrency) });
+        cwd: this.root, size: poseWorkerLimit(this.concurrency) });
       // Invalidate before inference: a failed refresh must not leave stale
       // measurements looking current in the new run or result cache.
       for (const result of poseTargets) { delete result.signals; delete result.pose; }
@@ -283,7 +290,7 @@ export class AnalysisPipeline {
       const onItem = () => onProgress({ completed: ++inferred, total: poseTotal, cached, stage: 'pose' });
       const poses = await this.poseDetector(batch.map((result) => ({
         id: result.unitId, filePath: result.previewPath, faces: result.faces,
-      })), { cwd: this.root, size: workerLimit('EAGLE_POSE_WORKERS', this.concurrency), pool: posePool, signal, onItem });
+      })), { cwd: this.root, size: poseWorkerLimit(this.concurrency), pool: posePool, signal, onItem });
       check();
       for (const [index, result] of batch.entries()) {
         const pose = poses[index];

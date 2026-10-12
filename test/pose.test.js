@@ -4,7 +4,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import sharp from 'sharp';
-import { detectPose, PoseWorkerPool } from '../src/core/pose.js';
+import { detectPose, PoseWorkerPool, poseProvider, poseWorkerLimit, poseProviderMatches,
+  POSE_CACHE_KEY } from '../src/core/pose.js';
 import { AnalysisPipeline } from '../src/core/pipeline.js';
 
 test('pose pool caps inference concurrency at two', () => {
@@ -12,13 +13,66 @@ test('pose pool caps inference concurrency at two', () => {
   assert.equal(pool.diagnostics().concurrency,2);
   pool.close();
 });
+test('pose provider policy resolves mac default and preserves explicit overrides', () => {
+  assert.equal(poseProvider('darwin', {}), 'CPUExecutionProvider');
+  assert.equal(poseProvider('win32', {}), 'auto');
+  assert.equal(poseProvider('darwin', { EAGLE_POSE_PROVIDER: 'CoreMLExecutionProvider' }), 'CoreMLExecutionProvider');
+  if (process.platform === 'darwin' && !process.env.EAGLE_POSE_PROVIDER)
+    assert.match(POSE_CACHE_KEY, /:CPUExecutionProvider:/);
+});
+test('pose cache checks actual detector and pose providers, including fallback', () => {
+  const cpu = {provider:'CPUExecutionProvider', providers:{detector:['CPUExecutionProvider'],pose:['CPUExecutionProvider']}};
+  assert.equal(poseProviderMatches(cpu, 'darwin', {}), true);
+  assert.equal(poseProviderMatches({provider:'CPUExecutionProvider'}, 'darwin', {}), false);
+  assert.equal(poseProviderMatches({...cpu, provider:'CoreMLExecutionProvider'}, 'darwin', {}), false);
+  assert.equal(poseProviderMatches({...cpu, providers:{...cpu.providers,detector:['CoreMLExecutionProvider']}},
+    'darwin', {}), false);
+  assert.equal(poseProviderMatches({...cpu, fallbackReason:'failed'}, 'darwin', {}), true, 'computed on CPU');
+  assert.equal(poseProviderMatches(cpu, 'darwin', {EAGLE_POSE_PROVIDER:'CoreMLExecutionProvider'}), true);
+  assert.equal(poseProviderMatches({...cpu, fallbackReason:'dml failed'}, 'win32', {}), true,
+    'machines that always fall back must not recompute pose every run');
+  assert.equal(poseProviderMatches(undefined, 'win32', {}), false);
+});
+test('pose worker count is bounded and configurable with platform defaults', () => {
+  const previous=process.env.EAGLE_POSE_WORKERS;
+  try {
+    delete process.env.EAGLE_POSE_WORKERS;
+    assert.equal(poseWorkerLimit(2,'darwin'),2);
+    assert.equal(poseWorkerLimit(2,'win32'),2);
+    for (const [value,expected] of [['1',1],['2',2],['8',2],['0',1],['invalid',2]]) {
+      process.env.EAGLE_POSE_WORKERS=value;
+      assert.equal(poseWorkerLimit(2,'darwin'),expected);
+    }
+    process.env.EAGLE_POSE_WORKERS='1';
+    const pool=new PoseWorkerPool();
+    assert.equal(pool.diagnostics().concurrency,1);
+    pool.close();
+    assert.throws(()=>new PoseWorkerPool({size:0}),/positive integer/);
+  } finally {
+    if(previous===undefined)delete process.env.EAGLE_POSE_WORKERS;else process.env.EAGLE_POSE_WORKERS=previous;
+  }
+});
+test('cached pose without recorded CPU providers is refreshed when CPU is required', async () => {
+  const cached={contractVersion:1,unitId:'u',fingerprint:'f',previewPath:'/proxy.jpg',faces:[],metrics:{faces:0},
+    flags:[],score:.7,signals:{contractVersion:1,persons:[]},
+    pose:{cacheKey:'signals-v3-proxy-joint-validity:measure-v3',provider:'CPUExecutionProvider',fallbackReason:'failed'}};
+  let calls=0;
+  const pipeline=new AnalysisPipeline({store:{get:async()=>cached,put:async()=>{}},poseDetector:async()=>{
+    calls++;return [{available:true,persons:[],source:{width:10,height:20,proxyWidth:10,proxyHeight:20,kind:'jpeg'},
+      provider:'CPUExecutionProvider',mode:'balanced'}];
+  }});
+  const result=await pipeline.run([{unitId:'u'}]);
+  assert.equal(calls,1);
+  assert.equal(result.results[0].pose.fallbackReason,undefined);
+});
 test('pipeline persists optional signals/verdicts without changing score, and skips cached pose', async () => {
   const cached=[{contractVersion:1,unitId:'u',fingerprint:'f',previewPath:'/proxy.jpg',faces:[],metrics:{faces:0},flags:[],score:.7}];
   let calls=0;const writes=[];
   const pipeline=new AnalysisPipeline({store:{get:async()=>cached[0],put:async(k,v)=>writes.push(structuredClone(v))},
     poseDetector:async(items)=>{
     calls++;assert.equal(items[0].filePath,'/proxy.jpg');return [{available:true,persons:[],source:{width:10,height:20,
-      proxyWidth:10,proxyHeight:20,kind:'jpeg'},provider:'CPUExecutionProvider',mode:'balanced',timingMs:{total:1}}];
+      proxyWidth:10,proxyHeight:20,kind:'jpeg'},provider:'CPUExecutionProvider',
+      providers:{detector:['CPUExecutionProvider'],pose:['CPUExecutionProvider']},mode:'balanced',timingMs:{total:1}}];
   }});
   const first=await pipeline.run([{unitId:'u'}]);
   assert.deepEqual(first.results[0].signals.persons,[]);

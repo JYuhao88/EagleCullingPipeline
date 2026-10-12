@@ -84,7 +84,7 @@ def source_files():
              for p in (ROOT / base).rglob('*')
              if p.is_file() and p.suffix in ('.js', '.mjs', '.json')]
     files += [ROOT / name for name in ('scripts/bench.mjs', 'scripts/bench-ray.py',
-              'python_worker/face_worker.py', 'python_worker/pose_worker.py',
+              'python_worker/face_worker.py', 'python_worker/pose_worker.py', 'python_worker/pose_runtime.py',
               'ml/common/private_env.py', 'test/fixtures/bench-syn-manifest.json',
               'test/fixtures/bench-triage-manifest.json')]
     return files

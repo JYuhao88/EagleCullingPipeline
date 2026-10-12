@@ -1,5 +1,6 @@
 import { execFile } from 'node:child_process';
 import path from 'node:path';
+import { CaptureMetadataCache, captureFileIdentity, captureMetadataKey } from './capture-metadata-cache.js';
 import { localSetting } from './local-config.js';
 
 /** EXIF wall time without an offset is kept on a synthetic UTC timeline.
@@ -32,7 +33,7 @@ export function parseCaptureMetadata(row = {}) {
     device: Object.keys(device).length ? device : null };
 }
 
-function runExiftool(paths, { signal } = {}) {
+export function runExiftool(paths, { signal } = {}) {
   return new Promise((resolve, reject) => {
     const child = execFile(localSetting('EAGLE_EXIFTOOL', 'exiftool'),
       ['-json', '-DateTimeOriginal', '-SubSecDateTimeOriginal',
@@ -50,25 +51,55 @@ function runExiftool(paths, { signal } = {}) {
 
 /** Serial bounded batches avoid argv/output growth and concurrent RAW readers. */
 export async function enrichCaptureMetadata(records, {
-  batchSize = 128, reader = runExiftool, signal, checkpoint, onProgress = () => {},
+  batchSize = 128, reader = runExiftool, signal, checkpoint, onProgress = () => {}, metadataCache,
 } = {}) {
   if (!Number.isInteger(batchSize) || batchSize < 1) throw new Error('batchSize must be positive');
   const candidates = records.filter(record => record.filePath && !/[\r\n]/.test(record.filePath));
-  onProgress({ stage: 'scanning', phase: 'capture-metadata', completed: 0, total: candidates.length, cached: 0 });
-  for (let start = 0; start < candidates.length; start += batchSize) {
+  // Custom readers (tests, alternative tools) must opt in, so their output never lands in the shared cache.
+  const enabled = metadataCache === undefined ? reader === runExiftool : metadataCache !== false;
+  const cache = enabled ? await (metadataCache || new CaptureMetadataCache()).load() : null;
+  const pending = [], identities = new Map();
+  let cached = 0;
+  onProgress({ stage: 'scanning', phase: 'capture-metadata', completed: 0, total: candidates.length, cached });
+  for (const record of candidates) {
     signal?.throwIfAborted();
-    const batch = candidates.slice(start, start + batchSize);
-    try {
-      const rows = await reader(batch.map(record => record.filePath), { signal });
-      signal?.throwIfAborted();
-      const sourceKey = value => process.platform === 'win32' && typeof value === 'string'
-        ? path.normalize(value).toLowerCase() : value;
-      const byPath = new Map(rows.map(row => [sourceKey(row.SourceFile), parseCaptureMetadata(row)]));
-      for (const record of batch) Object.assign(record, byPath.get(sourceKey(record.filePath)) || {});
-    } catch { signal?.throwIfAborted(); /* Missing EXIF preserves legacy grouping. */ }
-    if (checkpoint) for (const record of batch) await checkpoint.put(`scan:${record.id}`, record);
-    onProgress({ stage: 'scanning', phase: 'capture-metadata', completed: start + batch.length, total: candidates.length, cached: 0 });
+    const info = cache ? await captureFileIdentity(record.filePath) : null;
+    const key = info ? captureMetadataKey(record.filePath, info) : null;
+    identities.set(record, key);
+    const value = key ? cache.get(key) : null;
+    if (value) {
+      Object.assign(record, value);
+      if (checkpoint) await checkpoint.put(`scan:${record.id}`, record);
+      cached++;
+      onProgress({ stage: 'scanning', phase: 'capture-metadata', completed: cached, total: candidates.length, cached });
+    } else pending.push(record);
   }
+  let completed = cached;
+  try {
+    for (let start = 0; start < pending.length; start += batchSize) {
+      signal?.throwIfAborted();
+      const batch = pending.slice(start, start + batchSize);
+      try {
+        const rows = await reader(batch.map(record => record.filePath), { signal });
+        signal?.throwIfAborted();
+        const sourceKey = value => process.platform === 'win32' && typeof value === 'string'
+          ? path.win32.resolve(value).toLowerCase() : value;
+        const byPath = new Map(rows.map(row => [sourceKey(row.SourceFile), row]));
+        for (const record of batch) {
+          const row = byPath.get(sourceKey(record.filePath));
+          if (!row) continue;
+          const value = parseCaptureMetadata(row);
+          Object.assign(record, value);
+          const key = identities.get(record);
+          const after = key ? await captureFileIdentity(record.filePath) : null;
+          if (!row.Error && after && captureMetadataKey(record.filePath, after) === key) cache.put(key, value);
+        }
+      } catch { signal?.throwIfAborted(); /* Missing EXIF preserves legacy grouping. */ }
+      if (checkpoint) for (const record of batch) await checkpoint.put(`scan:${record.id}`, record);
+      completed += batch.length;
+      onProgress({ stage: 'scanning', phase: 'capture-metadata', completed, total: candidates.length, cached });
+    }
+  } finally { await cache?.flush(); }
   assignCaptureSessions(records);
   return records;
 }
