@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { Updater, officialOrigin, UPDATE_INTERVAL } from '../src/core/updater.js';
+import { Updater, officialOrigin, UPDATE_INTERVAL, MANUAL_CHECK_INTERVAL } from '../src/core/updater.js';
 import { lowPriority } from '../src/core/update-process.js';
 import { checkUpdateVersion } from '../scripts/check-update-version.mjs';
 import { shouldAutoUpdate } from '../src/plugin/update-banner.js';
@@ -70,6 +70,9 @@ test('checks tags and notes without REST even when API would return 403; caches 
   assert.match(status.releaseNotes, /Release 1.2.0/);
   await updater.status(); assert.equal(calls, 1);
   clock += UPDATE_INTERVAL; await updater.status(); assert.equal(calls, 2);
+  await updater.status({ refresh: true }); assert.equal(calls, 2, 'manual checks are still rate limited');
+  clock += MANUAL_CHECK_INTERVAL; await updater.status(); assert.equal(calls, 2, 'automatic checks keep six-hour cache');
+  await updater.status({ refresh: true }); assert.equal(calls, 3, 'manual check bypasses the six-hour cache');
 });
 
 test('dirty clone is refused without changing user edits', async t => {

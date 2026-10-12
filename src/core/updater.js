@@ -7,6 +7,7 @@ import { lowPriority } from './update-process.js';
 import { DependencyStore } from './dependency-store.js';
 
 export const UPDATE_INTERVAL = 6 * 60 * 60 * 1000;
+export const MANUAL_CHECK_INTERVAL = 60 * 1000;
 export const REPOSITORY = 'https://github.com/JYuhao88/EagleCullingPipeline';
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const tagPattern = /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/;
@@ -78,7 +79,7 @@ export class Updater {
     if (await this.git('status', '--porcelain', '--untracked-files=all')) throw new Error('工作区有未提交改动，请先保存或提交');
     return this.git('rev-parse', 'HEAD');
   }
-  async status() {
+  async status({ refresh = false } = {}) {
     await mkdir(this.data, { recursive: true });
     let reason = null, currentVersion = null;
     try { await this.preflight(); } catch (error) { reason = error.message; }
@@ -88,7 +89,8 @@ export class Updater {
     } catch { /* Not a clone. */ }
     const packageVersion = (await readJson(path.join(this.cwd, 'package.json'), {})).version || null;
     let cache = await readJson(path.join(this.data, 'update-status.json'), {});
-    if (!cache.checkedAt || this.now() - Date.parse(cache.checkedAt) >= UPDATE_INTERVAL) {
+    const interval = refresh ? MANUAL_CHECK_INTERVAL : UPDATE_INTERVAL;
+    if (!cache.checkedAt || this.now() - Date.parse(cache.checkedAt) >= interval) {
       cache = { ...cache, checkedAt: new Date(this.now()).toISOString(), checkError: null };
       try {
         if (!this.acceptOrigin(await this.git('remote', 'get-url', 'origin'))) throw new Error('origin 不是指定的公开仓库');

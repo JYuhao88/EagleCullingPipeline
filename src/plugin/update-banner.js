@@ -39,15 +39,20 @@ export function mountUpdates({ root = document, storage = localStorage, fetchImp
     banner.hidden = postponed || !status.hasUpdate && !operation && !status.error;
     banner.querySelector('span').textContent = operation ? '正在更新，请稍候…'
       : status.error ? `更新失败：${status.error}` : `有新版本 ${status.latestVersion}`;
-    const text = status.error || status.checkError || status.reason;
+    const text = status.error || status.checkError
+      || (status.reason && (status.hasUpdate ? `最新正式版 ${status.latestVersion}，暂不能更新：${status.reason}` : status.reason));
+    const checkedAt = Date.parse(status.checkedAt || '');
+    const when = Number.isFinite(checkedAt)
+      ? `（检查于 ${new Date(checkedAt).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}）` : '';
     el('[data-status]').textContent = text || completionNotice
-      || (status.hasUpdate ? `最新正式版 ${status.latestVersion}` : '当前已是最新正式版');
+      || (status.hasUpdate ? `最新正式版 ${status.latestVersion}` : `当前已是最新正式版${when}`);
   }
-  async function check() {
+  async function check({ manual = false } = {}) {
     if (checking || operation) return;
     checking = true;
+    if (manual) el('[data-status]').textContent = '正在检查更新…';
     try {
-      status = await api('status'); loaded = true;
+      status = await api(manual ? 'status?refresh=1' : 'status'); loaded = true;
       storage.setItem(key(), JSON.stringify({ checked: Date.now(), status }));
       render();
     } catch (error) { el('[data-status]').textContent = `检查未完成：${error.message}`; }
@@ -106,7 +111,7 @@ export function mountUpdates({ root = document, storage = localStorage, fetchImp
     const action = event.target.dataset.action;
     if (action === 'notes') { el('.update-about').open = true; el('[data-notes]').hidden = false; }
     if (action === 'later') { postponed = true; render(); }
-    if (action === 'check') { postponed = true; check(); }
+    if (action === 'check') { postponed = true; check({ manual: true }); }
     if (['apply', 'rollback'].includes(action)) apply(action);
   });
   const observer = new MutationObserver(() => { if (!reviewing() && loaded && !operation && !postponed) check(); });

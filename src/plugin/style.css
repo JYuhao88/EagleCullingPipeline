@@ -5,7 +5,7 @@ main { width: 100%; margin: 0; padding: 16px 20px; }
 input, select, button { margin: 5px; padding: 9px; border: 1px solid #444; border-radius: 6px; background: #252832; color: #eee; }
 button { cursor: pointer; }
 label { display: block; margin: 10px 0; }
-input { min-width: 360px; }
+input:not([type="checkbox"]):not([type="radio"]) { min-width: min(360px, 100%); }
 .actions { margin: 20px 0; }
 .actions button { padding: 12px 20px; font-size: 16px; }
 .group-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0 12px; font-size: 12px; opacity: .8; }
