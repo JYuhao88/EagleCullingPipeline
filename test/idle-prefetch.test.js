@@ -128,7 +128,7 @@ test('server hides prefetch runs, yields them to user analysis, and prunes old p
   await service.listen();
   t.after(async () => {
     for (const release of releases) release();
-    await service.close(); await rm(root, { recursive: true, force: true });
+    await service.close(); await rm(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
   });
   const base = `http://127.0.0.1:${service.server.address().port}`;
   const post = body => fetch(base + '/runs', { method: 'POST', headers: { 'content-type': 'application/json' },
@@ -148,6 +148,10 @@ test('server hides prefetch runs, yields them to user analysis, and prunes old p
   assert.notEqual(status.active.id, prefetch.id);
   assert.equal(status.prefetch.status, 'cancelled');
   assert.deepEqual((await (await fetch(base + '/runs')).json()).runs.map(run => run.id), [status.active.id]);
+  for (let i = 0; i < 200 && status.active?.progress?.stage !== 'metrics'; i++) {
+    await new Promise(r => setTimeout(r, 10));
+    status = await (await fetch(base + '/runs/status')).json();
+  }
   releases.at(-1)();
   for (let i = 0; i < 100 && (await (await fetch(base + '/runs/status')).json()).active; i++) await new Promise(r => setTimeout(r, 10));
   for (let index = 0; index < 6; index++) {

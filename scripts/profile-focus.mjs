@@ -5,7 +5,7 @@ import { fork } from 'node:child_process';
 import crypto from 'node:crypto';
 import { readFile, writeFile, mkdir, mkdtemp, rm, stat } from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { performance } from 'node:perf_hooks';
 import { isDeepStrictEqual } from 'node:util';
 import sharp from 'sharp';
@@ -102,8 +102,8 @@ async function worker(mode, directory) {
   const selected = [...heic, ...small, ...large].slice(0, sampleCount);
   assert.equal(selected.length, sampleCount);
   const files = await instrument(mode, directory);
-  const focusModule = await import(files.focusFile);
-  const nativeModule = await import(files.nativeFile);
+  const focusModule = await import(pathToFileURL(files.focusFile).href);
+  const nativeModule = await import(pathToFileURL(files.nativeFile).href);
   const rows = [];
   let peakSampledRss = process.memoryUsage().rss;
   const sample = setInterval(() => { peakSampledRss = Math.max(peakSampledRss, process.memoryUsage().rss); }, 20);
@@ -242,7 +242,7 @@ async function probe() {
   const selected = [records.find(r => r.ext === 'jpg' && r.width * r.height < 10_000_000),
     records.find(r => r.ext === 'jpg' && r.width * r.height >= 10_000_000), records.find(r => r.ext === 'heic')].filter(Boolean);
   const files = await instrument('A', directory);
-  const { withNativeImage } = await import(files.nativeFile);
+  const { withNativeImage } = await import(pathToFileURL(files.nativeFile).href);
   const rows = [];
   try {
     for (const record of selected) {

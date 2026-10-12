@@ -18,9 +18,11 @@ async function put(root, relative, bytes, ageDays) {
   await utimes(file, time, time);
   return file;
 }
-async function fixture(t) {
+// Windows scanners briefly hold new files; retry so cleanup never masks a test or leaves servers open.
+const removeTree = root => rm(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
+async function fixture(t, { cleanup = true } = {}) {
   const root = await mkdtemp(path.join(os.tmpdir(), 'cache-budget-'));
-  t.after(() => rm(root, { recursive: true, force: true }));
+  if (cleanup) t.after(() => removeTree(root));
   return root;
 }
 
@@ -117,14 +119,15 @@ test('maintenance is skipped while busy and throttled afterwards', async t => {
 });
 
 test('cache routes validate input, refuse clearing during analysis, and stub pipelines get no cache routes', async t => {
-  const root = await fixture(t);
+  const root = await fixture(t, { cleanup: false });
   const runs = path.join(root, 'runs'), cacheRoot = path.join(root, 'cache');
   await put(cacheRoot, 'previews/p.jpg', 10, 5);
   let finish;
   const pipeline = { cacheRoot, async run() { await new Promise(resolve => { finish = resolve; }); return { results: [], groups: [] }; } };
   const service = createAnalysisServer({ port: 0, pipeline, runStore: new RunStore(runs) });
   await service.listen();
-  t.after(async () => { finish?.(); await service.close(); });
+  let stub;
+  t.after(async () => { finish?.(); await service.close(); await stub?.close(); await removeTree(root); });
   const base = `http://127.0.0.1:${service.server.address().port}`;
   const post = (url, body) => fetch(base + url, { method: 'POST', headers: { 'content-type': 'application/json' },
     body: JSON.stringify(body) });
@@ -136,12 +139,12 @@ test('cache routes validate input, refuse clearing during analysis, and stub pip
   assert.equal((await post('/cache/clear', { scope: 'everything' })).status, 400);
   assert.equal((await post('/runs', { items: [] })).status, 202);
   assert.equal((await post('/cache/clear', { scope: 'all' })).status, 409);
+  for (let i = 0; i < 200 && !finish; i++) await new Promise(r => setTimeout(r, 10));
   finish();
   for (let i = 0; i < 100 && (await (await fetch(base + '/runs/status')).json()).active; i++) await new Promise(r => setTimeout(r, 10));
   const cleared = await (await post('/cache/clear', { scope: 'derived' })).json();
   assert.equal(cleared.totalBytes, 0);
-  const stub = createAnalysisServer({ port: 0, pipeline: {}, runStore: new RunStore(runs) });
+  stub = createAnalysisServer({ port: 0, pipeline: {}, runStore: new RunStore(runs) });
   await stub.listen();
-  t.after(() => stub.close());
   assert.equal((await fetch(`http://127.0.0.1:${stub.server.address().port}/cache/usage`)).status, 404);
 });

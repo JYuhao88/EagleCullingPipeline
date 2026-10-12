@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import sharp from 'sharp';
 import { instrument, differences } from '../scripts/profile-focus.mjs';
 import { analyzeFocus } from '../src/core/focus.js';
@@ -13,9 +14,9 @@ test('focus profiling preserves baseline and exposes lossy round-trip difference
   const directory = await mkdtemp(path.join(os.tmpdir(), 'focus-profile-test-'));
   const a = await instrument('A', directory), b = await instrument('B', directory);
   try {
-    const { analyzeFocus: profiled } = await import(a.focusFile);
-    const { analyzeFocus: candidate } = await import(b.focusFile);
-    const { withNativeImage } = await import(a.nativeFile);
+    const { analyzeFocus: profiled } = await import(pathToFileURL(a.focusFile).href);
+    const { analyzeFocus: candidate } = await import(pathToFileURL(b.focusFile).href);
+    const { withNativeImage } = await import(pathToFileURL(a.nativeFile).href);
     const pixels = Buffer.alloc(128 * 96 * 3);
     for (let i = 0; i < pixels.length; i++) pixels[i] = (i * 73 + Math.floor(i / 37)) % 256;
     for (let orientation = 1; orientation <= 8; orientation++) {

@@ -21,7 +21,7 @@ test("detectorFaces removes pose-completed faces and eye ROIs", () => {
 
 test("result cache survives a moved cache directory and restores detector faces", async t => {
   const dir = await mkdtemp(path.join(os.tmpdir(), "eagle-result-cache-"));
-  t.after(() => rm(dir, { recursive: true, force: true }));
+  t.after(() => rm(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 }));
   const filePath = path.join(dir, "photo.jpg");
   await sharp({ create: { width: 64, height: 48, channels: 3, background: "#808080" } })
     .composite([{ input: Buffer.from("<svg width='64' height='48'><rect x='8' y='8' width='20' height='20' fill='#fff'/></svg>") }])

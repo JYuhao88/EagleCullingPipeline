@@ -52,7 +52,8 @@ test('pose worker count is bounded and configurable with platform defaults', () 
     if(previous===undefined)delete process.env.EAGLE_POSE_WORKERS;else process.env.EAGLE_POSE_WORKERS=previous;
   }
 });
-test('cached pose without recorded CPU providers is refreshed when CPU is required', async () => {
+test('cached pose without recorded CPU providers is refreshed when CPU is required',
+  { skip: poseProvider() !== 'CPUExecutionProvider' && 'CPU provider is only required on macOS' }, async () => {
   const cached={contractVersion:1,unitId:'u',fingerprint:'f',previewPath:'/proxy.jpg',faces:[],metrics:{faces:0},
     flags:[],score:.7,signals:{contractVersion:1,persons:[]},
     pose:{cacheKey:'signals-v3-proxy-joint-validity:measure-v3',provider:'CPUExecutionProvider',fallbackReason:'failed'}};

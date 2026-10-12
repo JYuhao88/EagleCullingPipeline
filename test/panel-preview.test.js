@@ -4,7 +4,8 @@ import { spawn } from 'node:child_process';
 import { Script } from 'node:vm';
 
 test('preview serves every DARK/LIGHT state with valid mock scripts and service status codes', async t => {
-  const child = spawn('nice', ['-n', '15', 'node', 'scripts/dev-panel-fixture.mjs'], { stdio: ['ignore', 'pipe', 'pipe'] });
+  const launch = process.platform === 'win32' ? ['node', []] : ['nice', ['-n', '15', 'node']];
+  const child = spawn(launch[0], [...launch[1], 'scripts/dev-panel-fixture.mjs'], { stdio: ['ignore', 'pipe', 'pipe'] });
   let stderr = '';
   child.stderr.on('data', bytes => { stderr += bytes; });
   t.after(async () => {

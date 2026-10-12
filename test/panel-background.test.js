@@ -6,6 +6,7 @@ import { shouldAutoStart, launchLocalService, createRunNotifier, mountBackground
 import { scopeLabel, primaryAnalysis } from '../src/plugin/start-model.js';
 import { eagleContext } from '../src/plugin/api.js';
 import { setWindowMode } from '../src/plugin/window-mode.js';
+const fixtureRepository = process.platform === 'win32' ? 'C:\\fixture' : '/tmp/fixture';
 const storage = () => { const map = new Map(); return { getItem: key => map.get(key) ?? null,
   setItem: (key, value) => map.set(key, value), removeItem: key => map.delete(key) }; };
 
@@ -44,7 +45,7 @@ test('settings exact keys and defaults persist without enabling writeback implic
   assert.equal(values.getItem('eagle-culling-smart-folders'), '1');
 });
 test('auto start refuses running, disabled, non-local, missing repo and concurrent starts', () => {
-  const input = { connected: false, enabled: true, repository: '/tmp/fixture', base: 'http://127.0.0.1:43441' };
+  const input = { connected: false, enabled: true, repository: fixtureRepository, base: 'http://127.0.0.1:43441' };
   assert.equal(shouldAutoStart(input), true);
   for (const change of [{ connected: true }, { enabled: false }, { launching: true }, { repository: '' },
     { base: 'https://localhost:43441' }, { base: 'http://example.invalid:43441' }])
@@ -58,10 +59,10 @@ test('launch CLI detaches, ignores stdio, unrefs and blocks occupied or newly di
       const child = new EventEmitter(); child.unref = () => { unref = true; };
       queueMicrotask(() => child.emit('spawn')); return child; } };
   };
-  const input = { repository: '/tmp/fixture', base: 'http://127.0.0.1:43441', requireImpl, occupied: async () => false };
+  const input = { repository: fixtureRepository, base: 'http://127.0.0.1:43441', requireImpl, occupied: async () => false };
   await launchLocalService(input);
-  assert.equal(command, 'nice'); assert.ok(args.includes('src/cli.js')); assert.ok(args.includes('serve'));
-  assert.deepEqual(options, { cwd: '/tmp/fixture', detached: true, stdio: 'ignore', windowsHide: true }); assert.equal(unref, true);
+  assert.equal(command, process.platform === 'win32' ? 'node' : 'nice'); assert.ok(args.includes('src/cli.js')); assert.ok(args.includes('serve'));
+  assert.deepEqual(options, { cwd: fixtureRepository, detached: true, stdio: 'ignore', windowsHide: true }); assert.equal(unref, true);
   await assert.rejects(launchLocalService({ ...input, occupied: async () => true }), /占用/);
   await assert.rejects(launchLocalService({ ...input, allowed: () => false }), /关闭/);
 });

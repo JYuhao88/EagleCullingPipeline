@@ -26,7 +26,8 @@ test('normal keeps caps and priority; turbo divides cores and is memory bounded'
     const pool = new PoseWorkerPool({ size: 8 }); assert.equal(pool.options.size, 2);
     assert.ok(Number(pool.options.workerEnv(0).EAGLE_POSE_THREADS) * pool.options.size <= 6); pool.close();
     const exif = new ExiftoolPool({ size: 8 }); assert.equal(exif.size, 2); exif.close();
-    assert.deepEqual(childLaunch('python', ['worker']), { command: 'nice', args: ['-n', '15', 'python', 'worker'] });
+    assert.deepEqual(childLaunch('python', ['worker'], 'normal', 'darwin'), { command: 'nice', args: ['-n', '15', 'python', 'worker'] });
+    assert.deepEqual(childLaunch('python', ['worker'], 'normal', 'win32'), { command: 'python', args: ['worker'] });
   });
   await withPerformanceMode('turbo', async () => {
     assert.equal(performanceWorkerCap('turbo', 36 * 1024 ** 3), 4);
@@ -51,7 +52,7 @@ test('parallel async contexts and pipeline instances do not leak modes', async (
   pipeline.runAnalysis = async function () { await new Promise(resolve => setImmediate(resolve));
     return {concurrency:this.concurrency, launch:childLaunch('python',[]).command}; };
   const values = await Promise.all(['normal', 'turbo'].map(performanceMode => pipeline.run([], {performanceMode})));
-  assert.deepEqual(values, [{concurrency:2,launch:'nice'},{concurrency:performanceWorkerCap('turbo'),launch:'python'}]);
+  assert.deepEqual(values, [{concurrency:2,launch:process.platform === 'win32' ? 'python' : 'nice'},{concurrency:performanceWorkerCap('turbo'),launch:'python'}]);
   assert.equal(pipeline.concurrency,2);
 });
 test('pose pool transmits slot-specific threads and never adds them to cache keys', async () => {
