@@ -1,6 +1,17 @@
 #start { max-width: 1200px; margin: 0 auto; padding: 20px 8px; }
 .start-heading, .context-grid { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.status-card, .welcome-card, .recent-run { border: 1px solid #494949; border-radius: 12px; padding: 18px; margin: 16px 0; }
+.start-heading { align-items: center; }
+.start-heading h1 { margin: 12px 0; }
+.status-card, .welcome-card { border: 1px solid #494949; border-radius: 12px; padding: 18px; margin: 16px 0; }
+.resume-area { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-top: 16px; padding-top: 14px;
+  border-top: 1px solid #3a3d44; }
+.resume-area[hidden] { display: none; }
+#resumeLatest { margin: 0; }
+#resumeDetail { color: #bbb; font-size: 14px; }
+.recent-run { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 16px;
+  padding: 10px 14px; margin: 6px 0; border: 1px solid #3a3d44; border-radius: 8px; }
+.recent-run > :not(button) { grid-column: 1; }
+.recent-run button { grid-column: 2; grid-row: 1 / span 3; margin: 0; }
 .context-grid { margin-top: 14px; color: #bbb; font-size: 14px; }
 .context-grid b { color: #eee; margin-left: 8px; }
 .welcome-card { background: #26343d; }
@@ -12,8 +23,7 @@
 #start .primary { background: #80bfcb; color: #152429; font-size: 17px; padding: 14px 26px; font-weight: bold; }
 #start button:disabled { opacity: .45; cursor: default; }
 #selectionHint, #allHint, #recentStatus { color: #bbb; line-height: 1.6; }
-.recent-run p { color: #bbb; margin: 8px 0; }
-.recent-run button { margin-top: 8px; }
+.recent-run p { color: #bbb; margin: 4px 0 0; font-size: 13px; }
 #advancedSettings { border-top: 1px solid #494949; margin-top: 30px; padding-top: 16px; }
 #advancedSettings label { display: block; margin-top: 14px; }
 #advancedSettings input { max-width: 100%; }

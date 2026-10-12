@@ -1,8 +1,9 @@
+import { workerLimit } from './exiftool-pool.js';
 import { localSetting } from './local-config.js';
 import { completeEyeRois, EYE_ROI_VERSION } from "./eye-roi.js";
 import { checkCancelled } from "./checkpoints.js";
 import { setImmediate as yieldTurn } from "node:timers/promises";
-import { detectPose, POSE_CACHE_KEY, POSE_SIGNALS_CACHE_KEY } from "./pose.js";
+import { PoseWorkerPool, detectPose, POSE_CACHE_KEY, POSE_SIGNALS_CACHE_KEY } from "./pose.js";
 import { computeSignals } from "./signals.js";
 import { evaluateRules } from "./rules-engine.js";
 import crypto from "node:crypto";
@@ -14,7 +15,7 @@ import { groupResultsAsync, recallCrossDayDuplicates, readCaptureTimes } from ".
 import { groupConfidence, rankGroup, suggestDecision, gateFlags } from "./ranking.js";
 import { CONTRACT_VERSION } from "./contracts.js";
 import { embedImage } from "./embeddings.js";
-import { detectFaces } from "./faces.js";
+import { FaceWorkerPool, normalizeFaceResult, detectFaces } from "./faces.js";
 import { score, SCORER_CACHE_KEY } from "./scorer.js";
 import { measureCandidates } from "./candidate-measurements.js";
 import { buildCandidateSet } from "./candidates.js";
@@ -40,6 +41,9 @@ export class AnalysisPipeline {
   ) {
     const check = () => checkCancelled(signal);
     check();
+    let posePool;
+    let facePool;
+    try {
     const stages = new Map();
     const unitWarnings = new Map();
     let persistedWarnings = 0;
@@ -159,6 +163,7 @@ export class AnalysisPipeline {
         });
       }
     };
+    onProgress({ completed: 0, total: records.length, cached, stage: "metrics" });
     const workers = await Promise.allSettled(
       Array.from(
         { length: Math.min(this.concurrency, records.length || 1) },
@@ -168,10 +173,14 @@ export class AnalysisPipeline {
     const failure = workers.find(worker => worker.status === "rejected");
     if (failure) throw failure.reason;
     check();
-    onProgress({ completed, total: records.length, cached, stage: "embedding" });
+    onProgress({ completed: 0, total: records.length, cached, stage: "embedding" });
+    let embedded = 0;
     for (const result of results) {
       check();
-      if (stages.get(result.unitId) !== 'metrics') continue;
+      if (stages.get(result.unitId) !== 'metrics') {
+        onProgress({ completed: ++embedded, total: records.length, cached, stage: 'embedding' });
+        continue;
+      }
       try {
         result.embedding ||= await embedImage(result.previewPath, {
           signal, fingerprint: result.fingerprint, cacheDir: path.join(this.cacheRoot, "embeddings") });
@@ -179,8 +188,8 @@ export class AnalysisPipeline {
       check();
       if (!result.embedding) warnings.push("DINOv2 模型文件不存在，已降级为 hash + 时间分组");
       await saveUnit(result, 'embedding');
+      onProgress({ completed: ++embedded, total: records.length, cached, stage: 'embedding' });
     }
-    onProgress({ completed, total: records.length, cached, stage: "faces" });
     const faceTargets = results.filter(
       (result) => ["metrics", "embedding"].includes(stages.get(result.unitId)) && result.previewPath && (
         !Array.isArray(result.faces) || result.metrics.faces == null || result.metrics.faces > result.faces.length
@@ -189,11 +198,20 @@ export class AnalysisPipeline {
     for (const result of results) {
       if (!Array.isArray(result.faces)) result.faces = [];
     }
+    const faceTotal = faceTargets.length + results.length;
+    onProgress({ completed: 0, total: faceTotal, cached, stage: 'faces' });
     if (faceTargets.length) {
+      if (this.faceDetector === detectFaces) facePool = new FaceWorkerPool({
+        cwd: this.root, size: workerLimit('EAGLE_FACE_WORKERS', this.concurrency) });
       for (let start = 0; start < faceTargets.length; start += 16) {
       check();
       const batch = faceTargets.slice(start, start + 16);
-      const faces = await this.faceDetector(batch.map((result) => result.previewPath), { signal });
+      let detected = start;
+      const onItem = () => onProgress({ completed: ++detected, total: faceTotal, cached, stage: 'faces' });
+      const faces = facePool
+        ? (await facePool.run(batch.map(result => ({ id: result.unitId, filePath: result.previewPath })), { signal, onItem }))
+          .map(normalizeFaceResult)
+        : await this.faceDetector(batch.map((result) => result.previewPath), { signal });
       check();
       for (const [index, result] of batch.entries()) {
         const face = faces[index];
@@ -206,6 +224,7 @@ export class AnalysisPipeline {
         if (face.warning) warnings.push(face.warning);
         await saveUnit(result, "faces");
       }
+      onProgress({ completed: start + batch.length, total: faceTotal, cached, stage: 'faces' });
       }
       if (this.store) {
         for (const result of faceTargets) {
@@ -215,10 +234,13 @@ export class AnalysisPipeline {
       }
     }
     check();
+    // Face models are no longer needed; free them before loading pose models.
+    facePool?.close();
     const captureTimes = await readCaptureTimes(records, { signal });
     check();
     for (const [index, result] of results.entries()) {
       check();
+      onProgress({ completed: faceTargets.length + index + 1, total: faceTotal, cached, stage: 'faces' });
       if (["pose", "focus"].includes(stages.get(result.unitId))) continue;
       result.sessionId = records[index].sessionId;
       result.captureTime = records[index].captureTime ?? captureTimes.get(records[index].filePath) ?? result.captureTime;
@@ -243,20 +265,25 @@ export class AnalysisPipeline {
       }
       result.flags = gateFlags(result);
     }
-    onProgress({ completed, total: records.length, cached, stage: "pose" });
     const poseTargets = results.filter((result) => !["pose-inferred", "pose", "focus"].includes(stages.get(result.unitId))
       && result.previewPath && (!result.signals || result.pose?.cacheKey !==
       POSE_SIGNALS_CACHE_KEY));
+    const poseTotal = poseTargets.length + results.length;
+    onProgress({ completed: 0, total: poseTotal, cached, stage: 'pose' });
     if (poseTargets.length) {
+      if (this.poseDetector === detectPose) posePool = new PoseWorkerPool({
+        cwd: this.root, size: workerLimit('EAGLE_POSE_WORKERS', this.concurrency) });
       // Invalidate before inference: a failed refresh must not leave stale
       // measurements looking current in the new run or result cache.
       for (const result of poseTargets) { delete result.signals; delete result.pose; }
       for (let start = 0; start < poseTargets.length; start += 16) {
       check();
       const batch = poseTargets.slice(start, start + 16);
+      let inferred = start;
+      const onItem = () => onProgress({ completed: ++inferred, total: poseTotal, cached, stage: 'pose' });
       const poses = await this.poseDetector(batch.map((result) => ({
         id: result.unitId, filePath: result.previewPath, faces: result.faces,
-      })), { cwd: this.root, size: Math.min(2, this.concurrency), signal });
+      })), { cwd: this.root, size: workerLimit('EAGLE_POSE_WORKERS', this.concurrency), pool: posePool, signal, onItem });
       check();
       for (const [index, result] of batch.entries()) {
         const pose = poses[index];
@@ -275,10 +302,14 @@ export class AnalysisPipeline {
           ...(pose.fallbackReason ? { fallbackReason: pose.fallbackReason } : {}) };
         await saveUnit(result, "pose-inferred");
       }
+      onProgress({ completed: start + batch.length, total: poseTotal, cached, stage: 'pose' });
     }
     }
+    posePool?.close();
+    let posed = 0;
     for (const result of results) {
       check();
+      onProgress({ completed: poseTargets.length + ++posed, total: poseTotal, cached, stage: 'pose' });
       if (["pose", "focus"].includes(stages.get(result.unitId))) continue;
       // Opt-in only; reuse model outputs and compute small-raster hints serially.
       if (result.signals?.imageMeasurements?.candidates) delete result.signals.imageMeasurements.candidates;
@@ -296,11 +327,17 @@ export class AnalysisPipeline {
       await saveUnit(result, "pose");
     }
     for (const result of results) result.faces = completeEyeRois(result.faces, result.signals?.persons);
-    // Native-resolution focus is an opt-in, serial, transient decode. Missing
+    // Native-resolution focus uses bounded transient decodes. Missing
     // embedded JPEG/rawpy is represented as na and never guessed from proxy sharpness.
-    for (const [index, result] of results.entries()) {
+    let focusCursor = 0;
+    let focused = 0;
+    onProgress({ completed: 0, total: records.length, cached, stage: 'focus' });
+    const focusWorker = async () => {
+      while (focusCursor < results.length) {
+      const index = focusCursor++;
+      const result = results[index];
       check();
-      onProgress({ completed: index, total: records.length, cached, stage: "focus" });
+      try {
       if (!nativeFocus || stages.get(result.unitId) === "focus") continue;
       if (!result.sourcePath || !result.faces?.length) { await saveUnit(result, "focus"); continue; }
       try {
@@ -314,10 +351,10 @@ export class AnalysisPipeline {
         try {
           focus = JSON.parse(await readFile(focusFile, "utf8"));
         } catch {
-          const maker = await readMakerFocus(result.sourcePath);
+          const maker = await readMakerFocus(result.sourcePath, { signal });
           const nativeRecord = { ...records[index], filePath: result.sourcePath };
           focus = await withNativeImage(nativeRecord,
-            { pairedItems: records[index].pairedItems }, async ({ image, source }) => {
+            { pairedItems: records[index].pairedItems, signal }, async ({ image, source }) => {
               const buffer = await image().jpeg({ quality: 96, chromaSubsampling: "4:4:4" }).toBuffer();
               return analyzeFocus({ nativeBuffer: buffer,
                 nativeSize: { width: source.width, height: source.height,
@@ -343,8 +380,13 @@ export class AnalysisPipeline {
       check();
       if (this.store) await this.store.put(result.fingerprint, result);
       await saveUnit(result, "focus");
-    }
-    onProgress({ completed, total: records.length, cached, stage: "grouping" });
+      } finally { onProgress({ completed: ++focused, total: records.length, cached, stage: 'focus' }); }
+      }
+    };
+    const focusWorkers = await Promise.allSettled(Array.from({ length: workerLimit('EAGLE_NATIVE_CONCURRENCY') }, focusWorker));
+    const focusFailure = focusWorkers.find(worker => worker.status === 'rejected');
+    if (focusFailure) throw focusFailure.reason;
+    onProgress({ completed: 0, total: records.length, cached, stage: "grouping" });
     check();
     const groupingSignature = crypto.createHash('sha256')
       .update(JSON.stringify(results.map(row => [row.unitId, row.fingerprint]))).digest('hex');
@@ -360,12 +402,17 @@ export class AnalysisPipeline {
     if (checkpoint && !grouped) await checkpoint.put('grouping', {
       signature: groupingSignature, groups: groups.map(({ items, ...group }) => group), duplicates: [...duplicateCandidates] });
     const resultsByUnit = new Map(results.map(result => [result.unitId || result.id, result]));
-    onProgress({ completed, total: records.length, cached, stage: "ranking" });
+    onProgress({ completed: records.length, total: records.length, cached, stage: 'grouping' });
+    onProgress({ completed: 0, total: groups.length, cached, stage: 'ranking' });
     const rankedGroups = [];
     for (const group of groups) {
       check();
       const saved = checkpoint ? await checkpoint.get(`ranking:${group.id}`) : null;
-      if (saved?.signature === groupingSignature) { rankedGroups.push(saved.group); continue; }
+      if (saved?.signature === groupingSignature) {
+        rankedGroups.push(saved.group);
+        onProgress({ completed: rankedGroups.length, total: groups.length, cached, stage: 'ranking' });
+        continue;
+      }
       const ranking = rankGroup(group.items, undefined, {
         averageSimilarity: group.averageSimilarity,
       });
@@ -395,6 +442,7 @@ export class AnalysisPipeline {
         candidateSet: buildCandidateSet(group.items),
       };
       rankedGroups.push(ranked);
+      onProgress({ completed: rankedGroups.length, total: groups.length, cached, stage: 'ranking' });
       if (checkpoint) await checkpoint.put(`ranking:${group.id}`, { signature: groupingSignature, group: ranked });
       await yieldTurn();
     }
@@ -409,5 +457,6 @@ export class AnalysisPipeline {
       duplicateCandidates: Object.fromEntries(duplicateCandidates),
       warnings: [...new Set(warnings)],
     };
+    } finally { facePool?.close(); posePool?.close(); }
   }
 }

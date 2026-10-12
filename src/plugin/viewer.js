@@ -36,6 +36,12 @@ export function createViewer({ root, nativeUrl }) {
   const image = root.querySelector("#previewImage");
   const native = root.querySelector("#viewerNative");
   const zoomLabel = root.querySelector("#viewerZoom");
+  const nativeLabel = root.querySelector("#viewerNativeState");
+  let nativeState = "";
+  const setNativeState = value => {
+    nativeState = value;
+    if (nativeLabel) nativeLabel.textContent = value === "loading" ? "读取原图…" : value === "ready" ? "原图" : "";
+  };
   let view = { scale: 1, x: 0, y: 0 };
   let natural = { width: 0, height: 0 };
   let unitId = null, drag = null, nativeTimer = null, nativeToken = 0, fitted = true;
@@ -81,23 +87,28 @@ export function createViewer({ root, nativeUrl }) {
   }
   function scheduleNative() {
     clearTimeout(nativeTimer);
-    if (!nativeUrl || view.scale <= 1.05 || !unitId) { native.hidden = true; return; }
-    const box = visibleBox(view, stage(), natural);
-    if ((box[2] - box[0]) * (box[3] - box[1]) > MAX_NATIVE_AREA) { native.hidden = true; return; }
+    const box = nativeUrl && unitId && view.scale > 1.05 ? visibleBox(view, stage(), natural) : null;
+    if (!box || (box[2] - box[0]) * (box[3] - box[1]) > MAX_NATIVE_AREA) {
+      if (nativeState) { nativeToken++; native.hidden = true; setNativeState(""); }
+      return;
+    }
     if (native.dataset.box === box.join(",") && !native.hidden) return;
+    setNativeState("loading");
     nativeTimer = setTimeout(() => {
       const token = ++nativeToken, next = new Image();
       next.onload = () => {
         if (token !== nativeToken) return;
         native.src = next.src; native.dataset.box = box.join(","); native.hidden = false; positionNative();
+        setNativeState("ready");
       };
+      next.onerror = () => { if (token === nativeToken) setNativeState(""); };
       next.src = nativeUrl(unitId, box);
     }, NATIVE_DELAY);
   }
 
   function show(id, src) {
     const changed = id !== unitId;
-    unitId = id; nativeToken++; native.hidden = true; delete native.dataset.box;
+    unitId = id; nativeToken++; native.hidden = true; delete native.dataset.box; setNativeState("");
     if (!changed && image.src === src) return;
     natural = { width: 0, height: 0 };
     image.onload = () => { natural = { width: image.naturalWidth, height: image.naturalHeight }; fit(); };

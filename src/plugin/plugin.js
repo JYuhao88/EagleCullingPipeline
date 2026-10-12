@@ -144,6 +144,7 @@ function renderPreview() {
   const decision = decisionFor(viewState, previewUnitId, group);
   const state = decision.source === "human" ? { selected: "精选", candidate: "候选", rejected: "淘汰" }[decision.action] : "未确认";
   root.querySelector("#previewCaption").textContent = `${index + 1} / ${ids.length} · ${item?.name || "未命名文件"} · ${state}`;
+  for (const button of root.querySelectorAll(".preview-nav")) button.hidden = ids.length < 2;
   for (const button of root.querySelectorAll("[data-viewer-action]")) {
     button.classList.toggle("active", decision.source === "human" && decision.action === button.dataset.viewerAction);
   }
@@ -193,6 +194,7 @@ function renderPageControls() {
   root.querySelector('#nextPage').disabled = page.nextCursor === null;
 }
 
+let autoAllFilter = false;
 async function openRun(runId) {
   const requestVersion = ++reviewRequest;
   root.querySelector("#loading").hidden = false;
@@ -202,10 +204,16 @@ async function openRun(runId) {
       root.querySelector('#feedbackStatus').textContent = `理由词表加载失败（仍可选片）：${error.message}`;
       return { reasons: [], rules: [] };
     });
-    const query = `limit=20&filter=${encodeURIComponent(viewState.filter)}`;
-    const data = await api(`/runs/${runId}/results?${query}`);
-    const response = await api(`/runs/${runId}/decisions?${query}`);
+    let filter = autoAllFilter ? "multi" : viewState.filter;
+    let data = await api(`/runs/${runId}/results?limit=20&filter=${encodeURIComponent(filter)}`);
+    autoAllFilter = filter === "multi" && data.page?.total === 0;
+    if (autoAllFilter) {
+      filter = "all";
+      data = await api(`/runs/${runId}/results?limit=20&filter=all`);
+    }
+    const response = await api(`/runs/${runId}/decisions?limit=20&filter=${encodeURIComponent(filter)}`);
     if (reviewRequest !== requestVersion) return;
+    if (filter !== viewState.filter) setState({ ...viewState, filter });
     setState(reduceState(viewState, { type: "load", runId, data, decisions: response.decisions }));
     root.querySelector("#start").hidden = true;
     root.querySelector("#review").hidden = false;
@@ -474,7 +482,7 @@ root.querySelector("#base").addEventListener("change", event => {
 
 const startView = createStartView({ root, api, getApi: () => api, onRun: openRun, autoCheck: false });
 reviewView = createReviewView({ root, state, setState,
-  onFilter: filter => loadReviewPage(0, filter).catch(error => {
+  onFilter: filter => (autoAllFilter = false, loadReviewPage(0, filter)).catch(error => {
     root.querySelector("#writeback").textContent = `暂时无法加载照片组：${error.message}。请检查服务连接后重新选择筛选。`; }),
   getRunId: () => viewState.runId, onBack: closeReview, onDecision: saveDecision,
   onPreview: openPreview, getCatalog: () => catalog,

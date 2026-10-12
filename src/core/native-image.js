@@ -1,3 +1,4 @@
+import { exiftoolRequest, workerLimit } from './exiftool-pool.js';
 import { replaceFile } from './atomic-file.js';
 import { localSetting } from './local-config.js';
 import path from 'node:path';
@@ -12,25 +13,30 @@ const RAW = new Set(['arw', 'dng', '3fr', 'cr2', 'cr3', 'nef', 'raf', 'orf', 'rw
 const decoder = fileURLToPath(new URL('../../ml/raw/decode.py', import.meta.url));
 const fileOf = item => item?.filePath || item?.path || item?.analysisPath;
 const extension = item => String(item?.ext || path.extname(fileOf(item) || '').slice(1)).toLowerCase();
-let queue = Promise.resolve();
-// Native decodes are deliberately serial: full-resolution buffers are transient.
+let active = 0;
+const waiting = [];
+// Full-resolution buffers stay bounded; two concurrent decodes are opt-in.
 async function serial(fn) {
-  const previous = queue;
-  let release;
-  queue = new Promise(resolve => { release = resolve; });
-  await previous;
-  try { return await fn(); } finally { release(); }
+  if (active >= workerLimit('EAGLE_NATIVE_CONCURRENCY')) await new Promise(resolve => waiting.push(resolve));
+  else active += 1;
+  try { return await fn(); } finally {
+    const next = waiting.shift();
+    if (next) next(); else active -= 1;
+  }
 }
 
-function command(program, args, { binary = false, timeoutMs = 60000 } = {}) {
+function command(program, args, { binary = false, timeoutMs = 60000, single = false, signal } = {}) {
+  if (program === 'exiftool' && !single) return exiftoolRequest(args, {
+    binary, signal, fallback: () => command(program, args, { binary, timeoutMs, single: true, signal }),
+  });
   if (program === 'exiftool') {
     program = localSetting('EAGLE_EXIFTOOL', 'exiftool');
     if (process.platform === 'win32') args = ['-charset', 'filename=UTF8', ...args];
   }
   return new Promise((resolve, reject) => {
     const child = process.platform === 'win32'
-      ? spawn(program, args, { windowsHide: true })
-      : spawn('nice', ['-n', '10', program, ...args]);
+      ? spawn(program, args, { windowsHide: true, signal })
+      : spawn('nice', ['-n', '15', program, ...args], { signal });
     if (process.platform === 'win32') child.once('spawn', () => {
       try { os.setPriority(child.pid, os.constants.priority.PRIORITY_BELOW_NORMAL); }
       catch (error) { child.kill(); child.emit('error', error); }
@@ -62,6 +68,7 @@ export function normalizedRect(box, width, height) {
 async function openNative(record, options, callback) {
   const temporary = await mkdtemp(path.join(os.tmpdir(), 'eagle-native-'));
   const warnings = [];
+  const runCommand = (program, args, settings = {}) => command(program, args, { ...settings, signal: options.signal });
   try {
     const paired = options.pairedItems || record.pairedItems || [];
     const raws = [record, ...paired].filter(item => RAW.has(extension(item)));
@@ -71,12 +78,13 @@ async function openNative(record, options, callback) {
       rawSource = fileOf(raw);
       if (!rawSource) continue;
       try {
+        options.signal?.throwIfAborted();
         const args = ['-j', '-n', '-ImageWidth', '-ImageHeight', '-ExifImageWidth',
           '-ExifImageHeight', '-Orientation', rawSource];
-        rawMeta ||= JSON.parse(await command('exiftool', args))[0];
+        rawMeta ||= JSON.parse(await runCommand('exiftool', args))[0];
         for (const tag of ['JpgFromRaw', 'PreviewImage']) {
           try {
-            const data = await command('exiftool', ['-b', `-${tag}`, rawSource], { binary: true });
+            const data = await runCommand('exiftool', ['-b', `-${tag}`, rawSource], { binary: true });
             const meta = await sharp(data).metadata();
             const width = rawMeta.ExifImageWidth || rawMeta.ImageWidth || raw.width;
             const height = rawMeta.ExifImageHeight || rawMeta.ImageHeight || raw.height;
@@ -84,9 +92,9 @@ async function openNative(record, options, callback) {
               warnings.push(`${tag}: embedded preview is not full resolution`); continue;
             }
             return await consume(data, 'embedded-jpeg', rawMeta.Orientation || meta.orientation || 1);
-          } catch (error) { warnings.push(`${tag}: ${error.message}`); }
+          } catch (error) { options.signal?.throwIfAborted(); warnings.push(`${tag}: ${error.message}`); }
         }
-      } catch (error) { warnings.push(`exiftool unavailable: ${error.message}`); }
+      } catch (error) { options.signal?.throwIfAborted(); warnings.push(`exiftool unavailable: ${error.message}`); }
     }
     for (const item of [record, ...paired].filter(item => !RAW.has(extension(item)))) {
       const source = fileOf(item);
@@ -94,24 +102,26 @@ async function openNative(record, options, callback) {
       try {
         if (extension(item) === 'heic' && process.platform === 'darwin') {
           const converted = path.join(temporary, 'heic.jpg');
-          await command('sips', ['-s', 'format', 'jpeg', source, '--out', converted]);
+          await runCommand('sips', ['-s', 'format', 'jpeg', source, '--out', converted]);
           return await consume(converted, 'heic');
         }
         return await consume(source, 'jpeg');
-      } catch (error) { warnings.push(`paired image: ${error.message}`); }
+      } catch (error) { options.signal?.throwIfAborted(); warnings.push(`paired image: ${error.message}`); }
     }
     if (rawSource) {
       try {
         const decoded = path.join(temporary, 'decoded.jpg');
         const python = options.python || localSetting("EAGLE_PYTHON") ||
           (process.platform === 'win32' ? 'python_worker/.venv/Scripts/python.exe' : 'python3');
-        await command(python, [decoder, rawSource, decoded]);
+        await runCommand(python, [decoder, rawSource, decoded]);
         return await consume(decoded, 'decoded-raw', rawMeta?.Orientation || 1);
-      } catch (error) { warnings.push(`rawpy unavailable or decode failed: ${error.message}`); }
+      } catch (error) { options.signal?.throwIfAborted(); warnings.push(`rawpy unavailable or decode failed: ${error.message}`); }
     }
+    options.signal?.throwIfAborted();
     return { available: false, naReason: 'native-source-unavailable', warnings };
 
     async function consume(input, kind, orientation) {
+      options.signal?.throwIfAborted();
       const meta = await sharp(input).metadata();
       orientation ||= meta.orientation || 1;
       const swapped = orientation >= 5 && orientation <= 8;

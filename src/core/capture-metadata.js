@@ -50,7 +50,7 @@ function runExiftool(paths, { signal } = {}) {
 
 /** Serial bounded batches avoid argv/output growth and concurrent RAW readers. */
 export async function enrichCaptureMetadata(records, {
-  batchSize = 256, reader = runExiftool, signal, checkpoint, onProgress = () => {},
+  batchSize = 128, reader = runExiftool, signal, checkpoint, onProgress = () => {},
 } = {}) {
   if (!Number.isInteger(batchSize) || batchSize < 1) throw new Error('batchSize must be positive');
   const candidates = records.filter(record => record.filePath && !/[\r\n]/.test(record.filePath));

@@ -1,3 +1,4 @@
+import { exiftoolRequest } from './exiftool-pool.js';
 import { localSetting } from './local-config.js';
 import sharp from "sharp";
 import { completeEyeRois } from "./eye-roi.js";
@@ -81,16 +82,22 @@ export function parseMakerFocus(metadata = {}) {
     mode: value("AFAreaMode") ?? null, source: parsedPoint?.point ? pointSource : null };
 }
 
-export async function readMakerFocus(filePath) {
+export async function readMakerFocus(filePath, { signal } = {}) {
   if (!filePath) return { point: null, coordinateSize: null, frameSize: null, mode: null, source: null, naReason: "no-source" };
   try {
     const args = [...(process.platform === "win32" ? ["-charset", "filename=UTF8"] : []),
       "-j", "-n", "-FocusLocation", "-FocusFrameSize", "-AFAreaMode", "-AFAreas", filePath];
-    const { stdout } = await execFileAsync(localSetting("EAGLE_EXIFTOOL", "exiftool"), args, { maxBuffer: 1024 * 1024 });
+    const stdout = await exiftoolRequest(args, { signal, fallback: async () => {
+      const program = localSetting('EAGLE_EXIFTOOL', 'exiftool');
+      const command = process.platform === 'win32' ? program : 'nice';
+      const options = process.platform === 'win32' ? args : ['-n', '15', program, ...args];
+      return (await execFileAsync(command, options, { maxBuffer: 1024 * 1024, timeout: 60000, windowsHide: true, signal })).stdout;
+    } });
     const metadata = JSON.parse(stdout)?.[0] || {};
     const parsed = parseMakerFocus(metadata);
     return parsed.point ? parsed : { ...parsed, naReason: "maker-focus-unavailable" };
   } catch (error) {
+    signal?.throwIfAborted();
     return { point: null, coordinateSize: null, frameSize: null, mode: null,
       source: null, naReason: `exiftool-unavailable:${error.code || "error"}` };
   }

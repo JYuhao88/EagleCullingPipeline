@@ -1,3 +1,4 @@
+import { RunProgress, measuredWeights } from '../core/run-progress.js';
 import { Checkpoints } from "../core/checkpoints.js";
 import { pageOptions } from "./pagination.js";
 import { randomUUID } from "node:crypto";
@@ -147,17 +148,14 @@ export function createRunsRouter({
       const request = resumeId ? await checkpoint?.get('request') : body;
       if (!request) return json(res, 409, { error: 'No resumable scan checkpoint' });
       if (!resumeId && checkpoint) await checkpoint.put('request', body);
+      const history = store.list ? (await store.list({ limit: 20, cursor: 0 })).runs || [] : [];
+      const tracker = new RunProgress({ weights: measuredWeights(history) || undefined });
       const run = {
         contractVersion: 1,
         id,
         status: "running",
         startedAt: new Date().toISOString(),
-        progress: {
-          completed: 0,
-          total: 0,
-          cached: 0,
-          stage: "scanning",
-        },
+        progress: tracker.update({ completed: 0, total: 0, cached: 0, stage: 'scanning' }),
         libraryPath: request.libraryPath || null,
         ...(request.scope && ['selection', 'folder', 'library'].includes(request.scope.type) ? { scope: {
           type: request.scope.type, label: String(request.scope.label || '').slice(0, 200),
@@ -178,7 +176,7 @@ export function createRunsRouter({
       let lastProgressStage;
       const progressWrites = new Set();
       const onProgress = progress => {
-        run.progress = progress;
+        run.progress = tracker.update(progress);
         const now = performance.now();
         if (progress.stage !== lastProgressStage || now - lastProgressAt >= progressIntervalMs) {
           lastProgressAt = now;
@@ -189,6 +187,8 @@ export function createRunsRouter({
           progressWrites.add(pending);
         }
       };
+      const heartbeat = setInterval(() => onProgress(tracker.last), 1000);
+      heartbeat.unref?.();
       const execute = async () => {
         controller.signal.throwIfAborted();
         let scan = checkpoint ? await checkpoint.get('scanning') : null;
@@ -219,6 +219,7 @@ export function createRunsRouter({
       };
       execute()
         .then(async (result) => {
+          clearInterval(heartbeat);
           controller.signal.throwIfAborted();
           const { results: _results, groups: _groups, duplicateCandidates: _duplicates, ...summary } = result;
           Object.assign(run, summary, {
@@ -226,6 +227,8 @@ export function createRunsRouter({
             groupCount: result.groups.length,
             warnings: result.warnings || [],
           });
+          run.progress = tracker.update(result.progress || { stage: 'done',
+            completed: result.results?.length || 0, total: result.results?.length || 0 });
           data.results = result.results || [];
           data.groups = result.groups || [];
           data.duplicateCandidates = result.duplicateCandidates;
@@ -235,6 +238,8 @@ export function createRunsRouter({
           if (active.run?.id === id) active.run = null;
         })
         .catch(async (error) => {
+          clearInterval(heartbeat);
+          run.progress = tracker.snapshot();
           run.status = controller.signal.aborted ? "cancelled" : "failed";
           run.error = error.message;
           delete run.controller;

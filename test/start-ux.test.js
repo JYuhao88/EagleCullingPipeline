@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { primaryAnalysis, stageIndex, readRecentRuns } from '../src/plugin/start-model.js';
+import { primaryAnalysis, stageIndex, readRecentRuns, analysisProgress, durationText } from '../src/plugin/start-model.js';
 import { serviceLaunch, serviceCommand, defaultRepository } from '../src/plugin/service-start.js';
 import { eagleContext } from '../src/plugin/api.js';
 import { createStartView } from '../src/plugin/start-view.js';
@@ -31,10 +31,49 @@ test('Windows launch uses node directly and PowerShell literal quoting; Unix ret
 });
 
 test('stage labels cover all analysis phases; malformed recent storage degrades safely', () => {
-  assert.deepEqual(['scanning', 'pairing', 'metrics', 'embedding', 'faces', 'pose', 'grouping', 'ranking', 'done']
-    .map(stageIndex), [0, 0, 1, 1, 2, 2, 3, 3, 4]);
+  assert.deepEqual(['scanning', 'pairing', 'metrics', 'embedding', 'faces', 'pose', 'focus', 'grouping', 'ranking', 'done']
+    .map(stageIndex), [0, 0, 1, 2, 3, 4, 5, 6, 7, 8]);
   for (const value of ['{}', 'null', 'oops']) assert.deepEqual(readRecentRuns({ getItem: () => value }), []);
   assert.deepEqual(readRecentRuns({ getItem: () => '["run-ok","../bad",null]' }), ['run-ok']);
+});
+
+test('analysis progress displays measured overall estimates and distinct Chinese phases', () => {
+  const run = { status: 'running', progress: { stage: 'focus', completed: 5, total: 10,
+    overallPercent: 73.9, elapsedSeconds: 125, remainingSeconds: 65.1 } };
+  const model = analysisProgress(run);
+  assert.equal(model.overallPercent, 73.9);
+  assert.equal(model.remainingSeconds, 66);
+  assert.equal(model.text, '对焦分析 · 总体 73% · 已用 2 分 5 秒 · 预计剩余 1 分 6 秒');
+  for (const [stage, label] of [['embedding', '特征提取'], ['pose', '姿态分析'], ['ranking', '排序']]) {
+    assert.equal(analysisProgress({ ...run, progress: { ...run.progress, stage } }).stage, label);
+  }
+  assert.equal(durationText(3601), '1 小时 0 分');
+  assert.equal(durationText(0), '0 秒');
+});
+
+test('old runs and insufficient warmup show estimating without inventing a percentage or ETA', () => {
+  const startedAt = '2026-10-01T00:00:00Z', now = Date.parse(startedAt) + 90000;
+  const legacy = { status: 'running', startedAt, progress: { stage: 'metrics', completed: 5, total: 10 } };
+  const model = analysisProgress(legacy, now);
+  assert.equal(model.overallPercent, null);
+  assert.equal(model.remainingSeconds, null);
+  assert.match(model.text, /总体进度待估算 · 已用 1 分 30 秒 · 预计剩余 估算中/);
+  const warmup = analysisProgress({ ...legacy, progress: { ...legacy.progress, overallPercent: 12, remainingSeconds: null } });
+  assert.match(warmup.text, /总体 12%/);
+  assert.equal(warmup.remainingSeconds, null);
+  assert.equal(analysisProgress({ status: 'completed', startedAt }, now).elapsedSeconds, null);
+  assert.equal(analysisProgress({ status: 'completed', startedAt }, now).overallPercent, 100);
+  assert.equal(analysisProgress({ status: 'interrupted', startedAt }, now).remainingSeconds, null);
+});
+
+test('invalid progress numbers degrade safely', () => {
+  const model = analysisProgress({ status: 'running', progress: {
+    overallPercent: NaN, elapsedSeconds: -1, remainingSeconds: Infinity
+  } });
+  assert.equal(model.overallPercent, null);
+  assert.equal(model.elapsedSeconds, null);
+  assert.equal(model.remainingSeconds, null);
+  assert.match(model.text, /已用 未记录/);
 });
 
 test('Eagle context reads efficient counts and only loads folder items when starting analysis', async () => {
@@ -61,12 +100,44 @@ function fakeRoot() {
   const elements = new Map();
   const node = () => ({ value: '', hidden: false, textContent: '', events: {}, children: [],
     addEventListener(name, callback) { this.events[name] = callback; },
+    removeAttribute(name) { delete this[name]; },
     append(...children) { this.children.push(...children); }, replaceChildren() { this.children = []; } });
   return { querySelector(id) {
     if (!elements.has(id)) elements.set(id, node());
     return elements.get(id);
   }, createElement: node };
 }
+
+test('home recent and active cards show overall progress and measured timing, including warmup', async () => {
+  const previous = globalThis.localStorage;
+  globalThis.localStorage = { getItem: () => null, setItem() {} };
+  const root = fakeRoot();
+  const run = { id: 'timed', status: 'running', progress: { stage: 'pose', completed: 4, total: 10,
+    overallPercent: 60, elapsedSeconds: 120, remainingSeconds: 80 } };
+  const api = async url => {
+    if (url === '/health') return { service: 'eagle-culling' };
+    if (url.startsWith('/runs?')) return { runs: [run], page: { nextCursor: null } };
+    if (url === '/runs/status') return { active: run };
+    return run;
+  };
+  const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false });
+  try {
+    await view.checkHealth();
+    const text = '姿态分析 · 总体 60% · 已用 2 分 0 秒 · 预计剩余 1 分 20 秒';
+    assert.ok(root.querySelector('#progressText').textContent.includes(text));
+    assert.ok(root.querySelector('#recentRuns').children[0].children[1].textContent.includes(text));
+    assert.equal(root.querySelector('#bar').max, 100);
+    assert.equal(root.querySelector('#bar').value, 60);
+    run.progress = { stage: 'focus', completed: 0, total: 10, overallPercent: 65, elapsedSeconds: 140, remainingSeconds: null };
+    await root.querySelector('#recentRuns').children[0].children.at(-1).events.click();
+    assert.match(root.querySelector('#progressText').textContent, /对焦分析 · 总体 65%/);
+    assert.match(root.querySelector('#progressText').textContent, /预计剩余 估算中/);
+    assert.equal(root.querySelector('#bar').value, 65);
+    run.progress = { stage: 'metrics', completed: 4, total: 10 };
+    await root.querySelector('#recentRuns').children[0].children.at(-1).events.click();
+    assert.equal(root.querySelector('#bar').value, undefined);
+  } finally { view.dispose(); globalThis.localStorage = previous; }
+});
 
 test('home welcome dismissal persists and help reopens it; recent run cards open or resume', async () => {
   const previous = globalThis.localStorage;

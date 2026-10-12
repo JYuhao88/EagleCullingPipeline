@@ -103,8 +103,17 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
     } catch (error) { output.textContent = `撤回失败：${error.message}`; }
     finally { applying = false; revertButton.disabled = false; }
   });
-  root.querySelector("#dryRun").addEventListener("click", () => {
-    return dryRun().catch(error => { output.textContent = error.message; });
+  const button = root.querySelector("#dryRun");
+  button.addEventListener("click", async () => {
+    if (button.disabled) return;
+    const pending = "正在生成写回预览，照片较多时需要几秒…";
+    button.disabled = true;
+    output.textContent = pending;
+    try {
+      await dryRun();
+      if (output.textContent === pending) output.textContent = "";
+    } catch (error) { output.textContent = `无法生成写回预览：${error.message}`; }
+    finally { button.disabled = false; }
   });
   root.querySelector("#cancelWriteback").addEventListener("click", () => {
     dialog.close();

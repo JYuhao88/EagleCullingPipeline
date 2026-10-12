@@ -72,7 +72,9 @@ test('Eagle scan reads original stat and batched EXIF without altering original'
     await mkdir(info, { recursive: true });
     await writeFile(path.join(info, 'metadata.json'), JSON.stringify({ id: 'A', name: 'DSC1', ext: 'jpg', size: 999 }));
     await writeFile(path.join(info, 'DSC1.jpg'), 'original');
-    const records = await listEagleImages(root, { metadataReader: async paths => paths.map(SourceFile => ({
+    const scanProgress = [];
+    const records = await listEagleImages(root, { onProgress: value => scanProgress.push(value),
+      metadataReader: async paths => paths.map(SourceFile => ({
       SourceFile, DateTimeOriginal: '2024:01:01 12:00:00', Model: 'Camera', OffsetTimeOriginal: '+08:00',
     })) });
     assert.equal(records[0].fileStat.size, 8);
@@ -80,6 +82,8 @@ test('Eagle scan reads original stat and batched EXIF without altering original'
     assert.equal(records[0].device.model, 'Camera');
     assert.equal(records[0].captureTime, '2024-01-01T04:00:00.000Z');
     assert.ok(records[0].sessionId);
+    assert.deepEqual(scanProgress.map(value => value.completed), [0, 1]);
+    assert.ok(scanProgress.every(value => value.total === 1 && value.stage === 'scanning'));
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 

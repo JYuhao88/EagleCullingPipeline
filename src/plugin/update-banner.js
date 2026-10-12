@@ -13,7 +13,7 @@ export function mountUpdates({ root = document, storage = localStorage, fetchImp
     <label><input type="checkbox" data-auto> 自动更新（空闲且在主页时）</label>
     <button data-action="check">检查更新</button><button data-action="rollback">回退到上一版</button>
     <p data-status role="status"></p><pre data-notes hidden></pre></details>`;
-  root.querySelector('#app').prepend(panel);
+  (root.querySelector('#start') || root.querySelector('#app')).prepend(panel);
   const el = selector => panel.querySelector(selector);
   const auto = el('[data-auto]');
   auto.checked = storage.getItem('eagle-culling-auto-update') !== 'false';

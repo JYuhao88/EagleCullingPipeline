@@ -9,7 +9,10 @@ const escapeReason = value => String(value ?? "").replace(/[&<>"']/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const flagLabels = { "eyes-closed": "闭眼", blurry: "模糊", "possibly-blurry": "模糊",
   overexposed: "过曝", underexposed: "欠曝" };
-const actionLabels = { selected: "保留", candidate: "候选", rejected: "淘汰" };
+const actionLabels = { selected: "精选", candidate: "候选", rejected: "淘汰" };
+const actionKeys = { selected: 1, candidate: 2, rejected: 3 };
+const MIN_COLUMN = 200;
+const CARD_CHROME = 116;
 const confidenceLabel = group => ({ high: "把握高", low: "需确认", single: "单张" })[group.confidence] || "";
 
 export function createReviewView({ root, state, setState, runId, getRunId = () => runId,
@@ -36,6 +39,7 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     }
     return exposurePending;
   }
+  let detailsOpen = false;
   let magnifier = false;
   let magnifierFace = 0;
   let magnifierRegion = "face";
@@ -56,7 +60,11 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     candidateToggle.textContent = `候选集：${viewState.candidateMode ? "开" : "关"}`;
     root.querySelector("#filter").value = viewState.filter;
     const group = currentGroup(viewState);
-    if (group.id !== magnifierGroup) { magnifier = false; magnifierFace = 0; magnifierGroup = group.id; }
+    if (group.id !== magnifierGroup) {
+      magnifier = false; magnifierFace = 0; magnifierGroup = group.id;
+      const scroller = root.querySelector(".review-main");
+      if (scroller) scroller.scrollTop = 0;
+    }
     const progress = reviewProgress(viewState);
     root.querySelector("#reviewProgress").textContent =
       `已审阅 ${progress.reviewed} / ${progress.total} 组${viewState.data?.page ? "（本页）" : ""}`;
@@ -92,6 +100,14 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
       .map((unitId, index) => renderUnit(viewState, group, unitId, index,
         magnifier ? [faceRows[magnifierFace]] : comparing ? faceRows : null))
       : ['<p class="review-empty">这个筛选下没有照片组。请在顶部切换「全部（含单张组）」，或返回主页开始新的分析。</p>']);
+    const decided = ids.filter(id => reviewIndex(viewState).human.has(id)).length;
+    const decidedLabel = root.querySelector("#groupDecided");
+    if (decidedLabel) {
+      decidedLabel.textContent = !ids.length ? "" : decided === ids.length ? `✓ 本组已完成（${decided}/${ids.length}）`
+        : `本组已确认 ${decided}/${ids.length} 张`;
+      decidedLabel.className = decided && decided === ids.length ? "group-done" : "";
+    }
+    layout(ids.length);
     root.querySelector("#unitStrip .focus")?.scrollIntoView?.({ block: "nearest", inline: "nearest" });
     void expose();
     root.querySelector("#selectedCount").textContent = viewState.selected.length ? `已选 ${viewState.selected.length} 张` : "";
@@ -103,6 +119,27 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
       button.disabled = count === 0;
       button.textContent = `${id === "bulkEyes" ? "闭眼" : "模糊"}照片标记淘汰（${count}）`;
     }
+  }
+
+  function layout(count) {
+    const container = root.querySelector("#group");
+    const strip = root.querySelector("#unitStrip");
+    if (!container?.style || typeof window === "undefined") return;
+    const width = container.clientWidth || window.innerWidth;
+    const columns = Math.max(1, Math.min(count || 1, Math.floor((width + 14) / (MIN_COLUMN + 14))));
+    const rows = Math.ceil((count || 1) / columns);
+    if (strip) strip.hidden = rows <= 1;
+    const scroller = container.closest?.(".review-main");
+    const viewport = scroller?.clientHeight || window.innerHeight;
+    const top = container.getBoundingClientRect().top - (scroller?.getBoundingClientRect().top || 0)
+      + (scroller?.scrollTop || 0);
+    const available = viewport - Math.min(top, viewport * 0.4) - 20;
+    const chrome = detailsOpen ? CARD_CHROME : Math.max(CARD_CHROME, ...[...container.querySelectorAll(".unit")]
+      .slice(0, columns).map(card => card.offsetHeight - (card.querySelector(".image-wrap")?.offsetHeight || 0)));
+    const floor = Math.min(220, Math.floor(viewport * 0.35));
+    const height = Math.max(floor, Math.floor(available / Math.min(rows, 2)) - chrome);
+    container.style.setProperty("--columns", String(columns));
+    container.style.setProperty("--image-height", `${height}px`);
   }
 
   function countUnreviewedIssue(viewState, issue) {
@@ -125,7 +162,7 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     }[viewState.filter];
     const suffix = filterLabel ? `（${filterLabel}）` : "";
     return `第 ${viewState.groupIndex + 1} / ${groups.length} 组${suffix} · ${ids.length} 张`
-      + (group.hideAI ? " · 对照展示：请先独立选择" : ` · ${confidenceLabel(group)} · 建议保留 ${name}`);
+      + (group.hideAI ? " · 对照展示：请先独立选择" : ` · ${confidenceLabel(group)} · 建议精选 ${name}`);
   }
 
   function renderGroupList(viewState, group) {
@@ -184,6 +221,9 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     const sourceClass = decision.source === "human" ? "human" : "suggested";
     const actionClass = action => `action-${action}`;
     const faceContext = { base: viewState.base, runId: getRunId(), unitId };
+    const recommend = !group.hideAI && ranking.rank === 1 ? "<span class=\"recommend\">推荐</span>" : "";
+    const decided = decision.source === "human" ? `<span class="decision-mark ${actionClass(decision.action)}">`
+      + `${actionLabels[decision.action] || decision.action}</span>` : "";
     const images = faceRows
       ? `<div class="face-column">${faceRows.map((row, rowIndex) =>
         (magnifier ? renderNativeFace(row[index], faceContext, magnifierRegion)
@@ -191,27 +231,31 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
       : `<div class="image-wrap" data-preview="${unitId}" title="双击看大图"><img src="${preview}" loading="lazy"
         alt="${item.name || "预览"}" draggable="false"
         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <span class="placeholder">预览不可用</span></div>${renderFaceStrip(result, faceContext)}`;
-    return `<article class="unit ${focus} ${selected}" data-unit-id="${unitId}">
-      ${!group.hideAI && ranking.rank === 1 ? "<span class=\"recommend\">推荐</span>" : ""}
-      ${faceRows ? `<h3>${item.name || "未命名文件"}</h3>` : ""}${images}
-      ${faceRows ? "" : `<h3>${item.name || "未命名文件"}</h3>`}<p class="rank" ${group.hideAI ? "hidden" : ""}>
-        排名 ${ranking.rank ?? index + 1} ·
-        <strong>${formatTotalScore(ranking.score ?? result.score)}</strong></p>
-      <div class="metrics">${scoreBars}</div>
-      <p class="reasons" ${group.hideAI ? "hidden" : ""}>
-        ${(ranking.reasons || []).join("；")}${candidateText ? `；${candidateText}` : ""}</p>
-      <p>${flags}</p>${renderRuleReasons(result, getCatalog())}
-      <p ${group.hideAI ? "hidden" : ""}>建议：
-        <strong class="${actionClass(group.suggested?.[unitId] || "candidate")}">${suggestion}</strong> ·
-      当前：<strong class="${sourceClass} ${decision.source === "human"
-        ? actionClass(decision.action) : "unconfirmed"}">${current}</strong></p>
-      <label>自由理由（最多 500 字符）<textarea data-decision-reason maxlength="500"
-        aria-label="自由理由">${escapeReason(reasonDrafts.get(unitId) ?? decision.reason ?? "")}</textarea></label>
+        <span class="placeholder">预览不可用</span>${recommend}${decided}
+        <span class="image-flags">${flags}</span></div>`;
+    const name = item.name || "未命名文件";
+    return `<article class="unit ${focus} ${selected} ${decision.source === "human" ? `decided-${decision.action}` : ""}"
+      data-unit-id="${unitId}">
+      ${faceRows ? `${recommend}<h3 title="${escapeReason(name)}">${escapeReason(name)}</h3>` : ""}${images}
+      <div class="unit-head">${faceRows ? "" : `<h3 title="${escapeReason(name)}">${escapeReason(name)}</h3>`}
+        <span class="rank" ${group.hideAI ? "hidden" : ""}>#${ranking.rank ?? index + 1} ·
+        <strong>${formatTotalScore(ranking.score ?? result.score)}</strong></span></div>
       <div class="decision-buttons">${Object.entries(actionLabels).map(([action, label]) =>
         `<button data-action="${action}" class="${decision.source === "human" && decision.action === action ? "active" : ""}"
-          >${label}</button>`).join("")}
-        <button data-tie="true" class="${decision.tie ? "active" : ""}">并列</button></div>
+          title="快捷键 ${actionKeys[action]}"><kbd>${actionKeys[action]}</kbd>${label}</button>`).join("")}
+        <button data-tie="true" class="tie ${decision.tie ? "active" : ""}" title="与其他照片各有所长">并列</button></div>
+      <p class="unit-status">${group.hideAI ? "" : `建议 <strong class="${actionClass(group.suggested?.[unitId]
+        || "candidate")}">${suggestion}</strong> · `}<strong class="${sourceClass} ${decision.source === "human"
+        ? actionClass(decision.action) : "unconfirmed"}">${decision.source === "human" ? `已${current}` : "未确认"}</strong></p>
+      ${faceRows ? "" : renderFaceStrip(result, faceContext)}
+      <details class="unit-details" ${detailsOpen ? "open" : ""}><summary>评分与理由</summary>
+        <div class="metrics">${scoreBars}</div>
+        <p class="reasons" ${group.hideAI ? "hidden" : ""}>
+          ${(ranking.reasons || []).join("；")}${candidateText ? `；${candidateText}` : ""}</p>
+        ${renderRuleReasons(result, getCatalog())}
+        <label>自由理由（最多 500 字符）<textarea data-decision-reason maxlength="500"
+          aria-label="自由理由">${escapeReason(reasonDrafts.get(unitId) ?? decision.reason ?? "")}</textarea></label>
+      </details>
     </article>`;
   }
 
@@ -256,6 +300,17 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     const button = event.target.closest("[data-unit-index]"); if (!button) return;
     setState(reduceState(state(), { type: "unit", index: Number(button.dataset.unitIndex) })); render();
   });
+  root.querySelector("#group").addEventListener("toggle", event => {
+    if (!event.target.matches?.(".unit-details") || event.target.open === detailsOpen) return;
+    detailsOpen = event.target.open;
+    root.querySelectorAll("#group .unit-details").forEach(element => { element.open = detailsOpen; });
+    render();
+  }, true);
+  if (typeof window !== "undefined") {
+    window.addEventListener?.("resize", () => {
+      if (!root.querySelector("#review")?.hidden) layout(root.querySelectorAll("#group .unit").length);
+    });
+  }
   root.querySelector("#group").addEventListener("input", event => {
     if (event.target.matches?.("[data-decision-reason]"))
       reasonDrafts.set(event.target.closest(".unit").dataset.unitId, event.target.value);

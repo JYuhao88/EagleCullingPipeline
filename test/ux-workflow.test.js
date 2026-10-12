@@ -19,11 +19,13 @@ test("service command quotes absolute repository paths and matches spawn port", 
   assert.throws(() => serviceOptions("/tmp/repo", "http://remote:43125", "darwin"), /本机/);
 });
 
-test("metric ETA uses elapsed work but does not claim a finalization estimate", () => {
+test("ETA uses server sliding-window measurement and keeps legacy estimates unknown", () => {
   const run = { startedAt: "2026-10-09T00:00:00Z", progress: { stage: "metrics", completed: 2, total: 10 } };
   const now = Date.parse(run.startedAt) + 10000;
-  assert.equal(progressEstimate(run, now), 40);
-  assert.equal(progressEstimate({ ...run, progress: { ...run.progress, stage: "grouping" } }, now), null);
+  assert.equal(progressEstimate(run, now), null);
+  assert.equal(progressEstimate({ ...run, progress: { ...run.progress, remainingSeconds: 40.1 } }), 41);
+  assert.equal(progressEstimate({ ...run, progress: { stage: "focus", remainingSeconds: 12 } }), 12);
+  assert.equal(progressEstimate({ ...run, progress: { remainingSeconds: -1 } }), null);
   assert.equal(progressEstimate({ progress: run.progress }, now), null);
 });
 

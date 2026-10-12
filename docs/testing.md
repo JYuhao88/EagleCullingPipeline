@@ -827,3 +827,34 @@ Node 412/412 通过、0 失败/跳过，242.948 秒；Python 4/4 通过。
 公开检查 0 命中，diff check 通过；最终 audit 该前缀 RUNNING/PENDING=0，
 本轮只操作上述新作业，未操作其它线作业。所有本机命令请求 nice 15，沙箱拒绝调整，实测继承 nice 20；
 Node heap 上限 2048 MiB，本机串行执行且没有整批模型冷算。未提交、未 push。
+
+
+## W19：进度与常驻 exiftool
+
+定向测试覆盖总体百分比单调性、扫描多次计数、滑动窗口预热/提速/停滞、未知总量、
+续跑预热、历史耗时权重、HTTP 心跳/终态持久化，以及最近卡片与进行中卡片的中文展示。
+Exiftool 测试覆盖复用、两 worker 输出隔离、跨 chunk ready 标记、二进制私有文件、
+退出/超时/启动失败/管道错误/输出超限/缺文件的逐张回退、换行路径安全回退、取消无回退。
+有 exiftool 时另用现场生成的 64×64 JPEG 和 ICC 数据，验证 Unicode 路径与单调用字节一致；
+无 exiftool 时仅此真实工具测试明确 skip，不把 mock 当作工具实测。
+
+配置从环境变量或不入库的 `config/local.json` 读取：
+`EAGLE_EXIFTOOL` 指定可执行文件；`EAGLE_EXIFTOOL_WORKERS`、`EAGLE_NATIVE_CONCURRENCY`
+默认 1、限 1–2；`EAGLE_EXIFTOOL_STAY_OPEN=0` 可禁用常驻模式。
+`EAGLE_FACE_WORKERS` 和 `EAGLE_POSE_WORKERS` 默认跟随 pipeline 并发、最多 2。
+常驻工具使用 `-stay_open True -@ -`，带编号 `-execute`/ready；二进制以
+`-w! <private-temp-dir>/%0fpayload.bin` 输出，避免按 RAW 文件名生成路径或混淆 JPEG 字节与标记。
+命令最长 60 秒，文本最多 1 MiB、二进制最多 128 MiB，空闲 5 秒退出，私有目录在 finally 清理。
+Mac 子进程请求 nice 15，Windows 工具设置 BelowNormal；失败保留原有逐张取像路径。
+
+人脸与姿态池在同一 run 的 16 张批次之间复用，阶段结束/异常/取消关闭。
+原生解码默认仍串行，仅显式配置才并行两张；预览随既有 metrics worker 并发处理。
+没有增加依赖、改变模型预处理、排序/规则/阈值，也没有并行 DINO 推理或额外扩大 RAW 缓冲。
+完整 Windows 计时、结果差异、资源与验收边界见 [windows-validation.md](windows-validation.md)。
+
+
+W19 最终证据：系统 Python 的完整回归 438 pass / 0 fail / 1 skip（本地姿态 smoke 未满足依赖），
+Ray 打包 unittest 4/4；新签名 Ray 冷算 388 张后，Mac cache-only 实跑 0/388 uncached，
+与任务前最新同清单报告比较三项 delta=0、368 行完全一致。
+本轮 Ray 作业终态、自身活动作业 0；公开检查 0 命中、diff check 通过。
+项目 Python 的一次 teacher CLI mock 超时及单项/完整复验、Windows 未完成项见上述验证文档。

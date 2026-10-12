@@ -92,12 +92,20 @@ export class FaceWorkerPool {
     this.unavailable = null;
   }
 
-  run(items, { signal } = {}) {
+  run(items, { signal, onItem } = {}) {
     if (signal?.aborted) return Promise.reject(signal.reason);
     const jobs = new Set();
     const promises = items.map(
       (item) =>
-        new Promise((resolve, reject) => {
+        new Promise((settle, fail) => {
+          let done = false;
+          const resolve = value => {
+            if (done) return;
+            done = true;
+            settle(value);
+            try { onItem?.(value); } catch { /* Progress must not fail inference. */ }
+          };
+          const reject = error => { done = true; fail(error); };
           if (this.closed) {
             reject(new Error("Face worker pool closed"));
             return;

@@ -8,7 +8,12 @@
   padding: 16px; border: 1px solid #465268; border-radius: 10px; background: #22252d; box-shadow: 0 12px 30px #0008; }
 .review-menu button { display: block; width: 100%; margin: 8px 0; text-align: left; }
 .review-menu button[hidden], .review-menu span[hidden] { display: none; }
-.group-toolbox { margin-bottom: 12px; border-bottom: 1px solid #343a45; }
+.group-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; margin: 0 0 10px; }
+.group-actions > button { margin: 0; }
+#groupDecided { color: #aaa; font-size: 13px; }
+#groupDecided.group-done { color: #8dd39e; }
+.group-toolbox { margin-left: auto; }
+.group-toolbox[open] { flex-basis: 100%; margin-left: 0; }
 .review-decisions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 #review .primary-action { background: #356aa5; border-color: #74a9e6; color: #fff; }
 .review-reports { padding: 16px 0; color: #b6c3d5; }

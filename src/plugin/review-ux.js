@@ -26,5 +26,14 @@ export function createReviewUx({ root, storage }) {
   q('reviewWelcome').addEventListener('cancel', dismiss);
   q('openReviewSettings').addEventListener('click', () => show('reviewSettings'));
   q('closeReviewSettings').addEventListener('click', () => q('reviewSettings').close());
+  q('openFinish')?.addEventListener('click', () => show('finishDialog'));
+  q('closeFinish')?.addEventListener('click', () => q('finishDialog').close());
+  // Results are reported in the review toast, which an open modal would cover.
+  for (const id of ['acceptUnreviewed', 'acceptHighConfidence', 'acceptSingles', 'dryRun', 'revertWriteback']) {
+    q(id)?.addEventListener('click', () => q('finishDialog')?.close());
+  }
+  q('writeback')?.addEventListener('click', event => {
+    if (!event.target.closest?.('a')) q('writeback').textContent = '';
+  });
   return { enter: () => { if (!dismissed) show('reviewWelcome'); } };
 }

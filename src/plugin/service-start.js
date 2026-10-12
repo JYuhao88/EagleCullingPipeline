@@ -44,10 +44,7 @@ export function windowsRepository(value) {
   return /^[a-z]:[\\/]/i.test(value) || /^(?:\\\\|\/\/)[^\\/]+[\\/][^\\/]+/.test(value);
 }
 
-export function progressEstimate(run, now = Date.now()) {
-  const progress = run.progress || {};
-  const elapsed = Math.max(0, now - Date.parse(run.startedAt || ""));
-  if (progress.stage !== "metrics" || !progress.completed || !Number.isFinite(elapsed)) return null;
-  if (progress.completed >= progress.total) return null;
-  return Math.ceil(elapsed / progress.completed * (progress.total - progress.completed) / 1000);
+export function progressEstimate(run) {
+  const seconds = run.progress?.remainingSeconds;
+  return Number.isFinite(seconds) && seconds >= 0 ? Math.ceil(seconds) : null;
 }

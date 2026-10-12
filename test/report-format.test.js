@@ -84,6 +84,26 @@ test("writeback confirmation is re-entry safe", async () => {
   assert.equal(root.elements["#confirmWriteback"].disabled, false);
 });
 
+test("slow writeback preview shows progress, blocks repeat clicks and reports failures", async () => {
+  const root = fakeRoot([
+    "#writeback", "#moveTrash", "#trashConfirm", "#writebackDialog", "#writebackSummary",
+    "#confirmWriteback", "#dryRun", "#cancelWriteback", "#writebackDetails", "#revertWriteback"
+  ]);
+  let calls = 0;
+  let fail;
+  const pending = new Promise((_, reject) => { fail = reject; });
+  createWritebackDialog({ root, api: async () => { calls += 1; return pending; }, runId: "run-1" });
+  const first = root.elements["#dryRun"].click();
+  root.elements["#dryRun"].click();
+  assert.equal(calls, 1);
+  assert.equal(root.elements["#dryRun"].disabled, true);
+  assert.match(root.elements["#writeback"].textContent, /正在生成写回预览/);
+  fail(new Error("服务未响应"));
+  await first;
+  assert.equal(root.elements["#dryRun"].disabled, false);
+  assert.equal(root.elements["#writeback"].textContent, "无法生成写回预览：服务未响应");
+});
+
 test("completed polling invokes onRun once", async () => {
   const root = fakeRoot(["#health", "#libraryPath", "#runId", "#progress", "#bar", "#progressText",
     "#analyzeSelected", "#analyzeAll", "#cancel", "#openRun", "#serviceGuide", "#repositoryPath", "#serviceCommand",

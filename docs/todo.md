@@ -272,3 +272,14 @@ W6验收见 `docs/testing.md`：Ray完成1万/2万/5万文件与10万轻量索�
 - [x] Ray CPU-only 1 万/5 万/10 万合成结果存储和 HTTP 压测，实际数据见 testing。
 - [ ] 十万真实模型全流程内存、浏览器渲染、完整 pipeline 续跑性能；统一生产资源调度。
 - [ ] 不可变 generation/阶段日志压缩与自动回收；大型全 run 学习/修组物化接口进一步改造。
+
+
+## W19 Windows 分析提速与实测 ETA（2026-10-12）
+
+- [x] 总体进度/滑动速率/ETA/已用时间与最近/进行中中文卡片；exiftool 常驻与失败回退，
+  run 内人脸/姿态池复用、可配置原生并发；详见 contracts/testing 的 W19 节。
+- [x] Mac 完整回归零失败（438 pass/1 skip）、Ray 新签名 388 张冷算与 cache-only 同清单比较，三项 delta=0。
+- [x] Windows CPU 配置对比：629.62 → 485.36 秒，242 个结果全部一致；临时补丁副本定向测试 35/35。
+- [ ] 收集有效 DML/混合对照；新代码同批全流程计时与结果一致性；服务空闲时更新稳定配置并验收。
+- [ ] 恢复 Windows SSH 后审计自身任务、断开临时 junction 后清理副本、恢复开发 cache/adapter，
+  同步最终 ops PROGRESS。当前 TCP 可连但 SSH 握手关闭，尚未更新或重启 43125。

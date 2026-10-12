@@ -17,6 +17,8 @@
         <strong id="health" role="status">正在连接服务…</strong>
         <div class="context-grid"><span>资源库 <b id="libraryName">读取中…</b></span>
           <span>文件夹 <b id="folderName">未选择</b></span><span>选中 <b id="selectionCount">0 张</b></span></div>
+        <div id="resumeArea" class="resume-area" hidden><button id="resumeLatest" class="primary">继续审阅</button>
+          <span id="resumeDetail"></span></div>
       </section>
       <section id="welcome" class="welcome-card" hidden>
         <button id="closeWelcome" aria-label="关闭欢迎说明">×</button><h2>从一小组照片开始</h2>
@@ -68,6 +70,7 @@
           <option value="blurry">模糊</option>
           <option value="reviewed">已审</option>
         </select>
+        <button id="openFinish" class="primary-action">完成与导出</button>
         <button id="reviewHelp" aria-label="审阅帮助">?</button>
         <details id="reviewMore"><summary aria-label="更多工具与设置">⋯</summary>
           <div class="review-menu"><strong>查看工具</strong>
@@ -82,7 +85,8 @@
       </header>
       <aside id="groupSidebar">
         <div class="sidebar-actions"><button id="bulkEyes">闭眼照片标记淘汰（0）</button>
-          <button id="bulkBlurry">模糊照片标记淘汰（0）</button></div><div><button id="previousPage">上一页</button> <span id="pageStatus"></span>
+          <button id="bulkBlurry">模糊照片标记淘汰（0）</button></div>
+        <div class="sidebar-pager"><button id="previousPage">上一页</button><span id="pageStatus"></span>
           <button id="nextPage">下一页</button></div><nav id="groupList"></nav>
       </aside>
       <section class="review-main">
@@ -120,44 +124,48 @@
         <div id="personalizeBanner" hidden><span id="personalizeText"></span>
           <button id="personalizeApply">应用</button><button id="personalizeIgnore">忽略</button></div>
         <div id="unitStrip" aria-label="组内照片"></div>
+        <div class="group-actions"><button id="acceptGroup" class="primary-action"
+          title="当前照片设为精选，本组其余照片设为候选（已淘汰的保持不变）">设为本组首选并完成（S）</button>
+          <span id="groupDecided"></span>
         <details class="group-toolbox"><summary>分组与整组操作</summary>
         <div class="group-tools" aria-label="分组修正"><button id="movePrevious">移到上一组（M）</button>
           <button id="moveNext">移到下一组（Shift+M）</button><button id="newGroup">移到新组（G）</button>
           <button id="mergePrevious">与上一组合并</button><button id="splitSelected">拆分所选</button>
           <button id="undoGroup">撤销分组修正</button><button id="tieGroup">整组并列</button>
-          <button id="rejectGroup">整组拒绝</button></div></details>
+          <button id="rejectGroup">整组拒绝</button></div></details></div>
         <section id="rejectReasons" hidden aria-label="淘汰理由">
           <strong id="rejectReasonsTitle">淘汰理由（可多选）</strong>
           <p>仅记录选片偏好。已预选工具违反/门槛理由，可点选取消。1–9 选理由；Enter/Esc 完成，继续切图可跳过。</p>
           <div id="rejectReasonChips"></div><button id="clearRejectReasons">清空理由</button>
           <button id="closeRejectReasons">完成 / 跳过补充</button>
         </section><p id="feedbackStatus" role="status"></p><div id="group"></div><div id="selectedCount"></div></section>
-      <div class="shortcut-bar">1 精选 · 2 候选 · 3 淘汰 · ←→ 切图 · Enter 下一组
+      <div class="shortcut-bar">S 当前设首选并完成本组 · 1 精选 · 2 候选 · 3 淘汰 · ←→ 切图 · Enter 下一组 · 双击/空格 看大图
         <button id="allShortcuts">? 全部快捷键</button></div>
-      <footer>
-        <div class="review-decisions" aria-label="选片操作">
-          <button id="acceptGroup" class="primary-action">设为本组首选（S）</button>
-          <button id="acceptUnreviewed">接受所有未审组建议</button>
-          <details><summary>更多接受建议方式</summary>
+      <pre id="writeback" class="review-toast" role="status" aria-live="polite" title="点击关闭"></pre>
+      <dialog id="finishDialog" class="settings-drawer" aria-labelledby="finishTitle">
+        <button id="closeFinish">关闭</button>
+        <h2 id="finishTitle">完成与导出</h2>
+        <section class="finish-section" aria-label="选片操作"><h3>批量接受建议</h3>
+          <p class="setting-hint">只处理还没有人工决定的照片；已做的选择不会被覆盖，可用 U 撤销。</p>
+          <div class="review-decisions"><button id="acceptUnreviewed">接受所有未审组建议</button>
             <button id="acceptHighConfidence">接受本页把握高的组</button>
-            <button id="acceptSingles">接受本页未审单张组建议</button>
-          </details>
-        </div>
-        <div class="review-reports" aria-label="导出报告"><span>导出报告</span>
+            <button id="acceptSingles">接受本页未审单张组建议</button></div>
+        </section>
+        <section class="finish-section review-reports" aria-label="导出报告"><h3>导出报告</h3>
           <a id="reportCsv" target="_blank">CSV 报告</a><a id="reportJson" target="_blank">JSON 报告</a>
-        </div>
-        <section class="writeback-area" aria-label="写回 Eagle">
+        </section>
+        <section class="finish-section writeback-area" aria-label="写回 Eagle">
           <h3>写回 Eagle</h3>
           <p>将审阅结果作为 AI 标签保存到 Eagle。下一步先预览更改并确认；默认不移入回收站。</p>
           <button id="dryRun">预览写回更改…</button><button id="revertWriteback" hidden>撤回本次写回</button>
         </section>
-        <pre id="writeback" role="status" aria-live="polite"></pre>
-      </footer>
+      </dialog>
       <dialog id="reviewWelcome" aria-labelledby="reviewWelcomeTitle">
         <h2 id="reviewWelcomeTitle">三步完成审阅</h2>
         <ol class="review-guide">
           <li><strong>看一组相似照片</strong><p>点照片或用 ←→ 切换；高亮框表示当前照片。</p></li>
-          <li><strong>1 精选 · 2 候选 · 3 淘汰</strong><p>也可以点卡片按钮。选择自动保存，可用 U 撤销。</p></li>
+          <li><strong>S 设首选 · 或 1 精选 · 2 候选 · 3 淘汰</strong>
+            <p>S 把当前照片设为精选、其余设为候选，一键完成本组。选择自动保存，可用 U 撤销。</p></li>
           <li><strong>Enter 进入下一组</strong><p>完成后可导出报告；写回 Eagle 需要另外确认。</p></li>
         </ol>
         <button id="dismissReviewWelcome" class="primary-action">开始审阅</button>
@@ -191,7 +199,7 @@
           <p id="previewCaption"></p>
           <div class="viewer-zoom"><button id="viewerZoomOut" aria-label="缩小">−</button>
             <span id="viewerZoom">适应窗口</span><button id="viewerZoomIn" aria-label="放大">+</button>
-            <button id="viewerFit">适应窗口（0）</button></div>
+            <button id="viewerFit">适应窗口（0）</button><span id="viewerNativeState"></span></div>
           <div class="viewer-decisions"><button data-viewer-action="selected">1 精选</button>
             <button data-viewer-action="candidate">2 候选</button><button data-viewer-action="rejected">3 淘汰</button></div>
           <span class="viewer-hint">滚轮缩放 · 拖动查看 · 双击/Z 放大 · ←→ 切图 · Esc 关闭</span>

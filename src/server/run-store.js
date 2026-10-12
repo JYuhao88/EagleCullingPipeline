@@ -8,6 +8,9 @@ import { mkdir, readFile, readdir, writeFile, stat } from "node:fs/promises";
 import { randomUUID, createHash } from "node:crypto";
 import { applyGroupOverrides } from "../core/group-overrides.js";
 
+const newestFirst = (a, b) => (Date.parse(b.startedAt || b.createdAt) || 0) -
+  (Date.parse(a.startedAt || a.createdAt) || 0) || b.id.localeCompare(a.id);
+
 export class RunStore {
   constructor(root = "data/runs") {
     this.root = path.resolve(root);
@@ -86,6 +89,13 @@ export class RunStore {
     }
   }
 
+  async datedRun(id) {
+    const run = await this.getRun(id);
+    if (!run || run.startedAt || run.createdAt) return run;
+    try { return { ...run, startedAt: (await stat(path.join(this.dir(id), "run.json"))).mtime.toISOString() }; }
+    catch { return run; }
+  }
+
   async recentRuns(limit = 10) {
     let entries;
     try { entries = await readdir(this.root, { withFileTypes: true }); }
@@ -93,10 +103,10 @@ export class RunStore {
     const runs = [];
     for (const entry of entries) {
       if (!entry.isDirectory() || !/^run-[a-zA-Z0-9_-]+$/.test(entry.name)) continue;
-      const run = await this.getRun(entry.name);
+      const run = await this.datedRun(entry.name);
       if (run) runs.push(run);
     }
-    return runs.sort((a, b) => String(b.startedAt).localeCompare(String(a.startedAt))).slice(0, limit);
+    return runs.sort(newestFirst).slice(0, limit);
   }
 
   async saveReviewSummary(id, groups) {
@@ -121,12 +131,11 @@ export class RunStore {
     for (const entry of entries) {
       if (!entry.isDirectory() || !/^[a-zA-Z0-9_-]+$/.test(entry.name)) continue;
       try {
-        const run = await this.getRun(entry.name);
+        const run = await this.datedRun(entry.name);
         if (run && run.id === entry.name) runs.push(run);
       } catch (error) { if (!(error instanceof SyntaxError)) throw error; }
     }
-    runs.sort((a, b) => (Date.parse(b.startedAt || b.createdAt) || 0) -
-      (Date.parse(a.startedAt || a.createdAt) || 0) || b.id.localeCompare(a.id));
+    runs.sort(newestFirst);
     const summaries = [];
     for (const run of runs.slice(cursor, cursor + limit)) {
       const groups = await this.reviewSummary(run.id);

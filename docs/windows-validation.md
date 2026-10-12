@@ -433,3 +433,131 @@ unittest、sharp PNG/ONNX Node 冒烟通过。Mac 指定串行回归 417 pass/0 
 用户需在 Eagle 移除旧插件并「导入本地项目」选择 `<stable-root>/src/plugin`；
 调试用 `<ops-root>/start-dev.ps1` 和服务地址端口 43135，结束用 `stop-dev.ps1`，
 开发更新先停止再 `git pull --ff-only`。未点击宿主、未切库、未写回或触碰原片/「未删减」。
+
+
+## W19：Windows 分析提速与实测 ETA（2026-10-12，部分完成）
+
+**已验证配置候选：CPU、sharp 2、worker 上限 2、CLI concurrency 2。**
+同一请求的 524 张选中照片形成 242 个单元、82 组；旧代码配置对照从 629.62 秒降至
+485.36 秒，缩短 22.91%。这不是新代码的整批提速成绩，也尚未应用到 43125。
+各次使用独立分析/预览/embedding/focus 缓存；没有隔离系统磁盘缓存或用户后台活动。
+只读取用户旧 run 的 request，照片与完整结果仍留在 Windows，不调用 Eagle 写回/切库 API。
+
+### 配置实测
+
+全部 Windows 测试任务 BelowNormal，Node heap 2048 MiB；整机 CPU 与全设备 GPU 占用采样，
+进程树 working set 包含服务及其 Python/exiftool 子进程。每轮休眠 5 秒后读 WMI/GPU/进程树，
+实际间隔还包含采样开销；峰值可能漏掉瞬时分配，GPU 显存包含桌面及其他应用。
+CPU 基线采样脚本初次报错后接续同一个 run，首个资源样本在 76.51 秒，平均/峰值不覆盖首段。
+其他两轮首样本约在 5 秒。滚动平均 CPU 持续超过约 50% 或设备显存超过 8192 MiB，
+驱动只取消自身 43135 测试，不处理用户 43125 run。
+
+| 配置 | 总秒 | CPU 平均/峰值 % | GPU 平均/峰值 % | 全设备显存峰值 MiB | 进程树内存峰值 MiB | 判定 |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| CPU / sharp 1 / worker 1 / concurrency 1 | 629.62 | 8.74 / 26 | 0.24 / 13 | 5088 | 1291.89 | 基线；242 个模型结果完整 |
+| CPU / sharp 2 / worker 2 / concurrency 2 | 485.36 | 8.69 / 29 | 0.07 / 5 | 4540 | 1817.10 | 全部判定与分数一致 |
+| 初次 DML / sharp 1 / worker 1 / concurrency 1 | 445.29 | 7.81 / 28 | 0.29 / 12 | 4706 | 1616.39 | 拒绝：姿态 provider 不可用 |
+
+| 阶段 | CPU 1 秒 | CPU 2 秒 | 初次无效 DML 秒 |
+| --- | ---: | ---: | ---: |
+| scanning | 76.51 | 81.16 | 83.60 |
+| metrics | 120.07 | 62.79 | 149.60 |
+| embedding | 14.05 | 13.64 | 21.28 |
+| faces（包含后处理） | 34.41 | 35.01 | 34.65 |
+| pose（包含规则处理） | 187.62 | 104.29 | 6.94 |
+| focus | 194.84 | 186.50 | 147.32 |
+
+这些是 HTTP 阶段切换采样估计，不是阶段内部计时；grouping/ranking 很短，未分别观测，
+不把末段采样间隔当成这两项的准确用时。旧 pipeline 的 CLI concurrency 最多 2，
+传 4 实际仍为 2；旧人脸路径逐批单进程，adapter worker 参数主要影响继承池的姿态路径。
+CPU 2 与 CPU 1：242 个校准 scorer/姿态/embedding 均完整；组、排名、建议、候选、
+flags/规则分类、人脸/闭眼、对焦均零变化，scorer/排名分数、关键点、embedding 最大差均 0。
+
+初次 DML 的 Python 实际是 ORT 1.31.0，仅 Azure/CPU providers，姿态 0/242 可用。
+相对基线：61 个排名/建议位置变化、16 个候选组变化、13 个 flags 变化、242 个规则分类变化，
+68 个眼部判定/对焦结果变化；539 个人员无法匹配；最大排名分差 0.1764。
+TOPIQ 最大差 0.00023150444，aesthetic 差 0；DINO 最大逐维差 9.89261e-7，
+最小配对余弦 0.999999999983。缺失姿态不能用零关键点差宣称等价。
+该轮既缺模型结果，也超过 w12 TOPIQ 的 0.000173897 实测上界，因此未用于推荐。
+判定差异摘要已观察；原始逐行对照尚未回传，不能称为完整差异清单。
+
+在 ops 临时目录通过 `pip --target --no-deps` 准备 w12 的
+`onnxruntime-directml==1.24.4`，实际 import 已确认 DML/CPU providers。
+开发克隆和稳定版 venv、Node 依赖、package.json/lock 均未修改。
+随后已启动有效全 DML（sharp 2 / worker 2 / concurrency 2）及混合模式
+（CPU scorer、DML DINO/pose，sharp 4 / worker 2 / 请求 concurrency 4，实际 2）对照。
+SSH 在有效 DML 的 focus 阶段失联：TCP 可建立，但 SSH 握手被对端关闭；
+这两轮的最终状态、耗时、结果一致性和资源峰值 **未完成观察**。
+不能仅凭 provider preflight 或任务启动判定质量通过。
+
+### Mac 代码与回归
+
+总体进度、实测速率/滑动窗口 ETA、每秒已用时间与中文最近/进行中卡片已实现。
+初始预算按已观察 CPU 阶段比例近似；成功冷 run 的实测耗时随后校准。
+预热不足/停滞/未知总量时 ETA 为 null，界面显示估算中；扫描已接通原有 EXIF 批次回调，
+目录发现期间仍没有可测总量。扫描保持原库存与会话语义，没有改成可能改变会话边界的选中项扫描。
+exiftool 常驻、二进制私有文件、逐张回退、取消与 1–2 worker 上限见 testing 的 W19 节。
+人脸/姿态在 run 内复用；原生解码默认 1，可配置 2；预览继续随现有 metrics worker 并发。
+DINO 保持串行，未修改排序、规则、阈值、模型预处理、package.json 或 package-lock.json。
+
+实际命令：
+
+```sh
+nice -n 15 node --max-old-space-size=2048 --test --test-concurrency=1 --test-skip-pattern='fixture face detection recall|fixture grouping reaches'
+EAGLE_PYTHON=python3 nice -n 15 node --max-old-space-size=2048 --test --test-concurrency=1 test/joint-crop-teacher.test.js
+EAGLE_PYTHON=python3 nice -n 15 node --max-old-space-size=2048 --test --test-concurrency=1 --test-skip-pattern='fixture face detection recall|fixture grouping reaches'
+nice -n 15 python3 -m unittest scripts/test_bench_ray.py
+source ~/.config/eagle-culling/env.sh
+nice -n 15 python3 scripts/bench-ray.py audit
+nice -n 15 python3 scripts/bench-ray.py submit --reuse-assets w11-raybench-907408355f00
+nice -n 15 python3 scripts/bench-ray.py status --id w11-raybench-3ed861731502
+nice -n 15 python3 scripts/bench-ray.py collect --id w11-raybench-3ed861731502
+unset PYTHONPATH EAGLE_POSE_MODE EAGLE_POSE_MODEL EAGLE_POSE_DETECTOR EAGLE_SCORER_PROVIDER EAGLE_DINO_PROVIDER
+EAGLE_PYTHON=python_worker/.venv/bin/python EAGLE_POSE_PROVIDER=CPUExecutionProvider EAGLE_BENCH_CACHE_ONLY=1 nice -n 15 node --max-old-space-size=2048 scripts/bench.mjs --compare data/cache/bench/reports/2026-10-11T20-07-12-447Z/report.json
+nice -n 15 python3 scripts/bench-ray.py audit
+nice -n 15 node scripts/check-public-release.mjs
+nice -n 15 git diff --check
+```
+
+扫描回调接通前完整回归 439/439；接通后一次项目 Python 的未改动 teacher CLI mock
+测试 spawnSync ETIMEDOUT（438 pass/1 fail），不计作通过，也未归因于扫描逻辑。
+该项用系统 Python 单独重跑通过；最终完整回归 **438 pass / 0 fail / 1 skip**，152.30 秒。
+skip 为系统 Python/本地姿态模型不可用的 blank-image JSONL smoke；没有把它写成实际模型验收。
+Ray 打包/传输 unittest 4/4。所有本机入口请求 nice 15；沙箱拒绝提升优先级，继承 nice 20。
+本机测试/打包计算串行，但轻量 SSH/状态读取与回归存在交错；没有本机整批模型冷算。
+
+扫描源码属于 bench 签名：按原函数生成新签名后在 Ray 真实重算 388 张。
+本轮唯一新作业 `w11-raybench-3ed861731502` SUCCEEDED，746.449 秒，2 CPU / 0 GPU / 8 GiB。
+复用终态包前全 tar SHA 核验，代码/模型及 388 条缓存与传输 SHA 全部通过；未导入不可用输出。
+Mac 最终实跑 `0/388 uncached`；新报告 `2026-10-12T02-17-07-342Z`，
+签名 `bd578ed2d2d64a52b38ce27ebddf18f742432bcc000c4485d09315fac4572e0f`。
+与任务前最新同清单、使用既有 Ray 缓存的报告比较：354/368 = 96.19565%、
+101/112 = 90.17857%、1/20 = 5%，**三项 delta 均 0，368 行 unchangedRows=true，warnings=[]**。
+清单 SHA 一致；没有复制报告、改签名、填入旧缓存或硬写测试结果。
+这是常规 scorer/pose/ranking 清单门槛；不验证 DINO 分组或 RAW 原生对焦新路径。
+最终 audit 本轮自身 RUNNING/PENDING 为 0；未操作其它作业。公开发布检查 0 命中、diff check 通过。
+
+### Windows 新代码与未完成项
+
+Windows 开发克隆为正式版 `887f45d`，Mac 工作区为 w19；相关基线源文件一致。
+已在 `<ops-root>/scratch/w19` 解出正式 HEAD，将 Mac 改动作为补丁应用（另有扫描回调增量补丁），
+没有推送开发分支、改开发克隆的 tracked source 或改用户安装代码。
+临时副本复用只读依赖/模型 junction；35 个进度、插件展示、exiftool 定向测试全部通过，
+包括实际 exiftool Unicode 路径与二进制数据对单调用一致。Mock 不替代真实 RAW 全流程。
+
+**未完成，受 Windows SSH 握手关闭阻塞：**
+
+- 有效全 DML/混合配置最终结果收集与 w12 范围判断；CPU 2 是已验证候选，尚不能称为最终最优。
+- 新代码同一批 242 单元的优化前后耗时、资源、完整结果与 ETA 实际误差对照。
+- 43125 的配置修改/重启及修改后的 `/health`、`/runs`、`/update/status` 验收。
+  用户原 run 自然完成后才开始独立测试；没有中断用户 run，没有重启 43125。
+- 43135 最终进程/任务审计、临时副本清理、恢复开发克隆的原 cache/adapter。
+  临时目录仍需清理；须先用不递归的目录移除命令断开自身 dependency/model/venv junction，
+  再清理副本，不能递归删除 junction 指向的原目录。
+- ops PROGRESS 已同步各已观测任务与拒绝的首次 DML；失联后的最终结论同步未完成。
+- 原生 Eagle 宿主对新 UI 的实机展示及新代码正式发布未完成；稳定版仍为原代码。
+
+SSH 失联不证明机器或后台任务停止；CIM 任务不依赖 SSH，恢复后须先检查实际状态和资源，
+再继续比对/清理。未批准读取编辑器窗口，未以 UI 备用入口操作机器。
+未修改或删除原片、未接触受保护库；没有做整批原片 SHA 前后复核，不能宣称已验全库完整性。
+未提交、未 push。代码与 Mac 质量门槛完成，Windows 全流程及部署门槛未全部完成。

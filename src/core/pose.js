@@ -12,7 +12,7 @@ export class PoseWorkerPool extends FaceWorkerPool {
 export async function detectPose(items, options = {}) {
   const pool = options.pool || new PoseWorkerPool(options);
   try {
-    const results = await pool.run(items, { signal: options.signal });
+    const results = await pool.run(items, { signal: options.signal, onItem: options.onItem });
     // Proxy measurements run sequentially after pose inference (no extra model).
     for (const [index, result] of results.entries()) {
       if (options.signal?.aborted) throw options.signal.reason || new Error('pose cancelled');

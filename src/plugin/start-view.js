@@ -1,5 +1,5 @@
-import { defaultRepository, serviceCommand, serviceLaunch, progressEstimate } from "./service-start.js";
-import { primaryAnalysis, analysisStages, stageIndex, readRecentRuns } from "./start-model.js";
+import { defaultRepository, serviceCommand, serviceLaunch } from "./service-start.js";
+import { primaryAnalysis, analysisStages, stageIndex, readRecentRuns, analysisProgress } from "./start-model.js";
 import { eagleContext, isEagleEnvironment } from "./api.js";
 
 export function createStartView({ root, api, getApi = () => api, onRun, autoCheck = true, autoRefresh = true }) {
@@ -25,6 +25,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   let contextTimer = null;
   let recentCursor = null;
   let recentToken = 0;
+  const recentDetails = new Map();
   const optional = id => root.querySelector(`#${id}`);
   const showText = (id, value) => { const element = optional(id); if (element) element.textContent = value; };
   const storage = globalThis.localStorage;
@@ -72,7 +73,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     const container = optional("recentRuns");
     if (!container) return;
     const token = ++recentToken;
-    if (!append) container.replaceChildren();
+    if (!append) { container.replaceChildren(); recentDetails.clear(); }
     showText("recentStatus", "正在读取最近的分析…");
     try {
       let response;
@@ -86,6 +87,11 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
       }
       if (token !== recentToken) return;
       recentCursor = response.page?.nextCursor ?? null;
+      if (!append) {
+        const latest = (response.runs || []).find(run => run.status === "completed");
+        if (latest && !activeRun) showResume(latest);
+        else if (optional("resumeArea")) optional("resumeArea").hidden = true;
+      }
       for (const run of response.runs || []) {
         const card = root.createElement("article");
         card.className = "recent-run";
@@ -94,8 +100,11 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
         const detail = root.createElement("p");
         const status = { completed: "可审阅", failed: "分析失败", cancelled: "已取消", running: "分析中", queued: "等待分析", interrupted: "已中断" };
         const date = run.startedAt ? new Date(run.startedAt).toLocaleString("zh-CN") : "时间未记录";
-        const reviewed = run.reviewedGroupCount == null ? "审阅进度暂不可用" : `已审 ${run.reviewedGroupCount} / ${run.groupCount} 组`;
-        detail.textContent = `${date} · ${run.itemCount || 0} 张 · ${run.groupCount || 0} 组 · ${reviewed} · ${status[run.status] || "状态未知"}`;
+        const reviewed = run.reviewedGroupCount == null ? "" : ` · 已审 ${run.reviewedGroupCount} / ${run.groupCount} 组`;
+        detail.textContent = `${date} · ${run.itemCount || 0} 张 · ${run.groupCount || 0} 组${reviewed} · ${status[run.status] || "状态未知"}`;
+        const baseDetail = detail.textContent;
+        if (["running", "queued"].includes(run.status)) detail.textContent += ` · ${analysisProgress(run).text}`;
+        recentDetails.set(run.id, { element: detail, baseDetail });
         if (run.status === "running") {
           detail.textContent += ` · ${run.progress?.completed || 0}/${run.progress?.total || 0}`;
         }
@@ -267,6 +276,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
 
   async function watchRun(id) {
     stopPolling(); activeRun = id; runInput.value = id; progress.hidden = false; renderContext();
+    if (optional("resumeArea")) optional("resumeArea").hidden = true;
     await pollRun(id, pollToken);
   }
 
@@ -284,22 +294,44 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
           progress.hidden = false;
           progressText.textContent = latest.status === 'failed' ? friendlyFailure(latest.error)
             : '上次分析已取消或中断。缓存仍可复用，可重新开始分析。';
-        } else health.textContent += ' · 已找到最近结果，点击打开继续审阅。';
+        }
       }
     } catch (error) { if (error.status !== 404) health.textContent = friendlyFailure(error.message); }
   }
+
+  let resumeId = null;
+  function showResume(run) {
+    const area = optional("resumeArea");
+    if (!area) return;
+    resumeId = run.id;
+    const parts = [run.scope?.label, run.startedAt && new Date(run.startedAt).toLocaleString("zh-CN"),
+      run.itemCount && `${run.itemCount} 张`, run.groupCount && `${run.groupCount} 组`].filter(Boolean);
+    showText("resumeDetail", parts.length ? `最近结果：${parts.join(" · ")}` : "最近一次分析已完成");
+    area.hidden = false;
+  }
+  optional("resumeLatest")?.addEventListener("click", async () => {
+    if (!resumeId) return;
+    const button = optional("resumeLatest");
+    button.disabled = true;
+    try { await onRun(resumeId); }
+    catch (error) { health.textContent = `无法打开：${error.message}。请重试或检查服务连接。`; }
+    finally { button.disabled = false; }
+  });
 
   async function pollRun(runId, token = pollToken) {
     if (token !== pollToken || activeRun !== runId) return;
     const run = await getApi()(`/runs/${runId}`);
     if (token !== pollToken || activeRun !== runId) return;
     const value = run.progress || run;
-    progressBar.max = value.total || 1;
-    progressBar.value = value.completed || 0;
-    const seconds = progressEstimate(run);
-    const remaining = seconds === null ? "剩余时间估算中…" : `画质分析预计还需 ${seconds} 秒，后续人脸和分组另计`;
+    const model = analysisProgress(run);
+    progressBar.max = 100;
+    if (model.overallPercent === null) progressBar.removeAttribute?.("value");
+    else progressBar.value = model.overallPercent;
     const index = stageIndex(value.stage);
-    progressText.textContent = `${analysisStages[index]} · 已处理 ${value.completed || 0} / ${value.total || 0} · ${remaining}`;
+    const step = value.stage === "scanning" ? "读取资源库拍摄时间" : "当前步骤";
+    progressText.textContent = `${model.text} · ${step} ${value.completed || 0}/${value.total || 0}`;
+    const recent = recentDetails.get(runId);
+    if (recent) recent.element.textContent = `${recent.baseDetail} · ${model.text} · ${value.completed || 0}/${value.total || 0}`;
     const stages = optional("progressStages");
     if (stages) stages.innerHTML = analysisStages.map((label, step) =>
       `<li class="${step === index ? "current" : step < index ? "complete" : ""}"`
