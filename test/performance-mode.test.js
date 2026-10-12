@@ -52,7 +52,8 @@ test('parallel async contexts and pipeline instances do not leak modes', async (
   pipeline.runAnalysis = async function () { await new Promise(resolve => setImmediate(resolve));
     return {concurrency:this.concurrency, launch:childLaunch('python',[]).command}; };
   const values = await Promise.all(['normal', 'turbo'].map(performanceMode => pipeline.run([], {performanceMode})));
-  assert.deepEqual(values, [{concurrency:2,launch:process.platform === 'win32' ? 'python' : 'nice'},{concurrency:performanceWorkerCap('turbo'),launch:'python'}]);
+  const normalLaunch = process.platform === 'win32' ? 'python' : 'nice';
+  assert.deepEqual(values, [{concurrency:2,launch:normalLaunch},{concurrency:performanceWorkerCap('turbo'),launch:'python'}]);
   assert.equal(pipeline.concurrency,2);
 });
 test('pose pool transmits slot-specific threads and never adds them to cache keys', async () => {

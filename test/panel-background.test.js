@@ -61,7 +61,8 @@ test('launch CLI detaches, ignores stdio, unrefs and blocks occupied or newly di
   };
   const input = { repository: fixtureRepository, base: 'http://127.0.0.1:43441', requireImpl, occupied: async () => false };
   await launchLocalService(input);
-  assert.equal(command, process.platform === 'win32' ? 'node' : 'nice'); assert.ok(args.includes('src/cli.js')); assert.ok(args.includes('serve'));
+  assert.equal(command, process.platform === 'win32' ? 'node' : 'nice');
+  assert.ok(args.includes('src/cli.js')); assert.ok(args.includes('serve'));
   assert.deepEqual(options, { cwd: fixtureRepository, detached: true, stdio: 'ignore', windowsHide: true }); assert.equal(unref, true);
   await assert.rejects(launchLocalService({ ...input, occupied: async () => true }), /占用/);
   await assert.rejects(launchLocalService({ ...input, allowed: () => false }), /关闭/);

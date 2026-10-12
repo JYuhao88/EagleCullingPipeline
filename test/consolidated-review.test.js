@@ -6,7 +6,8 @@ const review = JSON.parse(await readFile(new URL('../src/rules/candidates/consol
 
 test('consolidated review is reproducible from existing inputs and covers each candidate and formal rule once', async () => {
   assert.deepEqual(await buildReview(), review);
-  assert.equal((await readFile(new URL('../docs/rules-review-guide.md', import.meta.url), 'utf8')).replaceAll('\r\n', '\n'), renderGuide(review));
+  const guide = await readFile(new URL('../docs/rules-review-guide.md', import.meta.url), 'utf8');
+  assert.equal(guide.replaceAll('\r\n', '\n'), renderGuide(review));
   const ids=review.entries.flatMap(e=>[e.id,...e.aliases]);
   assert.equal(new Set(ids).size, review.counts.candidates);
   assert.equal(ids.length, review.counts.candidates);
