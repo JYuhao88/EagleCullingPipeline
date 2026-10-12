@@ -93,7 +93,6 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
         magnifier ? [faceRows[magnifierFace]] : comparing ? faceRows : null))
       : ['<p class="review-empty">这个筛选下没有照片组。请在顶部切换「全部（含单张组）」，或返回主页开始新的分析。</p>']);
     root.querySelector("#unitStrip .focus")?.scrollIntoView?.({ block: "nearest", inline: "nearest" });
-    root.querySelector("#review").classList.toggle("zoomed", viewState.zoomed);
     void expose();
     root.querySelector("#selectedCount").textContent = viewState.selected.length ? `已选 ${viewState.selected.length} 张` : "";
     const issueCounts = { bulkEyes: countUnreviewedIssue(viewState, "eyes-closed"),
@@ -163,8 +162,7 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     const candidate = group.candidateSet?.entries?.find(item => item.unitId === unitId);
     const decision = decisionFor(viewState, unitId, group);
     const item = reviewIndex(viewState).items.get(unit.primaryItemId) || {};
-    const endpoint = viewState.zoomed ? "detail" : "preview";
-    const preview = `${viewState.base}/runs/${getRunId()}/${endpoint}/${encodeURIComponent(unitId)}`;
+    const preview = `${viewState.base}/runs/${getRunId()}/preview/${encodeURIComponent(unitId)}`;
     const flags = (result.flags || []).map(flag => `<span class="badge">${flagLabels[flag] || flag}</span>`).join("");
     const scoreBars = scoreParts(result).map(part => {
       const width = part.value == null ? 0 : Math.min(100, Number(part.value) <= 1
@@ -190,7 +188,8 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
       ? `<div class="face-column">${faceRows.map((row, rowIndex) =>
         (magnifier ? renderNativeFace(row[index], faceContext, magnifierRegion)
           : renderFace(row[index], faceContext, `位置 ${rowIndex + 1}`))).join("")}</div>`
-      : `<div class="image-wrap" data-preview="${unitId}"><img src="${preview}" loading="lazy" alt="${item.name || "预览"}"
+      : `<div class="image-wrap" data-preview="${unitId}" title="双击看大图"><img src="${preview}" loading="lazy"
+        alt="${item.name || "预览"}" draggable="false"
         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span class="placeholder">预览不可用</span></div>${renderFaceStrip(result, faceContext)}`;
     return `<article class="unit ${focus} ${selected}" data-unit-id="${unitId}">
@@ -273,10 +272,6 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     if (event.target.closest("[data-tie]")) {
       onDecision(unitId, "candidate", { category: "candidate", tie: true, reason: "各有所长" }); return;
     }
-    if (event.target.closest("[data-preview]") && !state().zoomed) {
-      setState(reduceState(state(), { type: "zoom" }));
-      root.querySelector("#review").classList.toggle("zoomed", state().zoomed);
-    }
     if (event.metaKey || event.ctrlKey || event.shiftKey) {
       const selected = toggleSelection(viewState.selected, unitId, {
         range: event.shiftKey, orderedIds: ids
@@ -285,15 +280,9 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     }
     setState(reduceState(state(), { type: "unit", index: ids.indexOf(unitId) })); render();
   });
-  root.querySelector("#group").addEventListener("pointermove", event => {
-    if (!state().zoomed) return;
-    const wrap = event.target.closest(".image-wrap");
-    if (!wrap) return;
-    const rect = wrap.getBoundingClientRect();
-    const x = Math.max(0, Math.min(100, ((event.clientX - rect.left) / rect.width) * 100));
-    const y = Math.max(0, Math.min(100, ((event.clientY - rect.top) / rect.height) * 100));
-    root.querySelector("#group").style.setProperty("--zoom-x", `${x}%`);
-    root.querySelector("#group").style.setProperty("--zoom-y", `${y}%`);
+  root.querySelector("#group").addEventListener("dblclick", event => {
+    const wrap = event.target.closest("[data-preview]");
+    if (wrap && onPreview) onPreview(wrap.dataset.preview);
   });
   function closeNativeMagnifier() {
     if (!magnifier) return false;

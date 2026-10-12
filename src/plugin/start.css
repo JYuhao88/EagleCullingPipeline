@@ -1,4 +1,4 @@
-#start { max-width: 960px; margin: 0 auto; padding: 28px 20px; }
+#start { max-width: 1200px; margin: 0 auto; padding: 20px 8px; }
 .start-heading, .context-grid { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .status-card, .welcome-card, .recent-run { border: 1px solid #494949; border-radius: 12px; padding: 18px; margin: 16px 0; }
 .context-grid { margin-top: 14px; color: #bbb; font-size: 14px; }

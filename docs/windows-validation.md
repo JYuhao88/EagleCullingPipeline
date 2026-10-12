@@ -402,3 +402,34 @@ Mac 所有命令请求 nice 15，沙箱拒绝调整优先级；Windows 使用 Be
 在独立临时演练目录和端口 `43145` 完成了 `v1.2.0`（真实 `node_modules`）→ `v1.2.1`（仅版本变化）→ `v1.2.2` → `v1.2.3` → `v1.2.4` 的连续更新；后三级每次只改变 lockfile 标记，服务运行期间已加载 sharp。每次更新后 `/health` 正常、`/update/status` 为 `completed`，根 `node_modules` 为 Junction，当前依赖目录存在，上一版依赖目录仍保留。依赖目录按 mtime 保留并保护当前及上一版目标；首次真实目录迁移留下的旧目录也未被删除。
 
 从 `v1.2.4` 回退到 `v1.2.3` 成功，Junction 指回仍存在的上一版依赖目录，服务健康。演练服务通过 Windows Scheduled Task 脱离 SSH 启动，断开 SSH 后重新连接仍可访问 `/health`。演练服务、任务、临时目录和端口监听已清理；未触碰用户服务端口 `43125` 或固定应用目录。
+
+## w18 稳定安装、开发克隆与运维目录分离（2026-10-12）
+
+真实目录和命令仅写入 Windows 不入库的 `<ops-root>/PROGRESS.md`。
+稳定版从 GitHub 正式 v1.2.1 克隆到 `<stable-root>`（43125）；开发版 `<dev-root>`
+保持 master、`git pull --ff-only` 到同一发布提交（43135），data 与 venv 独立。
+运维资料、工具及基础 Python 复制到 `<ops-root>/legacy`；两个 venv 在最终位置重建，
+按旧环境 pip freeze 补齐依赖，config 指向各自新 Python 和运维工具。
+Mac 未传送开发分支，未提交、未 push、未修改用户 Git 配置；两个 Windows 克隆干净。
+
+停旧服务前两次确认无活动 run、phase=idle、无 `data/update.lock`。
+旧安装保留为 `app-old`，旧验证目录未删除；复制 data 17,402 文件和模型 12 文件
+逐文件 SHA-256 零差异。随后仅原子修改一份旧 cancelled run 的 checkpoints.jsonl，
+将 127 个预览路径迁到新副本（预览字节哈希相同），原元数据另备份到 ops。
+start/stop/status 脚本经解析检查；CIM 脱离 SSH，BelowNormal、CPU、Node heap 2048 MiB、
+并发 1；`--import` 使用应用根相对路径。未配置自启。
+43125 health/两条历史/更新验收通过：v1.2.1、idle、canUpdate=true、checkError=null；
+43135 空历史启动与停止通过，最终无开发监听。收尾用户新 run 已 running，未中断，
+此时 canUpdate=false 是活动分析保护。两个 venv 导入/pip check、各 3 项 face_regions
+unittest、sharp PNG/ONNX Node 冒烟通过。Mac 指定串行回归 417 pass/0 fail/1 skip；
+命令同 w16 的 Node 回归（EAGLE_PYTHON=python3），nice 调整被沙箱拒绝。
+质量 compare **未完成**：Windows 检查发现用户活动分析，未执行 bench；Mac 实际运行
+`EAGLE_PYTHON=python3 EAGLE_POSE_PROVIDER=CPUExecutionProvider EAGLE_SCORER_PROVIDER=cpu`
+`EAGLE_BENCH_CACHE_ONLY=1 nice -n 15 node --max-old-space-size=2048 scripts/bench.mjs --compare`
+`data/cache/bench/reports/2026-10-11T20-07-12-447Z/report.json`，同 manifest SHA 核对通过，
+但 exit 1：`Cache-only benchmark refuses 388 cold images`。没有冷推理或生成新报告，
+不能引用旧报告声称本轮质量通过。公开扫描 483 文件/0 命中，`git diff --check` 通过。
+
+用户需在 Eagle 移除旧插件并「导入本地项目」选择 `<stable-root>/src/plugin`；
+调试用 `<ops-root>/start-dev.ps1` 和服务地址端口 43135，结束用 `stop-dev.ps1`，
+开发更新先停止再 `git pull --ff-only`。未点击宿主、未切库、未写回或触碰原片/「未删减」。

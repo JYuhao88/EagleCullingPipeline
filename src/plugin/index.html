@@ -177,14 +177,26 @@
       <dialog id="shortcutHelp"><h2>审阅帮助与快捷键</h2><button id="helpReviewWelcome">查看三步入门</button>
         <p>1/2/3 决定；←/→ 切图；Enter 下一组；Shift+Enter 上一组；S 设为首选；A 全选、Esc 清除选择；
         M 移到上一组；Shift+M 移到下一组；G 移到新组；Cmd/Shift 点击多选；F 打开/关闭人脸对比、Esc 关闭；
-        L 原生 1:1 放大镜；Shift+L 切换脸；E 切换眼部/脸部；空格全屏；Z 同步放大；U 或 Cmd/Ctrl+Z 撤销。淘汰理由面板打开时，1–9 切换理由，Enter/Esc 完成；切图/切组恢复原快捷键。</p>
+        L 原生 1:1 放大镜；Shift+L 切换脸；E 切换眼部/脸部；
+        空格或双击照片看大图（滚轮缩放、拖动查看、Z 放大/还原、0 适应窗口）；U 或 Cmd/Ctrl+Z 撤销。淘汰理由面板打开时，1–9 切换理由，Enter/Esc 完成；切图/切组恢复原快捷键。</p>
         <button id="closeHelp">关闭</button></dialog>
-      <dialog id="previewDialog" class="preview-dialog">
-        <button id="closePreview" class="preview-close" aria-label="关闭预览">×</button>
+      <dialog id="previewDialog" class="preview-dialog" aria-label="看大图">
+        <div id="viewerStage" class="viewer-stage">
+          <img id="previewImage" alt="大图" draggable="false">
+          <img id="viewerNative" class="viewer-native" alt="" draggable="false" hidden>
+        </div>
         <button id="previewPrevious" class="preview-nav" aria-label="上一张">‹</button>
-        <img id="previewImage" alt="全屏预览">
         <button id="previewNext" class="preview-nav" aria-label="下一张">›</button>
-        <p id="previewCaption"></p>
+        <div class="viewer-bar">
+          <p id="previewCaption"></p>
+          <div class="viewer-zoom"><button id="viewerZoomOut" aria-label="缩小">−</button>
+            <span id="viewerZoom">适应窗口</span><button id="viewerZoomIn" aria-label="放大">+</button>
+            <button id="viewerFit">适应窗口（0）</button></div>
+          <div class="viewer-decisions"><button data-viewer-action="selected">1 精选</button>
+            <button data-viewer-action="candidate">2 候选</button><button data-viewer-action="rejected">3 淘汰</button></div>
+          <span class="viewer-hint">滚轮缩放 · 拖动查看 · 双击/Z 放大 · ←→ 切图 · Esc 关闭</span>
+          <button id="closePreview" class="preview-close" aria-label="关闭大图">×</button>
+        </div>
       </dialog>
     </section>
   </main>

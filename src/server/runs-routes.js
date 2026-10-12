@@ -10,7 +10,7 @@ import { buildCaptureUnits } from "../core/capture-units.js";
 import { groupConfidence, CONFIDENCE_MARGIN_THRESHOLD } from "../core/ranking.js";
 import { CORS_HEADERS, json, parseBody } from "./http.js";
 import { faceImage } from "./face-image.js";
-import { focusCropImage } from "./focus-image.js";
+import { focusCropImage, parseRegionBox, regionCropImage } from "./focus-image.js";
 
 function activeRun(active) {
   return active.run && (active.run.controller || ["queued", "running"].includes(active.run.status))
@@ -349,6 +349,24 @@ export function createRunsRouter({
       } catch {
         return json(res, 404, { error: "face not found" });
       }
+      return true;
+    }
+    if (req.method === "GET" && sub?.startsWith("native/")) {
+      const unitId = decodeUnitId(sub.slice("native/".length));
+      const box = parseRegionBox(url.searchParams?.get("box"));
+      if (!unitId || !box) return json(res, 404, { error: "native region not found" });
+      const state = store.unitData ? await store.unitData(id, unitId) : await store.get(id);
+      if (!runFromState(state) || !state?.units?.some(item => item.id === unitId)) {
+        return json(res, 404, { error: "native region not found" });
+      }
+      const crop = await regionCropImage(store, id, unitId, box, state);
+      if (!crop?.available) return json(res, 404, { error: "native region unavailable", naReason: crop?.naReason });
+      try {
+        const image = await readFile(crop.path);
+        res.writeHead(200, { "content-type": "image/jpeg", "cache-control": "private, max-age=3600",
+          "x-native-width": String(crop.rect.width), "x-native-height": String(crop.rect.height), ...CORS_HEADERS });
+        res.end(image);
+      } catch { return json(res, 404, { error: "native region not found" }); }
       return true;
     }
     if (req.method === "GET" && sub?.startsWith("focus-crop/")) {

@@ -27,3 +27,20 @@ export async function focusCropImage(store, id, unitId, faceIndex, region, state
   return nativeCrop(primary, box, { pairedItems: items.filter(item => item !== primary),
     cacheDir: path.join(store.root || path.dirname(store.dir(id)), "focus-crops") });
 }
+
+export const MAX_REGION_AREA = 0.36;
+
+export function parseRegionBox(value) {
+  const box = String(value || "").split(",").map(Number);
+  if (box.length !== 4 || !normalizedRect(box, 1, 1)) return null;
+  return (box[2] - box[0]) * (box[3] - box[1]) <= MAX_REGION_AREA ? box : null;
+}
+
+export async function regionCropImage(store, id, unitId, box, state) {
+  const unit = state.units?.find(item => item.id === unitId);
+  const items = state.items?.filter(item => (unit?.itemIds || [unit?.primaryItemId]).includes(item.id)) || [];
+  const primary = items.find(item => item.id === unit?.primaryItemId);
+  if (!primary) return { available: false, naReason: "native-source-unavailable" };
+  return nativeCrop(primary, box, { pairedItems: items.filter(item => item !== primary),
+    cacheDir: path.join(store.root || path.dirname(store.dir(id)), "focus-crops") });
+}

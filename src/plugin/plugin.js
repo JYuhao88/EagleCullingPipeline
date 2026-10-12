@@ -5,6 +5,7 @@ import { createReviewView } from "./review-view.js";
 import { createStartView } from "./start-view.js";
 import { createWritebackDialog } from "./writeback-dialog.js";
 import { keyboardAction } from "./keyboard.js";
+import { createViewer } from "./viewer.js";
 import {
   applyDecisionBatch,
   currentGroup,
@@ -30,6 +31,8 @@ let api = createApi(viewState.base);
 let reviewView = null;
 let writebackDialog = null;
 let previewUnitId = null;
+const viewer = createViewer({ root: document, nativeUrl: (unitId, box) =>
+  `${viewState.base}/runs/${viewState.runId}/native/${encodeURIComponent(unitId)}?box=${box.map(v => v.toFixed(5)).join(",")}` });
 let personalization = null;
 let learningPanel = null;
 let catalog = { reasons: [], rules: [] };
@@ -125,34 +128,38 @@ function inInput(target) {
 }
 
 function previewIds() {
-  return currentGroup(viewState).unitIds;
+  return rankedUnitIds(currentGroup(viewState));
 }
 
 function renderPreview() {
   const ids = previewIds();
   const index = Math.max(0, ids.indexOf(previewUnitId));
   previewUnitId = ids[index] || ids[0] || null;
+  if (!previewUnitId) return;
+  const group = currentGroup(viewState);
   const unit = viewState.data?.units?.find(item => item.id === previewUnitId);
   const item = viewState.data?.items?.find(candidate => candidate.id === unit?.primaryItemId);
-  const image = root.querySelector("#previewImage");
-  image.src = `${viewState.base}/runs/${viewState.runId}/detail/${encodeURIComponent(previewUnitId)}`;
-  image.alt = item?.name || "全屏预览";
-  root.querySelector("#previewCaption").textContent = `${index + 1} / ${ids.length} · ${item?.name || "未命名文件"}`;
+  viewer.show(previewUnitId, `${viewState.base}/runs/${viewState.runId}/detail/${encodeURIComponent(previewUnitId)}`);
+  root.querySelector("#previewImage").alt = item?.name || "大图";
+  const decision = decisionFor(viewState, previewUnitId, group);
+  const state = decision.source === "human" ? { selected: "精选", candidate: "候选", rejected: "淘汰" }[decision.action] : "未确认";
+  root.querySelector("#previewCaption").textContent = `${index + 1} / ${ids.length} · ${item?.name || "未命名文件"} · ${state}`;
+  for (const button of root.querySelectorAll("[data-viewer-action]")) {
+    button.classList.toggle("active", decision.source === "human" && decision.action === button.dataset.viewerAction);
+  }
+  if (viewState.unitIndex !== index) { setState(reduceState(viewState, { type: "unit", index })); reviewView.render(); }
 }
 
 function openPreview(unitId) {
   previewUnitId = unitId;
   renderPreview();
-  const dialog = root.querySelector("#previewDialog");
-  if (typeof dialog.showModal === "function") dialog.showModal();
-  else dialog.hidden = false;
+  viewer.open();
 }
 
 function closePreview() {
-  const dialog = root.querySelector("#previewDialog");
-  if (typeof dialog.close === "function") dialog.close();
-  else dialog.hidden = true;
+  viewer.close();
   previewUnitId = null;
+  scrollFocusedCard();
 }
 
 function movePreview(delta) {
@@ -371,7 +378,7 @@ async function undoLast() {
 root.addEventListener("keydown", async event => {
   // A modal owns the keyboard; review shortcuts resume after it closes.
   if (root.querySelector('dialog[open]:not(#previewDialog)')) return;
-  if (previewUnitId && event.key === "Escape") {
+  if (previewUnitId && (event.key === " " || event.key === "Escape")) {
     event.preventDefault();
     closePreview();
     return;
@@ -386,6 +393,7 @@ root.addEventListener("keydown", async event => {
     movePreview(1);
     return;
   }
+  if (previewUnitId && viewer.key(event)) { event.preventDefault(); return; }
   const action = keyboardAction(event, inInput(event.target), Boolean(reasonSession) && !previewUnitId);
   if (!action || root.querySelector("#review").hidden) return;
   event.preventDefault();
@@ -397,6 +405,7 @@ root.addEventListener("keydown", async event => {
       const group = currentGroup(viewState);
       const unitId = rankedUnitIds(group)[viewState.unitIndex];
       if (unitId) await saveDecision(unitId, action.action);
+      if (previewUnitId) renderPreview();
     }
     if (action.type === "moveUnit") await moveUnit(action.delta);
     if (action.type === "newGroup") await moveUnit(0, true);
@@ -430,10 +439,7 @@ root.addEventListener("keydown", async event => {
       reviewView.render();
       scrollFocusedCard();
     }
-    if (action.type === "syncZoom") {
-      setState(reduceState(viewState, { type: "zoom" }));
-      reviewView.render();
-    }
+    if (action.type === "syncZoom") openPreview(rankedUnitIds(currentGroup(viewState))[viewState.unitIndex]);
     if (action.type === "faceCompare") reviewView.toggleFaces();
     if (action.type === "zoom") openPreview(rankedUnitIds(currentGroup(viewState))[viewState.unitIndex]);
     if (["nativeMagnifier", "nativeNextFace", "nativeRegion"].includes(action.type)) reviewView.nativeAction(action.type);
@@ -520,9 +526,12 @@ root.querySelector("#closeHelp").addEventListener("click", () => root.querySelec
 root.querySelector("#closePreview").addEventListener("click", closePreview);
 root.querySelector("#previewPrevious").addEventListener("click", () => movePreview(-1));
 root.querySelector("#previewNext").addEventListener("click", () => movePreview(1));
-root.querySelector("#previewDialog").addEventListener("click", event => {
-  if (event.target.id === "previewDialog") closePreview();
-});
+root.querySelector("#previewDialog").addEventListener("cancel", event => { event.preventDefault(); closePreview(); });
+for (const button of root.querySelectorAll("[data-viewer-action]")) {
+  button.addEventListener("click", () => saveDecision(previewUnitId, button.dataset.viewerAction)
+    .then(() => renderPreview())
+    .catch(error => { root.querySelector("#writeback").textContent = `保存失败：${error.message}`; }));
+}
 for (const [buttonId, issue] of [["bulkEyes", "eyes-closed"], ["bulkBlurry", "blurry"]]) {
   root.querySelector(`#${buttonId}`).addEventListener("click", async () => {
     const ids = issueUnitIds(viewState.data.groups, viewState.data.results, issue, viewState.decisions);
