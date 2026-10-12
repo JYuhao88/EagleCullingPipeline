@@ -28,6 +28,7 @@ import { createFeedbackRecorder, defaultRejectReasons, winnerChanges, escapeHtml
 import { createRemoteView } from './remote-view.js';
 import { createCullView } from './cull-view.js';
 import { displayUrl } from './display-url.js';
+import { adjustmentFilterMarkup, adjustmentsAreIdentity } from './adjust.js';
 import { KEY_ACTIONS } from './cull-model.js';
 
 const ENTRY_KEY = 'eagle-culling-entry';
@@ -254,7 +255,9 @@ async function openRun(runId, { finish = false, compareReturn: returnToCull = fa
       data = await api(`/runs/${runId}/results?limit=20&filter=all`);
     }
     const response = await api(`/runs/${runId}/decisions?limit=20&filter=${encodeURIComponent(filter)}`);
+    const adjustments = await api(`/runs/${runId}/adjustments`).catch(() => ({}));
     if (reviewRequest !== requestVersion) return;
+    applyReviewAdjustments(adjustments);
     if (filter !== viewState.filter) setState({ ...viewState, filter });
     setState(reduceState(viewState, { type: "load", runId, data, decisions: response.decisions }));
     root.querySelector("#start").hidden = true;
@@ -297,6 +300,16 @@ function closeReview() {
 }
 
 let compareReturn = false;
+let reviewAdjustmentIds = new Map();
+const reviewAdjustDefs = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+reviewAdjustDefs.setAttribute("class", "cull-defs");
+reviewAdjustDefs.setAttribute("aria-hidden", "true");
+document.body.append(reviewAdjustDefs);
+function applyReviewAdjustments(all) {
+  const entries = Object.entries(all || {}).filter(([, value]) => !adjustmentsAreIdentity(value));
+  reviewAdjustmentIds = new Map(entries.map(([unitId], index) => [unitId, index]));
+  reviewAdjustDefs.innerHTML = entries.map(([, value], index) => adjustmentFilterMarkup(value, `ec-adj-${index}`)).join("");
+}
 async function openCull(runId, options) {
   localStorage.setItem(ENTRY_KEY, "cull");
   remoteView.close({ restore: false });
@@ -602,7 +615,8 @@ reviewView = createReviewView({ root, state, setState,
     method: "POST", headers: { "content-type": "application/json" },
     body: JSON.stringify({ ...exposure, ...learningPanel?.context() })
   }).catch(error => { root.querySelector("#learningStatus").textContent = `曝光记录失败：${error.message}`; }),
-  getPresentation: group => learningPanel?.presentation(group) });
+  getPresentation: group => learningPanel?.presentation(group),
+  getAdjustmentFilter: unitId => reviewAdjustmentIds.has(unitId) ? `url(#ec-adj-${reviewAdjustmentIds.get(unitId)})` : null });
 root.querySelector("#tieGroup").addEventListener("click", () => decideCurrentGroup("candidate", {
   category: "candidate", tie: true, reason: "各有所长"
 }).catch(error => { root.querySelector("#writeback").textContent = `保存失败：${error.message}`; }));

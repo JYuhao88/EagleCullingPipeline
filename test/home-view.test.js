@@ -246,7 +246,8 @@ test('broken tasks resume, rerun or explain how to reselect; a busy service is a
 });
 
 test('offline home shows a service card and no review entry; retry connects', async () => {
-  await withGlobals({ storage: new Map([['eagle-culling-repository', '/tmp/photo repo']]) }, async () => {
+  const repository = process.platform === 'win32' ? 'C:\\photo repo' : '/tmp/photo repo';
+  await withGlobals({ storage: new Map([['eagle-culling-repository', repository]]) }, async () => {
     const root = fakeRoot(); let connected = false;
     const api = async url => {
       if (!connected) throw new Error('offline');

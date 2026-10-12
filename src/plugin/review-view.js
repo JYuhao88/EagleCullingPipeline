@@ -57,7 +57,8 @@ export function decisionBadge(decision, hideAI = false) {
 const confidenceLabel = group => ({ high: "把握高", low: "需确认", single: "单张" })[group.confidence] || "";
 
 export function createReviewView({ root, state, setState, runId, getRunId = () => runId,
-  onFilter, onBack, onDecision, onPreview, getCatalog = () => ({}), onExposure = () => {}, getPresentation = () => null }) {
+  onFilter, onBack, onDecision, onPreview, getCatalog = () => ({}), onExposure = () => {}, getPresentation = () => null,
+  getAdjustmentFilter = () => null }) {
   const reasonDrafts = new Map();
   let reasonRunId;
   let lastExposure = "";
@@ -260,6 +261,7 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
         (magnifier ? renderNativeFace(row[index], faceContext, magnifierRegion)
           : renderFace(row[index], faceContext, `位置 ${rowIndex + 1}`))).join("")}</div>`
       : `<div class="image-wrap" data-preview="${unitId}" title="双击看大图"><img src="${preview}" loading="lazy"
+        ${getAdjustmentFilter(unitId) ? `style="filter:${getAdjustmentFilter(unitId)}"` : ""}
         alt="${escapeReason(item.name || "预览")}" draggable="false"
         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span class="placeholder">预览不可用</span>${decided}
