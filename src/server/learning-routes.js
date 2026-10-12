@@ -120,7 +120,8 @@ export async function handleLearningRoute(req, res, ctx, data) {
     ctx.json(res, 200, { eventId: event.id });
   } else if (action === 'backfill') {
     const { DecisionsStore } = await import('../core/decisions-store.js');
-    const events = await dataStore.backfill(data, await new DecisionsStore(ctx.runStore.dir(data.run.id)).read(), { profileId });
+    const events = await dataStore.backfill(data, (await new DecisionsStore(ctx.runStore.dir(data.run.id)).read())
+      .filter(row => !row.inheritedFrom), { profileId });
     ctx.json(res, 200, { events: events.length, exposureKnown: false });
   } else if (action === 'train') {
     await profiles.train(profileId, await learningGroups(dataStore, profileId));

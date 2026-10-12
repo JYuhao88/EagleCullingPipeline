@@ -5,7 +5,7 @@ import { SETTINGS, readSetting, writeSetting } from '../src/plugin/panel-setting
 import { shouldAutoStart, launchLocalService, createRunNotifier, mountBackgroundLifecycle } from '../src/plugin/background.js';
 import { scopeLabel, primaryAnalysis } from '../src/plugin/start-model.js';
 import { eagleContext } from '../src/plugin/api.js';
-import { setWindowMode } from '../src/plugin/window-mode.js';
+import { setWindowMode, createWindowSizer, readSavedSize } from '../src/plugin/window-mode.js';
 const fixtureRepository = process.platform === 'win32' ? 'C:\\fixture' : '/tmp/fixture';
 const storage = () => { const map = new Map(); return { getItem: key => map.get(key) ?? null,
   setItem: (key, value) => map.set(key, value), removeItem: key => map.delete(key) }; };
@@ -89,14 +89,37 @@ test('background lifecycle hides on close, shows on run, and permits updater rel
   assert.equal(win.onbeforeunload({}), false); assert.equal(hidden, 1);
   win.__ecAllowUnload = true; assert.equal(win.onbeforeunload({}), undefined);
 });
-test('window mode maximizes review and returns to compact size; missing APIs are harmless', async () => {
+test('entering or leaving review never resizes the Eagle window', async () => {
   const calls = [];
-  await setWindowMode(true, { window: { maximize: async () => calls.push('max') } });
-  await setWindowMode(false, { window: { unmaximize: async () => calls.push('restore'), setSize: async (...args) => calls.push(args) } });
-  assert.deepEqual(calls, ['max', 'restore', [420, 600]]);
-  await setWindowMode(true, {});
-  await setWindowMode(true, { window: { setSize: async (w, h) => { assert.equal(w, 1000); assert.equal(h, 700); } },
-    screen: { getPrimaryDisplay: async () => ({ workAreaSize: { width: 1000, height: 700 } }) } });
+  const eagle = { window: { maximize: async () => calls.push('max'), unmaximize: async () => calls.push('restore'),
+    setSize: async (...args) => calls.push(args) } };
+  globalThis.eagle = eagle;
+  try { await setWindowMode(true); await setWindowMode(false); } finally { delete globalThis.eagle; }
+  assert.deepEqual(calls, []);
+});
+
+test('window sizer remembers the user size, zooms on request and restores the remembered size', async () => {
+  const calls = [], store = new Map(), listeners = {};
+  const storage = { getItem: key => store.get(key) ?? null, setItem: (key, value) => store.set(key, value) };
+  let size = [700, 560];
+  const eagle = { window: { getSize: async () => size, isMaximized: async () => false,
+    maximize: async () => calls.push('max'), unmaximize: async () => calls.push('unmax'),
+    setSize: async (w, h) => { calls.push([w, h]); size = [w, h]; } } };
+  const button = { hidden: true, textContent: '', attrs: {}, setAttribute(k, v) { this.attrs[k] = v; } };
+  const root = { querySelectorAll: () => [button], addEventListener: (type, fn) => { listeners[type] = fn; } };
+  const win = { addEventListener: (type, fn) => { listeners[`win:${type}`] = fn; } };
+  const sizer = createWindowSizer({ eagle, storage, root, win, delay: 0 });
+  assert.equal(button.hidden, false); assert.equal(button.textContent, '放大审阅');
+  assert.equal(await sizer.restore(), false);
+  await sizer.toggle();
+  assert.deepEqual(readSavedSize(storage), { width: 700, height: 560 });
+  assert.equal(button.textContent, '还原窗口'); assert.deepEqual(calls, ['max']);
+  await sizer.toggle();
+  assert.deepEqual(calls, ['max', 'unmax', [700, 560]]);
+  storage.setItem('eagle-culling-window-size', JSON.stringify({ width: 100, height: 100 }));
+  assert.deepEqual(readSavedSize(storage), { width: 360, height: 480 });
+  const bare = createWindowSizer({ eagle: {}, storage, root, win });
+  assert.equal(bare.supported, false); assert.equal(await bare.toggle(), false); assert.equal(button.hidden, true);
 });
 
 test('Windows launch uses direct Node and BelowNormal without a visible console', async () => {

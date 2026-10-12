@@ -11,8 +11,11 @@ import { handleGroupRoute } from "./group-routes.js";
 import { buildReport, reportCsv } from "../core/report.js";
 import { applyPersonalization, personalizeReport } from "../core/personalize.js";
 import { CORS_HEADERS } from "./http.js";
+import { handleAdjustmentsRoute } from "./adjustments-routes.js";
+import { buildQueue, filterQueue, MODES } from './queue.js';
 
 export async function handleReviewRoute(req, res, ctx) {
+  if (await handleAdjustmentsRoute(req, res, ctx)) return true;
   if (await handleFeedbackRoute(req, res, ctx)) return true;
   const url = new URL(req.url, "http://localhost");
   const match = url.pathname.match(/^\/runs\/([^/]+)(?:\/([^/]+))?/);
@@ -45,6 +48,17 @@ export async function handleReviewRoute(req, res, ctx) {
   } else data = await ctx.runStore.get(runId, { readOnly: true });
   if (!data) {
     ctx.json(res, 404, { error: "run not found" });
+    return true;
+  }
+
+  if (req.method === 'GET' && action === 'queue') {
+    const mode = url.searchParams.get('mode') || 'all';
+    if (!MODES.has(mode)) { ctx.json(res, 400, { error: `未知队列模式：${mode}` }); return true; }
+    const queue = await buildQueue(ctx.runStore, runId);
+    if (!queue) { ctx.json(res, 404, { error: 'run not found' }); return true; }
+    const items = filterQueue(queue.rows, mode);
+    ctx.json(res, 200, { mode, queue: items, items, order: queue.rows.map(row => row.unitId), counts: queue.counts,
+      total: queue.total });
     return true;
   }
 
@@ -90,41 +104,15 @@ export async function handleReviewRoute(req, res, ctx) {
     return true;
   }
   if (req.method === "POST" && action === "decisions") {
-    // Keep the persisted decision and its learning snapshot in request order.
     const body = await ctx.readBody(req);
     const decisions = Array.isArray(body) ? body : body.decisions || [body];
-    return serializeWriteback(ctx, runId, async data => {
-      const timestamp = ctx.clock?.().toISOString();
-      const writeStart = performance.now();
-      const saved = await store.upsert(decisions.map(row => ({ ...row,
-        ...(timestamp ? { updatedAt: timestamp } : {}) })));
-      const decisionsMs = performance.now() - writeStart;
-      const learningStart = performance.now();
-      let learningWarning;
-      try {
-        const { dataStore, profiles } = learningServices(ctx);
-        const context = Array.isArray(body) ? {} : body.learning || {};
-        const profile = await profiles.loadProfile(context.profileId || 'default');
-        const events = await dataStore.recordDecisions(data, saved, { ...context,
-          ...(timestamp ? { timestamp } : {}),
-          changedUnitIds: decisions.map(row => row.unitId),
-          modelVersion: profile.head?.version || 'L0', weightsVersion: profile.head?.snapshotId || 'L0' });
-        if (profile.config.pixelTier === 1) {
-          for (const event of events) for (const decision of event.decisions || []) {
-            if (decision.action !== 'rejected' || !decision.hash) continue;
-            const unit = data.units.find(row => row.id === decision.unitId);
-            const item = data.items.find(row => row.id === unit?.primaryItemId);
-            await dataStore.retainPixels(decision.hash, { tier: 1, sourcePath: item?.filePath || item?.path });
-          }
-        }
-      } catch (error) { learningWarning = error.message; }
-      const learningMs = performance.now() - learningStart;
-      res.setHeader?.("Server-Timing", `decisions;dur=${decisionsMs.toFixed(2)}, learning;dur=${learningMs.toFixed(2)}, `
-        + `run;dur=${(data.readDurationMs || 0).toFixed(2)}`);
-      ctx.json(res, 200, { decisions: saved, ...(learningWarning ? { learningWarning } : {}) });
-      return true;
-    }, decisions.map(row => row.unitId));
+    const result = await decideUnits(ctx, runId, decisions, Array.isArray(body) ? {} : body.learning || {});
+    res.setHeader?.('Server-Timing', result.timing);
+    ctx.json(res, 200, { decisions: result.decisions, ...(result.learningWarning ? { learningWarning: result.learningWarning } : {}),
+      ...(result.tagWarning ? { tagWarning: result.tagWarning } : {}) });
+    return true;
   }
+  if (req.method === 'POST' && action === 'eagle-tags') return handleEagleTags(req, res, ctx, runId, data, store);
   if (req.method === "POST" && url.pathname === `/runs/${runId}/writeback/revert`) {
     return serializeWriteback(ctx, runId, fresh => revertRun(req, res, ctx, fresh));
   }
@@ -143,6 +131,46 @@ export async function handleReviewRoute(req, res, ctx) {
     return true;
   }
   return false;
+}
+
+export async function saveDecisionBatch(ctx, data, store, decisions, context = {}) {
+  const timestamp = ctx.clock?.().toISOString();
+  const writeStart = performance.now();
+  const saved = await store.upsert(decisions.map(row => ({ ...row, ...(timestamp ? { updatedAt: timestamp } : {}) })));
+  const decisionsMs = performance.now() - writeStart;
+  const learningStart = performance.now();
+  let learningWarning;
+  try {
+    const { dataStore, profiles } = learningServices(ctx);
+    const profile = await profiles.loadProfile(context.profileId || 'default');
+    const events = await dataStore.recordDecisions(data, saved, { ...context, ...(timestamp ? { timestamp } : {}),
+      changedUnitIds: decisions.map(row => row.unitId), modelVersion: profile.head?.version || 'L0',
+      weightsVersion: profile.head?.snapshotId || 'L0' });
+    if (profile.config.pixelTier === 1) for (const event of events) for (const decision of event.decisions || []) {
+      if (decision.action !== 'rejected' || !decision.hash) continue;
+      const unit = data.units.find(row => row.id === decision.unitId);
+      const item = data.items.find(row => row.id === unit?.primaryItemId);
+      await dataStore.retainPixels(decision.hash, { tier: 1, sourcePath: item?.filePath || item?.path });
+    }
+  } catch (error) { learningWarning = error.message; }
+  const learningMs = performance.now() - learningStart;
+  const timing = `decisions;dur=${decisionsMs.toFixed(2)}, learning;dur=${learningMs.toFixed(2)}, `
+    + `run;dur=${(data.readDurationMs || 0).toFixed(2)}`;
+  return { decisions: saved, learningWarning, timing };
+}
+
+// Decisions and the task's Eagle tags change in the same per-run queue, so tags never lag a newer decision.
+export function decideUnits(ctx, runId, decisions, context = {}) {
+  const store = new DecisionsStore(ctx.runStore.dir(runId));
+  const unitIds = decisions.map(row => row.unitId);
+  return serializeWriteback(ctx, runId, async data => {
+    const result = await saveDecisionBatch(ctx, data, store, decisions, context);
+    if (data.run?.eagleTagsEnabled) {
+      try { await applyLiveUnits(ctx, data, store, [...new Set(unitIds)], false, { suggestions: true }); }
+      catch (error) { result.tagWarning = `决定已保存，但 Eagle 标签未更新：${error.message}`; }
+    }
+    return result;
+  }, unitIds);
 }
 
 async function serializeWriteback(ctx, runId, operation, unitIds) {
@@ -192,18 +220,61 @@ async function applyRun(req, res, ctx, data, store) {
   return true;
 }
 
+async function handleEagleTags(req, res, ctx, runId, data, store) {
+  const body = await ctx.readBody(req);
+  if (typeof body.enabled !== 'boolean') { ctx.json(res, 400, { error: 'enabled 必须是布尔值' }); return true; }
+  return serializeWriteback(ctx, runId, async fresh => {
+    if (!ctx.api?.itemInfo || !ctx.api?.updateItem) throw new Error('当前 Eagle API 不支持标签写回');
+    if (fresh.run.libraryPath && ctx.api.assertLibrary) await ctx.api.assertLibrary(fresh.run.libraryPath);
+    let result;
+    if (body.enabled) {
+      const live = await liveItems(ctx.api, fresh, true);
+      const decisions = await store.effective(fresh.results, fresh.groups);
+      const plan = planWriteback({ ...fresh, items: live.items, decisions });
+      result = await applyWriteback(plan, ctx.api, { apply: true });
+      const records = writebackRecords(plan, result);
+      await ctx.runStore.saveApplied(runId, mergeWritebackRecords(fresh.applied || [], records));
+      result.liveTags = true;
+    } else {
+      const applied = (fresh.applied || []).filter(record => !record.revertedAt);
+      if (!applied.length) result = { dryRun: false, summary: {}, results: [], revert: true };
+      else {
+        const live = await liveItems(ctx.api, { ...fresh, items: applied.map(record => ({ id: record.id, name: record.fileName })) }, true);
+        const plan = planRevertWriteback({ applied, items: live.items });
+        result = await applyWriteback(plan, ctx.api, { apply: true });
+        await ctx.runStore.saveApplied(runId, revertedRecords(fresh.applied || [], result));
+        result.revert = true;
+      }
+    }
+    const run = { ...fresh.run, eagleTagsEnabled: body.enabled };
+    if (ctx.runStore.saveProgress) await ctx.runStore.saveProgress(run);
+    else await ctx.runStore.save(run, { run }, { metadataOnly: true });
+    ctx.json(res, 200, { ...result, enabled: body.enabled });
+    return true;
+  });
+}
+
 async function liveRun(res, ctx, data, store, unitIds, star) {
+  let result;
+  try { result = await applyLiveUnits(ctx, data, store, unitIds, star); }
+  catch (error) { ctx.json(res, 400, { error: error.message }); return true; }
+  ctx.json(res, 200, result);
+  return true;
+}
+
+// suggestions: the task shows AI suggestions in Eagle, so undecided units carry their suggestion tags.
+export async function applyLiveUnits(ctx, data, store, unitIds, star = false, { suggestions = false } = {}) {
   const wanted = new Set(unitIds);
   const units = data.units.filter(unit => wanted.has(unit.id));
   const itemIds = new Set(units.flatMap(unit => unit.itemIds || [unit.primaryItemId]));
   const scoped = { ...data, units, results: data.results.filter(row => wanted.has(row.unitId)),
     items: data.items.filter(item => itemIds.has(item.id) || wanted.has(item.unitId)) };
   if (units.length !== wanted.size) {
-    ctx.json(res, 400, { error: 'Unknown unit ID' }); return true;
+    throw new Error('Unknown unit ID');
   }
   const applied = ctx.runStore.applied ? await ctx.runStore.applied(data.run.id) : data.applied || [];
   const decisions = await store.effective(scoped.results, scoped.groups);
-  const human = new Set(decisions.filter(row => row.source === 'human').map(row => row.unitId));
+  const human = new Set(decisions.filter(row => suggestions || row.source === 'human').map(row => row.unitId));
   const live = await liveItems(ctx.api, scoped, true);
   const plan = addLiveStars(planWriteback({ ...scoped, items: live.items,
     results: scoped.results.filter(row => human.has(row.unitId)), decisions }), live.items, star);
@@ -218,8 +289,7 @@ async function liveRun(res, ctx, data, store, unitIds, star) {
   const result = await applyWriteback(plan, ctx.api, { apply: true });
   const records = writebackRecords(plan, result).map(record => ({ ...record, live: true }));
   await ctx.runStore.saveApplied(data.run.id, mergeWritebackRecords(applied, records));
-  ctx.json(res, 200, { ...result, liveTags: true });
-  return true;
+  return { ...result, liveTags: true };
 }
 
 async function revertRun(req, res, ctx, data) {

@@ -4,6 +4,7 @@ import { formatTotalScore, scoreParts } from "./score.js";
 import { alignFaces, renderFace, renderFaceStrip, renderNativeFace } from "./face-view.js";
 
 import { renderRuleReasons } from "./feedback.js";
+import { displayUrl } from './display-url.js';
 
 const escapeReason = value => String(value ?? "").replace(/[&<>"']/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -227,7 +228,8 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     const candidate = group.candidateSet?.entries?.find(item => item.unitId === unitId);
     const decision = decisionFor(viewState, unitId, group);
     const item = reviewIndex(viewState).items.get(unit.primaryItemId) || {};
-    const preview = `${viewState.base}/runs/${getRunId()}/${viewMode === "grid" ? "preview" : "detail"}/${encodeURIComponent(unitId)}`;
+    const preview = viewMode === "grid" ? `${viewState.base}/runs/${getRunId()}/preview/${encodeURIComponent(unitId)}`
+      : displayUrl(viewState.base, getRunId(), unitId, 440, 340, globalThis.devicePixelRatio || 1);
     const flags = (result.flags || []).map(flag =>
       `<span class="badge" title="${flagLabels[flag] || flag}">
       ${flag === "eyes-closed" ? "◡" : "⚠"}</span>`).join("");
@@ -263,8 +265,10 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
         <span class="placeholder">预览不可用</span>${decided}
         <span class="image-flags">${flags}</span></div>`;
     const name = item.name || "未命名文件";
+    const legacyDetail = viewMode === 'grid' ? ''
+      : ` data-detail-compat="${viewState.base}/runs/${getRunId()}/detail/${encodeURIComponent(unitId)}"`;
     return `<article class="unit ${focus} ${selected} ${decision.source === "human" ? `decided-${decision.action}` : ""}"
-      data-unit-id="${unitId}">
+      data-unit-id="${unitId}"${legacyDetail}>
       ${faceRows ? `${recommend}<h3 title="${escapeReason(name)}">${escapeReason(name)}</h3>` : ""}${images}
       <div class="unit-info" ${!detailsOpen || index !== viewState.unitIndex ? "hidden" : ""}>
       <div class="unit-head">${faceRows ? "" : `<h3 title="${escapeReason(name)}">${escapeReason(name)}</h3>`}

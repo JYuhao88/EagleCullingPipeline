@@ -1,17 +1,7 @@
 import { assignCaptureSessions } from "./capture-metadata.js";
+import { isRaw } from './image-formats.js';
 
-const RENDITIONS = new Set(["jpg", "jpeg", "heic", "png"]);
-const RAW = new Set([
-  "arw",
-  "dng",
-  "3fr",
-  "cr2",
-  "cr3",
-  "nef",
-  "raf",
-  "orf",
-  "rw2",
-]);
+const RENDITIONS = new Set(["jpg", "jpeg", "png", ...['heic', 'heif', 'hif']]);
 const stem = (item) =>
   String(item.name || "")
     .replace(/\.[^.]+$/, "")
@@ -71,7 +61,7 @@ export function buildCaptureUnits(items = []) {
       RENDITIONS.has(String(item.ext || "").toLowerCase()),
     );
     const raws = members.filter((item) =>
-      RAW.has(String(item.ext || "").toLowerCase()),
+      isRaw(item.ext),
     );
     const makeUnit = (selected, selectedPair) => {
       const primary = selectedPair?.rendition || selected.find(item => RENDITIONS.has(String(item.ext || "").toLowerCase())) || selected[0];

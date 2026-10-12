@@ -7,6 +7,28 @@ const port = 43441;
 const states = ['offline', 'starting', 'none', 'selected', 'folder', 'running', 'completed', 'settings', 'history',
   'inspector-result', 'inspector-empty', 'inspector-offline'];
 const template = JSON.parse(await readFile(path.join(root, 'test/fixtures/review/results.json'), 'utf8'));
+const FLAGS = [[], [], ['eyes-closed'], [], ['blurry'], [], ['overexposed'], [], ['possibly-blurry'], ['underexposed']];
+const queueRows = [];
+for (let g = 0, n = 0; g < 20; g++) {
+  const size = [1, 3, 2, 4, 5][g % 5];
+  for (let r = 1; r <= size; r++, n++) {
+    const score = Math.round((0.9 - r * 0.07 - (g % 7) * 0.03) * 100) / 100;
+    queueRows.push({ unitId: `unit-${n}`, primaryItemId: `photo-${n}`, fileName: `IMG_${String(4100 + n)}.${['JPG', 'CR3', 'HEIC'][n % 3]}`,
+      itemIds: [`photo-${n}`], groupId: `group-${g}`, groupIndex: g, rank: r, groupSize: size,
+      suggested: r === 1 ? 'selected' : r >= 4 || FLAGS[n % 10].length ? 'rejected' : 'candidate', action: null, human: null,
+      flags: FLAGS[n % 10], confidence: g % 4 === 1 ? 'low' : 'high', score, margin: g % 6 === 2 ? 0 : 0.05,
+      reasons: r === 1 ? ['综合分最高', '眼神清晰'] : ['不如本组第一张'] });
+  }
+}
+for (const row of queueRows) row.action = row.suggested;
+const adjustments = {};
+function photo(id) {
+  const n = Number(id.split('-').pop()) || 0, hue = (n * 47) % 360;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000"><defs><linearGradient id="g" x2="1" y2="1">
+<stop offset="0" stop-color="hsl(${hue},55%,62%)"/><stop offset="1" stop-color="hsl(${(hue + 60) % 360},45%,22%)"/></linearGradient></defs>
+<rect width="1500" height="1000" fill="url(#g)"/><circle cx="${500 + (n % 5) * 120}" cy="460" r="210" fill="hsl(${hue},30%,85%)"/>
+<text x="60" y="940" font-size="72" fill="#fff" font-family="sans-serif">${id}</text></svg>`;
+}
 function json(res, status, value) { res.writeHead(status, { 'content-type': 'application/json' }); res.end(JSON.stringify(value)); }
 function run(state, index = 0) {
   return { id: index ? `run-fixture-${index}` : 'run-fixture', status: state === 'running' ? 'running' : 'completed',
@@ -90,6 +112,29 @@ if(initial.has('h'))frame.style.height=initial.get('h')+'px';</script>`); return
       const rows = state === 'none' ? [] : Array.from({ length: 6 }, (_, i) => run(state, i));
       return json(res, 200, { runs: rows.slice(cursor, cursor + 4), page: { nextCursor: cursor + 4 < rows.length ? String(cursor +
         4) : null } });
+    }
+    const queueMatch = url.pathname.match(/^\/runs\/[^/]+\/(queue|adjustments|preview|detail|display)(?:\/([^/]+))?$/);
+    if (queueMatch?.[1] === 'queue') return json(res, 200, { mode: 'all', queue: queueRows, items: queueRows,
+      order: queueRows.map(row => row.unitId), counts: {}, total: queueRows.length });
+    if (queueMatch?.[1] === 'adjustments') {
+      const id = queueMatch[2] && decodeURIComponent(queueMatch[2]);
+      if (req.method === 'PUT') {
+        let body = ''; for await (const chunk of req) body += chunk;
+        adjustments[id] = JSON.parse(body || '{}'); return json(res, 200, adjustments[id]);
+      }
+      return json(res, 200, id ? adjustments[id] || {} : adjustments);
+    }
+    if (queueMatch && ["preview", "detail", "display"].includes(queueMatch[1])) {
+      res.writeHead(200, { 'content-type': 'image/svg+xml', 'access-control-allow-origin': '*' });
+      res.end(photo(decodeURIComponent(queueMatch[2] || ''))); return;
+    }
+    if (url.pathname.endsWith('/decisions') && req.method === 'POST') {
+      let body = ''; for await (const chunk of req) body += chunk;
+      for (const row of JSON.parse(body).decisions || []) {
+        const target = queueRows.find(item => item.unitId === row.unitId);
+        if (target) { target.human = row.clear ? null : row.action; target.action = target.human || target.suggested; }
+      }
+      return json(res, 200, { decisions: [] });
     }
     if (/^\/runs\/[^/]+$/.test(url.pathname)) return json(res, 200, run(state));
     if (url.pathname.endsWith('/cancel')) return json(res, 200, { ...run(state), status: 'cancelled' });

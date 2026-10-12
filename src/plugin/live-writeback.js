@@ -2,8 +2,8 @@ export const LIVE_KEYS = { enabled: 'eagle-culling-live-writeback', star: 'eagle
   folders: 'eagle-culling-smart-folders' };
 const FOLDER_KEY = 'eagle-culling-smart-folders-created';
 
-export async function ensureSmartFolders(eagle, storage, onNotice = () => {}) {
-  if (storage?.getItem(LIVE_KEYS.enabled) !== '1' || storage?.getItem(LIVE_KEYS.folders) === '0') return;
+export async function ensureSmartFolders(eagle, storage, onNotice = () => {}, options = {}) {
+  if (!options.force && (storage?.getItem(LIVE_KEYS.enabled) !== '1' || storage?.getItem(LIVE_KEYS.folders) === '0')) return;
   const sf = eagle?.smartFolder;
   if (!sf?.create || !sf?.getAll || !sf?.getRules) {
     if (storage?.getItem(FOLDER_KEY) !== 'unsupported') onNotice('当前 Eagle 版本不支持自动创建智能文件夹');
@@ -15,7 +15,9 @@ export async function ensureSmartFolders(eagle, storage, onNotice = () => {}) {
   const method = schema?.tags?.methods?.includes('contain') ? 'contain' : null;
   if (!method) { onNotice('当前 Eagle 标签筛选规则不支持自动创建智能文件夹'); return; }
   const folders = await sf.getAll();
-  for (const [name, tag] of [['AI精选', 'AI精选'], ['AI待淘汰', 'AI淘汰']]) {
+  const names = [['AI精选', 'AI精选'], ['AI待淘汰', 'AI淘汰']];
+  if (options.includeProblemFolders) names.push(['AI 建议淘汰', 'AI淘汰'], ['AI 闭眼', 'AI闭眼'], ['AI 模糊', 'AI模糊']);
+  for (const [name, tag] of names) {
     if (folders.some(folder => folder.name === name)) continue;
     const value = schema.tags.valueType === 'array' ? [tag] : tag;
     const rule = sf.rule?.('tags')?.[method]?.(value) || { property: 'tags', method, value };

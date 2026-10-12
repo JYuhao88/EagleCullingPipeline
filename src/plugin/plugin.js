@@ -1,4 +1,4 @@
-import { setWindowMode } from "./window-mode.js";
+import { setWindowMode, createWindowSizer } from "./window-mode.js";
 import { bindLiveWriteback } from "./live-writeback.js";
 import { createLearningPanel } from "./learning-panel.js";
 import { createReviewUx } from "./review-ux.js";
@@ -25,6 +25,12 @@ import { createPersonalization } from "./personalization.js";
 import { rankedUnitIds, selectionTargets } from "./selection.js";
 
 import { createFeedbackRecorder, defaultRejectReasons, winnerChanges, escapeHtml } from "./feedback.js";
+import { createRemoteView } from './remote-view.js';
+import { createCullView } from './cull-view.js';
+import { displayUrl } from './display-url.js';
+import { KEY_ACTIONS } from './cull-model.js';
+
+const ENTRY_KEY = 'eagle-culling-entry';
 
 const root = document;
 const reviewUx = createReviewUx({ root });
@@ -33,7 +39,8 @@ let api = createApi(viewState.base);
 let reviewView = null;
 let writebackDialog = null;
 let previewUnitId = null;
-const viewer = createViewer({ root: document, nativeUrl: (unitId, box, display) =>
+const viewer = createViewer({ root: document, displayUrl: (unitId, edge) =>
+  `${viewState.base}/runs/${viewState.runId}/display/${encodeURIComponent(unitId)}?edge=${edge}`, nativeUrl: (unitId, box, display) =>
   `${viewState.base}/runs/${viewState.runId}/native/${encodeURIComponent(unitId)}?box=${box.map(v => v.toFixed(5)).join(",")}` +
   `&width=${display.width}&height=${display.height}`,
   prefetchUrl: unitId => `${viewState.base}/runs/${viewState.runId}/native/${encodeURIComponent(unitId)}/prefetch` });
@@ -41,6 +48,18 @@ let personalization = null;
 let learningPanel = null;
 let catalog = { reasons: [], rules: [] };
 let reasonSession = null;
+const remoteApi = (...args) => api(...args);
+Object.defineProperty(remoteApi, 'base', { get: () => api.base });
+const remoteView = createRemoteView({ root, api: remoteApi, eagle: globalThis.eagle,
+  onExit: () => { remoteView.close({ restore: false }); showHome(); },
+  onOpenFocusedReview: runId => openCull(runId), onFinish: runId => openRun(runId, { finish: true }) });
+const cullView = createCullView({ root, api: remoteApi, windowSizer: { render: () => windowSizer?.render?.() },
+  imageUrl: (runId, unitId) => displayUrl(api.base, runId, unitId, innerWidth, innerHeight, devicePixelRatio || 1),
+  onExit: () => { cullView.close(); showHome(); },
+  onFinish: runId => { cullView.close(); return openRun(runId, { finish: true }); },
+  onCompare: runId => { cullView.close(); return openRun(runId, { compareReturn: true }); },
+  onEagle: runId => openRemote(runId),
+  onZoom: (runId, unitId, view) => openCullViewer(runId, unitId, view) });
 const liveWriteback = bindLiveWriteback({ root, api: (...args) => api(...args), getRunId: () => viewState.runId });
 const feedback = createFeedbackRecorder({ api: (...args) => api(...args), onError: error => {
   root.querySelector("#feedbackStatus").textContent = `反馈记录失败（选片和写回可继续）：${error.message}`;
@@ -217,7 +236,8 @@ function renderPageControls() {
 }
 
 let autoAllFilter = false;
-async function openRun(runId) {
+async function openRun(runId, { finish = false, compareReturn: returnToCull = false } = {}) {
+  compareReturn = returnToCull;
   const requestVersion = ++reviewRequest;
   root.querySelector("#loading").hidden = false;
   try {
@@ -248,6 +268,7 @@ async function openRun(runId) {
     liveWriteback.sync();
     reviewUx.enter();
     void setWindowMode(true);
+    if (finish) openFinish();
   } catch (error) {
     root.querySelector("#health").textContent = `加载失败：${error.message}`;
     throw error;
@@ -256,11 +277,52 @@ async function openRun(runId) {
   }
 }
 
-function closeReview() {
-  void setWindowMode(false);
-  root.querySelector("#review").hidden = true;
+function openFinish() {
+  void writebackDialog?.dryRun().catch(error => {
+    root.querySelector("#writeback").textContent = `无法生成写回预览：${error.message}`;
+  });
+}
+
+function showHome() {
+  for (const id of ["#review", "#cull", "#remote"]) root.querySelector(id).hidden = true;
   root.querySelector("#start").hidden = false;
   void startView.checkHealth();
+}
+
+function closeReview() {
+  void setWindowMode(false);
+  if (compareReturn) { const runId = viewState.runId; compareReturn = false; root.querySelector("#review").hidden = true;
+    void openCull(runId); return; }
+  showHome();
+}
+
+let compareReturn = false;
+async function openCull(runId, options) {
+  localStorage.setItem(ENTRY_KEY, "cull");
+  remoteView.close({ restore: false });
+  for (const id of ["#start", "#review"]) root.querySelector(id).hidden = true;
+  await cullView.open(runId, options);
+}
+
+let cullViewerUnit = null;
+function openCullViewer(runId, unitId, view) {
+  viewState.runId = runId;
+  cullViewerUnit = unitId;
+  viewer.show(unitId, view.src, []);
+  viewer.applyAdjustment?.(view.filter);
+  root.querySelector("#previewCaption").textContent = view.caption;
+  for (const button of root.querySelectorAll(".preview-nav")) button.hidden = true;
+  viewer.open();
+}
+
+// The viewer is shared by the group review and the focused cull view, so it must not live inside a hidden section.
+document.body.append(root.querySelector("#previewDialog"));
+root.querySelector("#previewDialog")?.addEventListener("close", () => { if (cullViewerUnit) closeCullViewer(); });
+
+function closeCullViewer() {
+  viewer.close();
+  viewer.applyAdjustment?.("none");
+  cullViewerUnit = null;
 }
 
 async function saveDecision(unitId, action, metadata = {}, explicitTargets = null) {
@@ -414,9 +476,22 @@ async function undoLast() {
   renderDecisions();
 }
 
+root.addEventListener("keyup", event => { if (cullView.isVisible() && cullView.key(event)) event.preventDefault(); });
 root.addEventListener("keydown", async event => {
   // A modal owns the keyboard; review shortcuts resume after it closes.
   if (root.querySelector('dialog[open]:not(#previewDialog):not(#reviewWelcome)')) return;
+  if (cullViewerUnit) {
+    const decision = !event.metaKey && !event.ctrlKey ? KEY_ACTIONS[event.key.toLowerCase()] : null;
+    if (event.key === " " || event.key === "Escape") closeCullViewer();
+    else if (decision) void cullView.decide(decision, [cullViewerUnit]);
+    else if (!viewer.key(event)) return;
+    event.preventDefault();
+    return;
+  }
+  if (cullView.isVisible() || remoteView.isVisible()) {
+    if ((cullView.isVisible() ? cullView : remoteView).key(event)) event.preventDefault();
+    return;
+  }
   if (previewUnitId && (event.key === " " || event.key === "Escape")) {
     event.preventDefault();
     closePreview();
@@ -513,7 +588,11 @@ root.querySelector("#base").addEventListener("change", event => {
   void startView.checkHealth();
 });
 
-const startView = createStartView({ root, api, getApi: () => api, onRun: openRun, autoCheck: false });
+function openReviewEntry(runId, { finish = false, compare = false } = {}) {
+  if (finish || compare) return openRun(runId, { finish });
+  return localStorage.getItem(ENTRY_KEY) === "cull" ? openCull(runId) : openRemote(runId);
+}
+const startView = createStartView({ root, api, getApi: () => api, onRun: openReviewEntry, autoCheck: false });
 reviewView = createReviewView({ root, state, setState,
   onFilter: filter => (autoAllFilter = false, loadReviewPage(0, filter)).catch(error => {
     root.querySelector("#writeback").textContent = `暂时无法加载照片组：${error.message}。请检查服务连接后重新选择筛选。`; }),
@@ -546,6 +625,13 @@ for (const [id, direction] of [['previousPage', -1], ['nextPage', 1]]) {
   });
 }
 window.loadRun = openRun;
+// The home-page “审阅” entry has one deliberately small integration hook.
+export function openRemote(runId) {
+  localStorage.setItem(ENTRY_KEY, "remote");
+  cullView.close();
+  return remoteView.open(runId);
+}
+globalThis.openRemote = openRemote;
 
 root.querySelector("#acceptGroup").addEventListener("click", () => selectBest().catch(error => {
   root.querySelector("#writeback").textContent = `保存失败：${error.message}`;
@@ -569,7 +655,9 @@ root.querySelector("#previewPrevious").addEventListener("click", () => movePrevi
 root.querySelector("#previewNext").addEventListener("click", () => movePreview(1));
 root.querySelector("#previewDialog").addEventListener("cancel", event => { event.preventDefault(); closePreview(); });
 for (const button of root.querySelectorAll("[data-viewer-action]")) {
-  button.addEventListener("click", () => saveDecision(previewUnitId, button.dataset.viewerAction)
+  button.addEventListener("click", () => cullViewerUnit
+    ? cullView.decide(button.dataset.viewerAction, [cullViewerUnit])
+    : saveDecision(previewUnitId, button.dataset.viewerAction)
     .then(() => renderPreview())
     .catch(error => { root.querySelector("#writeback").textContent = `保存失败：${error.message}`; }));
 }
@@ -580,6 +668,9 @@ for (const [buttonId, issue] of [["bulkEyes", "eyes-closed"], ["bulkBlurry", "bl
     await saveDecision(ids[0], "rejected", {}, ids);
   });
 }
+
+const windowSizer = createWindowSizer();
+void windowSizer.restore();
 
 resolveBase().then(base => {
   viewState.base = base;

@@ -121,18 +121,12 @@ const IMAGE_EXTENSIONS = new Set([
   "tiff",
   "bmp",
 ]);
+import { RAW_EXTENSIONS, HEIF_EXTENSIONS } from './image-formats.js';
 const PROXY_EXTENSIONS = new Set([
-  "arw",
-  "dng",
-  "3fr",
-  "heic",
-  "cr2",
-  "nef",
-  "raf",
-  "rw2",
-  "orf",
-  "srw",
+  "arw", "dng", "3fr", "cr2", "cr3", "crw", "nef", "nrw", "raf", "orf", "rw2", "pef", "srw", "sr2", "srf",
+  "erf", "iiq", "x3f", "kdc", "dcr", "mef", "mos", "mrw", "rwl", "raw", "heic", "heif", "hif",
 ]);
+if (![...RAW_EXTENSIONS, ...HEIF_EXTENSIONS].every(ext => PROXY_EXTENSIONS.has(ext))) throw new Error('image format list drift');
 // Keep libvips from competing with the Eagle UI or exhausting RAM during a
 // large-library scan. Override per machine when a dedicated worker is used.
 const sharpConcurrency = Math.max(

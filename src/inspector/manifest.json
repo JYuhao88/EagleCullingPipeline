@@ -1,6 +1,6 @@
 {
   "id": "com.eagle.culling.inspector",
-  "version": "1.2.9",
+  "version": "1.3.0",
   "platform": "all",
   "arch": "all",
   "name": "Eagle照片筛选·检查器",
@@ -11,7 +11,7 @@
   ],
   "devTools": true,
   "preview": {
-    "jpg,jpeg,png,webp,tif,tiff,bmp,arw,dng,3fr,heic,cr2,nef,raf,rw2,orf,srw": {
+    "jpg,jpeg,png,webp,tif,tiff,bmp,arw,dng,3fr,cr2,cr3,crw,nef,nrw,raf,orf,rw2,pef,srw,sr2,srf,erf,iiq,x3f,kdc,dcr,mef,mos,mrw,rwl,raw,heic,heif,hif": {
       "inspector": {
         "path": "index.html",
         "height": 180,

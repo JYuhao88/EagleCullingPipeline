@@ -1,6 +1,37 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport"
-  content="width=device-width,initial-scale=1"><title>照片筛选检查器</title><link rel="stylesheet" href="../plugin/theme.css"><link
-  rel="stylesheet" href="inspector.css"></head><body><section id="inspector"><strong id="status" role="status">加载中…</strong><div
-  id="lines"></div><details id="details" hidden><summary>理由</summary><p id="reasons"></p></details></section><script type="module"
-  src="inspector.js"></script></body></html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>照片筛选检查器</title>
+  <link rel="stylesheet" href="../plugin/theme.css">
+  <link rel="stylesheet" href="inspector.css">
+</head>
+<body>
+  <section id="inspector">
+    <strong id="status" role="status">加载中…</strong>
+    <span id="selectedCount"></span>
+    <p id="eagleFallback" hidden>当前 Eagle 版本不支持跳转，请升级到 4.0 build12+；仍可在下方逐张决定</p>
+    <div id="groupContext"></div>
+    <div class="decisions" aria-label="人工决定">
+      <button data-decision="selected">精选 <kbd>1</kbd></button>
+      <button data-decision="candidate">候选 <kbd>2</kbd></button>
+      <button data-decision="rejected">淘汰 <kbd>3</kbd></button>
+      <button data-decision="clear">恢复为 AI 建议 <kbd>0</kbd></button>
+    </div>
+    <div class="group-actions">
+      <button id="selectGroup">在 Eagle 中选中本组</button>
+      <button id="selectBest">看本组最佳</button>
+    </div>
+    <div class="group-actions">
+      <button id="nextUndecided">下一张未决定</button>
+      <button id="nextReject">下一张建议淘汰</button>
+    </div>
+    <label class="advance"><input id="autoAdvance" type="checkbox"> 决定后自动跳到下一张未决定</label>
+    <small id="tagsState"></small>
+    <div id="lines"></div>
+    <details id="details" hidden><summary>理由</summary><p id="reasons"></p></details>
+  </section>
+  <script type="module" src="inspector.js"></script>
+</body>
+</html>

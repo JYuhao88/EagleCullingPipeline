@@ -9,8 +9,8 @@ import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { mkdir, mkdtemp, rm, stat, readFile, writeFile, readdir, utimes } from 'node:fs/promises';
 import sharp from 'sharp';
-
-const RAW = new Set(['arw', 'dng', '3fr', 'cr2', 'cr3', 'nef', 'raf', 'orf', 'rw2']);
+import { isRaw, isHeif } from './image-formats.js';
+import { decodeHeif, decodeWic } from './heif-decode.js';
 const decoder = fileURLToPath(new URL('../../ml/raw/decode.py', import.meta.url));
 const fileOf = item => item?.filePath || item?.path || item?.analysisPath;
 const extension = item => String(item?.ext || path.extname(fileOf(item) || '').slice(1)).toLowerCase();
@@ -64,7 +64,7 @@ async function serial(fn, options = {}) {
   }
 }
 
-function command(program, args, { binary = false, timeoutMs = 60000, single = false, signal } = {}) {
+export function command(program, args, { binary = false, timeoutMs = 60000, single = false, signal } = {}) {
   if (program === 'exiftool' && !single) return exiftoolRequest(args, {
     binary, signal, fallback: () => command(program, args, { binary, timeoutMs, single: true, signal }),
   });
@@ -105,13 +105,19 @@ export function normalizedRect(box, width, height) {
     height: Math.min(height, Math.ceil(box[3] * height)) - top };
 }
 
+export function embeddedPreviewAccepted(meta, rawMeta, { minEdge = 0.95 } = {}) {
+  const width = rawMeta?.ExifImageWidth || rawMeta?.ImageWidth || rawMeta?.width;
+  const height = rawMeta?.ExifImageHeight || rawMeta?.ImageHeight || rawMeta?.height;
+  return Boolean(width && height && meta?.width >= width * minEdge && meta?.height >= height * minEdge);
+}
+
 async function openNative(record, options, callback) {
   const temporary = await mkdtemp(path.join(os.tmpdir(), 'eagle-native-'));
   const warnings = [];
   const runCommand = (program, args, settings = {}) => command(program, args, { ...settings, signal: options.signal });
   try {
     const paired = options.pairedItems || record.pairedItems || [];
-    const raws = [record, ...paired].filter(item => RAW.has(extension(item)));
+    const raws = [record, ...paired].filter(item => isRaw(extension(item)));
     let rawMeta = options.metadata;
     let rawSource;
     for (const raw of raws) {
@@ -126,9 +132,9 @@ async function openNative(record, options, callback) {
           try {
             const data = await runCommand('exiftool', ['-b', `-${tag}`, rawSource], { binary: true });
             const meta = await sharp(data).metadata();
-            const width = rawMeta.ExifImageWidth || rawMeta.ImageWidth || raw.width;
-            const height = rawMeta.ExifImageHeight || rawMeta.ImageHeight || raw.height;
-            if (!width || !height || meta.width < width * 0.95 || meta.height < height * 0.95) {
+            if (!embeddedPreviewAccepted(meta, {
+              ...rawMeta, width: rawMeta?.width || raw.width, height: rawMeta?.height || raw.height,
+            }, { minEdge: options.minEdge ?? (options.purpose === 'display' ? 0 : 0.95) })) {
               warnings.push(`${tag}: embedded preview is not full resolution`); continue;
             }
             return await consume(data, 'embedded-jpeg', rawMeta.Orientation || meta.orientation || 1);
@@ -136,14 +142,16 @@ async function openNative(record, options, callback) {
         }
       } catch (error) { options.signal?.throwIfAborted(); warnings.push(`exiftool unavailable: ${error.message}`); }
     }
-    for (const item of [record, ...paired].filter(item => !RAW.has(extension(item)))) {
+    for (const item of [record, ...paired].filter(item => !isRaw(extension(item)))) {
       const source = fileOf(item);
       if (!source) continue;
       try {
-        if (extension(item) === 'heic' && process.platform === 'darwin') {
-          const converted = path.join(temporary, 'heic.jpg');
-          await runCommand('sips', ['-s', 'format', 'jpeg', source, '--out', converted]);
-          return await consume(converted, 'heic');
+        if (isHeif(extension(item))) {
+          const decoded = await decodeHeif(source, { temporaryDir: temporary, runCommand, platform: options.platform || process.platform });
+          if (!decoded.available && decoded.input === undefined) {
+            throw new Error(decoded.warning || decoded.warnings?.join('；') || 'HEIF unavailable');
+          }
+          return await consume(decoded.input, decoded.kind || 'heif', decoded.orientation || 1);
         }
         return await consume(source, 'jpeg');
       } catch (error) { options.signal?.throwIfAborted(); warnings.push(`paired image: ${error.message}`); }
@@ -156,6 +164,12 @@ async function openNative(record, options, callback) {
         await runCommand(python, [decoder, rawSource, decoded]);
         return await consume(decoded, 'decoded-raw', rawMeta?.Orientation || 1);
       } catch (error) { options.signal?.throwIfAborted(); warnings.push(`rawpy unavailable or decode failed: ${error.message}`); }
+      if ((options.platform || process.platform) === 'win32') {
+        try {
+          const decoded = await decodeWic(rawSource, { temporaryDir: temporary, runCommand });
+          return await consume(decoded.input, 'raw-wic', 1);
+        } catch (error) { options.signal?.throwIfAborted(); warnings.push(`WIC RAW: ${error.message}`); }
+      }
     }
     options.signal?.throwIfAborted();
     return { available: false, naReason: 'native-source-unavailable', warnings };

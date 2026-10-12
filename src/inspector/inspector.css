@@ -5,5 +5,13 @@ body { margin: 0; padding: 8px 10px; }
 #status[data-tone="selected"] { color: var(--ec-pick); }
 #status[data-tone="rejected"] { color: var(--ec-reject); }
 p { margin: 5px 0; line-height: 1.45; color: var(--ec-text-dim); overflow-wrap: anywhere; }
+button { border: 1px solid var(--ec-border, #999); background: var(--ec-surface-2); color: var(--ec-text);
+  border-radius: 6px; padding: 7px 8px; cursor: pointer; }
+.decisions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin: 9px 0 6px; }
+.decisions button { min-height: 36px; font-weight: 600; }
+.decisions button.active { outline: 2px solid var(--ec-pick); }
+.decisions button[data-decision="rejected"] { color: var(--ec-reject); }
+.group-actions { display: flex; gap: 6px; margin-bottom: 5px; }
+#groupContext, #selectedCount, #tagsState { color: var(--ec-text-dim); margin-right: 7px; }
 summary { cursor: pointer; }
 [hidden] { display: none; }

@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="review-ux.css">
   <link rel="stylesheet" href="review.css">
+  <link rel="stylesheet" href="remote.css">
+  <link rel="stylesheet" href="cull.css">
   <link rel="stylesheet" href="start.css">
   <link rel="stylesheet" href="update-banner.css">
   <title>Eagle 照片筛选</title>
@@ -14,56 +16,77 @@
 <body>
   <main id="app">
     <section id="start">
-      <div class="start-heading"><img src="logo.png" alt="" width="24" height="24"><h1>Eagle 照片筛选</h1><strong id="health"
-        role="status" title="正在连接服务">连接中</strong><button id="openSettings" title="设置" aria-label="设置">⚙</button></div>
+      <header class="home-bar">
+        <img src="logo.png" alt="" width="22" height="22">
+        <div class="home-title"><h1>照片筛选</h1><span id="libraryName">读取资源库…</span></div>
+        <strong id="health" role="status" title="正在连接服务">连接中</strong>
+        <button data-window-zoom class="quiet" hidden>放大审阅</button>
+        <button id="openSettings" class="quiet" title="设置" aria-label="设置">设置</button>
+      </header>
       <div id="updateSlot"></div>
-      <div id="panelHome">
-        <section class="status-card"><strong id="scopeLabel">读取选择…</strong><p id="libraryName">读取资源库…</p><span id="folderName"
-          hidden></span><span id="selectionCount" hidden></span></section>
-        <div id="serviceGuide" hidden><span id="serviceHint">分析服务未运行</span><button id="startService" hidden>重试启动</button><button
-          id="retryService">重试连接</button></div>
-        <div class="analysis-actions"><button id="analyzeSelected" class="primary" disabled>分析</button><p
-          id="selectionHint"></p><button id="analyzeAll" hidden>分析整个资源库</button><p id="allHint" hidden></p></div>
-        <div id="progress" class="status-card" hidden><ol id="progressStages" hidden></ol><progress id="bar" max="100"
-          value="0"></progress><p id="progressText" role="status"></p><button id="cancel">取消</button></div>
-        <div id="resumeArea" class="status-card" hidden><p id="resumeDetail"></p><button id="resumeLatest"
-          class="primary">开始审阅</button></div>
-        <section class="recent-section"><div class="section-heading"><h2>最近记录</h2><button id="allRuns">全部记录 ›</button></div><p
-          id="recentStatus" role="status"></p><div id="recentRuns"></div></section>
-        <button id="startHelp" class="text-button">怎么用？</button><div id="welcome" hidden>选择照片 → 分析 → 开始审阅。分析不修改原片。<button
-          id="closeWelcome" aria-label="关闭提示">×</button></div>
+      <div id="panelHome" class="home-layout">
+        <div class="home-main">
+          <section id="primaryCard" class="primary-card" data-kind="empty" aria-live="polite">
+            <p id="primaryEyebrow" class="eyebrow"></p>
+            <h2 id="primaryTitle">读取中…</h2>
+            <p id="primaryChip" class="chip" hidden></p>
+            <div id="progress" hidden><progress id="bar" max="100" value="0"></progress>
+              <ol id="progressStages" class="stage-list"></ol></div>
+            <p id="primaryDetail"></p>
+            <p id="progressText" class="sr-only" role="status"></p>
+            <div class="primary-actions"><button id="primaryAction" class="primary" hidden></button>
+              <span id="secondaryActions"></span><button id="cancel" hidden>取消</button></div>
+            <p id="primaryNote" class="note"></p>
+            <div id="serviceGuide" hidden><span id="serviceHint"></span><button id="startService" hidden>启动服务</button><button
+              id="retryService" class="quiet">重试连接</button></div>
+          </section>
+          <p id="homeNotice" class="notice" role="status"></p>
+          <button id="analyzeAll" class="text-button" hidden>分析整个资源库…</button>
+        </div>
+        <section class="home-tasks" aria-labelledby="tasksHeading">
+          <div class="section-heading"><h2 id="tasksHeading">任务</h2><button id="allRuns" class="text-button">全部任务 ›</button></div>
+          <p id="recentStatus" class="note" role="status"></p>
+          <div id="recentRuns" class="task-list"></div>
+        </section>
       </div>
-      <section id="historyView" hidden><div class="section-heading"><button id="closeHistory">‹ 返回</button><h2>全部记录</h2></div><div
-        id="historyRuns"></div><button id="moreRuns" hidden>加载更多</button></section>
-      <section id="panelSettings" hidden><div class="section-heading"><button id="closeSettings">‹ 返回</button><h2>设置</h2></div>
-        <h3>常用</h3>
-        <label><input id="performanceTurbo" type="checkbox">全速模式 <small>夜间整批，会占满 CPU</small></label>
-        <label><input id="autoStart" type="checkbox">随 Eagle 自动启动服务</label>
-        <label><input id="liveWriteback" type="checkbox">实时写回 Eagle 标签</label><p class="setting-hint">会修改 Eagle 中照片的标签，可在审阅完成页撤回</p>
-        <label><input id="liveStar" type="checkbox">同时写星级</label>
-        <label><input id="smartFolders" type="checkbox">自动创建智能文件夹</label><p id="apiCapability" class="setting-hint"></p>
-        <h3>缓存与预处理</h3>
-        <p id="cacheUsage" class="setting-hint" role="status">读取缓存占用…</p>
-        <div class="cache-row"><label for="cacheLimit">上限</label><select id="cacheLimit"><option value="2">2 GB</option><option
-          value="5">5 GB</option><option value="10">10 GB</option><option value="20">20 GB</option><option value="50">50
-          GB</option></select><button id="clearPreviewCache">清理预览</button><button id="clearAllCache">清空全部</button></div>
-        <p class="setting-hint">超出上限时自动删除最久未用的缓存，先删预览图；分析结果不受影响，只是再次分析会变慢。</p>
-        <label><input id="idlePrefetch" type="checkbox">空闲时预处理新照片</label>
-        <div class="cache-row"><label for="idleWindowStart">时段</label><input id="idleWindowStart" type="time"
-          value="01:00"><span>–</span><input id="idleWindowEnd" type="time" value="07:00"></div>
-        <p class="setting-hint">插电、窗口关闭且电脑空闲时，分析最近 30 天导入的照片以备审阅；只读，不改 Eagle。</p>
-        <p id="prefetchLast" class="setting-hint"></p>
-        <details><summary>个性化（实验）</summary><p>默认关闭；在分析记录中学习并验证偏好。</p><button id="panelPersonalization">打开最近结果的个性化设置</button></details>
-        <div id="updateSettings"></div>
-        <details id="advancedSettings"><summary>高级 / 诊断</summary>
+      <section id="historyView" hidden><div class="section-heading"><button id="closeHistory" class="quiet">‹ 返回</button><h2>全部任务</h2>
+        <label class="inline"><input id="showSuperseded" type="checkbox">显示旧版本</label></div>
+        <div id="historyRuns" class="task-list"></div><button id="moreRuns" hidden>加载更多</button></section>
+      <section id="panelSettings" hidden><div class="section-heading"><button id="closeSettings" class="quiet">‹ 返回</button>
+        <h2>设置</h2></div>
+        <fieldset class="settings-group"><legend>分析</legend>
+          <label><input id="autoStart" type="checkbox">随 Eagle 自动启动分析服务</label>
+          <label><input id="performanceTurbo" type="checkbox">全速模式 <small>整批处理更快，但会占满 CPU</small></label>
+          <label><input id="idlePrefetch" type="checkbox">空闲时预先分析新照片</label>
+          <div class="cache-row"><label for="idleWindowStart">时段</label><input id="idleWindowStart" type="time"
+            value="01:00"><span>–</span><input id="idleWindowEnd" type="time" value="07:00"></div>
+          <p class="setting-hint">插电、插件窗口关闭且电脑空闲时，分析最近 30 天导入的照片，挑片时直接可用；只读，不改 Eagle。</p>
+          <p id="prefetchLast" class="setting-hint"></p>
+        </fieldset>
+        <fieldset class="settings-group"><legend>写回 Eagle</legend>
+          <label><input id="liveWriteback" type="checkbox">挑片时实时写回标签</label>
+          <p class="setting-hint">每次决定立即给照片加 AI精选/AI候选/AI淘汰 标签；关闭时在「完成」页统一写回。都可撤回。</p>
+          <label><input id="liveStar" type="checkbox">精选同时写 5 星</label>
+          <label><input id="smartFolders" type="checkbox">自动创建智能文件夹</label><p id="apiCapability" class="setting-hint"></p>
+        </fieldset>
+        <fieldset class="settings-group"><legend>存储</legend>
+          <p id="cacheUsage" class="setting-hint" role="status">读取缓存占用…</p>
+          <div class="cache-row"><label for="cacheLimit">缓存上限</label><select id="cacheLimit"><option value="2">2 GB</option><option
+            value="5">5 GB</option><option value="10">10 GB</option><option value="20">20 GB</option><option value="50">50
+            GB</option></select><button id="clearPreviewCache">清理预览</button><button id="clearAllCache">清空全部</button></div>
+          <p class="setting-hint">超出上限时自动删除最久未用的缓存；挑片结果和决定不受影响，只是再次分析会变慢。</p>
+        </fieldset>
+        <fieldset class="settings-group"><legend>关于</legend><div id="updateSettings"></div></fieldset>
+        <details id="advancedSettings" class="settings-group"><summary>高级与实验</summary>
           <label>服务地址<input id="base" value="http://127.0.0.1:43125"></label>
           <label>仓库路径<input id="repositoryPath" placeholder="自动检测，可覆盖"></label>
           <pre id="serviceCommand"></pre><button id="copyServiceCommand">复制启动命令</button><pre id="serviceDiagnostics" role="status"></pre>
           <label>资源库路径（浏览器预览）<input id="libraryPath" placeholder="资源库绝对路径"></label>
-          <label>按运行 ID 打开审阅<input id="runId" placeholder="run-..."></label><button id="openRun">打开审阅</button><button
-            id="settingsHelp">帮助</button>
+          <label>按记录 ID 打开<input id="runId" placeholder="run-..."></label><button id="openRun">打开</button>
+          <h4>个性化（实验，默认关闭）</h4><p class="setting-hint">根据你的选择学习偏好，验证有效后才会调整排序。</p>
+          <button id="panelPersonalization">打开最近任务的个性化设置</button>
         </details>
-      </section><p id="loading" hidden>正在打开分析结果…</p>
+      </section><p id="loading" class="note" hidden>正在打开…</p>
     </section>
     <section id="review" hidden data-view-mode="compare">
       <header>
@@ -230,6 +253,98 @@
           <button id="closePreview" class="preview-close" aria-label="关闭大图">×</button>
         </div>
       </dialog>
+    </section>
+    <section id="cull" hidden aria-label="专注挑片">
+      <header class="cull-bar">
+        <button type="button" data-cull="exit" class="quiet">‹ 返回</button>
+        <div class="cull-heading"><strong data-cull-title>挑片</strong><span data-cull-progress></span>
+          <span class="cull-meter" data-cull-meter aria-hidden="true"></span></div>
+        <div class="cull-methods" role="group" aria-label="挑片方式">
+          <button type="button" data-method="loupe" title="一张一张看大图（G 切换网格）">逐张</button>
+          <button type="button" data-method="grid" title="缩略图批量处理，Shift/⌘ 多选">网格</button>
+          <button type="button" data-method="target" title="设定要保留的张数，只看保留线附近">AI 先挑</button>
+          <button type="button" data-method="passes" title="先去废片，再组内比较，最后复核精选">分轮</button>
+        </div>
+        <button type="button" data-cull="eagle" class="quiet" title="回到 Eagle 主窗口浏览，本窗口跟随记录">在 Eagle 中挑</button>
+        <button type="button" data-window-zoom class="quiet" hidden>放大审阅</button>
+        <button type="button" data-cull="finish" class="primary">完成…</button>
+      </header>
+      <nav class="cull-filters" data-cull-filters aria-label="筛选"></nav>
+      <nav class="cull-passes" data-cull-passes aria-label="轮次" hidden></nav>
+      <div class="cull-target" data-cull-target hidden>
+        <label>保留 <input type="number" min="0" step="1" data-target-input> 张</label>
+        <p data-target-summary></p>
+        <button type="button" data-cull="accept" data-target-accept></button>
+      </div>
+      <div class="cull-body">
+        <div class="cull-grid" data-cull-grid hidden></div>
+        <div class="cull-loupe" data-cull-loupe hidden>
+          <div class="cull-stage"><img data-cull-image alt="" draggable="false">
+            <span data-cull-decision class="cull-badge large"></span></div>
+          <p class="cull-info" data-cull-info></p>
+          <div class="cull-strip" data-cull-strip></div>
+        </div>
+        <div class="cull-compare" data-cull-compare hidden><p data-compare-text></p>
+          <button type="button" class="primary" data-cull="compare" data-compare-open>打开组内比较</button></div>
+        <aside class="cull-adjust" data-cull-adjust hidden aria-label="查看调整">
+          <header><strong>查看调整</strong><span>只影响显示，不改原图</span></header>
+          <label><span>曝光</span><input type="range" data-adjust="exposure" min="-3" max="3" step="0.05"><output></output></label>
+          <label><span>对比度</span><input type="range" data-adjust="contrast" min="-1" max="1" step="0.02"><output></output></label>
+          <label><span>高光</span><input type="range" data-adjust="highlights" min="-1" max="1" step="0.02"><output></output></label>
+          <label><span>阴影</span><input type="range" data-adjust="shadows" min="-1" max="1" step="0.02"><output></output></label>
+          <label><span>色温</span><input type="range" data-adjust="temperature" min="-1" max="1" step="0.02"><output></output></label>
+          <label><span>色调</span><input type="range" data-adjust="tint" min="-1" max="1" step="0.02"><output></output></label>
+          <label><span>饱和度</span><input type="range" data-adjust="saturation" min="-1" max="1" step="0.02"><output></output></label>
+          <div class="cull-adjust-actions"><button type="button" data-cull="auto">自动曝光</button>
+            <button type="button" data-cull="group">用到本组</button><button type="button" data-cull="reset">重置</button></div>
+          <p class="cull-hint">按住 \ 看调整前</p>
+        </aside>
+      </div>
+      <div class="cull-pager" data-cull-pager hidden><button type="button" data-cull="page-prev">上一页</button>
+        <span data-pager-label></span><button type="button" data-cull="page-next">下一页</button></div>
+      <footer class="cull-actions" data-cull-actions>
+        <span class="cull-scope" data-cull-scope></span>
+        <div class="cull-decide"><button type="button" data-decide="selected" class="pick">精选 1</button>
+          <button type="button" data-decide="candidate">候选 2</button>
+          <button type="button" data-decide="rejected" class="reject">淘汰 3</button>
+          <button type="button" data-decide="clear" class="quiet">恢复 AI 0</button></div>
+        <div class="cull-tools"><button type="button" data-cull="prev" data-loupe-only aria-label="上一张">←</button>
+          <button type="button" data-cull="next" data-loupe-only aria-label="下一张">→</button>
+          <button type="button" data-cull="full" data-loupe-only title="空格 / Z">看原图</button>
+          <button type="button" data-cull="adjust" data-loupe-only title="A">调整</button>
+          <label class="cull-advance" data-loupe-only><input type="checkbox" data-cull-advance> 决定后下一张</label></div>
+        <p class="cull-status" data-cull-status role="status"></p>
+      </footer>
+      <svg class="cull-defs" width="0" height="0" aria-hidden="true"><defs data-cull-filter></defs></svg>
+    </section>
+    <section id="remote" hidden aria-label="在 Eagle 中挑片">
+      <header class="remote-head"><button type="button" id="remoteExit" class="quiet">‹ 返回</button>
+        <div class="remote-heading"><strong id="remoteTitle">挑片</strong><span id="remoteProgress"></span>
+          <span id="remoteMeter" class="cull-meter" aria-hidden="true"></span></div>
+        <button type="button" data-window-zoom class="quiet" hidden>放大审阅</button></header>
+      <div class="remote-modes" role="group" aria-label="筛选">
+        <button type="button" id="remoteMode-all">全部</button><button type="button" id="remoteMode-undecided">未决定</button>
+        <button type="button" id="remoteMode-uncertain">没把握</button><button type="button" id="remoteMode-rejects">建议淘汰</button>
+        <button type="button" id="remoteMode-issues">有问题</button></div>
+      <div class="remote-card"><img id="remoteImage" alt="当前照片">
+        <div class="remote-text"><span id="remotePosition"></span><strong id="remoteCurrent"></strong>
+          <p id="remoteSuggestion"></p><p id="remoteDecision"></p></div></div>
+      <div class="remote-decisions"><button type="button" data-remote-decide="selected" class="pick">精选 1</button>
+        <button type="button" data-remote-decide="candidate">候选 2</button>
+        <button type="button" data-remote-decide="rejected" class="reject">淘汰 3</button>
+        <button type="button" data-remote-decide="clear" class="quiet">恢复 AI 0</button></div>
+      <div class="remote-nav"><button type="button" id="remotePrevious">← 上一张</button>
+        <button type="button" id="remoteNext">下一张 →</button><button type="button" id="remoteNextGroup">下一组 ↓</button></div>
+      <p id="remoteStatus" class="remote-status" role="status"></p>
+      <p id="remoteSelectNote" class="remote-note" hidden>当前 Eagle 版本不支持由插件选中照片；请在 Eagle 中手动点选，这里会跟随。</p>
+      <div class="remote-options">
+        <label><input id="remoteFollow" type="checkbox" checked> 跟随 Eagle 中选中的照片</label>
+        <label><input id="remoteAdvance" type="checkbox"> 决定后自动下一张</label>
+        <label><input id="remoteTags" type="checkbox"> 在 Eagle 中显示 AI 建议标签</label>
+        <p class="remote-note">标签只写在 Eagle 资源库里，不改照片文件，随时可撤回。快捷键需要焦点在本窗口或右侧检查器。</p>
+        <button type="button" id="remoteClearTags" class="quiet">清除插件写入的全部 AI 标签…</button></div>
+      <footer class="remote-foot"><button type="button" id="remoteReview">在插件里专注挑片</button>
+        <button type="button" id="remoteFinish" class="primary">完成…</button></footer>
     </section>
   </main>
   <script type="module" src="plugin.js"></script>

@@ -56,6 +56,8 @@ export class RunStore {
       };
       if (!metadataOnly && (state.results || state.units || state.groups || state.items)) {
         await writeSegmented(directory, resultData);
+        await this.writeAtomic(run.id, "unit-ids.json", resultData.units.map(unit => ({ id: unit.id,
+          itemIds: unit.itemIds || [unit.primaryItemId] })));
         await this.saveReviewSummary(run.id, resultData.groups);
         if (run.status === "completed" && run.purpose !== "prefetch") {
           try { await this.learningData.ingestRun(resultData); }
@@ -151,6 +153,37 @@ export class RunStore {
     return [...analyzed];
   }
 
+  async unitIndex(id) {
+    try { return JSON.parse(await readFile(path.join(this.dir(id), "unit-ids.json"), "utf8")); }
+    catch (error) { if (error.code !== "ENOENT") throw error; }
+    const data = await this.results(id, { readOnly: true }).catch(() => null);
+    return (data?.units || []).map(unit => ({ id: unit.id, itemIds: unit.itemIds || [unit.primaryItemId] }));
+  }
+
+  async unitIds(id) {
+    return (await this.unitIndex(id)).map(unit => unit.id);
+  }
+
+  // Which existing task does the user's current Eagle selection belong to?
+  async matchScope({ libraryPath, itemIds = [], key = null }) {
+    const wanted = new Set(itemIds);
+    const runs = (await this.allRuns()).filter(run => run.libraryPath === libraryPath && run.purpose !== "prefetch" &&
+      !run.supersededBy).sort(newestFirst).slice(0, 50);
+    let best = null;
+    for (const run of runs) {
+      const runItems = new Set((await this.unitIndex(run.id)).flatMap(unit => unit.itemIds));
+      let matched = 0;
+      for (const id of wanted) if (runItems.has(id)) matched++;
+      const sameScope = Boolean(key && run.scope?.key === key);
+      if (!matched && !sameScope) continue;
+      const candidate = { runId: run.id, status: run.status, sameScope, matched, total: wanted.size,
+        missing: wanted.size - matched, runItemCount: runItems.size };
+      if (!best || Number(sameScope) > Number(best.sameScope) ||
+        (sameScope === best.sameScope && matched > best.matched)) best = candidate;
+    }
+    return best;
+  }
+
   async cacheProtection() {
     const files = [], fingerprints = [];
     for (const run of await this.allRuns()) {
@@ -192,7 +225,24 @@ export class RunStore {
     return (await this.manifest(id))?.groups || null;
   }
 
-  async list({ limit = 20, cursor = 0, libraryPath } = {}) {
+  async continuity(id, run) {
+    const exists = async name => stat(path.join(this.dir(id), name)).then(() => true, () => false);
+    const human = (await new DecisionsStore(this.dir(id)).read()).filter(row => row.source === "human");
+    const lastDecisionAt = human.map(row => row.updatedAt).filter(Boolean).sort().at(-1) || null;
+    let writtenBackAt = null;
+    try {
+      const applied = await this.applied(id);
+      if (applied.some(record => !record.revertedAt)) {
+        writtenBackAt = (await stat(path.join(this.dir(id), "applied.json"))).mtime.toISOString();
+      }
+    } catch { /* A damaged writeback record must not hide the task. */ }
+    const rerunnable = await exists("checkpoints.jsonl");
+    return { rerunnable, resumable: rerunnable && ["failed", "cancelled", "interrupted", "running"].includes(run.status),
+      reviewedUnitCount: human.length, inheritedCount: human.filter(row => row.inheritedFrom).length, lastDecisionAt,
+      writtenBackAt, pendingWriteback: Boolean(writtenBackAt && lastDecisionAt && lastDecisionAt > writtenBackAt) };
+  }
+
+  async list({ limit = 20, cursor = 0, libraryPath, includeSuperseded = false } = {}) {
     let entries;
     try { entries = await readdir(this.root, { withFileTypes: true }); }
     catch (error) { if (error.code === 'ENOENT') entries = []; else throw error; }
@@ -201,7 +251,8 @@ export class RunStore {
       if (!entry.isDirectory() || !/^[a-zA-Z0-9_-]+$/.test(entry.name)) continue;
       try {
         const run = await this.datedRun(entry.name);
-        if (run && run.purpose !== 'prefetch' && run.id === entry.name && (!libraryPath || run.libraryPath === libraryPath)) runs.push(run);
+        if (run && run.purpose !== 'prefetch' && run.id === entry.name && (!libraryPath || run.libraryPath === libraryPath) &&
+          (includeSuperseded || !run.supersededBy)) runs.push(run);
       } catch (error) { if (!(error instanceof SyntaxError)) throw error; }
     }
     runs.sort(newestFirst);
@@ -219,7 +270,8 @@ export class RunStore {
           group.unitIds.every(id => reviewed.has(id))).length : null,
         selectedCount: run.selectedCount ?? null, rejectedCount: run.rejectedCount ?? null,
         scope: run.scope || { type: 'unknown', label: '以前的分析' }, error: run.error || null,
-        progress: run.progress || null });
+        progress: run.progress || null, finishedAt: run.finishedAt || null,
+        supersededBy: run.supersededBy || null, ...await this.continuity(run.id, run) });
     }
     return { runs: summaries, page: { total: runs.length, cursor, limit,
       nextCursor: cursor + limit < runs.length ? String(cursor + limit) : null } };

@@ -2,6 +2,13 @@ const MAX_SCALE = 8;
 const NATIVE_DELAY = 250;
 // Must not exceed MAX_REGION_AREA in src/server/focus-image.js.
 const MAX_NATIVE_AREA = 0.36;
+import { displayEdgeForViewport } from './display-url.js';
+
+export const displayEdge = (stage, dpr = 1, zoom = 1) =>
+  displayEdgeForViewport(stage.width, stage.height, dpr * Math.min(4, Math.max(1, zoom || 1)));
+export function preserveDisplayGeometry(view, before, after) {
+  return before?.width && after?.width ? { ...view, scale: view.scale * before.width / after.width } : view;
+}
 
 export function clampView(view, stage, image) {
   const width = image.width * view.scale, height = image.height * view.scale;
@@ -36,7 +43,7 @@ export function regionDisplay(view, image, box, dpr = 1) {
     height: Math.ceil((box[3] - box[1]) * image.height * view.scale * dpr) };
 }
 
-export function createViewer({ root, nativeUrl, prefetchUrl }) {
+export function createViewer({ root, nativeUrl, prefetchUrl, displayUrl }) {
   const dialog = root.querySelector("#previewDialog");
   const stageElement = root.querySelector("#viewerStage");
   const image = root.querySelector("#previewImage");
@@ -50,7 +57,9 @@ export function createViewer({ root, nativeUrl, prefetchUrl }) {
   };
   let view = { scale: 1, x: 0, y: 0 };
   let natural = { width: 0, height: 0 };
-  let unitId = null, drag = null, nativeTimer = null, nativeToken = 0, fitted = true;
+  let unitId = null, drag = null, nativeTimer = null, nativeToken = 0, fitted = true, displayToken = 0;
+  let displayObjectUrl = null, displayTimer = null;
+  let displayRequestKey = null;
 
   let regionController = null, regionObjectUrl = null, requestKey = null;
   let prefetchController = null, neighbors = [];
@@ -81,7 +90,35 @@ export function createViewer({ root, nativeUrl, prefetchUrl }) {
     stageElement.classList.toggle("zoomed", !fitted);
     positionNative();
     scheduleNative();
+    clearTimeout(displayTimer);
+    displayTimer = setTimeout(requestDisplay, fitted ? 0 : NATIVE_DELAY);
   };
+  function requestDisplay() {
+    if (!displayUrl || !unitId || !natural.width || !dialog.open) return;
+    const zoom = view.scale / (fitScale(stage(), natural) || view.scale || 1);
+    const edge = displayEdge(stage(), window.devicePixelRatio || 1, zoom), key = `${unitId}:${edge}`;
+    const previous = displayRequestKey?.startsWith(`${unitId}:`) ? Number(displayRequestKey.split(':').pop()) : 0;
+    if (edge <= previous) return;
+    const token = ++displayToken;
+    displayRequestKey = key;
+    fetch(displayUrl(unitId, edge)).then(response => { if (!response.ok) throw new Error('display unavailable');
+      return response.blob().then(blob => ({ blob, response })); }).then(({ blob, response }) => new Promise((resolve, reject) => {
+      const objectUrl = URL.createObjectURL(blob), next = new Image();
+      next.onload = () => resolve({ objectUrl, next, response });
+      next.onerror = () => reject(new Error('display image invalid')); next.src = objectUrl;
+    })).then(({ objectUrl, next, response }) => {
+      if (token !== displayToken || !unitId) return URL.revokeObjectURL(objectUrl);
+      const before = natural, oldView = view;
+      if (displayObjectUrl) URL.revokeObjectURL(displayObjectUrl);
+      displayObjectUrl = objectUrl; image.src = objectUrl; natural = { width: next.naturalWidth, height: next.naturalHeight };
+      if (fitted) fit(); else { view = preserveDisplayGeometry(oldView, before, natural); apply(); }
+      const warning = response.headers.get('x-display-warning');
+      const source = response.headers.get('x-display-source');
+      if (nativeLabel && (warning || source === 'eagle-thumbnail')) {
+        nativeLabel.textContent = `低清：${warning ? decodeURIComponent(warning) : 'Eagle 缩略图'}`;
+      }
+    }).catch(() => { if (token === displayToken) displayRequestKey = null; });
+  }
   function fit() {
     fitted = true;
     view = clampView({ scale: fitScale(stage(), natural), x: 0, y: 0 }, stage(), natural);
@@ -155,15 +192,19 @@ export function createViewer({ root, nativeUrl, prefetchUrl }) {
     const changed = id !== unitId || image.src !== src;
     neighbors = adjacent;
     if (!changed) return;
-    cancelRegion(); prefetchController?.abort();
+    cancelRegion(); prefetchController?.abort(); displayToken++; displayRequestKey = null;
     unitId = id; native.hidden = true; delete native.dataset.box; setNativeState("");
     if (regionObjectUrl) URL.revokeObjectURL(regionObjectUrl);
     regionObjectUrl = null;
+    if (displayObjectUrl) URL.revokeObjectURL(displayObjectUrl);
+    displayObjectUrl = null;
     natural = { width: 0, height: 0 };
     image.onload = () => { natural = { width: image.naturalWidth, height: image.naturalHeight }; fit(); };
     image.src = src;
     if (dialog.open) prefetch();
   }
+
+  function applyAdjustment(filter) { image.style.filter = filter || "none"; native.style.filter = filter || "none"; }
 
   function open() {
     if (typeof dialog.showModal === "function" && !dialog.open) dialog.showModal();
@@ -172,10 +213,12 @@ export function createViewer({ root, nativeUrl, prefetchUrl }) {
     requestAnimationFrame?.(() => natural.width && fit());
   }
   function close() {
-    unitId = null; cancelRegion(); prefetchController?.abort();
+    unitId = null; cancelRegion(); prefetchController?.abort(); displayToken++; displayRequestKey = null;
     native.hidden = true; setNativeState('');
     if (regionObjectUrl) URL.revokeObjectURL(regionObjectUrl);
     regionObjectUrl = null;
+    if (displayObjectUrl) URL.revokeObjectURL(displayObjectUrl);
+    displayObjectUrl = null;
     if (typeof dialog.close === "function") dialog.close(); else dialog.hidden = true;
   }
 
@@ -221,5 +264,5 @@ export function createViewer({ root, nativeUrl, prefetchUrl }) {
   root.querySelector("#viewerZoomIn")?.addEventListener("click", () => zoom(1.25));
   root.querySelector("#viewerZoomOut")?.addEventListener("click", () => zoom(0.8));
   root.querySelector("#viewerFit")?.addEventListener("click", fit);
-  return { show, open, close, key, fit, isOpen: () => Boolean(dialog.open || (!dialog.hidden && unitId)) };
+  return { show, open, close, key, fit, applyAdjustment, isOpen: () => Boolean(dialog.open || (!dialog.hidden && unitId)) };
 }

@@ -8,7 +8,20 @@ export function itemAnalysisModel(data, unitId, decision) {
   const ranking = group?.ranking?.find(row => row.unitId === unitId) || {};
   const suggested = group?.suggested?.[unitId] || 'candidate';
   const flags = result.flags || [];
+  const bestItemId = group?.ranking?.find(row => row.rank === 1)?.unitId === unitId
+    ? data.units.find(row => row.id === unitId)?.primaryItemId : (() => {
+      const best = group?.ranking?.find(row => row.rank === 1);
+      return data.units.find(row => row.id === best?.unitId)?.primaryItemId || null;
+    })();
+  const orderedIds = (group?.ranking || (group?.unitIds || []).map((id, index) => ({ unitId: id, rank: index + 1 })))
+    .slice().sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0)).map(row => row.unitId);
+  const groupItemIds = orderedIds.flatMap(id => {
+    const unit = data.units.find(row => row.id === id); return unit?.itemIds || [unit?.primaryItemId].filter(Boolean);
+  });
   return { runId: data.run.id, unitId, runName: data.run.scope?.label || '照片分析',
+    taskName: data.run.scope?.label || data.run.id, eagleTagsEnabled: data.run.eagleTagsEnabled === true,
+    groupId: group?.id || null, groupIndex: data.groups.findIndex(row => row.id === group?.id),
+    groupItemIds, bestItemId,
     analyzedAt: data.run.completedAt || data.run.startedAt || null,
     suggested, action: decision?.source === 'human' ? decision.action : suggested,
     humanDecided: decision?.source === 'human', rank: ranking.rank ?? null, groupSize: group?.unitIds.length || 1,
@@ -26,7 +39,7 @@ export class ItemAnalysisIndex {
   async build(libraryPath) {
     const index = new Map();
     for (const run of await this.store.recentRuns(Infinity)) {
-      if (run.libraryPath !== libraryPath || run.status !== 'completed') continue;
+      if (run.libraryPath !== libraryPath || run.status !== 'completed' || run.supersededBy) continue;
       const manifest = await this.store.manifest(run.id);
       const units = manifest ? readRows(this.store.dir(run.id), manifest, 'units')
         : (await this.store.results(run.id, { readOnly: true }))?.units || [];
@@ -49,18 +62,34 @@ export class ItemAnalysisIndex {
     // Do not publish stale results if completion raced the first build.
     if (generation !== (this.store.analysisGeneration || 0)) return this.get(itemId, libraryPath);
     const match = index.get(itemId); if (!match) return null;
-    const data = await this.store.unitData(match.runId, match.unitId);
+    let data = await this.store.unitData(match.runId, match.unitId);
     if (!data?.results.length) return null;
+    const group = data.groups?.find(row => row.unitIds.includes(match.unitId));
+    if (group && group.unitIds.length > 1 && this.store.page) {
+      const page = await this.store.page(match.runId, { groupId: group.id });
+      if (page?.units?.length) data = { ...data, units: page.units };
+    }
     const decisions = await new DecisionsStore(this.store.dir(match.runId)).read();
     return { itemId, ...itemAnalysisModel(data, match.unitId, decisions.find(row => row.unitId === match.unitId)) };
   }
 }
-export function createItemAnalysisRouter(store) {
+export function createItemAnalysisRouter(store, { onDecision, readBody } = {}) {
   const index = new ItemAnalysisIndex(store);
   return async (req, res, url) => {
-    const match = url.pathname.match(/^\/items\/([^/]+)\/analysis$/);
+    const match = url.pathname.match(/^\/items\/([^/]+)\/(analysis|decision)$/);
     if (!match) return false;
-    if (req.method !== 'GET') return json(res, 405, { error: '检查器接口只读' });
+    if (match[2] === 'decision' && req.method === 'POST') {
+      if (!onDecision) return json(res, 405, { error: '当前服务不支持按 item 决定' });
+      let body;
+      try { body = readBody ? await readBody(req) : {}; } catch { return json(res, 400, { error: '请求体不是有效 JSON' }); }
+      const libraryPath = url.searchParams.get('libraryPath') || body?.libraryPath;
+      if (!libraryPath) return json(res, 400, { error: '需要 libraryPath' });
+      const itemId = decodeURIComponent(match[1]);
+      const entry = await index.get(itemId, libraryPath);
+      if (!entry) return json(res, 404, { error: '尚未分析，在插件中分析后显示' });
+      return onDecision(req, res, { ...entry, itemId, libraryPath, body });
+    }
+    if (match[2] !== 'analysis' || req.method !== 'GET') return json(res, 405, { error: '检查器只支持 GET/POST 决定' });
     const libraryPath = url.searchParams.get('libraryPath');
     if (!libraryPath) return json(res, 400, { error: '需要 libraryPath' });
     const itemId = decodeURIComponent(match[1]);

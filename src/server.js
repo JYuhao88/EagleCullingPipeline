@@ -9,9 +9,10 @@ import { EagleApi } from "./core/eagle-api.js";
 import { ResultsStore } from "./core/results-store.js";
 import { RunStore } from "./server/run-store.js";
 import { createRunsRouter } from "./server/runs-routes.js";
-import { handleReviewRoute } from "./server/review-routes.js";
+import { handleReviewRoute, decideUnits } from "./server/review-routes.js";
 import { json, parseBody } from "./server/http.js";
 import { createRulesRouter } from "./server/rules-routes.js";
+import { AI_TAGS } from './core/writeback.js';
 
 export function createAnalysisServer({
   host = "127.0.0.1",
@@ -42,7 +43,17 @@ export function createAnalysisServer({
     isUpdating: () => updater.isUpdating() || cacheLock.busy });
   const ctx = { runStore, api, json, readBody: parseBody, clock };
   const rules = createRulesRouter();
-  const itemAnalysis = createItemAnalysisRouter(runStore);
+  const itemAnalysis = createItemAnalysisRouter(runStore, { readBody: parseBody, onDecision: async (req, res, entry) => {
+    const body = entry.body || {};
+    if (!['selected', 'candidate', 'rejected', 'clear'].includes(body.action)) return json(res, 400, { error: 'action 无效' });
+    const decision = body.action === 'clear' ? { unitId: entry.unitId, clear: true }
+      : { unitId: entry.unitId, action: body.action, ...(typeof body.reason === 'string' ? { reason: body.reason } : {}) };
+    try {
+      const result = await decideUnits(ctx, entry.runId, [decision]);
+      return json(res, 200, { runId: entry.runId, unitId: entry.unitId, decisions: result.decisions.filter(row =>
+        row.unitId === entry.unitId), ...(result.tagWarning ? { tagWarning: result.tagWarning } : {}) });
+    } catch (error) { return json(res, /reason/.test(error.message) ? 400 : 500, { error: error.message }); }
+  } });
   const server = http.createServer(async (req, res) => {
     try {
       const url = new URL(req.url, `http://${host}:${port}`);
@@ -59,6 +70,31 @@ export function createAnalysisServer({
         });
       }
       if (await cache(req, res, url)) return;
+      if (req.method === 'POST' && url.pathname === '/eagle/clear-ai-tags') {
+        const body = await parseBody(req);
+        if (typeof body.libraryPath !== 'string' || typeof body.dryRun !== 'boolean')
+          return json(res, 400, { error: '需要 libraryPath 和 dryRun' });
+        if (api.assertLibrary) await api.assertLibrary(body.libraryPath);
+        let scanned = 0, changed = 0, failed = 0;
+        const items = [];
+        if (api.items) for await (const item of api.items({ fields: ['id', 'tags', 'name'] })) items.push(item);
+        for (const item of items) {
+          scanned++;
+          const tags = Array.isArray(item.tags) ? item.tags : [];
+          const next = tags.filter(tag => !AI_TAGS.has(tag));
+          if (next.length === tags.length) continue;
+          changed++;
+          if (!body.dryRun) try { await api.updateItem({ id: item.id, tags: next }); }
+          catch { failed++; }
+        }
+        if (!body.dryRun && runStore.allRuns) {
+          for (const run of await runStore.allRuns()) {
+            if (run.libraryPath !== body.libraryPath || !run.eagleTagsEnabled) continue;
+            await runStore.saveProgress({ ...run, eagleTagsEnabled: false });
+          }
+        }
+        return json(res, 200, { dryRun: body.dryRun, scanned, changed, failed, removed: changed - failed });
+      }
       if (await itemAnalysis(req, res, url)) return;
       if (await runs(req, res, url)) return;
       if (await rules(req, res)) return;

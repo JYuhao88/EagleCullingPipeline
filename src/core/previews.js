@@ -5,18 +5,10 @@ import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import sharp from "sharp";
 import crypto from "node:crypto";
 import { withNativeImage } from "./native-image.js";
+import { isRaw, isHeif } from './image-formats.js';
 
-const rawExtensions = new Set([
-  "arw",
-  "dng",
-  "3fr",
-  "cr2",
-  "cr3",
-  "nef",
-  "raf",
-  "orf",
-  "rw2",
-]);
+// Thumbnail fallbacks are re-probed once per process so a newly installed decoder is picked up without a decode storm.
+const reprobed = new Set();
 
 async function exists(filePath) {
   try {
@@ -40,6 +32,12 @@ export async function choosePreview(
   const output = path.resolve(cacheDir, `${fingerprint}.jpg`);
   if (await exists(output)) {
     try {
+      const mapping = JSON.parse(await readFile(`${output}.json`, "utf8"));
+      const ext = record.ext || path.extname(source);
+      if (mapping.previewSource === 'eagle-thumbnail' && (isRaw(ext) || isHeif(ext)) && !reprobed.has(output)) {
+        reprobed.add(output);
+        throw new Error('fallback cache must be reprobed');
+      }
       const stats = await sharp(output).stats();
       const deviation = stats.channels.reduce(
         (sum, channel) => sum + channel.stdev,
@@ -48,7 +46,7 @@ export async function choosePreview(
       if (deviation >= 0.5) {
         record.previewSource = "cache";
         // Old thumbnails remain readable, but a new analysis must establish a source mapping.
-        record.sourceMapping = JSON.parse(await readFile(`${output}.json`, "utf8"));
+        record.sourceMapping = mapping;
         await touchCache(output);
         await touchCache(`${output}.json`);
         return output;
@@ -79,19 +77,21 @@ export async function choosePreview(
     return output;
   }
   try {
-    if (extension === "heic" && process.platform === "darwin") {
-      const native = await withNativeImage(record, {}, async ({ image, source }) => {
+    if (isHeif(extension)) {
+      const native = await withNativeImage(record, {
+        purpose: 'display', minEdge: 1024 / Math.max(record.width || 0, record.height || 0, 1024),
+      }, async ({ image, source }) => {
         await image().resize({ width: 1024, height: 1024, fit: "inside", withoutEnlargement: true }).jpeg({ quality: 88 }).toFile(output);
         const proxy = await sharp(output).metadata();
         record.sourceMapping = { ...source, proxyWidth: proxy.width, proxyHeight: proxy.height, reliable: true };
         record.previewSource = source.kind;
-        await writeFile(`${output}.json`, JSON.stringify(record.sourceMapping));
+        await writeFile(`${output}.json`, JSON.stringify({ ...record.sourceMapping, previewSource: record.previewSource }));
         return output;
       });
       if (typeof native === "string") return native;
       throw new Error(native.warnings?.join("；") || "HEIC unavailable");
     }
-    if (rawExtensions.has(extension)) {
+    if (isRaw(extension)) {
       const native = await withNativeImage(record, {}, async ({ image, source }) => {
         await image().resize({ width: 1024, height: 1024, fit: "inside", withoutEnlargement: true })
           .jpeg({ quality: 88 }).toFile(output);
@@ -99,14 +99,14 @@ export async function choosePreview(
         record.sourceMapping = { ...source, proxyWidth: proxy.width, proxyHeight: proxy.height, reliable: true };
         record.previewSource = source.kind;
         if (source.warnings.length) record.previewWarning = source.warnings.join("；");
-        await writeFile(`${output}.json`, JSON.stringify(record.sourceMapping));
+        await writeFile(`${output}.json`, JSON.stringify({ ...record.sourceMapping, previewSource: record.previewSource }));
         return output;
       });
       if (typeof native === "string") return native;
-      record.previewWarning = native.warnings?.join("；");
+      record.previewWarning = native.warnings?.join("；") || "RAW 解码失败";
       if (record.thumbnailPath && (await exists(record.thumbnailPath))) {
         record.previewSource = "eagle-thumbnail";
-        record.sourceMapping = { reliable: false, naReason: "native-source-unavailable" };
+        record.sourceMapping = { reliable: false, naReason: "native-source-unavailable", previewSource: 'eagle-thumbnail' };
         const preview = await normalize(record.thumbnailPath);
         await writeFile(`${output}.json`, JSON.stringify(record.sourceMapping));
         return preview;
@@ -138,7 +138,9 @@ export async function choosePreview(
       try {
         record.previewSource = "eagle-thumbnail";
         record.previewWarning = `主预览失败，已降级到 Eagle 缩略图：${failures.join("；")}`;
-        return await normalize(record.thumbnailPath);
+        const preview = await normalize(record.thumbnailPath);
+        await writeFile(`${output}.json`, JSON.stringify({ reliable: false, previewSource: 'eagle-thumbnail' }));
+        return preview;
       } catch (fallbackError) {
         failures.push(fallbackError.message);
       }

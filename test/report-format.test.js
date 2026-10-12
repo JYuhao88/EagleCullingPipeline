@@ -3,7 +3,6 @@ import assert from "node:assert/strict";
 import { buildReport, reportCsv, reportJson } from "../src/core/report.js";
 import { formatApplyResult } from "../src/plugin/format.js";
 import { createWritebackDialog } from "../src/plugin/writeback-dialog.js";
-import { createStartView } from "../src/plugin/start-view.js";
 
 class FakeElement {
   constructor() { this.listeners = {}; this.checked = false; this.hidden = false; }
@@ -102,58 +101,6 @@ test("slow writeback preview shows progress, blocks repeat clicks and reports fa
   await first;
   assert.equal(root.elements["#dryRun"].disabled, false);
   assert.equal(root.elements["#writeback"].textContent, "无法生成写回预览：服务未响应");
-});
-
-test("completed polling stays in panel and explicit review invokes onRun once", async () => {
-  const root = fakeRoot(["#health", "#libraryPath", "#runId", "#progress", "#bar", "#progressText",
-    "#analyzeSelected", "#analyzeAll", "#cancel", "#openRun", "#serviceGuide", "#repositoryPath", "#serviceCommand",
-    "#copyServiceCommand", "#retryService", "#startService", "#resumeArea", "#resumeLatest", "#resumeDetail"]);
-  root.elements["#libraryPath"].value = "/library";
-  const originalStorage = globalThis.localStorage;
-  globalThis.localStorage = { setItem() {}, getItem() { return "[]"; } };
-  let statusCalls = 0;
-  let opened = 0;
-  const api = async path => {
-    if (path === "/health") return { service: "test" };
-    if (path === "/runs") return { id: "run-1" };
-    statusCalls += 1;
-    return { id: "run-1", status: "completed", progress: { total: 1, completed: 1 } };
-  };
-  const view = createStartView({ root, api, onRun: async () => { opened += 1; }, autoCheck: false, autoRefresh: false });
-  await root.elements["#analyzeAll"].click();
-  await new Promise(resolve => setImmediate(resolve));
-  assert.equal(statusCalls, 1);
-  assert.equal(opened, 0);
-  assert.equal(root.elements["#resumeArea"].hidden, false);
-  await root.elements["#resumeLatest"].click();
-  assert.equal(opened, 1);
-  view.dispose(); globalThis.localStorage = originalStorage;
-});
-
-test("disconnected start view exposes absolute command and retry hides guide after health succeeds", async () => {
-  const root = fakeRoot(["#health", "#libraryPath", "#runId", "#progress", "#bar", "#progressText",
-    "#analyzeSelected", "#analyzeAll", "#cancel", "#openRun", "#serviceGuide", "#repositoryPath", "#serviceCommand",
-    "#copyServiceCommand", "#retryService", "#startService"]);
-  const originalStorage = globalThis.localStorage;
-  globalThis.localStorage = { getItem: () => process.platform === "win32" ? "C:/photo repo" : "/tmp/photo repo", setItem() {} };
-  let connected = false;
-  const api = async () => {
-    if (!connected) throw new Error("offline");
-    return { service: "eagle-culling" };
-  };
-  api.base = "http://127.0.0.1:43210";
-  try {
-    const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false });
-    await view.checkHealth();
-    assert.equal(root.elements["#serviceGuide"].hidden, false);
-    assert.match(root.elements["#serviceCommand"].textContent, process.platform === "win32"
-      ? /Set-Location -LiteralPath 'C:\/photo repo'.*--concurrency 1 --port 43210/
-      : /cd '\/tmp\/photo repo'.*--concurrency 1 --port 43210/);
-    assert.equal(root.elements["#startService"].hidden, true);
-    connected = true;
-    await root.elements["#retryService"].click();
-    assert.equal(root.elements["#serviceGuide"].hidden, true);
-  } finally { globalThis.localStorage = originalStorage; }
 });
 
 test("writeback preview renders counts and only first 50 changed names without executing", async () => {

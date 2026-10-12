@@ -6,7 +6,7 @@ const optional = (v, key, check) => v !== null && typeof v === 'object' && (!(ke
 const edges = ['top', 'bottom', 'left', 'right'];
 const joints = ['hairline', 'neck', 'wrist', 'fingers', 'elbow', 'knee', 'ankle', 'foot'];
 const sides = ['left', 'right'];
-const sourceKinds = ['embedded-jpeg', 'decoded-raw', 'jpeg', 'heic'];
+const sourceKinds = ['embedded-jpeg', 'decoded-raw', 'jpeg', 'heic', 'heif', 'heif-sharp', 'heif-wic', 'raw-wic'];
 export function validateSignals(v) {
   if (!v || v.contractVersion !== 1 || !Array.isArray(v.persons)) return false;
   if (!optional(v, 'source', (s) => s && ['width', 'height', 'proxyWidth', 'proxyHeight'].every((key) => finite(s[key]) && s[key]

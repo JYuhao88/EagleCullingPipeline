@@ -1,8 +1,8 @@
 export const PREFETCH_WINDOW_KEY = 'eagle-culling-idle-window';
 export const DEFAULT_WINDOW = '01:00-07:00';
 export const CHECK_INTERVAL_MS = 15 * 60 * 1000;
-const IMAGE_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'webp', 'tif', 'tiff', 'heic', 'heif', 'arw', 'dng', '3fr', 'cr2', 'cr3',
-  'nef', 'raf', 'orf', 'rw2']);
+import { RAW_EXTENSIONS, HEIF_EXTENSIONS } from './image-formats.js';
+const IMAGE_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'webp', 'tif', 'tiff', ...HEIF_EXTENSIONS, ...RAW_EXTENSIONS]);
 const minutes = text => {
   const match = /^(\d{1,2}):(\d{2})$/.exec(String(text || '').trim());
   if (!match || Number(match[1]) > 23 || Number(match[2]) > 59) return null;

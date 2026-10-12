@@ -1,11 +1,11 @@
 import { parsePerformanceMode, configuredPerformanceMode } from '../core/performance-mode.js';
 import { RunProgress, measuredWeights } from '../core/run-progress.js';
 import { Checkpoints } from "../core/checkpoints.js";
+import { scopeKey, inheritDecisions, supersedeOlderRuns } from "../core/task-continuity.js";
 import { pageOptions } from "./pagination.js";
 import { randomUUID } from "node:crypto";
 import path from "node:path";
-import { spawn } from "node:child_process";
-import { access, mkdir, readFile, rm } from "node:fs/promises";
+import { access, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import sharp from "sharp";
 import { listEagleImages } from "../core/metrics.js";
 import { buildCaptureUnits } from "../core/capture-units.js";
@@ -13,6 +13,12 @@ import { groupConfidence, CONFIDENCE_MARGIN_THRESHOLD } from "../core/ranking.js
 import { CORS_HEADERS, json, parseBody } from "./http.js";
 import { faceImage } from "./face-image.js";
 import { focusCropImage, parseRegionBox, regionCropImage, prefetchRegionImage } from "./focus-image.js";
+import { readMid } from '../core/native-mid.js';
+import { withNativeImage } from '../core/native-image.js';
+import { isRaw, isHeif } from '../core/image-formats.js';
+import { snapDisplayEdge } from '../core/display.js';
+import { touchCache } from '../core/cache-budget.js';
+export { snapDisplayEdge } from '../core/display.js';
 
 function activeRun(active) {
   return active.run && (active.run.controller || ["queued", "running"].includes(active.run.status))
@@ -57,6 +63,11 @@ function decodeUnitId(value) {
 }
 
 const pendingDetails = new Map();
+const pendingDisplays = new Map();
+// A thumbnail fallback is retried once per service start (decoders may have been installed since), not per request.
+const reprobedFallbacks = new Set();
+const retryFallback = (file, source, ext) => source === 'eagle-thumbnail' && (isRaw(ext) || isHeif(ext)) && !reprobedFallbacks.has(file)
+  && reprobedFallbacks.add(file);
 
 async function detailImage(store, id, unitId, state) {
   const key = path.join(store.dir(id), "detail", `${encodeURIComponent(unitId)}.jpg`);
@@ -76,34 +87,105 @@ async function createDetailImage(store, id, unitId, state) {
   const file = path.join(store.dir(id), "detail", `${encodeURIComponent(unitId)}.jpg`);
   try {
     await access(file);
-    return file;
+    const cached = JSON.parse(await readFile(`${file}.json`, 'utf8').catch(() => '{"previewSource":"eagle-thumbnail"}'));
+    if (!retryFallback(file, cached.previewSource, item?.ext)) return file;
   } catch {
-    await mkdir(path.dirname(file), { recursive: true });
-    for (const candidate of [...new Set([source, result.previewPath].filter(Boolean))]) {
+    /* rebuild old or incomplete entries */
+  }
+  await mkdir(path.dirname(file), { recursive: true });
+  let previewSource = 'sharp';
+  for (const candidate of [...new Set([source, result.previewPath].filter(Boolean))]) {
       try {
         const ext = path.extname(candidate).toLowerCase();
-        if (ext === ".heic" && process.platform === "darwin") {
-          const converted = `${file}.sips.jpg`;
-          await new Promise((resolve, reject) => {
-            const child = spawn("sips", ["-s", "format", "jpeg", "-Z", "2048", candidate, "--out", converted]);
-            child.on("error", reject);
-            child.on("close", code => code === 0 ? resolve() : reject(new Error(`sips exited ${code}`)));
-          });
-          // sips keeps the EXIF orientation tag instead of rotating pixels; face boxes assume upright pixels.
-          await sharp(converted).rotate().jpeg({ quality: 90 }).toFile(file);
-          await rm(converted, { force: true });
-        } else {
+        if (!isRaw(ext) && !isHeif(ext)) {
           await sharp(candidate, { failOn: "none" }).rotate().resize({
             width: 2048, height: 2048, fit: "inside", withoutEnlargement: true
           }).jpeg({ quality: 90 }).toFile(file);
+        } else {
+          const pairedItems = state.items?.filter(entry => entry.id !== item?.id && (unit.itemIds || []).includes(entry.id)) || [];
+          const native = await withNativeImage({ ...item, filePath: candidate, ext: ext.slice(1) }, {
+            pairedItems, purpose: 'display', minEdge: 2048 / Math.max(item.width || 0, item.height || 0, 2048),
+          },
+            async ({ image }) => image().resize({ width: 2048, height: 2048, fit: 'inside', withoutEnlargement: true })
+              .jpeg({ quality: 90 }).toFile(file));
+          if (!native?.available && native?.warnings) throw new Error(native.warnings.join('；'));
         }
+        if (candidate === result.previewPath && (isRaw(item?.ext) || isHeif(item?.ext))) previewSource = 'eagle-thumbnail';
+        await writeFile(`${file}.json`, JSON.stringify({ previewSource }));
         return file;
       } catch {
         continue;
       }
-    }
-    return null;
   }
+  return null;
+}
+function unitRecord(state, unitId) {
+  const unit = state.units?.find(item => item.id === unitId);
+  const items = state.items?.filter(item => (unit?.itemIds || [unit?.primaryItemId]).includes(item.id)) || [];
+  const primary = items.find(item => item.id === unit?.primaryItemId) || items[0];
+  return { unit, items, primary };
+}
+
+export async function displayImage(store, id, unitId, state, requestedEdge) {
+  const { unit, items, primary } = unitRecord(state, unitId);
+  if (!unit || !primary) return null;
+  const result = state.results?.find(item => item.unitId === unitId);
+  const source = primary.filePath || primary.path || result?.sourcePath || result?.previewPath;
+  if (!source) return null;
+  let sourceLongEdge = Number(result?.source?.width && result?.source?.height
+    ? Math.max(result.source.width, result.source.height) : 0);
+  if (!sourceLongEdge) sourceLongEdge = Math.max(Number(primary.width) || 0, Number(primary.height) || 0);
+  const edge = snapDisplayEdge(requestedEdge, sourceLongEdge || Infinity);
+  const file = path.join(store.dir(id), 'display', `${encodeURIComponent(unitId)}-${edge}.jpg`);
+  const sidecar = `${file}.json`;
+  try {
+    const metadata = JSON.parse(await readFile(sidecar, 'utf8'));
+    if (!retryFallback(file, metadata.previewSource, primary.ext)) {
+      await access(file); await touchCache(file); await touchCache(sidecar);
+      return { path: file, edge: metadata.edge || edge, source: metadata.previewSource || 'display', warning: metadata.warning };
+    }
+  } catch { /* stale or missing */ }
+  const pendingKey = `${file}|${source}`;
+  if (!pendingDisplays.has(pendingKey)) {
+    const pending = (async () => {
+      await mkdir(path.dirname(file), { recursive: true });
+      let displaySource = 'sharp', warning;
+      const write = async (pipeline, kind) => {
+        const info = await pipeline.rotate().resize({ width: edge, height: edge, fit: 'inside', withoutEnlargement: true })
+          .jpeg({ quality: 92, chromaSubsampling: '4:4:4' }).toFile(file);
+        displaySource = kind; return { width: info.width, height: info.height };
+      };
+      let dimensions;
+      const mid = await readMid(primary, { pairedItems: items.filter(item => item !== primary) });
+      if (mid && Math.max(mid.width, mid.height) >= edge) {
+        dimensions = await write(sharp(mid.path), 'native-mid');
+      } else {
+        try {
+          if (isRaw(primary.ext) || isHeif(primary.ext)) {
+            const native = await withNativeImage(primary, {
+              pairedItems: items.filter(item => item !== primary), purpose: 'display',
+              minEdge: edge / Math.max(sourceLongEdge || 0, edge),
+            },
+              async ({ image, source: nativeSource }) => { dimensions = await write(image(), nativeSource.kind); return dimensions; });
+            if (native?.available === false) throw new Error(native.warnings?.join('；') || 'native unavailable');
+          } else {
+            dimensions = await write(sharp(source, { failOn: 'none' }), 'sharp');
+          }
+        } catch (error) {
+          warning = error.message;
+          if (!state.results?.find(item => item.unitId === unitId)?.previewPath) throw error;
+          dimensions = await write(sharp(result.previewPath, { failOn: 'none' }), 'eagle-thumbnail');
+          warning = warning || '已降级到 Eagle 缩略图';
+        }
+      }
+      const metadata = { edge: Math.max(dimensions.width, dimensions.height), previewSource: displaySource, warning };
+      await writeFile(sidecar, JSON.stringify(metadata));
+      await touchCache(file); await touchCache(sidecar);
+      return { path: file, edge: Math.max(dimensions.width, dimensions.height), source: displaySource, warning };
+    })().finally(() => pendingDisplays.delete(pendingKey));
+    pendingDisplays.set(pendingKey, pending);
+  }
+  return pendingDisplays.get(pendingKey);
 }
 
 async function persist(store, run, data) {
@@ -130,6 +212,14 @@ export function createRunsRouter({
         return json(res, 400, { error: 'Invalid candidates' });
       return json(res, 200, { itemIds: await store.analyzedItemIds(body.itemIds, body.libraryPath) });
     }
+    if (req.method === 'POST' && url.pathname === '/runs/match') {
+      const body = await parseBody(req);
+      if (typeof body.libraryPath !== 'string' || !Array.isArray(body.itemIds) || body.itemIds.length > 50000 ||
+        !body.itemIds.every(id => typeof id === 'string')) return json(res, 400, { error: 'Invalid scope' });
+      const key = scopeKey(body.scope || {}, body.itemIds);
+      return json(res, 200, { key, match: store.matchScope ? await store.matchScope({ libraryPath: body.libraryPath,
+        itemIds: body.itemIds, key }) : null });
+    }
     if (req.method === 'GET' && url.pathname === '/runs/status') {
       const running = activeRun(active);
       const current = running?.purpose === 'prefetch' ? null : running;
@@ -146,14 +236,21 @@ export function createRunsRouter({
       if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100 || !Number.isSafeInteger(cursor) || cursor < 0) {
         return json(res, 400, { error: '分页参数无效：limit 为 1–100，cursor 为非负整数' });
       }
-      const result = await store.list({ limit, cursor, libraryPath: url.searchParams.get("libraryPath") || undefined });
+      const result = await store.list({ limit, cursor, libraryPath: url.searchParams.get("libraryPath") || undefined,
+        includeSuperseded: url.searchParams.get("includeSuperseded") === "1" });
       result.runs = result.runs.map(run => ({ ...run,
         ...(run.status === 'running' && activeRun(active)?.id !== run.id ? { status: 'interrupted' } : {}) }));
       return json(res, 200, result);
     }
     if (req.method === "POST" && url.pathname === "/runs") {
       if (isUpdating()) return json(res, 409, { error: "正在更新，请稍后开始分析" });
-      const body = await parseBody(req);
+      let body = await parseBody(req);
+      if (body.rerunOf !== undefined) {
+        if (typeof body.rerunOf !== 'string' || !/^[a-zA-Z0-9_-]+$/.test(body.rerunOf)) return json(res, 400, { error: 'Invalid rerunOf' });
+        const original = store.dir ? await new Checkpoints(store.dir(body.rerunOf)).get('request').catch(() => null) : null;
+        if (!original) return json(res, 409, { error: '找不到原分析范围，请在 Eagle 重新选择照片后分析；已做的决定会自动带上' });
+        body = { ...original, ...(body.performanceMode ? { performanceMode: body.performanceMode } : {}) };
+      }
       const current = activeRun(active);
       // Background prefetch only warms caches; a user's analysis always takes over.
       if (current?.purpose === 'prefetch' && body.purpose !== 'prefetch') {
@@ -201,6 +298,7 @@ export function createRunsRouter({
         ...(request.scope && ['selection', 'folder', 'library'].includes(request.scope.type) ? { scope: {
           type: request.scope.type, label: String(request.scope.label || '').slice(0, 200),
           ...(typeof request.scope.folderId === 'string' ? { folderId: request.scope.folderId.slice(0, 200) } : {}),
+          key: scopeKey({ ...request.scope, folderId: request.scope.folderId?.slice?.(0, 200) }, request.itemIds),
         } } : {}),
         itemCount: 0,
         unitCount: 0,
@@ -283,6 +381,16 @@ export function createRunsRouter({
           delete run.controller;
           run.finishedAt = new Date().toISOString();
           await Promise.all(progressWrites);
+          const continuity = run.purpose !== 'prefetch' && store.allRuns && store.dir;
+          const unitIds = data.units.map(unit => unit.id);
+          // Carry decisions and retire old versions before the completed status becomes visible.
+          if (continuity) {
+            try {
+              const inherited = await inheritDecisions(store, run, unitIds);
+              if (inherited.count) run.inherited = inherited;
+              if (store.unitIds) await supersedeOlderRuns(store, run, unitIds);
+            } catch (error) { run.continuityWarning = error.message; }
+          }
           await persist(store, run, data);
           if (active.run?.id === id) active.run = null;
           if (run.purpose === 'prefetch') await store.prunePrefetchRuns?.(5).catch(() => {});
@@ -386,6 +494,27 @@ export function createRunsRouter({
       });
       res.end(image);
       return true;
+    }
+    if (req.method === 'GET' && sub?.startsWith('display/')) {
+      const unitId = decodeUnitId(sub.slice('display/'.length));
+      const requested = Number(url.searchParams.get('edge'));
+      if (!unitId) return json(res, 404, { error: 'display not found' });
+      const state = store.unitData ? await store.unitData(id, unitId) : await store.get(id);
+      const run = runFromState(state);
+      if (!run || !state?.units?.some(item => item.id === unitId)) return json(res, 404, { error: 'display not found' });
+      try {
+        const result = await displayImage(store, id, unitId, state, requested);
+        if (!result) return json(res, 404, { error: 'display not found' });
+        const image = await readFile(result.path);
+        const fallback = result.source === 'eagle-thumbnail' || result.source === 'proxy';
+        const headers = { 'content-type': 'image/jpeg', 'cache-control': fallback ? 'no-store' : 'public, max-age=3600',
+          'x-display-source': result.source, 'x-display-edge': String(result.edge),
+          'access-control-expose-headers': 'x-display-source, x-display-edge, x-display-warning', ...CORS_HEADERS };
+        if (result.warning) {
+          headers['x-display-warning'] = encodeURIComponent(result.warning);
+        }
+        res.writeHead(200, headers); res.end(image); return true;
+      } catch { return json(res, 404, { error: 'display not found' }); }
     }
     if (req.method === "GET" && sub?.startsWith("face/")) {
       const faceMatch = sub.match(/^face\/([^/]+)\/(0|[1-9]\d*)$/);
