@@ -35,5 +35,5 @@ export function createReviewUx({ root, storage }) {
   q('writeback')?.addEventListener('click', event => {
     if (!event.target.closest?.('a')) q('writeback').textContent = '';
   });
-  return { enter: () => { if (!dismissed) show('reviewWelcome'); } };
+  return { enter: () => { if (!dismissed) { const hint = q('reviewWelcome'); if (hint.show) hint.show(); else hint.open = true; } } };
 }

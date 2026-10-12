@@ -1,3 +1,5 @@
+import { setWindowMode } from "./window-mode.js";
+import { bindLiveWriteback } from "./live-writeback.js";
 import { createLearningPanel } from "./learning-panel.js";
 import { createReviewUx } from "./review-ux.js";
 import { createApi } from "./api.js";
@@ -39,6 +41,7 @@ let personalization = null;
 let learningPanel = null;
 let catalog = { reasons: [], rules: [] };
 let reasonSession = null;
+const liveWriteback = bindLiveWriteback({ root, api: (...args) => api(...args), getRunId: () => viewState.runId });
 const feedback = createFeedbackRecorder({ api: (...args) => api(...args), onError: error => {
   root.querySelector("#feedbackStatus").textContent = `反馈记录失败（选片和写回可继续）：${error.message}`;
 } });
@@ -106,7 +109,22 @@ for (const id of ['unitStrip', 'groupList', 'filter', 'back', 'dryRun']) {
   root.querySelector(`#${id}`).addEventListener('click', closeReasons);
 }
 
+let progressTimer;
+function refreshOverallProgress() {
+  clearTimeout(progressTimer);
+  const runId = viewState.runId;
+  progressTimer = setTimeout(async () => {
+    try {
+      const progress = await api(`/runs/${runId}/review-progress`);
+      if (viewState.runId !== runId || !viewState.data) return;
+      setState({ ...viewState, data: { ...viewState.data, reviewProgress: progress } });
+      root.querySelector('#reviewProgress').textContent = `已审 ${progress.reviewed ?? '—'} / ${progress.total}`;
+    } catch { /* Older services still show page progress. */ }
+  }, 300);
+}
+
 function renderDecisions() {
+  refreshOverallProgress();
   reviewView.render();
   globalThis.dispatchEvent(new CustomEvent("culling:decision-rendered"));
   void personalization?.scheduleRefresh();
@@ -184,6 +202,7 @@ async function loadReviewPage(cursor = 0, filter = viewState.filter) {
   setState({ ...viewState, data, decisions: response.decisions, filter,
     groupIndex: 0, unitIndex: 0, selected: [] });
   reviewView.render();
+  refreshOverallProgress();
   renderPageControls();
 }
 
@@ -226,7 +245,9 @@ async function openRun(runId) {
     await learningPanel?.refresh();
     renderDecisions();
     renderPageControls();
+    liveWriteback.sync();
     reviewUx.enter();
+    void setWindowMode(true);
   } catch (error) {
     root.querySelector("#health").textContent = `加载失败：${error.message}`;
     throw error;
@@ -236,6 +257,7 @@ async function openRun(runId) {
 }
 
 function closeReview() {
+  void setWindowMode(false);
   root.querySelector("#review").hidden = true;
   root.querySelector("#start").hidden = false;
   void startView.checkHealth();
@@ -257,6 +279,7 @@ async function saveDecision(unitId, action, metadata = {}, explicitTargets = nul
     body: JSON.stringify({ decisions, learning: learningPanel?.context() })
   });
   if (response.learningWarning) root.querySelector("#learningStatus").textContent = `决定已保存；反馈失败：${response.learningWarning}`;
+  liveWriteback.schedule(before.runId, decisions.map(row => row.unitId));
   recordDecisions(before, decisions, previous);
   setState(applyDecisionBatch(viewState, decisions, previous));
   renderDecisions();
@@ -276,6 +299,7 @@ async function decideCurrentGroup(action, metadata = {}) {
     body: JSON.stringify({ decisions, learning: learningPanel?.context() })
   });
   if (response.learningWarning) root.querySelector("#learningStatus").textContent = `决定已保存；反馈失败：${response.learningWarning}`;
+  liveWriteback.schedule(before.runId, decisions.map(row => row.unitId));
   recordDecisions(before, decisions, previous);
   setState(applyDecisionBatch(viewState, decisions, previous));
   renderDecisions();
@@ -299,6 +323,7 @@ async function selectBest() {
     body: JSON.stringify({ decisions, learning: learningPanel?.context() })
   });
   if (response.learningWarning) root.querySelector("#learningStatus").textContent = `决定已保存；反馈失败：${response.learningWarning}`;
+  liveWriteback.schedule(before.runId, decisions.map(row => row.unitId));
   recordDecisions(before, decisions, previous);
   setState(applyDecisionBatch(viewState, decisions, previous));
   renderDecisions();
@@ -325,6 +350,7 @@ async function acceptUnreviewed(mode = "filtered") {
     body: JSON.stringify({ decisions, learning: learningPanel?.context({ signal: "bulk" }) })
   });
   if (response.learningWarning) root.querySelector("#learningStatus").textContent = `决定已保存；反馈失败：${response.learningWarning}`;
+  liveWriteback.schedule(before.runId, ids);
   recordDecisions(before, decisions, previous, { preference: false });
   setState(applyDecisionBatch(viewState, decisions, previous)); renderDecisions();
 }
@@ -340,6 +366,7 @@ async function correctGroup(action, body, focusUnitId = null) {
     api(`/runs/${runId}/decisions?limit=20&filter=${encodeURIComponent(viewState.filter)}`)
   ]);
   setState(refreshGroups(viewState, data, response.decisions, focusUnitId));
+  refreshOverallProgress();
   reviewView.render();
   scrollFocusedCard();
   root.querySelector("#writeback").textContent = "分组修正已保存，人工决定已保留；建议已按新组更新。";
@@ -380,6 +407,7 @@ async function undoLast() {
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ decisions: result.requests, learning: learningPanel?.context({ undo: true }) })
   });
+  liveWriteback.schedule(viewState.runId, result.requests.map(row => row.unitId));
   closeReasons();
   feedback.undo(handles);
   setState(result.state);
@@ -388,7 +416,7 @@ async function undoLast() {
 
 root.addEventListener("keydown", async event => {
   // A modal owns the keyboard; review shortcuts resume after it closes.
-  if (root.querySelector('dialog[open]:not(#previewDialog)')) return;
+  if (root.querySelector('dialog[open]:not(#previewDialog):not(#reviewWelcome)')) return;
   if (previewUnitId && (event.key === " " || event.key === "Escape")) {
     event.preventDefault();
     closePreview();
@@ -469,6 +497,8 @@ root.addEventListener("keydown", async event => {
       setState(next);
       reviewView.render();
     }
+    if (action.type === "view") reviewView.setViewMode(action.mode);
+    if (action.type === "info") reviewView.toggleInfo();
     if (action.type === "help") root.querySelector("#shortcutHelp").showModal?.();
   } catch (error) {
     root.querySelector("#writeback").textContent = `保存失败：${error.message}`;
@@ -505,7 +535,7 @@ personalization = createPersonalization({ root, api: (...args) => api(...args), 
 learningPanel = createLearningPanel({ root, api: (...args) => api(...args), state, setState,
   render: () => reviewView.render() });
 writebackDialog = createWritebackDialog({ root, api: (...args) => api(...args),
-  getRunId: () => viewState.runId });
+  getRunId: () => viewState.runId, beforeApply: () => liveWriteback.flush(), beforeRevert: () => liveWriteback.cancel() });
 for (const [id, direction] of [['previousPage', -1], ['nextPage', 1]]) {
   root.querySelector(`#${id}`)?.addEventListener('click', () => {
     const page = viewState.data.page;

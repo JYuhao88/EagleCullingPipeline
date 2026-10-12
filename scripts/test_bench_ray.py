@@ -3,6 +3,7 @@ import copy
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 import unittest
 from unittest.mock import patch
@@ -49,6 +50,25 @@ class CollectionTest(unittest.TestCase):
             bad['cacheSha256'][key] = hashlib.sha256(raw.encode()).hexdigest()
             with self.assertRaises(ValueError):
                 self.validate(bad)
+
+    def test_thread_environment_is_propagated_without_changing_signature_inputs(self):
+        with patch.dict(os.environ, {'EAGLE_POSE_THREADS': '3', 'EAGLE_PERFORMANCE_MODE': 'turbo'}, clear=True):
+            self.assertEqual(bench.env()['EAGLE_POSE_THREADS'], '3')
+            self.assertEqual(bench.env()['EAGLE_PERFORMANCE_MODE'], 'normal')
+        self.assertNotIn('EAGLE_POSE_THREADS', bench.SIGNATURE_ENV)
+
+    def test_each_cache_must_confirm_actual_threads(self):
+        self.expected['poseThreads'] = 3
+        key = next(iter(self.artifact['caches']))
+        row = json.loads(self.artifact['caches'][key])
+        row['poseDiagnostics'] = {'intraOpThreads': {'pose': 3}}
+        raw = json.dumps(row)
+        self.artifact['caches'][key] = raw
+        self.artifact['cacheSha256'][key] = hashlib.sha256(raw.encode()).hexdigest()
+        self.assertEqual(len(self.validate(self.artifact)), 1)
+        self.expected['poseThreads'] = 4
+        with self.assertRaisesRegex(ValueError, 'thread diagnostics'):
+            self.validate(self.artifact)
 
     def test_source_package_excludes_private_data(self):
         paths = [str(f.relative_to(bench.ROOT)) for f in bench.source_files()]

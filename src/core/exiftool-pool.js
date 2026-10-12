@@ -1,3 +1,4 @@
+import { performanceMode, performanceWorkerCap, nativeChildLaunch } from './performance-mode.js';
 import { spawn } from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
@@ -5,15 +6,17 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { localSetting } from './local-config.js';
 
 export function workerLimit(name, fallback = 1) {
-  const value = Number(localSetting(name, String(fallback)));
-  return Number.isSafeInteger(value) ? Math.max(1, Math.min(2, value)) : fallback;
+  const cap = performanceWorkerCap();
+  const value = Number(localSetting(name, String(performanceMode() === 'turbo' ? cap : fallback)));
+  return Math.max(1, Math.min(cap, Number.isSafeInteger(value) ? value : fallback));
 }
 
 function start(program, args) {
-  const child = process.platform === 'win32' ? spawn(program, args, { windowsHide: true })
-    : spawn('nice', ['-n', '15', program, ...args]);
+  const launch = nativeChildLaunch(program, args);
+  const child = spawn(launch.command, launch.args, { windowsHide: true });
   if (process.platform === 'win32') child.once('spawn', () => {
-    try { os.setPriority(child.pid, os.constants.priority.PRIORITY_BELOW_NORMAL); }
+    try { os.setPriority(child.pid, performanceMode() === 'turbo' ? os.constants.priority.PRIORITY_NORMAL
+      : os.constants.priority.PRIORITY_BELOW_NORMAL); }
     catch (error) { child.kill(); child.emit('error', error); }
   });
   return child;
@@ -25,7 +28,7 @@ export class ExiftoolPool {
     size = workerLimit('EAGLE_EXIFTOOL_WORKERS'), timeoutMs = 60000, idleMs = 5000,
     maxBytes = 128 * 1024 * 1024, spawnChild = start } = {}) {
     this.program = program;
-    this.size = Number.isSafeInteger(size) ? Math.max(1, Math.min(2, size)) : 1;
+    this.size = Number.isSafeInteger(size) ? Math.max(1, Math.min(performanceWorkerCap(), size)) : 1;
     this.timeoutMs = timeoutMs;
     this.idleMs = idleMs;
     this.maxBytes = maxBytes;
@@ -152,8 +155,9 @@ export class ExiftoolPool {
   }
 }
 
-let pool;
+const pools = new Map();
 export function exiftoolRequest(args, options) {
-  pool ||= new ExiftoolPool();
-  return pool.request(args, options);
+  const key = `${performanceMode()}:${workerLimit('EAGLE_EXIFTOOL_WORKERS')}`;
+  if (!pools.has(key)) pools.set(key, new ExiftoolPool());
+  return pools.get(key).request(args, options);
 }

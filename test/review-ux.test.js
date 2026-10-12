@@ -9,7 +9,7 @@ function setup(storage) {
     if (!nodes.has(selector)) nodes.set(selector, {
       open: false, events: {},
       addEventListener(name, callback) { this.events[name] = callback; },
-      showModal() { this.open = true; }, close() { this.open = false; }
+      modal: false, showModal() { this.open = true; this.modal = true; }, show() { this.open = true; }, close() { this.open = false; }
     });
     return nodes.get(selector);
   } };
@@ -22,6 +22,7 @@ test('first review guide dismisses persistently and can be reopened from help', 
   const storage = { getItem: key => values.get(key), setItem: (key, value) => values.set(key, value) };
   const { ux, node } = setup(storage);
   ux.enter(); assert.equal(node('reviewWelcome').open, true);
+  assert.equal(node('reviewWelcome').modal, false, 'first-use hint must not block keyboard review');
   node('closeReviewWelcome').events.click();
   assert.equal(values.get(REVIEW_WELCOME_KEY), 'dismissed');
   ux.enter(); assert.equal(node('reviewWelcome').open, false);

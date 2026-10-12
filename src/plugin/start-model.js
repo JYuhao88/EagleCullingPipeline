@@ -1,14 +1,15 @@
 // Pure presentation rules; selection and analysis semantics stay in the existing APIs.
 export function primaryAnalysis(context = {}, connected = true, busy = false) {
-  const selected = context.itemIds?.length || 0;
+  const selected = context.selectionCount ?? context.itemIds?.length ?? 0;
   const count = context.folderCount ?? context.folderItemIds?.length ?? 0;
   const folder = context.folders?.length > 0;
   return {
-    label: selected ? `分析选中的 ${selected} 张` : folder ? `分析当前文件夹（${count} 张）` : "开始分析",
-    disabled: !connected || busy || (!selected && (!folder || !count)),
+    label: selected ? `分析选中的 ${selected} 张` : folder ? `分析当前文件夹（${count} 张）` :
+      `分析整个资源库${context.libraryCount == null ? "" : `（${context.libraryCount} 张）`}`,
+    disabled: !connected || busy || (!selected && (folder ? !count : !context.libraryPath || context.libraryCount === 0)),
     hint: selected ? "只分析选中的照片。" : folder ? count ? "分析当前文件夹中的照片。" : "这个文件夹没有照片，请换一个。"
-      : "请先在 Eagle 左侧选择文件夹，或选中几张照片。",
-    itemIds: selected ? context.itemIds : context.folderItemIds || []
+      : "将分析整个资源库；也可先选择少量照片。",
+    itemIds: selected || folder ? context.itemIds || context.folderItemIds || [] : null
   };
 }
 
@@ -55,4 +56,17 @@ export function readRecentRuns(storage) {
     const value = JSON.parse(storage.getItem("eagle-culling-recent-runs") || "[]");
     return Array.isArray(value) ? value.filter(id => typeof id === "string" && /^[\w-]+$/.test(id)).slice(0, 10) : [];
   } catch { return []; }
+}
+
+export function scopeLabel(context = {}) {
+  const count = context.selectionCount ?? context.itemIds?.length ?? 0;
+  return count ? `选中 ${count} 张` : context.folders?.length
+    ? `文件夹 ${context.folders.map(row => row.name || '未命名').join('、')}（${context.folderCount ?? '—'} 张）`
+    : `整个资源库（${context.libraryCount ?? '—'} 张）`;
+}
+export function completionText(run = {}) {
+  const summary = run.progress?.summary || run;
+  const selected = summary.selectedCount ?? summary.selected ?? '—';
+  const rejected = summary.rejectedCount ?? summary.rejected ?? '—';
+  return `${run.groupCount ?? summary.groupCount ?? 0} 组 · 建议精选 ${selected} 张 / 淘汰 ${rejected} 张`;
 }

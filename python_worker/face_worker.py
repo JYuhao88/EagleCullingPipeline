@@ -70,6 +70,8 @@ def analyze_faces(detector, image, scale_fallback=True):
 
 
 def main():
+    from memory_guard import start_memory_guard
+    start_memory_guard()
     # Node pipes are UTF-8 JSON even when the Windows locale is not UTF-8.
     # Reconfigure explicitly so non-ASCII Eagle filenames remain intact.
     if hasattr(sys.stdin, "reconfigure"):

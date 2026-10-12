@@ -1,6 +1,7 @@
 import { formatApplySummary } from "./format.js";
 
-export function createWritebackDialog({ root, api, runId = null, getRunId = () => runId, onComplete }) {
+export function createWritebackDialog({ root, api, runId = null, getRunId = () => runId, onComplete,
+  beforeApply, beforeRevert }) {
   const output = root.querySelector("#writeback");
   const trash = root.querySelector("#moveTrash");
   const confirm = root.querySelector("#trashConfirm");
@@ -58,6 +59,7 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
     applying = true;
     confirmButton.disabled = true;
     try {
+      if (beforeApply) await beforeApply();
       const runId = getRunId();
       const result = await api(`/runs/${runId}/apply`, {
         method: "POST",
@@ -93,13 +95,14 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
     applying = true;
     revertButton.disabled = true;
     try {
+      if (beforeRevert) await beforeRevert();
       const result = await api(`/runs/${getRunId()}/writeback/revert`, {
         method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ apply: true })
       });
       const failures = result.results.filter(item => item.ok === false).length;
       const restored = result.results.filter(item => item.ok && item.changed).length;
       output.textContent = `撤回完成：恢复 ${restored} 个文件，无变化 ${result.summary.unchanged} 个文件`
-        + `，失败 ${failures} 个。仅恢复 AI 标签；回收站操作不会撤销。`;
+        + `，失败 ${failures} 个。恢复 AI 标签及本次设置的星级；回收站操作不会撤销。`;
     } catch (error) { output.textContent = `撤回失败：${error.message}`; }
     finally { applying = false; revertButton.disabled = false; }
   });

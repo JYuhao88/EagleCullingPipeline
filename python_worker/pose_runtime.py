@@ -17,3 +17,9 @@ def select_providers(available, requested=None, platform=None):
     if 'CPUExecutionProvider' not in providers:
         providers.append('CPUExecutionProvider')
     return providers
+
+
+def cpu_threads(value='3'):
+    if not isinstance(value, str) or len(value) != 1 or value not in '12345678':
+        raise ValueError('EAGLE_POSE_THREADS must be an integer from 1 to 8')
+    return int(value)

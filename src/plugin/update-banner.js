@@ -13,8 +13,10 @@ export function mountUpdates({ root = document, storage = localStorage, fetchImp
     <label><input type="checkbox" data-auto> 自动更新（空闲且在主页时）</label>
     <button data-action="check">检查更新</button><button data-action="rollback">回退到上一版</button>
     <p data-status role="status"></p><pre data-notes hidden></pre></details>`;
-  (root.querySelector('#start') || root.querySelector('#app')).prepend(panel);
-  const el = selector => panel.querySelector(selector);
+  (root.querySelector('#updateSlot') || root.querySelector('#start') || root.querySelector('#app')).prepend(panel);
+  const about = panel.querySelector('.update-about');
+  root.querySelector('#updateSettings')?.append(about);
+  const el = selector => panel.querySelector(selector) || about.querySelector(selector) || (selector === ".update-about" ? about : null);
   const auto = el('[data-auto]');
   auto.checked = storage.getItem('eagle-culling-auto-update') !== 'false';
   let status = {}, operation = false, postponed = false, checking = false, timer, loaded = false;
@@ -91,6 +93,7 @@ export function mountUpdates({ root = document, storage = localStorage, fetchImp
           storage.removeItem(key());
           storage.setItem('eagle-culling-update-result', value.pythonChanged
             ? '更新完成；Python 依赖有变化，请按更新说明手动安装。' : '更新完成，插件已重新加载。');
+          if (globalThis.window) globalThis.window.__ecAllowUnload = true;
           reload(); return;
         }
       }
@@ -107,13 +110,15 @@ export function mountUpdates({ root = document, storage = localStorage, fetchImp
     storage.setItem('eagle-culling-auto-update', String(auto.checked));
     if (auto.checked) { postponed = false; check(); }
   });
-  panel.addEventListener('click', event => {
+  const handleClick = event => {
     const action = event.target.dataset.action;
-    if (action === 'notes') { el('.update-about').open = true; el('[data-notes]').hidden = false; }
+    if (action === 'notes') { root.querySelector('#openSettings')?.click(); el('.update-about').open = true;
+      el('[data-notes]').hidden = false; }
     if (action === 'later') { postponed = true; render(); }
     if (action === 'check') { postponed = true; check({ manual: true }); }
     if (['apply', 'rollback'].includes(action)) apply(action);
-  });
+  };
+  panel.addEventListener('click', handleClick); about.addEventListener('click', handleClick);
   const observer = new MutationObserver(() => { if (!reviewing() && loaded && !operation && !postponed) check(); });
   observer.observe(root.querySelector('#review'), { attributes: true, attributeFilter: ['hidden'] });
   root.querySelector('#base').addEventListener('change', () => { loaded = false; check(); });
@@ -125,7 +130,7 @@ export function mountUpdates({ root = document, storage = localStorage, fetchImp
   // The server enforces the network interval; always refresh local safety/run state.
   check();
   const idle = setInterval(() => { if (!reviewing() && !operation) check(); }, 60000);
-  return () => { clearInterval(idle); clearTimeout(timer); observer.disconnect(); panel.remove(); };
+  return () => { clearInterval(idle); clearTimeout(timer); observer.disconnect(); panel.remove(); about.remove(); };
 }
 
 if (typeof document !== 'undefined' && document.querySelector('#app')) mountUpdates();

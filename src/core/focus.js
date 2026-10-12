@@ -1,6 +1,8 @@
+import { nativeChildLaunch } from './performance-mode.js';
 import { exiftoolRequest } from './exiftool-pool.js';
 import { localSetting } from './local-config.js';
 import sharp from "sharp";
+import { alignedFocusJpegRoi, blockIndependentJpegDefaults } from "./focus-jpeg-roi.js";
 import { completeEyeRois } from "./eye-roi.js";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
@@ -89,8 +91,7 @@ export async function readMakerFocus(filePath, { signal } = {}) {
       "-j", "-n", "-FocusLocation", "-FocusFrameSize", "-AFAreaMode", "-AFAreas", filePath];
     const stdout = await exiftoolRequest(args, { signal, fallback: async () => {
       const program = localSetting('EAGLE_EXIFTOOL', 'exiftool');
-      const command = process.platform === 'win32' ? program : 'nice';
-      const options = process.platform === 'win32' ? args : ['-n', '15', program, ...args];
+      const { command, args: options } = nativeChildLaunch(program, args);
       return (await execFileAsync(command, options, { maxBuffer: 1024 * 1024, timeout: 60000, windowsHide: true, signal })).stdout;
     } });
     const metadata = JSON.parse(stdout)?.[0] || {};
@@ -145,8 +146,8 @@ function frameBox(makerFocus, orientation = 1) {
 
 /** Analyze native-resolution eye/face crops. Native source is decoded on demand. */
 export async function analyzeFocus({ nativePath, nativeBuffer, proxySize, faces = [], persons = [],
-  groupFocus = [], makerFocus, nativeSize } = {}) {
-  const source = nativePath || nativeBuffer;
+  groupFocus = [], makerFocus, nativeSize, nativeRoi } = {}) {
+  const source = nativePath || nativeBuffer || nativeRoi;
   if (!source) return { status: "na", naReason: "native-source-unavailable" };
   const rawMeta = nativeSize || await sharp(source).metadata();
   // sharp.rotate() applies EXIF orientation. Orientations 5..8 transpose the
@@ -156,16 +157,17 @@ export async function analyzeFocus({ nativePath, nativeBuffer, proxySize, faces 
   if (!meta.width || !meta.height) return { status: "na", naReason: "native-dimensions-unavailable" };
   faces = completeEyeRois(faces, persons);
   const all = [];
+  const cropJpeg = nativeRoi || (crop => sharp(source).rotate().extract(crop).jpeg().toBuffer());
   for (const [faceIndex, face] of faces.entries()) {
     const fb = clampBox(face?.box); if (!fb) continue;
     const eyes = [];
     for (const eb of eyeBoxes(face)) {
       const crop = mapProxyBoxToNative(eb, meta); if (!crop) continue;
-      const metrics = await focusMetrics(await sharp(source).rotate().extract(crop).jpeg().toBuffer());
+      const metrics = await focusMetrics(await cropJpeg(crop));
       eyes.push({ proxyBox: eb, native: crop, ...metrics });
     }
     const faceCrop = mapProxyBoxToNative(fb, meta);
-    const faceMetrics = faceCrop ? await focusMetrics(await sharp(source).rotate().extract(faceCrop).jpeg().toBuffer()) : {};
+    const faceMetrics = faceCrop ? await focusMetrics(await cropJpeg(faceCrop)) : {};
     all.push({ faceIndex, eyes, face: faceMetrics });
   }
   const eyeValues = all.flatMap((x) => x.eyes.map((e) => e.laplacianVariance)).filter(Number.isFinite);
@@ -187,4 +189,19 @@ export async function analyzeFocus({ nativePath, nativeBuffer, proxySize, faces 
     relativeRank: rank, confidence: eyeValues.length ? Math.min(1, eyeValues.length / 2) : 0,
     afPoint, afFrame, afPointOnSubject, afPointOnEye,
     afSource: makerFocus?.source || null, faces: all, naReason: eyeSharpnessNative == null ? "no-eye-roi" : null };
+}
+
+/** One upright decode, with the existing q96 round trip reproduced on aligned DCT blocks only. */
+export async function analyzeFocusFromNativeImage({ image, source, ...options }) {
+  const nativeSize = { width: source.width, height: source.height, orientation: source.orientation,
+    rawWidth: source.rawWidth, rawHeight: source.rawHeight };
+  const metadata = await image().metadata();
+  // Keep legacy colour/depth handling for sources outside the verified RGB JPEG path.
+  if (metadata.format !== 'jpeg' || metadata.depth !== 'uchar' || metadata.channels !== 3 || !blockIndependentJpegDefaults()) {
+    const nativeBuffer = await image().jpeg({ quality: 96, chromaSubsampling: '4:4:4' }).toBuffer();
+    return analyzeFocus({ ...options, nativeBuffer, nativeSize });
+  }
+  const pixels = await image().removeAlpha().toColourspace('srgb').raw().toBuffer({ resolveWithObject: true });
+  // The closure and its frame buffer live only until this single native callback returns.
+  return analyzeFocus({ ...options, nativeSize, nativeRoi: crop => alignedFocusJpegRoi(pixels, nativeSize, crop) });
 }

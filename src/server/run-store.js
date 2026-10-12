@@ -15,6 +15,8 @@ export class RunStore {
   constructor(root = "data/runs") {
     this.root = path.resolve(root);
     this.pending = new Map();
+    this.analysisGeneration = 0;
+    this.knownAnalysisRuns = new Set();
     this.overridePending = new Map();
     this.unitIndexes = new Map();
     this.resultSnapshots = new Map();
@@ -65,6 +67,9 @@ export class RunStore {
       }
       // Publish terminal status only after its result payload is durable.
       await this.writeAtomic(run.id, "run.json", runJson);
+      if (!this.knownAnalysisRuns.has(run.id) || !metadataOnly) {
+        this.knownAnalysisRuns.add(run.id); this.analysisGeneration++;
+      }
       return run;
     });
     const queued = operation.catch(() => {});
@@ -123,7 +128,7 @@ export class RunStore {
     return (await this.manifest(id))?.groups || null;
   }
 
-  async list({ limit = 20, cursor = 0 } = {}) {
+  async list({ limit = 20, cursor = 0, libraryPath } = {}) {
     let entries;
     try { entries = await readdir(this.root, { withFileTypes: true }); }
     catch (error) { if (error.code === 'ENOENT') entries = []; else throw error; }
@@ -132,7 +137,7 @@ export class RunStore {
       if (!entry.isDirectory() || !/^[a-zA-Z0-9_-]+$/.test(entry.name)) continue;
       try {
         const run = await this.datedRun(entry.name);
-        if (run && run.id === entry.name) runs.push(run);
+        if (run && run.id === entry.name && (!libraryPath || run.libraryPath === libraryPath)) runs.push(run);
       } catch (error) { if (!(error instanceof SyntaxError)) throw error; }
     }
     runs.sort(newestFirst);
@@ -141,12 +146,14 @@ export class RunStore {
       const groups = await this.reviewSummary(run.id);
       const reviewed = new Set((await new DecisionsStore(this.dir(run.id)).read())
         .filter(row => row.source === 'human').map(row => row.unitId));
-      summaries.push({ id: run.id, status: run.status, startedAt: run.startedAt || run.createdAt || null,
+      summaries.push({ id: run.id, status: run.status, startedAt: run.startedAt ||
+        run.createdAt || null,
         itemCount: run.itemCount || run.progress?.summary?.itemCount || 0,
         unitCount: run.unitCount || run.progress?.summary?.unitCount || 0,
         groupCount: groups?.length ?? run.groupCount ?? run.progress?.summary?.groupCount ?? 0,
         reviewedGroupCount: groups ? groups.filter(group => group.unitIds.length &&
           group.unitIds.every(id => reviewed.has(id))).length : null,
+        selectedCount: run.selectedCount ?? null, rejectedCount: run.rejectedCount ?? null,
         scope: run.scope || { type: 'unknown', label: '以前的分析' }, error: run.error || null,
         progress: run.progress || null });
     }

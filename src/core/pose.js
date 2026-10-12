@@ -1,3 +1,4 @@
+import { performanceMode, performanceWorkerCap, poseThreads, MODEL_BUDGET_BYTES } from './performance-mode.js';
 import { FaceWorkerPool } from './faces.js';
 import { computeProxyMeasurements } from './signals.js';
 import { workerLimit } from './exiftool-pool.js';
@@ -21,12 +22,18 @@ export function poseProviderMatches(pose, platform = process.platform, env = pro
     ['detector', 'pose'].every(name => pose.providers?.[name]?.[0] === expected);
 }
 
-// Reuse the tested JSONL scheduling/timeout/cancellation protocol. Max two
-// persistent models, irrespective of batch size; close after a pipeline run.
+// Reuse the tested JSONL protocol. Two models normally, up to four in turbo;
+// model stages remain separate and pools close after every pipeline run.
 export class PoseWorkerPool extends FaceWorkerPool {
   constructor(options = {}) {
-    super({ timeoutMs: 300000, ...options, size: Math.min(2, options.size ?? poseWorkerLimit()), script: options.script ||
-      'python_worker/pose_worker.py' });
+    const mode = options.mode ?? performanceMode();
+    const size = Math.min(performanceWorkerCap(mode), options.size ?? poseWorkerLimit());
+    poseThreads(size, mode); // Reject invalid local settings before scheduling any model jobs.
+    super({ timeoutMs: 300000, ...options, size, mode,
+      workerEnv: slot => ({ EAGLE_POSE_THREADS: String(poseThreads(size, mode, slot)) }),
+      env: { ...options.env,
+        ...(mode === 'turbo' ? { EAGLE_WORKER_RSS_BYTES: String(Math.floor(MODEL_BUDGET_BYTES / size)) } : {}) },
+      script: options.script || 'python_worker/pose_worker.py' });
   }
 }
 export async function detectPose(items, options = {}) {

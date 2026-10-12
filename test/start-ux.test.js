@@ -165,7 +165,10 @@ test('home welcome dismissal persists and help reopens it; recent run cards open
     const cards = root.querySelector('#recentRuns').children;
     assert.match(cards[0].children[1].textContent, /已审 1 \/ 2 组/);
     await cards[0].children.at(-1).events.click(); assert.deepEqual(opened, ['done']);
-    await cards[1].children.at(-1).events.click(); assert.deepEqual(posted, [{ resumeRunId: 'cancelled' }]);
+    await cards[1].children.at(-1).events.click(); assert.deepEqual(posted, [{ resumeRunId: 'cancelled', performanceMode: 'normal' }]);
+    assert.deepEqual(opened, ['done']);
+    assert.equal(root.querySelector('#resumeLatest').textContent || '开始审阅', '开始审阅');
+    await root.querySelector('#resumeLatest').events.click();
     assert.deepEqual(opened, ['done', 'resumed']); view.dispose();
   } finally { globalThis.localStorage = previous; }
 });
@@ -196,7 +199,8 @@ test('primary folder analysis sends current folder IDs and selection overrides t
     assert.deepEqual(calls[1].itemIds, ['c']); assert.equal(calls[1].scope.type, 'selection');
     selected = []; selectedFolders = [];
     await root.querySelector('#analyzeSelected').events.click();
-    assert.equal(calls.length, 2); assert.equal(root.querySelector('#analyzeSelected').disabled, true);
+    assert.equal(calls.length, 3); assert.equal(calls[2].scope.type, 'library');
+    assert.equal(calls[2].itemIds, undefined); assert.equal(root.querySelector('#analyzeSelected').disabled, false);
     view.dispose();
   } finally { globalThis.eagle = previousEagle; globalThis.localStorage = previousStorage; }
 });
@@ -230,4 +234,128 @@ test('new home recovers busy progress and gives safe failed or interrupted recen
     assert.equal(root.querySelector('#analyzeSelected').disabled, true);
     assert.equal(reads, 1);
   } finally { view.dispose(); globalThis.localStorage = previous; }
+});
+
+test('turbo checkbox defaults off, persists locally and travels with analysis requests', async () => {
+  const oldStorage=globalThis.localStorage, oldEagle=globalThis.eagle;
+  const values=new Map(), calls=[];
+  globalThis.localStorage={getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value)};
+  globalThis.eagle={library:{path:'/example.library'},folder:{getSelected:async()=>[]},
+    item:{getSelected:async()=>[{id:'a'}],countAll:async()=>1}};
+  const api=async(url,options)=>{
+    if(url==='/health')return {service:'eagle-culling'};
+    if(url.startsWith('/runs?'))return {runs:[],page:{nextCursor:null}};
+    if(url==='/runs'){calls.push(JSON.parse(options.body));return {id:'example'};}
+    return {status:'completed',progress:{stage:'done'}};
+  };
+  const root=fakeRoot();let view;
+  try {
+    view=createStartView({root,api,onRun(){},autoCheck:false,autoRefresh:false});
+    assert.equal(root.querySelector('#performanceTurbo').checked,false);
+    await view.checkHealth();await view.refreshContext();
+    await root.querySelector('#analyzeSelected').events.click();
+    assert.equal(calls[0].performanceMode,'normal');
+    const checkbox=root.querySelector('#performanceTurbo');checkbox.checked=true;checkbox.events.change();
+    assert.equal(values.get('eagle-culling-turbo'),'1');
+    await root.querySelector('#analyzeSelected').events.click();assert.equal(calls[1].performanceMode,'turbo');
+    view.dispose();
+    const next=fakeRoot();view=createStartView({root:next,api,onRun(){},autoCheck:false,autoRefresh:false});
+    assert.equal(next.querySelector('#performanceTurbo').checked,true);
+  } finally {view?.dispose();globalThis.localStorage=oldStorage;globalThis.eagle=oldEagle;}
+});
+
+test('compact home limits recent cards to three and keeps pagination in history', async () => {
+  const previous = globalThis.localStorage;
+  globalThis.localStorage = { getItem: () => null, setItem() {} };
+  const root = fakeRoot(); let page = 0;
+  const api = async url => {
+    if (url === '/health') return { service: 'eagle-culling' };
+    if (url === '/runs/status') return { active: null, recent: [] };
+    if (url.startsWith('/runs?')) return { runs: Array.from({ length: 6 }, (_, index) => ({ id: `run-${page}-${index}`, status:
+      'completed' })),
+      page: { nextCursor: page++ === 0 ? '6' : null } };
+  };
+  const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false });
+  try {
+    await view.checkHealth(); assert.equal(root.querySelector('#recentRuns').children.length, 3);
+    assert.equal(root.querySelector('#historyRuns').children.length, 6);
+    await root.querySelector('#moreRuns').events.click();
+    assert.equal(root.querySelector('#recentRuns').children.length, 3);
+      assert.equal(root.querySelector('#historyRuns').children.length, 12);
+    assert.equal(root.querySelector('#moreRuns').hidden, true);
+  } finally { view.dispose(); globalThis.localStorage = previous; }
+});
+
+test('hidden background stops Eagle selection reads; library change clears old scope and records until visible', async () => {
+  const previousEagle = globalThis.eagle, previousStorage = globalThis.localStorage;
+  globalThis.localStorage = { getItem: () => null, setItem() {} };
+  let reads = 0, libraryChanged; const urls = [];
+  globalThis.eagle = { library: { path: '/old.library', name: '旧库' },
+    onLibraryChanged: callback => { libraryChanged = callback; },
+    item: { countSelected: async () => { reads++; return 5; }, countAll: async () => 10 } };
+  const root = fakeRoot();
+  root.querySelector('#start').hidden = false;
+  const api = async url => { urls.push(url); return url.startsWith('/runs?')
+    ? { runs: [], page: { nextCursor: null } } : { service: 'eagle-culling', active: null, recent: [] }; };
+  const view = createStartView({ root, api, onRun() {}, autoCheck: false });
+  try {
+    await new Promise(resolve => setTimeout(resolve, 20)); assert.equal(reads, 0);
+    view.setVisible(true); await new Promise(resolve => setTimeout(resolve, 30)); assert.ok(reads > 0);
+    view.setVisible(false); const before = reads;
+    globalThis.eagle.library = { path: '/new.library', name: '新库' }; libraryChanged('/new.library');
+    assert.equal(root.querySelector('#recentRuns').children.length, 0);
+    assert.equal(root.querySelector('#selectionCount').textContent, '0 张');
+    await new Promise(resolve => setTimeout(resolve, 1700)); assert.equal(reads, before);
+    view.setVisible(true); await new Promise(resolve => setTimeout(resolve, 30));
+    assert.equal(root.querySelector('#libraryName').textContent, '新库'); assert.ok(urls.some(url =>
+      url.includes('libraryPath=%2Fnew.library')));
+  } finally { view.dispose(); globalThis.eagle = previousEagle; globalThis.localStorage = previousStorage; }
+});
+
+test('service-existing analysis completes in hidden background, notifies once and waits for explicit review', async () => {
+  const previousEagle = globalThis.eagle, previousStorage = globalThis.localStorage;
+  const values = new Map(), notices = []; let opened = 0, active = true;
+  globalThis.localStorage = { getItem: key => values.get(key) ?? null, setItem: (key, value) => values.set(key, value),
+    removeItem: key => values.delete(key) };
+  globalThis.eagle = { library: { path: '/fixture.library' }, notification: { show: async value => notices.push(value) } };
+  const root = fakeRoot();
+  const completed = { id: 'run-service', libraryPath: '/fixture.library', status: 'completed', groupCount: 12, selectedCount: 8,
+    rejectedCount: 3 };
+  const api = async url => {
+    if (url === '/health') return { service: 'eagle-culling' };
+    if (url.startsWith('/runs?')) return { runs: [completed], page: { nextCursor: null } };
+    if (url === '/runs/status') return { active: active ? { id: completed.id, status: 'running' } : null, recent: [] };
+    if (url === '/runs/run-service') { active = false; return completed; }
+  };
+  api.base = 'fixture';
+  const view = createStartView({ root, api, onRun: async () => opened++, autoCheck: false, autoRefresh: false });
+  try {
+    await view.checkHealth(); assert.equal(opened, 0); assert.equal(notices.length, 1);
+    assert.equal(notices[0].title, '照片分析完成'); assert.match(notices[0].body, /12 组.*精选 8 张/);
+    assert.equal(root.querySelector('#resumeArea').hidden, false);
+    await view.checkHealth(); assert.equal(notices.length, 1);
+    await root.querySelector('#resumeLatest').events.click(); assert.equal(opened, 1);
+  } finally { view.dispose(); globalThis.eagle = previousEagle; globalThis.localStorage = previousStorage; }
+});
+
+test('changing service address drops the prior run monitor and recovers the new service active run', async () => {
+  const previousStorage = globalThis.localStorage;
+  globalThis.localStorage = { getItem: () => null, setItem() {} };
+  const root = fakeRoot(), reads = [];
+  function service(name) {
+    const api = async url => {
+      if (url === '/health') return { service: 'eagle-culling' };
+      if (url.startsWith('/runs?')) return { runs: [], page: { nextCursor: null } };
+      if (url === '/runs/status') return { active: { id: `run-${name}`, status: 'running' } };
+      reads.push([name, url]); return { id: `run-${name}`, status: 'running', progress: { stage: 'metrics' } };
+    };
+    api.base = name; return api;
+  }
+  let api = service('old');
+  const view = createStartView({ root, api, getApi: () => api, onRun() {}, autoCheck: false, autoRefresh: false });
+  try {
+    await view.checkHealth(); api = service('new'); await view.checkHealth();
+    assert.deepEqual(reads, [['old', '/runs/run-old'], ['new', '/runs/run-new']]);
+    assert.equal(root.querySelector('#runId').value, 'run-new');
+  } finally { view.dispose(); globalThis.localStorage = previousStorage; }
 });

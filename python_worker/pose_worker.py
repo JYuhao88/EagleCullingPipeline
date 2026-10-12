@@ -4,15 +4,34 @@ Raw predictions are retained internally until clipping at the Signals boundary.
 import contextlib
 import json
 import os
+from pathlib import Path
 import sys
 import time
 import numpy as np
 import onnxruntime as ort
 from PIL import Image, ImageOps
 from rtmlib import YOLOX, RTMPose
-from pose_runtime import select_providers
+from pose_runtime import select_providers, cpu_threads
 
 SESSION_FALLBACKS = []
+
+
+def _coreml_options():
+    """Return opt-in CoreML provider options; unset keeps the production path byte-for-byte."""
+    raw = os.environ.get('EAGLE_POSE_COREML_OPTIONS')
+    if not raw:
+        return None
+    try:
+        value = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        raise ValueError(f'EAGLE_POSE_COREML_OPTIONS must be JSON: {exc}') from exc
+    if not isinstance(value, dict) or any(not isinstance(k, str) for k in value):
+        raise ValueError('EAGLE_POSE_COREML_OPTIONS must be a JSON object')
+    cache = value.setdefault('ModelCacheDirectory', 'data/cache/pose-coreml')
+    if not isinstance(cache, str) or not cache:
+        raise ValueError('ModelCacheDirectory must be a non-empty string')
+    Path(cache).mkdir(parents=True, exist_ok=True)
+    return {k: ('1' if v else '0') if isinstance(v, bool) else str(v) for k, v in value.items()}
 
 
 def session(model):
@@ -27,10 +46,15 @@ def session(model):
     # DirectML requires sequential execution and disabled memory patterns.
     options.enable_mem_pattern = False
     options.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
+    coreml_options = _coreml_options()
     errors = []
     for index in range(len(providers)):
         try:
-            created = ort.InferenceSession(model, sess_options=options, providers=providers[index:])
+            options.intra_op_num_threads = cpu_threads(os.environ.get('EAGLE_POSE_THREADS', '3')) if providers[index] == 'CPUExecutionProvider' else 1
+            selected = providers[index:]
+            if coreml_options and selected and selected[0] == 'CoreMLExecutionProvider':
+                selected = [(selected[0], coreml_options), *selected[1:]]
+            created = ort.InferenceSession(model, sess_options=options, providers=selected)
             if errors:
                 SESSION_FALLBACKS.extend(errors)
                 print('Provider fallback: ' + '; '.join(errors), file=sys.stderr)
@@ -51,9 +75,21 @@ def load_models():
     # Avoid BaseTool's implicit download and uncontrolled ORT thread pool.
     detector = YOLOX.__new__(YOLOX)
     pose = RTMPose.__new__(RTMPose)
-    for model, filename, input_size in ((detector, detector_path, (640, 640)), (pose, pose_path, size)):
+    raw_det_size = os.environ.get('EAGLE_POSE_DET_SIZE', '640')
+    try:
+        det_size = int(raw_det_size)
+    except ValueError as exc:
+        raise ValueError('EAGLE_POSE_DET_SIZE must be an integer') from exc
+    if det_size < 128 or det_size > 1280:
+        raise ValueError('EAGLE_POSE_DET_SIZE must be between 128 and 1280')
+    for model, filename, input_size in ((detector, detector_path, (det_size, det_size)), (pose, pose_path, size)):
         model.session = session(filename)
         model.backend = 'onnxruntime'
+        if model is detector:
+            shape = model.session.get_inputs()[0].shape
+            static = shape[-1] if len(shape) == 4 and isinstance(shape[-1], int) else None
+            if static is not None and static != det_size:
+                raise ValueError(f'EAGLE_POSE_DET_SIZE={det_size} incompatible with detector input {static}x{static}')
         model.model_input_size = input_size
     detector.det_mode, detector.nms_thr, detector.score_thr = 'human', 0.45, 0.7
     pose.mean, pose.std = (123.675, 116.28, 103.53), (58.395, 57.12, 57.375)
@@ -91,6 +127,8 @@ def analyze(record, detector, pose, mode):
     providers = {'detector': detector.session.get_providers(), 'pose': pose.session.get_providers()}
     return {'id': record.get('id'), 'available': True, 'persons': persons,
             'source': {'width': width, 'height': height, 'proxyWidth': width, 'proxyHeight': height, 'kind': 'jpeg'},
+            'diagnostics': {'intraOpThreads': {name: model.session.get_session_options().intra_op_num_threads
+                            for name, model in [('detector', detector), ('pose', pose)]}},
             'mode': mode, 'provider': providers['pose'][0], 'providers': providers,
             'timingMs': {'detection': (detected-start)*1000, 'total': (time.perf_counter()-start)*1000}}
 
@@ -100,6 +138,8 @@ def emit(value):
 
 
 def main():
+    from memory_guard import start_memory_guard
+    start_memory_guard()
     for stream in (sys.stdin, sys.stdout):
         if hasattr(stream, 'reconfigure'):
             stream.reconfigure(encoding='utf-8')

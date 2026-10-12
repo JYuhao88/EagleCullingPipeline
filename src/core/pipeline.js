@@ -1,3 +1,5 @@
+import { performanceMode, configuredPerformanceMode, parsePerformanceMode, performanceWorkerCap,
+  withPerformanceMode, MODEL_BUDGET_BYTES, NODE_BUDGET_BYTES } from './performance-mode.js';
 import { workerLimit } from './exiftool-pool.js';
 import { localSetting } from './local-config.js';
 import { completeEyeRois, EYE_ROI_VERSION } from "./eye-roi.js";
@@ -20,14 +22,15 @@ import { FaceWorkerPool, normalizeFaceResult, detectFaces } from "./faces.js";
 import { score, SCORER_CACHE_KEY } from "./scorer.js";
 import { measureCandidates } from "./candidate-measurements.js";
 import { buildCandidateSet } from "./candidates.js";
-import { withNativeImage } from "./native-image.js";
-import { analyzeFocus, readMakerFocus } from "./focus.js";
+import { withNativeImage, nativeDecodeLimit } from "./native-image.js";
+import { analyzeFocusFromNativeImage, readMakerFocus } from "./focus.js";
 export class AnalysisPipeline {
   constructor({
     concurrency = 2, store, analyzer = analyzeImage, faceDetector = detectFaces,
     poseDetector = detectPose,
     root = process.cwd(), cacheRoot = "data/cache",
   } = {}) {
+    this.requestedConcurrency = concurrency;
     this.concurrency = Math.max(1, Math.min(2, concurrency));
     this.store = store;
     this.analyzer = analyzer;
@@ -36,11 +39,31 @@ export class AnalysisPipeline {
     this.root = root;
     this.cacheRoot = cacheRoot;
   }
-  async run(
+  async run(records, options = {}) {
+    const mode = parsePerformanceMode(options.performanceMode ?? configuredPerformanceMode());
+    // Per-run instance and async context prevent a request from changing other callers.
+    const instance = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+    instance.concurrency = mode === 'turbo' ? performanceWorkerCap(mode) : this.concurrency;
+    const controller = new AbortController();
+    const signal = options.signal ? AbortSignal.any([options.signal, controller.signal]) : controller.signal;
+    const guard = mode === 'turbo' ? setInterval(() => {
+      if (process.memoryUsage().rss > NODE_BUDGET_BYTES)
+        controller.abort(new Error('全速模式内存保护：Node RSS 超过 3 GiB'));
+    }, 100) : null;
+    guard?.unref();
+    try {
+      return await withPerformanceMode(mode, () => instance.runAnalysis(records, {...options, signal}));
+    } finally { if (guard) clearInterval(guard); }
+  }
+  async runAnalysis(
     records,
     { id = `run-${Date.now()}`, signal, checkpoint, onProgress = () => {}, nativeFocus = true } = {},
   ) {
-    const check = () => checkCancelled(signal);
+    const check = () => {
+      checkCancelled(signal);
+      if (performanceMode() === 'turbo' && process.memoryUsage().rss > NODE_BUDGET_BYTES)
+        throw new Error('全速模式内存保护：Node RSS 超过 3 GiB');
+    };
     check();
     let posePool;
     let facePool;
@@ -209,7 +232,9 @@ export class AnalysisPipeline {
     onProgress({ completed: 0, total: faceTotal, cached, stage: 'faces' });
     if (faceTargets.length) {
       if (this.faceDetector === detectFaces) facePool = new FaceWorkerPool({
-        cwd: this.root, size: workerLimit('EAGLE_FACE_WORKERS', this.concurrency) });
+        cwd: this.root, size: workerLimit('EAGLE_FACE_WORKERS', this.concurrency),
+        env: performanceMode() === 'turbo' ? { EAGLE_WORKER_RSS_BYTES: String(
+          Math.floor(MODEL_BUDGET_BYTES / workerLimit('EAGLE_FACE_WORKERS', this.concurrency))) } : {} });
       for (let start = 0; start < faceTargets.length; start += 16) {
       check();
       const batch = faceTargets.slice(start, start + 16);
@@ -305,7 +330,7 @@ export class AnalysisPipeline {
           height: record.height || pose.source.height,
         } });
         result.pose = { cacheKey: POSE_SIGNALS_CACHE_KEY, provider: pose.provider, providers: pose.providers,
-          mode: pose.mode, timingMs: pose.timingMs,
+          mode: pose.mode, timingMs: pose.timingMs, diagnostics: pose.diagnostics,
           ...(pose.fallbackReason ? { fallbackReason: pose.fallbackReason } : {}) };
         await saveUnit(result, "pose-inferred");
       }
@@ -362,11 +387,7 @@ export class AnalysisPipeline {
           const nativeRecord = { ...records[index], filePath: result.sourcePath };
           focus = await withNativeImage(nativeRecord,
             { pairedItems: records[index].pairedItems, signal }, async ({ image, source }) => {
-              const buffer = await image().jpeg({ quality: 96, chromaSubsampling: "4:4:4" }).toBuffer();
-              return analyzeFocus({ nativeBuffer: buffer,
-                nativeSize: { width: source.width, height: source.height,
-                  orientation: source.orientation, rawWidth: source.rawWidth, rawHeight: source.rawHeight },
-                faces: result.faces, makerFocus: maker });
+              return analyzeFocusFromNativeImage({ image, source, faces: result.faces, makerFocus: maker });
             });
           await mkdir(path.dirname(focusFile), { recursive: true });
           await writeFile(focusFile, JSON.stringify(focus));
@@ -390,7 +411,7 @@ export class AnalysisPipeline {
       } finally { onProgress({ completed: ++focused, total: records.length, cached, stage: 'focus' }); }
       }
     };
-    const focusWorkers = await Promise.allSettled(Array.from({ length: workerLimit('EAGLE_NATIVE_CONCURRENCY') }, focusWorker));
+    const focusWorkers = await Promise.allSettled(Array.from({ length: nativeDecodeLimit() }, focusWorker));
     const focusFailure = focusWorkers.find(worker => worker.status === 'rejected');
     if (focusFailure) throw focusFailure.reason;
     onProgress({ completed: 0, total: records.length, cached, stage: "grouping" });

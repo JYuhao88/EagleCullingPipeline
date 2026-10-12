@@ -43,6 +43,8 @@ test('GET /runs pages lightweight summaries without reading malformed full resul
     assert.deepEqual(second.payload.runs.map(run => run.id), ['run-1']);
     assert.equal(second.payload.page.nextCursor, null);
     assert.equal((await request(store, '?cursor=99')).payload.runs.length, 0);
+    assert.equal((await request(store, '?libraryPath=%2Fprivate%2Fexample-library')).payload.page.total, 3);
+    assert.deepEqual((await request(store, '?libraryPath=%2Fother.library')).payload.runs, []);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 

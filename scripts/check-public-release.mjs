@@ -31,6 +31,9 @@ const media = /\.(?:jpe?g|png|webp|gif|heic|avif|bmp|tiff?|arw|dng|3fr|cr[23]|ne
 const allowedBinary = new Map([['src/plugin/logo.png', {
   sha256: 'f8c7917b7626c342c92370b25b1eae770f77ffaef03b2d1156ebfef0a4a1c79f',
   reason: 'Camera icon, no person/photo/screenshot; explicitly retained for the Eagle plugin.',
+}], ['src/inspector/logo.png', {
+  sha256: 'f8c7917b7626c342c92370b25b1eae770f77ffaef03b2d1156ebfef0a4a1c79f',
+  reason: 'Same reviewed camera icon as the main plugin.',
 }]]);
 const issues = [];
 const fail = (file, line, reason) => issues.push(`${file}${line ? `:${line}` : ''}: ${reason}`);

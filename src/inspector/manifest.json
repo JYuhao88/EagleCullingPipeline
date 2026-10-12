@@ -1,0 +1,22 @@
+{
+  "id": "com.eagle.culling.inspector",
+  "version": "1.2.6",
+  "platform": "all",
+  "arch": "all",
+  "name": "Eagle照片筛选·检查器",
+  "logo": "/logo.png",
+  "keywords": [
+    "photo",
+    "culling"
+  ],
+  "devTools": true,
+  "preview": {
+    "jpg,jpeg,png,webp,tif,tiff,bmp,arw,dng,3fr,heic,cr2,nef,raf,rw2,orf,srw": {
+      "inspector": {
+        "path": "index.html",
+        "height": 180,
+        "multiSelect": false
+      }
+    }
+  }
+}

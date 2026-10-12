@@ -26,12 +26,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from ml.common.private_env import dashboard_url, merge_private_env
 
-PREFIX = 'w11-raybench-'
-LOCAL = Path(tempfile.gettempdir()) / 'w11-raybench'
-BASELINE = 'data/cache/bench/reports/2026-10-11T03-11-11-048Z/report.json'
+PREFIX = 'w23-threads-raybench-'
+LOCAL = ROOT / 'data/cache/w23-threads/ray-control'
+LEGACY_LOCAL = Path(tempfile.gettempdir()) / 'w11-raybench'
+BASELINE = 'data/cache/bench/reports/2026-10-12T04-39-19-060Z/report.json'
 OPENER = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 BENCH_ENV = {'EAGLE_PYTHON': 'python_worker/.venv/bin/python',
-             'EAGLE_POSE_PROVIDER': 'CPUExecutionProvider', 'EAGLE_SHARP_CONCURRENCY': '1'}
+             'EAGLE_POSE_PROVIDER': 'CPUExecutionProvider', 'EAGLE_SHARP_CONCURRENCY': '1', 'EAGLE_PERFORMANCE_MODE': 'normal', 'EAGLE_POSE_THREADS': '3'}
 SIGNATURE_ENV = ('EAGLE_PYTHON', 'PYTHONPATH', 'EAGLE_POSE_MODE',
                  'EAGLE_POSE_PROVIDER', 'EAGLE_POSE_MODEL', 'EAGLE_POSE_DETECTOR')
 MODELS = ('models/scorer/topiq_nr_512.onnx', 'models/scorer/topiq_nr_512.onnx.data',
@@ -53,6 +54,7 @@ def env():
     for key in SIGNATURE_ENV:
         result.pop(key, None)
     result.update(BENCH_ENV)
+    result['EAGLE_POSE_THREADS'] = os.environ.get('EAGLE_POSE_THREADS', BENCH_ENV['EAGLE_POSE_THREADS'])
     return result
 
 
@@ -84,7 +86,7 @@ def source_files():
              for p in (ROOT / base).rglob('*')
              if p.is_file() and p.suffix in ('.js', '.mjs', '.json')]
     files += [ROOT / name for name in ('scripts/bench.mjs', 'scripts/bench-ray.py',
-              'python_worker/face_worker.py', 'python_worker/pose_worker.py', 'python_worker/pose_runtime.py',
+              'python_worker/face_worker.py', 'python_worker/pose_worker.py', 'python_worker/pose_runtime.py', 'python_worker/memory_guard.py',
               'ml/common/private_env.py', 'test/fixtures/bench-syn-manifest.json',
               'test/fixtures/bench-triage-manifest.json')]
     return files
@@ -106,6 +108,8 @@ def validate_cache(artifact, expected):
         row = json.loads(raw)
         if row['warnings'] or row['scorer']['model'] != 'topiq-nr-onnx' or row['metrics']['faces'] is None:
             raise ValueError('Unavailable model output; refusing collection')
+        if 'poseThreads' in expected and row.get('poseDiagnostics', {}).get('intraOpThreads', {}).get('pose') != expected['poseThreads']:
+            raise ValueError('Cache pose thread diagnostics mismatch')
         if 'signals' not in row:
             raise ValueError('Missing pose signals; refusing collection')
     return artifact['caches']
@@ -115,6 +119,11 @@ def submit(reuse=None):
     jobs = request('/api/jobs/')
     if any(str(j.get('submission_id', '')).startswith(PREFIX) and j['status'] in ('RUNNING', 'PENDING') for j in jobs):
         raise RuntimeError('Own job already active')
+    if sum(j['status'] in ('RUNNING', 'PENDING') for j in jobs) >= 2:
+        raise RuntimeError('Ray concurrency limit of two active jobs reached')
+    threads = env()['EAGLE_POSE_THREADS']
+    if threads not in tuple(str(i) for i in range(1, 9)):
+        raise ValueError('EAGLE_POSE_THREADS must be 1 to 8')
     files = source_files()
     manifest = json.loads((ROOT / 'test/fixtures/bench-syn-manifest.json').read_text())
     assets = [ROOT / f for f in MODELS]
@@ -133,6 +142,7 @@ def submit(reuse=None):
                 'node': subprocess.check_output(['node', '-p', 'process.version'], text=True).strip().lstrip('v'),
                 'npm': json.loads(subprocess.check_output(['node', '-e',
                   "console.log(JSON.stringify(Object.fromEntries(['sharp','onnxruntime-node'].map(n=>[n,require(n+'/package.json').version]))))"], text=True))}
+    expected['poseThreads'] = int(threads)
     job = PREFIX + uuid.uuid4().hex[:12]
     with tempfile.TemporaryDirectory(prefix='bench-package-') as folder:
         folder = Path(folder)
@@ -142,11 +152,13 @@ def submit(reuse=None):
                 tar.add(file, arcname=str(file.relative_to(ROOT)), recursive=False)
         modules = []
         if reuse:
-            if not reuse.startswith(PREFIX) or not reuse[len(PREFIX):].isalnum():
+            reuse_prefix = next((prefix for prefix in (PREFIX, 'w11-raybench-') if reuse.startswith(prefix)), '')
+            if not reuse_prefix or not reuse[len(reuse_prefix):].isalnum():
                 raise ValueError('Only own asset packages may be reused')
-            previous = json.loads((LOCAL / (reuse + '.json')).read_text())
+            prior = (LOCAL if reuse.startswith(PREFIX) else LEGACY_LOCAL) / (reuse + '.json')
+            previous = json.loads(prior.read_text())
             state = request('/api/jobs/' + reuse)
-            if state['status'] in ('RUNNING', 'PENDING') or digest(archive) != previous['assetSha256']:
+            if state['status'] != 'SUCCEEDED' or digest(archive) != previous['assetSha256']:
                 raise ValueError('Asset reuse requires terminal job and identical archive SHA-256')
             modules = state['runtime_env']['py_modules']
         with archive.open('rb') as stream:
@@ -177,7 +189,8 @@ def submit(reuse=None):
                 'entrypoint_num_cpus': 2, 'entrypoint_num_gpus': 0, 'entrypoint_memory': 8 * 1024 ** 3,
                 'runtime_env': {'working_dir': upload(code), 'py_modules': modules,
                                 'env_vars': {'CUDA_VISIBLE_DEVICES': '', 'OMP_NUM_THREADS': '2',
-                                             'OPENBLAS_NUM_THREADS': '2', 'MKL_NUM_THREADS': '2'}}}
+                                             'OPENBLAS_NUM_THREADS': '2', 'MKL_NUM_THREADS': '2',
+                                             'EAGLE_POSE_THREADS': threads, 'EAGLE_PERFORMANCE_MODE': 'normal'}}}
         merge_private_env(body)
         result = request('/api/jobs/', body)
     (LOCAL / (job + '.json')).write_text(json.dumps(expected))
@@ -267,12 +280,14 @@ const m=JSON.parse(await readFile('test/fixtures/bench-syn-manifest.json'));
 const filePath='data/cache/bench/syn/'+m.images[0].path;
 const faces=await detectFaces([filePath]);
 const poses=await detectPose([{id:'preflight',filePath,faces:faces[0].faceDetails}],{size:1});
-console.log('W11_PREFLIGHT '+JSON.stringify({faceWarning:faces[0].warning,poseError:poses[0].error}));
+console.log('W11_PREFLIGHT '+JSON.stringify({faceWarning:faces[0].warning,poseError:poses[0].error,diagnostics:poses[0].diagnostics,requestedThreads:process.env.EAGLE_POSE_THREADS}));
+if (poses[0].diagnostics?.intraOpThreads?.pose !== Number(process.env.EAGLE_POSE_THREADS)) process.exit(2);
 process.exit(faces[0].warning||!poses[0].available?1:0);"""
         subprocess.run(['node', '--input-type=module', '-e', preflight], env=child_env, check=True)
         subprocess.run(['node', 'scripts/bench.mjs', '--compare', BASELINE], env=child_env, check=True)
         caches = {p.stem: p.read_text() for p in (work / 'data/cache/bench/analysis').glob('*.json')}
         artifact = {k: identity[k] for k in ('signature', 'models', 'sources')}
+        artifact['poseThreads'] = identity['poseThreads']
         artifact.update(caches=caches, cacheSha256={k: hashlib.sha256(v.encode()).hexdigest() for k,v in caches.items()})
         warnings = sorted({warning for raw in caches.values() for warning in json.loads(raw)['warnings']})
         print('W11_WARNINGS ' + json.dumps(warnings), flush=True)
@@ -292,7 +307,7 @@ def main():
     args = parser.parse_args()
     if args.action == 'worker':
         worker(); return
-    LOCAL.mkdir(exist_ok=True)
+    LOCAL.mkdir(parents=True, exist_ok=True)
     if args.action == 'submit':
         submit(args.reuse_assets); return
     if args.action == 'audit':
@@ -325,7 +340,9 @@ def main():
         raise ValueError('Incomplete artifact transport')
     artifact = json.loads(gzip.decompress(base64.b64decode(encoded, validate=True)))
     caches = validate_cache(artifact, expected)
-    directory = ROOT / 'data/cache/bench/analysis'
+    if artifact.get('poseThreads') != expected['poseThreads']:
+        raise ValueError('Worker thread configuration mismatch')
+    directory = ROOT / 'data/cache/w23-threads/bench/analysis'
     directory.mkdir(parents=True, exist_ok=True)
     for key, raw in caches.items():
         temporary = directory / (key + '.tmp')

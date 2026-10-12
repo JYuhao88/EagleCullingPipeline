@@ -1,11 +1,13 @@
+import { performanceMode, MODEL_BUDGET_BYTES } from './performance-mode.js';
 import { localSetting } from './local-config.js';
 import { spawn } from "node:child_process";
 import { createInterface } from "node:readline";
 import os from "node:os";
-function lowerWindowsPriority(child) {
+function lowerWindowsPriority(child, mode = performanceMode()) {
   if (process.platform !== "win32") return;
   child.once("spawn", () => {
-    try { os.setPriority(child.pid, os.constants.priority.PRIORITY_BELOW_NORMAL); }
+    try { os.setPriority(child.pid, mode === "turbo" ? os.constants.priority.PRIORITY_NORMAL
+      : os.constants.priority.PRIORITY_BELOW_NORMAL); }
     catch (error) { child.kill(); child.emit("error", error); }
   });
 }
@@ -25,7 +27,8 @@ export function runFaceWorker(
       cwd,
       stdio: ["pipe", "pipe", "pipe"],
       windowsHide: true,
-      env: { ...process.env, PYTHONUTF8: "1" },
+      env: { ...process.env, PYTHONUTF8: "1",
+        ...(performanceMode() === "turbo" ? {EAGLE_WORKER_RSS_BYTES: String(MODEL_BUDGET_BYTES)} : {}) },
     });
     lowerWindowsPriority(child);
     const results = [];
@@ -72,6 +75,9 @@ export class FaceWorkerPool {
     timeoutMs = 60000,
     idleMs = 30000,
     spawnWorker = spawn,
+    mode = performanceMode(),
+    env = {},
+    workerEnv = () => ({}),
   } = {}) {
     if (!Number.isSafeInteger(size) || size < 1)
       throw new Error("Model worker count must be a positive integer");
@@ -84,6 +90,9 @@ export class FaceWorkerPool {
       timeoutMs,
       idleMs,
       spawnWorker,
+      mode,
+      env,
+      workerEnv,
     };
     this.workers = new Set();
     this.pending = [];
@@ -148,8 +157,11 @@ export class FaceWorkerPool {
   }
 
   startWorker() {
-    const { python, script, args, cwd, spawnWorker } = this.options;
-    const child = spawnWorker(python, [script, ...args], {
+    const { python, script, args, cwd, spawnWorker, mode, env } = this.options;
+    // POSIX workers retain the service priority, as before; turbo adds no nice wrapper.
+    const launch = {command: python, args: [script, ...args]};
+    const slot = Array.from({length: this.options.size}, (_, i) => i).find(i => ![...this.workers].some(w => w.slot === i));
+    const child = spawnWorker(launch.command, launch.args, {
       cwd,
       windowsHide: true,
       stdio: ["pipe", "pipe", "pipe"],
@@ -158,10 +170,12 @@ export class FaceWorkerPool {
         PYTHONUTF8: "1",
         OMP_NUM_THREADS: "1",
         OPENBLAS_NUM_THREADS: "1",
+        ...env,
+        ...this.options.workerEnv(slot),
       },
     });
-    lowerWindowsPriority(child);
-    const worker = { child, active: null, stderr: "", stopping: false };
+    lowerWindowsPriority(child, mode);
+    const worker = { child, slot, active: null, stderr: "", stopping: false };
     this.workers.add(worker);
     this.starts += 1;
     const lines = createInterface({ input: child.stdout });

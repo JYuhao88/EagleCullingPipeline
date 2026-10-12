@@ -1,0 +1,32 @@
+/* Eagle 主题变量：界面颜色和字号只从这里取值，data-theme 由 theme.js 根据 eagle.app.theme 设置。 */
+:root, :root[data-theme="DARK"] {
+  --ec-bg: #1e1f22; --ec-surface: #26272b; --ec-surface-2: #2f3035; --ec-hover: #37383e;
+  --ec-border: #3a3b41; --ec-text: #e8e8ea; --ec-text-dim: #9d9ea4; --ec-accent: #3d8bfd;
+  --ec-accent-text: #ffffff; --ec-pick: #f0b429; --ec-reject: #e5534b; --ec-ok: #3fb950;
+  --ec-overlay: rgba(0, 0, 0, .55); --ec-image-bg: #141517;
+  --ec-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --ec-font-size: 12px; --ec-font-size-small: 11px; --ec-font-size-title: 13px;
+  --ec-radius: 6px; --ec-control-height: 26px;
+}
+:root[data-theme="GRAY"] {
+  --ec-bg: #2c2d31; --ec-surface: #343539; --ec-surface-2: #3c3d42; --ec-hover: #45464c;
+  --ec-border: #4a4b51; --ec-text: #ececee; --ec-text-dim: #a6a7ad; --ec-image-bg: #232427;
+}
+:root[data-theme="BLUE"] {
+  --ec-bg: #1b2230; --ec-surface: #222a3a; --ec-surface-2: #2a3345; --ec-hover: #323c50;
+  --ec-border: #374257; --ec-text: #e6eaf2; --ec-text-dim: #98a2b6; --ec-image-bg: #141a25;
+}
+:root[data-theme="PURPLE"] {
+  --ec-bg: #221d2c; --ec-surface: #2a2436; --ec-surface-2: #332c41; --ec-hover: #3c344c;
+  --ec-border: #443b55; --ec-text: #ece8f2; --ec-text-dim: #a69cb6; --ec-image-bg: #1a1622;
+}
+:root[data-theme="LIGHT"] {
+  --ec-bg: #ffffff; --ec-surface: #f5f5f7; --ec-surface-2: #ebebee; --ec-hover: #e2e2e6;
+  --ec-border: #d9d9de; --ec-text: #1f1f23; --ec-text-dim: #6e6e76; --ec-accent: #2f7cf6;
+  --ec-overlay: rgba(255, 255, 255, .7); --ec-image-bg: #f0f0f2;
+}
+:root[data-theme="LIGHTGRAY"] {
+  --ec-bg: #ececee; --ec-surface: #e3e3e6; --ec-surface-2: #d9d9dd; --ec-hover: #d0d0d5;
+  --ec-border: #c8c8ce; --ec-text: #1f1f23; --ec-text-dim: #66666e; --ec-accent: #2f7cf6;
+  --ec-overlay: rgba(236, 236, 238, .7); --ec-image-bg: #e0e0e3;
+}

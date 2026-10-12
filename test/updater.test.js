@@ -30,9 +30,11 @@ async function fixture(t, { offMaster = false, lockChange = false, mismatch = fa
   await git('config', 'user.name', 'Fixture');
   await mkdir(path.join(source, 'docs'));
   await mkdir(path.join(source, 'src/plugin'), { recursive: true });
+  await mkdir(path.join(source, 'src/inspector'), { recursive: true });
   await writeFile(path.join(source, '.gitignore'), 'data/\nnode_modules/\n');
   for (const version of ['1.0.0', '1.1.0', '1.2.0']) {
     if (version === '1.2.0' && offMaster) await git('checkout', '-b', 'side');
+    await writeFile(path.join(source, 'src/inspector/manifest.json'), JSON.stringify({ version }));
     await writeFile(path.join(source, 'package.json'), JSON.stringify({ version, type: 'module' }));
     await writeFile(path.join(source, 'src/plugin/manifest.json'), JSON.stringify({
       version: mismatch && version === '1.2.0' ? '1.1.0' : version,

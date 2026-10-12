@@ -1,6 +1,7 @@
 """Bounded local provider probe. Run under the shared heavy-work lock, nice 15.
 
-Writes private predictions only below data/cache/pose-provider; never touches originals.
+Writes private predictions below EAGLE_POSE_PROBE_ROOT (default data/cache/pose-provider).
+A STOP file in that namespace prevents new parent probes. Never touches originals.
 """
 import argparse
 import hashlib
@@ -8,6 +9,7 @@ import json
 import os
 from pathlib import Path
 import resource
+import re
 import subprocess
 import sys
 import time
@@ -17,7 +19,19 @@ from concurrent.futures import ThreadPoolExecutor
 
 def probe_cache_directory():
     # Provider experiments must never write into another worktree's cache namespace.
-    return Path('data/cache/pose-provider')
+    return Path(os.environ.get('EAGLE_POSE_PROBE_ROOT', 'data/cache/pose-provider'))
+
+
+def configure_probe_threads(runtime, threads):
+    """Private probe override; do not change production or accelerator sessions."""
+    if not isinstance(threads, int) or isinstance(threads, bool) or not 1 <= threads <= 8:
+        raise ValueError('Probe threads must be an integer from 1 to 8')
+    create_session = runtime.InferenceSession
+    def with_threads(model, *, sess_options, providers):
+        if providers[0] == 'CPUExecutionProvider':
+            sess_options.intra_op_num_threads = threads
+        return create_session(model, sess_options=sess_options, providers=providers)
+    runtime.InferenceSession = with_threads
 
 
 def worker(files, face=False):
@@ -52,6 +66,7 @@ def worker(files, face=False):
         imported = time.perf_counter() - started
         load = {}
         original = pw.session
+        configure_probe_threads(pw.ort, int(os.environ['EAGLE_POSE_THREADS']))
         def timed(model):
             before = time.perf_counter()
             value = original(model)
@@ -85,25 +100,32 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--provider', default='CPUExecutionProvider')
     parser.add_argument('--workers', type=int, choices=(1, 2), default=1)
+    parser.add_argument('--threads', type=int, choices=range(1, 9), default=1)
     parser.add_argument('--label', required=True)
     parser.add_argument('--child', action='store_true')
     parser.add_argument('--face', action='store_true')
     args = parser.parse_args()
+    if not args.child and (probe_cache_directory() / 'STOP').exists():
+        print(json.dumps({'probeSkipped': 'stop-requested', 'label': args.label}), flush=True)
+        return
+    if not re.fullmatch(r'[a-z0-9-]+', args.label):
+        raise ValueError('Label must contain only lowercase ASCII letters, digits and hyphens')
     if args.child:
         result = worker(json.loads(sys.stdin.read()), args.face)
         print(json.dumps(result), flush=True)
         return
-    print(json.dumps({'probeStart': args.label, 'provider': args.provider, 'workers': args.workers}), flush=True)
+    print(json.dumps({'probeStart': args.label, 'provider': args.provider, 'threads': args.threads, 'workers': args.workers}), flush=True)
     root = probe_cache_directory()
     root.mkdir(parents=True, exist_ok=True)
     manifest = root / 'probe-inputs.json'
     if not manifest.exists():
-        files = sorted(Path('data/cache/previews').glob('*.jpg'))[:10]
+        fixed = Path('data/cache/pose-provider/probe-inputs.json')
+        files = json.loads(fixed.read_text()) if fixed.exists() else sorted(Path('data/cache/previews').glob('*.jpg'))[:10]
         if len(files) != 10:
             raise RuntimeError('Need ten existing previews')
         manifest.write_text(json.dumps([str(p) for p in files]))
     files = json.loads(manifest.read_text())
-    env = dict(os.environ, EAGLE_POSE_PROVIDER=args.provider, OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1',
+    env = dict(os.environ, EAGLE_POSE_PROVIDER=args.provider, EAGLE_POSE_THREADS=str(args.threads), OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1',
                PROBE_RSS_BYTES=str(3 * 1024**3 // args.workers))
     processes = []
     started = time.perf_counter()
@@ -133,11 +155,18 @@ def main():
             return {'exitCode': p.returncode, 'elapsedSeconds': time.perf_counter()-started,
                     'peakMiB': None, 'predictions': [], 'failures': [{'error': 'See private stderr'}],
                     'stopped': stopped}
-        return json.loads(out)
+        for line in out.splitlines():
+            try:
+                value = json.loads(line)
+                if isinstance(value, dict) and 'predictions' in value:
+                    return value
+            except ValueError:
+                pass
+        raise RuntimeError('Probe returned no JSON predictions; inspect private stderr')
     with ThreadPoolExecutor(max_workers=args.workers) as executor:
         futures = [executor.submit(run, i) for i in range(args.workers)]
         results = [f.result() for f in futures]
-    report = {'provider': args.provider, 'workers': args.workers,
+    report = {'provider': args.provider, 'threads': args.threads, 'workers': args.workers,
               'wallSeconds': time.perf_counter()-started,
               'sumWorkerPeakMiB': sum(r['peakMiB'] or 0 for r in results) if all(r['peakMiB'] for r in results) else None,
               'inputSha256': [hashlib.sha256(Path(f).read_bytes()).hexdigest() for f in files], 'results': results}

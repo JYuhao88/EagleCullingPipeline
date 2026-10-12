@@ -60,7 +60,7 @@ function reviewFixture(results, { cards = [], onExposure = () => {} } = {}) {
       setAttribute() {}, addEventListener() {}
     });
     return nodes.get(selector);
-  }, querySelectorAll: () => cards };
+  }, querySelectorAll: selector => selector === "#group .unit" ? cards : [] };
   let state = { ...initialState, data: {
     units: [], items: [], results,
     groups: [{ id: "g", unitIds: results.map(item => item.unitId), ranking: [], suggested: {} }]
@@ -99,6 +99,20 @@ test("review cards tolerate missing faces and hide the group comparison button",
   assert.doesNotMatch(fixture.nodes.get("#group").innerHTML, /face-strip/);
   fixture.view.toggleFaces();
   assert.equal(fixture.state().faceCompare, false);
+});
+
+test('large groups request detail images only for the visible compare page and single focus', () => {
+  const fixture = reviewFixture(Array.from({ length: 40 }, (_, index) => ({ unitId: `unit:${index}` })));
+  fixture.view.render();
+  assert.equal((fixture.nodes.get('#group').innerHTML.match(/class="unit /g) || []).length, 8);
+  assert.equal((fixture.nodes.get('#group').innerHTML.match(/\/detail\//g) || []).length, 8);
+  assert.equal((fixture.nodes.get('#unitStrip').innerHTML.match(/\/preview\//g) || []).length, 40);
+  assert.match(fixture.nodes.get('#unitStrip').innerHTML, /loading="lazy"/);
+  assert.equal(fixture.nodes.get('#groupList').innerHTML, '');
+  fixture.view.setViewMode('single');
+  assert.equal((fixture.nodes.get('#group').innerHTML.match(/\/detail\//g) || []).length, 1);
+  fixture.view.setViewMode('grid');
+  assert.doesNotMatch(fixture.nodes.get('#group').innerHTML, /\/detail\//);
 });
 
 test("group comparison renders one column per photo with unmatched placeholders and toggles off", () => {

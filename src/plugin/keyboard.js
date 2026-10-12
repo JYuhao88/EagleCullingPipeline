@@ -6,6 +6,10 @@ export function keyboardAction(event, inInput = false, reasonsOpen = false) {
   if (reasonsOpen && /^[1-9]$/.test(event.key)) return { type: "rejectReason", index: Number(event.key) - 1 };
   if (reasonsOpen && ["Enter", "Escape"].includes(event.key)) return { type: "closeReasons" };
   if (event.key.toLowerCase() === "f" && !event.metaKey && !event.ctrlKey && !event.altKey) return { type: "faceCompare" };
+  if (event.key.toLowerCase() === "i") return { type: "info" };
+  if (event.key.toLowerCase() === "c") return { type: "view", mode: "compare" };
+  if (event.key.toLowerCase() === "v") return { type: "view", mode: "single" };
+  if (event.key.toLowerCase() === "b") return { type: "view", mode: "grid" };
   if (event.key.toLowerCase() === "l") return { type: event.shiftKey ? "nativeNextFace" : "nativeMagnifier" };
   if (event.key.toLowerCase() === "e") return { type: "nativeRegion" };
   if (event.key.toLowerCase() === "m") return { type: "moveUnit", delta: event.shiftKey ? 1 : -1 };

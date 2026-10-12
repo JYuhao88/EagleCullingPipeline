@@ -5,6 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import sharp from 'sharp';
 import { nativeCrop, normalizedRect, withNativeImage } from '../src/core/native-image.js';
+import { withPerformanceMode } from '../src/core/performance-mode.js';
 import { choosePreview } from '../src/core/previews.js';
 
 test('native crop uses upright original pixels and cache remains bounded', async () => {
@@ -77,4 +78,32 @@ test('all EXIF orientations match sharp auto-orientation including mirrored imag
       assert.deepEqual(result, expected, `orientation ${orientation}`);
     }
   } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+
+test('turbo pixel budget serializes 100 MP originals and cancelled queues release reservations', async () => {
+  const dir = await mkdtemp(path.join(os.tmpdir(), 'native-budget-'));
+  try {
+    const file = path.join(dir, 'image.jpg');
+    await sharp({create:{width:8,height:8,channels:3,background:'red'}}).jpeg().toFile(file);
+    await withPerformanceMode('turbo', async () => {
+      let active = 0, peak = 0;
+      const record = {filePath:file,ext:'jpg',width:10000,height:10000};
+      const tasks = Array.from({length:4}, () => withNativeImage(record, {}, async () => {
+        peak = Math.max(peak, ++active);
+        await new Promise(resolve => setTimeout(resolve, 10));
+        active--;
+      }));
+      await Promise.all(tasks);assert.equal(peak,1);
+      const controller = new AbortController();
+      const first = withNativeImage(record, {}, async () => {
+        await new Promise(resolve => setTimeout(resolve, 20));
+      });
+      const queued = withNativeImage(record, {signal:controller.signal}, () => assert.fail('cancelled queue ran'));
+      const rejected = assert.rejects(queued,/cancelled/);
+      controller.abort(new Error('cancelled'));
+      await Promise.all([first,rejected]);
+      assert.equal(await withNativeImage(record, {}, () => 'reused'), 'reused');
+    });
+  } finally {await rm(dir,{recursive:true,force:true});}
 });

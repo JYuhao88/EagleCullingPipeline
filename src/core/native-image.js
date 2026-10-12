@@ -1,3 +1,4 @@
+import { performanceMode, nativeChildLaunch } from './performance-mode.js';
 import { exiftoolRequest, workerLimit } from './exiftool-pool.js';
 import { replaceFile } from './atomic-file.js';
 import { localSetting } from './local-config.js';
@@ -14,13 +15,27 @@ const decoder = fileURLToPath(new URL('../../ml/raw/decode.py', import.meta.url)
 const fileOf = item => item?.filePath || item?.path || item?.analysisPath;
 const extension = item => String(item?.ext || path.extname(fileOf(item) || '').slice(1)).toLowerCase();
 let active = 0;
+let reservedBytes = 0;
 const waiting = [];
+const DECODE_BUDGET_BYTES = 1536 * 1024 ** 2;
+export function nativeDecodeReservation(record, options = {}) {
+  // Allow decoder, orientation, JPEG encoding and ROI decoding working sets.
+  const pixels = [record, ...(options.pairedItems || record.pairedItems || [])]
+    .map(item => Number(item.width) * Number(item.height)).filter(value => Number.isFinite(value) && value > 0);
+  return pixels.length ? Math.min(DECODE_BUDGET_BYTES, Math.max(...pixels) * 16) : DECODE_BUDGET_BYTES;
+}
+export function nativeDecodeLimit() {
+  // Full-resolution 100 MP decodes have a much larger working set than model previews.
+  return Math.min(performanceMode() === 'turbo' ? 2 : Infinity, workerLimit('EAGLE_NATIVE_CONCURRENCY'));
+}
 // Full-resolution buffers stay bounded; two concurrent decodes are opt-in.
 async function serial(fn, options = {}) {
   options.signal?.throwIfAborted();
-  if (active >= workerLimit('EAGLE_NATIVE_CONCURRENCY') || (options.background && active > 0)) {
+  const bytes = options.decodeBytes || DECODE_BUDGET_BYTES;
+  const budget = performanceMode() === 'turbo' ? DECODE_BUDGET_BYTES : Infinity;
+  if (active >= nativeDecodeLimit() || reservedBytes + bytes > budget || (options.background && active > 0)) {
     await new Promise((resolve, reject) => {
-      const entry = { resolve, reject, background: options.background };
+      const entry = { resolve, reject, background: options.background, limit: nativeDecodeLimit(), bytes, budget };
       const abort = () => {
         const index = waiting.indexOf(entry);
         if (index >= 0) waiting.splice(index, 1);
@@ -30,18 +45,21 @@ async function serial(fn, options = {}) {
       options.signal?.addEventListener('abort', abort, { once: true });
       waiting.push(entry);
     });
-  } else active += 1;
+  } else { active += 1; reservedBytes += bytes; }
   try {
     options.signal?.throwIfAborted();
     if (options.isBusy?.()) return { available: false, naReason: 'analysis-busy' };
     return await fn();
   } finally {
     active -= 1;
-    const index = waiting.findIndex(entry => !entry.background);
+    reservedBytes -= bytes;
+    const index = waiting.findIndex(entry => !entry.background && active < entry.limit
+      && reservedBytes + entry.bytes <= entry.budget);
     // Background generation must not start alongside another native decode.
-    if (index >= 0 || active === 0) {
-      const next = waiting.splice(index < 0 ? 0 : index, 1)[0];
-      if (next) { active += 1; next.resolve(); }
+    if (index >= 0 || (active === 0 && waiting.some(entry => entry.background))) {
+      const nextIndex = index >= 0 ? index : waiting.findIndex(entry => entry.background);
+      const next = waiting.splice(nextIndex, 1)[0];
+      if (next) { active += 1; reservedBytes += next.bytes; next.resolve(); }
     }
   }
 }
@@ -55,18 +73,19 @@ function command(program, args, { binary = false, timeoutMs = 60000, single = fa
     if (process.platform === 'win32') args = ['-charset', 'filename=UTF8', ...args];
   }
   return new Promise((resolve, reject) => {
-    const child = process.platform === 'win32'
-      ? spawn(program, args, { windowsHide: true, signal })
-      : spawn('nice', ['-n', '15', program, ...args], { signal });
+    const launch = nativeChildLaunch(program, args);
+    const child = spawn(launch.command, launch.args, { windowsHide: true, signal });
     if (process.platform === 'win32') child.once('spawn', () => {
-      try { os.setPriority(child.pid, os.constants.priority.PRIORITY_BELOW_NORMAL); }
+      try { os.setPriority(child.pid, performanceMode() === 'turbo' ? os.constants.priority.PRIORITY_NORMAL
+      : os.constants.priority.PRIORITY_BELOW_NORMAL); }
       catch (error) { child.kill(); child.emit('error', error); }
     });
     const chunks = []; let bytes = 0; let stderr = '';
-    const timer = setTimeout(() => child.kill('SIGKILL'), timeoutMs);
+    const terminate = () => child.kill(performanceMode() === 'turbo' ? 'SIGTERM' : 'SIGKILL');
+    const timer = setTimeout(terminate, timeoutMs);
     child.stdout.on('data', chunk => {
       bytes += chunk.length;
-      if (bytes > 128 * 1024 * 1024) child.kill('SIGKILL'); else chunks.push(chunk);
+      if (bytes > 128 * 1024 * 1024) terminate(); else chunks.push(chunk);
     });
     child.stderr.on('data', chunk => { stderr = (stderr + chunk).slice(-4096); });
     child.on('error', error => { clearTimeout(timer); reject(error); });
@@ -161,7 +180,7 @@ async function openNative(record, options, callback) {
 }
 
 export async function withNativeImage(record, options = {}, callback) {
-  return serial(() => openNative(record, options, callback), options);
+  return serial(() => openNative(record, options, callback), { ...options, decodeBytes: nativeDecodeReservation(record, options) });
 }
 
 export async function nativeFingerprint(record, paired) {
@@ -219,5 +238,5 @@ export async function nativeCrop(record, box, options = {}) {
     await trimCache(dir, options.maxBytes ?? 256 * 1024 * 1024, options.maxEntries ?? 1000);
     options.signal?.throwIfAborted();
     return result;
-  }, options);
+  }, { ...options, decodeBytes: nativeDecodeReservation(record, options) });
 }

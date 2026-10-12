@@ -5,6 +5,8 @@ import path from 'node:path';
 export async function checkUpdateVersion(tag, cwd = process.cwd()) {
   const packageJson = JSON.parse(await readFile(path.join(cwd, 'package.json'), 'utf8'));
   const manifest = JSON.parse(await readFile(path.join(cwd, 'src/plugin/manifest.json'), 'utf8'));
+  const inspector = JSON.parse(await readFile(path.join(cwd, 'src/inspector/manifest.json'), 'utf8'));
+  if (packageJson.version !== inspector.version) throw new Error('package.json 与检查器 manifest 版本不一致');
   if (packageJson.version !== manifest.version) throw new Error('package.json 与插件 manifest 版本不一致');
   if (tag && (!/^v\d+\.\d+\.\d+$/.test(tag) || tag !== `v${packageJson.version}`)) {
     throw new Error('发布 tag 与 package.json / manifest 版本不一致');

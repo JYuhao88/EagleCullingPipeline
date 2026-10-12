@@ -5,7 +5,7 @@ import { handleFeedbackRoute } from "./feedback-routes.js";
 import { DecisionsStore } from "../core/decisions-store.js";
 import {
   planWriteback, applyWriteback, withLiveTags, planRevertWriteback,
-  validateRevertRecords, writebackRecords, revertedRecords
+  validateRevertRecords, writebackRecords, revertedRecords, mergeWritebackRecords, addLiveStars, summarizeWriteback
 } from "../core/writeback.js";
 import { handleGroupRoute } from "./group-routes.js";
 import { buildReport, reportCsv } from "../core/report.js";
@@ -21,6 +21,8 @@ export async function handleReviewRoute(req, res, ctx) {
   // Mutations reload the current full state inside their run queue. Training
   // and status only need the run identity; neither should parse all embeddings.
   const metadataOnly = req.method === "POST" && action === "decisions" ||
+    req.method === "POST" && url.pathname === `/runs/${runId}/writeback/live` ||
+    req.method === 'GET' && action === 'review-progress' ||
     action === "learning" && (req.method === "GET" || /\/learning\/(train|rollback)$/.test(url.pathname));
   if (req.method === 'GET' && action === 'report' && ctx.runStore.page) {
     return streamReport(req, res, ctx.runStore, runId, url, ctx.json);
@@ -51,6 +53,23 @@ export async function handleReviewRoute(req, res, ctx) {
   if (await handleGroupRoute(req, res, ctx, data)) return true;
 
   const store = new DecisionsStore(ctx.runStore.dir(runId));
+  if (req.method === 'GET' && action === 'review-progress') {
+    const groups = ctx.runStore.reviewSummary ? await ctx.runStore.reviewSummary(runId) : data.groups;
+    const human = new Set((await store.read()).filter(row => row.source === 'human').map(row => row.unitId));
+    ctx.json(res, 200, { total: groups?.length ?? data.run.groupCount ?? 0,
+      reviewed: groups ? groups.filter(group => group.unitIds.length && group.unitIds.every(id => human.has(id))).length : null });
+    return true;
+  }
+  if (req.method === 'POST' && url.pathname === `/runs/${runId}/writeback/live`) {
+    const body = await ctx.readBody(req);
+    if (!Array.isArray(body.unitIds) || !body.unitIds.length || body.unitIds.length > 10000 ||
+      body.unitIds.some(id => typeof id !== 'string' || !id)) {
+      ctx.json(res, 400, { error: 'unitIds must be a non-empty array of unit IDs (maximum 10000)' });
+      return true;
+    }
+    const ids = [...new Set(body.unitIds)];
+    return serializeWriteback(ctx, runId, fresh => liveRun(res, ctx, fresh, store, ids, body.star === true), ids);
+  }
   if (req.method === "GET" && url.pathname === `/runs/${runId}/personalize`) {
     ctx.json(res, 200, personalizeReport(data, await store.read()));
     return true;
@@ -165,9 +184,41 @@ async function applyRun(req, res, ctx, data, store) {
       : { dryRun: true, ids };
   }
   if (body.apply === true) {
-    await ctx.runStore.saveApplied(data.run.id, writebackRecords(plan, result));
+    const records = writebackRecords(plan, result);
+    const hasLiveHistory = data.applied?.some(record => record.live && !record.revertedAt);
+    await ctx.runStore.saveApplied(data.run.id, hasLiveHistory ? mergeWritebackRecords(data.applied, records) : records);
   }
   ctx.json(res, 200, result);
+  return true;
+}
+
+async function liveRun(res, ctx, data, store, unitIds, star) {
+  const wanted = new Set(unitIds);
+  const units = data.units.filter(unit => wanted.has(unit.id));
+  const itemIds = new Set(units.flatMap(unit => unit.itemIds || [unit.primaryItemId]));
+  const scoped = { ...data, units, results: data.results.filter(row => wanted.has(row.unitId)),
+    items: data.items.filter(item => itemIds.has(item.id) || wanted.has(item.unitId)) };
+  if (units.length !== wanted.size) {
+    ctx.json(res, 400, { error: 'Unknown unit ID' }); return true;
+  }
+  const applied = ctx.runStore.applied ? await ctx.runStore.applied(data.run.id) : data.applied || [];
+  const decisions = await store.effective(scoped.results, scoped.groups);
+  const human = new Set(decisions.filter(row => row.source === 'human').map(row => row.unitId));
+  const live = await liveItems(ctx.api, scoped, true);
+  const plan = addLiveStars(planWriteback({ ...scoped, items: live.items,
+    results: scoped.results.filter(row => human.has(row.unitId)), decisions }), live.items, star);
+  // Clearing a human decision restores the baseline, rather than committing an AI suggestion.
+  const clearedItems = new Set(units.filter(unit => !human.has(unit.id)).flatMap(unit => unit.itemIds || [unit.primaryItemId]));
+  const cleared = applied.filter(record => !record.revertedAt && clearedItems.has(record.id));
+  if (cleared.length) plan.items.push(...planRevertWriteback({ applied: cleared, items: live.items }).items);
+  // Rebuild exact counts after joining normal and undo plans.
+  plan.changed = plan.items.filter(row => row.changed);
+  plan.unchanged = plan.items.filter(row => !row.changed);
+  plan.summary = summarizeWriteback(plan.items);
+  const result = await applyWriteback(plan, ctx.api, { apply: true });
+  const records = writebackRecords(plan, result).map(record => ({ ...record, live: true }));
+  await ctx.runStore.saveApplied(data.run.id, mergeWritebackRecords(applied, records));
+  ctx.json(res, 200, { ...result, liveTags: true });
   return true;
 }
 

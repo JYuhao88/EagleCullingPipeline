@@ -134,6 +134,8 @@ export class EagleApi {
   }
 
   updateItem(item) {
+    // Official /api/item/update supports optional star (ratings) alongside tags.
+    // https://api.eagle.cool/item/update.md; callers must preserve existing ratings.
     return this.post("item/update", item);
   }
 

@@ -1,0 +1,9 @@
+:root { font-family: var(--ec-font); font-size: var(--ec-font-size-small); color: var(--ec-text); background: var(--ec-bg); }
+body { margin: 0; padding: 8px 10px; }
+#status { display: inline-block; padding: 3px 6px; border-radius: var(--ec-radius); background: var(--ec-surface-2); font-size:
+  var(--ec-font-size); }
+#status[data-tone="selected"] { color: var(--ec-pick); }
+#status[data-tone="rejected"] { color: var(--ec-reject); }
+p { margin: 5px 0; line-height: 1.45; color: var(--ec-text-dim); overflow-wrap: anywhere; }
+summary { cursor: pointer; }
+[hidden] { display: none; }

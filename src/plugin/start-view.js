@@ -1,8 +1,13 @@
-import { defaultRepository, serviceCommand, serviceLaunch } from "./service-start.js";
-import { primaryAnalysis, analysisStages, stageIndex, readRecentRuns, analysisProgress } from "./start-model.js";
+import { initEagleTheme } from "./theme.js";
+import { mountPanelSettings } from "./panel-settings.js";
+import { shouldAutoStart, launchLocalService, createRunNotifier, mountBackgroundLifecycle } from "./background.js";
+import { defaultRepository, serviceCommand } from "./service-start.js";
+import { primaryAnalysis, analysisStages, stageIndex, readRecentRuns, analysisProgress, scopeLabel, completionText } from
+  "./start-model.js";
 import { eagleContext, isEagleEnvironment } from "./api.js";
 
 export function createStartView({ root, api, getApi = () => api, onRun, autoCheck = true, autoRefresh = true }) {
+  void initEagleTheme();
   const health = root.querySelector("#health");
   const libraryInput = root.querySelector("#libraryPath");
   const runInput = root.querySelector("#runId");
@@ -19,29 +24,44 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   let activeRun = null;
   let pollToken = 0;
   let connected = false;
+  let serviceBase = getApi().base;
   let submitting = false;
   let context = {};
   let contextKey = "";
   let contextTimer = null;
+  let healthTimer = null;
+  let visible = !globalThis.eagle && !root.hidden;
+  let launching = false;
+  let contextVersion = 0;
+  let disposed = false;
   let recentCursor = null;
   let recentToken = 0;
   const recentDetails = new Map();
   const optional = id => root.querySelector(`#${id}`);
   const showText = (id, value) => { const element = optional(id); if (element) element.textContent = value; };
   const storage = globalThis.localStorage;
+  const notify = createRunNotifier({ storage, base: () => getApi().base });
   function renderContext() {
     const model = primaryAnalysis(context, connected, Boolean(activeRun) || submitting);
     const button = root.querySelector("#analyzeSelected");
+    button.hidden = Boolean(activeRun);
     button.textContent = model.label;
     button.disabled = model.disabled;
     root.querySelector("#analyzeAll").disabled = !connected || Boolean(activeRun) || submitting;
+    showText("scopeLabel", scopeLabel(context));
     showText("selectionHint", model.hint);
     showText("libraryName", context.libraryName || "浏览器预览");
     showText("folderName", context.folders?.map(folder => folder.name).join("、") || "未选择");
-    showText("selectionCount", `${context.itemIds?.length || 0} 张`);
+    showText("selectionCount", `${context.selectionCount ?? context.itemIds?.length ?? 0} 张`);
     const count = context.libraryCount;
     root.querySelector("#analyzeAll").textContent = `分析整个资源库${count == null ? "（张数待扫描）" : `（${count} 张）`}`;
     showText("allHint", `${count == null ? "扫描后确认总张数；" : `共 ${count} 张；`}全库分析可能较久，建议先试一个文件夹。`);
+    syncPrimary();
+  }
+  // Only one primary action: a finished, unopened result outranks starting a new analysis.
+  function syncPrimary() {
+    const reviewReady = optional("resumeArea") && !optional("resumeArea").hidden;
+    root.querySelector("#analyzeSelected")?.classList?.toggle("primary", !reviewReady);
   }
   async function refreshContext() {
     if (!isEagleEnvironment()) {
@@ -49,7 +69,9 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
       renderContext();
       return;
     }
-    const next = await eagleContext();
+    const version = ++contextVersion;
+    const next = await eagleContext({ lightweight: true });
+    if (version !== contextVersion || disposed) return;
     const key = JSON.stringify([next.libraryPath, next.folders.map(folder => folder.id)]);
     if (key !== contextKey) {
       const full = next;
@@ -73,15 +95,19 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     const container = optional("recentRuns");
     if (!container) return;
     const token = ++recentToken;
-    if (!append) { container.replaceChildren(); recentDetails.clear(); }
+    if (!append) { container.replaceChildren(); optional("historyRuns")?.replaceChildren(); recentDetails.clear(); }
     showText("recentStatus", "正在读取最近的分析…");
     try {
       let response;
-      try { response = await getApi()(`/runs?limit=6&cursor=${append ? recentCursor : 0}`); }
+      try { response = await
+        getApi()(`/runs?limit=20&cursor=${append ? recentCursor : 0}`
+          + (context.libraryPath ? `&libraryPath=${encodeURIComponent(context.libraryPath)}` : "")); }
       catch {
         const runs = [];
         for (const id of readRecentRuns(storage)) {
-          try { runs.push(await getApi()(`/runs/${id}`)); } catch { /* Missing old runs can be ignored. */ }
+          try { const run = await getApi()(`/runs/${id}`);
+            if (!context.libraryPath || run.libraryPath === context.libraryPath) runs.push(run); } catch { /* Missing old runs can
+              be ignored. */ }
         }
         response = { runs, page: { nextCursor: null }, localOnly: true };
       }
@@ -89,9 +115,11 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
       recentCursor = response.page?.nextCursor ?? null;
       if (!append) {
         const latest = (response.runs || []).find(run => run.status === "completed");
-        if (latest && !activeRun) showResume(latest);
+        if ((latest || completedResult) && !activeRun) showResume(completedResult && (!latest ||
+          !(Date.parse(latest.startedAt) > Date.parse(completedResult.startedAt))) ? completedResult : latest);
         else if (optional("resumeArea")) optional("resumeArea").hidden = true;
       }
+      let recentCount = 0;
       for (const run of response.runs || []) {
         const card = root.createElement("article");
         card.className = "recent-run";
@@ -111,7 +139,8 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
         const button = root.createElement("button");
         button.textContent = ["failed", "cancelled", "interrupted"].includes(run.status) ? "重新分析"
           : run.status === "completed" ? "继续审阅" : "查看进度";
-        button.addEventListener("click", async () => {
+        const activate = async () => {
+          if (button.disabled) return;
           button.disabled = true;
           try {
             if (run.status === "completed") await onRun(run.id);
@@ -123,6 +152,10 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
               : `无法打开：${error.message}。请重试或检查服务连接。`);
           }
           finally { button.disabled = false; }
+        };
+        button.addEventListener("click", activate);
+        card.addEventListener("click", event => {
+          if (!event.target.closest?.("button")) void activate();
         });
         card.append(title, detail);
         if (["failed", "cancelled", "interrupted"].includes(run.status)) {
@@ -132,7 +165,14 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
           card.append(reason);
         }
         card.append(button);
-        container.append(card);
+        if (!append && recentCount++ < 3) container.append(card);
+        const history = optional("historyRuns");
+        if (history && card.cloneNode) {
+          const copy = card.cloneNode(true);
+          copy.querySelector("button")?.addEventListener("click", activate);
+          copy.addEventListener("click", event => { if (!event.target.closest?.("button")) void activate(); });
+          history.append(copy);
+        } else history?.append(card);
       }
       showText("recentStatus", response.runs?.length ? response.localOnly ? "当前服务不支持列表，显示本机最近记录。" : ""
         : "还没有分析记录。选几张照片，开始第一次分析吧。");
@@ -152,19 +192,28 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   }
 
   async function checkHealth() {
+    if (serviceBase !== getApi().base) {
+      serviceBase = getApi().base; stopPolling(); activeRun = null;
+      resumeId = null; completedResult = null; progress.hidden = true;
+      if (optional("resumeArea")) optional("resumeArea").hidden = true;
+    }
     try {
       const response = await getApi()("/health");
       if (response.service !== "eagle-culling") throw new Error("服务类型不匹配");
       connected = true;
-      health.textContent = "✓ 已连接";
+      health.textContent = "已连接";
+      health.title = "本机分析服务已连接";
+      if (health.dataset) health.dataset.state = "connected";
       renderContext();
       await refreshRecent();
       guide.hidden = true;
-      await recoverRun();
+      if (!activeRun) await recoverRun();
       return true;
     } catch {
       connected = false;
-      health.textContent = "未连接 · 启动服务后即可分析照片";
+      health.textContent = launching ? "启动中" : "未运行";
+      health.title = "分析服务未运行；点击重试启动或在设置中查看诊断";
+      if (health.dataset) health.dataset.state = launching ? "starting" : "offline";
       renderContext();
       guide.hidden = false;
       updateCommand();
@@ -184,48 +233,31 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
       health.textContent = "启动命令已复制，请在终端粘贴执行后重试连接";
     } catch (error) { health.textContent = `复制失败，请手动选择命令复制：${error.message}`; }
   });
-  startButton.addEventListener("click", async () => {
-    startButton.disabled = true;
+  async function startService(automatic = false) {
+    if (launching || disposed) return;
+    if (automatic && !shouldAutoStart({ connected, enabled: storage.getItem('eagle-culling-autostart') !== '0',
+      repository: repository.value, base: getApi().base })) return;
+    if (typeof globalThis.require !== 'function') return;
+    launching = true; startButton.disabled = true;
     try {
-      if (await checkHealth()) { startButton.disabled = false; return; }
-      const options = serviceLaunch(repository.value, getApi().base);
-      const { spawn } = require("node:child_process");
-      const child = spawn(options.command, options.args,
-        { cwd: options.cwd, detached: true, stdio: "ignore", windowsHide: true });
-      if (options.command === "node" && child.pid) {
-        try { require("node:os").setPriority(child.pid, require("node:os").constants.priority.PRIORITY_BELOW_NORMAL); }
-        catch (error) { health.textContent = `无法降低服务优先级：${error.message}`; }
+      if (await checkHealth()) return;
+      if (automatic && storage.getItem('eagle-culling-autostart') === '0') return;
+      await launchLocalService({ repository: repository.value, base: getApi().base,
+        allowed: () => !automatic || storage.getItem("eagle-culling-autostart") !== "0" });
+      for (let attempt = 0; attempt < 30 && !disposed; attempt++) {
+        if (await checkHealth()) return;
+        showText('serviceHint', '启动中…');
+        await new Promise(resolve => { serviceTimer = setTimeout(resolve, 1000); });
       }
-      let startupFailed = false;
-      child.on("error", error => {
-        startupFailed = true;
-        clearTimeout(serviceTimer);
-        health.textContent = `启动失败：${error.message}。请使用复制命令。`;
-        if (optional("advancedSettings")) optional("advancedSettings").open = true;
-        startButton.disabled = false;
-      });
-      child.unref();
-      let attempts = 0;
-      const poll = async () => {
-        if (startupFailed) return;
-        if (await checkHealth()) { startButton.disabled = false; return; }
-        if (startupFailed) return;
-        if (++attempts >= 30) {
-          health.textContent = "启动后仍未连接，请检查仓库路径和终端 node 命令，再重试连接";
-          if (optional("advancedSettings")) optional("advancedSettings").open = true;
-          startButton.disabled = false;
-          return;
-        }
-        health.textContent = "正在等待本地服务启动…";
-        serviceTimer = setTimeout(poll, 1000);
-      };
-      await poll();
+      throw new Error('启动后仍未连接，请检查 Node 和仓库路径');
     } catch (error) {
-      health.textContent = `无法直接启动：${error.message}。请使用复制命令。`;
-      if (optional("advancedSettings")) optional("advancedSettings").open = true;
-      startButton.disabled = false;
-    }
-  });
+      showText('serviceHint', '启动失败');
+      showText('serviceDiagnostics', error.message);
+      health.textContent = '未运行'; health.title = error.message;
+      guide.hidden = false; startButton.hidden = false;
+    } finally { launching = false; startButton.disabled = false; }
+  }
+  startButton.addEventListener('click', () => startService());
 
   async function startAnalysis(itemIds) {
     if (submitting || activeRun) return;
@@ -253,7 +285,8 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     health.textContent = '正在提交分析；首次全库可能需要数小时，建议先试几百张。';
     try {
       const run = await getApi()("/runs", {
-        method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body)
+        method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...body, performanceMode:
+          storage.getItem("eagle-culling-turbo") === "1" ? "turbo" : "normal" })
       });
       const recent = [run.id, ...readRecentRuns(storage).filter(id => id !== run.id)].slice(0, 10);
       storage.setItem("eagle-culling-recent-runs", JSON.stringify(recent));
@@ -277,6 +310,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   async function watchRun(id) {
     stopPolling(); activeRun = id; runInput.value = id; progress.hidden = false; renderContext();
     if (optional("resumeArea")) optional("resumeArea").hidden = true;
+    storage.setItem(`eagle-culling-active:${getApi().base}`, id);
     await pollRun(id, pollToken);
   }
 
@@ -287,6 +321,12 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
         health.textContent = '已有分析在进行，可查看下方进度或取消。';
         await watchRun(status.active.id);
       } else {
+        const pendingId = storage.getItem(`eagle-culling-active:${getApi().base}`);
+        if (pendingId) {
+          const pending = await getApi()(`/runs/${pendingId}`);
+          await notify(pending); storage.removeItem?.(`eagle-culling-active:${getApi().base}`);
+          if (pending.status === "completed") showResume(pending);
+        }
         const latest = status.recent?.[0];
         if (!latest) return;
         runInput.value = latest.id;
@@ -300,14 +340,15 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   }
 
   let resumeId = null;
+  let completedResult = null;
   function showResume(run) {
     const area = optional("resumeArea");
     if (!area) return;
-    resumeId = run.id;
-    const parts = [run.scope?.label, run.startedAt && new Date(run.startedAt).toLocaleString("zh-CN"),
-      run.itemCount && `${run.itemCount} 张`, run.groupCount && `${run.groupCount} 组`].filter(Boolean);
-    showText("resumeDetail", parts.length ? `最近结果：${parts.join(" · ")}` : "最近一次分析已完成");
+    if (context.libraryPath && run.libraryPath && context.libraryPath !== run.libraryPath) { area.hidden = true; return; }
+    resumeId = run.id; completedResult = run;
+    showText("resumeDetail", `${run.scope?.label || "最近结果"} · ${completionText(run)}`);
     area.hidden = false;
+    syncPrimary();
   }
   optional("resumeLatest")?.addEventListener("click", async () => {
     if (!resumeId) return;
@@ -340,13 +381,15 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
       progress.hidden = run.status === "completed";
       if (run.status === "completed" && token === pollToken && activeRun === runId) {
         activeRun = null;
-        await onRun(runId);
+        showResume(run);
       }
       if (run.status !== "completed") {
         activeRun = null;
         progressText.textContent = run.status === "failed" ? friendlyFailure(run.error)
           : "分析已取消或中断。可在最近的分析中重新分析并复用缓存。";
       }
+      await notify(run);
+      storage.removeItem?.(`eagle-culling-active:${getApi().base}`);
       renderContext();
       await refreshRecent();
       return;
@@ -354,11 +397,11 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     queuePoll(runId, token);
   }
 
-  function queuePoll(runId, token, delay = 700) {
+  function queuePoll(runId, token, delay = 5000) {
     timer = setTimeout(() => pollRun(runId, token).catch(error => {
       if (token !== pollToken || activeRun !== runId) return;
       progressText.textContent = friendlyFailure(error.message);
-      queuePoll(runId, token, 2000);
+      queuePoll(runId, token, 5000);
     }), delay);
   }
 
@@ -385,8 +428,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   root.querySelector("#openRun").addEventListener("click", () => {
     const runId = runInput.value.trim();
     if (runId) {
-      stopPolling();
-      watchRun(runId).catch(error => { health.textContent = friendlyFailure(error.message); });
+      onRun(runId).catch(error => { health.textContent = friendlyFailure(error.message); });
     }
   });
   runInput.addEventListener("keydown", event => {
@@ -394,29 +436,54 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     event.preventDefault();
     const runId = runInput.value.trim();
     if (runId) {
-      stopPolling();
-      watchRun(runId).catch(error => { health.textContent = friendlyFailure(error.message); });
+      onRun(runId).catch(error => { health.textContent = friendlyFailure(error.message); });
     }
   });
-  if (autoRefresh && optional("libraryName")) {
-    let checks = 0;
-    const refresh = async () => {
-      if (!optional("start")?.hidden) {
-        try { await refreshContext(); } catch (error) { showText("selectionHint", `无法读取 Eagle 选择：${error.message}。请重试。`); }
-        if (++checks % 4 === 0) {
-          try {
-            const response = await getApi()("/health");
-            if (response.service !== "eagle-culling") throw new Error("服务类型不匹配");
-            if (!connected) await checkHealth();
-          } catch { if (connected) await checkHealth(); }
-        }
-      }
-      contextTimer = setTimeout(refresh, 2500);
-    };
-    void refresh();
+  const settings = mountPanelSettings({ root, storage, onPersonalization: async () => {
+    if (!resumeId) { showText('serviceDiagnostics', '先完成一次分析，再打开个性化设置。'); return; }
+    await onRun(resumeId); root.querySelector('#reviewSettings')?.showModal?.();
+  } });
+  function setVisible(value) {
+    visible = value; contextVersion++; clearTimeout(contextTimer);
+    if (visible && autoRefresh) void refreshContext()
+      .then(() => { if (visible && !disposed) return refreshRecent(); })
+      .catch(() => {}).then(refreshVisible);
   }
-  if (autoCheck) void checkHealth();
-  return { checkHealth, refreshContext, refreshRecent, dispose() {
-    stopPolling(); clearTimeout(serviceTimer); clearTimeout(contextTimer); recentToken += 1;
+  async function refreshVisible() {
+    if (!visible || disposed || root.hidden) return;
+    if (!optional('start')?.hidden) {
+      try { await refreshContext(); } catch (error) { showText('selectionHint', error.message); }
+    }
+    if (visible && !disposed) { clearTimeout(contextTimer); contextTimer = setTimeout(refreshVisible, 1500); }
+  }
+  mountBackgroundLifecycle({ onVisible: setVisible, onCreate: async () => {
+    await checkHealth(); await startService(true);
+  } });
+  globalThis.eagle?.onLibraryChanged?.(libraryPath => {
+    contextVersion++; contextKey = ''; context = { libraryPath, libraryName: libraryPath?.split(/[\\/]/).pop(), itemIds: [],
+      folders: [] }; resumeId = null; completedResult = null;
+    recentToken++; optional('recentRuns')?.replaceChildren(); optional('historyRuns')?.replaceChildren();
+    if (optional('resumeArea')) optional('resumeArea').hidden = true;
+    renderContext();
+    void refreshRecent();
+    if (visible) void refreshContext().then(() => { if (visible) return refreshRecent(); }).catch(() => {});
+  });
+  root.addEventListener?.('visibilitychange', () => setVisible(!root.hidden));
+  if (autoRefresh) {
+    setVisible(visible);
+    // Idle discovery uses health only; the server reports whether a run exists.
+    healthTimer = setInterval(async () => {
+      try {
+        const response = await getApi()('/health');
+        if (response.service !== 'eagle-culling') throw new Error('服务类型不匹配');
+        if (!connected || response.activeRunId && !activeRun) await checkHealth();
+      } catch { connected = false; health.textContent = "未运行"; health.title = "分析服务未运行";
+        if (health.dataset) health.dataset.state = "offline"; guide.hidden = false; renderContext(); }
+    }, 60000);
+  }
+  if (autoCheck) void checkHealth().then(() => startService(true));
+  return { checkHealth, refreshContext, refreshRecent, setVisible, startService, settings, dispose() {
+    disposed = true; stopPolling(); clearTimeout(serviceTimer); clearTimeout(contextTimer); clearInterval(healthTimer);
+      recentToken += 1; contextVersion++;
   } };
 }

@@ -1,3 +1,4 @@
+import { createItemAnalysisRouter } from "./server/item-analysis.js";
 import http from "node:http";
 import { Updater } from "./core/updater.js";
 import { createUpdateRouter } from "./server/update-routes.js";
@@ -29,6 +30,7 @@ export function createAnalysisServer({
   const runs = createRunsRouter({ pipeline, store: runStore, active, scanItems, isUpdating: () => updater.isUpdating() });
   const ctx = { runStore, api, json, readBody: parseBody, clock };
   const rules = createRulesRouter();
+  const itemAnalysis = createItemAnalysisRouter(runStore);
   const server = http.createServer(async (req, res) => {
     try {
       const url = new URL(req.url, `http://${host}:${port}`);
@@ -39,9 +41,11 @@ export function createAnalysisServer({
           ok: true,
           service: "eagle-culling",
           contractVersion: 1,
+          activeRunId: active.run?.id || null,
           updateToken: process.env.EAGLE_UPDATE_CANDIDATE || null,
         });
       }
+      if (await itemAnalysis(req, res, url)) return;
       if (await runs(req, res, url)) return;
       if (await rules(req, res)) return;
       if (await handleReviewRoute(req, res, ctx)) return;

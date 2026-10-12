@@ -144,3 +144,28 @@ python_worker/.venv/bin/python scripts/bench-pose-provider.py --face --label fac
 原始预测、错误日志、输入路径和图片哈希仅在不入库的 `pose-provider/` 中。
 CPU 与 CoreML 回退后的结果可以比较；有效 CoreML 与 CPU 的数值一致性未完成，
 因为 CoreML 检测失败。**未在 Windows 验证**；仅有配置策略的单元测试。
+
+## W23：CPU 线程默认 3 与默认关闭的全速模式
+
+CPU 会话新增 `EAGLE_POSE_THREADS`（环境变量或 localSetting 字符串配置，范围 1–8），默认 3。
+普通模式两个 workers 的线程总预算不超过 6；加速 provider 选择、线程选项及 Windows 缓存键不变。
+实际线程写入 `pose.diagnostics.intraOpThreads`，不进入姿态缓存键，已有线程 1 的有效缓存继续复用。
+全速请求与 UI、内存预算和完整复现命令见 [performance-mode.md](performance-mode.md)。
+
+同批 10 张、线程 {1,2,3,4} × workers {1,2} 两轮反向交替，均在共享重负载锁内运行。
+单 worker 线程 1/2/3/4 两轮平均分别为 75.362 / 41.535 / 31.720 / 27.002 秒；
+双 worker 分别为 46.827 / 30.220 / 27.909 / 29.417 秒。
+默认双 worker × 3 比双 worker × 1 耗时减少约 40.4%，进程峰值之和为 1045.891 / 1087.109 MiB。
+线程 4 的双 worker 超过 6 线程办公预算且没有进一步加速，因此推荐普通默认 3。
+这是后台 nice 20 的相对结果，绝对时间需由主代理前台复测。
+
+逐张比较覆盖 10 张、21 人、2793 关键点，16 组派生 signals 与规则 verdicts 均完全一致。
+只剔除 persons 中的原始 box/score/keypoints，其它全部计算字段仍严格比较。
+原始坐标最大绝对差 0.002562533593166272，各组平均绝对差最大 4.655611242191994e-7；
+原始预测并不逐字节相同。没有改舍入、规则、阈值或模型输出来制造相等。
+具体每组数值在私有 `data/cache/w23-threads/probes/compare-*.json`。
+
+真实 cold-run 首次失败于原有 60 秒人脸启动超时；隔离字体缓存首次 import 62.340 秒，
+复用同目录 import 3.171 秒，模型创建约 0.620 秒。
+后续所有模式使用本线可写字体缓存，生产默认超时及启动行为没有改动。
+Ray 388 张与真实 38 单元验证、完整回归在 performance-mode 文档收尾记录。

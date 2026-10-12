@@ -1,9 +1,10 @@
-.update-panel { margin: 0 0 4px; font-size: 13px; color: #aaa; }
-.update-banner { padding: 8px 12px; border: 1px solid #697ba6; border-radius: 8px; }
-.update-banner span { margin-right: 12px; }
-.update-panel button { margin: 4px; }
-.update-about { padding: 6px 12px; }
+.update-panel { font-size: var(--ec-font-size-small); color: var(--ec-text-dim); }
+.update-banner { display: flex; align-items: center; gap: 3px; padding: 4px; border: 1px solid var(--ec-border); border-radius:
+  var(--ec-radius); }
+.update-banner[hidden] { display: none; }
+.update-banner span { flex: 1; min-width: 0; }
+.update-panel button { font-size: var(--ec-font-size-small); padding: 2px 4px; margin: 0; }
+.update-about { padding: 8px 0; }
 .update-about summary { cursor: pointer; }
-.update-about label { display: flex; align-items: center; gap: 6px; width: fit-content; margin: 6px 0; }
-.update-about label input { margin: 0; }
-.update-about pre { white-space: pre-wrap; max-height: 240px; overflow: auto; }
+.update-about label { display: flex; align-items: center; gap: 6px; margin: 6px 0; }
+.update-about pre { white-space: pre-wrap; max-height: 200px; overflow: auto; }

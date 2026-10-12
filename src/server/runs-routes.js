@@ -1,3 +1,4 @@
+import { parsePerformanceMode, configuredPerformanceMode } from '../core/performance-mode.js';
 import { RunProgress, measuredWeights } from '../core/run-progress.js';
 import { Checkpoints } from "../core/checkpoints.js";
 import { pageOptions } from "./pagination.js";
@@ -127,7 +128,7 @@ export function createRunsRouter({
       if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100 || !Number.isSafeInteger(cursor) || cursor < 0) {
         return json(res, 400, { error: '分页参数无效：limit 为 1–100，cursor 为非负整数' });
       }
-      const result = await store.list({ limit, cursor });
+      const result = await store.list({ limit, cursor, libraryPath: url.searchParams.get("libraryPath") || undefined });
       result.runs = result.runs.map(run => ({ ...run,
         ...(run.status === 'running' && activeRun(active)?.id !== run.id ? { status: 'interrupted' } : {}) }));
       return json(res, 200, result);
@@ -138,6 +139,11 @@ export function createRunsRouter({
         return json(res, 409, { error: "已有分析任务运行中", run: runSummary(activeRun(active)) });
       }
       const body = await parseBody(req);
+      try {
+        if (Object.hasOwn(body, 'performanceMode') && !['normal', 'turbo'].includes(body.performanceMode))
+          throw new Error('performanceMode must be normal or turbo');
+      }
+      catch (error) { return json(res, 400, { error: error.message }); }
       const resumeId = body.resumeRunId;
       if (resumeId && !/^[a-zA-Z0-9_-]+$/.test(resumeId)) return json(res, 400, { error: 'Invalid resumeRunId' });
       const previousRun = resumeId ? await store.getRun(resumeId) : null;
@@ -148,6 +154,9 @@ export function createRunsRouter({
       const checkpoint = store.dir ? new Checkpoints(store.dir(id)) : null;
       const request = resumeId ? await checkpoint?.get('request') : body;
       if (!request) return json(res, 409, { error: 'No resumable scan checkpoint' });
+      let mode;
+      try { mode = parsePerformanceMode(request.performanceMode ?? configuredPerformanceMode()); }
+      catch (error) { return json(res, 400, { error: error.message }); }
       if (!resumeId && checkpoint) await checkpoint.put('request', body);
       const history = store.list ? (await store.list({ limit: 20, cursor: 0 })).runs || [] : [];
       const tracker = new RunProgress({ weights: measuredWeights(history) || undefined });
@@ -155,6 +164,7 @@ export function createRunsRouter({
         contractVersion: 1,
         id,
         status: "running",
+        performanceMode: mode,
         startedAt: new Date().toISOString(),
         progress: tracker.update({ completed: 0, total: 0, cached: 0, stage: 'scanning' }),
         libraryPath: request.libraryPath || null,
@@ -216,6 +226,7 @@ export function createRunsRouter({
           id,
           signal: controller.signal,
           checkpoint,
+          performanceMode: mode,
           onProgress,
         });
       };
@@ -227,6 +238,8 @@ export function createRunsRouter({
           Object.assign(run, summary, {
             status: "completed",
             groupCount: result.groups.length,
+            selectedCount: result.groups.reduce((n, g) => n + Object.values(g.suggested || {}).filter(v => v === "selected").length, 0),
+            rejectedCount: result.groups.reduce((n, g) => n + Object.values(g.suggested || {}).filter(v => v === "rejected").length, 0),
             warnings: result.warnings || [],
           });
           run.progress = tracker.update(result.progress || { stage: 'done',

@@ -11,8 +11,48 @@ const flagLabels = { "eyes-closed": "闭眼", blurry: "模糊", "possibly-blurry
   overexposed: "过曝", underexposed: "欠曝" };
 const actionLabels = { selected: "精选", candidate: "候选", rejected: "淘汰" };
 const actionKeys = { selected: 1, candidate: 2, rejected: 3 };
-const MIN_COLUMN = 200;
-const CARD_CHROME = 116;
+export function reviewLayout(count, width = 1200, height = 700, mode = 'compare', focus = 0, aspect = 1.5) {
+  const capacity = mode === 'single' ? 1 : mode === 'grid' ? Math.max(1, Math.floor(width / 160) * Math.floor(height / 140)) : 8;
+  const clamped = Math.max(0, Math.min(count - 1, focus));
+  const start = Math.floor(clamped / capacity) * capacity;
+  const visible = Math.min(capacity, Math.max(0, count - start));
+  const columns = mode === 'single' ? 1 : mode === 'grid' ? Math.max(1, Math.min(visible, Math.floor(width / 160)))
+    : compareColumns(visible, width, height, aspect);
+  return { start, end: start + visible, columns, rows: Math.max(1, Math.ceil(visible / columns)) };
+}
+
+// Pick the column count that gives each contained photo the largest displayed area.
+function compareColumns(visible, width, height, aspect) {
+  const ratio = Number.isFinite(aspect) && aspect > 0 ? aspect : 1.5;
+  let best = 1, bestArea = -1;
+  for (let columns = 1; columns <= Math.max(1, Math.min(visible, 4)); columns += 1) {
+    const rows = Math.ceil(visible / columns);
+    const imageWidth = Math.min(width / columns, (height / rows) * ratio);
+    const area = imageWidth * imageWidth / ratio;
+    if (area > bestArea + 1) { best = columns; bestArea = area; }
+  }
+  return best;
+}
+
+export function groupAspect(viewState, unitIds) {
+  const units = new Map((viewState.data?.units || []).map(unit => [unit.id, unit]));
+  const items = new Map((viewState.data?.items || []).map(item => [item.id, item]));
+  const ratios = unitIds.map(id => {
+    const unit = units.get(id);
+    const item = items.get(unit?.primaryItemId || unit?.itemIds?.[0]);
+    return item?.width > 0 && item?.height > 0 ? item.width / item.height : null;
+  }).filter(Boolean).sort((a, b) => a - b);
+  return ratios.length ? ratios[Math.floor(ratios.length / 2)] : 1.5;
+}
+export function decisionBadge(decision, hideAI = false) {
+  if (hideAI && decision.source !== 'human') return '';
+  const symbol = decision.tie ? '≈' : { selected: '★', rejected: '✕' }[decision.action];
+  if (!symbol) return '';
+  const human = decision.source === 'human';
+  return `<span class="decision-mark action-${decision.action} ${human ? 'human' : 'suggested'}"
+    title="${human ? '已决定' : 'AI 建议'}：${actionLabels[decision.action]}${decision.tie ? ' · 并列' : ''}">
+    ${human ? '' : '建议 '}${symbol}</span>`;
+}
 const confidenceLabel = group => ({ high: "把握高", low: "需确认", single: "单张" })[group.confidence] || "";
 
 export function createReviewView({ root, state, setState, runId, getRunId = () => runId,
@@ -40,6 +80,8 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     return exposurePending;
   }
   let detailsOpen = false;
+  let viewMode = "compare";
+  let sidebarOpen = false;
   let magnifier = false;
   let magnifierFace = 0;
   let magnifierRegion = "face";
@@ -55,6 +97,7 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
   function render() {
     if (reasonRunId !== getRunId()) { reasonDrafts.clear(); reasonRunId = getRunId(); }
     const viewState = state();
+    root.querySelector("#review")?.classList.toggle("info-open", detailsOpen);
     const candidateToggle = root.querySelector("#candidateToggle");
     candidateToggle.setAttribute("aria-pressed", String(Boolean(viewState.candidateMode)));
     candidateToggle.textContent = `候选集：${viewState.candidateMode ? "开" : "关"}`;
@@ -65,14 +108,16 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
       const scroller = root.querySelector(".review-main");
       if (scroller) scroller.scrollTop = 0;
     }
-    const progress = reviewProgress(viewState);
+    const progress = viewState.data?.reviewProgress || reviewProgress(viewState);
     root.querySelector("#reviewProgress").textContent =
-      `已审阅 ${progress.reviewed} / ${progress.total} 组${viewState.data?.page ? "（本页）" : ""}`;
+      `已审 ${progress.reviewed ?? "—"} / ${progress.total}`;
     root.querySelector("#reviewTitle").textContent = groupTitle(viewState, group);
-    renderList(root.querySelector("#groupList"), filteredGroups(viewState)
+    if (sidebarOpen) renderList(root.querySelector("#groupList"), filteredGroups(viewState)
       .map(item => renderGroupList(viewState, item)));
     const display = getPresentation(group);
     const ids = display?.order || rankedUnitIds(group);
+    const bounds = reviewLayout(ids.length, root.querySelector("#group").clientWidth || 1200,
+      root.querySelector("#group").clientHeight || 700, viewMode, viewState.unitIndex, groupAspect(viewState, ids));
     const faceRows = alignFaces(ids.map(id => reviewIndex(viewState).results.get(id)));
     const comparing = viewState.faceCompare && faceRows.length > 0;
     magnifierFace = Math.min(magnifierFace, Math.max(0, faceRows.length - 1));
@@ -96,8 +141,8 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
       .map((unitId, index) => renderUnitThumbnail(viewState, group, unitId, index)));
     root.querySelector("#group").classList.toggle("face-comparing", Boolean(comparing || magnifier));
     root.querySelector("#group").classList.toggle("native-comparing", magnifier);
-    renderList(root.querySelector("#group"), ids.length ? ids
-      .map((unitId, index) => renderUnit(viewState, group, unitId, index,
+    renderList(root.querySelector("#group"), ids.length ? ids.slice(bounds.start, bounds.end)
+      .map((unitId, offset) => renderUnit(viewState, group, unitId, bounds.start + offset,
         magnifier ? [faceRows[magnifierFace]] : comparing ? faceRows : null))
       : ['<p class="review-empty">这个筛选下没有照片组。请在顶部切换「全部（含单张组）」，或返回主页开始新的分析。</p>']);
     const decided = ids.filter(id => reviewIndex(viewState).human.has(id)).length;
@@ -107,7 +152,8 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
         : `本组已确认 ${decided}/${ids.length} 张`;
       decidedLabel.className = decided && decided === ids.length ? "group-done" : "";
     }
-    layout(ids.length);
+    layout(ids);
+    root.querySelector("#review")?.classList.toggle("info-open", detailsOpen);
     root.querySelector("#unitStrip .focus")?.scrollIntoView?.({ block: "nearest", inline: "nearest" });
     void expose();
     root.querySelector("#selectedCount").textContent = viewState.selected.length ? `已选 ${viewState.selected.length} 张` : "";
@@ -121,25 +167,15 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     }
   }
 
-  function layout(count) {
+  function layout(ids) {
     const container = root.querySelector("#group");
     const strip = root.querySelector("#unitStrip");
     if (!container?.style || typeof window === "undefined") return;
-    const width = container.clientWidth || window.innerWidth;
-    const columns = Math.max(1, Math.min(count || 1, Math.floor((width + 14) / (MIN_COLUMN + 14))));
-    const rows = Math.ceil((count || 1) / columns);
-    if (strip) strip.hidden = rows <= 1;
-    const scroller = container.closest?.(".review-main");
-    const viewport = scroller?.clientHeight || window.innerHeight;
-    const top = container.getBoundingClientRect().top - (scroller?.getBoundingClientRect().top || 0)
-      + (scroller?.scrollTop || 0);
-    const available = viewport - Math.min(top, viewport * 0.4) - 20;
-    const chrome = detailsOpen ? CARD_CHROME : Math.max(CARD_CHROME, ...[...container.querySelectorAll(".unit")]
-      .slice(0, columns).map(card => card.offsetHeight - (card.querySelector(".image-wrap")?.offsetHeight || 0)));
-    const floor = Math.min(220, Math.floor(viewport * 0.35));
-    const height = Math.max(floor, Math.floor(available / Math.min(rows, 2)) - chrome);
-    container.style.setProperty("--columns", String(columns));
-    container.style.setProperty("--image-height", `${height}px`);
+    const bounds = reviewLayout(ids.length, container.clientWidth || window.innerWidth,
+      container.clientHeight || window.innerHeight, viewMode, state().unitIndex, groupAspect(state(), ids));
+    if (strip) strip.hidden = false;
+    container.style.setProperty("--columns", String(bounds.columns));
+    container.style.setProperty("--rows", String(bounds.rows));
   }
 
   function countUnreviewedIssue(viewState, issue) {
@@ -152,17 +188,9 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
   function groupTitle(viewState, group) {
     const ids = rankedUnitIds(group);
     if (!ids.length) return "当前筛选没有照片组，可切换「全部（含单张组）」查看";
-    const suggestedId = ids.find(id => group.suggested?.[id] === "selected") || ids[0];
-    const unit = reviewIndex(viewState).units.get(suggestedId);
-    const name = reviewIndex(viewState).items.get(unit?.primaryItemId)?.name || "—";
     const groups = filteredGroups(viewState);
-    const filterLabel = {
-      multi: "多张组", issues: "有问题", unreviewed: "未审阅", reviewed: "已审",
-      "eyes-closed": "闭眼", blurry: "模糊", "low-first": "先看需确认"
-    }[viewState.filter];
-    const suffix = filterLabel ? `（${filterLabel}）` : "";
-    return `第 ${viewState.groupIndex + 1} / ${groups.length} 组${suffix} · ${ids.length} 张`
-      + (group.hideAI ? " · 对照展示：请先独立选择" : ` · ${confidenceLabel(group)} · 建议精选 ${name}`);
+    return `第 ${(viewState.data?.page?.cursor || 0) + viewState.groupIndex + 1} / ${viewState.data?.page?.total || groups.length} 组`
+      + ` · ${ids.length} 张`;
   }
 
   function renderGroupList(viewState, group) {
@@ -187,9 +215,9 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     const recommended = !group.hideAI && group.ranking?.find(entry => entry.unitId === unitId)?.rank === 1;
     const recommendation = recommended ? "<span class=\"thumbnail-recommend\">推荐</span>" : "";
     return `<button class="unit-strip-item ${focus}" data-unit-index="${index}"
-      aria-label="${item.name || `第 ${index + 1} 张`}" aria-current="${index === viewState.unitIndex}">
+      aria-label="${escapeReason(item.name || `第 ${index + 1} 张`)}" aria-current="${index === viewState.unitIndex}">
       <img src="${preview}" loading="lazy" alt=""><span class="thumbnail-rank">${index + 1}</span>
-      ${recommendation}</button>`;
+      ${decisionBadge(decisionFor(viewState, unitId, group), group.hideAI)}</button>`;
   }
 
   function renderUnit(viewState, group, unitId, index, faceRows) {
@@ -199,8 +227,10 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     const candidate = group.candidateSet?.entries?.find(item => item.unitId === unitId);
     const decision = decisionFor(viewState, unitId, group);
     const item = reviewIndex(viewState).items.get(unit.primaryItemId) || {};
-    const preview = `${viewState.base}/runs/${getRunId()}/preview/${encodeURIComponent(unitId)}`;
-    const flags = (result.flags || []).map(flag => `<span class="badge">${flagLabels[flag] || flag}</span>`).join("");
+    const preview = `${viewState.base}/runs/${getRunId()}/${viewMode === "grid" ? "preview" : "detail"}/${encodeURIComponent(unitId)}`;
+    const flags = (result.flags || []).map(flag =>
+      `<span class="badge" title="${flagLabels[flag] || flag}">
+      ${flag === "eyes-closed" ? "◡" : "⚠"}</span>`).join("");
     const scoreBars = scoreParts(result).map(part => {
       const width = part.value == null ? 0 : Math.min(100, Number(part.value) <= 1
         ? Number(part.value) * 100 : Number(part.value));
@@ -222,40 +252,41 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     const actionClass = action => `action-${action}`;
     const faceContext = { base: viewState.base, runId: getRunId(), unitId };
     const recommend = !group.hideAI && ranking.rank === 1 ? "<span class=\"recommend\">推荐</span>" : "";
-    const decided = decision.source === "human" ? `<span class="decision-mark ${actionClass(decision.action)}">`
-      + `${actionLabels[decision.action] || decision.action}</span>` : "";
+    const decided = decisionBadge(decision, group.hideAI);
     const images = faceRows
       ? `<div class="face-column">${faceRows.map((row, rowIndex) =>
         (magnifier ? renderNativeFace(row[index], faceContext, magnifierRegion)
           : renderFace(row[index], faceContext, `位置 ${rowIndex + 1}`))).join("")}</div>`
       : `<div class="image-wrap" data-preview="${unitId}" title="双击看大图"><img src="${preview}" loading="lazy"
-        alt="${item.name || "预览"}" draggable="false"
+        alt="${escapeReason(item.name || "预览")}" draggable="false"
         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <span class="placeholder">预览不可用</span>${recommend}${decided}
+        <span class="placeholder">预览不可用</span>${decided}
         <span class="image-flags">${flags}</span></div>`;
     const name = item.name || "未命名文件";
     return `<article class="unit ${focus} ${selected} ${decision.source === "human" ? `decided-${decision.action}` : ""}"
       data-unit-id="${unitId}">
       ${faceRows ? `${recommend}<h3 title="${escapeReason(name)}">${escapeReason(name)}</h3>` : ""}${images}
+      <div class="unit-info" ${!detailsOpen || index !== viewState.unitIndex ? "hidden" : ""}>
       <div class="unit-head">${faceRows ? "" : `<h3 title="${escapeReason(name)}">${escapeReason(name)}</h3>`}
         <span class="rank" ${group.hideAI ? "hidden" : ""}>#${ranking.rank ?? index + 1} ·
         <strong>${formatTotalScore(ranking.score ?? result.score)}</strong></span></div>
-      <div class="decision-buttons">${Object.entries(actionLabels).map(([action, label]) =>
-        `<button data-action="${action}" class="${decision.source === "human" && decision.action === action ? "active" : ""}"
-          title="快捷键 ${actionKeys[action]}"><kbd>${actionKeys[action]}</kbd>${label}</button>`).join("")}
-        <button data-tie="true" class="tie ${decision.tie ? "active" : ""}" title="与其他照片各有所长">并列</button></div>
       <p class="unit-status">${group.hideAI ? "" : `建议 <strong class="${actionClass(group.suggested?.[unitId]
         || "candidate")}">${suggestion}</strong> · `}<strong class="${sourceClass} ${decision.source === "human"
         ? actionClass(decision.action) : "unconfirmed"}">${decision.source === "human" ? `已${current}` : "未确认"}</strong></p>
-      ${faceRows ? "" : renderFaceStrip(result, faceContext)}
+      ${faceRows || !detailsOpen || index !== viewState.unitIndex ? "" : renderFaceStrip(result, faceContext)}
       <details class="unit-details" ${detailsOpen ? "open" : ""}><summary>评分与理由</summary>
         <div class="metrics">${scoreBars}</div>
         <p class="reasons" ${group.hideAI ? "hidden" : ""}>
-          ${(ranking.reasons || []).join("；")}${candidateText ? `；${candidateText}` : ""}</p>
+          ${escapeReason((ranking.reasons || []).join("；"))}${candidateText ? `；${escapeReason(candidateText)}` : ""}</p>
         ${renderRuleReasons(result, getCatalog())}
         <label>自由理由（最多 500 字符）<textarea data-decision-reason maxlength="500"
           aria-label="自由理由">${escapeReason(reasonDrafts.get(unitId) ?? decision.reason ?? "")}</textarea></label>
-      </details>
+      </details></div>
+      <div class="decision-buttons">${Object.entries(actionLabels).map(([action, label]) =>
+        `<button data-action="${action}" title="${label}（${actionKeys[action]}）" aria-label="${label}">
+          ${{ selected: '★', candidate: '○', rejected: '✕' }[action]}</button>`).join('')}
+        <button data-tie="true" title="并列" aria-label="并列">≈</button>
+        <button data-open-preview="${unitId}" title="看大图" aria-label="看大图">⤢</button></div>
     </article>`;
   }
 
@@ -267,6 +298,7 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
   root.querySelector("#compareFaces").addEventListener("click", toggleFaces);
   root.querySelector("#candidateToggle").addEventListener("click", () => {
     setState(reduceState(state(), { type: "candidateMode", value: !state().candidateMode }));
+    setState(reduceState(state(), { type: "unit", index: state().unitIndex }));
     render();
   });
 
@@ -308,7 +340,7 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
   }, true);
   if (typeof window !== "undefined") {
     window.addEventListener?.("resize", () => {
-      if (!root.querySelector("#review")?.hidden) layout(root.querySelectorAll("#group .unit").length);
+      if (!root.querySelector("#review")?.hidden) render();
     });
   }
   root.querySelector("#group").addEventListener("input", event => {
@@ -318,6 +350,7 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
   root.querySelector("#group").addEventListener("click", event => {
     const card = event.target.closest(".unit"); if (!card) return;
     if (event.target.closest("details, textarea, input")) return;
+    if (event.target.closest("[data-open-preview]")) { onPreview?.(card.dataset.unitId); return; }
     const viewState = state(); const group = currentGroup(viewState);
     const ids = rankedUnitIds(group); const unitId = card.dataset.unitId;
     if (event.target.closest("[data-action]")) {
@@ -347,5 +380,22 @@ export function createReviewView({ root, state, setState, runId, getRunId = () =
     const card = [...(root.querySelectorAll("#group .unit") || [])].find(c => c.dataset.unitId === unitId);
     return card?.querySelector("[data-decision-reason]")?.value.trim();
   }
-  return { decisionReason, render, expose, toggleFaces, nativeAction, closeNativeMagnifier };
+  function setViewMode(mode) {
+    if (!['compare', 'single', 'grid'].includes(mode)) return;
+    viewMode = mode;
+    const review = root.querySelector('#review');
+    if (review?.dataset) review.dataset.viewMode = mode;
+    root.querySelectorAll?.('[data-view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === mode)));
+    render();
+  }
+  function toggleInfo() { detailsOpen = !detailsOpen; render(); }
+  root.querySelector('#toggleInfo')?.addEventListener('click', toggleInfo);
+  root.querySelector('#toggleGroups')?.addEventListener('click', () => {
+    sidebarOpen = !sidebarOpen;
+    root.querySelector('#review')?.classList.toggle('sidebar-open', sidebarOpen);
+    render();
+  });
+  root.querySelectorAll?.('[data-view]').forEach(button => button.addEventListener('click', () => setViewMode(button.dataset.view)));
+  return { decisionReason, render, expose, toggleFaces, nativeAction, closeNativeMagnifier, setViewMode, toggleInfo };
+
 }

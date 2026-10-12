@@ -104,11 +104,12 @@ test("slow writeback preview shows progress, blocks repeat clicks and reports fa
   assert.equal(root.elements["#writeback"].textContent, "无法生成写回预览：服务未响应");
 });
 
-test("completed polling invokes onRun once", async () => {
+test("completed polling stays in panel and explicit review invokes onRun once", async () => {
   const root = fakeRoot(["#health", "#libraryPath", "#runId", "#progress", "#bar", "#progressText",
     "#analyzeSelected", "#analyzeAll", "#cancel", "#openRun", "#serviceGuide", "#repositoryPath", "#serviceCommand",
-    "#copyServiceCommand", "#retryService", "#startService"]);
+    "#copyServiceCommand", "#retryService", "#startService", "#resumeArea", "#resumeLatest", "#resumeDetail"]);
   root.elements["#libraryPath"].value = "/library";
+  const originalStorage = globalThis.localStorage;
   globalThis.localStorage = { setItem() {}, getItem() { return "[]"; } };
   let statusCalls = 0;
   let opened = 0;
@@ -118,11 +119,15 @@ test("completed polling invokes onRun once", async () => {
     statusCalls += 1;
     return { id: "run-1", status: "completed", progress: { total: 1, completed: 1 } };
   };
-  createStartView({ root, api, onRun: async () => { opened += 1; } });
+  const view = createStartView({ root, api, onRun: async () => { opened += 1; }, autoCheck: false, autoRefresh: false });
   await root.elements["#analyzeAll"].click();
   await new Promise(resolve => setImmediate(resolve));
   assert.equal(statusCalls, 1);
+  assert.equal(opened, 0);
+  assert.equal(root.elements["#resumeArea"].hidden, false);
+  await root.elements["#resumeLatest"].click();
   assert.equal(opened, 1);
+  view.dispose(); globalThis.localStorage = originalStorage;
 });
 
 test("disconnected start view exposes absolute command and retry hides guide after health succeeds", async () => {
@@ -138,7 +143,7 @@ test("disconnected start view exposes absolute command and retry hides guide aft
   };
   api.base = "http://127.0.0.1:43210";
   try {
-    const view = createStartView({ root, api, onRun() {}, autoCheck: false });
+    const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false });
     await view.checkHealth();
     assert.equal(root.elements["#serviceGuide"].hidden, false);
     assert.match(root.elements["#serviceCommand"].textContent, process.platform === "win32"

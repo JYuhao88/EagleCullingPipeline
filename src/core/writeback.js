@@ -60,7 +60,7 @@ export function planWriteback({
     items: rows,
     changed: rows.filter(row => row.changed),
     unchanged: rows.filter(row => !row.changed),
-    summary: summarize(rows)
+    summary: summarizeWriteback(rows)
   };
 }
 
@@ -93,7 +93,7 @@ function tagChanges(previousTags, tags) {
   return { addedTags, removedTags, changed: addedTags.length > 0 || removedTags.length > 0 };
 }
 
-function summarize(rows) {
+export function summarizeWriteback(rows) {
   return rows.reduce((summary, row) => {
     summary[row.changed ? "changed" : "unchanged"] += 1;
     summary.addedTags += row.addedTags.length;
@@ -134,12 +134,14 @@ export function planRevertWriteback({ applied = [], items = [] }) {
       action: "revert",
       previousTags,
       tags,
-      ...tagChanges(previousTags, tags)
+      ...tagChanges(previousTags, tags),
+      ...(!record.revertedAt && record.previousStar !== undefined && item.star === record.star
+        ? { star: record.previousStar, previousStar: item.star, changed: true } : {})
     };
   });
   return {
     items: rows, changed: rows.filter(row => row.changed),
-    unchanged: rows.filter(row => !row.changed), summary: summarize(rows)
+    unchanged: rows.filter(row => !row.changed), summary: summarizeWriteback(rows)
   };
 }
 
@@ -149,7 +151,8 @@ export function writebackRecords(plan, result) {
     id: item.id,
     fileName: item.fileName,
     tags: item.tags,
-    previousTags: item.previousTags
+    previousTags: item.previousTags,
+    ...(item.star !== undefined ? { star: item.star, previousStar: item.previousStar } : {})
   }));
 }
 
@@ -175,7 +178,7 @@ export async function withLiveTags(items, api, options = {}) {
     if (options.requireTags && !Array.isArray(info?.tags)) {
       throw new Error(`无法读取文件的当前标签：${item.id}`);
     }
-    refreshed.push({ ...item, tags: Array.isArray(info?.tags) ? info.tags : [] });
+    refreshed.push({ ...item, tags: Array.isArray(info?.tags) ? info.tags : [], star: info?.star ?? 0 });
   }
   return { items: refreshed, live: true };
 }
@@ -196,7 +199,7 @@ export async function applyWriteback(plan, api, options = {}) {
       continue;
     }
     try {
-      await api.updateItem({ id: item.id, tags: item.tags });
+      await api.updateItem({ id: item.id, tags: item.tags, ...(item.star !== undefined ? { star: item.star } : {}) });
       results.push({ ...item, ok: true });
     } catch (error) {
       results.push({ ...item, ok: false, error: error.message });
@@ -206,3 +209,31 @@ export async function applyWriteback(plan, api, options = {}) {
 }
 
 export { ACTION_TAGS, FLAG_TAGS, AI_TAGS };
+
+// Keep the first successful pre-write snapshot across live and final writes.
+// A completed revert starts a fresh cycle; user metadata remains read live.
+export function mergeWritebackRecords(previous = [], incoming = []) {
+  const merged = new Map(previous.map(record => [record.id, record]));
+  for (const record of incoming) {
+    const prior = merged.get(record.id);
+    merged.set(record.id, prior && !prior.revertedAt ? { ...record,
+      previousTags: prior.previousTags,
+      ...(prior.live ? { live: true } : {}),
+      ...(prior.previousStar !== undefined ? { previousStar: prior.previousStar, star: prior.star } : {})
+    } : record);
+  }
+  return [...merged.values()];
+}
+
+export function addLiveStars(plan, items, enabled = false) {
+  if (!enabled) return plan;
+  const live = new Map(items.map(item => [item.id, item]));
+  for (const row of plan.items) {
+    const star = live.get(row.id)?.star ?? 0;
+    if (row.action === 'selected' && star === 0) Object.assign(row, { star: 5, previousStar: 0, changed: true });
+  }
+  plan.changed = plan.items.filter(row => row.changed);
+  plan.unchanged = plan.items.filter(row => !row.changed);
+  plan.summary = summarizeWriteback(plan.items);
+  return plan;
+}

@@ -192,3 +192,19 @@ test("normal apply rejects malformed live tags without writing and releases its 
   assert.equal(await handleReviewRoute(req, {}, ctx), true);
   assert.equal(writes, 2);
 });
+
+test('normal apply without live history retains the previous latest-write snapshot semantics', async () => {
+  const data = { ...fixture(), run: { id: 'normal-cycle' }, applied: [], groups: [
+    { id: 'g', unitIds: ['unit:a'], suggested: { 'unit:a': 'selected' } }
+  ] };
+  const live = new Map(data.items.map(item => [item.id, [...item.tags]]));
+  const ctx = { runStore: { get: async () => data, dir: () => '/tmp/nonexistent-normal-cycle-decisions',
+    saveApplied: async (_id, records) => { data.applied = records; } }, readBody: async () => ({ apply: true }),
+    json() {}, api: { itemInfo: async id => ({ tags: live.get(id) }), updateItem: async row => live.set(row.id, row.tags) } };
+  await handleReviewRoute({ method: 'POST', url: '/runs/normal-cycle/apply' }, {}, ctx);
+  const afterFirst = [...live.get('a')];
+  data.groups[0].suggested['unit:a'] = 'rejected';
+  await handleReviewRoute({ method: 'POST', url: '/runs/normal-cycle/apply' }, {}, ctx);
+  assert.deepEqual(data.applied.find(row => row.id === 'a').previousTags, afterFirst);
+  assert.equal(data.applied.some(row => row.live), false);
+});

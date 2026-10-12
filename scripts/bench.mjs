@@ -71,10 +71,11 @@ export function markdown(report) {
 }
 export async function analysisSignature() {
   const files = ['metrics.js', 'scorer.js', 'ranking.js', 'ranking-weights.json', 'faces.js', 'pose.js', 'signals.js', 'rules-engine.js',
-    'candidate-measurements.js', 'candidate-config.json'];
+    'candidate-measurements.js', 'candidate-config.json', 'performance-mode.js', 'exiftool-pool.js'];
   const chunks = await Promise.all(files.map(file => readFile(path.join('src/core', file))));
   for (const file of ['portrait', 'landscape', 'street']) chunks.push(await readFile(`src/rules/${file}.json`));
-  for (const file of ['pose_worker.py', 'pose_runtime.py', 'face_worker.py']) chunks.push(await readFile(`python_worker/${file}`));
+  for (const file of ['pose_worker.py', 'pose_runtime.py', 'face_worker.py', 'memory_guard.py'])
+    chunks.push(await readFile(`python_worker/${file}`));
   chunks.push(Buffer.from(JSON.stringify([process.env.EAGLE_PYTHON, process.env.PYTHONPATH, process.env.EAGLE_POSE_MODE,
     process.env.EAGLE_POSE_PROVIDER, process.env.EAGLE_POSE_MODEL, process.env.EAGLE_POSE_DETECTOR,
     process.env.EAGLE_SCORER_PROVIDER])));
@@ -121,7 +122,8 @@ async function analyze(images, directory, warnings, signature) {
       faces: face?.faces, eyesClosed: face?.eyesClosed });
     const flags = [...new Set([...(analyzed[j].qualityFlags ?? []), ...(face?.eyesClosed > 0 ? ['eyes-closed'] : [])])];
     const signals = pose?.available ? computeSignals(pose) : undefined;
-    const result = { metrics, flags, faces, scorer, signals, verdicts: evaluateRules(signals, { faces }),
+    const result = { metrics, flags, faces, scorer, signals, poseDiagnostics: pose?.diagnostics,
+      verdicts: evaluateRules(signals, { faces }),
       warnings: [scorer.warning, face?.warning, pose?.error?.message].filter(Boolean) };
     await writeFile(item.cache, JSON.stringify(result));
     results[item.i] = { ...result, unitId: item.image.id };

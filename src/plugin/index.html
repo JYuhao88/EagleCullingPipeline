@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="theme.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="review-ux.css">
+  <link rel="stylesheet" href="review.css">
   <link rel="stylesheet" href="start.css">
   <link rel="stylesheet" href="update-banner.css">
   <title>Eagle 照片筛选</title>
@@ -12,49 +14,47 @@
 <body>
   <main id="app">
     <section id="start">
-      <div class="start-heading"><h1>鹰眼照片筛选</h1><button id="startHelp">? 帮助</button></div>
-      <section class="status-card" aria-label="当前状态">
-        <strong id="health" role="status">正在连接服务…</strong>
-        <div class="context-grid"><span>资源库 <b id="libraryName">读取中…</b></span>
-          <span>文件夹 <b id="folderName">未选择</b></span><span>选中 <b id="selectionCount">0 张</b></span></div>
-        <div id="resumeArea" class="resume-area" hidden><button id="resumeLatest" class="primary">继续审阅</button>
-          <span id="resumeDetail"></span></div>
-      </section>
-      <section id="welcome" class="welcome-card" hidden>
-        <button id="closeWelcome" aria-label="关闭欢迎说明">×</button><h2>从一小组照片开始</h2>
-        <p>工具会找出相似照片并提供建议。最终取舍由你决定，分析不会修改 Eagle 照片。</p>
-      </section>
-      <ol class="start-steps">
-        <li><b>选择照片</b><span>在 Eagle 左侧选一个文件夹，或选中几张照片。</span></li>
-        <li><b>开始分析</b><span>先找相似照片，再比较画质与人脸。</span></li>
-        <li><b>逐组审阅</b><span>完成后自动打开；1 精选 · 2 候选 · 3 淘汰。</span></li>
-      </ol>
-      <div id="serviceGuide" class="welcome-card" hidden>
-        <p>照片分析需要本机服务。首次使用请先启动，连接后即可开始。</p>
-        <button id="startService" class="primary" hidden>启动服务</button><button id="retryService">重试连接</button>
-        <p id="serviceHint">浏览器预览请展开高级设置，复制命令到终端执行。</p>
+      <div class="start-heading"><img src="logo.png" alt="" width="24" height="24"><h1>Eagle 照片筛选</h1><strong id="health"
+        role="status" title="正在连接服务">连接中</strong><button id="openSettings" title="设置" aria-label="设置">⚙</button></div>
+      <div id="updateSlot"></div>
+      <div id="panelHome">
+        <section class="status-card"><strong id="scopeLabel">读取选择…</strong><p id="libraryName">读取资源库…</p><span id="folderName"
+          hidden></span><span id="selectionCount" hidden></span></section>
+        <div id="serviceGuide" hidden><span id="serviceHint">分析服务未运行</span><button id="startService" hidden>重试启动</button><button
+          id="retryService">重试连接</button></div>
+        <div class="analysis-actions"><button id="analyzeSelected" class="primary" disabled>分析</button><p
+          id="selectionHint"></p><button id="analyzeAll" hidden>分析整个资源库</button><p id="allHint" hidden></p></div>
+        <div id="progress" class="status-card" hidden><ol id="progressStages" hidden></ol><progress id="bar" max="100"
+          value="0"></progress><p id="progressText" role="status"></p><button id="cancel">取消</button></div>
+        <div id="resumeArea" class="status-card" hidden><p id="resumeDetail"></p><button id="resumeLatest"
+          class="primary">开始审阅</button></div>
+        <section class="recent-section"><div class="section-heading"><h2>最近记录</h2><button id="allRuns">全部记录 ›</button></div><p
+          id="recentStatus" role="status"></p><div id="recentRuns"></div></section>
+        <button id="startHelp" class="text-button">怎么用？</button><div id="welcome" hidden>选择照片 → 分析 → 开始审阅。分析不修改原片。<button
+          id="closeWelcome" aria-label="关闭提示">×</button></div>
       </div>
-      <div class="analysis-actions"><button id="analyzeSelected" class="primary" disabled>开始分析</button>
-        <p id="selectionHint">请先在 Eagle 选择照片或文件夹。</p>
-        <button id="analyzeAll">分析整个资源库</button><p id="allHint">全库分析可能需要较长时间，建议先试一个文件夹。</p>
-      </div>
-      <div id="progress" class="status-card" hidden>
-        <ol id="progressStages" class="progress-stages" aria-label="分析阶段"></ol>
-        <progress id="bar" max="1" value="0"></progress>
-        <p id="progressText" role="status"></p><button id="cancel">取消分析</button>
-      </div>
-      <section class="recent-section"><h2>最近的分析</h2><p id="recentStatus" role="status"></p>
-        <div id="recentRuns"></div><button id="moreRuns" hidden>加载更多</button></section>
-      <p id="loading" hidden>正在打开分析结果，请稍候…</p>
-      <details id="advancedSettings"><summary>高级设置</summary>
-        <label>服务地址 <input id="base" value="http://127.0.0.1:43125"></label>
-        <label>仓库路径 <input id="repositoryPath" placeholder="本机仓库的绝对路径"></label>
-        <pre id="serviceCommand"></pre><button id="copyServiceCommand">复制启动命令</button>
-        <label>资源库路径（浏览器预览）<input id="libraryPath" placeholder="Eagle 资源库的绝对路径"></label>
-        <label>分析记录 ID <input id="runId" placeholder="run-..."><button id="openRun">打开审阅</button></label>
-      </details>
+      <section id="historyView" hidden><div class="section-heading"><button id="closeHistory">‹ 返回</button><h2>全部记录</h2></div><div
+        id="historyRuns"></div><button id="moreRuns" hidden>加载更多</button></section>
+      <section id="panelSettings" hidden><div class="section-heading"><button id="closeSettings">‹ 返回</button><h2>设置</h2></div>
+        <h3>常用</h3>
+        <label><input id="performanceTurbo" type="checkbox">全速模式 <small>夜间整批，会占满 CPU</small></label>
+        <label><input id="autoStart" type="checkbox">随 Eagle 自动启动服务</label>
+        <label><input id="liveWriteback" type="checkbox">实时写回 Eagle 标签</label><p class="setting-hint">会修改 Eagle 中照片的标签，可在审阅完成页撤回</p>
+        <label><input id="liveStar" type="checkbox">同时写星级</label>
+        <label><input id="smartFolders" type="checkbox">自动创建智能文件夹</label><p id="apiCapability" class="setting-hint"></p>
+        <details><summary>个性化（实验）</summary><p>默认关闭；在分析记录中学习并验证偏好。</p><button id="panelPersonalization">打开最近结果的个性化设置</button></details>
+        <div id="updateSettings"></div>
+        <details id="advancedSettings"><summary>高级 / 诊断</summary>
+          <label>服务地址<input id="base" value="http://127.0.0.1:43125"></label>
+          <label>仓库路径<input id="repositoryPath" placeholder="自动检测，可覆盖"></label>
+          <pre id="serviceCommand"></pre><button id="copyServiceCommand">复制启动命令</button><pre id="serviceDiagnostics" role="status"></pre>
+          <label>资源库路径（浏览器预览）<input id="libraryPath" placeholder="资源库绝对路径"></label>
+          <label>按运行 ID 打开审阅<input id="runId" placeholder="run-..."></label><button id="openRun">打开审阅</button><button
+            id="settingsHelp">帮助</button>
+        </details>
+      </section><p id="loading" hidden>正在打开分析结果…</p>
     </section>
-    <section id="review" hidden>
+    <section id="review" hidden data-view-mode="compare">
       <header>
         <button id="back">← 返回</button>
         <strong id="reviewTitle"></strong>
@@ -70,15 +70,28 @@
           <option value="blurry">模糊</option>
           <option value="reviewed">已审</option>
         </select>
-        <button id="openFinish" class="primary-action">完成与导出</button>
+        <div class="view-switch" role="group" aria-label="视图">
+          <button data-view="compare" aria-pressed="true" aria-label="比较视图 C" title="比较视图 C">▥</button>
+          <button data-view="single" aria-pressed="false" aria-label="单张视图 V" title="单张视图 V">□</button>
+          <button data-view="grid" aria-pressed="false" aria-label="网格视图 B" title="网格视图 B">▦</button></div>
+        <button id="toggleInfo" aria-label="信息面板 I" title="信息 I">ⓘ</button>
+        <button id="toggleGroups" aria-label="组列表" title="组列表">☰</button>
+        <button id="liveIndicator" hidden title="实时写回状态；失败时点击重试"></button>
         <button id="reviewHelp" aria-label="审阅帮助">?</button>
         <details id="reviewMore"><summary aria-label="更多工具与设置">⋯</summary>
-          <div class="review-menu"><strong>查看工具</strong>
+          <div class="review-menu"><button id="openFinish" class="primary-action">完成与写回 / 导出 / 批量接受建议</button>
+            <button id="acceptGroup" class="primary-action"
+          title="当前照片设为精选，本组其余照片设为候选（已淘汰的保持不变）">设为本组首选并完成（S）</button>
+          <strong>查看工具</strong>
             <button id="compareFaces" hidden aria-pressed="false">对比人脸（F）</button>
             <button id="candidateToggle" aria-pressed="false">候选集：关</button>
             <button id="nativeMagnifier" hidden aria-pressed="false">1:1 放大镜（L）</button>
             <span id="nativeControls" hidden></span>
             <button id="openReviewSettings">个性化设置（实验）</button>
+            <label><input id="liveWritebackToggle" type="checkbox">实时写回标签</label>
+            <label><input id="liveStarToggle" type="checkbox">精选写入 5 星</label>
+            <label><input id="smartFoldersToggle" type="checkbox" checked>自动创建智能文件夹</label>
+            <span id="liveWritebackStatus" role="status"></span>
             <button id="reopenReviewWelcome">重新查看审阅入门</button>
           </div>
         </details>
@@ -124,8 +137,7 @@
         <div id="personalizeBanner" hidden><span id="personalizeText"></span>
           <button id="personalizeApply">应用</button><button id="personalizeIgnore">忽略</button></div>
         <div id="unitStrip" aria-label="组内照片"></div>
-        <div class="group-actions"><button id="acceptGroup" class="primary-action"
-          title="当前照片设为精选，本组其余照片设为候选（已淘汰的保持不变）">设为本组首选并完成（S）</button>
+        <div class="group-actions">
           <span id="groupDecided"></span>
         <details class="group-toolbox"><summary>分组与整组操作</summary>
         <div class="group-tools" aria-label="分组修正"><button id="movePrevious">移到上一组（M）</button>
@@ -133,6 +145,7 @@
           <button id="mergePrevious">与上一组合并</button><button id="splitSelected">拆分所选</button>
           <button id="undoGroup">撤销分组修正</button><button id="tieGroup">整组并列</button>
           <button id="rejectGroup">整组拒绝</button></div></details></div>
+
         <section id="rejectReasons" hidden aria-label="淘汰理由">
           <strong id="rejectReasonsTitle">淘汰理由（可多选）</strong>
           <p>仅记录选片偏好。已预选工具违反/门槛理由，可点选取消。1–9 选理由；Enter/Esc 完成，继续切图可跳过。</p>
@@ -183,7 +196,7 @@
         <button id="confirmWriteback">确认写回</button>
       </dialog>
       <dialog id="shortcutHelp"><h2>审阅帮助与快捷键</h2><button id="helpReviewWelcome">查看三步入门</button>
-        <p>1/2/3 决定；←/→ 切图；Enter 下一组；Shift+Enter 上一组；S 设为首选；A 全选、Esc 清除选择；
+        <p>I 信息面板；C 比较；V 单张；B 网格；1/2/3 决定；←/→ 切图；Enter 下一组；Shift+Enter 上一组；S 设为首选；A 全选、Esc 清除选择；
         M 移到上一组；Shift+M 移到下一组；G 移到新组；Cmd/Shift 点击多选；F 打开/关闭人脸对比、Esc 关闭；
         L 原生 1:1 放大镜；Shift+L 切换脸；E 切换眼部/脸部；
         空格或双击照片看大图（滚轮缩放、拖动查看、Z 放大/还原、0 适应窗口）；U 或 Cmd/Ctrl+Z 撤销。淘汰理由面板打开时，1–9 切换理由，Enter/Esc 完成；切图/切组恢复原快捷键。</p>

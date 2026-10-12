@@ -43,7 +43,7 @@ Python requirements/pyproject/poetry 清单改变只提示，绝不自动安装�
 
 候选 Node 进程先监听临时本机端口，验证带本次随机标识的 `/health` 后接管原端口，
 再次验证健康后旧进程退出。失败则终止候选进程、恢复旧监听与提交。
-保留启动参数、环境变量和工作目录；生产更新需用 CLI 启动，嵌入式服务默认不允许更新。
+保留启动参数、环境变量和工作目录；生产更新需用 CLI 启动（紧凑后台插件自动拉起的也是 CLI），嵌入式服务默认不允许更新。
 日志写入 `data/logs/update-*.log`。git 超时两分钟，npm 超时十分钟；候选启动/交接等待各三十秒。
 POSIX 子进程使用 nice 15，Windows 使用 BelowNormal；npm 使用 npm.cmd。
 更新不会调用 Eagle 写接口，不删除 runs、决定、学习记录、模型或缓存。
@@ -59,7 +59,7 @@ POSIX 子进程使用 nice 15，Windows 使用 BelowNormal；npm 使用 npm.cmd�
 
 ## 发布前检查
 
-发布者同时修改 `package.json` 与 `src/plugin/manifest.json` 的版本；依赖未变时不要改动 `package-lock.json`（包括其中的项目版本字段），
+发布者同时修改 `package.json`、`src/plugin/manifest.json` 与 `src/inspector/manifest.json` 的版本；依赖未变时不要改动 `package-lock.json`（包括其中的项目版本字段），
 因为任何 lockfile 字节变化都会触发依赖重装，而 v1.2.0 的更新器在 Windows 上就地重装会失败。
 新增 `docs/release-notes-vX.Y.Z.md`，然后运行：
 
