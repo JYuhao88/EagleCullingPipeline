@@ -1,8 +1,9 @@
+import { touchCache } from './cache-budget.js';
 import { performanceMode, configuredPerformanceMode, parsePerformanceMode, performanceWorkerCap,
   withPerformanceMode, MODEL_BUDGET_BYTES, NODE_BUDGET_BYTES } from './performance-mode.js';
 import { workerLimit } from './exiftool-pool.js';
 import { localSetting } from './local-config.js';
-import { completeEyeRois, EYE_ROI_VERSION } from "./eye-roi.js";
+import { completeEyeRois, detectorFaces, EYE_ROI_VERSION } from "./eye-roi.js";
 import { checkCancelled } from "./checkpoints.js";
 import { setImmediate as yieldTurn } from "node:timers/promises";
 import { PoseWorkerPool, detectPose, poseWorkerLimit, poseProviderMatches, POSE_CACHE_KEY,
@@ -92,8 +93,9 @@ export class AnalysisPipeline {
         const index = cursor++;
         if (index >= records.length) return;
         const record = records[index];
-        const preview = await choosePreview(record, { cacheDir: path.join(this.cacheRoot, "previews") });
-        const fingerprint = crypto
+        const previewDir = path.resolve(this.cacheRoot, "previews");
+        const preview = await choosePreview(record, { cacheDir: previewDir });
+        const unitFingerprint = previewKey => crypto
           .createHash("sha256")
           .update(
             JSON.stringify([
@@ -101,7 +103,7 @@ export class AnalysisPipeline {
               record.size || 0,
               record.mtimeMs || 0,
               record.itemIds || [],
-              preview || "",
+              previewKey,
               "analysis-v6-exposure-gates",
               POSE_CACHE_KEY,
               SCORER_CACHE_KEY,
@@ -109,6 +111,9 @@ export class AnalysisPipeline {
             ]),
           )
           .digest("hex");
+        // Generated previews are content-addressed; their directory must not invalidate results.
+        const fingerprint = unitFingerprint(preview && path.dirname(path.resolve(preview)) === previewDir
+          ? `preview:${path.basename(preview)}` : preview || "");
         check();
         const saved = checkpoint ? await checkpoint.get(`unit:${record.unitId || record.id}`) : null;
         const restored = saved?.result?.fingerprint === fingerprint ? saved : null;
@@ -118,6 +123,18 @@ export class AnalysisPipeline {
         }
         if (restored) stages.set(restored.result.unitId, restored.stage);
         let result = restored?.result || (this.store ? await this.store.get(fingerprint) : null);
+        if (!result && this.store && preview) {
+          const legacy = unitFingerprint(preview);
+          if (legacy !== fingerprint) result = await this.store.get(legacy);
+          if (result) {
+            result.fingerprint = fingerprint;
+            await this.store.put(fingerprint, result);
+          }
+        }
+        if (result && !restored) {
+          result.faces = detectorFaces(result.faces);
+          if (preview) result.previewPath = preview;
+        }
         if (result?.pose && !poseProviderMatches(result.pose)) {
           delete result.signals;
           delete result.pose;
@@ -382,6 +399,7 @@ export class AnalysisPipeline {
         let focus;
         try {
           focus = JSON.parse(await readFile(focusFile, "utf8"));
+          await touchCache(focusFile);
         } catch {
           const maker = await readMakerFocus(result.sourcePath, { signal });
           const nativeRecord = { ...records[index], filePath: result.sourcePath };

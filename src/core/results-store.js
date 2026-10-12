@@ -1,3 +1,4 @@
+import { touchCache } from './cache-budget.js';
 import { replaceFile } from './atomic-file.js';
 import path from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
@@ -17,7 +18,12 @@ export class ResultsStore {
     return path.join(this.root, 'results-v2', key.slice(0, 2), `${key}.json`);
   }
   async get(fingerprint) {
-    try { return JSON.parse(await readFile(this.location(fingerprint), 'utf8')).result; }
+    try {
+      const file = this.location(fingerprint);
+      const result = JSON.parse(await readFile(file, 'utf8')).result;
+      await touchCache(file);
+      return result;
+    }
     catch (error) { if (error.code !== 'ENOENT') throw error; }
     return (await this.journal.get(fingerprint))?.result || null;
   }

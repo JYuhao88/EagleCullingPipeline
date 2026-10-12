@@ -4,7 +4,7 @@ import { DecisionsStore } from "../core/decisions-store.js";
 import { writeSegmented, readManifest, readRow, readRows } from "../core/segmented-results.js";
 import { LearningData } from "../core/learning-data.js";
 import path from "node:path";
-import { mkdir, readFile, readdir, writeFile, stat } from "node:fs/promises";
+import { mkdir, readFile, readdir, rm, writeFile, stat } from "node:fs/promises";
 import { randomUUID, createHash } from "node:crypto";
 import { applyGroupOverrides } from "../core/group-overrides.js";
 
@@ -57,7 +57,7 @@ export class RunStore {
       if (!metadataOnly && (state.results || state.units || state.groups || state.items)) {
         await writeSegmented(directory, resultData);
         await this.saveReviewSummary(run.id, resultData.groups);
-        if (run.status === "completed") {
+        if (run.status === "completed" && run.purpose !== "prefetch") {
           try { await this.learningData.ingestRun(resultData); }
           catch (error) { runJson.learningWarning = error.message; }
         }
@@ -109,9 +109,73 @@ export class RunStore {
     for (const entry of entries) {
       if (!entry.isDirectory() || !/^run-[a-zA-Z0-9_-]+$/.test(entry.name)) continue;
       const run = await this.datedRun(entry.name);
-      if (run) runs.push(run);
+      if (run && run.purpose !== 'prefetch') runs.push(run);
     }
     return runs.sort(newestFirst).slice(0, limit);
+  }
+
+  async allRuns() {
+    const entries = await readdir(this.root, { withFileTypes: true }).catch(error => {
+      if (error.code === 'ENOENT') return []; throw error;
+    });
+    const runs = [];
+    for (const entry of entries) {
+      if (!entry.isDirectory() || !/^run-[a-zA-Z0-9_-]+$/.test(entry.name)) continue;
+      const run = await this.getRun(entry.name).catch(() => null);
+      if (run) runs.push(run);
+    }
+    return runs;
+  }
+
+  async analyzedItemIds(itemIds, libraryPath) {
+    const wanted = new Set(itemIds), analyzed = new Set();
+    for (const run of await this.allRuns()) {
+      if (run.libraryPath !== libraryPath || run.status !== 'completed') continue;
+      const manifest = await this.manifest(run.id);
+      if (manifest) {
+        const completed = new Set();
+        for await (const result of readRows(this.dir(run.id), manifest, 'results')) completed.add(result.unitId);
+        for await (const unit of readRows(this.dir(run.id), manifest, 'units')) {
+          if (!completed.has(unit.id)) continue;
+          for (const id of unit.itemIds || [unit.primaryItemId]) if (wanted.has(id)) analyzed.add(id);
+        }
+      } else {
+        const data = await this.results(run.id, { readOnly: true });
+        const completed = new Set((data?.results || []).map(row => row.unitId));
+        for (const unit of data?.units || []) if (completed.has(unit.id)) {
+          for (const id of unit.itemIds || [unit.primaryItemId]) if (wanted.has(id)) analyzed.add(id);
+        }
+      }
+      if (analyzed.size === wanted.size) break;
+    }
+    return [...analyzed];
+  }
+
+  async cacheProtection() {
+    const files = [], fingerprints = [];
+    for (const run of await this.allRuns()) {
+      if (!['running', 'queued'].includes(run.status)) continue;
+      const data = await this.results(run.id, { readOnly: true });
+      for (const row of data?.results || []) {
+        if (row.previewPath) files.push(row.previewPath, `${row.previewPath}.json`);
+        if (row.fingerprint) fingerprints.push(row.fingerprint);
+      }
+    }
+    return { files, fingerprints };
+  }
+
+  async prefetchRuns() {
+    return (await this.allRuns()).filter(run => run.purpose === 'prefetch').sort(newestFirst);
+  }
+
+  async latestPrefetch() {
+    return (await this.prefetchRuns()).find(run => run.status !== 'running') || null;
+  }
+
+  async prunePrefetchRuns(keep = 5) {
+    for (const run of (await this.prefetchRuns()).filter(run => run.status !== 'running').slice(keep)) {
+      if (/^run-[a-zA-Z0-9_-]+$/.test(run.id)) await rm(this.dir(run.id), { recursive: true, force: true });
+    }
   }
 
   async saveReviewSummary(id, groups) {
@@ -137,7 +201,7 @@ export class RunStore {
       if (!entry.isDirectory() || !/^[a-zA-Z0-9_-]+$/.test(entry.name)) continue;
       try {
         const run = await this.datedRun(entry.name);
-        if (run && run.id === entry.name && (!libraryPath || run.libraryPath === libraryPath)) runs.push(run);
+        if (run && run.purpose !== 'prefetch' && run.id === entry.name && (!libraryPath || run.libraryPath === libraryPath)) runs.push(run);
       } catch (error) { if (!(error instanceof SyntaxError)) throw error; }
     }
     runs.sort(newestFirst);

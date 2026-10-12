@@ -42,6 +42,17 @@
         <label><input id="liveWriteback" type="checkbox">实时写回 Eagle 标签</label><p class="setting-hint">会修改 Eagle 中照片的标签，可在审阅完成页撤回</p>
         <label><input id="liveStar" type="checkbox">同时写星级</label>
         <label><input id="smartFolders" type="checkbox">自动创建智能文件夹</label><p id="apiCapability" class="setting-hint"></p>
+        <h3>缓存与预处理</h3>
+        <p id="cacheUsage" class="setting-hint" role="status">读取缓存占用…</p>
+        <div class="cache-row"><label for="cacheLimit">上限</label><select id="cacheLimit"><option value="2">2 GB</option><option
+          value="5">5 GB</option><option value="10">10 GB</option><option value="20">20 GB</option><option value="50">50
+          GB</option></select><button id="clearPreviewCache">清理预览</button><button id="clearAllCache">清空全部</button></div>
+        <p class="setting-hint">超出上限时自动删除最久未用的缓存，先删预览图；分析结果不受影响，只是再次分析会变慢。</p>
+        <label><input id="idlePrefetch" type="checkbox">空闲时预处理新照片</label>
+        <div class="cache-row"><label for="idleWindowStart">时段</label><input id="idleWindowStart" type="time"
+          value="01:00"><span>–</span><input id="idleWindowEnd" type="time" value="07:00"></div>
+        <p class="setting-hint">插电、窗口关闭且电脑空闲时，分析最近 30 天导入的照片以备审阅；只读，不改 Eagle。</p>
+        <p id="prefetchLast" class="setting-hint"></p>
         <details><summary>个性化（实验）</summary><p>默认关闭；在分析记录中学习并验证偏好。</p><button id="panelPersonalization">打开最近结果的个性化设置</button></details>
         <div id="updateSettings"></div>
         <details id="advancedSettings"><summary>高级 / 诊断</summary>

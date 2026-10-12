@@ -1,5 +1,7 @@
 import { initEagleTheme } from "./theme.js";
 import { mountPanelSettings } from "./panel-settings.js";
+import { mountCacheSettings } from "./cache-settings.js";
+import { createIdlePrefetcher } from "./idle-prefetch.js";
 import { shouldAutoStart, launchLocalService, createRunNotifier, mountBackgroundLifecycle } from "./background.js";
 import { defaultRepository, serviceCommand } from "./service-start.js";
 import { primaryAnalysis, analysisStages, stageIndex, readRecentRuns, analysisProgress, scopeLabel, completionText } from
@@ -443,8 +445,13 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     if (!resumeId) { showText('serviceDiagnostics', '先完成一次分析，再打开个性化设置。'); return; }
     await onRun(resumeId); root.querySelector('#reviewSettings')?.showModal?.();
   } });
+  const cacheSettings = mountCacheSettings({ root, getApi, storage });
+  const prefetcher = createIdlePrefetcher({ storage, getApi, isVisible: () => visible, isConnected: () => connected,
+    isBusy: () => Boolean(activeRun) || submitting });
   function setVisible(value) {
     visible = value; contextVersion++; clearTimeout(contextTimer);
+    // Showing the window is user activity: a running prefetch yields immediately.
+    if (visible && autoRefresh) void prefetcher.tick({ force: true });
     if (visible && autoRefresh) void refreshContext()
       .then(() => { if (visible && !disposed) return refreshRecent(); })
       .catch(() => {}).then(refreshVisible);
@@ -470,6 +477,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   });
   root.addEventListener?.('visibilitychange', () => setVisible(!root.hidden));
   if (autoRefresh) {
+    prefetcher.start();
     setVisible(visible);
     // Idle discovery uses health only; the server reports whether a run exists.
     healthTimer = setInterval(async () => {
@@ -482,8 +490,8 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     }, 60000);
   }
   if (autoCheck) void checkHealth().then(() => startService(true));
-  return { checkHealth, refreshContext, refreshRecent, setVisible, startService, settings, dispose() {
-    disposed = true; stopPolling(); clearTimeout(serviceTimer); clearTimeout(contextTimer); clearInterval(healthTimer);
+  return { checkHealth, refreshContext, refreshRecent, setVisible, startService, settings, cacheSettings, prefetcher, dispose() {
+    disposed = true; stopPolling(); prefetcher.stop(); clearTimeout(serviceTimer); clearTimeout(contextTimer); clearInterval(healthTimer);
       recentToken += 1; contextVersion++;
   } };
 }

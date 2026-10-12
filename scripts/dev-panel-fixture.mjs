@@ -38,13 +38,16 @@ const nativeFetch=window.fetch.bind(window); window.fetch=(input,options)=>{
 const url=new URL(typeof input==='string'?input:input.url,location.href);
 if(url.origin===location.origin){url.searchParams.set('fixture',fixtureState);return nativeFetch(url,options);} throw new
   Error('fixture only');};
-window.addEventListener('load',()=>{events.PluginShow?.();setTimeout(()=>{
-if(fixtureState==='settings')document.querySelector('#openSettings')?.click();
-if(fixtureState==='history')document.querySelector('#allRuns')?.click();
+// Module init and the first health check race the load event; retry until the target view is shown.
+const targets={settings:['#openSettings','#panelSettings'],history:['#allRuns','#historyView']};
+window.addEventListener('load',()=>{events.PluginShow?.();let tries=0;const open=()=>{
+const target=targets[fixtureState];
+if(target){const view=document.querySelector(target[1]);if(view&&!view.hidden&&document.querySelector('#health')?.dataset.state===
+  'connected')return;document.querySelector(target[0])?.click();}
 if(fixtureState==='starting'){const
   h=document.querySelector('#health');h.textContent='启动中';h.dataset.state='starting';h.title='正在等待服务启动';
 document.querySelector('#serviceHint').textContent='启动中…';}
-},150);});
+if(++tries<40&&(target||fixtureState==='starting'))setTimeout(open,100);};setTimeout(open,50);});
 </script>`;
 }
 const server = http.createServer(async (req, res) => {
@@ -59,12 +62,28 @@ const server = http.createServer(async (req, res) => {
 <label>选中 <input id="count" type="number" value="8" min="0"></label><button id="switch">切换</button>
 <p>仅假 Eagle / 假服务；通知记录可在 iframe 的 fixture.notices 查看。</p>
 <iframe id="frame" style="width:420px;height:600px;border:1px solid"></iframe>
-<script>function update(){frame.src='/?state='+state.value+'&theme='+theme.value+'&n='+count.value;}
-document.querySelector('#switch').onclick=update;update();</script>`); return;
+<script>const initial=new URLSearchParams(location.search);
+for(const [id,key] of [['state','state'],['theme','theme'],['count','n']])
+  if(initial.has(key))document.getElementById(id).value=initial.get(key);
+// Same-origin wrapper for screenshots: /lab?bare=1&state=settings&w=420&h=900
+const frame=document.getElementById('frame'), field=id=>document.getElementById(id);
+function update(){frame.src='/?state='+field('state').value+'&theme='+field('theme').value+'&n='+field('count').value;}
+field('switch').onclick=update;update();
+if(initial.has('bare')){document.body.style.margin='0';for(const node of [...document.body.children])
+  if(node!==frame&&node.tagName!=='SCRIPT')node.hidden=true;frame.style.border='0';frame.style.display='block';}
+if(initial.has('w'))frame.style.width=initial.get('w')+'px';
+if(initial.has('h'))frame.style.height=initial.get('h')+'px';</script>`); return;
     }
     if (url.pathname === '/health') return json(res, ['offline', 'starting', 'inspector-offline'].includes(state) ? 503 : 200,
       { service: 'eagle-culling', ok: true, activeRunId: state === 'running' ? 'run-fixture' : null });
-    if (url.pathname === '/runs/status') return json(res, 200, { active: state === 'running' ? run(state) : null, recent: [] });
+    if (url.pathname === '/runs/status') return json(res, 200, { active: state === 'running' ? run(state) : null, recent: [],
+      prefetch: { id: 'run-prefetch', status: 'completed', startedAt: '2026-10-12T01:10:00Z', finishedAt: '2026-10-12T01:24:00Z',
+        itemCount: 126 } });
+    if (url.pathname === '/cache/usage') return json(res, 200, { totalBytes: 1.8 * 1024 ** 3, maxBytes: 5 * 1024 ** 3,
+      categories: [{ name: 'previews', label: '预览', bytes: 1.3 * 1024 ** 3, files: 9800 },
+        { name: 'results-v2', label: '分析结果', bytes: 0.2 * 1024 ** 3, files: 9800 }] });
+    if (url.pathname === '/cache/limit' || url.pathname === '/cache/clear')
+      return json(res, 200, { totalBytes: 0.4 * 1024 ** 3, maxBytes: 5 * 1024 ** 3, categories: [] });
     if (url.pathname === '/runs') {
       if (req.method === 'POST') return json(res, 202, run('completed'));
       const cursor = Number(url.searchParams.get('cursor') || 0);

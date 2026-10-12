@@ -1,7 +1,7 @@
 export const SETTINGS = {
   performanceTurbo: ['eagle-culling-turbo', false], autoStart: ['eagle-culling-autostart', true],
   liveWriteback: ['eagle-culling-live-writeback', false], liveStar: ['eagle-culling-live-star', false],
-  smartFolders: ['eagle-culling-smart-folders', true]
+  smartFolders: ['eagle-culling-smart-folders', true], idlePrefetch: ['eagle-culling-idle-prefetch', false]
 };
 export function readSetting(storage, id) {
   const [key, defaultValue] = SETTINGS[id];

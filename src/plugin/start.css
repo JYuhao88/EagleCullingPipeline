@@ -25,6 +25,10 @@
 #start small, #start .setting-hint { font-size: var(--ec-font-size-small); color: var(--ec-text-dim); }
 #panelSettings, #historyView { max-height: calc(100vh - 80px); overflow-y: auto; }
 #panelSettings input:not([type="checkbox"]) { display: block; width: 100%; margin: 4px 0; }
+#panelSettings .cache-row { display: flex; align-items: center; gap: 6px; margin: 4px 0; }
+#panelSettings .cache-row input { width: auto; flex: 1; margin: 0; }
+#panelSettings .cache-row select { flex: 1; min-width: 0; }
+#panelSettings .cache-row button { margin: 0; white-space: nowrap; }
 #panelSettings details { border-top: 1px solid var(--ec-border); padding: 10px 0; }
 #start pre { background: var(--ec-surface); color: var(--ec-text-dim); font-size: var(--ec-font-size-small); padding: 8px;
   overflow-wrap: anywhere; }

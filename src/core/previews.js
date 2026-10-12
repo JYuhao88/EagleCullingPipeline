@@ -1,3 +1,4 @@
+import { touchCache } from './cache-budget.js';
 import { replaceFile } from './atomic-file.js';
 import path from "node:path";
 import { access, mkdir, readFile, writeFile } from "node:fs/promises";
@@ -48,6 +49,8 @@ export async function choosePreview(
         record.previewSource = "cache";
         // Old thumbnails remain readable, but a new analysis must establish a source mapping.
         record.sourceMapping = JSON.parse(await readFile(`${output}.json`, "utf8"));
+        await touchCache(output);
+        await touchCache(`${output}.json`);
         return output;
       }
     } catch {

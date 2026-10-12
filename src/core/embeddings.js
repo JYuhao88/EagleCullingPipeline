@@ -1,3 +1,4 @@
+import { touchCache } from './cache-budget.js';
 import { createRequire } from "node:module";
 import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -80,7 +81,9 @@ export async function embedImage(
     ? '-' + crypto.createHash('sha256').update(process.env.EAGLE_DINO_PROVIDER).digest('hex') : '';
   const cachePath = path.resolve(cacheDir, `${key}${providerKey}.json`);
   try {
-    return JSON.parse(await readFile(cachePath, "utf8"));
+    const cached = JSON.parse(await readFile(cachePath, "utf8"));
+    await touchCache(cachePath);
+    return cached;
   } catch {
     signal?.throwIfAborted();
     const vector = await embedRaw(filePath, selectedModel, signal);

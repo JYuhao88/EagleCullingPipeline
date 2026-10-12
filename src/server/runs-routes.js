@@ -26,6 +26,11 @@ function runSummary(run) {
   return summary;
 }
 
+function prefetchSummary(run) {
+  return { id: run.id, status: run.status, startedAt: run.startedAt, finishedAt: run.finishedAt || null,
+    itemCount: run.itemCount || 0, cached: run.progress?.cached ?? null };
+}
+
 function runFromState(state) {
   return state?.run || state;
 }
@@ -112,13 +117,26 @@ export function createRunsRouter({
   scanItems = listEagleImages,
   progressIntervalMs = 250,
   isUpdating = () => false,
+  beforeRun = async () => {},
+  onFinished = () => {},
 } = {}) {
   const prefetchControllers = new Set();
+  const finishing = new WeakMap();
   return async function handleRunsRoute(req, res, url) {
+    if (req.method === 'POST' && url.pathname === '/runs/analyzed') {
+      const body = await parseBody(req);
+      if (!Array.isArray(body.itemIds) || body.itemIds.length > 1000 ||
+        !body.itemIds.every(id => typeof id === 'string') || typeof body.libraryPath !== 'string')
+        return json(res, 400, { error: 'Invalid candidates' });
+      return json(res, 200, { itemIds: await store.analyzedItemIds(body.itemIds, body.libraryPath) });
+    }
     if (req.method === 'GET' && url.pathname === '/runs/status') {
-      const current = activeRun(active);
+      const running = activeRun(active);
+      const current = running?.purpose === 'prefetch' ? null : running;
       const recent = store.recentRuns ? await store.recentRuns() : [];
+      const prefetch = store.latestPrefetch ? await store.latestPrefetch() : null;
       return json(res, 200, { active: current ? runSummary(current) : null,
+        prefetch: running?.purpose === 'prefetch' ? runSummary(running) : prefetch && prefetchSummary(prefetch),
         recent: recent.map(run => ({ ...runSummary(run),
           ...(current?.id !== run.id && run.status === 'running' ? { status: 'interrupted' } : {}) })) });
     }
@@ -135,11 +153,21 @@ export function createRunsRouter({
     }
     if (req.method === "POST" && url.pathname === "/runs") {
       if (isUpdating()) return json(res, 409, { error: "正在更新，请稍后开始分析" });
+      const body = await parseBody(req);
+      const current = activeRun(active);
+      // Background prefetch only warms caches; a user's analysis always takes over.
+      if (current?.purpose === 'prefetch' && body.purpose !== 'prefetch') {
+        current.controller?.abort(new Error('用户开始分析，空闲预处理已暂停'));
+        await finishing.get(current)?.catch(() => {});
+      }
       if (activeRun(active)) {
         return json(res, 409, { error: "已有分析任务运行中", run: runSummary(activeRun(active)) });
       }
-      const body = await parseBody(req);
       try {
+        if (body.purpose !== undefined && !['analysis', 'prefetch'].includes(body.purpose))
+          throw new Error('Invalid purpose');
+        if (body.purpose === 'prefetch' && (!Array.isArray(body.itemIds) || body.itemIds.length > 300))
+          throw new Error('Prefetch requires at most 300 itemIds');
         if (Object.hasOwn(body, 'performanceMode') && !['normal', 'turbo'].includes(body.performanceMode))
           throw new Error('performanceMode must be normal or turbo');
       }
@@ -155,7 +183,8 @@ export function createRunsRouter({
       const request = resumeId ? await checkpoint?.get('request') : body;
       if (!request) return json(res, 409, { error: 'No resumable scan checkpoint' });
       let mode;
-      try { mode = parsePerformanceMode(request.performanceMode ?? configuredPerformanceMode()); }
+      try { mode = request.purpose === 'prefetch' ? 'normal'
+        : parsePerformanceMode(request.performanceMode ?? configuredPerformanceMode()); }
       catch (error) { return json(res, 400, { error: error.message }); }
       if (!resumeId && checkpoint) await checkpoint.put('request', body);
       const history = store.list ? (await store.list({ limit: 20, cursor: 0 })).runs || [] : [];
@@ -165,6 +194,7 @@ export function createRunsRouter({
         id,
         status: "running",
         performanceMode: mode,
+        purpose: request.purpose || 'analysis',
         startedAt: new Date().toISOString(),
         progress: tracker.update({ completed: 0, total: 0, cached: 0, stage: 'scanning' }),
         libraryPath: request.libraryPath || null,
@@ -181,7 +211,10 @@ export function createRunsRouter({
       run.controller = controller;
       if (isUpdating()) return json(res, 409, { error: "正在更新，请稍后开始分析" });
       for (const controller of prefetchControllers) controller.abort(new Error("analysis started"));
+      // Reserve before awaiting cancellation of maintenance or initial persistence.
+      if (activeRun(active)) return json(res, 409, { error: '已有分析任务运行中' });
       active.run = run;
+      await beforeRun();
       if (store.saveProgress) await store.saveProgress(run);
       else await store.save(run, { run });
       let lastProgressAt = 0;
@@ -230,7 +263,7 @@ export function createRunsRouter({
           onProgress,
         });
       };
-      execute()
+      const finished = execute()
         .then(async (result) => {
           clearInterval(heartbeat);
           controller.signal.throwIfAborted();
@@ -248,9 +281,12 @@ export function createRunsRouter({
           data.groups = result.groups || [];
           data.duplicateCandidates = result.duplicateCandidates;
           delete run.controller;
+          run.finishedAt = new Date().toISOString();
           await Promise.all(progressWrites);
           await persist(store, run, data);
           if (active.run?.id === id) active.run = null;
+          if (run.purpose === 'prefetch') await store.prunePrefetchRuns?.(5).catch(() => {});
+          void onFinished();
         })
         .catch(async (error) => {
           clearInterval(heartbeat);
@@ -258,10 +294,14 @@ export function createRunsRouter({
           run.status = controller.signal.aborted ? "cancelled" : "failed";
           run.error = error.message;
           delete run.controller;
+          run.finishedAt = new Date().toISOString();
           await Promise.all(progressWrites);
           await persist(store, run, data);
           if (active.run?.id === id) active.run = null;
+          if (run.purpose === 'prefetch') await store.prunePrefetchRuns?.(5).catch(() => {});
+          void onFinished();
         });
+      finishing.set(run, finished);
       const response = runSummary(run);
       return json(res, 202, response);
     }

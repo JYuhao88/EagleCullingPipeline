@@ -44,3 +44,11 @@ export function completeEyeRois(faces = [], persons = []) {
   }
   return output;
 }
+// Cached results store completed ROIs; detector-stage consumers must see detector faces only.
+export function detectorFaces(faces = []) {
+  return (Array.isArray(faces) ? faces : []).filter(f => f?.roiSource !== 'rtmw-face').map(f => {
+    if (f?.eyeRoiSource !== 'rtmw-68') return f;
+    const { eyeBoxes, eyeRoiSource, eyeRoiConfidence, ...face } = f;
+    return face;
+  });
+}

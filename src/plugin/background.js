@@ -32,7 +32,7 @@ export async function launchLocalService({ repository, base, requireImpl = globa
 export function createRunNotifier({ storage, eagle = globalThis.eagle, base = () => '' }) {
   const key = () => `eagle-culling-notified:${base()}`;
   return async run => {
-    if (!['completed', 'failed'].includes(run.status)) return false;
+    if (!['completed', 'failed'].includes(run.status) || run.purpose === 'prefetch') return false;
     let ids; try { ids = JSON.parse(storage.getItem(key()) || '[]'); } catch { ids = []; }
     if (!Array.isArray(ids)) ids = [];
     if (ids.includes(run.id)) return false;

@@ -84,8 +84,23 @@ nice -n 15 node scripts/dev-panel-fixture.mjs
 仅监听 127.0.0.1:43441，所有 Eagle 对象、服务状态及通知都是假的。
 入口 `http://127.0.0.1:43441/lab` 包含 420×600 iframe 和状态/主题/选中数切换。
 独立截图 URL 用 `http://127.0.0.1:43441/?state=<state>&theme=DARK`，LIGHT 把参数改为 LIGHT。
+无头浏览器截 420 宽面板时用同源包装 `http://127.0.0.1:43441/lab?bare=1&state=settings&theme=DARK&w=420&h=900`；
+跨源（file://）包装页里的设置状态不可靠。settings/history 会重试直到对应界面显示。
 状态：offline、starting、none、selected（可加 `&n=8`）、folder、running、completed、settings、history、
 inspector-result、inspector-empty、inspector-offline。
 可在页面 `fixture.setSelection(n)`、`fixture.setFolder(true)`、`fixture.setTheme('LIGHT')` 切换假 Eagle；
 `fixture.hide()/show()/changeLibrary()` 模拟生命周期，通知记录在 `fixture.notices`。
 退出脚本用 Ctrl+C；不要指向真实服务或资源库。
+
+## 空闲预处理（默认关闭）
+
+- 由主插件（后台服务窗口）每分钟检查一次，满足条件最多每 15 分钟发起一次：设置开启、服务已连接、在时段内、
+  插件窗口隐藏、非电池供电、系统空闲 ≥10 分钟、没有正在进行的分析。
+- 电源：优先 Electron `powerMonitor`（渲染进程通常不可用），否则用 Chromium Battery API；都不可用时视为未知，不运行。
+  空闲：`powerMonitor.getSystemIdleTime()`，macOS 退回 `ioreg` 的 HIDIdleTime；都不可用时只按时段判断。
+- 候选：`eagle.item.getIdsWithModifiedAt()` 取最近 30 天修改过的 id（最多 1000），`getByIds` 后按 `importedAt`
+  过滤最近 30 天导入的图片；旧版 Eagle 退回 `item.get({ fields })`。服务端 `POST /runs/analyzed` 去掉已分析的，单次最多 300 张。
+- 运行：`POST /runs { purpose: 'prefetch' }`，固定普通性能模式；不进入最近记录、检查器索引、学习数据和通知，
+  `/health` 用 `prefetchRunId` 而不是 `activeRunId`。只保留最近 5 条预处理记录。
+- 让出：窗口显示、空闲 <60 秒、改用电池或离开时段时由插件取消；用户的正式分析请求会先取消预处理再开始。
+- 只读：不调用任何写 Eagle 的 API。

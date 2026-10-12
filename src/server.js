@@ -1,3 +1,5 @@
+import { createCacheMaintenance } from './core/cache-budget.js';
+import { createCacheRouter } from './server/cache-routes.js';
 import { createItemAnalysisRouter } from "./server/item-analysis.js";
 import http from "node:http";
 import { Updater } from "./core/updater.js";
@@ -27,7 +29,17 @@ export function createAnalysisServer({
   updater ||= new Updater({ isBusy: () => Boolean(active.run &&
     (active.run.controller || ["queued", "running"].includes(active.run.status))), restart });
   const updates = createUpdateRouter(updater);
-  const runs = createRunsRouter({ pipeline, store: runStore, active, scanItems, isUpdating: () => updater.isUpdating() });
+  // Only a pipeline that owns a cache directory gets budget maintenance; stubs never touch real caches.
+  const cacheRoot = typeof pipeline?.cacheRoot === 'string' ? pipeline.cacheRoot : null;
+  const cacheLock = { busy: false };
+  const isBusy = () => Boolean(active.run && (active.run.controller || ['running', 'queued'].includes(active.run.status)));
+  const maintenance = cacheRoot ? createCacheMaintenance({ cacheRoot, isBusy: () => isBusy() || cacheLock.busy,
+    getProtect: () => runStore.cacheProtection?.() || {} })
+    : { trigger: async () => {}, start() {}, cancel: async () => {}, dispose: async () => {} };
+  const cache = cacheRoot ? createCacheRouter({ cacheRoot, isBusy, maintenance, lock: cacheLock }) : async () => false;
+  const runs = createRunsRouter({ pipeline, store: runStore, active, scanItems,
+    beforeRun: () => maintenance.cancel(), onFinished: () => maintenance.trigger(),
+    isUpdating: () => updater.isUpdating() || cacheLock.busy });
   const ctx = { runStore, api, json, readBody: parseBody, clock };
   const rules = createRulesRouter();
   const itemAnalysis = createItemAnalysisRouter(runStore);
@@ -41,10 +53,12 @@ export function createAnalysisServer({
           ok: true,
           service: "eagle-culling",
           contractVersion: 1,
-          activeRunId: active.run?.id || null,
+          activeRunId: active.run && active.run.purpose !== 'prefetch' ? active.run.id : null,
+          prefetchRunId: active.run?.purpose === 'prefetch' ? active.run.id : null,
           updateToken: process.env.EAGLE_UPDATE_CANDIDATE || null,
         });
       }
+      if (await cache(req, res, url)) return;
       if (await itemAnalysis(req, res, url)) return;
       if (await runs(req, res, url)) return;
       if (await rules(req, res)) return;
@@ -59,15 +73,17 @@ export function createAnalysisServer({
     updater,
     listen: () => new Promise((resolve, reject) => {
       const failed = error => { server.off('listening', ready); reject(error); };
-      const ready = () => { server.off('error', failed); resolve(); };
+      const ready = () => { server.off('error', failed); maintenance.start(); resolve(); };
       server.once('error', failed);
       server.once('listening', ready);
       server.listen(port, host);
     }),
-    close: () =>
-      new Promise((resolve) => {
+    close: async () => {
+      await maintenance.dispose();
+      return new Promise((resolve) => {
         server.close(resolve);
         server.closeAllConnections();
-      }),
+      });
+    },
   };
 }
