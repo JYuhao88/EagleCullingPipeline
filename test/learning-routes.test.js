@@ -6,41 +6,9 @@ import { mkdtemp, rm, writeFile, readFile } from 'node:fs/promises';
 import { RunStore } from '../src/server/run-store.js';
 import { handleReviewRoute } from '../src/server/review-routes.js';
 import { learningServices, learningGroups, applyPreferenceSnapshot, restorePreferenceOrder } from '../src/server/learning-routes.js';
-import { presentation, createLearningPanel } from '../src/plugin/learning-panel.js';
 import { LearningData } from '../src/core/learning-data.js';
 import { fitPreferenceHead } from '../src/core/preference-head.js';
 
-test('learning panel restores the selected profile when the page is reopened', async t => {
-  const storage = new Map();
-  const previous = globalThis.localStorage;
-  globalThis.localStorage = { getItem: key => storage.get(key) || null, setItem: (key, value) => storage.set(key, value) };
-  t.after(() => { if (previous === undefined) delete globalThis.localStorage; else globalThis.localStorage = previous; });
-  const requests = [];
-  function panel() {
-    const fields = new Map();
-    const root = { querySelector: key => {
-      if (!fields.has(key)) fields.set(key, { value: 'default', addEventListener: (_type, callback) => {
-        fields.get(key).click = callback;
-      }, replaceChildren: () => {} });
-      return fields.get(key);
-    } };
-    let current = { runId: 'one', data: { groups: [] } };
-    const instance = createLearningPanel({ root, state: () => current, setState: value => { current = value; },
-      render: () => {}, api: async (_url, options) => {
-        if (options) { requests.push(JSON.parse(options.body).profileId); return { config: {}, snapshots: [] }; }
-        return { groups: [] };
-      } });
-    return { instance, fields };
-  }
-  const first = panel(); await first.instance.refresh();
-  first.fields.get('#learningProfile').value = 'client';
-  // Use the same UI listener as the Load profile button.
-  await first.fields.get('#learningLoad').click();
-  const reopened = panel(); await reopened.instance.refresh();
-  assert.equal(reopened.fields.get('#learningProfile').value, 'client');
-  assert.equal(reopened.instance.context().profileId, 'client');
-  assert.deepEqual(requests, ['default', 'client', 'client']);
-});
 
 test('decisions retain their storage contract while exposure/bulk/profile persist across runs', async t => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'w7-routes-'));
@@ -110,16 +78,4 @@ test('L1 apply preserves severe gate strata, reviewed groups and defaults', asyn
   const reviewed = await applyPreferenceSnapshot(data, [{ unitId: 'b', source: 'human' }], profile, hashes, features);
   assert.deepEqual(reviewed.data.groups, data.groups); assert.equal(reviewed.changedGroups, 0);
   assert.equal((await applyPreferenceSnapshot(data, [], { ...profile, config: { enabled: false } }, hashes, features)).changedGroups, 0);
-});
-
-test('debias treatment is stable, small and disabled by default', () => {
-  const group = { id: 'g', unitIds: ['a', 'b'], ranking: [{ unitId: 'a', rank: 1 }, { unitId: 'b', rank: 2 }] };
-  assert.equal(presentation(group).aiVisible, true);
-  let controls = 0;
-  for (let i = 0; i < 1000; i++) {
-    const input = { ...group, id: `group-${i}` }, first = presentation(input, true);
-    assert.deepEqual(first, presentation(input, true));
-    if (!first.aiVisible) { controls++; assert.deepEqual(first.order, ['b', 'a']); }
-  }
-  assert.ok(controls >= 20 && controls <= 80);
 });

@@ -9,10 +9,11 @@ import { EagleApi } from "./core/eagle-api.js";
 import { ResultsStore } from "./core/results-store.js";
 import { RunStore } from "./server/run-store.js";
 import { createRunsRouter } from "./server/runs-routes.js";
-import { handleReviewRoute, decideUnits } from "./server/review-routes.js";
+import { handleReviewRoute, decideUnits, wantsStars } from "./server/review-routes.js";
 import { json, parseBody } from "./server/http.js";
 import { createRulesRouter } from "./server/rules-routes.js";
 import { CLEARABLE_TAGS } from './core/writeback.js';
+import { createPluginStamp } from './server/plugin-stamp.js';
 
 export function createAnalysisServer({
   host = "127.0.0.1",
@@ -43,15 +44,19 @@ export function createAnalysisServer({
     isUpdating: () => updater.isUpdating() || cacheLock.busy });
   const ctx = { runStore, api, json, readBody: parseBody, clock };
   const rules = createRulesRouter();
+  const pluginStamp = createPluginStamp();
   const itemAnalysis = createItemAnalysisRouter(runStore, { readBody: parseBody, onDecision: async (req, res, entry) => {
     const body = entry.body || {};
     if (!['selected', 'candidate', 'rejected', 'clear'].includes(body.action)) return json(res, 400, { error: 'action 无效' });
     const decision = body.action === 'clear' ? { unitId: entry.unitId, clear: true }
       : { unitId: entry.unitId, action: body.action, ...(typeof body.reason === 'string' ? { reason: body.reason } : {}) };
+    const fromStarItem = body.via === 'eagle-star' ? entry.itemId : null;
     try {
-      const result = await decideUnits(ctx, entry.runId, [decision]);
+      const result = await decideUnits(ctx, entry.runId, [decision], {}, { stars: wantsStars(req), fromStarItem });
+      if (result.unchanged) return json(res, 200, { runId: entry.runId, unitId: entry.unitId, unchanged: true });
       return json(res, 200, { runId: entry.runId, unitId: entry.unitId, decisions: result.decisions.filter(row =>
-        row.unitId === entry.unitId), ...(result.tagWarning ? { tagWarning: result.tagWarning } : {}) });
+        row.unitId === entry.unitId), ...(result.tagWarning ? { tagWarning: result.tagWarning } : {}),
+        ...(result.eagleStars ? { eagleStars: result.eagleStars } : {}) });
     } catch (error) { return json(res, /reason/.test(error.message) ? 400 : 500, { error: error.message }); }
   } });
   const server = http.createServer(async (req, res) => {
@@ -67,6 +72,7 @@ export function createAnalysisServer({
           activeRunId: active.run && active.run.purpose !== 'prefetch' ? active.run.id : null,
           prefetchRunId: active.run?.purpose === 'prefetch' ? active.run.id : null,
           updateToken: process.env.EAGLE_UPDATE_CANDIDATE || null,
+          pluginStamp: await pluginStamp().catch(() => null),
         });
       }
       if (await cache(req, res, url)) return;

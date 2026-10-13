@@ -12,45 +12,61 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
   const confirmButton = root.querySelector("#confirmWriteback");
   let plan = null;
   let applying = false;
+  let previewing = false, planRunId = null;
 
   async function dryRun() {
+    if (previewing || applying) return;
     const runId = getRunId();
-    plan = await api(`/runs/${runId}/apply`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ apply: false })
-    });
-    const lines = [
-      `将修改 ${plan.summary.changed} 个文件，无变化 ${plan.summary.unchanged} 个文件`,
-      `新增 AI 标签 ${plan.summary.addedTags || 0} 个，移除 AI 标签 ${plan.summary.removedTags || 0} 个`,
-      Object.entries(plan.summary.tags)
-        .map(([tag, count]) => `${tag}：${count} 项`)
-        .join("\n")
-    ];
-    if (plan.warning) lines.push(`提示：${plan.warning}`);
-    summary.textContent = lines.join("\n");
-    details.replaceChildren();
-    const labels = { selected: "精选", candidate: "候选", rejected: "淘汰" };
-    for (const [action, counts] of Object.entries(plan.summary.byAction || {})) {
-      const section = document.createElement("details");
-      const heading = document.createElement("summary");
-      heading.textContent = `${labels[action] || action}：修改 ${counts.changed} 个文件，无变化 ${counts.unchanged} 个文件`
-        + `；新增 ${counts.addedTags} / 移除 ${counts.removedTags} 个 AI 标签`;
-      section.append(heading);
-      const rows = (plan.results || []).filter(row => row.action === action && row.changed);
-      const text = document.createElement("pre");
-      text.textContent = rows.slice(0, 50).map(row => `${row.fileName || row.id}：`
-        + `新增 ${(row.addedTags || []).join("、") || "无"}；移除 ${(row.removedTags || []).join("、") || "无"}`).join("\n");
-      if (rows.length > 50) text.textContent += `\n仅显示前 50 条，共 ${rows.length} 条。`;
-      section.append(text);
-      details.append(section);
-    }
-    if (typeof dialog.showModal === "function") dialog.showModal();
-    else dialog.hidden = false;
+    if (!runId) return;
+    previewing = true;
+    planRunId = null;
+    trash.checked = false;
+    confirm.hidden = true;
+    confirm.querySelector("input").value = "";
+    try {
+      plan = await api(`/runs/${runId}/apply`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ apply: false })
+      });
+      if (getRunId() !== runId) return;
+      planRunId = runId;
+      const lines = [
+        `将修改 ${plan.summary.changed} 个文件，无变化 ${plan.summary.unchanged} 个文件`,
+        `新增 AI 标签 ${plan.summary.addedTags || 0} 个，移除 AI 标签 ${plan.summary.removedTags || 0} 个`,
+        Object.entries(plan.summary.tags)
+          .map(([tag, count]) => `${tag}：${count} 项`)
+          .join("\n")
+      ];
+      if (plan.warning) lines.push(`提示：${plan.warning}`);
+      summary.textContent = lines.join("\n");
+      details.replaceChildren();
+      const labels = { selected: "精选", candidate: "候选", rejected: "淘汰" };
+      for (const [action, counts] of Object.entries(plan.summary.byAction || {})) {
+        const section = document.createElement("details");
+        const heading = document.createElement("summary");
+        heading.textContent = `${labels[action] || action}：修改 ${counts.changed} 个文件，无变化 ${counts.unchanged} 个文件`
+          + `；新增 ${counts.addedTags} / 移除 ${counts.removedTags} 个 AI 标签`;
+        section.append(heading);
+        const rows = (plan.results || []).filter(row => row.action === action && row.changed);
+        const text = document.createElement("pre");
+        text.textContent = rows.slice(0, 50).map(row => `${row.fileName || row.id}：`
+          + `新增 ${(row.addedTags || []).join("、") || "无"}；移除 ${(row.removedTags || []).join("、") || "无"}`).join("\n");
+        if (rows.length > 50) text.textContent += `\n仅显示前 50 条，共 ${rows.length} 条。`;
+        section.append(text);
+        details.append(section);
+      }
+      if (typeof dialog.showModal === "function") dialog.showModal();
+      else dialog.hidden = false;
+    } finally { previewing = false; }
   }
 
   async function apply() {
-    if (applying) return;
+    if (applying || previewing) return;
+    if (!planRunId || planRunId !== getRunId()) {
+      output.textContent = "请重新预览当前任务的写回更改";
+      return;
+    }
     const confirmation = confirm.querySelector("input")?.value || "";
     if (trash.checked && confirmation !== "MOVE_TO_TRASH") {
       output.textContent = "请输入 MOVE_TO_TRASH 才能移入回收站";
@@ -60,7 +76,7 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
     confirmButton.disabled = true;
     try {
       if (beforeApply) await beforeApply();
-      const runId = getRunId();
+      const runId = planRunId;
       const result = await api(`/runs/${runId}/apply`, {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -91,7 +107,7 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
   }
 
   revertButton.addEventListener("click", async () => {
-    if (applying) return;
+    if (applying || previewing || !getRunId()) return;
     applying = true;
     revertButton.disabled = true;
     try {
@@ -103,6 +119,7 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
       const restored = result.results.filter(item => item.ok && item.changed).length;
       output.textContent = `撤回完成：恢复 ${restored} 个文件，无变化 ${result.summary.unchanged} 个文件`
         + `，失败 ${failures} 个。恢复 AI 标签及本次设置的星级；回收站操作不会撤销。`;
+      onComplete?.(result);
     } catch (error) { output.textContent = `撤回失败：${error.message}`; }
     finally { applying = false; revertButton.disabled = false; }
   });
@@ -129,5 +146,5 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
     return apply().catch(error => { output.textContent = error.message; });
   });
   trash.addEventListener("change", () => { confirm.hidden = !trash.checked; });
-  return { dryRun };
+  return { dryRun, isBusy: () => applying || previewing };
 }

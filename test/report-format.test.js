@@ -74,7 +74,11 @@ test("writeback confirmation is re-entry safe", async () => {
   let calls = 0;
   let release;
   const pending = new Promise(resolve => { release = resolve; });
-  createWritebackDialog({ root, api: async () => { calls += 1; await pending; return { summary: {} }; }, runId: "run-1" });
+  const view = createWritebackDialog({ root, api: async (_path, options) => {
+    if (!JSON.parse(options.body).apply) return { summary: { tags: {} }, results: [] };
+    calls += 1; await pending; return { summary: {} };
+  }, runId: "run-1" });
+  await view.dryRun();
   const first = root.elements["#confirmWriteback"].click();
   const second = root.elements["#confirmWriteback"].click();
   assert.equal(calls, 1);

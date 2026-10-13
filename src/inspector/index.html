@@ -4,34 +4,117 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>照片筛选检查器</title>
+  <script>
+    // Eagle loads a new document on every photo switch. Paint the theme background and keep the last height before
+    // anything else, so the panel neither flashes white nor shrinks (which scrolls Eagle's right panel to the top).
+    (() => {
+      const colors = { DARK: '#1e1f22', GRAY: '#2c2d31', BLUE: '#1b2230', PURPLE: '#221d2c', LIGHT: '#ffffff',
+        LIGHTGRAY: '#ececee' };
+      const theme = String(new URLSearchParams(location.search).get('theme') || '').toUpperCase();
+      let height = 0;
+      try { height = Number(localStorage.getItem('eagle-culling-inspector-height')) || 0; } catch { /* none */ }
+      globalThis.__earlyTrace = `view=${innerHeight} hold=${Math.round(height)}`;
+      document.write(`<style id="earlyHold">html, body { background: ${colors[theme] || colors.DARK}; }
+        body { box-sizing: border-box; min-height: ${Math.max(0, Math.round(height))}px; }</style>`);
+    })();
+  </script>
   <link rel="stylesheet" href="../plugin/theme.css">
-  <link rel="stylesheet" href="inspector.css">
+  <link rel="stylesheet" href="../plugin/inspector/inspector.css">
 </head>
 <body>
   <section id="inspector">
-    <strong id="status" role="status">加载中…</strong>
-    <span id="selectedCount"></span>
-    <p id="eagleFallback" hidden>当前 Eagle 版本不支持跳转，请升级到 4.0 build12+；仍可在下方逐张决定</p>
-    <div id="groupContext"></div>
-    <div class="decisions" aria-label="人工决定">
-      <button data-decision="selected">精选 <kbd>1</kbd></button>
-      <button data-decision="candidate">候选 <kbd>2</kbd></button>
-      <button data-decision="rejected">淘汰 <kbd>3</kbd></button>
-      <button data-decision="clear">恢复为 AI 建议 <kbd>0</kbd></button>
+    <div class="top">
+      <div class="head"><strong id="status" role="status">加载中…</strong><span id="position"></span>
+        <span id="selectedCount"></span></div>
+      <div class="decisions" aria-label="人工决定">
+        <button data-decision="selected">精选 <kbd>5</kbd></button>
+        <button data-decision="candidate">候选 <kbd>3</kbd></button>
+        <button data-decision="rejected">淘汰 <kbd>1</kbd></button>
+        <button data-decision="clear">恢复 AI <kbd>0</kbd></button>
+      </div>
+      <div class="group-nav" aria-label="跳到其他分组">
+        <button data-nav="prev" title="上一组">‹ 上组</button>
+        <button data-nav="next" title="下一组">下组 ›</button>
+        <button data-nav="undecided" title="下一个还有照片未决定的组">未定组</button>
+        <button data-nav="uncertain" title="下一个分组没把握、还没定完的组">没把握</button>
+      </div>
+      <p id="difference" class="difference" hidden></p>
+      <p id="actionStatus" class="action-status" role="status"></p>
     </div>
-    <div class="group-actions">
-      <button id="selectGroup">在 Eagle 中选中本组</button>
-      <button id="selectBest">看本组最佳</button>
+    <div id="groupChart" class="chart" aria-label="组内分布：每根柱是一张，按名次排，高度是组内相对总分，点一根在 Eagle 中选中" hidden></div>
+    <div id="keepTop" class="keep-top" hidden>
+      <span>保留前</span><button data-keep="-1" aria-label="少一张">−</button><strong id="keepCount">3</strong>
+      <button data-keep="1" aria-label="多一张">+</button><span>张</span>
+      <button id="keepApply" title="第 1 名精选，到第 K 名保留为候选，其余淘汰；已决定的不变">其余淘汰</button>
     </div>
-    <div class="group-actions">
-      <button id="nextUndecided">下一张未决定</button>
-      <button id="nextReject">下一张建议淘汰</button>
-    </div>
-    <label class="advance"><input id="autoAdvance" type="checkbox"> 决定后自动跳到下一张未决定</label>
-    <small id="tagsState"></small>
-    <div id="lines"></div>
-    <details id="details" hidden><summary>理由</summary><p id="reasons"></p></details>
+    <p id="eagleFallback" hidden>这个 Eagle 版本不能由插件选中照片：点缩略图或跳组会在 Eagle 里打开那一张，整组选中需要升级 Eagle。</p>
+    <div id="pair" class="pair" aria-label="当前照片和对比照片，点一张在 Eagle 中选中" hidden></div>
+    <label id="marksToggle" class="marks-toggle" hidden><input type="checkbox" id="marksOn">
+      缩略图标出人脸（红框是闭眼）和人体姿态<span id="marksHint" class="hint"></span></label>
+    <table id="compareTable" class="compare" aria-label="本组逐项对比，点一行在 Eagle 中选中" hidden></table>
+    <button id="expandTable" class="text-button" hidden></button>
+    <p id="runProgress" class="run-progress"></p>
+    <p id="finishHint" class="finish-hint" hidden>这个任务已全部决定。回到「Eagle照片筛选」插件写回或清理。</p>
+    <details id="groupTools" class="fold"><summary>本组操作</summary>
+      <div class="group-actions" aria-label="本组">
+        <button id="acceptGroup">按 AI 建议</button>
+        <button id="selectGroup">选中本组</button>
+        <button id="selectUndecided">选中未定的</button>
+      </div>
+      <p class="hint">分组不对？对当前或选中的照片生效，人工决定会保留。</p>
+      <div class="regroup-buttons">
+        <button data-regroup="prev">移到上一组</button>
+        <button data-regroup="next">移到下一组</button>
+        <button data-regroup="alone">单独成组</button>
+        <button data-regroup="merge">和上一组合并</button>
+        <button data-regroup="undo">撤销分组修正</button>
+      </div>
+    </details>
+    <details id="nearby" class="fold"><summary>前后组</summary>
+      <div id="neighbours" class="neighbours" aria-label="拍摄时间紧挨着的前后组" hidden></div>
+    </details>
+    <details id="runTools" class="fold"><summary>整个任务</summary>
+      <p class="hint">只处理还没决定的照片，已做的决定不变。点两次确认。</p>
+      <div class="run-buttons">
+        <button data-bulk="eyes">闭眼的标淘汰</button>
+        <button data-bulk="blurry">模糊的标淘汰</button>
+        <button data-bulk="accept">未定的全按 AI 建议</button>
+      </div>
+    </details>
+    <details id="more" class="fold"><summary>更多</summary>
+      <label class="advance"><input id="autoAdvance" type="checkbox"> 决定后自动跳到下一张未决定</label>
+      <div id="groupContext"></div>
+      <small id="tagsState"></small>
+      <div id="lines"></div>
+      <div id="details" hidden><strong>理由</strong><p id="reasons"></p></div>
+    </details>
   </section>
-  <script type="module" src="inspector.js"></script>
+  <script>
+    // Eagle reloads this page whenever another photo is selected. Paint the theme and the last view of the same group
+    // before the first frame; inspector.js then updates it in place.
+    (() => {
+      try {
+        const log = JSON.parse(localStorage.getItem('eagle-culling-inspector-trace') || '[]').slice(-29);
+        log.push([new Date().toISOString().slice(11, 23), `page ${location.search.slice(4, 17)}`]);
+        localStorage.setItem('eagle-culling-inspector-trace', JSON.stringify(log));
+      } catch { /* storage unavailable */ }
+      const html = document.documentElement, section = document.getElementById('inspector');
+      const sig = [...section.querySelectorAll('[id]')].map(node => node.id).join(',');
+      html.dataset.layout = sig;
+      const params = new URLSearchParams(location.search);
+      const theme = String(params.get('theme') || '').toUpperCase();
+      if (['LIGHT', 'LIGHTGRAY', 'GRAY', 'DARK', 'BLUE', 'PURPLE'].includes(theme)) {
+        html.dataset.theme = theme; html.style.colorScheme = theme.startsWith('LIGHT') ? 'light' : 'dark';
+        document.body.setAttribute('theme', theme);
+      }
+      try {
+        const snapshot = JSON.parse(localStorage.getItem('eagle-culling-inspector-snapshot') || 'null');
+        if (!snapshot || snapshot.sig !== sig || !snapshot.ids.includes(params.get('id'))
+          || !(Date.now() - snapshot.at < 3600000)) return;
+        section.innerHTML = snapshot.html;
+      } catch { /* first load or storage unavailable */ }
+    })();
+  </script>
+  <script type="module" src="../plugin/inspector/inspector.js"></script>
 </body>
 </html>

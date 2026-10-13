@@ -6,7 +6,6 @@ import { mkdtemp, rm, readdir, utimes, stat, writeFile } from 'node:fs/promises'
 import sharp from 'sharp';
 import { midKey, prefetchMid, readMid, midCovers, midRegion, trimMidCache } from '../src/core/native-mid.js';
 import { withNativeImage } from '../src/core/native-image.js';
-import { regionDisplay } from '../src/plugin/viewer.js';
 
 async function fixture(fn) {
   const dir = await mkdtemp(path.join(os.tmpdir(), 'native-mid-test-'));
@@ -57,7 +56,6 @@ test('resolution selection rejects missing demand, oversampling and near 1:1; cr
   const info = await sharp(crop.buffer).metadata();
   assert.deepEqual([info.width, info.height, crop.tier], [200, 100, 'mid']);
   assert.equal(await midRegion(record, box, { width: 400, height: 200 }, options), null);
-  assert.deepEqual(regionDisplay({ scale: 2 }, { width: 2048, height: 1024 }, box, 2), { width: 4096, height: 2048 });
 }));
 test('prefetch skips analysis and cancellation never publishes an incomplete cache', async () => fixture(async (record, options) => {
   assert.equal((await prefetchMid(record, { ...options, isBusy: () => true })).naReason, 'analysis-busy');

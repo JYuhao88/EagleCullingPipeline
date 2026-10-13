@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createStartView } from '../src/plugin/start-view.js';
-import { taskState, taskView, sortTasks, homeCard, measuredRate, libraryConfirmText, friendlyFailure } from '../src/plugin/task-model.js';
+import { taskState, taskView, sortTasks, homeCard, measuredRate, libraryConfirmText, friendlyFailure,
+  cullStartNotice, startCullingInEagle } from '../src/plugin/task-model.js';
 
 const NOW = Date.parse('2026-10-13T12:00:00Z');
 const tick = (ms = 0) => new Promise(resolve => setTimeout(resolve, ms));
@@ -18,7 +19,7 @@ function fakeRoot() {
   }, createElement: node, addEventListener() {} };
 }
 const $ = (root, id) => root.querySelector(`#${id}`);
-const rowAction = row => row.children.at(-1);
+const rowAction = row => row.children.at(-1).children[0];
 const rowDetail = row => row.children[0].children[2].textContent;
 function withGlobals({ storage = new Map(), eagle } = {}, fn) {
   const previous = { localStorage: globalThis.localStorage, eagle: globalThis.eagle };
@@ -40,10 +41,10 @@ test('task states cover the lifecycle and give exactly one primary action', () =
     [{ status: 'interrupted', resumable: false, rerunnable: true }, 'lost', 'rerun'],
     [{ status: 'failed', resumable: false, rerunnable: false }, 'lost', 'reselect'],
     [{ status: 'completed', groupCount: 4, reviewedGroupCount: 1 }, 'reviewing', 'review'],
-    [{ status: 'completed', groupCount: 4, reviewedGroupCount: 4 }, 'toWriteback', 'finish'],
+    [{ status: 'completed', groupCount: 4, reviewedGroupCount: 4 }, 'toWriteback', 'review'],
     [{ status: 'completed', groupCount: 4, reviewedGroupCount: 4, writtenBackAt: '2026-10-13T11:00:00Z' }, 'writtenBack', 'review'],
     [{ status: 'completed', groupCount: 4, reviewedGroupCount: 4, writtenBackAt: 'x', pendingWriteback: true },
-      'pendingWriteback', 'finish'],
+      'pendingWriteback', 'review'],
     [{ status: 'completed', groupCount: 0 }, 'empty', 'review'],
   ];
   for (const [run, state, action] of cases) {
@@ -128,7 +129,7 @@ test('progress is shown in the primary card while analysing and completion waits
       assert.equal(opened.length, 0, 'never jumps into review by itself');
       assert.equal(notices.length, 1);
       assert.equal($(root, 'primaryCard').dataset.kind, 'task');
-      assert.equal($(root, 'primaryAction').textContent, '开始挑选');
+      assert.equal($(root, 'primaryAction').textContent, '在 Eagle 中挑片');
       await $(root, 'primaryAction').onclick();
       assert.deepEqual(opened, [['r1']]);
     } finally { view.dispose(); }
@@ -196,7 +197,7 @@ test('a selection already covered by a task offers that task instead of a new an
       await view.checkHealth(); await view.refreshContext(); await tick();
       assert.deepEqual(posted.at(-1).itemIds, ['a', 'b']);
       assert.equal($(root, 'primaryCard').dataset.kind, 'task');
-      assert.equal($(root, 'primaryAction').textContent, '继续挑选');
+      assert.equal($(root, 'primaryAction').textContent, '在 Eagle 中挑片');
       await $(root, 'primaryAction').onclick(); assert.deepEqual(opened, ['task-1']);
     } finally { view.dispose(); }
   });
@@ -367,6 +368,43 @@ test('changing the service address drops the old monitor and adopts the new serv
       await view.checkHealth(); api = service('new'); await view.checkHealth();
       assert.deepEqual(reads, [['old', '/runs/run-old'], ['new', '/runs/run-new']]);
       assert.equal(view.view.active.id, 'run-new');
+    } finally { view.dispose(); }
+  });
+});
+
+test('Eagle culling entry selects the first undecided primary photo and explains missing selection support', async () => {
+  const calls = [], row = { unitId: 'raw', primaryItemId: 'photo', itemIds: ['photo', 'jpg'], groupIndex: 6 };
+  const api = async url => { calls.push(url); return { queue: [row, { primaryItemId: 'other', groupIndex: 7 }] }; };
+  const eagle = { item: { select: async ids => calls.push(ids) } };
+  assert.equal(await startCullingInEagle(api, 'run', eagle),
+    '已在 Eagle 中选中第 7 组的照片，在 Eagle 右栏查看分组和 AI 建议，按 5/3/1 打星。');
+  assert.deepEqual(calls, ['/runs/run/queue?mode=all', ['photo']]);
+  assert.match(await startCullingInEagle(api, 'run', {}, null), /手动点击.*5\/3\/1/);
+  const opened = [];
+  const older = { shell: { openExternal: async url => opened.push(url) } };
+  assert.match(await startCullingInEagle(api, 'run', older), /^已在 Eagle 中打开第 7 组/);
+  assert.deepEqual(opened, ['eagle://item/photo']);
+  assert.equal(await startCullingInEagle(async () => ({ queue: [] }), 'run', eagle),
+    '这个任务没有可挑选的照片，可以查看报告。');
+  assert.equal(cullStartNotice(null, 'none'), '这个任务没有可挑选的照片，可以查看报告。');
+});
+
+test('completed tasks expose Eagle culling and finish actions on the card and task rows', async () => {
+  await withGlobals({}, async () => {
+    const run = { id: 'done', status: 'completed', groupCount: 2, reviewedGroupCount: 1 };
+    const root = fakeRoot(), opened = [];
+    const api = async url => url === '/health' ? { service: 'eagle-culling' }
+      : url === '/runs/status' ? { active: null } : { runs: [run], page: { nextCursor: null } };
+    const view = createStartView({ root, api, onRun: async (...args) => opened.push(args), autoCheck: false, autoRefresh: false });
+    try {
+      await view.checkHealth();
+      const secondary = $(root, 'secondaryActions').children;
+      assert.equal(secondary[0].textContent, '写回 / 清理…');
+      await secondary[0].events.click({}); await tick();
+      const actions = $(root, 'recentRuns').children[0].children[1].children;
+      await actions.find(button => button.textContent === '写回 / 清理…').events.click({}); await tick();
+      assert.equal(actions[0].textContent, '在 Eagle 中挑片');
+      assert.deepEqual(opened, [['done', { finish: true }], ['done', { finish: true }]]);
     } finally { view.dispose(); }
   });
 });

@@ -1,5 +1,6 @@
 // Pure presentation rules for tasks ("the culling work for one scope"); see docs/ux-design.md.
 import { analysisProgress, durationText } from "./start-model.js";
+import { showInEagle } from "./eagle-select.js";
 
 const BROKEN = ["failed", "cancelled", "interrupted"];
 
@@ -77,7 +78,9 @@ export function taskView(run = {}, now = Date.now()) {
   const view = views[state];
   const inherited = run.inheritedCount ? `，${run.inheritedCount} 张沿用之前的决定` : "";
   return { state, title: run.scope?.label || "以前的分析", meta, chip: view.chip, detail: view.detail + (state === "reviewing" ? inherited : ""),
-    progress: view.progress, primary: { label: view.primary[0], action: view.primary[1] } };
+    secondary: run.status === "completed" ? [{ label: "写回 / 清理…", action: "finish" }] : [],
+    progress: view.progress, primary: run.status === "completed" ? { label: "在 Eagle 中挑片", action: "review" }
+      : { label: view.primary[0], action: view.primary[1] } };
 }
 
 export function needsAttention(run) {
@@ -115,7 +118,8 @@ export function homeCard({ connected = false, launching = false, active = null, 
     if (task && match.missing === 0) {
       const view = taskView(task, now);
       return { kind: "task", eyebrow: name, title: `已在任务「${view.title}」中`, detail: view.detail, task,
-        action: { label: view.primary.label, action: view.primary.action }, progress: view.progress, chip: view.chip };
+        action: { label: view.primary.label, action: view.primary.action },
+        progress: view.progress, chip: view.chip, secondary: view.secondary };
     }
     if (task && match.matched > 0) {
       const extra = match.missing;
@@ -133,7 +137,7 @@ export function homeCard({ connected = false, launching = false, active = null, 
   if (unfinished) {
     const view = taskView(unfinished, now);
     return { kind: "task", eyebrow: "继续上次的任务", title: view.title, detail: view.detail, task: unfinished, chip: view.chip,
-      progress: view.progress, action: { label: view.primary.label, action: view.primary.action },
+      progress: view.progress, secondary: view.secondary, action: { label: view.primary.label, action: view.primary.action },
       note: "要挑新的一批，在 Eagle 里选中文件夹或照片。" };
   }
   return { kind: "empty", eyebrow: "开始", title: "在 Eagle 里选中要挑的照片", detail: "选中一个文件夹或一批照片，这里会出现「分析这 N 张」。",
@@ -156,4 +160,17 @@ export function libraryConfirmText(count, secondsPerPhoto = null) {
   const estimate = Number.isFinite(count) && secondsPerPhoto
     ? `，按本机以往速度估算约 ${durationText(count * secondsPerPhoto)}` : "";
   return `将分析整个资源库${Number.isFinite(count) ? ` ${count} 张` : ""}${estimate}。已分析过的照片会复用。期间可以继续使用电脑，确定开始吗？`;
+}
+
+export function cullStartNotice(row, shown = "selected") {
+  if (!row) return "这个任务没有可挑选的照片，可以查看报告。";
+  if (shown === "none") return "请在 Eagle 中手动点击一张照片，在 Eagle 右栏查看分组和 AI 建议，按 5/3/1 打星。";
+  return `已在 Eagle 中${shown === "opened" ? "打开" : "选中"}第 ${row.groupIndex + 1} 组的照片，`
+    + "在 Eagle 右栏查看分组和 AI 建议，按 5/3/1 打星。";
+}
+
+export async function startCullingInEagle(api, runId, eagle, open) {
+  const response = await api(`/runs/${runId}/queue?mode=all`);
+  const row = (response.queue || response.items || [])[0];
+  return cullStartNotice(row, row ? await showInEagle(eagle, [row.primaryItemId], open) : "none");
 }

@@ -10,7 +10,7 @@ export function mountUpdates({ root = document, storage = localStorage, fetchImp
     <button data-action="notes">查看更新内容</button><button data-action="apply">立即更新</button>
     <button data-action="later">稍后</button></div>
     <details class="update-about"><summary>关于 / 更新</summary><p data-version>正在读取版本…</p>
-    <label><input type="checkbox" data-auto> 自动更新（空闲且在主页时）</label>
+    <label><input type="checkbox" data-auto> 自动更新（空闲时）</label>
     <button data-action="check">检查更新</button><button data-action="rollback">回退到上一版</button>
     <p data-status role="status"></p><pre data-notes hidden></pre></details>`;
   (root.querySelector('#updateSlot') || root.querySelector('#start') || root.querySelector('#app')).prepend(panel);
@@ -21,7 +21,9 @@ export function mountUpdates({ root = document, storage = localStorage, fetchImp
   auto.checked = storage.getItem('eagle-culling-auto-update') !== 'false';
   let status = {}, operation = false, postponed = false, checking = false, timer, loaded = false;
   const completionNotice = storage.getItem('eagle-culling-update-result');
-  const reviewing = () => !root.querySelector('#review')?.hidden;
+  const busy = () => root.querySelector('#start')?.dataset.submitting === 'true'
+    || Boolean(root.querySelector('dialog[open]'))
+    || ['INPUT', 'TEXTAREA', 'SELECT'].includes(root.activeElement?.tagName);
   const base = () => root.querySelector('#base').value.replace(/\/$/, '');
   const key = () => `eagle-culling-update:${base()}`;
   async function api(route, method = 'GET') {
@@ -62,14 +64,14 @@ export function mountUpdates({ root = document, storage = localStorage, fetchImp
     await automatic();
   }
   async function automatic() {
-    if (loaded && shouldAutoUpdate({ status, enabled: auto.checked, reviewing: reviewing(), postponed }) && !operation) {
+    if (loaded && shouldAutoUpdate({ status, enabled: auto.checked, reviewing: busy(), postponed }) && !operation) {
       await apply('apply');
     }
   }
   async function apply(action) {
     if (operation) return;
-    if (reviewing()) {
-      el('[data-status]').textContent = '请先返回主页，再更新或回退。';
+    if (busy()) {
+      el('[data-status]').textContent = '请先完成当前操作并关闭对话框，再更新或回退。';
       el('.update-about').open = true; return;
     }
     operation = true;
@@ -119,8 +121,10 @@ export function mountUpdates({ root = document, storage = localStorage, fetchImp
     if (['apply', 'rollback'].includes(action)) apply(action);
   };
   panel.addEventListener('click', handleClick); about.addEventListener('click', handleClick);
-  const observer = new MutationObserver(() => { if (!reviewing() && loaded && !operation && !postponed) check(); });
-  observer.observe(root.querySelector('#review'), { attributes: true, attributeFilter: ['hidden'] });
+  const observer = new MutationObserver(() => { if (!busy() && loaded && !operation && !postponed) check(); });
+  observer.observe(root.querySelector('#start'), { attributes: true, attributeFilter: ['data-submitting'] });
+  for (const dialog of root.querySelectorAll('dialog'))
+    observer.observe(dialog, { attributes: true, attributeFilter: ['open'] });
   root.querySelector('#base').addEventListener('change', () => { loaded = false; check(); });
   const result = completionNotice;
   if (result) {
@@ -129,7 +133,7 @@ export function mountUpdates({ root = document, storage = localStorage, fetchImp
   }
   // The server enforces the network interval; always refresh local safety/run state.
   check();
-  const idle = setInterval(() => { if (!reviewing() && !operation) check(); }, 60000);
+  const idle = setInterval(() => { if (!busy() && !operation) check(); }, 60000);
   return () => { clearInterval(idle); clearTimeout(timer); observer.disconnect(); panel.remove(); about.remove(); };
 }
 

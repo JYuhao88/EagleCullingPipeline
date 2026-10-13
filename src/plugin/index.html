@@ -5,10 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="theme.css">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="review-ux.css">
-  <link rel="stylesheet" href="review.css">
-  <link rel="stylesheet" href="remote.css">
-  <link rel="stylesheet" href="cull.css">
   <link rel="stylesheet" href="start.css">
   <link rel="stylesheet" href="update-banner.css">
   <title>Eagle 照片筛选</title>
@@ -20,7 +16,6 @@
         <img src="logo.png" alt="" width="22" height="22">
         <div class="home-title"><h1>照片筛选</h1><span id="libraryName">读取资源库…</span></div>
         <strong id="health" role="status" title="正在连接服务">连接中</strong>
-        <button data-window-zoom class="quiet" hidden>放大审阅</button>
         <button id="openSettings" class="quiet" title="设置" aria-label="设置">设置</button>
       </header>
       <div id="updateSlot"></div>
@@ -77,147 +72,28 @@
           <p class="setting-hint">超出上限时自动删除最久未用的缓存；挑片结果和决定不受影响，只是再次分析会变慢。</p>
         </fieldset>
         <fieldset class="settings-group"><legend>关于</legend><div id="updateSettings"></div></fieldset>
-        <details id="advancedSettings" class="settings-group"><summary>高级与实验</summary>
+        <details id="advancedSettings" class="settings-group"><summary>高级</summary>
           <label>服务地址<input id="base" value="http://127.0.0.1:43125"></label>
           <label>仓库路径<input id="repositoryPath" placeholder="自动检测，可覆盖"></label>
           <pre id="serviceCommand"></pre><button id="copyServiceCommand">复制启动命令</button><pre id="serviceDiagnostics" role="status"></pre>
           <label>资源库路径（浏览器预览）<input id="libraryPath" placeholder="资源库绝对路径"></label>
-          <label>按记录 ID 打开<input id="runId" placeholder="run-..."></label><button id="openRun">打开</button>
-          <h4>个性化（实验，默认关闭）</h4><p class="setting-hint">根据你的选择学习偏好，验证有效后才会调整排序。</p>
-          <button id="panelPersonalization">打开最近任务的个性化设置</button>
+          <label>按记录 ID 打开完成面板<input id="runId" placeholder="run-..."></label><button id="openRun">打开</button>
         </details>
-      </section><p id="loading" class="note" hidden>正在打开…</p>
-    </section>
-    <section id="review" hidden data-view-mode="compare">
-      <header>
-        <button id="back">← 返回</button>
-        <strong id="reviewTitle"></strong>
-        <span id="reviewProgress"></span>
-        <select id="filter">
-          <option value="multi" selected>多张组（默认）</option>
-          <option value="confirm">仅需确认</option>
-          <option value="low-first">先看需确认</option>
-          <option value="all">全部（含单张组）</option>
-          <option value="unreviewed">未审阅</option>
-          <option value="issues">有问题</option>
-          <option value="eyes-closed">闭眼</option>
-          <option value="blurry">模糊</option>
-          <option value="reviewed">已审</option>
-        </select>
-        <div class="view-switch" role="group" aria-label="视图">
-          <button data-view="compare" aria-pressed="true" aria-label="比较视图 C" title="比较视图 C">▥</button>
-          <button data-view="single" aria-pressed="false" aria-label="单张视图 V" title="单张视图 V">□</button>
-          <button data-view="grid" aria-pressed="false" aria-label="网格视图 B" title="网格视图 B">▦</button></div>
-        <button id="toggleInfo" aria-label="信息面板 I" title="信息 I">ⓘ</button>
-        <button id="toggleGroups" aria-label="组列表" title="组列表">☰</button>
-        <button id="liveIndicator" hidden title="实时写回状态；失败时点击重试"></button>
-        <button id="reviewHelp" aria-label="审阅帮助">?</button>
-        <details id="reviewMore"><summary aria-label="更多工具与设置">⋯</summary>
-          <div class="review-menu"><button id="openFinish" class="primary-action">完成与写回 / 导出 / 批量接受建议</button>
-            <button id="acceptGroup" class="primary-action"
-          title="当前照片设为精选，本组其余照片设为候选（已淘汰的保持不变）">设为本组首选并完成（S）</button>
-          <strong>查看工具</strong>
-            <button id="compareFaces" hidden aria-pressed="false">对比人脸（F）</button>
-            <button id="candidateToggle" aria-pressed="false">候选集：关</button>
-            <button id="nativeMagnifier" hidden aria-pressed="false">1:1 放大镜（L）</button>
-            <span id="nativeControls" hidden></span>
-            <button id="openReviewSettings">个性化设置（实验）</button>
-            <label><input id="liveWritebackToggle" type="checkbox">实时写回标签</label>
-            <label><input id="liveStarToggle" type="checkbox">精选写入 5 星</label>
-            <label><input id="smartFoldersToggle" type="checkbox" checked>自动创建智能文件夹</label>
-            <span id="liveWritebackStatus" role="status"></span>
-            <button id="reopenReviewWelcome">重新查看审阅入门</button>
-          </div>
-        </details>
-      </header>
-      <aside id="groupSidebar">
-        <div class="sidebar-actions"><button id="bulkEyes">闭眼照片标记淘汰（0）</button>
-          <button id="bulkBlurry">模糊照片标记淘汰（0）</button></div>
-        <div class="sidebar-pager"><button id="previousPage">上一页</button><span id="pageStatus"></span>
-          <button id="nextPage">下一页</button></div><nav id="groupList"></nav>
-      </aside>
-      <section class="review-main">
-        <dialog id="reviewSettings" class="settings-drawer" aria-labelledby="reviewSettingsTitle">
-          <button id="closeReviewSettings">关闭设置</button>
-          <h2 id="reviewSettingsTitle">个性化（实验，默认关闭）</h2>
-          <section id="learningPanel">
-            <p>根据已保存的选择学习偏好。验证有稳定改善后，才可调整尚未审阅的组。</p>
-            <label>偏好方案 <input id="learningProfile" value="default" maxlength="64"></label>
-            <p class="setting-hint">不同题材可分开学习；方案名称限字母、数字、下划线和连字符。</p>
-            <button id="learningLoad">切换 / 新建方案</button>
-            <label><input id="learningEnabled" type="checkbox">按我的选择调整排序</label>
-            <p class="setting-hint">默认关闭；启用后仍需验证并手动应用，已审组保留。</p>
-            <label>旧选择的影响减半时间（天）<input id="learningHalfLife" type="number" min="1" value="90"></label>
-            <p class="setting-hint">时间越短，最近的选择影响越大。</p>
-            <label><input id="learningDebias" type="checkbox">偶尔隐藏建议，独立选片</label>
-            <p class="setting-hint">5% 的组交替顺序并隐藏建议，用于检查建议是否影响你的选择。</p>
-            <label><input id="learningPixels" type="checkbox">额外保存局部细节图（占磁盘）</label>
-            <p class="setting-hint">默认关闭；开启后新的淘汰决定会保存局部图和缩小整图，供以后研究偏好。</p>
-            <button id="learningSave">保存设置</button>
-            <h3>学习与应用</h3><p class="setting-hint">先根据选择学习并验证，再手动应用；只调整未审组。</p>
-            <button id="learningTrain">学习并检查效果</button><button id="learningApply">应用已验证的排序</button>
-            <details><summary>历史与维护</summary>
-              <label>历史学习版本 <select id="learningSnapshots" aria-label="历史学习版本"></select></label>
-              <p class="setting-hint">恢复旧版本后，需要再次应用才能更新未审组排序。</p>
-              <button id="learningRollback">恢复所选版本</button>
-              <p class="setting-hint">把本次分析已有的选择加入学习记录。</p>
-              <button id="learningBackfill">导入本次已有选择</button>
-              <p class="setting-hint">只读核对照片是否仍在 Eagle 中，更新本地记录。</p>
-              <button id="learningScan">检查 Eagle 中已删除的照片</button>
-            </details>
-            <pre id="learningStatus" role="status">个性化已关闭；继续使用原排序。</pre>
-          </section>
-        </dialog>
-        <div id="personalizeBanner" hidden><span id="personalizeText"></span>
-          <button id="personalizeApply">应用</button><button id="personalizeIgnore">忽略</button></div>
-        <div id="unitStrip" aria-label="组内照片"></div>
-        <div class="group-actions">
-          <span id="groupDecided"></span>
-        <details class="group-toolbox"><summary>分组与整组操作</summary>
-        <div class="group-tools" aria-label="分组修正"><button id="movePrevious">移到上一组（M）</button>
-          <button id="moveNext">移到下一组（Shift+M）</button><button id="newGroup">移到新组（G）</button>
-          <button id="mergePrevious">与上一组合并</button><button id="splitSelected">拆分所选</button>
-          <button id="undoGroup">撤销分组修正</button><button id="tieGroup">整组并列</button>
-          <button id="rejectGroup">整组拒绝</button></div></details></div>
-
-        <section id="rejectReasons" hidden aria-label="淘汰理由">
-          <strong id="rejectReasonsTitle">淘汰理由（可多选）</strong>
-          <p>仅记录选片偏好。已预选工具违反/门槛理由，可点选取消。1–9 选理由；Enter/Esc 完成，继续切图可跳过。</p>
-          <div id="rejectReasonChips"></div><button id="clearRejectReasons">清空理由</button>
-          <button id="closeRejectReasons">完成 / 跳过补充</button>
-        </section><p id="feedbackStatus" role="status"></p><div id="group"></div><div id="selectedCount"></div></section>
-      <div class="shortcut-bar">S 当前设首选并完成本组 · 1 精选 · 2 候选 · 3 淘汰 · ←→ 切图 · Enter 下一组 · 双击/空格 看大图
-        <button id="allShortcuts">? 全部快捷键</button></div>
-      <pre id="writeback" class="review-toast" role="status" aria-live="polite" title="点击关闭"></pre>
-      <dialog id="finishDialog" class="settings-drawer" aria-labelledby="finishTitle">
-        <button id="closeFinish">关闭</button>
-        <h2 id="finishTitle">完成与导出</h2>
-        <section class="finish-section" aria-label="选片操作"><h3>批量接受建议</h3>
-          <p class="setting-hint">只处理还没有人工决定的照片；已做的选择不会被覆盖，可用 U 撤销。</p>
-          <div class="review-decisions"><button id="acceptUnreviewed">接受所有未审组建议</button>
-            <button id="acceptHighConfidence">接受本页把握高的组</button>
-            <button id="acceptSingles">接受本页未审单张组建议</button></div>
+      </section>
+      <section id="finishPanel" hidden aria-labelledby="finishTitle">
+        <div class="section-heading"><button id="closeFinish" class="quiet">‹ 返回</button><h2 id="finishTitle">完成</h2></div>
+        <h3 id="finishTask"></h3><p id="finishCounts" role="status"></p>
+        <button id="refreshFinish">刷新决定</button>
+        <section class="settings-group" aria-label="写回与清理">
+          <h3>写回与清理</h3>
+          <p>将挑片结果作为 AI 标签保存到 Eagle。先预览更改并确认；默认不移入回收站。</p>
+          <button id="dryRun" disabled>预览写回更改…</button><button id="revertWriteback" hidden>撤回本次写回</button>
+          <pre id="writeback" role="status" aria-live="polite"></pre>
         </section>
-        <section class="finish-section review-reports" aria-label="导出报告"><h3>导出报告</h3>
-          <a id="reportCsv" target="_blank">CSV 报告</a><a id="reportJson" target="_blank">JSON 报告</a>
+        <section class="settings-group" aria-label="导出报告"><h3>导出报告</h3>
+          <a id="reportCsv" target="_blank">CSV 报告</a> · <a id="reportJson" target="_blank">JSON 报告</a>
         </section>
-        <section class="finish-section writeback-area" aria-label="写回 Eagle">
-          <h3>写回 Eagle</h3>
-          <p>将审阅结果作为 AI 标签保存到 Eagle。下一步先预览更改并确认；默认不移入回收站。</p>
-          <button id="dryRun">预览写回更改…</button><button id="revertWriteback" hidden>撤回本次写回</button>
-        </section>
-      </dialog>
-      <dialog id="reviewWelcome" aria-labelledby="reviewWelcomeTitle">
-        <h2 id="reviewWelcomeTitle">三步完成审阅</h2>
-        <ol class="review-guide">
-          <li><strong>看一组相似照片</strong><p>点照片或用 ←→ 切换；高亮框表示当前照片。</p></li>
-          <li><strong>S 设首选 · 或 1 精选 · 2 候选 · 3 淘汰</strong>
-            <p>S 把当前照片设为精选、其余设为候选，一键完成本组。选择自动保存，可用 U 撤销。</p></li>
-          <li><strong>Enter 进入下一组</strong><p>完成后可导出报告；写回 Eagle 需要另外确认。</p></li>
-        </ol>
-        <button id="dismissReviewWelcome" class="primary-action">开始审阅</button>
-        <button id="closeReviewWelcome">关闭提示</button>
-      </dialog>
+      </section>
       <dialog id="writebackDialog">
         <h2>确认写回</h2>
         <pre id="writebackSummary"></pre>
@@ -229,128 +105,7 @@
         <button id="cancelWriteback">取消</button>
         <button id="confirmWriteback">确认写回</button>
       </dialog>
-      <dialog id="shortcutHelp"><h2>审阅帮助与快捷键</h2><button id="helpReviewWelcome">查看三步入门</button>
-        <p>I 信息面板；C 比较；V 单张；B 网格；1/2/3 决定；←/→ 切图；Enter 下一组；Shift+Enter 上一组；S 设为首选；A 全选、Esc 清除选择；
-        M 移到上一组；Shift+M 移到下一组；G 移到新组；Cmd/Shift 点击多选；F 打开/关闭人脸对比、Esc 关闭；
-        L 原生 1:1 放大镜；Shift+L 切换脸；E 切换眼部/脸部；
-        空格或双击照片看大图（滚轮缩放、拖动查看、Z 放大/还原、0 适应窗口）；U 或 Cmd/Ctrl+Z 撤销。淘汰理由面板打开时，1–9 切换理由，Enter/Esc 完成；切图/切组恢复原快捷键。</p>
-        <button id="closeHelp">关闭</button></dialog>
-      <dialog id="previewDialog" class="preview-dialog" aria-label="看大图">
-        <div id="viewerStage" class="viewer-stage">
-          <img id="previewImage" alt="大图" draggable="false">
-          <img id="viewerNative" class="viewer-native" alt="" draggable="false" hidden>
-        </div>
-        <button id="previewPrevious" class="preview-nav" aria-label="上一张">‹</button>
-        <button id="previewNext" class="preview-nav" aria-label="下一张">›</button>
-        <div class="viewer-bar">
-          <p id="previewCaption"></p>
-          <div class="viewer-zoom"><button id="viewerZoomOut" aria-label="缩小">−</button>
-            <span id="viewerZoom">适应窗口</span><button id="viewerZoomIn" aria-label="放大">+</button>
-            <button id="viewerFit">适应窗口（0）</button><span id="viewerNativeState"></span></div>
-          <div class="viewer-decisions"><button data-viewer-action="selected">1 精选</button>
-            <button data-viewer-action="candidate">2 候选</button><button data-viewer-action="rejected">3 淘汰</button></div>
-          <span class="viewer-hint">滚轮缩放 · 拖动查看 · 双击/Z 放大 · ←→ 切图 · Esc 关闭</span>
-          <button id="closePreview" class="preview-close" aria-label="关闭大图">×</button>
-        </div>
-      </dialog>
-    </section>
-    <section id="cull" hidden aria-label="专注挑片">
-      <header class="cull-bar">
-        <button type="button" data-cull="exit" class="quiet">‹ 返回</button>
-        <div class="cull-heading"><strong data-cull-title>挑片</strong><span data-cull-progress></span>
-          <span class="cull-meter" data-cull-meter aria-hidden="true"></span></div>
-        <div class="cull-methods" role="group" aria-label="挑片方式">
-          <button type="button" data-method="loupe" title="一张一张看大图（G 切换网格）">逐张</button>
-          <button type="button" data-method="grid" title="缩略图批量处理，Shift/⌘ 多选">网格</button>
-          <button type="button" data-method="target" title="设定要保留的张数，只看保留线附近">AI 先挑</button>
-          <button type="button" data-method="passes" title="先去废片，再组内比较，最后复核精选">分轮</button>
-        </div>
-        <button type="button" data-cull="eagle" class="quiet" title="回到 Eagle 主窗口浏览，本窗口跟随记录">在 Eagle 中挑</button>
-        <button type="button" data-window-zoom class="quiet" hidden>放大审阅</button>
-        <button type="button" data-cull="finish" class="primary">完成…</button>
-      </header>
-      <nav class="cull-filters" data-cull-filters aria-label="筛选"></nav>
-      <nav class="cull-passes" data-cull-passes aria-label="轮次" hidden></nav>
-      <div class="cull-target" data-cull-target hidden>
-        <label>保留 <input type="number" min="0" step="1" data-target-input> 张</label>
-        <p data-target-summary></p>
-        <button type="button" data-cull="accept" data-target-accept></button>
-      </div>
-      <div class="cull-body">
-        <div class="cull-grid" data-cull-grid hidden></div>
-        <div class="cull-loupe" data-cull-loupe hidden>
-          <div class="cull-stage" data-cull-stage title="滚轮缩放 · 双击 / Z 切换 100% · 放大后拖动">
-            <img data-cull-image alt="" draggable="false">
-            <img data-cull-native class="cull-native" alt="" draggable="false" hidden>
-            <span data-cull-decision class="cull-badge large"></span>
-            <div class="cull-zoom" data-cull-zoombar><button type="button" data-cull="zoom-out" aria-label="缩小">−</button>
-              <button type="button" data-cull="zoom-fit" data-cull-zoom title="适应窗口（Esc）">适应</button>
-              <button type="button" data-cull="zoom-in" aria-label="放大">+</button>
-              <span data-cull-native-state></span></div></div>
-          <p class="cull-info" data-cull-info></p>
-          <div class="cull-strip" data-cull-strip></div>
-        </div>
-        <div class="cull-compare" data-cull-compare hidden><p data-compare-text></p>
-          <button type="button" class="primary" data-cull="compare" data-compare-open>打开组内比较</button></div>
-        <aside class="cull-adjust" data-cull-adjust hidden aria-label="查看调整">
-          <header><strong>查看调整</strong><span>只影响显示，不改原图</span></header>
-          <label><span>曝光</span><input type="range" data-adjust="exposure" min="-3" max="3" step="0.05"><output></output></label>
-          <label><span>对比度</span><input type="range" data-adjust="contrast" min="-1" max="1" step="0.02"><output></output></label>
-          <label><span>高光</span><input type="range" data-adjust="highlights" min="-1" max="1" step="0.02"><output></output></label>
-          <label><span>阴影</span><input type="range" data-adjust="shadows" min="-1" max="1" step="0.02"><output></output></label>
-          <label><span>色温</span><input type="range" data-adjust="temperature" min="-1" max="1" step="0.02"><output></output></label>
-          <label><span>色调</span><input type="range" data-adjust="tint" min="-1" max="1" step="0.02"><output></output></label>
-          <label><span>饱和度</span><input type="range" data-adjust="saturation" min="-1" max="1" step="0.02"><output></output></label>
-          <div class="cull-adjust-actions"><button type="button" data-cull="auto">自动曝光</button>
-            <button type="button" data-cull="group">用到本组</button><button type="button" data-cull="reset">重置</button></div>
-          <p class="cull-hint">按住 \ 看调整前</p>
-        </aside>
-      </div>
-      <div class="cull-pager" data-cull-pager hidden><button type="button" data-cull="page-prev">上一页</button>
-        <span data-pager-label></span><button type="button" data-cull="page-next">下一页</button></div>
-      <footer class="cull-actions" data-cull-actions>
-        <span class="cull-scope" data-cull-scope></span>
-        <div class="cull-decide"><button type="button" data-decide="selected" class="pick">精选 1</button>
-          <button type="button" data-decide="candidate">候选 2</button>
-          <button type="button" data-decide="rejected" class="reject">淘汰 3</button>
-          <button type="button" data-decide="clear" class="quiet">恢复 AI 0</button></div>
-        <div class="cull-tools"><button type="button" data-cull="prev" data-loupe-only aria-label="上一张">←</button>
-          <button type="button" data-cull="next" data-loupe-only aria-label="下一张">→</button>
-          <button type="button" data-cull="full" data-loupe-only title="空格">全屏看</button>
-          <button type="button" data-cull="adjust" data-loupe-only title="A">调整</button>
-          <label class="cull-advance" data-loupe-only><input type="checkbox" data-cull-advance> 决定后下一张</label></div>
-        <p class="cull-status" data-cull-status role="status"></p>
-      </footer>
-      <svg class="cull-defs" width="0" height="0" aria-hidden="true"><defs data-cull-filter></defs></svg>
-    </section>
-    <section id="remote" hidden aria-label="在 Eagle 中挑片">
-      <header class="remote-head"><button type="button" id="remoteExit" class="quiet">‹ 返回</button>
-        <div class="remote-heading"><strong id="remoteTitle">挑片</strong><span id="remoteProgress"></span>
-          <span id="remoteMeter" class="cull-meter" aria-hidden="true"></span></div>
-        <button type="button" data-window-zoom class="quiet" hidden>放大审阅</button></header>
-      <div class="remote-modes" role="group" aria-label="筛选">
-        <button type="button" id="remoteMode-all">全部</button><button type="button" id="remoteMode-undecided">未决定</button>
-        <button type="button" id="remoteMode-uncertain">没把握</button><button type="button" id="remoteMode-rejects">建议淘汰</button>
-        <button type="button" id="remoteMode-issues">有问题</button></div>
-      <div class="remote-card"><img id="remoteImage" alt="当前照片">
-        <div class="remote-text"><span id="remotePosition"></span><strong id="remoteCurrent"></strong>
-          <p id="remoteSuggestion"></p><p id="remoteDecision"></p></div></div>
-      <div class="remote-decisions"><button type="button" data-remote-decide="selected" class="pick">精选 1</button>
-        <button type="button" data-remote-decide="candidate">候选 2</button>
-        <button type="button" data-remote-decide="rejected" class="reject">淘汰 3</button>
-        <button type="button" data-remote-decide="clear" class="quiet">恢复 AI 0</button></div>
-      <div class="remote-nav"><button type="button" id="remotePrevious">← 上一张</button>
-        <button type="button" id="remoteNext">下一张 →</button><button type="button" id="remoteNextGroup">下一组 ↓</button></div>
-      <p id="remoteStatus" class="remote-status" role="status"></p>
-      <p id="remoteSelectNote" class="remote-note" hidden>当前 Eagle 版本不支持由插件选中照片；请在 Eagle 中手动点选，这里会跟随。</p>
-      <div class="remote-options">
-        <label><input id="remoteFollow" type="checkbox" checked> 跟随 Eagle 中选中的照片</label>
-        <label><input id="remoteAdvance" type="checkbox"> 决定后自动下一张</label>
-        <label><input id="remoteTags" type="checkbox"> 在 Eagle 中显示 AI 建议标签</label>
-        <p class="remote-note">标签只写在 Eagle 资源库里，不改照片文件，随时可撤回。快捷键需要焦点在本窗口或右侧检查器。</p>
-        <button type="button" id="remoteClearTags" class="quiet">清除插件写入的全部 AI 标签…</button></div>
-      <footer class="remote-foot"><button type="button" id="remoteReview">在插件里专注挑片</button>
-        <button type="button" id="remoteFinish" class="primary">完成…</button></footer>
+      <p id="loading" class="note" hidden>正在打开…</p>
     </section>
   </main>
   <script type="module" src="plugin.js"></script>

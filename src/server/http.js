@@ -1,7 +1,7 @@
 export const CORS_HEADERS = {
   "access-control-allow-origin": "*",
   "access-control-allow-methods": "GET, POST, PUT, OPTIONS",
-  "access-control-allow-headers": "content-type",
+  "access-control-allow-headers": "content-type, x-eagle-stars",
 };
 
 export function json(res, status, body) {

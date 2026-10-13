@@ -1,15 +1,6 @@
 const SIZE_KEY = 'eagle-culling-window-size';
 const MIN_SIZE = { width: 360, height: 480 };
 
-// The plugin never resizes Eagle's window on its own; only the user's zoom button does.
-export async function setWindowMode(reviewing) {
-  if (reviewing) return;
-  for (const id of ["panelSettings", "historyView"]) {
-    const node = globalThis.document?.querySelector(`#${id}`); if (node) node.hidden = true;
-  }
-  const home = globalThis.document?.querySelector("#panelHome"); if (home) home.hidden = false;
-}
-
 export function readSavedSize(storage = globalThis.localStorage) {
   try {
     const value = JSON.parse(storage?.getItem(SIZE_KEY) || 'null');
@@ -40,7 +31,7 @@ export function createWindowSizer({ eagle = globalThis.eagle, storage = globalTh
   function render() {
     for (const button of root?.querySelectorAll?.('[data-window-zoom]') || []) {
       button.hidden = !supported;
-      button.textContent = zoomed ? '还原窗口' : '放大审阅';
+      button.textContent = zoomed ? '还原窗口' : '放大窗口';
       button.setAttribute('aria-pressed', String(zoomed));
     }
   }

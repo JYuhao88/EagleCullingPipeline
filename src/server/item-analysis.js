@@ -2,7 +2,46 @@ import { readRows } from '../core/segmented-results.js';
 import { DecisionsStore } from '../core/decisions-store.js';
 import { json } from './http.js';
 
-export function itemAnalysisModel(data, unitId, decision) {
+const finite = value => Number.isFinite(value) ? value : null;
+function memberMetrics(result = {}, ranking = {}) {
+  const metrics = result.metrics || {};
+  const clipped = [metrics.clippedHighlights, metrics.clippedShadows].filter(Number.isFinite);
+  return { score: finite(ranking.score ?? result.score), quality: finite(metrics.quality),
+    sharpness: finite(metrics.sharpness), eye: finite(result.focus?.eyeSharpnessNative),
+    exposure: finite(metrics.exposure), clipped: clipped.length ? clipped.reduce((a, b) => a + b, 0) : null,
+    faces: finite(metrics.faces), eyesClosed: finite(metrics.eyesClosed) };
+}
+
+const round3 = value => Math.round(value * 1000) / 1000;
+const isBox = box => Array.isArray(box) && box.length === 4 && box.every(Number.isFinite);
+// Face boxes with the blink verdict and, when pose ran, each person's box and 17 COCO body keypoints [x, y, score],
+// all normalised to the preview, for drawing on thumbnails.
+export function memberMarks(result = {}) {
+  const faces = (result.faces || []).filter(face => isBox(face?.box)).map(face => ({ box: face.box.map(round3),
+    ...(face.eyesAssessed ? { closed: Boolean(face.eyesClosed) } : {}) }));
+  const persons = (result.signals?.persons || []).filter(person => isBox(person?.box)).map(person => ({
+    box: person.box.map(round3), main: Boolean(person.isMain),
+    points: (person.keypoints?.points || []).slice(0, 17).map(point => point.slice(0, 3).map(round3)) }));
+  return faces.length || persons.length ? { faces, persons } : null;
+}
+
+// One row per photo unit in the group, in AI rank order, for the inspector's group strip and comparison table.
+export function groupMembersModel(data, group, decisions = []) {
+  if (!group) return [];
+  const ranking = new Map((group.ranking || []).map(row => [row.unitId, row]));
+  const human = new Map(decisions.filter(row => row.source === 'human').map(row => [row.unitId, row.action]));
+  return group.unitIds.map((id, index) => {
+    const unit = data.units.find(row => row.id === id);
+    const result = data.results.find(row => row.unitId === id);
+    return { unitId: id, primaryItemId: unit?.primaryItemId || unit?.itemIds?.[0] || null,
+      itemIds: unit?.itemIds?.length ? unit.itemIds : [unit?.primaryItemId].filter(Boolean),
+      rank: ranking.get(id)?.rank ?? index + 1, suggested: group.suggested?.[id] || 'candidate',
+      human: human.get(id) || null, flags: result?.flags || [], metrics: memberMetrics(result, ranking.get(id)),
+      marks: memberMarks(result) };
+  }).sort((a, b) => a.rank - b.rank);
+}
+
+export function itemAnalysisModel(data, unitId, decision, decisions = decision ? [decision] : []) {
   const result = data.results.find(row => row.unitId === unitId) || {};
   const group = data.groups.find(row => row.unitIds.includes(unitId));
   const ranking = group?.ranking?.find(row => row.unitId === unitId) || {};
@@ -21,7 +60,8 @@ export function itemAnalysisModel(data, unitId, decision) {
   return { runId: data.run.id, unitId, runName: data.run.scope?.label || '照片分析',
     taskName: data.run.scope?.label || data.run.id, eagleTagsEnabled: data.run.eagleTagsEnabled === true,
     groupId: group?.id || null, groupIndex: data.groups.findIndex(row => row.id === group?.id),
-    groupItemIds, bestItemId,
+    groupItemIds, bestItemId, groupMembers: groupMembersModel(data, group, decisions),
+    groupConfidence: group?.confidence || null,
     analyzedAt: data.run.completedAt || data.run.startedAt || null,
     suggested, action: decision?.source === 'human' ? decision.action : suggested,
     humanDecided: decision?.source === 'human', rank: ranking.rank ?? null, groupSize: group?.unitIds.length || 1,
@@ -67,10 +107,10 @@ export class ItemAnalysisIndex {
     const group = data.groups?.find(row => row.unitIds.includes(match.unitId));
     if (group && group.unitIds.length > 1 && this.store.page) {
       const page = await this.store.page(match.runId, { groupId: group.id });
-      if (page?.units?.length) data = { ...data, units: page.units };
+      if (page?.units?.length) data = { ...data, units: page.units, results: page.results?.length ? page.results : data.results };
     }
     const decisions = await new DecisionsStore(this.store.dir(match.runId)).read();
-    return { itemId, ...itemAnalysisModel(data, match.unitId, decisions.find(row => row.unitId === match.unitId)) };
+    return { itemId, ...itemAnalysisModel(data, match.unitId, decisions.find(row => row.unitId === match.unitId), decisions) };
   }
 }
 export function createItemAnalysisRouter(store, { onDecision, readBody } = {}) {

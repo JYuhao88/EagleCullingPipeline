@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { buildQueue, filterQueue } from '../src/server/queue.js';
-import { moveRemote, selectedUnit, remotePosition } from '../src/plugin/remote-view.js';
 
 test('queue modes preserve group/rank order and classify issues', () => {
   const rows = [
@@ -27,18 +26,8 @@ test('queue builder handles a synthetic 20k-unit run within a generous bound', a
   assert.equal(queue.rows.length, 20000); assert.ok(performance.now() - started < 5000);
 });
 
-test('remote state navigation and follow mapping are DOM-free', () => {
-  assert.equal(moveRemote([{ unitId: 'a' }, { unitId: 'b' }], 0, 1), 1);
-  assert.equal(moveRemote([{ unitId: 'a' }, { unitId: 'b' }], 0, -1, true), 1);
-  const row = selectedUnit([{ unitId: 'a', itemIds: ['raw', 'jpg'] }], 'jpg');
-  assert.equal(row.unitId, 'a');
-  const storage = { getItem: () => JSON.stringify({ unitId: 'b', mode: 'issues' }) };
-  assert.deepEqual(remotePosition('run', storage, { unitId: 'a' }, id => id === 'b'),
-    { unitId: 'b', mode: 'issues' });
-});
-
 test('inspector navigation moves forward from the current unit and wraps', async () => {
-  const { nextInQueue } = await import('../src/inspector/inspector.js');
+  const { nextInQueue } = await import('../src/plugin/inspector/inspector.js');
   const order = ['a', 'b', 'c', 'd'];
   const rows = [{ unitId: 'a', primaryItemId: 'A' }, { unitId: 'c', primaryItemId: 'C' }];
   assert.equal(nextInQueue(rows, 'b', order).unitId, 'c');

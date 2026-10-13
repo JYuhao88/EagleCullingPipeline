@@ -1,12 +1,21 @@
-export function createApi(base) {
+import { STAR_HEADER, applyEagleStars, starSyncEnabled } from './star-sync.js';
+
+export function createApi(base, storage = globalThis.localStorage) {
   const root = base.replace(/\/$/, "");
   const request = async function request(path, options = {}) {
+    if (options.method === 'POST' && starSyncEnabled(storage)) {
+      options = { ...options, headers: { ...options.headers, [STAR_HEADER]: '1' } };
+    }
     const response = await fetch(`${root}${path}`, options);
     let body = null;
     try { body = await response.json(); } catch { body = await response.text(); }
     if (!response.ok) {
       const error = new Error(body?.error || response.statusText);
       error.status = response.status; error.body = body; throw error;
+    }
+    if (body?.eagleStars?.length) {
+      const warning = await applyEagleStars(globalThis.eagle, body.eagleStars);
+      if (warning) body.starWarning = warning;
     }
     return body;
   };
@@ -43,4 +52,20 @@ export async function eagleContext({ includeFolderItems = false, selected = true
 
 export function isEagleEnvironment() {
   return Boolean(globalThis.eagle?.library);
+}
+
+const fallbackBase = 'http://127.0.0.1:43125';
+export async function resolveBase({ locationRef = globalThis.location,
+  storage = globalThis.localStorage, fetchImpl = globalThis.fetch } = {}) {
+  const origin = locationRef?.protocol === 'http:' ? locationRef.origin : '';
+  if (origin && typeof fetchImpl === 'function') {
+    try {
+      const response = await fetchImpl(`${origin}/health`);
+      const body = await response.json();
+      if (response.ok && body.service === 'eagle-culling') return origin;
+    } catch {
+      // The plugin may be served by a static web server.
+    }
+  }
+  return storage?.getItem('eagle-culling-base') || fallbackBase;
 }

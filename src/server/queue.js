@@ -25,7 +25,7 @@ function groupRows(data, decisions) {
         return { unitId, primaryItemId, fileName: itemById.get(primaryItemId)?.name || primaryItemId,
           itemIds: unit.itemIds || [unit.primaryItemId].filter(Boolean), groupId: group.id, groupIndex,
           rank: ranking.rank ?? rankIndex + 1, groupSize: group.unitIds.length, suggested,
-          action: human || suggested, human, flags, confidence: confidence.confidence || null,
+          action: human || suggested, human, flags, unitFlags: result.flags || [], confidence: confidence.confidence || null,
           score: ranking.score ?? result.score ?? null, margin: confidence.margin ?? null,
           reasons: ranking.reasons || [] };
       });

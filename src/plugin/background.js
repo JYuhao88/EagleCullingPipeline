@@ -14,14 +14,38 @@ export function portOccupied(base, requireImpl = globalThis.require) {
     socket.setTimeout(1500, () => { socket.destroy(); reject(new Error('无法确认端口是否空闲')); });
   });
 }
+// Apps started from the Dock or Finder get PATH=/usr/bin:/bin:/usr/sbin:/sbin, which misses every usual Node install.
+const POSIX_NODE_DIRS = ['/opt/homebrew/bin', '/usr/local/bin', '/opt/local/bin'];
+export function launchEnv(env = {}, platform = 'darwin', listDir = () => []) {
+  if (platform === 'win32') return { ...env };
+  const home = env.HOME || '';
+  let nvm = [];
+  try {
+    nvm = listDir(`${home}/.nvm/versions/node`).sort((a, b) => b.localeCompare(a, 'en', { numeric: true }))
+      .map(version => `${home}/.nvm/versions/node/${version}/bin`);
+  } catch { /* no nvm */ }
+  const extra = [...POSIX_NODE_DIRS, ...(home ? [`${home}/.volta/bin`, `${home}/.local/bin`, ...nvm] : [])];
+  const current = String(env.PATH || '').split(':').filter(Boolean);
+  return { ...env, PATH: [...new Set([...current, ...extra])].join(':') };
+}
 export async function launchLocalService({ repository, base, requireImpl = globalThis.require, occupied = portOccupied, allowed =
-  () => true }) {
+  () => true, env = globalThis.process?.env || {}, earlyExitMs = 1500 }) {
   const options = serviceLaunch(repository, base);
   if (await occupied(base, requireImpl)) throw new Error('端口已被占用，请检查诊断中的服务地址');
   if (!allowed()) throw new Error('自动启动已关闭');
+  const platform = options.command === 'node' ? 'win32' : 'posix';
+  const listDir = path => requireImpl('node:fs').readdirSync(path);
   const child = requireImpl('node:child_process').spawn(options.command, options.args,
-    { cwd: options.cwd, detached: true, stdio: 'ignore', windowsHide: true });
+    { cwd: options.cwd, detached: true, stdio: 'ignore', windowsHide: true, env: launchEnv(env, platform, listDir) });
+  let exitCode = null, timer = null, onExit = () => {};
+  child.once('exit', value => { exitCode = value ?? -1; onExit(); });
   await new Promise((resolve, reject) => { child.once('error', reject); child.once('spawn', resolve); });
+  const code = exitCode !== null ? exitCode : await new Promise(resolve => {
+    timer = setTimeout(() => resolve(null), earlyExitMs);
+    onExit = () => { clearTimeout(timer); resolve(exitCode); };
+  });
+  if (code === 127) throw new Error('找不到 Node.js：请安装 Node 20+（Homebrew、nvm 或官网安装包均可）');
+  if (code !== null) throw new Error(`服务启动后立即退出（退出码 ${code}），请在设置 › 高级复制启动命令到终端运行查看原因`);
   if (options.command === 'node' && child.pid) {
     try { const os = requireImpl('node:os'); os.setPriority(child.pid, os.constants.priority.PRIORITY_BELOW_NORMAL); }
     catch { /* Node still runs if priority adjustment is unavailable. */ }
@@ -47,14 +71,30 @@ export function createRunNotifier({ storage, eagle = globalThis.eagle, base = ()
     } catch { return false; }
   };
 }
+export const RELOAD_KEY = 'eagle-culling-reloaded';
 export function mountBackgroundLifecycle({ eagle = globalThis.eagle, win = globalThis.window, onVisible, onCreate }) {
-  eagle?.onPluginCreate?.(() => { onVisible(false); void onCreate(); });
-  eagle?.onPluginRun?.(() => { void Promise.resolve(eagle.window?.show?.()).catch(() => {}); onVisible(true); });
-  eagle?.onPluginShow?.(() => onVisible(true));
-  eagle?.onPluginHide?.(() => onVisible(false));
+  let shown = false;
+  const visible = value => { shown = value; onVisible(value); };
+  eagle?.onPluginCreate?.(() => { visible(false); void onCreate(); });
+  eagle?.onPluginRun?.(() => { void Promise.resolve(eagle.window?.show?.()).catch(() => {}); visible(true); });
+  eagle?.onPluginShow?.(() => visible(true));
+  eagle?.onPluginHide?.(() => visible(false));
   if (win && eagle?.window?.hide) win.onbeforeunload = event => {
     if (win.__ecAllowUnload) return;
-    onVisible(false); void Promise.resolve(eagle.window.hide()).catch(() => {});
+    visible(false); void Promise.resolve(eagle.window.hide()).catch(() => {});
     event.returnValue = false; return false;
+  };
+  // A reloaded page gets no create/show events from Eagle; restore what it was before reloading.
+  const reloaded = win?.sessionStorage?.getItem(RELOAD_KEY);
+  if (reloaded === '0' || reloaded === '1') {
+    win.sessionStorage.removeItem(RELOAD_KEY); visible(reloaded === '1'); void onCreate();
+  }
+  return {
+    isShown: () => shown,
+    reload() {
+      win?.sessionStorage?.setItem(RELOAD_KEY, shown ? '1' : '0');
+      if (win) win.__ecAllowUnload = true;
+      win?.location?.reload();
+    }
   };
 }

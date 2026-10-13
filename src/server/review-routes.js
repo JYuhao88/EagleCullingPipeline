@@ -13,6 +13,9 @@ import { applyPersonalization, personalizeReport } from "../core/personalize.js"
 import { CORS_HEADERS } from "./http.js";
 import { handleAdjustmentsRoute } from "./adjustments-routes.js";
 import { buildQueue, filterQueue, MODES } from './queue.js';
+import { ACTION_STARS, STAR_HEADER } from '../plugin/star-sync.js';
+
+export const wantsStars = req => req.headers?.[STAR_HEADER] === '1';
 
 export async function handleReviewRoute(req, res, ctx) {
   if (await handleAdjustmentsRoute(req, res, ctx)) return true;
@@ -106,10 +109,12 @@ export async function handleReviewRoute(req, res, ctx) {
   if (req.method === "POST" && action === "decisions") {
     const body = await ctx.readBody(req);
     const decisions = Array.isArray(body) ? body : body.decisions || [body];
-    const result = await decideUnits(ctx, runId, decisions, Array.isArray(body) ? {} : body.learning || {});
+    const result = await decideUnits(ctx, runId, decisions, Array.isArray(body) ? {} : body.learning || {},
+      { stars: wantsStars(req) });
     res.setHeader?.('Server-Timing', result.timing);
     ctx.json(res, 200, { decisions: result.decisions, ...(result.learningWarning ? { learningWarning: result.learningWarning } : {}),
-      ...(result.tagWarning ? { tagWarning: result.tagWarning } : {}) });
+      ...(result.tagWarning ? { tagWarning: result.tagWarning } : {}),
+      ...(result.eagleStars ? { eagleStars: result.eagleStars } : {}) });
     return true;
   }
   if (req.method === 'POST' && action === 'eagle-tags') return handleEagleTags(req, res, ctx, runId, data, store);
@@ -160,17 +165,37 @@ export async function saveDecisionBatch(ctx, data, store, decisions, context = {
 }
 
 // Decisions and the task's Eagle tags change in the same per-run queue, so tags never lag a newer decision.
-export function decideUnits(ctx, runId, decisions, context = {}) {
+// stars: the plugin records decisions as Eagle ratings, so each decision also sets its star.
+// fromStarItem: a rating read from that Eagle item; it is checked against the decision current at its turn in the queue,
+// and only the unit's other files (RAW+JPEG) get the star.
+export function decideUnits(ctx, runId, decisions, context = {}, { stars = false, fromStarItem = null } = {}) {
   const store = new DecisionsStore(ctx.runStore.dir(runId));
   const unitIds = decisions.map(row => row.unitId);
   return serializeWriteback(ctx, runId, async data => {
+    if (fromStarItem) {
+      const current = new Map((await store.read()).filter(row => row.source === 'human').map(row => [row.unitId, row.action]));
+      if (decisions.every(row => row.clear ? !current.has(row.unitId) : current.get(row.unitId) === row.action)) {
+        return { decisions: [], unchanged: true };
+      }
+    }
     const result = await saveDecisionBatch(ctx, data, store, decisions, context);
     if (data.run?.eagleTagsEnabled) {
       try { await applyLiveUnits(ctx, data, store, [...new Set(unitIds)], false, { suggestions: true }); }
       catch (error) { result.tagWarning = `决定已保存，但 Eagle 标签未更新：${error.message}`; }
     }
+    if (stars) result.eagleStars = decisionStars(data, decisions).filter(row => row.id !== fromStarItem);
     return result;
   }, unitIds);
+}
+
+// The plugin sets these through Eagle's item API: the Web API ignores star 0, so it cannot clear a rating.
+export function decisionStars(data, decisions) {
+  const units = new Map(data.units.map(unit => [unit.id, unit]));
+  return decisions.flatMap(row => {
+    const star = row.clear ? 0 : ACTION_STARS[row.action];
+    const unit = units.get(row.unitId);
+    return star === undefined || !unit ? [] : (unit.itemIds || [unit.primaryItemId]).filter(Boolean).map(id => ({ id, star }));
+  });
 }
 
 async function serializeWriteback(ctx, runId, operation, unitIds) {

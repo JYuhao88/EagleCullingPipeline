@@ -2,10 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { SETTINGS, readSetting, writeSetting } from '../src/plugin/panel-settings.js';
-import { shouldAutoStart, launchLocalService, createRunNotifier, mountBackgroundLifecycle } from '../src/plugin/background.js';
+import { shouldAutoStart, launchLocalService, launchEnv, createRunNotifier, mountBackgroundLifecycle } from '../src/plugin/background.js';
 import { scopeLabel, primaryAnalysis } from '../src/plugin/start-model.js';
 import { eagleContext } from '../src/plugin/api.js';
-import { setWindowMode, createWindowSizer, readSavedSize } from '../src/plugin/window-mode.js';
+import { createWindowSizer, readSavedSize } from '../src/plugin/window-mode.js';
 const fixtureRepository = process.platform === 'win32' ? 'C:\\fixture' : '/tmp/fixture';
 const storage = () => { const map = new Map(); return { getItem: key => map.get(key) ?? null,
   setItem: (key, value) => map.set(key, value), removeItem: key => map.delete(key) }; };
@@ -59,13 +59,32 @@ test('launch CLI detaches, ignores stdio, unrefs and blocks occupied or newly di
       const child = new EventEmitter(); child.unref = () => { unref = true; };
       queueMicrotask(() => child.emit('spawn')); return child; } };
   };
-  const input = { repository: fixtureRepository, base: 'http://127.0.0.1:43441', requireImpl, occupied: async () => false };
+  const input = { repository: fixtureRepository, base: 'http://127.0.0.1:43441', requireImpl, occupied: async () => false,
+    env: { PATH: '/usr/bin:/bin' }, earlyExitMs: 5 };
   await launchLocalService(input);
   assert.equal(command, process.platform === 'win32' ? 'node' : 'nice');
   assert.ok(args.includes('src/cli.js')); assert.ok(args.includes('serve'));
-  assert.deepEqual(options, { cwd: fixtureRepository, detached: true, stdio: 'ignore', windowsHide: true }); assert.equal(unref, true);
+  const { env, ...rest } = options;
+  assert.deepEqual(rest, { cwd: fixtureRepository, detached: true, stdio: 'ignore', windowsHide: true }); assert.equal(unref, true);
+  if (process.platform !== 'win32') assert.match(env.PATH, /^\/usr\/bin:\/bin:.*\/opt\/homebrew\/bin/);
   await assert.rejects(launchLocalService({ ...input, occupied: async () => true }), /占用/);
   await assert.rejects(launchLocalService({ ...input, allowed: () => false }), /关闭/);
+});
+test('launch reports a missing Node instead of waiting for a service that already exited', async () => {
+  const requireImpl = () => ({ spawn: () => {
+    const child = new EventEmitter(); child.unref = () => {};
+    queueMicrotask(() => { child.emit('spawn'); child.emit('exit', 127); }); return child; }, readdirSync: () => [] });
+  const input = { repository: fixtureRepository, base: 'http://127.0.0.1:43441', requireImpl, occupied: async () => false };
+  await assert.rejects(launchLocalService(input), process.platform === 'win32' ? /退出/ : /找不到 Node/);
+});
+test('Dock-launched apps get the usual Node install folders appended to PATH', () => {
+  const env = launchEnv({ PATH: '/usr/bin:/bin', HOME: '/tmp/fixture-home' }, 'darwin', () => ['v20.1.0', 'v22.9.0']);
+  const dirs = env.PATH.split(':');
+  assert.deepEqual(dirs.slice(0, 2), ['/usr/bin', '/bin']);
+  for (const dir of ['/opt/homebrew/bin', '/usr/local/bin', '/tmp/fixture-home/.volta/bin']) assert.ok(dirs.includes(dir), dir);
+  const nvm = version => dirs.indexOf(`/tmp/fixture-home/.nvm/versions/node/${version}/bin`);
+  assert.ok(nvm('v22.9.0') < nvm('v20.1.0'));
+  assert.deepEqual(launchEnv({ PATH: 'C:\\Windows' }, 'win32'), { PATH: 'C:\\Windows' });
 });
 test('completion and failure notify once across fresh notifier instances and skip missing API', async () => {
   const values = storage(), calls = [], eagle = { notification: { show: async row => calls.push(row) } };
@@ -89,15 +108,6 @@ test('background lifecycle hides on close, shows on run, and permits updater rel
   assert.equal(win.onbeforeunload({}), false); assert.equal(hidden, 1);
   win.__ecAllowUnload = true; assert.equal(win.onbeforeunload({}), undefined);
 });
-test('entering or leaving review never resizes the Eagle window', async () => {
-  const calls = [];
-  const eagle = { window: { maximize: async () => calls.push('max'), unmaximize: async () => calls.push('restore'),
-    setSize: async (...args) => calls.push(args) } };
-  globalThis.eagle = eagle;
-  try { await setWindowMode(true); await setWindowMode(false); } finally { delete globalThis.eagle; }
-  assert.deepEqual(calls, []);
-});
-
 test('window sizer remembers the user size, zooms on request and restores the remembered size', async () => {
   const calls = [], store = new Map(), listeners = {};
   const storage = { getItem: key => store.get(key) ?? null, setItem: (key, value) => store.set(key, value) };
@@ -109,7 +119,7 @@ test('window sizer remembers the user size, zooms on request and restores the re
   const root = { querySelectorAll: () => [button], addEventListener: (type, fn) => { listeners[type] = fn; } };
   const win = { addEventListener: (type, fn) => { listeners[`win:${type}`] = fn; } };
   const sizer = createWindowSizer({ eagle, storage, root, win, delay: 0 });
-  assert.equal(button.hidden, false); assert.equal(button.textContent, '放大审阅');
+  assert.equal(button.hidden, false); assert.equal(button.textContent, '放大窗口');
   assert.equal(await sizer.restore(), false);
   await sizer.toggle();
   assert.deepEqual(readSavedSize(storage), { width: 700, height: 560 });
@@ -129,7 +139,8 @@ test('Windows launch uses direct Node and BelowNormal without a visible console'
     (...args) => priority.push(args) }
     : { spawn: (command, args, options) => { calls.push({ command, args, options }); queueMicrotask(() => child.emit('spawn'));
       return child; } };
-  await launchLocalService({ repository: 'C:/fixture', base: 'http://localhost:43441', requireImpl, occupied: async () => false });
+  await launchLocalService({ repository: 'C:/fixture', base: 'http://localhost:43441', requireImpl, occupied: async () => false,
+    earlyExitMs: 5 });
   assert.equal(calls[0].command, 'node'); assert.equal(calls[0].options.windowsHide, true);
   assert.deepEqual(priority, [[42, 10]]); assert.equal(calls[1], 'unref');
 });

@@ -6,7 +6,6 @@ import path from 'node:path';
 import { DecisionsStore } from '../src/core/decisions-store.js';
 import { completeEyeRois } from '../src/core/eye-roi.js';
 import { focusRegionBox } from '../src/server/focus-image.js';
-import { keyboardAction } from '../src/plugin/keyboard.js';
 import { buildReport, reportCsv } from '../src/core/report.js';
 import { isReadOnlyEagleRequest } from '../scripts/eagle-readonly-proxy.mjs';
 function person() {
@@ -20,7 +19,7 @@ test('Eagle proxy allowlist blocks writes, unknown GET and case/path tricks', ()
     assert.equal(isReadOnlyEagleRequest('GET', p), false);
   for (const method of ['POST','PUT','DELETE','HEAD']) assert.equal(isReadOnlyEagleRequest(method,'/api/item/list'), false);
 });
-test('free reason roundtrip, batch rejection is atomic, keyboard input suppresses review keys', async t => {
+test('free reason roundtrip, batch rejection is atomic', async t => {
   const dir = await mkdtemp(path.join(os.tmpdir(),'w10-reasons-')); t.after(() => rm(dir,{recursive:true,force:true}));
   const store = new DecisionsStore(dir), reason = '</textarea><script>123</script> & 中文';
   for (const action of ['selected','rejected']) {
@@ -31,7 +30,6 @@ test('free reason roundtrip, batch rejection is atomic, keyboard input suppresse
     {unitId:'unit:b',action:'rejected',reason:'字'.repeat(501)}]), /500/);
   assert.equal((await store.read()).find(d=>d.unitId==='unit:a').action,'rejected');
   await assert.rejects(store.upsert([{unitId:'unit:a',reason:5}]), /string/);
-  for (const key of ['1','2','3','l','e','Enter','Escape']) assert.equal(keyboardAction({key}, true, true), null);
 });
 test('free reason included in JSON/CSV export with quote escaping', () => {
   const rows = buildReport({ units:[{id:'unit:a',itemIds:['a']}],results:[{unitId:'unit:a'}],

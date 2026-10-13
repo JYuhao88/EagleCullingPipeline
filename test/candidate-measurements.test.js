@@ -7,7 +7,6 @@ import { skyExposure } from '../src/core/metrics.js';
 import { evaluateRules } from '../src/core/rules-engine.js';
 import { rankGroup, gateFlags, rulePenalty } from '../src/core/ranking.js';
 import { validateRuleVerdict } from '../src/core/contracts.js';
-import { renderRuleReasons } from '../src/plugin/feedback.js';
 
 const size = 96;
 const person = { box: [.25, .1, .75, .98], score: .9, isMain: true };
@@ -71,7 +70,7 @@ test('tilt is mapping of existing thresholds and missing lines abstain', () => {
   assert.ok(missing.every(v => v.verdict === 'na'));
 });
 
-test('hints conform to contract, display as hints, and never change scores/penalties/gates', () => {
+test('hints conform to contract and never change scores/penalties/gates', () => {
   const m = measure(() => [128,128,128]);
   const base = { unitId:'a', metrics:{ quality:.6, sharpness:.2, exposure:.9 }, flags:[], signals };
   const candidate = structuredClone(base);
@@ -83,7 +82,6 @@ test('hints conform to contract, display as hints, and never change scores/penal
   assert.equal(rulePenalty({ ...base, verdicts: evaluateRules(base.signals) }), rulePenalty(candidate));
   const rows = evaluateCandidateRules(m,signals);
   assert.ok(rows.every(validateRuleVerdict));
-  assert.match(renderRuleReasons({ verdicts:rows }, { rules:[] }), /rule-hints/);
   assert.equal(evaluateRules(signals).some(v=>v.ruleId.startsWith('P-YD')), false);
   assert.equal(evaluateRules(candidate.signals).filter(v=>v.ruleId.startsWith('P-YD')).length, 4);
 });

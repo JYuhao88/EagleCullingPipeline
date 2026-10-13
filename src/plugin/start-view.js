@@ -10,6 +10,8 @@ import { homeCard, taskView, sortTasks, friendlyFailure, libraryAnalysisText, li
 import { eagleContext, isEagleEnvironment } from "./api.js";
 
 const HOME_TASKS = 5;
+const WIDE_TASKS = 20;
+const WIDE = "(min-width: 1000px)";
 
 export function createStartView({ root, api, getApi = () => api, onRun, autoCheck = true, autoRefresh = true,
   confirmImpl = text => globalThis.confirm(text) }) {
@@ -25,6 +27,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   let disposed = false, pollTimer = null, pollToken = 0, serviceTimer = null, contextTimer = null, healthTimer = null;
   let contextVersion = 0, contextKey = "", matchVersion = 0, tasksVersion = 0, serviceBase = getApi().base;
 
+  const wide = () => Boolean(globalThis.matchMedia?.(WIDE).matches);
   const setText = (id, value) => { const node = q(id); if (node) node.textContent = value ?? ""; };
   const setNotice = text => { view.notice = text || ""; setText("homeNotice", view.notice); };
 
@@ -42,13 +45,17 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   }
 
   function renderCard() {
+    const start = q("start");
+    if (start?.dataset) start.dataset.submitting = String(view.submitting);
     const card = homeCard({ ...view, secondsPerPhoto: measuredRate(view.tasks) });
+    const startsCulling = card.action?.action === "review" || card.secondary?.some(item => item.action === "openMatch");
     const node = q("primaryCard");
     if (node?.dataset) node.dataset.kind = card.kind;
     setText("primaryEyebrow", card.eyebrow);
     setText("primaryTitle", card.title);
     setText("primaryDetail", card.detail);
-    setText("primaryNote", card.note);
+    setText("primaryNote", [card.note, startsCulling ? "在 Eagle 里选中照片，右栏会显示它所在的分组和 AI 建议；直接按 5/3/1 打星。" : ""]
+      .filter(Boolean).join(" "));
     const chip = q("primaryChip");
     if (chip) { chip.hidden = !card.chip; chip.textContent = card.chip || ""; }
     const action = q("primaryAction");
@@ -107,16 +114,20 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
       body.append(bar);
     }
     const action = button(model.primary.label, () => perform(model.primary.action, run));
-    row.append(body, action);
+    const actions = root.createElement("div");
+    actions.className = "task-actions"; actions.append(action);
+    for (const item of model.secondary) actions.append(button(item.label, () => perform(item.action, run), "secondary"));
+    row.append(body, actions);
     row.addEventListener("click", event => { if (!event.target.closest?.("button")) void perform(model.primary.action, run); });
     return row;
   }
 
   function renderTasks() {
     const ordered = sortTasks(view.tasks.filter(run => run.id !== view.active?.id || run.status !== "running"));
-    q("recentRuns").replaceChildren(...ordered.slice(0, HOME_TASKS).map(taskRow));
+    const limit = wide() ? WIDE_TASKS : HOME_TASKS;
+    q("recentRuns").replaceChildren(...ordered.slice(0, limit).map(taskRow));
     q("historyRuns")?.replaceChildren(...ordered.map(taskRow));
-    q("allRuns").hidden = ordered.length <= HOME_TASKS && view.nextCursor === null;
+    q("allRuns").hidden = ordered.length <= limit && view.nextCursor === null;
     q("moreRuns").hidden = view.nextCursor === null;
     setText("recentStatus", view.tasks.length ? "" : view.connected ? "还没有任务。" : "");
   }
@@ -373,17 +384,12 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   });
   const openById = () => {
     const id = q("runId").value.trim();
-    if (id) onRun(id).catch(error => setNotice(`无法打开：${error.message}`));
+    if (id) onRun(id, { finish: true }).catch(error => setNotice(`无法打开：${error.message}`));
   };
   q("openRun").addEventListener("click", openById);
   q("runId").addEventListener("keydown", event => { if (event.key === "Enter") { event.preventDefault(); openById(); } });
 
-  const latestTaskId = () => sortTasks(view.tasks).find(run => run.status === "completed")?.id;
-  const settings = mountPanelSettings({ root, storage, onPersonalization: async () => {
-    const id = latestTaskId();
-    if (!id) { setText("serviceDiagnostics", "先完成一次分析，再打开个性化设置。"); return; }
-    await onRun(id, { compare: true }); q("reviewSettings")?.showModal?.();
-  } });
+  const settings = mountPanelSettings({ root, storage });
   const cacheSettings = mountCacheSettings({ root, getApi, storage });
   const prefetcher = createIdlePrefetcher({ storage, getApi, isVisible: () => visible, isConnected: () => view.connected,
     isBusy: () => Boolean(view.active) || view.submitting });
@@ -398,7 +404,8 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     if (!q("start")?.hidden) { try { await refreshContext(); } catch (error) { setNotice(error.message); } }
     if (visible && !disposed) { clearTimeout(contextTimer); contextTimer = setTimeout(refreshVisible, 1500); }
   }
-  mountBackgroundLifecycle({ onVisible: setVisible, onCreate: async () => { await checkHealth(); await startService(true); } });
+  const lifecycle = mountBackgroundLifecycle({ onVisible: setVisible,
+    onCreate: async () => { await checkHealth(); await startService(true); } });
   globalThis.eagle?.onLibraryChanged?.(libraryPath => {
     contextVersion++; contextKey = ""; matchVersion++;
     view.context = { libraryPath, libraryName: libraryPath?.split(/[\\/]/).pop(), itemIds: [], folders: [] };
@@ -408,6 +415,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     if (visible) void refreshContext().then(() => refreshTasks()).catch(() => {});
   });
   root.addEventListener?.("visibilitychange", () => setVisible(!root.hidden));
+  globalThis.matchMedia?.(WIDE).addEventListener?.("change", () => render());
   if (autoRefresh) {
     prefetcher.start();
     setVisible(visible);
@@ -421,8 +429,8 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   }
   render();
   if (autoCheck) void checkHealth().then(() => startService(true));
-  return { checkHealth, refreshContext, refreshRecent: refreshTasks, refreshTasks, setVisible, startService, settings,
-    cacheSettings, prefetcher, view, dispose() {
+  return { setNotice, reloadPage: () => lifecycle.reload(), checkHealth, refreshContext, refreshRecent: refreshTasks,
+    refreshTasks, setVisible, startService, settings, cacheSettings, prefetcher, view, dispose() {
       disposed = true; stopPolling(); prefetcher.stop(); clearTimeout(serviceTimer); clearTimeout(contextTimer);
       clearInterval(healthTimer); tasksVersion++; contextVersion++; matchVersion++;
     } };

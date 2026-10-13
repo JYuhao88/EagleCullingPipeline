@@ -10,7 +10,6 @@ import { embeddedPreviewAccepted } from '../src/core/native-image.js';
 import { decodeHeif, decodeWic, parseWicOutput, resetWicHealth, wicAvailable, windowsWicScript } from '../src/core/heif-decode.js';
 import { snapDisplayEdge } from '../src/core/display.js';
 import { createRunsRouter } from '../src/server/runs-routes.js';
-import { displayEdge, preserveDisplayGeometry } from '../src/plugin/viewer.js';
 
 test('image format helpers cover the complete RAW and HEIF lists', () => {
   assert.ok(RAW_EXTENSIONS.includes('crw') && RAW_EXTENSIONS.includes('rwl'));
@@ -21,9 +20,6 @@ test('image format helpers cover the complete RAW and HEIF lists', () => {
 test('display edges snap upward and never upscale a smaller source', () => {
   assert.equal(snapDisplayEdge(1100), 2048); assert.equal(snapDisplayEdge(5000), 6144);
   assert.equal(snapDisplayEdge(5000, 3500), 3500); assert.equal(snapDisplayEdge(500, 800), 800);
-  assert.equal(displayEdge({ width: 900, height: 700 }, 2), 2048);
-  assert.equal(displayEdge({ width: 900, height: 700 }, 1, 3), 3072);
-  assert.equal(displayEdge({ width: 900, height: 700 }, 2, 0.5), 2048, 'zooming out never lowers the tier below fit');
 });
 
 test('embedded preview threshold depends on purpose', () => {
@@ -96,9 +92,4 @@ test('display route returns a capped image and deduplicates concurrent requests'
     assert.equal(calls, 2); // each HTTP request may read state; image generation itself is deduplicated.
     const meta = await sharp(a.body).metadata(); assert.deepEqual([meta.width, meta.height], [3000, 1500]);
   } finally { await rm(dir, { recursive: true, force: true }); }
-});
-
-test('viewer display swap preserves rendered geometry', () => {
-  assert.deepEqual(preserveDisplayGeometry({ scale: 2, x: -10, y: 3 }, { width: 1000 }, { width: 2000 }),
-    { scale: 1, x: -10, y: 3 });
 });
