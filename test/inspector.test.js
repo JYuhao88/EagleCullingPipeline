@@ -416,3 +416,15 @@ test('inspector selection refresh ignores stale responses and never writes Eagle
     view.setVisible(false); selected = 'c'; await view.refresh(true); assert.equal(writes, 0);
   } finally { view.dispose(); }
 });
+test('selecting from the panel asks Eagle to scroll the grid to the photo, without the internal channel it just selects', async () => {
+  const { showInEagle, revealSelection } = await import('../src/plugin/eagle-select.js');
+  const sent = [], selected = [];
+  const ipc = { sendTo: (...args) => sent.push(args) };
+  const eagle = { item: { select: async ids => selected.push(ids) } };
+  assert.equal(await showInEagle(eagle, ['a'], undefined, () => revealSelection(ipc, 2)), 'selected');
+  assert.deepEqual(selected, [['a']]);
+  assert.deepEqual(sent, [[2, 'rebind-refresh']]);
+  assert.equal(revealSelection(ipc, undefined), false);
+  assert.equal(revealSelection(undefined, 2), false);
+  assert.equal(await showInEagle(eagle, ['b']), 'selected');
+});

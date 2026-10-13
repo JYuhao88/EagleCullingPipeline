@@ -106,6 +106,7 @@ if (typeof window !== 'undefined') {
     .slice(0, 60)} ${new Error().stack?.split('\n').slice(1, 4).join(' ')}`));
 }
 const SNAPSHOT_KEY = 'eagle-culling-inspector-snapshot';
+const STILLS_KEY = 'eagle-culling-inspector-stills', STILL_EDGE = 360;
 const SVG = 'http://www.w3.org/2000/svg';
 const BODY_LINES = [[5, 7], [7, 9], [6, 8], [8, 10], [5, 6], [5, 11], [6, 12], [11, 12], [11, 13], [13, 15], [12, 14],
   [14, 16], [0, 1], [0, 2], [1, 3], [2, 4]];
@@ -154,16 +155,60 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   // Re-rendering reuses the decoded <img> nodes (also the ones restored from the snapshot) so thumbnails never blink.
   const pool = new Map();
   let epoch = 0;
-  for (const image of root.querySelectorAll?.('img[data-pool]') || []) pool.set(image.dataset.pool, [image]);
+  // A reloaded page cannot paint URL images in its first frame, but a data: image with sync decoding is ready at once.
+  // Every member of the shown group keeps such a still (preview URL -> data: URL) so any snapshot can carry them.
+  let stills = new Map(), groupSources = [], stillsTimer;
+  try { stills = new Map(Object.entries(JSON.parse(session?.getItem(STILLS_KEY) || '{}'))); } catch { /* none yet */ }
+  const newImage = src => {
+    const image = root.createElement('img'); image.decoding = 'sync'; image.alt = '';
+    image.crossOrigin = 'anonymous'; image.dataset.pool = src;
+    image.addEventListener?.('load', () => keepStill(image));
+    image.src = src;
+    return image;
+  };
+  for (const image of root.querySelectorAll?.('img[data-pool]') || []) {
+    pool.set(image.dataset.pool, [image]);
+    // Snapshot copies carry inline stills; the swap back keeps showing the still until the full preview has loaded.
+    if (image.src?.startsWith('data:')) {
+      if (!stills.has(image.dataset.pool)) stills.set(image.dataset.pool, image.src);
+      image.crossOrigin = 'anonymous'; image.src = image.dataset.pool;
+    }
+  }
   function pooledImage(src) {
     const list = pool.get(src) || [];
     let image = list.find(node => node.dataset.epoch !== String(epoch));
-    if (!image) {
-      image = root.createElement('img'); image.decoding = 'async'; image.alt = ''; image.src = src;
-      image.dataset.pool = src; list.push(image); pool.set(src, list);
-    }
+    if (!image) { image = newImage(src); list.push(image); pool.set(src, list); }
     image.dataset.epoch = String(epoch);
     return image;
+  }
+  function keepStill(image) {
+    const src = image.dataset?.pool;
+    if (!src || stills.has(src) || !image.naturalWidth || image.src.startsWith('data:')) return;
+    try {
+      const scale = Math.min(1, STILL_EDGE / Math.max(image.naturalWidth, image.naturalHeight));
+      const canvas = root.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+      canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+      canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+      stills.set(src, canvas.toDataURL('image/jpeg', 0.78));
+    } catch { return; /* no canvas or a cross-origin image without CORS */ }
+    clearTimeout(stillsTimer);
+    stillsTimer = setTimeout(() => {
+      const keep = new Set(groupSources);
+      sessionSet(STILLS_KEY, Object.fromEntries([...stills].filter(([src]) => keep.has(src))));
+    }, 200);
+  }
+  function stillOf(image) {
+    if (!image) return null;
+    if (image.complete && image.src?.startsWith('data:')) return image.src;
+    if (image.complete) keepStill(image);
+    return stills.get(image.dataset?.pool || image.src) || null;
+  }
+  // Load and decode every member's preview up front: picking any photo then redraws without a blank frame.
+  function preloadGroup(result) {
+    if (!result?.runId) return;
+    groupSources = (result.groupMembers || []).slice(0, 80).map(member => previewUrl(result.runId, member.unitId));
+    for (const src of groupSources) if (!pool.has(src)) pool.set(src, [newImage(src)]);
   }
   const marksOn = () => storage.getItem(MARKS_KEY) === '1';
   // An SVG with the image's own size as its viewBox and 'meet' scaling lands exactly on an object-fit: contain image.
@@ -242,6 +287,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   function render(state, result, selected = current.selected) {
     if (state !== current.state || result?.unitId !== current.result?.unitId) trace(`render ${state} ${result?.unitId || ''}`, storage);
     current = { state, result, selected }; epoch++;
+    if (state === 'result') preloadGroup(result);
     const model = inspectorModel({ state, result });
     const units = state === 'result' ? selectedUnits(selected) : { count: selected.length, units: [], groupCount: 0 };
     const multi = units.count > 1 || state === 'many';
@@ -318,8 +364,17 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     const sig = root.documentElement?.dataset?.layout;
     if (current.state !== 'result' || !sig || typeof section?.innerHTML !== 'string') return;
     const ids = (current.result.groupMembers || []).flatMap(member => member.itemIds || []);
-    sessionSet(SNAPSHOT_KEY, { sig, at: now(), ids: ids.length ? ids : selectedIds(), html: section.innerHTML,
-      height: body?.scrollHeight || 0 });
+    let html = section.innerHTML;
+    const copy = section.cloneNode?.(true);
+    if (copy?.querySelectorAll) {
+      const live = [...section.querySelectorAll('img')];
+      [...copy.querySelectorAll('img')].forEach((image, index) => {
+        const still = stillOf(live[index]); if (!still) return;
+        image.src = still; image.decoding = 'sync'; image.removeAttribute('loading');
+      });
+      html = copy.innerHTML;
+    }
+    sessionSet(SNAPSHOT_KEY, { sig, at: now(), ids: ids.length ? ids : selectedIds(), html, height: body?.scrollHeight || 0 });
   }
   function renderRun() {
     const rows = runRows(), result = current.state === 'result' ? current.result : null;
@@ -344,9 +399,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     box.replaceChildren(...neighbours.map(({ side, group: item }) => {
       const node = root.createElement('button');
       node.type = 'button'; node.className = 'neighbour'; node.dataset.side = side;
-      const image = root.createElement('img');
-      image.loading = 'lazy'; image.decoding = 'async'; image.alt = '';
-      image.src = `${baseUrl()}/runs/${encodeURIComponent(result.runId)}/preview/${encodeURIComponent(item.best.unitId)}`;
+      const image = pooledImage(previewUrl(result.runId, item.best.unitId));
       const text = root.createElement('span');
       text.textContent = [`${side === 'prev' ? '前' : '后'}一组 · 第 ${item.groupIndex + 1} 组 · ${item.units.length} 张`,
         item.done ? '已全部决定' : `已定 ${item.decided}`, item.confidence === 'low' ? '没把握' : ''].filter(Boolean).join(' · ');
