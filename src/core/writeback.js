@@ -17,6 +17,11 @@ const AI_TAGS = new Set([
   ...Object.values(FLAG_TAGS)
 ]);
 
+// Tag names written by pre-1.0 plugin builds; cleared together with AI_TAGS.
+const LEGACY_AI_TAGS = new Set(["AI待淘汰", "AI原片", "AI已配对", "AI配对待确认", "AI未配对原片",
+  "AI可能模糊", "AI低分辨率", "待复核"]);
+const CLEARABLE_TAGS = new Set([...AI_TAGS, ...LEGACY_AI_TAGS]);
+
 export function planWriteback({
   results = [],
   decisions = [],
@@ -208,7 +213,7 @@ export async function applyWriteback(plan, api, options = {}) {
   return { dryRun: false, summary: plan.summary, results };
 }
 
-export { ACTION_TAGS, FLAG_TAGS, AI_TAGS };
+export { ACTION_TAGS, FLAG_TAGS, AI_TAGS, CLEARABLE_TAGS };
 
 // Keep the first successful pre-write snapshot across live and final writes.
 // A completed revert starts a fresh cycle; user metadata remains read live.

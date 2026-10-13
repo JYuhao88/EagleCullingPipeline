@@ -170,15 +170,18 @@ export class EagleApi {
   async *items({ fields, limit = 500 } = {}) {
     await this.detect();
     let offset = 0;
+    let fieldList = fields?.join(",");
     while (true) {
-      const page = await this.get(
-        this.apiVersion === 1 ? "item/list" : "item/get",
-        {
-          fields: fields?.join(","),
-          offset,
-          limit,
-        },
-      );
+      const path = this.apiVersion === 1 ? "item/list" : "item/get";
+      let page;
+      try {
+        page = await this.get(path, { fields: fieldList, offset, limit });
+      } catch (error) {
+        // Some Eagle 4 builds answer HTTP 500 to any `fields` filter.
+        if (!fieldList || error.status !== 500) throw error;
+        fieldList = undefined;
+        page = await this.get(path, { offset, limit });
+      }
       const items = Array.isArray(page) ? page : page.data || [];
       yield* items;
       offset += items.length;

@@ -4,10 +4,12 @@ import { ACTION_LABELS, FILTERS, FLAG_LABELS, KEY_ACTIONS, METHODS, PASSES, appl
 import { ADJUSTMENT_LABELS, ADJUSTMENT_RANGES, DEFAULT_ADJUSTMENTS, adjustmentFilterMarkup, adjustmentsAreIdentity,
   autoExposure, lumaSamples, normalizeAdjustments } from './adjust.js';
 import { restore as restoreSession, save as saveSession } from './review-session.js';
+import { createZoomStage } from './zoom-stage.js';
 
 const ADVANCE_KEY = 'eagle-culling-cull-advance';
 const GRID_PAGE = 120;
 const FILTER_ID = 'ec-cull-adjust';
+const STRIP_SPAN = 60;
 const json = body => ({ method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
 
 export function createCullView({ root = document, api, storage = globalThis.localStorage, imageUrl, thumbUrl,
@@ -25,6 +27,17 @@ export function createCullView({ root = document, api, storage = globalThis.loca
   const status = (text, tone = '') => { const el = $('[data-cull-status]'); el.textContent = text; el.dataset.tone = tone; };
   const image = id => imageUrl?.(state.runId, id) || `${api.base || ''}/runs/${state.runId}/detail/${encodeURIComponent(id)}`;
   const thumb = id => thumbUrl?.(state.runId, id) || `${api.base || ''}/runs/${state.runId}/preview/${encodeURIComponent(id)}`;
+  const runPath = (kind, id) => `${api.base || ''}/runs/${state.runId}/${kind}/${encodeURIComponent(id)}`;
+  const stageElement = $('[data-cull-stage]');
+  $('[data-cull-image]').crossOrigin = 'anonymous';
+  const zoom = createZoomStage({ stage: stageElement, image: $('[data-cull-image]'), native: $('[data-cull-native]'),
+    zoomLabel: $('[data-cull-zoom]'), nativeLabel: $('[data-cull-native-state]'), fitText: '适应',
+    displayUrl: (id, edge) => `${runPath('display', id)}?edge=${edge}`,
+    nativeUrl: (id, box, display) => `${runPath('native', id)}?box=${box.map(v => v.toFixed(5)).join(',')}`
+      + `&width=${display.width}&height=${display.height}`,
+    active: () => state.visible && showsLoupe() });
+  if (typeof ResizeObserver === 'function') new ResizeObserver(() => zoom.refit()).observe(stageElement);
+  else globalThis.addEventListener?.('resize', () => zoom.refit());
 
   function persist() {
     saveSession(state.runId, { method: state.method, filter: state.filter, pass: state.pass, target: state.target,
@@ -137,12 +150,8 @@ export function createCullView({ root = document, api, storage = globalThis.loca
     loupe.hidden = !showsLoupe();
     if (loupe.hidden) return;
     const item = row();
-    const img = $('[data-cull-image]');
-    if (!item) { img.removeAttribute('src'); $('[data-cull-info]').textContent = '这里没有需要处理的照片。'; return; }
-    const src = image(item.unitId);
-    if (img.dataset.src !== src) {
-      img.dataset.src = src; img.crossOrigin = 'anonymous'; img.src = src; img.alt = item.fileName || '照片';
-    }
+    if (!item) { zoom.clear(); $('[data-cull-info]').textContent = '这里没有需要处理的照片。'; return; }
+    if (zoom.show(item.unitId, image(item.unitId))) $('[data-cull-image]').alt = item.fileName || '照片';
     const b = badge(item);
     const flags = (item.flags || []).map(flag => FLAG_LABELS[flag]).filter(Boolean);
     $('[data-cull-decision]').className = `cull-badge large ${b.kind}`;
@@ -152,8 +161,8 @@ export function createCullView({ root = document, api, storage = globalThis.loca
       item.human ? `AI 建议${ACTION_LABELS[item.suggested] || '候选'}` : '', ...flags, ...(item.reasons || []).slice(0, 2)]
       .filter(Boolean).join(' · ');
     const strip = $('[data-cull-strip]');
-    const from = Math.max(0, state.index - 6);
-    strip.replaceChildren(...state.list.slice(from, state.index + 7).map((entry, offset) => {
+    const from = Math.max(0, state.index - STRIP_SPAN);
+    strip.replaceChildren(...state.list.slice(from, state.index + STRIP_SPAN + 1).map((entry, offset) => {
       const button = document.createElement('button');
       button.type = 'button'; button.dataset.index = String(from + offset); button.dataset.decision = effectiveAction(entry);
       button.dataset.human = entry.human ? '1' : '0';
@@ -163,6 +172,8 @@ export function createCullView({ root = document, api, storage = globalThis.loca
       button.append(thumbImg);
       return button;
     }));
+    const current = strip.querySelector('.current');
+    if (current) strip.scrollLeft = current.offsetLeft - (strip.clientWidth - current.offsetWidth) / 2;
     for (const next of state.list.slice(state.index + 1, state.index + 3)) new Image().src = image(next.unitId);
     applyAdjustments();
   }
@@ -207,7 +218,7 @@ export function createCullView({ root = document, api, storage = globalThis.loca
   function applyAdjustments() {
     const item = row();
     $('[data-cull-filter]').innerHTML = adjustmentFilterMarkup(item ? state.adjustments[item.unitId] : {}, FILTER_ID);
-    $('[data-cull-image]').style.filter = item ? filterFor(item.unitId) : 'none';
+    zoom.applyAdjustment(item ? filterFor(item.unitId) : 'none');
   }
   function renderAdjustPanel() {
     const panel = $('[data-cull-adjust]');
@@ -334,6 +345,9 @@ export function createCullView({ root = document, api, storage = globalThis.loca
     else if (data.cull === 'prev') go(state.index - 1);
     else if (data.cull === 'next') go(state.index + 1);
     else if (data.cull === 'full') openFull();
+    else if (data.cull === 'zoom-in') zoom.zoom(1.25);
+    else if (data.cull === 'zoom-out') zoom.zoom(0.8);
+    else if (data.cull === 'zoom-fit') zoom.toggle();
     else if (data.cull === 'adjust') { state.adjustOpen = !state.adjustOpen; render(); }
     else if (data.cull === 'auto') autoAdjust();
     else if (data.cull === 'reset') storeAdjustments([row().unitId], {});
@@ -349,6 +363,11 @@ export function createCullView({ root = document, api, storage = globalThis.loca
     else if (data.cull === 'accept') void acceptRest();
     else if (data.cull === 'compare') onCompare(state.runId);
   });
+  $('[data-cull-strip]').addEventListener('wheel', event => {
+    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+    event.preventDefault();
+    event.currentTarget.scrollLeft += event.deltaY;
+  }, { passive: false });
   section.addEventListener('input', event => {
     const name = event.target.dataset.adjust;
     if (name && row()) storeAdjustments([row().unitId], { ...currentAdjustments(), [name]: Number(event.target.value) });
@@ -385,11 +404,17 @@ export function createCullView({ root = document, api, storage = globalThis.loca
     if (lower === 'n') { const next = nextUndecided(state.list, state.index); if (next >= 0) go(next); return true; }
     if (lower === 'g') { setMethod(state.method === 'grid' ? 'loupe' : 'grid'); return true; }
     if (event.key === 'Enter' && grid) { setMethod('loupe'); return true; }
-    if ((event.key === ' ' || lower === 'z') && !grid) { openFull(); return true; }
+    if (event.key === ' ' && !grid) { openFull(); return true; }
+    if (showsLoupe() && !event.metaKey && !event.ctrlKey) {
+      if (lower === 'z') { zoom.toggle(); return true; }
+      if (event.key === '+' || event.key === '=') { zoom.zoom(1.25); return true; }
+      if (event.key === '-' || event.key === '_') { zoom.zoom(0.8); return true; }
+    }
     if (event.key === ' ' && grid) { setMethod('loupe'); return true; }
     if (lower === 'a' && showsLoupe()) { state.adjustOpen = !state.adjustOpen; render(); return true; }
     if (event.key === 'Escape') {
       if (state.adjustOpen) { state.adjustOpen = false; render(); return true; }
+      if (showsLoupe() && zoom.isZoomed()) { zoom.fit(); return true; }
       if (state.selected.size) { state.selected.clear(); render(); return true; }
     }
     return false;
@@ -425,7 +450,7 @@ export function createCullView({ root = document, api, storage = globalThis.loca
   }
 
   function close() {
-    state.visible = false; section.hidden = true; persist();
+    state.visible = false; section.hidden = true; zoom.clear(); persist();
   }
 
   async function refresh() { if (state.visible && state.runId) await open(state.runId, { method: state.method }); }

@@ -12,7 +12,7 @@ import { createRunsRouter } from "./server/runs-routes.js";
 import { handleReviewRoute, decideUnits } from "./server/review-routes.js";
 import { json, parseBody } from "./server/http.js";
 import { createRulesRouter } from "./server/rules-routes.js";
-import { AI_TAGS } from './core/writeback.js';
+import { CLEARABLE_TAGS } from './core/writeback.js';
 
 export function createAnalysisServer({
   host = "127.0.0.1",
@@ -81,7 +81,7 @@ export function createAnalysisServer({
         for (const item of items) {
           scanned++;
           const tags = Array.isArray(item.tags) ? item.tags : [];
-          const next = tags.filter(tag => !AI_TAGS.has(tag));
+          const next = tags.filter(tag => !CLEARABLE_TAGS.has(tag));
           if (next.length === tags.length) continue;
           changed++;
           if (!body.dryRun) try { await api.updateItem({ id: item.id, tags: next }); }

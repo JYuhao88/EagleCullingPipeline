@@ -1,4 +1,4 @@
-#start { max-width: 1080px; margin: 0 auto; padding: 0 2px 16px; font-size: var(--ec-font-size); }
+#start { max-width: 90rem; margin: 0 auto; padding: 0 2px 16px; font-size: var(--ec-font-size); }
 #start [hidden] { display: none !important; }
 #start p { margin: 6px 0; color: var(--ec-text-dim); line-height: 1.5; }
 #start h2, #start h3 { font-size: var(--ec-font-size-title); margin: 12px 0 6px; }
@@ -20,17 +20,17 @@
 #health[data-state="starting"]::before { color: var(--ec-pick); }
 .home-bar button { margin: 0; white-space: nowrap; }
 
-.home-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px 20px; padding-top: 10px; }
+.home-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: .33rem 1.67rem; padding-top: .83rem; }
 @media (min-width: 760px) {
-  .home-layout { grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr); align-items: start; }
-  .home-tasks { border-left: 1px solid var(--ec-border); padding-left: 20px; }
+  .home-layout { grid-template-columns: minmax(0, 1.1fr) minmax(23rem, .9fr); align-items: start; }
+  .home-tasks { border-left: 1px solid var(--ec-border); padding-left: 1.67rem; }
 }
 
-.primary-card { padding: 14px; border: 1px solid var(--ec-border); border-radius: var(--ec-radius); background: var(--ec-surface); }
+.primary-card { padding: 1.17rem; border: 1px solid var(--ec-border); border-radius: var(--ec-radius); background: var(--ec-surface); }
 .primary-card[data-kind="service"] { border-color: var(--ec-reject); }
 .primary-card[data-kind="progress"], .primary-card[data-kind="task"] { border-color: var(--ec-accent); }
 .primary-card .eyebrow { margin: 0; font-size: var(--ec-font-size-small); letter-spacing: .02em; }
-#start .primary-card h2 { margin: 2px 0 6px; font-size: 15px; line-height: 1.35; overflow-wrap: anywhere; }
+#start .primary-card h2 { margin: 2px 0 6px; font-size: 1.25rem; line-height: 1.35; overflow-wrap: anywhere; }
 .chip { display: inline-block; margin: 0 0 4px; padding: 1px 7px; border-radius: 999px; background: var(--ec-surface-2);
   color: var(--ec-text-dim); font-size: var(--ec-font-size-small); white-space: nowrap; }
 .task-row[data-state="analyzing"] .chip, .primary-card[data-kind="progress"] .chip { color: var(--ec-accent); }
@@ -41,17 +41,17 @@
 .task-row[data-state="writtenBack"] .chip { color: var(--ec-ok); }
 
 #progress { margin: 8px 0; }
-#progress progress { width: 100%; height: 6px; accent-color: var(--ec-accent); }
+#progress progress { width: 100%; height: .5rem; accent-color: var(--ec-accent); }
 .stage-list { display: flex; flex-wrap: wrap; gap: 2px 10px; margin: 4px 0 0; padding: 0; list-style: none;
   font-size: var(--ec-font-size-small); color: var(--ec-text-dim); }
 .stage-list .complete { color: var(--ec-ok); }
 .stage-list .current { color: var(--ec-text); font-weight: 600; }
 
 .primary-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; }
-#start .primary { flex: 1 1 180px; margin: 0; min-height: 34px; background: var(--ec-accent); color: var(--ec-accent-text);
+#start .primary { flex: 1 1 15rem; margin: 0; min-height: 2.83rem; background: var(--ec-accent); color: var(--ec-accent-text);
   font-weight: 600; border: 0; border-radius: var(--ec-radius); }
 #secondaryActions { display: contents; }
-.primary-actions button:not(.primary) { margin: 0; min-height: 30px; }
+.primary-actions button:not(.primary) { margin: 0; min-height: 2.5rem; }
 #serviceGuide { margin-top: 8px; color: var(--ec-reject); font-size: var(--ec-font-size-small); display: flex; flex-wrap: wrap;
   gap: 6px; align-items: center; }
 #serviceGuide button { margin: 0; }
@@ -64,7 +64,7 @@
 .section-heading h2 { flex: 1; }
 .section-heading .inline { display: flex; gap: 4px; align-items: center; white-space: nowrap; font-size: var(--ec-font-size-small); }
 .task-list { display: flex; flex-direction: column; }
-.task-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: center; padding: 8px 4px;
+.task-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: center; padding: .67rem .33rem;
   border-bottom: 1px solid var(--ec-border); cursor: pointer; border-radius: 4px; }
 .task-row:hover { background: var(--ec-hover); }
 .task-body { min-width: 0; }
@@ -73,10 +73,10 @@
 .task-head .chip { margin: 0; flex: none; }
 #start .task-meta, #start .task-detail { margin: 1px 0 0; font-size: var(--ec-font-size-small); overflow: hidden;
   text-overflow: ellipsis; white-space: nowrap; }
-.task-row progress { width: 100%; height: 4px; accent-color: var(--ec-accent); }
+.task-row progress { width: 100%; height: .33rem; accent-color: var(--ec-accent); }
 .task-row button { margin: 0; white-space: nowrap; }
 
-#panelSettings, #historyView { max-width: 640px; margin: 0 auto; max-height: calc(100vh - 60px); overflow-y: auto; }
+#panelSettings, #historyView { max-width: 53rem; margin: 0 auto; max-height: calc(100vh - 60px); overflow-y: auto; }
 .settings-group { border: 1px solid var(--ec-border); border-radius: var(--ec-radius); margin: 10px 0; padding: 8px 12px; }
 .settings-group legend, .settings-group > summary { font-weight: 600; padding: 0 4px; }
 .settings-group label { display: block; margin: 6px 0; }

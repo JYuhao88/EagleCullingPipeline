@@ -279,8 +279,14 @@
       <div class="cull-body">
         <div class="cull-grid" data-cull-grid hidden></div>
         <div class="cull-loupe" data-cull-loupe hidden>
-          <div class="cull-stage"><img data-cull-image alt="" draggable="false">
-            <span data-cull-decision class="cull-badge large"></span></div>
+          <div class="cull-stage" data-cull-stage title="滚轮缩放 · 双击 / Z 切换 100% · 放大后拖动">
+            <img data-cull-image alt="" draggable="false">
+            <img data-cull-native class="cull-native" alt="" draggable="false" hidden>
+            <span data-cull-decision class="cull-badge large"></span>
+            <div class="cull-zoom" data-cull-zoombar><button type="button" data-cull="zoom-out" aria-label="缩小">−</button>
+              <button type="button" data-cull="zoom-fit" data-cull-zoom title="适应窗口（Esc）">适应</button>
+              <button type="button" data-cull="zoom-in" aria-label="放大">+</button>
+              <span data-cull-native-state></span></div></div>
           <p class="cull-info" data-cull-info></p>
           <div class="cull-strip" data-cull-strip></div>
         </div>
@@ -310,7 +316,7 @@
           <button type="button" data-decide="clear" class="quiet">恢复 AI 0</button></div>
         <div class="cull-tools"><button type="button" data-cull="prev" data-loupe-only aria-label="上一张">←</button>
           <button type="button" data-cull="next" data-loupe-only aria-label="下一张">→</button>
-          <button type="button" data-cull="full" data-loupe-only title="空格 / Z">看原图</button>
+          <button type="button" data-cull="full" data-loupe-only title="空格">全屏看</button>
           <button type="button" data-cull="adjust" data-loupe-only title="A">调整</button>
           <label class="cull-advance" data-loupe-only><input type="checkbox" data-cull-advance> 决定后下一张</label></div>
         <p class="cull-status" data-cull-status role="status"></p>

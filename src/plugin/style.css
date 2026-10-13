@@ -1,8 +1,9 @@
 :root { font-family: var(--ec-font); font-size: var(--ec-font-size); background: var(--ec-bg); color: var(--ec-text); }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--ec-bg); }
-main { width: 100%; margin: 0; padding: 12px; }
-input, select, button { margin: 3px; padding: 4px 8px; min-height: var(--ec-control-height); border: 1px solid var(--ec-border);
+main { width: 100%; margin: 0; padding: 1rem; }
+input, select, button { margin: 3px; padding: calc(4px * var(--ec-scale)) calc(8px * var(--ec-scale));
+  min-height: var(--ec-control-height); border: 1px solid var(--ec-border);
   border-radius: var(--ec-radius); background: var(--ec-surface); color: var(--ec-text); font: inherit; }
 button { cursor: pointer; }
 label { display: block; margin: 8px 0; }

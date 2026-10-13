@@ -5,9 +5,15 @@
   --ec-accent-text: #ffffff; --ec-pick: #f0b429; --ec-reject: #e5534b; --ec-ok: #3fb950;
   --ec-overlay: rgba(0, 0, 0, .55); --ec-image-bg: #141517;
   --ec-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --ec-font-size: 12px; --ec-font-size-small: 11px; --ec-font-size-title: 13px;
-  --ec-radius: 6px; --ec-control-height: 26px;
+  --ec-font-size: calc(12px * var(--ec-scale)); --ec-font-size-small: calc(11px * var(--ec-scale));
+  --ec-font-size-title: calc(13px * var(--ec-scale));
+  --ec-radius: calc(6px * var(--ec-scale)); --ec-control-height: calc(26px * var(--ec-scale));
 }
+/* 放大或最大化窗口时整体放大界面；1rem = --ec-font-size，布局尺寸用 rem 跟随。 */
+:root { --ec-scale: 1; }
+@media (min-width: 1360px) and (min-height: 820px) { :root { --ec-scale: 1.15; } }
+@media (min-width: 1760px) and (min-height: 980px) { :root { --ec-scale: 1.3; } }
+@media (min-width: 2360px) and (min-height: 1300px) { :root { --ec-scale: 1.6; } }
 :root[data-theme="GRAY"] {
   --ec-bg: #2c2d31; --ec-surface: #343539; --ec-surface-2: #3c3d42; --ec-hover: #45464c;
   --ec-border: #4a4b51; --ec-text: #ececee; --ec-text-dim: #a6a7ad; --ec-image-bg: #232427;

@@ -1,5 +1,6 @@
 import { ensureSmartFolders, LIVE_KEYS } from './live-writeback.js';
 import { KEY_ACTIONS, FLAG_LABELS, applyDecisionLocally, groupJump, matchesFilter, progress } from './cull-model.js';
+import { displayUrl } from './display-url.js';
 
 const ACTIONS = { selected: '精选', candidate: '候选', rejected: '淘汰' };
 const MODES = [['all', '全部'], ['undecided', '未决定'], ['uncertain', '没把握'], ['rejects', '建议淘汰'], ['issues', '有问题']];
@@ -56,7 +57,10 @@ export function createRemoteView({ root = document, api, eagle = globalThis.eagl
     decision.textContent = row?.human ? `你的决定：${ACTIONS[row.human]}` : row ? '还没决定' : '';
     decision.dataset.decision = row?.human || '';
     const image = el('remoteImage');
-    const src = row && runId ? `${api.base || ''}/runs/${runId}/preview/${encodeURIComponent(row.unitId)}` : '';
+    const dpr = globalThis.devicePixelRatio || 1;
+    const large = image.clientWidth * dpr > 600 || image.clientHeight * dpr > 600;
+    const src = !row || !runId ? '' : large ? displayUrl(api.base || '', runId, row.unitId, image.clientWidth, image.clientHeight, dpr)
+      : `${api.base || ''}/runs/${runId}/preview/${encodeURIComponent(row.unitId)}`;
     if (image.dataset.src !== src) { image.dataset.src = src; if (src) image.src = src; else image.removeAttribute('src'); }
     for (const button of root.querySelectorAll('#remote [data-remote-decide]')) {
       button.disabled = !row;
@@ -190,6 +194,11 @@ export function createRemoteView({ root = document, api, eagle = globalThis.eagl
       el('remoteTags').checked = false;
       status(`已清除 ${done.changed || 0} 个项目的 AI 标签${done.failed ? `，${done.failed} 个失败` : ''}。`, done.failed ? 'warn' : '');
     } catch (error) { status(`清除失败：${error.message}`, 'error'); }
+  });
+  let resizeTimer = null;
+  globalThis.addEventListener?.('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { if (visible && runId) render(); }, 150);
   });
   return { open, close, load, decide, move, key, isVisible: () => visible,
     state: () => ({ runId, items, rows, index, mode, follow, autoAdvance }) };
