@@ -7,10 +7,12 @@ function fakeDocument() {
   return { documentElement: { dataset: {}, style: {} }, body: { setAttribute: (key, value) => { attributes[key] = value; } }, attributes };
 }
 
-test('theme names normalize to Eagle themes with a dark or light fallback', () => {
+test('theme names normalize the way Eagle does: Auto is GRAY or LIGHT, anything unreadable is GRAY', () => {
   assert.equal(normalizeTheme('dark'), 'DARK');
   assert.equal(normalizeTheme('Auto', false), 'LIGHT');
-  assert.equal(normalizeTheme(undefined, true), 'DARK');
+  assert.equal(normalizeTheme('Auto', true), 'GRAY');
+  assert.equal(normalizeTheme(undefined, true), 'GRAY');
+  assert.equal(normalizeTheme('undefined', false), 'GRAY');
   assert.equal(isDarkTheme('LIGHTGRAY'), false);
   assert.equal(isDarkTheme('PURPLE'), true);
 });
@@ -31,4 +33,12 @@ test('initEagleTheme resolves Auto through isDarkColors and follows theme change
   assert.equal(await initEagleTheme({ eagle, doc }), 'LIGHT');
   listener('BLUE');
   assert.equal(doc.documentElement.dataset.theme, 'BLUE');
+});
+test('initEagleTheme falls back to the URL theme when Eagle reports its preference as "undefined"', async () => {
+  const doc = fakeDocument();
+  const eagle = { app: { theme: 'undefined', isDarkColors: async () => true } };
+  assert.equal(await initEagleTheme({ eagle, doc, search: '?id=A&theme=gray' }), 'GRAY');
+  assert.equal(await initEagleTheme({ eagle, doc, search: '' }), 'GRAY');
+  assert.equal(await initEagleTheme({ eagle: { app: { theme: 'Auto', isDarkColors: async () => true } }, doc }), 'GRAY');
+  assert.equal(await initEagleTheme({ eagle: { app: { theme: 'BLUE' } }, doc, search: '?theme=light' }), 'BLUE');
 });

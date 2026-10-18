@@ -8,17 +8,22 @@
     // Eagle loads a new document on every photo switch. Paint the theme background and keep the last height before
     // anything else, so the panel neither flashes white nor shrinks (which scrolls Eagle's right panel to the top).
     (() => {
-      const colors = { DARK: '#1e1f22', GRAY: '#2c2d31', BLUE: '#1b2230', PURPLE: '#221d2c', LIGHT: '#ffffff',
-        LIGHTGRAY: '#ececee' };
+      // Eagle's right panel color, then its window color (theme.css --ec-panel and --ec-bg).
+      const colors = { DARK: ['#1f2023', '#18191c'], GRAY: ['#3d3e42', '#37383c'], BLUE: ['#141d36', '#0d1630'],
+        PURPLE: ['#231b2a', '#1c1424'], LIGHT: ['#edeef0', '#f3f4f6'], LIGHTGRAY: ['#dedfe1', '#e3e4e6'] };
       const params = new URLSearchParams(location.search);
-      const theme = String(params.get('theme') || '').toUpperCase();
+      // Eagle's own rules: Auto follows the system, a theme it cannot read shows GRAY.
+      let theme = String(params.get('theme') || '').toUpperCase();
+      if (theme === 'AUTO') theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'GRAY' : 'LIGHT';
+      if (!colors[theme]) theme = 'GRAY';
+      globalThis.__earlyTheme = theme;
       // ?mode=wide: the same page in the main plugin window, which has no Eagle panel height to hold.
       const wide = params.get('mode') === 'wide';
       if (wide) document.documentElement.dataset.mode = 'wide';
       let height = 0;
       try { height = wide ? 0 : Number(localStorage.getItem('eagle-culling-inspector-height')) || 0; } catch { /* none */ }
       globalThis.__earlyTrace = `view=${innerHeight} hold=${Math.round(height)}`;
-      document.write(`<style id="earlyHold">html, body { background: ${colors[theme] || colors.DARK}; }
+      document.write(`<style id="earlyHold">html, body { background: ${colors[theme][wide ? 1 : 0]}; }
         body { box-sizing: border-box; min-height: ${Math.max(0, Math.round(height))}px; }</style>`);
     })();
   </script>
@@ -140,11 +145,9 @@
       const sig = [...section.querySelectorAll('[id]')].map(node => node.id).join(',');
       html.dataset.layout = sig;
       const params = new URLSearchParams(location.search);
-      const theme = String(params.get('theme') || '').toUpperCase();
-      if (['LIGHT', 'LIGHTGRAY', 'GRAY', 'DARK', 'BLUE', 'PURPLE'].includes(theme)) {
-        html.dataset.theme = theme; html.style.colorScheme = theme.startsWith('LIGHT') ? 'light' : 'dark';
-        document.body.setAttribute('theme', theme);
-      }
+      const theme = globalThis.__earlyTheme || 'GRAY';
+      html.dataset.theme = theme; html.style.colorScheme = theme.startsWith('LIGHT') ? 'light' : 'dark';
+      document.body.setAttribute('theme', theme);
       try {
         const snapshot = JSON.parse(localStorage.getItem('eagle-culling-inspector-snapshot') || 'null');
         if (!snapshot || params.get('mode') === 'wide' || snapshot.sig !== sig || !snapshot.ids.includes(params.get('id'))

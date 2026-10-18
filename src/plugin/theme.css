@@ -1,9 +1,10 @@
-/* Eagle 主题变量：界面颜色和字号只从这里取值，data-theme 由 theme.js 根据 eagle.app.theme 设置。 */
+/* Eagle 主题变量：界面颜色和字号只从这里取值，data-theme 由 theme.js 按 Eagle 的规则设置。颜色取自 Eagle 自身样式：
+   --ec-bg 是 Eagle 窗口底色，--ec-panel 是右栏底色（底色上叠 3% 文字色），其余按右栏底色叠加文字色算出。 */
 :root, :root[data-theme="DARK"] {
-  --ec-bg: #1e1f22; --ec-surface: #26272b; --ec-surface-2: #2f3035; --ec-hover: #37383e;
-  --ec-border: #3a3b41; --ec-text: #e8e8ea; --ec-text-dim: #9d9ea4; --ec-accent: #3d8bfd;
+  --ec-bg: #18191c; --ec-panel: #1f2023; --ec-surface: #2a2b2e; --ec-surface-2: #303134; --ec-hover: #393a3d;
+  --ec-border: #353639; --ec-text: #f8f9fb; --ec-text-dim: #b7b8ba; --ec-accent: #3297ff;
   --ec-accent-text: #ffffff; --ec-pick: #f0b429; --ec-reject: #e5534b; --ec-ok: #3fb950;
-  --ec-overlay: rgba(0, 0, 0, .55); --ec-image-bg: #141517;
+  --ec-overlay: rgba(0, 0, 0, .55); --ec-image-bg: #121315;
   --ec-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
   --ec-font-size: calc(12px * var(--ec-scale)); --ec-font-size-small: calc(11px * var(--ec-scale));
   --ec-font-size-title: calc(13px * var(--ec-scale));
@@ -15,24 +16,24 @@
 @media (min-width: 1760px) and (min-height: 980px) { :root { --ec-scale: 1.3; } }
 @media (min-width: 2360px) and (min-height: 1300px) { :root { --ec-scale: 1.6; } }
 :root[data-theme="GRAY"] {
-  --ec-bg: #2c2d31; --ec-surface: #343539; --ec-surface-2: #3c3d42; --ec-hover: #45464c;
-  --ec-border: #4a4b51; --ec-text: #ececee; --ec-text-dim: #a6a7ad; --ec-image-bg: #232427;
+  --ec-bg: #37383c; --ec-panel: #3d3e42; --ec-surface: #46474b; --ec-surface-2: #4c4d51; --ec-hover: #535458;
+  --ec-border: #505155; --ec-text: #f8f9fb; --ec-text-dim: #c0c1c4; --ec-image-bg: #292a2d;
 }
 :root[data-theme="BLUE"] {
-  --ec-bg: #1b2230; --ec-surface: #222a3a; --ec-surface-2: #2a3345; --ec-hover: #323c50;
-  --ec-border: #374257; --ec-text: #e6eaf2; --ec-text-dim: #98a2b6; --ec-image-bg: #141a25;
+  --ec-bg: #0d1630; --ec-panel: #141d36; --ec-surface: #1f2840; --ec-surface-2: #262f46; --ec-hover: #2f374e;
+  --ec-border: #2c344a; --ec-text: #f8f9fb; --ec-text-dim: #b4b7c0; --ec-image-bg: #0a1024;
 }
 :root[data-theme="PURPLE"] {
-  --ec-bg: #221d2c; --ec-surface: #2a2436; --ec-surface-2: #332c41; --ec-hover: #3c344c;
-  --ec-border: #443b55; --ec-text: #ece8f2; --ec-text-dim: #a69cb6; --ec-image-bg: #1a1622;
+  --ec-bg: #1c1424; --ec-panel: #231b2a; --ec-surface: #2e2634; --ec-surface-2: #342d3b; --ec-hover: #3d3643;
+  --ec-border: #39323f; --ec-text: #f8f9fb; --ec-text-dim: #b8b6bc; --ec-image-bg: #150f1b;
 }
 :root[data-theme="LIGHT"] {
-  --ec-bg: #ffffff; --ec-surface: #f5f5f7; --ec-surface-2: #ebebee; --ec-hover: #e2e2e6;
-  --ec-border: #d9d9de; --ec-text: #1f1f23; --ec-text-dim: #6e6e76; --ec-accent: #2f7cf6;
-  --ec-overlay: rgba(255, 255, 255, .7); --ec-image-bg: #f0f0f2;
+  --ec-bg: #f3f4f6; --ec-panel: #edeef0; --ec-surface: #e3e4e6; --ec-surface-2: #dedfe1; --ec-hover: #d6d7d9;
+  --ec-border: #c9cacc; --ec-text: #2c2f32; --ec-text-dim: #66686b; --ec-accent: #0072ef;
+  --ec-overlay: rgba(255, 255, 255, .7); --ec-image-bg: #e3e4e6;
 }
 :root[data-theme="LIGHTGRAY"] {
-  --ec-bg: #ececee; --ec-surface: #e3e3e6; --ec-surface-2: #d9d9dd; --ec-hover: #d0d0d5;
-  --ec-border: #c8c8ce; --ec-text: #1f1f23; --ec-text-dim: #66666e; --ec-accent: #2f7cf6;
-  --ec-overlay: rgba(236, 236, 238, .7); --ec-image-bg: #e0e0e3;
+  --ec-bg: #e3e4e6; --ec-panel: #dedfe1; --ec-surface: #d5d6d8; --ec-surface-2: #d0d1d3; --ec-hover: #c9cacc;
+  --ec-border: #bdbebf; --ec-text: #2c2f32; --ec-text-dim: #616467; --ec-accent: #0072ef;
+  --ec-overlay: rgba(227, 228, 230, .7); --ec-image-bg: #d5d6d8;
 }

@@ -1,4 +1,6 @@
 :root { font-family: var(--ec-font); font-size: var(--ec-font-size-small); color: var(--ec-text); background: var(--ec-bg); }
+/* In Eagle's right panel the page sits on the panel color; the wide page sits on the window color. */
+:root:not([data-mode="wide"]) { --ec-bg: var(--ec-panel); }
 body { margin: 0; padding: 8px 10px; }
 #status { display: inline-block; padding: 3px 6px; border-radius: var(--ec-radius); background: var(--ec-surface-2); font-size:
   var(--ec-font-size); }
