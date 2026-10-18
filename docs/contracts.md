@@ -96,6 +96,7 @@ Group 可新增 `candidateSet`，不改变旧 `ranking`、`suggested` 字段：
 | GET | /runs/:id/results | `{run, units: CaptureUnit[], results: UnitResult[], groups: Group[], items: Item[], groupOverrides, writebackAvailable: boolean}` | 分析 |
 | GET | /runs/:id/preview/:unitId | 返回代理图（image/jpeg） | 分析 |
 | GET | /runs/:id/detail/:unitId | 按需生成并缓存长边 2048 的 JPEG 细节图（image/jpeg） | 分析 |
+| GET | /runs/:id/focus-points/:unitId | `{source, areas: [{box, kind, inFocus}], width, height}`：相机记录的对焦位置（索尼对焦框、理光/宾得对焦区域），box 为摆正后图像的 0–1 坐标；没有记录时 `areas` 为空。只供显示，不进入分析 | 分析 |
 | GET | /runs/:id/face/:unitId/:faceIndex | 按需裁剪指定人脸，长边不超过 320 的 JPEG（image/jpeg） | 分析 |
 | GET/POST | /runs/:id/decisions | 读取或批量写入 Decision（持久化到 `data/runs/<id>/decisions.json`） | 审阅 |
 | GET/PUT | /runs/:id/adjustments[/:unitId] | 检查器的查看调节，按照片存到 `data/runs/<id>/adjustments.json`；PUT `{}` 清除，全部清除时删除文件；只影响显示 | 审阅 |

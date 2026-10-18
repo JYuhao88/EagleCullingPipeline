@@ -69,9 +69,13 @@
       缩略图标出人脸（红框是闭眼）和人体姿态<span id="marksHint" class="hint"></span></label>
     <details id="detailView" class="fold detail" hidden>
       <summary>细节与调节<span id="detailAdjusted" class="adjusted-badge" hidden>已调整</span></summary>
-      <div id="detailFrame" class="detail-frame" title="点图片换放大位置"><img id="detailImage" alt="当前照片局部"></div>
-      <div class="detail-zoom"><button data-detail-zoom="1">适应</button><button data-detail-zoom="2">2×</button>
-        <button data-detail-zoom="4">4×</button></div>
+      <div id="detailFrame" class="detail-frame" title="滚轮或双指缩放，拖动平移，双击在适应和 100% 之间切换">
+        <img id="detailImage" alt="当前照片局部"><canvas id="detailPeaking" class="detail-peaking" hidden></canvas>
+        <div id="detailMarks" class="detail-marks" hidden></div>
+        <button id="detailZoomLabel" class="zoom-label" title="回到适应">适应</button></div>
+      <div class="detail-tools"><button id="detailMarksOn" aria-pressed="true" title="相机记录的对焦位置，实线框是合焦的区域">对焦框</button>
+        <button id="detailPeakingOn" aria-pressed="false" title="把当前看到的清晰边缘标红">合焦高亮</button>
+        <span id="detailFocusNote" class="hint"></span></div>
       <div class="adjust-list">
         <label class="adjust-row" title="双击复位"><span>曝光</span>
           <input type="range" data-adjust="exposure" min="-3" max="3" step="0.1" value="0">
@@ -103,7 +107,7 @@
       </div>
       <div class="detail-actions"><button id="detailAuto" title="按当前看到的区域测光，只改曝光">自动曝光</button>
         <button id="detailCopy" hidden>沿用上一张</button><button id="detailReset">复位</button></div>
-      <p id="detailHint" class="hint">同时作用于对比照片；按照片保存在分析记录里，不改原图、星级和评分。</p>
+      <p id="detailHint" class="hint">调节同时作用于对比照片，按照片保存在分析记录里，不改原图、星级和评分。</p>
     </details>
     </div>
     <table id="compareTable" class="compare" aria-label="本组逐项对比，点一行在 Eagle 中选中" hidden></table>

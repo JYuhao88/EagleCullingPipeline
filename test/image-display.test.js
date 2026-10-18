@@ -98,3 +98,21 @@ test('display route returns a capped image and deduplicates concurrent requests'
     const meta = await sharp(a.body).metadata(); assert.deepEqual([meta.width, meta.height], [3000, 1500]);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
+
+test('focus-points route answers the photo size, empty areas without camera data, and 404 for an unknown unit', async () => {
+  const dir = await mkdtemp(path.join(os.tmpdir(), 'focus-route-'));
+  try {
+    const source = path.join(dir, 'plain.jpg');
+    await sharp({ create: { width: 300, height: 200, channels: 3, background: 'grey' } }).jpeg().toFile(source);
+    const state = { run: { id: 'run1', status: 'completed' }, units: [{ id: 'u1', primaryItemId: 'i1', itemIds: ['i1'] }],
+      items: [{ id: 'i1', filePath: source, ext: 'jpg', width: 300, height: 200 }], results: [] };
+    const router = createRunsRouter({ store: { root: dir, dir: () => dir, unitData: async () => state } });
+    const call = async unit => {
+      const res = { writeHead(status) { this.status = status; }, end(body) { this.body = body; }, setHeader() {} };
+      await router({ method: 'GET' }, res, new URL(`http://localhost/runs/run1/focus-points/${unit}`));
+      return { status: res.status, body: JSON.parse(res.body) };
+    };
+    assert.deepEqual(await call('u1'), { status: 200, body: { source: null, areas: [], width: 300, height: 200 } });
+    assert.equal((await call('missing')).status, 404);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});

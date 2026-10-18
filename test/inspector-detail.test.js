@@ -2,8 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { adjustmentTables, toLinear, toSrgb, toneCurve, whiteBalanceGains } from '../src/plugin/adjust.js';
 import { validateAdjustments } from '../src/server/adjustments-routes.js';
-import { adjustmentLabel, autoExposure, clampExposure, createDetailView, exposureLabel, filterMarkup, focusPoint, fromSlider,
-  luminance, placement, readDetailState, sliderValue } from '../src/plugin/inspector/inspector-detail.js';
+import { adjustmentLabel, autoExposure, clampExposure, createDetailView, exposureLabel, filterMarkup, focusAreaCentre, focusPoint,
+  fromSlider, fullSizeZoom, luminance, peakingMask, placement, readDetailState, settle, sliderValue, zoomAround, zoomLabel }
+  from '../src/plugin/inspector/inspector-detail.js';
+import { orient, parseFocusPoints, readFocusPoints } from '../src/core/focus-points.js';
 
 test('exposure is clamped to ±3 EV in tenth stops; sliders show EV and −100…+100', () => {
   assert.equal(clampExposure(4), 3); assert.equal(clampExposure(-9), -3); assert.equal(clampExposure('x'), 0);
@@ -105,8 +107,63 @@ test('placement fits at zoom 1 and centres the focus when zoomed, never showing 
 
 test('stored state falls back to safe defaults', () => {
   const storage = value => ({ getItem: () => value });
-  assert.deepEqual(readDetailState(storage('{"ev":9,"zoom":3,"open":true}')), { zoom: 2, open: true });
-  assert.deepEqual(readDetailState(storage('nope')), { zoom: 2, open: false });
+  assert.deepEqual(readDetailState(storage('{"ev":9,"zoom":3.5,"open":true,"peaking":true}')),
+    { zoom: 3.5, open: true, marks: true, peaking: true });
+  assert.deepEqual(readDetailState(storage('{"zoom":99,"marks":false}')), { zoom: 2, open: false, marks: false, peaking: false });
+  assert.deepEqual(readDetailState(storage('nope')), { zoom: 2, open: false, marks: true, peaking: false });
+});
+
+test('wheel zoom keeps the point under the cursor still, and panning stops at the image edges', () => {
+  const view = { frameWidth: 300, frameHeight: 300, imageWidth: 3000, imageHeight: 2000, zoom: 2, focus: [0.4, 0.5] };
+  const under = (v, [px, py]) => { const at = placement(v); return [(px - at.x) / at.width, (py - at.y) / at.height]; };
+  for (const point of [[60, 90], [150, 150], [290, 10]]) {
+    const focus = zoomAround(view, 5, point), before = under(view, point), after = under({ ...view, zoom: 5, focus }, point);
+    assert.ok(Math.abs(before[0] - after[0]) < 1e-9 && Math.abs(before[1] - after[1]) < 1e-9, String(point));
+  }
+  assert.deepEqual(settle(view, [-3, 9]).map(v => +v.toFixed(4)), [0.25, 0.625], 'clamped where the edges stop it');
+  assert.deepEqual(settle({ ...view, zoom: 1 }, [0.9, 0.1]), [0.5, 0.5]);
+});
+
+test('100 % is one photo pixel per device pixel, and the label reads 适应 / percent', () => {
+  const geometry = { frameWidth: 300, frameHeight: 300, imageWidth: 3000, imageHeight: 2000 };
+  assert.equal(fullSizeZoom({ ...geometry, sourceLongEdge: 6000, dpr: 2 }), 10);
+  assert.equal(fullSizeZoom({ ...geometry, sourceLongEdge: 0 }), null);
+  assert.equal(fullSizeZoom({ ...geometry, sourceLongEdge: 200 }), 1, 'never below the fitted view');
+  assert.equal(zoomLabel(1, 10), '适应'); assert.equal(zoomLabel(5, 10), '50%'); assert.equal(zoomLabel(2.5, null), '2.5×');
+});
+
+test('focus areas centre on the in-focus one', () => {
+  assert.deepEqual(focusAreaCentre([{ box: [0, 0, 0.2, 0.2] }, { box: [0.4, 0.4, 0.6, 0.8], inFocus: true }]).map(v => +v.toFixed(3)),
+    [0.5, 0.6]);
+  assert.equal(focusAreaCentre([]), null);
+});
+
+test('peaking marks a hard edge and ignores a smooth gradient', () => {
+  const width = 8, height = 8, rgba = fill => Uint8ClampedArray.from({ length: width * height * 4 }, (_, i) => {
+    const pixel = i >> 2, x = pixel % width; return i % 4 === 3 ? 255 : fill(x);
+  });
+  const edge = peakingMask(rgba(x => x < 4 ? 20 : 230), width, height);
+  assert.equal(edge[3 * width + 3], 1); assert.equal(edge[3 * width + 1], 0);
+  assert.ok(peakingMask(rgba(x => x * 12), width, height).every(v => v === 0));
+});
+
+test('camera focus points: Sony frame, Ricoh areas with their in-focus flag, all turned upright', () => {
+  const sony = parseFocusPoints({ Orientation: 1, FocusLocation: '7008 4672 4270 2287', FocusFrameSize: '745 594 257' });
+  assert.equal(sony.source, 'sony');
+  assert.deepEqual(sony.areas, [{ box: [0.5562, 0.4259, 0.6625, 0.5531], kind: 'frame', inFocus: true }]);
+  const point = parseFocusPoints({ FocusLocation: '7008 4672 3504 2336', FocusFrameSize: '0 0 0' }).areas[0];
+  assert.equal(point.kind, 'point'); assert.ok(point.box[0] < 0.5 && point.box[2] > 0.5);
+  const ricoh = parseFocusPoints({ Orientation: 6, AFAreas: '720 480 360 240 112 72 15 720 480 248 240 112 72 7' });
+  assert.equal(ricoh.source, 'pentax');
+  assert.deepEqual(ricoh.areas.map(area => area.inFocus), [true, false]);
+  assert.deepEqual(ricoh.areas[0].box, [0.425, 0.4222, 0.575, 0.5778], 'the centre area stays centred after rotation');
+  assert.deepEqual(parseFocusPoints({ Orientation: 1 }), { source: null, areas: [] }, 'cameras without focus data');
+  assert.deepEqual(parseFocusPoints({ AFAreas: '720 480 900 240 112 72 15' }).areas, [], 'areas off the grid are dropped');
+  assert.deepEqual(orient([0.1, 0.2], 6), [0.8, 0.1]); assert.deepEqual(orient([0.1, 0.2], 8), [0.2, 0.9]);
+});
+
+test('reading focus points without a file answers empty', async () => {
+  assert.deepEqual(await readFocusPoints(''), { source: null, areas: [] });
 });
 
 function detailDom() {

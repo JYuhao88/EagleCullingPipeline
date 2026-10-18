@@ -172,7 +172,7 @@ if(initial.has('h'))frame.style.height=initial.get('h')+'px';</script>`); return
       return json(res, 200, { runs: rows.slice(cursor, cursor + 4), page: { nextCursor: cursor + 4 < rows.length ? String(cursor +
         4) : null } });
     }
-    const queueMatch = url.pathname.match(/^\/runs\/[^/]+\/(queue|adjustments|preview|detail|display)(?:\/([^/]+))?$/);
+    const queueMatch = url.pathname.match(/^\/runs\/[^/]+\/(queue|adjustments|preview|detail|display|focus-points)(?:\/([^/]+))?$/);
     if (queueMatch?.[1] === 'queue') return json(res, 200, { mode: 'all', queue: queueRows, items: queueRows,
       order: queueRows.map(row => row.unitId), counts: {}, total: queueRows.length });
     if (queueMatch?.[1] === 'adjustments') {
@@ -182,6 +182,13 @@ if(initial.has('h'))frame.style.height=initial.get('h')+'px';</script>`); return
         adjustments[id] = JSON.parse(body || '{}'); return json(res, 200, adjustments[id]);
       }
       return json(res, 200, id ? adjustments[id] || {} : adjustments);
+    }
+    if (queueMatch?.[1] === 'focus-points') return json(res, 200, queueMatch[2]?.endsWith('6')
+      ? { source: 'sony', width: 7008, height: 4672, areas: [{ box: [0.5562, 0.4259, 0.6625, 0.5531], kind: 'frame', inFocus: true }] }
+      : { source: null, width: 6000, height: 4000, areas: [] });
+    if (queueMatch?.[1] === 'display' && process.env.ECP_FIXTURE_PHOTO) {
+      res.writeHead(200, { 'content-type': 'image/jpeg', 'access-control-allow-origin': '*' });
+      res.end(await readFile(process.env.ECP_FIXTURE_PHOTO)); return;
     }
     if (queueMatch && ["preview", "detail", "display"].includes(queueMatch[1])) {
       res.writeHead(200, { 'content-type': 'image/svg+xml', 'access-control-allow-origin': '*' });

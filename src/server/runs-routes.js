@@ -18,6 +18,7 @@ import { readMid } from '../core/native-mid.js';
 import { withNativeImage } from '../core/native-image.js';
 import { isRaw, isHeif } from '../core/image-formats.js';
 import { snapDisplayEdge } from '../core/display.js';
+import { readFocusPoints } from '../core/focus-points.js';
 import { touchCache } from '../core/cache-budget.js';
 export { snapDisplayEdge } from '../core/display.js';
 
@@ -523,6 +524,15 @@ export function createRunsRouter({
         }
         res.writeHead(200, headers); res.end(image); return true;
       } catch { return json(res, 404, { error: 'display not found' }); }
+    }
+    if (req.method === 'GET' && sub?.startsWith('focus-points/')) {
+      const unitId = decodeUnitId(sub.slice('focus-points/'.length));
+      const state = unitId && (store.unitData ? await store.unitData(id, unitId) : await store.get(id));
+      const { primary } = state ? unitRecord(state, unitId) : {};
+      if (!primary) return json(res, 404, { error: 'unit not found' });
+      const size = { width: Number(primary.width) || null, height: Number(primary.height) || null };
+      try { return json(res, 200, { ...await readFocusPoints(primary.filePath || primary.path), ...size }); }
+      catch { return json(res, 200, { source: null, areas: [], ...size }); }
     }
     if (req.method === "GET" && sub?.startsWith("face/")) {
       const faceMatch = sub.match(/^face\/([^/]+)\/(0|[1-9]\d*)$/);
