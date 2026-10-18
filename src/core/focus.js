@@ -192,16 +192,20 @@ export async function analyzeFocus({ nativePath, nativeBuffer, proxySize, faces 
 }
 
 /** One upright decode, with the existing q96 round trip reproduced on aligned DCT blocks only. */
-export async function analyzeFocusFromNativeImage({ image, source, ...options }) {
+export async function analyzeFocusFromNativeImage({ image, source, onNativePixels, ...options }) {
   const nativeSize = { width: source.width, height: source.height, orientation: source.orientation,
     rawWidth: source.rawWidth, rawHeight: source.rawHeight };
   const metadata = await image().metadata();
   // Keep legacy colour/depth handling for sources outside the verified RGB JPEG path.
   if (metadata.format !== 'jpeg' || metadata.depth !== 'uchar' || metadata.channels !== 3 || !blockIndependentJpegDefaults()) {
     const nativeBuffer = await image().jpeg({ quality: 96, chromaSubsampling: '4:4:4' }).toBuffer();
-    return analyzeFocus({ ...options, nativeBuffer, nativeSize });
+    const result = await analyzeFocus({ ...options, nativeBuffer, nativeSize });
+    if (onNativePixels) await onNativePixels(() => sharp(nativeBuffer), source);
+    return result;
   }
   const pixels = await image().removeAlpha().toColourspace('srgb').raw().toBuffer({ resolveWithObject: true });
   // The closure and its frame buffer live only until this single native callback returns.
-  return analyzeFocus({ ...options, nativeSize, nativeRoi: crop => alignedFocusJpegRoi(pixels, nativeSize, crop) });
+  const result = await analyzeFocus({ ...options, nativeSize, nativeRoi: crop => alignedFocusJpegRoi(pixels, nativeSize, crop) });
+  if (onNativePixels) await onNativePixels(() => sharp(pixels.data, { raw: pixels.info }), source);
+  return result;
 }

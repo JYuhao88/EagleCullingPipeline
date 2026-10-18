@@ -29,6 +29,7 @@ export class EagleApi {
     this.apiVersion = apiVersion === "auto" ? null : apiVersion;
     this.rootUrl = this.baseUrl.replace(/\/api(?:\/v2)?$/, "");
     this.expectedLibraryPath = expectedLibraryPath;
+    this.endpointVersions = new Map();
     if (this.apiVersion)
       this.baseUrl = `${this.rootUrl}/api${this.apiVersion === 2 ? "/v2" : ""}`;
   }
@@ -69,18 +70,34 @@ export class EagleApi {
     await this.detect();
     if (this.expectedLibraryPath && path !== "library/info")
       await this.assertLibrary();
-    const data = await this.request("GET", path, params);
+    const data = await this.endpointRequest("GET", path, params);
     return data;
   }
 
   async post(path, body = {}) {
     await this.detect();
     if (this.expectedLibraryPath) await this.assertLibrary();
-    return this.request("POST", path, body);
+    return this.endpointRequest("POST", path, body);
   }
 
-  async request(method, path, values = {}) {
-    const url = new URL(`${this.baseUrl}/${path.replace(/^\//, "")}`);
+  async endpointRequest(method, path, values) {
+    const version = this.endpointVersions.get(path) || this.apiVersion;
+    try {
+      return await this.request(method, path, values, version);
+    } catch (error) {
+      // These mixed-version Eagle builds reject unsupported endpoints before
+      // applying mutations. An explicit 404 is the only safe write retry.
+      if (version !== 2 || error.status !== 404 || !["item/info", "item/update"].includes(path)) throw error;
+      this.endpointVersions.set(path, 1);
+      return this.request(method, path, values, 1);
+    }
+  }
+
+  async request(method, path, values = {}, version = this.apiVersion) {
+    const baseUrl = version ? `${this.rootUrl}/api${version === 2 ? "/v2" : ""}` : this.baseUrl;
+    const url = new URL(`${baseUrl}/${path.replace(/^\//, "")}`);
+    // V1 ignores numeric zero when clearing ratings.
+    if (version === 1 && path === "item/update" && values.star === 0) values = { ...values, star: "0" };
     if (method === "GET")
       for (const [key, value] of Object.entries(values)) {
         if (value !== undefined && value !== null)
@@ -115,6 +132,7 @@ export class EagleApi {
           (typeof payload.data === "string"
             ? payload.data
             : "Eagle returned an error"),
+        Number(payload.code) === 404 ? 404 : undefined,
       );
     return payload.data;
   }

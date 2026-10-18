@@ -1,0 +1,1389 @@
+{
+  "schemaVersion": 1,
+  "completedReports": 8,
+  "pendingReports": 0,
+  "runtimeEligibleCount": 0,
+  "measurement": "Frozen calibration-selected thresholds. Precision, Wilson lower bound, coverage and recall use exact reference counts.",
+  "gates": "Original rounded gate comparisons retained; ECE <=0.05, CelebA within 0.05, launch P>=0.90 (gaze 0.95), Wilson lower>=0.85, statements>=140.",
+  "descriptiveFrontier": "Reference-selected empirical envelope at baseline precision, thresholds >=0.5 with grouped ties; never a deployment threshold.",
+  "referencePopulation": {
+    "smile": {
+      "rows": 647,
+      "positives": 288
+    },
+    "mouth": {
+      "rows": 668,
+      "positives": 352
+    },
+    "gaze": {
+      "rows": 631,
+      "positives": 302
+    }
+  },
+  "baseline": {
+    "encoder": {
+      "id": "clip-b32-q",
+      "dimensions": 512,
+      "modelSha256": "583fd1110a514667812fee7d684952aaf82a99b959760c8d7dca7e0ab9839299"
+    },
+    "attributes": {
+      "smile": {
+        "threshold": 0.83,
+        "hits": 232,
+        "statements": 239,
+        "rows": 647,
+        "positives": 288,
+        "coverage": 0.3693972179289026,
+        "precision": 0.9707112970711297,
+        "precisionLow": 0.9407881420437684,
+        "recall": 0.8055555555555556,
+        "ece": 0.0343,
+        "gates": {
+          "ece": true,
+          "celebaWithin5": true,
+          "launch": true
+        },
+        "passed": true,
+        "descriptiveEqualPrecision": {
+          "threshold": 0.819446818404136,
+          "hits": 235,
+          "statements": 242,
+          "rows": 647,
+          "positives": 288,
+          "coverage": 0.3740340030911901,
+          "precision": 0.9710743801652892,
+          "precisionLow": 0.941507065340911,
+          "recall": 0.8159722222222222
+        },
+        "celeba": {
+          "studentPrecision": 0.849,
+          "teacherPrecision": 0.852
+        },
+        "origin": "published head on cached Node features; frozen linear reevaluation"
+      },
+      "mouth": {
+        "threshold": 0.73,
+        "hits": 221,
+        "statements": 234,
+        "rows": 668,
+        "positives": 352,
+        "coverage": 0.3502994011976048,
+        "precision": 0.9444444444444444,
+        "precisionLow": 0.9072823083797431,
+        "recall": 0.6278409090909091,
+        "ece": 0.049,
+        "gates": {
+          "ece": true,
+          "celebaWithin5": true,
+          "launch": true
+        },
+        "passed": true,
+        "descriptiveEqualPrecision": {
+          "threshold": 0.7158978681823774,
+          "hits": 225,
+          "statements": 238,
+          "rows": 668,
+          "positives": 352,
+          "coverage": 0.3562874251497006,
+          "precision": 0.9453781512605042,
+          "precisionLow": 0.9088023203717762,
+          "recall": 0.6392045454545454
+        },
+        "celeba": {
+          "studentPrecision": 0.915,
+          "teacherPrecision": 0.895
+        },
+        "origin": "published head on cached Node features; frozen linear reevaluation"
+      },
+      "gaze": {
+        "threshold": 0.98,
+        "hits": 77,
+        "statements": 81,
+        "rows": 631,
+        "positives": 302,
+        "coverage": 0.12836767036450078,
+        "precision": 0.9506172839506173,
+        "precisionLow": 0.8797959524607503,
+        "recall": 0.25496688741721857,
+        "ece": 0.0347,
+        "gates": {
+          "ece": true,
+          "launch": false
+        },
+        "passed": false,
+        "descriptiveEqualPrecision": null,
+        "origin": "historical frozen point; non-shipping gaze weights were not retained"
+      }
+    }
+  },
+  "candidates": [
+    {
+      "encoder": "siglip2-base",
+      "precision": "fp32",
+      "dimensions": 768,
+      "modelSha256": "6e5ea270038bba2780aa1f3355ddebdc4ec8cd8dee1bb29ea3035323bab20f24",
+      "repo": "google/siglip2-base-patch16-224",
+      "revision": "75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2",
+      "license": "Apache-2.0",
+      "status": "completed",
+      "validated": true,
+      "eligibleForRuntimeCheck": false,
+      "retainsSmileAndMouthGates": true,
+      "coverageWins": [],
+      "extraGazePasses": false,
+      "attributes": {
+        "smile": {
+          "threshold": 0.81,
+          "passed": true,
+          "gates": {
+            "ece": true,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [],
+          "frozen": {
+            "hits": 221,
+            "statements": 222,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.34312210200927357,
+            "precision": 0.9954954954954955,
+            "precisionLow": 0.9749296615810499,
+            "recall": 0.7673611111111112
+          },
+          "ece": 0.0285,
+          "eceCalibration": 0.0243,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.5514330956974177,
+            "hits": 248,
+            "statements": 255,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.3941267387944359,
+            "precision": 0.9725490196078431,
+            "precisionLow": 0.9444307740081557,
+            "recall": 0.8611111111111112
+          },
+          "targetBaselinePrecision": 0.9707112970711297,
+          "failedGateReasons": {},
+          "celeba": {
+            "studentPrecision": 0.876,
+            "teacherPrecision": 0.852,
+            "minimumStudentPrecision": 0.802,
+            "studentStatements": 194
+          }
+        },
+        "mouth": {
+          "threshold": 0.68,
+          "passed": true,
+          "gates": {
+            "ece": true,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [],
+          "frozen": {
+            "hits": 247,
+            "statements": 270,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.4041916167664671,
+            "precision": 0.9148148148148149,
+            "precisionLow": 0.8754234081718315,
+            "recall": 0.7017045454545454
+          },
+          "ece": 0.0429,
+          "eceCalibration": 0.0357,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.7268226304671994,
+            "hits": 235,
+            "statements": 248,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.3712574850299401,
+            "precision": 0.9475806451612904,
+            "precisionLow": 0.9123929600266772,
+            "recall": 0.6676136363636364
+          },
+          "targetBaselinePrecision": 0.9444444444444444,
+          "failedGateReasons": {},
+          "celeba": {
+            "studentPrecision": 0.905,
+            "teacherPrecision": 0.895,
+            "minimumStudentPrecision": 0.845,
+            "studentStatements": 147
+          }
+        },
+        "gaze": {
+          "threshold": 0.97,
+          "passed": false,
+          "gates": {
+            "ece": true,
+            "launch": false
+          },
+          "failedGates": [
+            "launch"
+          ],
+          "frozen": {
+            "hits": 83,
+            "statements": 89,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.1410459587955626,
+            "precision": 0.9325842696629213,
+            "precisionLow": 0.8606305520179829,
+            "recall": 0.27483443708609273
+          },
+          "ece": 0.0289,
+          "eceCalibration": 0.0242,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.976758504415368,
+            "hits": 61,
+            "statements": 64,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.10142630744849446,
+            "precision": 0.953125,
+            "precisionLow": 0.8710013921145747,
+            "recall": 0.20198675496688742
+          },
+          "targetBaselinePrecision": 0.9506172839506173,
+          "failedGateReasons": {
+            "launch": [
+              {
+                "metric": "precision",
+                "observed": 0.933,
+                "minimum": 0.95
+              },
+              {
+                "metric": "statements",
+                "observed": 89,
+                "minimum": 140
+              }
+            ]
+          },
+          "celeba": null
+        }
+      }
+    },
+    {
+      "encoder": "siglip2-base",
+      "precision": "fp16",
+      "dimensions": 768,
+      "modelSha256": "2b3688458b85b6e33ba3d61ff9b36ac028cc482c8e9988899232f6e259f89ed6",
+      "repo": "google/siglip2-base-patch16-224",
+      "revision": "75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2",
+      "license": "Apache-2.0",
+      "status": "completed",
+      "validated": true,
+      "eligibleForRuntimeCheck": false,
+      "retainsSmileAndMouthGates": true,
+      "coverageWins": [],
+      "extraGazePasses": false,
+      "attributes": {
+        "smile": {
+          "threshold": 0.81,
+          "passed": true,
+          "gates": {
+            "ece": true,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [],
+          "frozen": {
+            "hits": 221,
+            "statements": 222,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.34312210200927357,
+            "precision": 0.9954954954954955,
+            "precisionLow": 0.9749296615810499,
+            "recall": 0.7673611111111112
+          },
+          "ece": 0.0304,
+          "eceCalibration": 0.0244,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.5455475765782315,
+            "hits": 248,
+            "statements": 255,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.3941267387944359,
+            "precision": 0.9725490196078431,
+            "precisionLow": 0.9444307740081557,
+            "recall": 0.8611111111111112
+          },
+          "targetBaselinePrecision": 0.9707112970711297,
+          "failedGateReasons": {},
+          "celeba": {
+            "studentPrecision": 0.876,
+            "teacherPrecision": 0.852,
+            "minimumStudentPrecision": 0.802,
+            "studentStatements": 194
+          }
+        },
+        "mouth": {
+          "threshold": 0.68,
+          "passed": true,
+          "gates": {
+            "ece": true,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [],
+          "frozen": {
+            "hits": 246,
+            "statements": 267,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.3997005988023952,
+            "precision": 0.9213483146067416,
+            "precisionLow": 0.8827596001454395,
+            "recall": 0.6988636363636364
+          },
+          "ece": 0.0444,
+          "eceCalibration": 0.0358,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.7276261653103775,
+            "hits": 235,
+            "statements": 248,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.3712574850299401,
+            "precision": 0.9475806451612904,
+            "precisionLow": 0.9123929600266772,
+            "recall": 0.6676136363636364
+          },
+          "targetBaselinePrecision": 0.9444444444444444,
+          "failedGateReasons": {},
+          "celeba": {
+            "studentPrecision": 0.905,
+            "teacherPrecision": 0.895,
+            "minimumStudentPrecision": 0.845,
+            "studentStatements": 147
+          }
+        },
+        "gaze": {
+          "threshold": 0.97,
+          "passed": false,
+          "gates": {
+            "ece": true,
+            "launch": false
+          },
+          "failedGates": [
+            "launch"
+          ],
+          "frozen": {
+            "hits": 84,
+            "statements": 90,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.14263074484944532,
+            "precision": 0.9333333333333333,
+            "precisionLow": 0.8620973805849326,
+            "recall": 0.2781456953642384
+          },
+          "ece": 0.0264,
+          "eceCalibration": 0.0196,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.9769039273978088,
+            "hits": 61,
+            "statements": 64,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.10142630744849446,
+            "precision": 0.953125,
+            "precisionLow": 0.8710013921145747,
+            "recall": 0.20198675496688742
+          },
+          "targetBaselinePrecision": 0.9506172839506173,
+          "failedGateReasons": {
+            "launch": [
+              {
+                "metric": "precision",
+                "observed": 0.933,
+                "minimum": 0.95
+              },
+              {
+                "metric": "statements",
+                "observed": 90,
+                "minimum": 140
+              }
+            ]
+          },
+          "celeba": null
+        }
+      }
+    },
+    {
+      "encoder": "siglip2-so400m",
+      "precision": "fp32",
+      "dimensions": 1152,
+      "modelSha256": "4ef7a287be5c6175857b7ec9dc4f56ad536155cbf5c9d180c594f19aa6118b66",
+      "repo": "google/siglip2-so400m-patch14-384",
+      "revision": "e8e487298228002f3d8a82e0cd5c8ea9c567f57f",
+      "license": "Apache-2.0",
+      "status": "completed",
+      "validated": true,
+      "eligibleForRuntimeCheck": false,
+      "retainsSmileAndMouthGates": false,
+      "coverageWins": [
+        "smile"
+      ],
+      "extraGazePasses": true,
+      "attributes": {
+        "smile": {
+          "threshold": 0.63,
+          "passed": true,
+          "gates": {
+            "ece": true,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [],
+          "frozen": {
+            "hits": 261,
+            "statements": 268,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.4142194744976816,
+            "precision": 0.9738805970149254,
+            "precisionLow": 0.947076151032332,
+            "recall": 0.90625
+          },
+          "ece": 0.0201,
+          "eceCalibration": 0.0143,
+          "coverageWinAtNoLowerPrecision": true,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.6010136774584167,
+            "hits": 262,
+            "statements": 269,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.41576506955177744,
+            "precision": 0.9739776951672863,
+            "precisionLow": 0.9472692484587008,
+            "recall": 0.9097222222222222
+          },
+          "targetBaselinePrecision": 0.9707112970711297,
+          "failedGateReasons": {},
+          "celeba": {
+            "studentPrecision": 0.84,
+            "teacherPrecision": 0.852,
+            "minimumStudentPrecision": 0.802,
+            "studentStatements": 213
+          }
+        },
+        "mouth": {
+          "threshold": 0.63,
+          "passed": false,
+          "gates": {
+            "ece": true,
+            "celebaWithin5": false,
+            "launch": false
+          },
+          "failedGates": [
+            "celebaWithin5",
+            "launch"
+          ],
+          "frozen": {
+            "hits": 286,
+            "statements": 319,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.47754491017964074,
+            "precision": 0.896551724137931,
+            "precisionLow": 0.858278731624235,
+            "recall": 0.8125
+          },
+          "ece": 0.0255,
+          "eceCalibration": 0.0446,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.770649091535986,
+            "hits": 246,
+            "statements": 260,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.38922155688622756,
+            "precision": 0.9461538461538461,
+            "precisionLow": 0.9116577895507059,
+            "recall": 0.6988636363636364
+          },
+          "targetBaselinePrecision": 0.9444444444444444,
+          "failedGateReasons": {
+            "celebaWithin5": {
+              "observed": 0.839,
+              "minimum": 0.845
+            },
+            "launch": [
+              {
+                "metric": "precision",
+                "observed": 0.897,
+                "minimum": 0.9
+              }
+            ]
+          },
+          "celeba": {
+            "studentPrecision": 0.839,
+            "teacherPrecision": 0.895,
+            "minimumStudentPrecision": 0.845,
+            "studentStatements": 168
+          }
+        },
+        "gaze": {
+          "threshold": 0.96,
+          "passed": true,
+          "gates": {
+            "ece": true,
+            "launch": true
+          },
+          "failedGates": [],
+          "frozen": {
+            "hits": 159,
+            "statements": 167,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.26465927099841524,
+            "precision": 0.9520958083832335,
+            "precisionLow": 0.9083302148025331,
+            "recall": 0.5264900662251656
+          },
+          "ece": 0.0214,
+          "eceCalibration": 0.0236,
+          "coverageWinAtNoLowerPrecision": true,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.9559966123507893,
+            "hits": 167,
+            "statements": 175,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.277337559429477,
+            "precision": 0.9542857142857143,
+            "precisionLow": 0.9123980544495223,
+            "recall": 0.5529801324503312
+          },
+          "targetBaselinePrecision": 0.9506172839506173,
+          "failedGateReasons": {},
+          "celeba": null
+        }
+      }
+    },
+    {
+      "encoder": "siglip2-so400m",
+      "precision": "fp16",
+      "dimensions": 1152,
+      "modelSha256": "085eca189f47b1f6c872cd3658feb55c57bcc05ec79dfe6927a0c155c3501626",
+      "repo": "google/siglip2-so400m-patch14-384",
+      "revision": "e8e487298228002f3d8a82e0cd5c8ea9c567f57f",
+      "license": "Apache-2.0",
+      "status": "completed",
+      "validated": true,
+      "eligibleForRuntimeCheck": false,
+      "retainsSmileAndMouthGates": false,
+      "coverageWins": [
+        "smile"
+      ],
+      "extraGazePasses": true,
+      "attributes": {
+        "smile": {
+          "threshold": 0.63,
+          "passed": true,
+          "gates": {
+            "ece": true,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [],
+          "frozen": {
+            "hits": 261,
+            "statements": 268,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.4142194744976816,
+            "precision": 0.9738805970149254,
+            "precisionLow": 0.947076151032332,
+            "recall": 0.90625
+          },
+          "ece": 0.0201,
+          "eceCalibration": 0.0117,
+          "coverageWinAtNoLowerPrecision": true,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.6083549013376321,
+            "hits": 262,
+            "statements": 269,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.41576506955177744,
+            "precision": 0.9739776951672863,
+            "precisionLow": 0.9472692484587008,
+            "recall": 0.9097222222222222
+          },
+          "targetBaselinePrecision": 0.9707112970711297,
+          "failedGateReasons": {},
+          "celeba": {
+            "studentPrecision": 0.845,
+            "teacherPrecision": 0.852,
+            "minimumStudentPrecision": 0.802,
+            "studentStatements": 213
+          }
+        },
+        "mouth": {
+          "threshold": 0.64,
+          "passed": false,
+          "gates": {
+            "ece": true,
+            "celebaWithin5": false,
+            "launch": false
+          },
+          "failedGates": [
+            "celebaWithin5",
+            "launch"
+          ],
+          "frozen": {
+            "hits": 285,
+            "statements": 317,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.4745508982035928,
+            "precision": 0.8990536277602523,
+            "precisionLow": 0.8609663937749642,
+            "recall": 0.8096590909090909
+          },
+          "ece": 0.0227,
+          "eceCalibration": 0.0421,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.7739941270006715,
+            "hits": 246,
+            "statements": 260,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.38922155688622756,
+            "precision": 0.9461538461538461,
+            "precisionLow": 0.9116577895507059,
+            "recall": 0.6988636363636364
+          },
+          "targetBaselinePrecision": 0.9444444444444444,
+          "failedGateReasons": {
+            "celebaWithin5": {
+              "observed": 0.837,
+              "minimum": 0.845
+            },
+            "launch": [
+              {
+                "metric": "precision",
+                "observed": 0.899,
+                "minimum": 0.9
+              }
+            ]
+          },
+          "celeba": {
+            "studentPrecision": 0.837,
+            "teacherPrecision": 0.895,
+            "minimumStudentPrecision": 0.845,
+            "studentStatements": 166
+          }
+        },
+        "gaze": {
+          "threshold": 0.96,
+          "passed": true,
+          "gates": {
+            "ece": true,
+            "launch": true
+          },
+          "failedGates": [],
+          "frozen": {
+            "hits": 161,
+            "statements": 169,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.26782884310618066,
+            "precision": 0.9526627218934911,
+            "precisionLow": 0.9093821731173414,
+            "recall": 0.5331125827814569
+          },
+          "ece": 0.0232,
+          "eceCalibration": 0.0234,
+          "coverageWinAtNoLowerPrecision": true,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.954893632013444,
+            "hits": 168,
+            "statements": 176,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.27892234548335976,
+            "precision": 0.9545454545454546,
+            "precisionLow": 0.9128812984745193,
+            "recall": 0.5562913907284768
+          },
+          "targetBaselinePrecision": 0.9506172839506173,
+          "failedGateReasons": {},
+          "celeba": null
+        }
+      }
+    },
+    {
+      "encoder": "dinov2-base",
+      "precision": "fp32",
+      "dimensions": 768,
+      "modelSha256": "3cfdbf13e877f710a67f7716bc9e9c0eec812401cd35d08efb973f085c69f8bf",
+      "repo": "facebook/dinov2-base",
+      "revision": "f9e44c814b77203eaa57a6bdbbd535f21ede1415",
+      "license": "Apache-2.0",
+      "status": "completed",
+      "validated": true,
+      "eligibleForRuntimeCheck": false,
+      "retainsSmileAndMouthGates": false,
+      "coverageWins": [
+        "mouth"
+      ],
+      "extraGazePasses": false,
+      "attributes": {
+        "smile": {
+          "threshold": 0.73,
+          "passed": true,
+          "gates": {
+            "ece": true,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [],
+          "frozen": {
+            "hits": 223,
+            "statements": 230,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.3554868624420402,
+            "precision": 0.9695652173913043,
+            "precisionLow": 0.9385212963728774,
+            "recall": 0.7743055555555556
+          },
+          "ece": 0.023,
+          "eceCalibration": 0.0163,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.7670357146394543,
+            "hits": 220,
+            "statements": 226,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.34930448222565685,
+            "precision": 0.9734513274336283,
+            "precisionLow": 0.9432989021306509,
+            "recall": 0.7638888888888888
+          },
+          "targetBaselinePrecision": 0.9707112970711297,
+          "failedGateReasons": {},
+          "celeba": {
+            "studentPrecision": 0.843,
+            "teacherPrecision": 0.852,
+            "minimumStudentPrecision": 0.802,
+            "studentStatements": 229
+          }
+        },
+        "mouth": {
+          "threshold": 0.71,
+          "passed": false,
+          "gates": {
+            "ece": false,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [
+            "ece"
+          ],
+          "frozen": {
+            "hits": 226,
+            "statements": 239,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.35778443113772457,
+            "precision": 0.9456066945606695,
+            "precisionLow": 0.9091745706144129,
+            "recall": 0.6420454545454546
+          },
+          "ece": 0.0502,
+          "eceCalibration": 0.0351,
+          "coverageWinAtNoLowerPrecision": true,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.6838767491872769,
+            "hits": 241,
+            "statements": 255,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.38173652694610777,
+            "precision": 0.9450980392156862,
+            "precisionLow": 0.9099661494092208,
+            "recall": 0.6846590909090909
+          },
+          "targetBaselinePrecision": 0.9444444444444444,
+          "failedGateReasons": {
+            "ece": {
+              "observed": 0.0502,
+              "maximum": 0.05
+            }
+          },
+          "celeba": {
+            "studentPrecision": 0.932,
+            "teacherPrecision": 0.895,
+            "minimumStudentPrecision": 0.845,
+            "studentStatements": 132
+          }
+        },
+        "gaze": {
+          "threshold": 0.97,
+          "passed": false,
+          "gates": {
+            "ece": true,
+            "launch": false
+          },
+          "failedGates": [
+            "launch"
+          ],
+          "frozen": {
+            "hits": 101,
+            "statements": 107,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.16957210776545167,
+            "precision": 0.9439252336448598,
+            "precisionLow": 0.8830289394435241,
+            "recall": 0.3344370860927152
+          },
+          "ece": 0.0342,
+          "eceCalibration": 0.02,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.9785751358124333,
+            "hits": 79,
+            "statements": 83,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.13153724247226625,
+            "precision": 0.9518072289156626,
+            "precisionLow": 0.8825396981330589,
+            "recall": 0.26158940397350994
+          },
+          "targetBaselinePrecision": 0.9506172839506173,
+          "failedGateReasons": {
+            "launch": [
+              {
+                "metric": "precision",
+                "observed": 0.944,
+                "minimum": 0.95
+              },
+              {
+                "metric": "statements",
+                "observed": 107,
+                "minimum": 140
+              }
+            ]
+          },
+          "celeba": null
+        }
+      }
+    },
+    {
+      "encoder": "dinov2-base",
+      "precision": "fp16",
+      "dimensions": 768,
+      "modelSha256": "b9a12e4a78ee454665b6e10d6c8afd3978b7f385bc43953fb5364d26bbcb43a7",
+      "repo": "facebook/dinov2-base",
+      "revision": "f9e44c814b77203eaa57a6bdbbd535f21ede1415",
+      "license": "Apache-2.0",
+      "status": "completed",
+      "validated": true,
+      "eligibleForRuntimeCheck": false,
+      "retainsSmileAndMouthGates": false,
+      "coverageWins": [
+        "mouth"
+      ],
+      "extraGazePasses": false,
+      "attributes": {
+        "smile": {
+          "threshold": 0.72,
+          "passed": true,
+          "gates": {
+            "ece": true,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [],
+          "frozen": {
+            "hits": 223,
+            "statements": 230,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.3554868624420402,
+            "precision": 0.9695652173913043,
+            "precisionLow": 0.9385212963728774,
+            "recall": 0.7743055555555556
+          },
+          "ece": 0.023,
+          "eceCalibration": 0.0179,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.7677783485096924,
+            "hits": 220,
+            "statements": 226,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.34930448222565685,
+            "precision": 0.9734513274336283,
+            "precisionLow": 0.9432989021306509,
+            "recall": 0.7638888888888888
+          },
+          "targetBaselinePrecision": 0.9707112970711297,
+          "failedGateReasons": {},
+          "celeba": {
+            "studentPrecision": 0.843,
+            "teacherPrecision": 0.852,
+            "minimumStudentPrecision": 0.802,
+            "studentStatements": 229
+          }
+        },
+        "mouth": {
+          "threshold": 0.71,
+          "passed": false,
+          "gates": {
+            "ece": false,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [
+            "ece"
+          ],
+          "frozen": {
+            "hits": 226,
+            "statements": 239,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.35778443113772457,
+            "precision": 0.9456066945606695,
+            "precisionLow": 0.9091745706144129,
+            "recall": 0.6420454545454546
+          },
+          "ece": 0.0502,
+          "eceCalibration": 0.0351,
+          "coverageWinAtNoLowerPrecision": true,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.683389893882797,
+            "hits": 241,
+            "statements": 255,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.38173652694610777,
+            "precision": 0.9450980392156862,
+            "precisionLow": 0.9099661494092208,
+            "recall": 0.6846590909090909
+          },
+          "targetBaselinePrecision": 0.9444444444444444,
+          "failedGateReasons": {
+            "ece": {
+              "observed": 0.0502,
+              "maximum": 0.05
+            }
+          },
+          "celeba": {
+            "studentPrecision": 0.932,
+            "teacherPrecision": 0.895,
+            "minimumStudentPrecision": 0.845,
+            "studentStatements": 132
+          }
+        },
+        "gaze": {
+          "threshold": 0.97,
+          "passed": false,
+          "gates": {
+            "ece": true,
+            "launch": false
+          },
+          "failedGates": [
+            "launch"
+          ],
+          "frozen": {
+            "hits": 101,
+            "statements": 107,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.16957210776545167,
+            "precision": 0.9439252336448598,
+            "precisionLow": 0.8830289394435241,
+            "recall": 0.3344370860927152
+          },
+          "ece": 0.0338,
+          "eceCalibration": 0.02,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.9786007826360779,
+            "hits": 79,
+            "statements": 83,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.13153724247226625,
+            "precision": 0.9518072289156626,
+            "precisionLow": 0.8825396981330589,
+            "recall": 0.26158940397350994
+          },
+          "targetBaselinePrecision": 0.9506172839506173,
+          "failedGateReasons": {
+            "launch": [
+              {
+                "metric": "precision",
+                "observed": 0.944,
+                "minimum": 0.95
+              },
+              {
+                "metric": "statements",
+                "observed": 107,
+                "minimum": 140
+              }
+            ]
+          },
+          "celeba": null
+        }
+      }
+    },
+    {
+      "encoder": "dinov2-large",
+      "precision": "fp32",
+      "dimensions": 1024,
+      "modelSha256": "45ba80ccc09f555ad31cba57ed7b2699e0643c1f0d62233dc724d3483cad4480",
+      "repo": "facebook/dinov2-large",
+      "revision": "47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+      "license": "Apache-2.0",
+      "status": "completed",
+      "validated": true,
+      "eligibleForRuntimeCheck": false,
+      "retainsSmileAndMouthGates": false,
+      "coverageWins": [
+        "smile"
+      ],
+      "extraGazePasses": false,
+      "attributes": {
+        "smile": {
+          "threshold": 0.77,
+          "passed": true,
+          "gates": {
+            "ece": true,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [],
+          "frozen": {
+            "hits": 247,
+            "statements": 253,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.3910355486862442,
+            "precision": 0.9762845849802372,
+            "precisionLow": 0.94923464424662,
+            "recall": 0.8576388888888888
+          },
+          "ece": 0.0334,
+          "eceCalibration": 0.0228,
+          "coverageWinAtNoLowerPrecision": true,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.7657131227504788,
+            "hits": 247,
+            "statements": 254,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.39258114374034003,
+            "precision": 0.9724409448818898,
+            "precisionLow": 0.9442162887725697,
+            "recall": 0.8576388888888888
+          },
+          "targetBaselinePrecision": 0.9707112970711297,
+          "failedGateReasons": {},
+          "celeba": {
+            "studentPrecision": 0.833,
+            "teacherPrecision": 0.852,
+            "minimumStudentPrecision": 0.802,
+            "studentStatements": 234
+          }
+        },
+        "mouth": {
+          "threshold": 0.72,
+          "passed": false,
+          "gates": {
+            "ece": false,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [
+            "ece"
+          ],
+          "frozen": {
+            "hits": 221,
+            "statements": 230,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.344311377245509,
+            "precision": 0.9608695652173913,
+            "precisionLow": 0.9273172985956948,
+            "recall": 0.6278409090909091
+          },
+          "ece": 0.0558,
+          "eceCalibration": 0.0527,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.6355626671328397,
+            "hits": 255,
+            "statements": 270,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.4041916167664671,
+            "precision": 0.9444444444444444,
+            "precisionLow": 0.9103717920986684,
+            "recall": 0.7244318181818182
+          },
+          "targetBaselinePrecision": 0.9444444444444444,
+          "failedGateReasons": {
+            "ece": {
+              "observed": 0.0558,
+              "maximum": 0.05
+            }
+          },
+          "celeba": {
+            "studentPrecision": 0.922,
+            "teacherPrecision": 0.895,
+            "minimumStudentPrecision": 0.845,
+            "studentStatements": 115
+          }
+        },
+        "gaze": {
+          "threshold": 0.95,
+          "passed": false,
+          "gates": {
+            "ece": true,
+            "launch": false
+          },
+          "failedGates": [
+            "launch"
+          ],
+          "frozen": {
+            "hits": 151,
+            "statements": 166,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.2630744849445325,
+            "precision": 0.9096385542168675,
+            "precisionLow": 0.856270629798359,
+            "recall": 0.5
+          },
+          "ece": 0.0288,
+          "eceCalibration": 0.0305,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.9796597299475452,
+            "hits": 97,
+            "statements": 102,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.16164817749603805,
+            "precision": 0.9509803921568627,
+            "precisionLow": 0.8903407284663869,
+            "recall": 0.3211920529801324
+          },
+          "targetBaselinePrecision": 0.9506172839506173,
+          "failedGateReasons": {
+            "launch": [
+              {
+                "metric": "precision",
+                "observed": 0.91,
+                "minimum": 0.95
+              }
+            ]
+          },
+          "celeba": null
+        }
+      }
+    },
+    {
+      "encoder": "dinov2-large",
+      "precision": "fp16",
+      "dimensions": 1024,
+      "modelSha256": "35e68a9c3b3315a344cf1245b110a2d0c9ec01ad5e7d30e9c709dc053b4ffa71",
+      "repo": "facebook/dinov2-large",
+      "revision": "47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+      "license": "Apache-2.0",
+      "status": "completed",
+      "validated": true,
+      "eligibleForRuntimeCheck": false,
+      "retainsSmileAndMouthGates": false,
+      "coverageWins": [
+        "smile"
+      ],
+      "extraGazePasses": false,
+      "attributes": {
+        "smile": {
+          "threshold": 0.77,
+          "passed": true,
+          "gates": {
+            "ece": true,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [],
+          "frozen": {
+            "hits": 247,
+            "statements": 253,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.3910355486862442,
+            "precision": 0.9762845849802372,
+            "precisionLow": 0.94923464424662,
+            "recall": 0.8576388888888888
+          },
+          "ece": 0.033,
+          "eceCalibration": 0.0222,
+          "coverageWinAtNoLowerPrecision": true,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.7665783655542941,
+            "hits": 247,
+            "statements": 254,
+            "rows": 647,
+            "positives": 288,
+            "coverage": 0.39258114374034003,
+            "precision": 0.9724409448818898,
+            "precisionLow": 0.9442162887725697,
+            "recall": 0.8576388888888888
+          },
+          "targetBaselinePrecision": 0.9707112970711297,
+          "failedGateReasons": {},
+          "celeba": {
+            "studentPrecision": 0.833,
+            "teacherPrecision": 0.852,
+            "minimumStudentPrecision": 0.802,
+            "studentStatements": 234
+          }
+        },
+        "mouth": {
+          "threshold": 0.72,
+          "passed": false,
+          "gates": {
+            "ece": false,
+            "celebaWithin5": true,
+            "launch": true
+          },
+          "failedGates": [
+            "ece"
+          ],
+          "frozen": {
+            "hits": 221,
+            "statements": 230,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.344311377245509,
+            "precision": 0.9608695652173913,
+            "precisionLow": 0.9273172985956948,
+            "recall": 0.6278409090909091
+          },
+          "ece": 0.0558,
+          "eceCalibration": 0.0511,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.6356491447233225,
+            "hits": 253,
+            "statements": 267,
+            "rows": 668,
+            "positives": 352,
+            "coverage": 0.3997005988023952,
+            "precision": 0.947565543071161,
+            "precisionLow": 0.9139220598232188,
+            "recall": 0.71875
+          },
+          "targetBaselinePrecision": 0.9444444444444444,
+          "failedGateReasons": {
+            "ece": {
+              "observed": 0.0558,
+              "maximum": 0.05
+            }
+          },
+          "celeba": {
+            "studentPrecision": 0.922,
+            "teacherPrecision": 0.895,
+            "minimumStudentPrecision": 0.845,
+            "studentStatements": 115
+          }
+        },
+        "gaze": {
+          "threshold": 0.95,
+          "passed": false,
+          "gates": {
+            "ece": true,
+            "launch": false
+          },
+          "failedGates": [
+            "launch"
+          ],
+          "frozen": {
+            "hits": 151,
+            "statements": 166,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.2630744849445325,
+            "precision": 0.9096385542168675,
+            "precisionLow": 0.856270629798359,
+            "recall": 0.5
+          },
+          "ece": 0.028,
+          "eceCalibration": 0.0307,
+          "coverageWinAtNoLowerPrecision": false,
+          "descriptiveEqualPrecision": {
+            "threshold": 0.979707987851794,
+            "hits": 97,
+            "statements": 102,
+            "rows": 631,
+            "positives": 302,
+            "coverage": 0.16164817749603805,
+            "precision": 0.9509803921568627,
+            "precisionLow": 0.8903407284663869,
+            "recall": 0.3211920529801324
+          },
+          "targetBaselinePrecision": 0.9506172839506173,
+          "failedGateReasons": {
+            "launch": [
+              {
+                "metric": "precision",
+                "observed": 0.91,
+                "minimum": 0.95
+              }
+            ]
+          },
+          "celeba": null
+        }
+      }
+    }
+  ],
+  "run": {
+    "fp32BaseJob": "w33-encoder-083772d74256",
+    "remainingJob": "w33-encoder-a8a78ae05813",
+    "remainingJobStatus": "SUCCEEDED",
+    "encoderPrecisions": 8,
+    "sourceCounts": {
+      "oi": 8000,
+      "panel": 786,
+      "p0": 605
+    },
+    "totalVectors": 75128,
+    "extractionFailures": 0,
+    "orderedIdsMatch": true,
+    "maxNormError": 3.881262777838401e-08
+  },
+  "runtime": {
+    "changed": false,
+    "headsPublished": false,
+    "nodePythonParityMeasured": false,
+    "macCpuLatencyMeasured": false,
+    "reason": "No candidate retains all baseline smile/mouth gates and improves frozen coverage at no lower precision or adds passing gaze."
+  }
+}

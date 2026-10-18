@@ -1,3 +1,4 @@
+import { resultAiTags } from './item-analysis.js';
 import { streamReport } from "./stream-report.js";
 import { pageOptions } from "./pagination.js";
 import { handleLearningRoute, learningServices } from "./learning-routes.js";
@@ -9,7 +10,8 @@ import {
 } from "../core/writeback.js";
 import { handleGroupRoute } from "./group-routes.js";
 import { buildReport, reportCsv } from "../core/report.js";
-import { applyPersonalization, personalizeReport } from "../core/personalize.js";
+import { personalizeReport } from "../core/personalize.js";
+import { appliedPersonalization, applyWithUndo, readPersonalizeUndo, undoPersonalization } from './personalize-undo.js';
 import { CORS_HEADERS } from "./http.js";
 import { handleAdjustmentsRoute } from "./adjustments-routes.js";
 import { buildQueue, filterQueue, MODES } from './queue.js';
@@ -46,7 +48,7 @@ export async function handleReviewRoute(req, res, ctx) {
   if (metadataOnly && ctx.runStore.getRun) {
     const run = await ctx.runStore.getRun(runId);
     data = run ? { run } : null;
-  } else if (url.searchParams.has('groupId') && ctx.runStore.page) {
+  } else if (action !== 'personalize' && url.searchParams.has('groupId') && ctx.runStore.page) {
     data = await ctx.runStore.page(runId, { groupId: url.searchParams.get('groupId') });
   } else data = await ctx.runStore.get(runId, { readOnly: true });
   if (!data) {
@@ -77,6 +79,13 @@ export async function handleReviewRoute(req, res, ctx) {
       reviewed: groups ? groups.filter(group => group.unitIds.length && group.unitIds.every(id => human.has(id))).length : null });
     return true;
   }
+  if (req.method === 'POST' && ['apply', 'clear'].some(mode => url.pathname === `/runs/${runId}/ai-tags/${mode}`)) {
+    const clear = url.pathname.endsWith('/clear');
+    return serializeWriteback(ctx, runId, async fresh => {
+      ctx.json(res, 200, await writeAiTags(ctx.api, fresh, { clear }));
+      return true;
+    });
+  }
   if (req.method === 'POST' && url.pathname === `/runs/${runId}/writeback/live`) {
     const body = await ctx.readBody(req);
     if (!Array.isArray(body.unitIds) || !body.unitIds.length || body.unitIds.length > 10000 ||
@@ -88,19 +97,23 @@ export async function handleReviewRoute(req, res, ctx) {
     return serializeWriteback(ctx, runId, fresh => liveRun(res, ctx, fresh, store, ids, body.star === true), ids);
   }
   if (req.method === "GET" && url.pathname === `/runs/${runId}/personalize`) {
-    ctx.json(res, 200, personalizeReport(data, await store.read()));
+    ctx.json(res, 200, { ...personalizeReport(data, await store.read()),
+      applied: appliedPersonalization(await readPersonalizeUndo(ctx.runStore, runId)) });
     return true;
   }
   if (req.method === "POST" && url.pathname === `/runs/${runId}/personalize/apply`) {
-    const result = applyPersonalization(data, await store.read());
-    const { data: updated, ...report } = result;
-    if (!result.ready) {
-      ctx.json(res, 409, { ...report, error: "数据不足或留出集未稳定优于 L0，不能应用偏好" });
+    return serializeWriteback(ctx, runId, async fresh => {
+      const report = await applyWithUndo(ctx.runStore, fresh, await store.read(), ctx.clock?.().toISOString());
+      ctx.json(res, report.ready ? 200 : 409, report.ready ? report
+        : { ...report, error: "数据不足或留出集未稳定优于 L0，不能应用偏好" });
       return true;
-    }
-    if (result.changedGroups) await ctx.runStore.save(data.run, updated);
-    ctx.json(res, 200, report);
-    return true;
+    });
+  }
+  if (req.method === "POST" && url.pathname === `/runs/${runId}/personalize/undo`) {
+    return serializeWriteback(ctx, runId, async fresh => {
+      ctx.json(res, 200, await undoPersonalization(ctx.runStore, fresh));
+      return true;
+    });
   }
   if (req.method === "GET" && action === "decisions") {
     ctx.json(res, 200, { decisions: await store.effective(data.results, data.groups) });
@@ -188,7 +201,7 @@ export function decideUnits(ctx, runId, decisions, context = {}, { stars = false
   }, unitIds);
 }
 
-// The plugin sets these through Eagle's item API: the Web API ignores star 0, so it cannot clear a rating.
+// The plugin applies these through Eagle's item API to keep the native grid in sync.
 export function decisionStars(data, decisions) {
   const units = new Map(data.units.map(unit => [unit.id, unit]));
   return decisions.flatMap(row => {
@@ -351,4 +364,32 @@ async function moveToTrash(api, ids) {
   } catch (error) {
     return ids.map(id => ({ id, ok: false, error: error.message }));
   }
+}
+
+export async function writeAiTags(api, data, { clear = false } = {}) {
+  if (!api?.itemInfo || !api?.updateItem || !api?.assertLibrary || !data.run.libraryPath) {
+    throw new Error('无法确认 Eagle 资源库，未写入 AI 标签');
+  }
+  await api.assertLibrary(data.run.libraryPath);
+  const assigned = new Map();
+  for (const unit of data.units || []) {
+    const result = data.results?.find(row => row.unitId === unit.id) || { unitId: unit.id };
+    const tags = clear ? [] : resultAiTags(data, result).map(row => row.tag).filter(tag => tag?.startsWith('AI·'));
+    for (const id of unit.itemIds || [unit.primaryItemId]) if (id) assigned.set(id, tags);
+  }
+  const plan = [];
+  for (const [id, tags] of assigned) {
+    const item = await api.itemInfo(id);
+    if (!item || !Array.isArray(item.tags)) throw new Error('无法读取当前 Eagle 标签，未开始写入');
+    const next = [...new Set([...item.tags.filter(tag => !tag.startsWith('AI·')), ...tags])];
+    if (JSON.stringify(item.tags) !== JSON.stringify(next)) plan.push({ id, tags: next });
+  }
+  const results = [];
+  for (const row of plan) {
+    await api.assertLibrary(data.run.libraryPath);
+    try { await api.updateItem(row); results.push({ id: row.id, ok: true }); }
+    catch (error) { results.push({ id: row.id, ok: false, error: error.message }); }
+  }
+  return { total: assigned.size, updated: results.filter(row => row.ok).length,
+    failed: results.filter(row => !row.ok).length, results };
 }

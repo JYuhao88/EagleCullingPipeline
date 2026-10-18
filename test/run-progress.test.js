@@ -60,3 +60,22 @@ test('only successful complete measurements supply future stage weights', () => 
   assert.equal(weights.focus, 9 / 16);
   assert.equal(weights.metrics, 1 / 16);
 });
+
+test('optional observations keep progress monotonic, report their duration and give finite ETA only after warming', () => {
+  let now = 0;
+  const tracker = new RunProgress({ now: () => now });
+  const before = tracker.update({ stage: 'focus', completed: 10, total: 10 });
+  assert.equal(before.stageWeights.observations, undefined);
+  now = 1000;
+  const start = tracker.update({ stage: 'observations', completed: 0, total: 20 });
+  assert.ok(start.overallPercent >= before.overallPercent);
+  assert.equal(start.remainingSeconds, null);
+  now = 7000;
+  const measured = tracker.update({ stage: 'observations', completed: 6, total: 20 });
+  assert.equal(measured.stageRatePerSecond, 1);
+  assert.ok(Number.isFinite(measured.remainingSeconds));
+  now = 8000;
+  const next = tracker.update({ stage: 'grouping', completed: 0, total: 1 });
+  assert.ok(next.overallPercent >= measured.overallPercent);
+  assert.equal(next.stageDurationsMs.observations, 7000);
+});

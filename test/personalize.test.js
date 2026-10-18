@@ -77,13 +77,11 @@ async function routeFixture(t, count = 12) {
   await runStore.save(data.run, data);
   const decisionStore = new DecisionsStore(runStore.dir(data.run.id));
   await decisionStore.write(decisions);
+  const ctx = { runStore, json: (_res, status, body) => { ctx.response = { status, body }; } };
   const call = async (method, suffix) => {
-    let response;
-    const handled = await handleReviewRoute({ method, url: `/runs/test-run/${suffix}` }, {}, {
-      runStore, json: (_res, status, body) => { response = { status, body }; },
-    });
+    const handled = await handleReviewRoute({ method, url: `/runs/test-run/${suffix}` }, {}, ctx);
     assert.equal(handled, true);
-    return response;
+    return ctx.response;
   };
   return { data, decisions, call, runStore, decisionStore };
 }
@@ -95,12 +93,60 @@ test("personalize routes report metrics and apply only to this run without chang
   assert.equal(preview.status, 200);
   assert.equal(preview.body.labeledGroups, 10);
   assert.equal(preview.body.remainingGroups, 2);
+  assert.equal(preview.body.applied, null);
   const applied = await call("POST", "personalize/apply");
   assert.equal(applied.status, 200);
   assert.equal(applied.body.changedGroups, 2);
+  assert.equal(applied.body.applied.changedGroups, 2);
+  assert.ok(Number.isFinite(Date.parse(applied.body.applied.at)));
+  assert.deepEqual((await call("GET", "personalize")).body.applied, applied.body.applied);
   const persisted = await runStore.get(data.run.id);
   assert.deepEqual(persisted.groups.slice(0, 10), data.groups.slice(0, 10));
   assert.equal(persisted.groups[10].ranking[0].unitId, "10-b");
+  assert.equal(await readFile(decisionStore.file, "utf8"), originalDecisions);
+});
+
+test("personalize undo restores original fields and refreshes run pages without changing decisions", async t => {
+  const { data, call, runStore, decisionStore } = await routeFixture(t);
+  const original = await runStore.get(data.run.id);
+  const originalDecisions = await readFile(decisionStore.file, "utf8");
+  await runStore.page(data.run.id, { groupId: "g10" });
+  await runStore.unitData(data.run.id, "10-a");
+  await call("POST", "personalize/apply");
+  assert.equal((await runStore.page(data.run.id, { groupId: "g10" })).groups[0].ranking[0].unitId, "10-b");
+  const undoFile = path.join(runStore.dir(data.run.id), "personalize-undo.json");
+  const snapshot = JSON.parse(await readFile(undoFile, "utf8"));
+  assert.equal(snapshot.groups.length, 2);
+  assert.ok(snapshot.groups.every(group => !Object.hasOwn(group.fields, "unitIds")));
+  assert.ok(snapshot.groups.every(group => group.absent.includes("candidateSet")));
+  const undone = await call("POST", "personalize/undo");
+  assert.equal(undone.status, 200);
+  assert.equal(undone.body.changedGroups, 2);
+  assert.deepEqual(await runStore.get(data.run.id), original);
+  assert.deepEqual((await runStore.unitData(data.run.id, "10-a")).groups[0], original.groups[10]);
+  assert.equal((await call("GET", "personalize")).body.applied, null);
+  await assert.rejects(readFile(undoFile), { code: "ENOENT" });
+  assert.equal(await readFile(decisionStore.file, "utf8"), originalDecisions);
+  assert.deepEqual((await call("POST", "personalize/undo")).body, { applied: null, changedGroups: 0 });
+});
+
+test("repeated personalize apply preserves the first snapshot and undo returns to the initial run", async t => {
+  const { data, call, runStore, decisionStore } = await routeFixture(t);
+  const original = await runStore.get(data.run.id);
+  const originalDecisions = await readFile(decisionStore.file, "utf8");
+  const first = await call("POST", "personalize/apply");
+  const undoFile = path.join(runStore.dir(data.run.id), "personalize-undo.json");
+  const firstSnapshot = await readFile(undoFile, "utf8");
+  const reranked = await runStore.get(data.run.id);
+  reranked.groups[11].ranking[0].score -= 1;
+  await runStore.save(reranked.run, reranked);
+  const second = await call("POST", "personalize/apply");
+  assert.equal(second.status, 200);
+  assert.equal(second.body.changedGroups, 1);
+  assert.deepEqual(second.body.applied, first.body.applied);
+  assert.equal(await readFile(undoFile, "utf8"), firstSnapshot);
+  await call("POST", "personalize/undo");
+  assert.deepEqual(await runStore.get(data.run.id), original);
   assert.equal(await readFile(decisionStore.file, "utf8"), originalDecisions);
 });
 

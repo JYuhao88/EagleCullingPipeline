@@ -5,7 +5,7 @@ import { mkdir, readFile, writeFile, stat, rm } from 'node:fs/promises';
 import { replaceFile } from './atomic-file.js';
 
 // Bump whenever parseCaptureMetadata output or its interpretation changes.
-export const CAPTURE_PARSER_VERSION = 'capture-v1';
+export const CAPTURE_PARSER_VERSION = 'capture-v2';
 const DEFAULT_DIRECTORY = fileURLToPath(new URL('../../data/cache/capture-metadata/', import.meta.url));
 const digest = value => createHash('sha256').update(value).digest('hex');
 
@@ -28,8 +28,10 @@ function validValue(value) {
   const nullableString = x => x === null || typeof x === 'string';
   return value && Object.keys(value).sort().join(',') === 'captureTime,device,exif' &&
     nullableString(value.captureTime) && value.exif &&
-    Object.keys(value.exif).sort().join(',') === 'dateTimeOriginal,localDate,offsetTimeOriginal,subSecTimeOriginal' &&
-    Object.values(value.exif).every(nullableString) &&
+    Object.keys(value.exif).filter(key => !['focalLength', 'focalLength35mm'].includes(key)).sort().join(',') ===
+      'dateTimeOriginal,localDate,offsetTimeOriginal,subSecTimeOriginal' &&
+    Object.entries(value.exif).every(([key, item]) => ['focalLength', 'focalLength35mm'].includes(key)
+      ? Number.isFinite(item) && item > 0 : nullableString(item)) &&
     (value.device === null || (typeof value.device === 'object' && !Array.isArray(value.device) &&
       Object.entries(value.device).every(([key, item]) => ['make', 'model', 'serial'].includes(key) && typeof item === 'string')));
 }

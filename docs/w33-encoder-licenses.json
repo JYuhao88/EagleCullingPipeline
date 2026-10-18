@@ -1,0 +1,142 @@
+{
+  "version": "w33-encoder-license-review-v1",
+  "reviewedDate": "2026-10-17",
+  "scope": "Official image-encoder weights considered for the local observation experiment.",
+  "verification": {
+    "method": "Read official model cards, repository file trees, commit pages and upstream license statements.",
+    "weightsDownloaded": false,
+    "hashPolicy": "No weight or exported ONNX SHA-256 is claimed here. Compute and record artifact hashes after download and export.",
+    "downloadPolicy": "Use the full pinned revision in each URL; verify downloaded artifacts before use. Preserve the upstream license and attribution when distributing converted weights."
+  },
+  "candidates": [
+    {
+      "id": "siglip2-base",
+      "repoId": "google/siglip2-base-patch16-224",
+      "revision": "75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2",
+      "status": "eligible",
+      "weightLicense": "Apache-2.0",
+      "licenseEvidence": [
+        {
+          "url": "https://huggingface.co/google/siglip2-base-patch16-224/blob/75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2/README.md",
+          "statement": "The official Google model card declares license: apache-2.0 for this model repository."
+        }
+      ],
+      "revisionUrl": "https://huggingface.co/google/siglip2-base-patch16-224/commit/75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2",
+      "downloads": {
+        "weights": "https://huggingface.co/google/siglip2-base-patch16-224/resolve/75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2/model.safetensors",
+        "config": "https://huggingface.co/google/siglip2-base-patch16-224/resolve/75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2/config.json",
+        "preprocessor": "https://huggingface.co/google/siglip2-base-patch16-224/resolve/75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2/preprocessor_config.json"
+      },
+      "exportNotes": "This fixed-resolution SigLIP2 checkpoint uses the Transformers siglip architecture, not the NaFlex siglip2 architecture. Export the vision tower with attention pooling."
+    },
+    {
+      "id": "siglip2-so400m",
+      "repoId": "google/siglip2-so400m-patch14-384",
+      "revision": "e8e487298228002f3d8a82e0cd5c8ea9c567f57f",
+      "status": "eligible",
+      "weightLicense": "Apache-2.0",
+      "licenseEvidence": [
+        {
+          "url": "https://huggingface.co/google/siglip2-so400m-patch14-384",
+          "statement": "The official Google model card declares license: apache-2.0 for this model repository."
+        },
+        {
+          "url": "https://huggingface.co/google/siglip2-so400m-patch14-384/commit/e8e487298228002f3d8a82e0cd5c8ea9c567f57f",
+          "statement": "The pinned official model-card commit retains the apache-2.0 license metadata."
+        }
+      ],
+      "revisionUrl": "https://huggingface.co/google/siglip2-so400m-patch14-384/commit/e8e487298228002f3d8a82e0cd5c8ea9c567f57f",
+      "downloads": {
+        "weights": "https://huggingface.co/google/siglip2-so400m-patch14-384/resolve/e8e487298228002f3d8a82e0cd5c8ea9c567f57f/model.safetensors",
+        "config": "https://huggingface.co/google/siglip2-so400m-patch14-384/resolve/e8e487298228002f3d8a82e0cd5c8ea9c567f57f/config.json",
+        "preprocessor": "https://huggingface.co/google/siglip2-so400m-patch14-384/resolve/e8e487298228002f3d8a82e0cd5c8ea9c567f57f/preprocessor_config.json"
+      },
+      "exportNotes": "This fixed-resolution SigLIP2 checkpoint uses the Transformers siglip architecture. Its vision tower has 1152-dimensional pooled output and input size 384."
+    },
+    {
+      "id": "dinov2-base",
+      "repoId": "facebook/dinov2-base",
+      "revision": "f9e44c814b77203eaa57a6bdbbd535f21ede1415",
+      "status": "eligible",
+      "weightLicense": "Apache-2.0",
+      "licenseEvidence": [
+        {
+          "url": "https://huggingface.co/facebook/dinov2-base",
+          "statement": "The official Meta model repository declares license: apache-2.0."
+        },
+        {
+          "url": "https://github.com/facebookresearch/dinov2#license",
+          "statement": "The upstream DINOv2 license section explicitly applies Apache License 2.0 to both code and model weights."
+        }
+      ],
+      "revisionUrl": "https://huggingface.co/facebook/dinov2-base/commit/f9e44c814b77203eaa57a6bdbbd535f21ede1415",
+      "downloads": {
+        "weights": "https://huggingface.co/facebook/dinov2-base/resolve/f9e44c814b77203eaa57a6bdbbd535f21ede1415/model.safetensors",
+        "config": "https://huggingface.co/facebook/dinov2-base/resolve/f9e44c814b77203eaa57a6bdbbd535f21ede1415/config.json",
+        "preprocessor": "https://huggingface.co/facebook/dinov2-base/resolve/f9e44c814b77203eaa57a6bdbbd535f21ede1415/preprocessor_config.json"
+      },
+      "exportNotes": "Regular DINOv2 ViT-B/14, without registers or a classification head. The license conclusion does not cover Cell-DINO or other separately licensed upstream models."
+    },
+    {
+      "id": "dinov2-large",
+      "repoId": "facebook/dinov2-large",
+      "revision": "47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+      "status": "eligible",
+      "weightLicense": "Apache-2.0",
+      "licenseEvidence": [
+        {
+          "url": "https://huggingface.co/facebook/dinov2-large",
+          "statement": "The official Meta model repository declares license: apache-2.0."
+        },
+        {
+          "url": "https://github.com/facebookresearch/dinov2#license",
+          "statement": "The upstream DINOv2 license section explicitly applies Apache License 2.0 to both code and model weights."
+        },
+        {
+          "url": "https://huggingface.co/facebook/dinov2-large/commit/47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+          "statement": "The pinned official commit is the license update for this model repository."
+        }
+      ],
+      "revisionUrl": "https://huggingface.co/facebook/dinov2-large/commit/47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+      "downloads": {
+        "weights": "https://huggingface.co/facebook/dinov2-large/resolve/47b73eefe95e8d44ec3623f8890bd894b6ea2d6c/model.safetensors",
+        "config": "https://huggingface.co/facebook/dinov2-large/resolve/47b73eefe95e8d44ec3623f8890bd894b6ea2d6c/config.json",
+        "preprocessor": "https://huggingface.co/facebook/dinov2-large/resolve/47b73eefe95e8d44ec3623f8890bd894b6ea2d6c/preprocessor_config.json"
+      },
+      "exportNotes": "Regular DINOv2 ViT-L/14, without registers or a classification head. The license conclusion does not cover Cell-DINO or other separately licensed upstream models."
+    },
+    {
+      "id": "clip-l14",
+      "repoId": "openai/clip-vit-large-patch14",
+      "revision": "32bd64288804d66eefd0ccbe215aa642df71cc41",
+      "status": "excluded",
+      "codeLicense": "MIT",
+      "weightLicense": "unresolved",
+      "reason": "The official CLIP code repository has an MIT license, but the official weight repository has no license field or license file. The upstream questions about whether MIT covers the separately downloaded weights remain unanswered. This does not establish the permissive weight license required for this experiment.",
+      "licenseEvidence": [
+        {
+          "url": "https://github.com/openai/CLIP/blob/main/LICENSE",
+          "statement": "MIT license verified for the code repository; no separate model-weight grant is stated here."
+        },
+        {
+          "url": "https://huggingface.co/openai/clip-vit-large-patch14/tree/32bd64288804d66eefd0ccbe215aa642df71cc41",
+          "statement": "The official pinned weight repository lists no LICENSE file and its model-card metadata declares no license."
+        },
+        {
+          "url": "https://github.com/openai/CLIP/issues/203",
+          "statement": "The upstream question specifically asks whether the separately downloaded model weights are MIT licensed; no maintainer clarification is present."
+        },
+        {
+          "url": "https://github.com/openai/CLIP/issues/241",
+          "statement": "A second upstream question asks for the pretrained-model license; no maintainer clarification is present."
+        }
+      ],
+      "revisionUrl": "https://huggingface.co/openai/clip-vit-large-patch14/commit/32bd64288804d66eefd0ccbe215aa642df71cc41",
+      "downloads": {
+        "weights": "https://huggingface.co/openai/clip-vit-large-patch14/resolve/32bd64288804d66eefd0ccbe215aa642df71cc41/model.safetensors",
+        "config": "https://huggingface.co/openai/clip-vit-large-patch14/resolve/32bd64288804d66eefd0ccbe215aa642df71cc41/config.json",
+        "preprocessor": "https://huggingface.co/openai/clip-vit-large-patch14/resolve/32bd64288804d66eefd0ccbe215aa642df71cc41/preprocessor_config.json"
+      }
+    }
+  ]
+}

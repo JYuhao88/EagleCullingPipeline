@@ -29,7 +29,7 @@ def _config(config_path=None):
 
 
 def _validated(name, value):
-    if name == 'ECP_HTTP_PROXY' and value == '':
+    if name in ('ECP_HTTP_PROXY', 'ECP_NPM_REGISTRY') and value == '':
         return value
     if not isinstance(value, str) or not value.strip() or '<' in value or '>' in value:
         raise ValueError(f'{name} must be a nonempty configured value; set it in local config/local.json or the environment before submitting the Ray job')
@@ -72,14 +72,20 @@ def jobs_url(config_path=None):
     return value.rstrip('/') + '/'
 
 
+def _forwarded(key):
+    # The Ray job listing shows env_vars, so model-service endpoints and credentials never travel this way.
+    return (key.startswith('ECP_') and key != 'ECP_LOCAL_CONFIG' and not key.startswith('ECP_AIHUB_')
+            and not any(word in key for word in ('KEY', 'TOKEN', 'SECRET', 'PASSWORD')))
+
+
 def merge_private_env(body, config_path=None):
     """Add configured ECP_* values without replacing job-specific settings.
 
     RAY_DASHBOARD is the submission endpoint, not a worker setting. Explicit
     job env_vars take precedence; other runtime_env entries are preserved.
     """
-    values = {key: value for key, value in _config(config_path).items() if key.startswith('ECP_') and key != 'ECP_LOCAL_CONFIG'}
-    values.update({key: value for key, value in os.environ.items() if key.startswith('ECP_') and key != 'ECP_LOCAL_CONFIG'})
+    values = {key: value for key, value in _config(config_path).items() if _forwarded(key)}
+    values.update({key: value for key, value in os.environ.items() if _forwarded(key)})
     values = {key: _validated(key, value) for key, value in values.items()}
     runtime = body.setdefault('runtime_env', {})
     values.update(runtime.get('env_vars', {}))

@@ -39,6 +39,10 @@
         <button data-nav="uncertain" title="下一个分组没把握、还没定完的组">没把握</button>
       </div>
       <p id="difference" class="difference" hidden></p>
+      <section id="observations" class="observations" hidden>
+        <strong>AI 观察（本地）</strong><div id="observationList"></div>
+      </section>
+      <div id="aiTags" class="ai-tags" aria-label="当前照片的 AI 内容标签" hidden></div>
       <p id="actionStatus" class="action-status" role="status"></p>
     </div>
     <div id="groupChart" class="chart" aria-label="组内分布：每根柱是一张，按名次排，高度是组内相对总分，点一根在 Eagle 中选中" hidden></div>
@@ -51,6 +55,16 @@
     <div id="pair" class="pair" aria-label="当前照片和对比照片，点一张在 Eagle 中选中" hidden></div>
     <label id="marksToggle" class="marks-toggle" hidden><input type="checkbox" id="marksOn">
       缩略图标出人脸（红框是闭眼）和人体姿态<span id="marksHint" class="hint"></span></label>
+    <details id="detailView" class="fold detail" hidden><summary>细节与曝光</summary>
+      <div id="detailFrame" class="detail-frame" title="点图片换放大位置"><img id="detailImage" alt="当前照片局部"></div>
+      <div class="detail-zoom"><button data-detail-zoom="1">适应</button><button data-detail-zoom="2">2×</button>
+        <button data-detail-zoom="4">4×</button></div>
+      <div class="detail-exposure"><span>曝光</span>
+        <input id="detailExposure" type="range" min="-3" max="3" step="0.1" value="0" aria-label="曝光（只影响这里的显示）">
+        <output id="detailEv">0 EV</output></div>
+      <div class="detail-actions"><button id="detailAuto" title="按当前看到的区域测光">自动</button>
+        <button id="detailReset">复位</button><span class="hint">只影响这里的显示，不改原图和评分</span></div>
+    </details>
     <table id="compareTable" class="compare" aria-label="本组逐项对比，点一行在 Eagle 中选中" hidden></table>
     <button id="expandTable" class="text-button" hidden></button>
     <p id="runProgress" class="run-progress"></p>
@@ -74,6 +88,21 @@
       <div id="neighbours" class="neighbours" aria-label="拍摄时间紧挨着的前后组" hidden></div>
     </details>
     <details id="runTools" class="fold"><summary>整个任务</summary>
+      <div id="personalize" class="personalize" hidden>
+        <strong>按我的口味调整</strong>
+        <p id="personalizeSummary"></p>
+        <p id="personalizeFactors" class="hint" hidden></p>
+        <p id="personalizeHint" class="hint" hidden></p>
+        <button id="personalizeApply" disabled>应用到剩余 0 组</button>
+        <span id="personalizeApplied" hidden></span>
+        <button id="personalizeUndo" class="text-button" hidden>撤销</button>
+        <p id="personalizeError" role="status" hidden></p>
+      </div>
+      <div class="run-buttons">
+        <button data-ai-tags="apply">写入 AI 标签到 Eagle</button>
+        <button data-ai-tags="clear">清除 AI 标签</button>
+      </div>
+      <p id="aiTagsStatus" class="hint" role="status"></p>
       <p class="hint">只处理还没决定的照片，已做的决定不变。点两次确认。</p>
       <div class="run-buttons">
         <button data-bulk="eyes">闭眼的标淘汰</button>

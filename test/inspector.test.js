@@ -66,8 +66,8 @@ test('item analysis lists the whole group in rank order with AI suggestion, huma
   assert.deepEqual(row.groupMembers.map(member => [member.unitId, member.rank, member.suggested, member.human]),
     [['u3', 1, 'selected', null], ['u1', 2, 'candidate', null], ['u2', 3, 'rejected', 'rejected']]);
   assert.deepEqual(row.groupMembers[1].itemIds, ['p1', 'r1']); assert.deepEqual(row.groupMembers[2].flags, ['blurry']);
-  assert.deepEqual(row.groupMembers[0].metrics, { score: null, quality: null, sharpness: null, eye: null, exposure: null,
-    clipped: null, faces: null, eyesClosed: null });
+  assert.deepEqual(row.groupMembers[0].metrics, { score: null, quality: null, aesthetic: null, sharpness: null, eye: null, exposure: null,
+    clipped: null, faces: null, eyesClosed: null, eyesOpen: null, faceSize: null, similar: null });
   assert.equal(groupSummary(row), '第 1 组 · 3 张 · AI 建议 精选 1 · 候选 1 · 淘汰 1 · 已定 1/3 · 分组没把握，建议确认');
   assert.equal(groupSummary({ groupMembers: [{ unitId: 'u1' }] }), '单张，无需对比');
 });
@@ -166,15 +166,21 @@ test('item analysis carries per-photo metrics for the comparison table', async t
   const store = new RunStore(root);
   await store.save({ id: 'run-m', startedAt: '2026-10-01', status: 'completed', libraryPath: '/fixture.library' }, {
     units: [{ id: 'u1', primaryItemId: 'p1' }, { id: 'u2', primaryItemId: 'p2' }], items: [],
-    results: [{ unitId: 'u1', score: .4, flags: [], focus: { eyeSharpnessNative: .8 }, metrics: { quality: .7, sharpness: .2,
-      exposure: .9, clippedHighlights: .01, clippedShadows: .002, faces: 1, eyesClosed: 0 } },
-    { unitId: 'u2', flags: [], metrics: {} }],
+    results: [{ unitId: 'u1', name: 'DSC001', score: .4, flags: [], focus: { eyeSharpnessNative: .8 }, embedding: [1, 0],
+      faces: [{ box: [.1, .2, .3, .5], eyesAssessed: true, blinkLeft: .1, blinkRight: .3 }, { box: [.5, .5, .6, .6] }],
+      metrics: { quality: .7, sharpness: .2, exposure: .9, clippedHighlights: .01, clippedShadows: .002, faces: 1, eyesClosed: 0 } },
+    { unitId: 'u2', flags: [], metrics: {}, embedding: [0.6, 0.8] }],
     groups: [{ id: 'g1', unitIds: ['u1', 'u2'], suggested: { u1: 'selected', u2: 'candidate' },
-      ranking: [{ unitId: 'u1', rank: 1, score: .6 }, { unitId: 'u2', rank: 2, score: .5 }] }] });
+      ranking: [{ unitId: 'u1', rank: 1, score: .6, reasons: ['综合分最高'] }, { unitId: 'u2', rank: 2, score: .5 }] }] });
   const row = await new ItemAnalysisIndex(store).get('p2', '/fixture.library');
-  assert.deepEqual(row.groupMembers[0].metrics, { score: .6, quality: .7, sharpness: .2, eye: .8, exposure: .9,
-    clipped: .012, faces: 1, eyesClosed: 0 });
+  const metrics = row.groupMembers[0].metrics;
+  assert.deepEqual({ ...metrics, eyesOpen: Math.round(metrics.eyesOpen * 100), faceSize: Math.round(metrics.faceSize * 100) },
+    { score: .6, quality: .7, aesthetic: null, sharpness: .2, eye: .8, exposure: .9, clipped: .012, faces: 1, eyesClosed: 0,
+      eyesOpen: 70, faceSize: 30, similar: null });
+  assert.equal(row.groupMembers[0].name, 'DSC001'); assert.deepEqual(row.groupMembers[0].reasons, ['综合分最高']);
   assert.equal(row.groupMembers[1].metrics.clipped, null);
+  assert.equal(Math.round(row.groupMembers[1].metrics.similar * 100), 60);
+  assert.equal(row.groupMembers[1].metrics.eyesOpen, null);
 });
 test('inspector fixes groups for the selected photos and undoes only its own fixes', async () => {
   const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
@@ -427,4 +433,77 @@ test('selecting from the panel asks Eagle to scroll the grid to the photo, witho
   assert.equal(revealSelection(ipc, undefined), false);
   assert.equal(revealSelection(undefined, 2), false);
   assert.equal(await showInEagle(eagle, ['b']), 'selected');
+});
+
+test('personalization explains readiness, heldout agreement and the strongest factors in Chinese', async () => {
+  const { personalizationModel } = await import('../src/plugin/inspector/inspector.js');
+  const insufficient = personalizationModel({ ready: false, labeledGroups: 2, reason: 'insufficient-data' });
+  assert.equal(insufficient.disabled, true);
+  assert.match(insufficient.hint, /更多.*留出样本/);
+  const unstable = personalizationModel({ ready: false, reason: 'no-stable-heldout-improvement' });
+  assert.match(unstable.hint, /尚未稳定优于默认/);
+  const ready = personalizationModel({ ready: true, labeledGroups: 32, remainingGroups: 8,
+    before: { top1: { rate: .63 } }, after: { top1: { rate: .71 } },
+    weights: { sharpness: 2, eyes: -3, exposure: 1, quality: .5, aesthetic: 0 } });
+  assert.equal(ready.summary, '按你的 32 个选优决定学习；留出一致率 71%，默认 63%');
+  assert.equal(ready.factors, '最影响的因素：睁眼比例（负向）、清晰度（正向）、曝光（正向）');
+  assert.equal(ready.disabled, false); assert.equal(ready.button, '应用到剩余 8 组');
+  assert.equal(personalizationModel({ applied: { at: '2026-10-13', changedGroups: 7 } }).applied, '已调整 7 组');
+});
+
+test('inspector personalizes locally after two clicks, expires confirmation and refreshes suggestions on undo', async () => {
+  const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
+  const nodes = new Map();
+  const element = () => ({ textContent: '', children: [], hidden: false, disabled: false, dataset: {}, replacements: 0,
+    classList: { add() {}, toggle() {} }, replaceChildren(...children) { this.children = children; this.replacements++; },
+    append(...children) { this.children.push(...children); }, addEventListener() {} });
+  const root = { hidden: false, querySelector: id => { if (!nodes.has(id)) nodes.set(id, element()); return nodes.get(id); },
+    querySelectorAll: () => [], createElement: element };
+  const member = { unitId: 'u1', itemIds: ['p1'], rank: 1, suggested: 'selected', flags: [] };
+  const analysis = { runId: 'run-p', unitId: 'u1', groupId: 'g1', groupSize: 1, groupMembers: [member], focus: '清晰' };
+  let report = { ready: false, labeledGroups: 2, remainingGroups: 8, reason: 'insufficient-data', applied: null };
+  let failure = 0, analysisReads = 0, queueReads = 0;
+  const posts = [];
+  const fetchImpl = async (url, options = {}) => {
+    if (options.method === 'POST') {
+      posts.push(url.split('/personalize/')[1]);
+      if (!failure) report = { ...report, applied: url.endsWith('/undo') ? null : { at: '2026-10-13', changedGroups: 7 } };
+      return { ok: !failure, status: failure || 200, json: async () => ({}) };
+    }
+    if (url.endsWith('/personalize')) return { ok: true, json: async () => report };
+    if (url.includes('/queue')) { queueReads++; return { ok: true, json: async () => ({ queue: [] }) }; }
+    analysisReads++; return { ok: true, json: async () => analysis };
+  };
+  const eagle = { library: { path: '/fixture.library' }, item: { getSelected: async () => [{ id: 'p1' }] } };
+  const view = mountInspector({ root, eagle, storage: { getItem: () => null }, fetchImpl, session: null });
+  const node = id => root.querySelector(`#${id}`);
+  try {
+    view.watcher.stop(); await view.refresh(true); await new Promise(resolve => setTimeout(resolve, 10));
+    await view.loadPersonalization();
+    assert.equal(node('personalizeApply').disabled, true); assert.match(node('personalizeHint').textContent, /更多/);
+    await view.personalize(); assert.equal(posts.length, 0);
+    report = { ...report, ready: true, labeledGroups: 32, weights: { quality: 2, sharpness: 1 } };
+    const before = node('compareTable').replacements;
+    await view.loadPersonalization(true);
+    assert.equal(node('compareTable').replacements, before);
+    assert.equal(node('personalizeApply').disabled, false);
+    await view.personalize(); assert.equal(node('personalizeApply').textContent, '确认应用');
+    await new Promise(resolve => setTimeout(resolve, 3100));
+    assert.equal(node('personalizeApply').textContent, '应用到剩余 8 组');
+    assert.equal(posts.length, 0);
+    assert.equal(node('compareTable').replacements, before);
+    await view.personalize(); await view.personalize();
+    assert.deepEqual(posts, ['apply']);
+    assert.equal(node('personalizeApplied').textContent, '已调整 7 组 ·');
+    assert.equal(node('personalizeUndo').hidden, false);
+    const reads = analysisReads, queues = queueReads;
+    await view.personalize('undo');
+    assert.deepEqual(posts, ['apply', 'undo']);
+    assert.equal(node('personalizeUndo').hidden, true);
+    assert.ok(analysisReads > reads); assert.ok(queueReads > queues);
+    failure = 409;
+    await view.personalize(); await view.personalize();
+    assert.match(node('personalizeError').textContent, /尚未稳定优于默认/);
+    assert.equal(node('personalizeApply').disabled, false);
+  } finally { view.dispose(); }
 });

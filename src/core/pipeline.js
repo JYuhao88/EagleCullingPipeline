@@ -1,3 +1,4 @@
+import { deriveTags, sceneTags } from './ai-tags.js';
 import { touchCache } from './cache-budget.js';
 import { performanceMode, configuredPerformanceMode, parsePerformanceMode, performanceWorkerCap,
   withPerformanceMode, MODEL_BUDGET_BYTES, NODE_BUDGET_BYTES } from './performance-mode.js';
@@ -19,17 +20,20 @@ import { groupResultsAsync, recallCrossDayDuplicates, readCaptureTimes } from ".
 import { groupConfidence, rankGroup, suggestDecision, gateFlags } from "./ranking.js";
 import { CONTRACT_VERSION } from "./contracts.js";
 import { embedImage } from "./embeddings.js";
+import { applyAestheticReference, clearAestheticReference, LEGACY_EMBEDDING_VERSION } from './aesthetic-head.js';
 import { FaceWorkerPool, normalizeFaceResult, detectFaces } from "./faces.js";
 import { score, SCORER_CACHE_KEY } from "./scorer.js";
 import { measureCandidates } from "./candidate-measurements.js";
 import { buildCandidateSet } from "./candidates.js";
 import { withNativeImage, nativeDecodeLimit } from "./native-image.js";
 import { analyzeFocusFromNativeImage, readMakerFocus } from "./focus.js";
+import { loadObservationHeads } from './observation-head.js';
 export class AnalysisPipeline {
   constructor({
     concurrency = 2, store, analyzer = analyzeImage, faceDetector = detectFaces,
     poseDetector = detectPose,
     root = process.cwd(), cacheRoot = "data/cache",
+    observationHeadDir, observationInfer,
   } = {}) {
     this.requestedConcurrency = concurrency;
     this.concurrency = Math.max(1, Math.min(2, concurrency));
@@ -39,6 +43,8 @@ export class AnalysisPipeline {
     this.poseDetector = poseDetector;
     this.root = root;
     this.cacheRoot = cacheRoot;
+    this.observationHeadDir = observationHeadDir;
+    this.observationInfer = observationInfer;
   }
   async run(records, options = {}) {
     const mode = parsePerformanceMode(options.performanceMode ?? configuredPerformanceMode());
@@ -66,6 +72,16 @@ export class AnalysisPipeline {
         throw new Error('全速模式内存保护：Node RSS 超过 3 GiB');
     };
     check();
+    const observationSetup = performance.now();
+    const observationHeads = await loadObservationHeads({ root: this.root, directory: this.observationHeadDir, signal });
+    let observations;
+    let observationSetupMs = 0;
+    if (observationHeads.length) {
+      const { ObservationRuntime } = await import('./observation-runtime.js');
+      observations = new ObservationRuntime(observationHeads, { cacheDir: path.join(this.cacheRoot, 'observations'),
+        signal, infer: this.observationInfer });
+      observationSetupMs = performance.now() - observationSetup;
+    }
     let posePool;
     let facePool;
     try {
@@ -135,13 +151,16 @@ export class AnalysisPipeline {
           result.faces = detectorFaces(result.faces);
           if (preview) result.previewPath = preview;
         }
+        // A cached reference must not enter ranking or the Pareto candidate dimensions on a resumed run.
+        if (result) clearAestheticReference(result);
         if (result?.pose && !poseProviderMatches(result.pose)) {
           delete result.signals;
           delete result.pose;
-          if (["pose-inferred", "pose", "focus"].includes(stages.get(result.unitId)))
+          if (["pose-inferred", "pose", "focus", "observations"].includes(stages.get(result.unitId)))
             stages.set(result.unitId, "faces");
         }
         if (result) {
+          if (!observations) delete result.observations;
           cached += 1;
           // Retain model caches while upgrading preview-gradient normalization.
           if (this.analyzer === analyzeImage && result.metrics?.raw?.previewSharpness == null && preview) {
@@ -191,6 +210,7 @@ export class AnalysisPipeline {
             phash: analyzed.phash,
             dhash: analyzed.dhash,
             embedding: analyzed.embedding,
+            embeddingVersion: analyzed.embeddingVersion,
             captureTime: record.captureTime,
             name: record.name,
           };
@@ -231,6 +251,7 @@ export class AnalysisPipeline {
       try {
         result.embedding ||= await embedImage(result.previewPath, {
           signal, fingerprint: result.fingerprint, cacheDir: path.join(this.cacheRoot, "embeddings") });
+        if (result.embedding) result.embeddingVersion ||= LEGACY_EMBEDDING_VERSION;
       } catch (error) { check(); warnings.push(`DINOv2 embedding 不可用：${error.message}`); }
       check();
       if (!result.embedding) warnings.push("DINOv2 模型文件不存在，已降级为 hash + 时间分组");
@@ -290,7 +311,7 @@ export class AnalysisPipeline {
     for (const [index, result] of results.entries()) {
       check();
       onProgress({ completed: faceTargets.length + index + 1, total: faceTotal, cached, stage: 'faces' });
-      if (["pose", "focus"].includes(stages.get(result.unitId))) continue;
+      if (["pose", "focus", "observations"].includes(stages.get(result.unitId))) continue;
       result.sessionId = records[index].sessionId;
       result.captureTime = records[index].captureTime ?? captureTimes.get(records[index].filePath) ?? result.captureTime;
       if (this.analyzer === analyzeImage && Number.isFinite(result.metrics?.raw?.meanLuma)) {
@@ -314,7 +335,7 @@ export class AnalysisPipeline {
       }
       result.flags = gateFlags(result);
     }
-    const poseTargets = results.filter((result) => !["pose-inferred", "pose", "focus"].includes(stages.get(result.unitId))
+    const poseTargets = results.filter((result) => !["pose-inferred", "pose", "focus", "observations"].includes(stages.get(result.unitId))
       && result.previewPath && (!result.signals || result.pose?.cacheKey !==
       POSE_SIGNALS_CACHE_KEY));
     const poseTotal = poseTargets.length + results.length;
@@ -359,7 +380,7 @@ export class AnalysisPipeline {
     for (const result of results) {
       check();
       onProgress({ completed: poseTargets.length + ++posed, total: poseTotal, cached, stage: 'pose' });
-      if (["pose", "focus"].includes(stages.get(result.unitId))) continue;
+      if (["pose", "focus", "observations"].includes(stages.get(result.unitId))) continue;
       // Opt-in only; reuse model outputs and compute small-raster hints serially.
       if (result.signals?.imageMeasurements?.candidates) delete result.signals.imageMeasurements.candidates;
       if (process.env.EAGLE_W5_HINTS === "1" && result.previewPath) {
@@ -376,6 +397,10 @@ export class AnalysisPipeline {
       await saveUnit(result, "pose");
     }
     for (const result of results) result.faces = completeEyeRois(result.faces, result.signals?.persons);
+    if (observations) for (const [index, result] of results.entries()) {
+      check();
+      await observations.prepare(result, records[index]);
+    }
     // Native-resolution focus uses bounded transient decodes. Missing
     // embedded JPEG/rawpy is represented as na and never guessed from proxy sharpness.
     let focusCursor = 0;
@@ -387,7 +412,7 @@ export class AnalysisPipeline {
       const result = results[index];
       check();
       try {
-      if (!nativeFocus || stages.get(result.unitId) === "focus") continue;
+      if (!nativeFocus || ["focus", "observations"].includes(stages.get(result.unitId))) continue;
       if (!result.sourcePath || !result.faces?.length) { await saveUnit(result, "focus"); continue; }
       try {
         const sourceStat = await stat(result.sourcePath);
@@ -405,7 +430,16 @@ export class AnalysisPipeline {
           const nativeRecord = { ...records[index], filePath: result.sourcePath };
           focus = await withNativeImage(nativeRecord,
             { pairedItems: records[index].pairedItems, signal }, async ({ image, source }) => {
-              return analyzeFocusFromNativeImage({ image, source, faces: result.faces, makerFocus: maker });
+              return analyzeFocusFromNativeImage({ image, source, faces: result.faces, makerFocus: maker,
+                ...(observations ? { onNativePixels: async (pixels, nativeSource) => {
+                  try {
+                    const start = performance.now();
+                    if (await observations.capture(result, pixels, nativeSource)) {
+                      observations.timing.reusedNativeCrops++;
+                      observations.timing.reusedNativeCropMs += performance.now() - start;
+                    }
+                  } catch (error) { check(); warnings.push(`观察人脸裁剪不可用：${error.message}`); }
+                } } : {}) });
             });
           await mkdir(path.dirname(focusFile), { recursive: true });
           await writeFile(focusFile, JSON.stringify(focus));
@@ -432,6 +466,22 @@ export class AnalysisPipeline {
     const focusWorkers = await Promise.allSettled(Array.from({ length: nativeDecodeLimit() }, focusWorker));
     const focusFailure = focusWorkers.find(worker => worker.status === 'rejected');
     if (focusFailure) throw focusFailure.reason;
+    let observationStageMs = 0;
+    if (observations) {
+      const start = performance.now();
+      onProgress({ completed: 0, total: records.length, cached, stage: 'observations' });
+      for (const [index, result] of results.entries()) {
+        check();
+        delete result.observations;
+        try { await observations.analyze(result, records[index]); }
+        catch (error) { check(); warnings.push(`本地模型观察不可用：${error.message}`); }
+        check();
+        if (this.store) await this.store.put(result.fingerprint, result);
+        await saveUnit(result, 'observations');
+        onProgress({ completed: index + 1, total: records.length, cached, stage: 'observations' });
+      }
+      observationStageMs = performance.now() - start;
+    }
     onProgress({ completed: 0, total: records.length, cached, stage: "grouping" });
     check();
     const groupingSignature = crypto.createHash('sha256')
@@ -493,6 +543,18 @@ export class AnalysisPipeline {
       await yieldTurn();
     }
     check();
+    // Compute only after all decisions; the reference is never an input to ranking, rules, grouping or Pareto.
+    for (const result of results) {
+      applyAestheticReference(result);
+      const record = recordsByUnit.get(result.unitId) || {};
+      result.exif = record.exif ?? result.exif;
+      result.aiTags = [...deriveTags(result, record), ...await sceneTags(result.previewPath, {
+        model: path.join(this.root, 'models/clip/vision_model_quantized.onnx'),
+        cacheDir: path.join(this.cacheRoot, 'ai-tags'), fingerprint: result.fingerprint, signal,
+      })];
+      check();
+      if (this.store) await this.store.put(result.fingerprint, result);
+    }
     return {
       contractVersion: 1,
       id,
@@ -502,6 +564,9 @@ export class AnalysisPipeline {
       groups: rankedGroups,
       duplicateCandidates: Object.fromEntries(duplicateCandidates),
       warnings: [...new Set(warnings)],
+      ...(observations ? { observationTimingMs: { setup: observationSetupMs, stage: observationStageMs,
+        ...observations.timing, total: observationSetupMs + observations.timing.prepareMs
+          + observations.timing.reusedNativeCropMs + observationStageMs } } : {}),
     };
     } finally { facePool?.close(); posePool?.close(); }
   }

@@ -471,3 +471,175 @@ size、mtimeMs 的 JSON 数组的 SHA-256；Windows 使用 win32 路径规范化
 缺参和接近 1:1 保留原生分辨率，响应 `x-native-tier: mid|original`。
 新增 `POST /runs/:id/native/:unit/prefetch`，可中止的本机串行低优先级预取，活动分析时跳过。
 参数、LRU、取消边界与验证见 [native-mid.md](native-mid.md)，不参与分析/评分。
+
+## 本地模型观察（W30，展示字段）
+
+当前上线头为 `src/core/observation-heads/clip-face-v1.json`（在笑、嘴张开）与
+`gaze-iris-q2-clip-v1.json`（看镜头，740 维虹膜二次项与 CLIP 整脸组合）；均只在 Open Images 上训练和校准，
+验收数字见 [research-local-observations.md](research-local-observations.md) 6.2、6.7 节。每次分析开始只枚举一次此目录；
+没有有效 JSON 头时完全跳过 `observations` 阶段，无编码器加载、模型哈希、裁剪、观察缓存或逐单元推理开销。
+坏文件、缺字段、任意属性形状不符、模型不存在或 SHA 不符均停用该文件，不影响其它分析阶段。
+安装或替换分类头后，在下次分析或续跑时生效；已完成 run 的历史结果不会自动重算。
+视线头只输出正类“看镜头”，阈值 `0.91`、温度 `1.076452351253655`、最小脸高 `0.05`；
+没有有效虹膜/姿态组合特征或 Python worker 不可用时弃权，其它头照常运行。观察继续只用于展示。
+
+一个 JSON 文件是一组使用相同编码器和输入的二分类属性。根字段如下：
+
+| 字段 | 要求 |
+|---|---|
+| `version` | 非空版本字符串，最长 128 字符；更换训练数据、预处理、权重或校准时升级 |
+| `encoder` | `{id:"clip-b32-q"\|"dinov2-small"\|"mediapipe-iris-pose-q2-clip-b32-q", dimensions:512\|384\|740, modelSha256:"64 位小写十六进制"}`；虹膜组合编码器另须 `clipModelSha256`（同格式），且只接受 `face-crop` |
+| `input` | `{type:"face-crop",expansion:1.8,size:384}` 或 `{type:"full"}`；`face-crop` 可加 `minFaceHeight`（0–1 开区间），主体脸框高度低于它时该头不裁剪、不推理、不发言 |
+| `attributes` | 1–64 个属性，`id` 在该文件内唯一 |
+
+本地模型位置分别为 `models/clip/vision_model_quantized.onnx` 与 `models/dinov2-small/model.onnx`；
+DINOv2 保留现有 `EAGLE_DINO_MODEL` 覆盖，路径通过 `path.resolve/join` 处理。
+虹膜组合编码器的主模型为 `models/mediapipe/face_landmarker.task`，`encoder.modelSha256` 对应该文件
+（当前清单 SHA-256 为 `64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff`），
+`encoder.clipModelSha256` 对应上述 CLIP 文件。加载结果的 `model`、`clipModel` 为两个模型的绝对路径。
+启动分析时流式计算本地模型文件 SHA-256，与头声明严格比对；组合编码器缺少任一文件、辅助 SHA 缺失、
+格式错误或任一 SHA 不符时停用整个头。辅助 SHA 随头完整内容进入哈希与观察缓存身份。
+编码器复用 `ai-tags.js` / `embeddings.js` 的进程内会话；会话身份含路径、大小、mtime 与原有 provider。
+观察逐单元串行推理，沿用编码器现有线程数和 DINO provider；原图解码沿用 `withNativeImage` 的
+nice/turbo 并发及内存预留。单次 Sharp/ONNX 调用不可抢占，返回后检查取消，不启动下一单元。
+
+`face-crop` 选择主体人脸：有 `isMain` 人体时，只接受唯一一个超过半数面积落在该人体内的有效脸框；
+没有主体人体时取最大有效脸框。主体匹配含糊、没有脸框时弃权。框坐标为旋转后画面的归一化坐标。
+以框中心为中心，按实际像素宽高取 `floor(min(width, height, 1.8 * max(faceWidth,faceHeight)))` 边长的正方形；
+贴边时整体平移回画面内（左上角四舍五入），不补黑，与老师标注和训练数据的裁剪
+（`scripts/observe-teacher.mjs`、`scripts/openimages-sample-ray.py`）的方框几何一致。历史 JPEG 老师视图与生产 PNG
+不逐像素相等；验收必须重新使用生产裁剪。ROI 以 Lanczos3 缩到
+384×384 sRGB、无 alpha 的无损裁剪。优先复用 focus 回调已解码的像素，
+非 RGB JPEG 路径复用 focus 既有 q96 JPEG 缓冲；focus 已缓存时使用相同有界原图入口，
+只提取并缩放 ROI，不新增整张原图输出缓冲。原图不可用才退回已旋转的预览图。
+此 384 裁剪再送入下述现有编码器预处理；编码器 ONNX 输入仍为 224，训练必须采用同一流程。
+
+特征固定为：
+
+- CLIP：现有 `rotate → cover 224×224 cubic → sRGB → /255 → CLIP mean/std`，
+  mean `[0.48145466,0.4578275,0.40821073]`，std `[0.26862954,0.26130258,0.27577711]`；
+  `image_embeds` 输出再作 L2 归一化，512 维。
+- DINOv2：现有 `cover 256×256 Lanczos3 → 中心 extract [16,16,224,224] → /255 → ImageNet mean/std`，
+  mean `[0.485,0.456,0.406]`，std `[0.229,0.224,0.225]`；不额外旋转输入，
+  排除 CLS 的 patch 均值再 L2 归一化，384 维。
+- 虹膜组合：同一 384 人脸裁剪送入 MediaPipe Face Landmarker，虹膜/眼角/眼睑与头部矩阵提取
+  `ml/observe/gaze_geometry.py` 中固定顺序的 19 个几何数：每眼 6 个（水平/垂直虹膜偏移、眼睑开度、
+  虹膜半径比、眼轴 sin/cos），左眼后右眼，再接水平/垂直偏移均值、水平偏移绝对值均值、
+  两眼水平偏移之差，最后 yaw/pitch/roll 角度。无有效虹膜或头部矩阵时弃权。
+  原始 19 维先以 Float32 固定，再转 Float64；共享 `geometry_terms_vector(raw19)` 依次输出
+  原始 19 维、绝对值 19 维及含对角线的上三角乘积 190 维（先 i=0,j=0…18，再 i=1,j=1…18，依此类推），
+  共 228 维；最后拼接上述归一化 CLIP 人脸 512 维，共 740 维。只用于展示观察，不参与评分或决定。
+- `full` 直接使用管线的已旋转预览，沿用以上各自整图预处理，不解码原图。
+
+每个属性必须包含：
+
+| 字段 | 要求 |
+|---|---|
+| `id` | `[a-z][a-z0-9-]{0,63}`，正负状态共享同一个 ID |
+| `type` | `"logistic"` 或 `"mlp"`；MLP 为一个最多 8 单元的 ReLU 隐层、一个输出 logit |
+| `weights` | logistic：长度为 D 的有限数数组；MLP：长度 H×D，hidden-input 行优先；或下述量化字节 |
+| `bias` | logistic：有限数；MLP：H 个有限数 |
+| `outputWeights`, `outputBias` | MLP 必填，H 个有限数与一个有限数 |
+| `normalization` | `{mean:[D 个有限数],scale:[D 个严格正有限数]}`；输入为 `(feature-mean)/scale` |
+| `temperature` | 严格正有限数；正类概率 `p=sigmoid(logit/temperature)` |
+| `showThreshold` | `(0.5,1]`；显示所选正/负状态的校准概率达到此阈值的观察 |
+| `positive`, `negative` | `{text:"中文事实文案",tone:"good"\|"bad"\|"neutral"}`，非空且最多 12 个 Unicode 字符；`negative` 可省略，省略时只说正面结论 |
+
+量化 `weights` 为标准 base64 字符串，附带
+`quantization:{dtype:"int8"|"int16le",encoding:"base64"|"gzip-base64",layout:"hidden-input",scales:[每行正比例]}`。
+logistic 视作 H=1；字节数严格等于 H×D×字长；int16 显式按 little-endian 解码。
+解压输出长度有界。每行整数乘对应 scale 后再推理；bias 和输出层保留浮点。
+参考假头见 `test/fixtures/observation-head.json`，不随生产目录自动加载。
+
+若 `p>=0.5` 选正文案，置信度 `p`；否则选负文案，置信度 `1-p`。
+任意非有限特征或 logit 不产生结论。温度和阈值由训练线用独立留出数据校准，运行时不估计。
+
+focus 后新增可选 `progress.stage:"observations"`。完成单元用 `saveUnit` 保存该阶段，可续跑、可取消。
+阶段缓存位于当前 cacheRoot 的 `observations/`，384 裁剪位于其 `crops/`；JSON 原子发布。
+JSON 与裁剪一起计入现有缓存预算，可通过已有全缓存清理回收。
+每组头缓存键含单元 fingerprint、头 version 与全部内容哈希、编码器 SHA、input、主体脸框、
+原图/配对图/预览文件的路径、size、mtime；缺失文件也进入键，后来恢复会失效。
+管线生成的预览使用内容寻址的文件名，忽略 LRU 访问导致的 mtime 变化，避免热缓存被访问动作失效。
+命中时不裁剪、不推理；更换头、模型、输入或框时不复用旧结论。
+没有有效头时删除本次分析内历史缓存的模型观察，避免继续展示已停用头的结果。
+`AnalysisPipeline.run` 返回可选 `observationTimingMs`：`setup,prepareMs,cropMs,inferenceMs,reusedNativeCropMs,stage,total`（毫秒），
+以及 `reusedNativeCrops,cacheHits`；total 为 setup+prepare+focus 内新增裁剪+观察阶段，
+阶段内裁剪不重复计入。进度在启用观察时插入一个临时 0.5% 预算；该预算仅用于 ETA，实际耗时另记。
+
+结果行可新增：
+
+```js
+observations: { version: 'observations-v1-<全部已加载头内容的哈希>', items: [
+  { id: 'smile', text: '在笑', tone: 'good', source: 'model', confidence: 0.93,
+    box: [0.2, 0.1, 0.4, 0.3] }
+] }
+```
+
+`box` 可选，归一化指向原画面位置；face-crop 观察返回原主体脸框，full 观察不附框。
+规则观察使用相同对象，但 `source:"rule"` 且不带置信度。
+W32 新增 `focus-eye`「对焦点在眼部」，为 `neutral`（「对焦点在脸部」正例太少，未上线），
+`box` 指向相机记录的对焦框，只描述记录位置，不保证眼部已合焦。
+仅在 `focus.status === "ok"`、`afSource === "FocusLocation"`、有效对焦点位于有效对焦框内时考虑；
+必须有唯一主体及唯一超过半脸面积落在主体框内的脸，鼻眼关键点置信度 ≥0.65 并匹配该脸，脸高 ≥4%。
+主体脸部曝光测量至少 64 像素，黑/白溢出比例各 <50%，否则不发言；缺测同样弃权。
+必须有两个完整落在该脸内的有效眼框；眼部观察要求对焦点落在其中一个眼框，且两个既有 AF 布尔值都为 `true`；
+脸部观察要求点在脸框四边各内缩 20% 后的中央区域、整个对焦框与双眼框均无交叠，
+且 `afPointOnSubject === true`、`afPointOnEye === false`；脸框边缘可能含头发，不据此发言。
+既有 AF 布尔值聚合所有人脸，不能单独证明主体对焦位置。`na`、未知字段、含糊主体/脸匹配均静默。
+本轮不输出偏离主体、失焦/运动模糊、裁切、遮挡或曝光观察；证据及未上线原因见研究记录的 W32 表。
+`observationsFor(result)` 依次取规则「主体闭眼」、模型项、其余规则观察，同 ID 规则优先，
+维持来源内顺序、过滤无效对象，最多 4 条（模型项排在一般规则之前，避免被路人、朝向等挤掉）；不修改结果行、评分、分组、阈值或建议。
+`groupMembersModel`、`itemAnalysisModel` 都新增 `observations:Observation[]`；旧结果缺字段视为空。
+检查器在对比句下显示「AI 观察（本地）」：✓/✗/· 沿用对比句主题，模型条目悬停显示校准置信度，
+有 box 时在现有对比缩略图上画定位框（也支持键盘聚焦）。单张没有现有缩略图时只显示文字。
+空列表、非结果态或多选时整节隐藏。保持现有 1.5 秒轮询，不增加请求。
+
+组内对比（W32）仍为首选对第二名、其余对首选，默认最多三句，优先闭眼、清晰度/对焦位置及笑/嘴型，
+再报切边、高光、倾斜、朝向/背景和亮度。观察缺失是未声明，不是负例；单侧只说“这张在笑”或“第 1 名嘴张开”，
+不声称另一侧没笑或嘴未张开。同 ID 的两侧声明文字不同时才并列陈述；只有双方明确给出相反好坏状态才给方向性语气。
+闭眼观察仅在 `facts.eyes` 未知时补充闭眼事实，不重复输出；闭眼对未知只陈述已知一侧，不能称另一侧睁眼。
+单侧观察和裁切提示为中性，不表示另一张更好；单侧正脸/侧脸不生成对比句，只保留双方明确的正脸对侧脸。
+空裁切列表不能证明肢体完整。
+背景人物只比较两侧已声明的框占画面面积：面积比至少 2、绝对差至少 0.005 才说占比大小，同 ID 有多框时取最大有效框；
+当前照片占比更大标 `worse`、更小标 `better`，沿用背景人物观察的 bad 语气；单侧存在和仅位置不同不生成对比句。
+不匹配人物身份。该显著差异阈值不是新观察的模型门槛。
+
+`groupMembersModel.facts` 的 `blur`、`tilted` 取 `boolean|null`：未评估保持 `null`；倾斜 warn 也不当作无倾斜。
+对焦位置不生成对比句：单侧缺少 `focus-eye` 只表示未知；`focus.afPointOnEye` 汇总所有检测脸，也不用于对比句。
+眼部/脸部清晰度仍沿用已有聚合测量，并非人物身份匹配。历史结果无需重算；这些派生展示字段不回写结果或人工决定。
+无事实句时的总分说明也不再由另一侧的警告标记缺失推导“这张没有闭眼”等结论。
+
+只使用已有依赖和模型会话，无线上模型调用。未在 Windows 实测。
+
+W34 的 `scripts/observe-vlm-prepare.mjs`、`scripts/observe-vlm-ray.py` 和 `ml/observe/vlm_eval*.py`
+仅为独立离线研究入口，不由分析管线或检查器导入，不新增观察来源或运行时下载。
+研究作业只允许在 Ray 上显式执行；提交前校验包内照片为无元数据、长边不超过 768 的 JPEG。
+原生作业只预留一张 GPU，提交时持共享锁检查本线单作业与项目资源上限，提交返回后立即释放锁。
+经用户批准，项目最多三个活动作业，其中申请 GPU 的最多两个，每作业最多两张 GPU；第三个必须显式不申请 GPU。
+按提交的 entrypoint 资源分类，正数申请即 GPU 作业；资源不明按 GPU 计，不根据进程命令或 CUDA 使用量猜测。
+Ray 列表若省略 entrypoint 字段，则读取提交器从实际资源生成的 `ecp_requested_gpus` 元数据回执；该回执覆盖调用者提供的同名值。
+计分把缺答、解析失败和“看不清”保留为弃权；报告三次复问一致策略的正例精确率、Wilson 下限和条数，
+不用多数负例形成的整体准确率替代上线门槛。具体许可与实测结论见观察研究文档 6.6、6.8 节。
+W35 复用同一清单、问卷与计分，模型家族适配只改变加载及原生视觉预处理。
+新模型家族与原生量化加载须记录完整加载诊断；缺失、多余、形状不符或转换错误均拒绝，
+不能把部分随机初始化后仍能生成的模型计作成功。W34 原有 Qwen3-VL 加载路径保持不变。
+模型 revision 必须为完整提交哈希；启用远程代码时，代码 revision 必须与权重相同，离线加载固定快照。
+MiniCPM 压缩倍率在处理器和生成器两侧保持一致；单卡显存预算显式记录，默认仍为 12 GiB。
+W35 使用独立作业前缀与缓存目录，保留共享锁及项目并发限制；不接入运行时或改变展示之外的任何决定。
+评分器的可选 `--statements` 会在独立结果文件中补报所有反向陈述：预测与参照同时反转，
+弃权不变，使用相同条数、精确率与 Wilson 门槛，并给出恒说反状态的参照基线。
+此分析不改变已有正状态报告；事后发现的候选不得当作预先注册的独立上线验收。
+
+W35 的 `scripts/observe-vlm-gguf-ray.py` 与 `ml/observe/vlm_eval_gguf_ray.py` 另测 GGUF 部署形态，
+仍为 Ray 离线研究，本线最多一个作业。可选两个独立单卡副本在同作业内按清单序号交错分片，
+同项三问不拆分、每副本单 slot 且参数一致；合并拒绝重复、遗漏及跨片身份，保留每副本 CUDA 与显存回执。语言权重、投影器及 llama.cpp 源码分别固定完整 revision，下载后逐文件校验 SHA-256；
+模型文件只由 Ray 从公开仓库下载，本机打包与结果回传均不包含模型文件。
+CUDA 构建和安装调试最多一小时；临时 `llama-server` 只绑定该 Ray 节点的 loopback，随作业回收，
+不调用分析服务或 Windows。复用既有锁、清单、问卷、计分器、三问策略与门槛；无受约束 JSON 解码。
+固定 greedy、种子、256 输出 token、4,096 上下文、单 slot、关闭 thinking 和 prompt KV 复用；
+服务器显式关闭 reasoning 并把空 reasoning 标记与正文分开，不加 reasoning 预算强制采样；正文仍由原计分器直接解析，不剥标记修补答案。
+非空 reasoning 计调用错误；冒烟在任一纳入数据集完全没有可解析问卷时失败，防止输出格式配置错误进入全量。
+上下文溢出、缺少 token／计时／零缓存证明或调用失败均保留为执行错误，不能补猜答案。
+分别记录服务器视觉编码／prefill／decode 计算区间、HTTP 往返和完整调用，显存为指定卡的采样峰值。
+GGUF 与原生 Transformers 的模板、视觉实现及 kernel 不同；质量差值属于部署形态对照，不能全部归因于位宽，
+也不能直接作为“单张评价＋后期建议”等其它用途的验收。

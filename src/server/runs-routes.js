@@ -1,3 +1,4 @@
+import { resultAiTags } from './item-analysis.js';
 import { parsePerformanceMode, configuredPerformanceMode } from '../core/performance-mode.js';
 import { RunProgress, measuredWeights } from '../core/run-progress.js';
 import { Checkpoints } from "../core/checkpoints.js";
@@ -445,7 +446,7 @@ export function createRunsRouter({
             run,
             ...(state?.page ? { page: state.page } : {}),
             units: state?.units || [],
-            results: state?.results || [],
+            results: (state?.results || []).map(result => ({ ...result, aiTags: resultAiTags(state, result) })),
             groups: reviewGroups(state),
             groupOverrides: state?.groupOverrides,
             writebackAvailable: Boolean(state?.applied?.length),

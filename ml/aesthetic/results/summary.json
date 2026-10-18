@@ -1,0 +1,271 @@
+{
+  "ava": {
+    "train_n": 19999,
+    "generic_test_n": 5000,
+    "alpha": 100,
+    "cv": "5-fold train-only standardization; negative MSE",
+    "seed": 26,
+    "teacher_ava_mos": {
+      "srcc": 0.7502651123731283,
+      "plcc": 0.7565114991194607
+    },
+    "architecture_cv_srcc": {
+      "ridge": [
+        0.5446337539950094,
+        0.5564882154847104,
+        0.5836989503224248
+      ],
+      "mlp8": [
+        0.49323123941327573,
+        0.5022534816578951,
+        0.5113262692073118
+      ]
+    },
+    "selected": "ridge",
+    "seconds": 12.706380749994423,
+    "sklearn": "1.8.0",
+    "numpy": "2.5.1",
+    "mlp_epochs": 136,
+    "metrics": {
+      "ridge": {
+        "teacher": {
+          "srcc": 0.5789658868824258,
+          "plcc": 0.5971996292630702
+        },
+        "ava_mos": {
+          "srcc": 0.5049870890803438,
+          "plcc": 0.5185168529588163
+        }
+      },
+      "mlp8": {
+        "teacher": {
+          "srcc": 0.5723912029711229,
+          "plcc": 0.5844709799431295
+        },
+        "ava_mos": {
+          "srcc": 0.49737272653420345,
+          "plcc": 0.5033791980533103
+        }
+      },
+      "exported": {
+        "teacher": {
+          "srcc": 0.5789658868824258,
+          "plcc": 0.5971996292630702
+        },
+        "ava_mos": {
+          "srcc": 0.5049870890803438,
+          "plcc": 0.5185168529588163
+        }
+      }
+    }
+  },
+  "local": {
+    "n": 291,
+    "scored_n": 291,
+    "human_n": 23,
+    "head": {
+      "pairs": 59,
+      "agreement": 0.15254237288135594,
+      "groups": 1,
+      "model_ties": 0,
+      "ties_credit": 0.5,
+      "human_ties": "excluded"
+    },
+    "score": {
+      "pairs": 59,
+      "agreement": 1.0,
+      "groups": 1,
+      "model_ties": 0,
+      "ties_credit": 0.5,
+      "human_ties": "excluded"
+    },
+    "raw_result_score": {
+      "pairs": 59,
+      "agreement": 0.15254237288135594,
+      "groups": 1,
+      "model_ties": 0,
+      "ties_credit": 0.5,
+      "human_ties": "excluded"
+    },
+    "score_source": "groups[].ranking[].score; fallback results[].score",
+    "js_max_abs_difference": 1.6653345369377348e-15,
+    "teacher": {
+      "n": 60,
+      "srcc": 0.5190886357321479,
+      "plcc": 0.43729895755554715
+    }
+  },
+  "latency": {
+    "head_version": "dinov2-ava-topiq-ridge-v1",
+    "iterations": 10000,
+    "compatible_rows": 291,
+    "mean_ms": 0.00846470000000013,
+    "median_ms": 0.007709000000005517,
+    "p95_ms": 0.010374999999996248,
+    "max_ms": 0.14291699999999707,
+    "head_bytes": 7260,
+    "checksum": 4596.09158057204
+  },
+  "extraction": {
+    "train_n": 19999,
+    "test_n": 5000,
+    "skipped_train": [
+      {
+        "skipped": "729377",
+        "error": "OSError"
+      }
+    ],
+    "reused": 24541,
+    "elapsed_s": 29.900802798569202,
+    "teacher_sha256": "1507e13834b375822b426adcf9984c1d2293d91270c887ff524bde7e32aed1ad",
+    "dino_sha256": "83141175ec78b4ff9a2bb58a4c7c264ba0054d1c2e122e5a8114b79a8d4179ea",
+    "seed": 26,
+    "train_list": "train_splits/ILGnet_train.txt",
+    "excluded_test_ids": 38465,
+    "cpu_workers": 32
+  },
+  "local_teacher": {
+    "n": 60,
+    "threads": 2,
+    "mean_ms": 643.6226409462203,
+    "p95_ms": 706.5005743555956
+  },
+  "parity": {
+    "modelSha256": "83141175ec78b4ff9a2bb58a4c7c264ba0054d1c2e122e5a8114b79a8d4179ea",
+    "n": 20,
+    "cosine_min": 0.9999999999949145,
+    "cosine_mean": 0.9999999999985348,
+    "pass": true,
+    "pixel_max_diff": 0,
+    "pixel_mean_abs_diff": 0.0
+  },
+  "ray_jobs": [
+    {
+      "id": "w26-aes-train-remaining-inspect",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    },
+    {
+      "id": "w26-aes-teacher-transfer-1",
+      "status": "STOPPED",
+      "driver_exit_code": null
+    },
+    {
+      "id": "w26-aes-archive-inspect",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    },
+    {
+      "id": "w26-aes-parity-approved",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    },
+    {
+      "id": "w26-aes-extract-cpu-2",
+      "status": "FAILED",
+      "driver_exit_code": 1
+    },
+    {
+      "id": "w26-aes-remaining-inspect",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    },
+    {
+      "id": "w26-aes-teacher-transfer-2",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    },
+    {
+      "id": "w26-aes-extract-stream-1",
+      "status": "FAILED",
+      "driver_exit_code": 1
+    },
+    {
+      "id": "w26-aes-split-inspect",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    },
+    {
+      "id": "w26-aes-extract-stream-2",
+      "status": "STOPPED",
+      "driver_exit_code": null
+    },
+    {
+      "id": "w26-aes-extract-cpu-4",
+      "status": "FAILED",
+      "driver_exit_code": 1
+    },
+    {
+      "id": "w26-aes-extract-cpu-3",
+      "status": "STOPPED",
+      "driver_exit_code": null
+    },
+    {
+      "id": "w26-aes-decode-inspect",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    },
+    {
+      "id": "w26-aes-probe-2",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    },
+    {
+      "id": "w26-aes-parity-1",
+      "status": "FAILED",
+      "driver_exit_code": null
+    },
+    {
+      "id": "w26-aes-progress-inspect",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    },
+    {
+      "id": "w26-aes-parity-cpu-2",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    },
+    {
+      "id": "w26-aes-probe-1",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    },
+    {
+      "id": "w26-aes-extract-stream-3",
+      "status": "STOPPED",
+      "driver_exit_code": null
+    },
+    {
+      "id": "w26-aes-resume-1",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    },
+    {
+      "id": "w26-aes-extract-cpu-1",
+      "status": "STOPPED",
+      "driver_exit_code": null
+    },
+    {
+      "id": "w26-aes-parity-cpu-1",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    },
+    {
+      "id": "w26-aes-parity-cpu-3",
+      "status": "SUCCEEDED",
+      "driver_exit_code": 0
+    }
+  ],
+  "verification": {
+    "node_tests": {
+      "total": 549,
+      "passed": 546,
+      "failed": 0,
+      "skipped": 3
+    },
+    "active_ray_jobs": 0,
+    "local_input_metadata_unchanged": true,
+    "user_data_uploaded": false,
+    "niceness": 10
+  }
+}

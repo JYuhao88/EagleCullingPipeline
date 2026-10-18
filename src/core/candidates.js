@@ -4,6 +4,7 @@
  * this module describes the set a reviewer may want to keep side by side.
  */
 import { createRequire } from "node:module";
+import { metricsWithoutAestheticReference } from './aesthetic-head.js';
 import { rulePenalty } from "./ranking.js";
 
 const require = createRequire(import.meta.url);
@@ -31,7 +32,7 @@ function crop(item) {
 
 /** Return normalized, explainable objectives. Missing signals remain unknown. */
 export function candidateDimensions(item) {
-  const metrics = item?.metrics || {};
+  const metrics = metricsWithoutAestheticReference(item);
   return {
     sharpness: finite(metrics.sharpness),
     exposure: finite(metrics.exposureSuitability ?? metrics.exposure ?? item?.exposure),

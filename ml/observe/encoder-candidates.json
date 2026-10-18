@@ -1,0 +1,131 @@
+{
+  "models": [
+    {
+      "id": "siglip2-base",
+      "repo": "google/siglip2-base-patch16-224",
+      "revision": "75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2",
+      "family": "siglip",
+      "dimensions": 768,
+      "license": "Apache-2.0",
+      "input": {
+        "size": 224,
+        "mean": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "std": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "resize": "square",
+        "resizeSize": 224,
+        "crop": "none",
+        "kernel": "cubic"
+      }
+    },
+    {
+      "id": "siglip2-so400m",
+      "repo": "google/siglip2-so400m-patch14-384",
+      "revision": "e8e487298228002f3d8a82e0cd5c8ea9c567f57f",
+      "family": "siglip",
+      "dimensions": 1152,
+      "license": "Apache-2.0",
+      "input": {
+        "size": 384,
+        "mean": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "std": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "resize": "square",
+        "resizeSize": 384,
+        "crop": "none",
+        "kernel": "cubic"
+      }
+    },
+    {
+      "id": "dinov2-base",
+      "repo": "facebook/dinov2-base",
+      "revision": "f9e44c814b77203eaa57a6bdbbd535f21ede1415",
+      "family": "dino",
+      "dimensions": 768,
+      "license": "Apache-2.0",
+      "input": {
+        "size": 224,
+        "mean": [
+          0.485,
+          0.456,
+          0.406
+        ],
+        "std": [
+          0.229,
+          0.224,
+          0.225
+        ],
+        "resize": "shortest",
+        "resizeSize": 256,
+        "crop": "center",
+        "kernel": "cubic"
+      }
+    },
+    {
+      "id": "dinov2-large",
+      "repo": "facebook/dinov2-large",
+      "revision": "47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+      "family": "dino",
+      "dimensions": 1024,
+      "license": "Apache-2.0",
+      "input": {
+        "size": 224,
+        "mean": [
+          0.485,
+          0.456,
+          0.406
+        ],
+        "std": [
+          0.229,
+          0.224,
+          0.225
+        ],
+        "resize": "shortest",
+        "resizeSize": 256,
+        "crop": "center",
+        "kernel": "cubic"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "name": "oi",
+      "manifest": "oi/manifest.jsonl",
+      "root": "ceph",
+      "imageRoot": "photography/eagle-culling/observe/openimages-v1"
+    },
+    {
+      "name": "panel",
+      "manifest": "panel/manifest.jsonl",
+      "root": "local"
+    },
+    {
+      "name": "p0",
+      "manifest": "p0/manifest.jsonl",
+      "root": "local"
+    }
+  ],
+  "expectedCounts": {
+    "oi": 8000,
+    "panel": 786,
+    "p0": 605
+  },
+  "output": "output",
+  "batchSize": 16,
+  "train": true,
+  "exportBatchSize": 1
+}

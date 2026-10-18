@@ -40,6 +40,18 @@ test('usage counts every cache category and skips symlinks', async t => {
   assert.deepEqual(usage.categories.find(row => row.name === 'previews'), { name: 'previews', label: '预览', bytes: 110, files: 2 });
 });
 
+test('observation results and bounded face crops count toward the shared cache budget and can be cleared', async t => {
+  const root = await fixture(t);
+  const result = await put(root, 'observations/head.json', 80, 3);
+  const crop = await put(root, 'observations/crops/face.png', 20, 3);
+  const usage = await cacheUsage(root);
+  assert.equal(usage.totalBytes, 100);
+  assert.deepEqual(usage.categories.find(row => row.name === 'observations'),
+    { name: 'observations', label: 'AI 观察', bytes: 100, files: 2 });
+  await enforceCacheBudget({ cacheRoot: root, maxBytes: 0, scope: 'all', now: NOW });
+  assert.equal(await exists(result), false); assert.equal(await exists(crop), false);
+});
+
 test('budget evicts derived previews in pairs before results, oldest first, down to 90 percent', async t => {
   const root = await fixture(t);
   const oldPreview = await put(root, 'previews/old.jpg', 300, 10);

@@ -20,7 +20,7 @@ export const analysisStages = [
 ];
 export function stageIndex(stage) {
   if (["scanning", "pairing"].includes(stage)) return 0;
-  return { metrics: 1, embedding: 2, faces: 3, pose: 4, focus: 5, grouping: 6, ranking: 7, done: 8 }[stage] ?? 0;
+  return { metrics: 1, embedding: 2, faces: 3, pose: 4, focus: 5, observations: 5, grouping: 6, ranking: 7, done: 8 }[stage] ?? 0;
 }
 
 export function durationText(seconds) {
@@ -44,7 +44,7 @@ export function analysisProgress(run, now = Date.now()) {
   }
   const remainingSeconds = active ? progressEstimate(run) : run.status === "completed" ? 0 : null;
   const stage = run.status === "completed" ? "完成" : run.status === "queued" ? "等待分析"
-    : progress.stage ? analysisStages[stageIndex(progress.stage)] : "准备分析";
+    : progress.stage === 'observations' ? 'AI 观察' : progress.stage ? analysisStages[stageIndex(progress.stage)] : "准备分析";
   const remaining = remainingSeconds === null ? active ? "估算中…" : "未记录" : durationText(remainingSeconds);
   const percentage = overallPercent === null ? "总体进度待估算" : `总体 ${Math.floor(overallPercent)}%`;
   return { overallPercent, elapsedSeconds, remainingSeconds, stage,

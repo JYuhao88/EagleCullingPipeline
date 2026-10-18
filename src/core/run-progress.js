@@ -23,6 +23,7 @@ export class RunProgress {
     this.now = now;
     this.started = now();
     this.weights = { ...PROGRESS_WEIGHTS, ...weights };
+    this.stages = [...stages];
     const sum = Object.values(this.weights).reduce((a, b) => a + b, 0);
     for (const stage of stages) this.weights[stage] /= sum;
     this.windowMs = windowMs;
@@ -35,7 +36,12 @@ export class RunProgress {
 
   update(progress) {
     const now = this.now();
-    const index = stages.indexOf(progress.stage);
+    if (progress.stage === 'observations' && !this.stages.includes('observations')) {
+      this.stages.splice(this.stages.indexOf('grouping'), 0, 'observations');
+      for (const stage of stages) this.weights[stage] *= .995;
+      this.weights.observations = .005;
+    }
+    const index = this.stages.indexOf(progress.stage);
     if (this.stage !== progress.stage) {
       if (this.stage) this.durations[this.stage] = (this.durations[this.stage] || 0) + now - this.stageStarted;
       this.stage = progress.stage;
@@ -53,7 +59,7 @@ export class RunProgress {
     const completed = Math.max(0, Number(progress.completed) || 0);
     const total = Math.max(0, Number(progress.total) || 0);
     const fraction = total ? Math.min(1, completed / total) : 0;
-    const prefix = stages.slice(0, Math.max(0, index)).reduce((sum, stage) => sum + this.weights[stage], 0);
+    const prefix = this.stages.slice(0, Math.max(0, index)).reduce((sum, stage) => sum + this.weights[stage], 0);
     const weighted = index < 0 ? 0 : prefix + this.weights[progress.stage] * fraction;
     this.overall = progress.stage === 'done' ? 1 : Math.max(this.overall, Math.min(0.999, weighted));
     if (this.samples.length && completed < this.samples.at(-1).completed) this.samples = [];

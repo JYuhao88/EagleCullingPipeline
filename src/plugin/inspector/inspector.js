@@ -7,11 +7,20 @@ import { createCodeReload, fetchPluginStamp } from '../code-reload.js';
 import { canSelectInEagle, showInEagle } from '../eagle-select.js';
 import { groupTarget, neighbourGroups, patchRows, runGroups, runProgress, selectionSummary, unitItems }
   from './inspector-groups.js';
-import { FOLD_OVER, compareTable, differenceLine, keepTopDecisions, scoreBars, visibleRows } from './inspector-compare.js';
+import { COLUMNS, FOLD_OVER, compareTable, contrastLines, differenceLine, keepTopDecisions, scoreBars, visibleRows }
+  from './inspector-compare.js';
 import { createLiveWriteback } from '../live-writeback.js';
+import { createDetailView } from './inspector-detail.js';
 
 const BADGES = { selected: '精', candidate: '候', rejected: '汰' };
 const MARKS = { selected: '★5', candidate: '★3', rejected: '★1' };
+export function observationLines(items = []) {
+  return (Array.isArray(items) ? items : []).filter(item => item && typeof item.text === 'string'
+    && ['good', 'bad', 'neutral'].includes(item.tone)).slice(0, 4).map(item => ({ ...item,
+    className: `contrast ${{ good: 'better', bad: 'worse', neutral: 'neutral' }[item.tone]}`,
+    title: item.source === 'model' && Number.isFinite(item.confidence)
+      ? `校准置信度 ${Math.round(item.confidence * 100)}%` : '' }));
+}
 // One line about the whole group: AI split, how many you decided, and whether the grouping needs a look.
 export function groupSummary(result) {
   const members = result?.groupMembers || [];
@@ -41,6 +50,23 @@ export function inspectorModel({ state, result } = {}) {
         ? new Date(result.analyzedAt).toLocaleString('zh-CN') : '时间未记录'}`].filter(Boolean),
     reasons: [...(result.reasons || []), ...(result.humanReason ? [`人工理由：${result.humanReason}`] : [])] };
 }
+const PERSONALIZE_NAMES = { ...Object.fromEntries(COLUMNS.map(column => [column.key, column.name])), eyes: '睁眼比例' };
+export function personalizationModel(report, { armed = false, busy = false, error = '' } = {}) {
+  const rate = value => Number.isFinite(value) ? `${Math.round(value * 100)}%` : '—';
+  const learned = report ? `按你的 ${report.labeledGroups ?? 0} 个选优决定学习` : '正在读取学习情况…';
+  const accuracy = report?.before && report?.after
+    ? `；留出一致率 ${rate(report.after.top1?.rate)}，默认 ${rate(report.before.top1?.rate)}` : '';
+  const factors = Object.entries(report?.weights || {}).filter(([key, value]) => PERSONALIZE_NAMES[key] && Number.isFinite(value))
+    .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1])).slice(0, 3)
+    .map(([key, value]) => `${PERSONALIZE_NAMES[key]}（${value < 0 ? '负向' : '正向'}）`).join('、');
+  const hint = !report || report.ready ? '' : report.reason === 'insufficient-data'
+    ? '请继续挑选各组最喜欢的一张，需要更多有时间记录、内容独立的训练和留出样本'
+    : '留出一致率尚未稳定优于默认建议，请继续挑选以积累偏好';
+  return { summary: learned + accuracy, factors: factors ? `最影响的因素：${factors}` : '', hint, error,
+    applied: report?.applied ? `已调整 ${report.applied.changedGroups} 组` : '',
+    button: busy ? '处理中…' : armed ? '确认应用' : `应用到剩余 ${report?.remainingGroups ?? 0} 组`,
+    disabled: busy || !report?.ready || !report?.remainingGroups, undoDisabled: busy };
+}
 const ADVANCE_KEY = 'eagle-culling-inspector-advance';
 // Next queue row after the current unit in group/rank order, wrapping; never the current unit itself.
 export function nextInQueue(rows, unitId, order = null) {
@@ -59,7 +85,7 @@ const ACTION_NAMES = { selected: '精选', candidate: '候选', rejected: '淘�
 // time, so sessionStorage does not carry over.
 const SESSION = { queue: 'eagle-culling-inspector-queue', group: 'eagle-culling-inspector-group',
   height: 'eagle-culling-inspector-height', note: 'eagle-culling-inspector-note', expanded: 'eagle-culling-table-expanded',
-  keep: 'eagle-culling-inspector-keep' };
+  keep: 'eagle-culling-inspector-keep', personalize: 'eagle-culling-inspector-personalize' };
 const QUEUE_FIELDS = ['unitId', 'primaryItemId', 'itemIds', 'groupId', 'groupIndex', 'rank', 'suggested', 'human',
   'confidence', 'flags', 'unitFlags'];
 const QUEUE_TTL = 60000;
@@ -134,9 +160,13 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   let queue = { runId: null, rows: [], at: 0 }, queueLoad = null;
   // The server keeps one undo stack per run; 撤销 pops only the operations made from this panel.
   let saving = 0, regroupUndo = 0, armed = null;
+  let personal = { runId: null, report: null, at: -Infinity }, personalLoad = null, personalBusy = false;
+  let aiTagsArmed = null, aiTagsTimer, aiTagsBusy = false, aiTagsStatus = '';
+  let personalArmed = null, personalTimer, personalError = '', personalRevision = 0;
   const el = id => root.querySelector(`#${id}`);
   const baseUrl = () => (storage.getItem('eagle-culling-base') || 'http://127.0.0.1:43125').replace(/\/$/, '');
   const runRows = () => queue.runId && queue.runId === current.result?.runId ? queue.rows : [];
+  const detail = createDetailView({ root, storage, baseUrl });
   const selectedIds = (selected = current.selected) => selected.map(item => item?.id || item).filter(Boolean);
   const canSelect = () => canSelectInEagle(eagle);
   // A switch started from this panel is drawn at once; the snapshot it leaves covers the page Eagle builds next.
@@ -154,6 +184,8 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   const previewUrl = (runId, unitId) => `${baseUrl()}/runs/${encodeURIComponent(runId)}/preview/${encodeURIComponent(unitId)}`;
   // Re-rendering reuses the decoded <img> nodes (also the ones restored from the snapshot) so thumbnails never blink.
   const pool = new Map();
+  const observationFrames = new Map();
+  let observationOverlays = [];
   let epoch = 0;
   // A reloaded page cannot paint URL images in its first frame, but a data: image with sync decoding is ready at once.
   // Every member of the shown group keeps such a still (preview URL -> data: URL) so any snapshot can carry them.
@@ -287,6 +319,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   function render(state, result, selected = current.selected) {
     if (state !== current.state || result?.unitId !== current.result?.unitId) trace(`render ${state} ${result?.unitId || ''}`, storage);
     current = { state, result, selected }; epoch++;
+    clearObservationBoxes(); observationFrames.clear();
     if (state === 'result') preloadGroup(result);
     const model = inspectorModel({ state, result });
     const units = state === 'result' ? selectedUnits(selected) : { count: selected.length, units: [], groupCount: 0 };
@@ -320,15 +353,13 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     const group = el('groupContext');
     if (group) group.textContent = state === 'result' ? groupSummary({ ...result, groupIndex }) : '';
     const difference = el('difference');
-    if (difference) {
-      difference.textContent = compared && !multi ? differenceLine(result.groupMembers, result.unitId) : '';
-      difference.hidden = !difference.textContent;
-    }
+    if (difference) renderDifference(difference, compared && !multi ? result : null);
     const position = el('position');
     if (position) position.textContent = state === 'result' && !multi && result.groupSize > 1
       ? `第 ${result.rank ?? '—'} / ${result.groupSize} 名` : '';
     renderTable(compared ? result : null, selected);
     renderPair(compared && !multi ? result : null);
+    renderObservations(state === 'result' && !multi ? result : null);
     renderChart(compared ? result : null, selected);
     renderKeep(compared && !multi ? result : null);
     if (compared && result.groupId) sessionSet(SESSION.group, { runId: result.runId, groupId: result.groupId, result });
@@ -341,12 +372,26 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
       accept.textContent = undecided.length ? `按 AI 建议 ${undecided.length}` : '已全部决定';
       accept.title = undecided.length ? `本组未决定的 ${undecided.length} 张按 AI 建议决定，已决定的不变` : '';
     }
+    const aiTags = el('aiTags');
+    if (aiTags) {
+      const tags = state === 'result' && !multi ? (result.aiTags || []).map(row => row.tag) : [];
+      const key = JSON.stringify(tags);
+      if (aiTags.dataset?.tags !== key) {
+        aiTags.replaceChildren(...tags.map(tag => {
+          const node = root.createElement('span'); node.textContent = tag; return node;
+        }));
+        if (aiTags.dataset) aiTags.dataset.tags = key;
+      }
+      aiTags.hidden = !tags.length;
+    }
     const tags = el('tagsState');
     if (tags) tags.textContent = model.tagsOn ? 'AI 标签已开启' : 'AI 标签未开启';
     const fallback = el('eagleFallback');
     if (fallback) fallback.hidden = canSelect();
     renderRun();
+    syncPersonalization();
     renderMarksToggle(compared ? result : null);
+    detail.render(state === 'result' && !multi ? result : null);
     if (state !== 'loading') { releaseHeight(); saveSnapshot(); }
   }
   function renderMarksToggle(result) {
@@ -376,6 +421,84 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     }
     sessionSet(SNAPSHOT_KEY, { sig, at: now(), ids: ids.length ? ids : selectedIds(), html, height: body?.scrollHeight || 0 });
   }
+  function renderPersonalization() {
+    const box = el('personalize'); if (!box) return;
+    const runId = current.state === 'result' ? current.result?.runId : null;
+    box.hidden = !runId;
+    const report = personal.runId === runId ? personal.report : null;
+    const model = personalizationModel(report, { armed: personalArmed !== null, busy: personalBusy, error: personalError });
+    for (const [id, text] of [['personalizeSummary', model.summary], ['personalizeFactors', model.factors],
+      ['personalizeHint', model.hint], ['personalizeError', model.error],
+      ['personalizeApplied', model.applied ? `${model.applied} ·` : '']]) {
+      const node = el(id); if (node) { node.textContent = text; node.hidden = !text; }
+    }
+    const apply = el('personalizeApply');
+    if (apply) { apply.textContent = model.button; apply.disabled = model.disabled; }
+    const undo = el('personalizeUndo');
+    if (undo) { undo.hidden = !report?.applied; undo.disabled = model.undoDisabled; }
+    saveSnapshot();
+  }
+  function syncPersonalization() {
+    const runId = current.state === 'result' ? current.result?.runId : null;
+    if (personal.runId !== runId) {
+      personalRevision++; clearTimeout(personalTimer); personalArmed = null; personalError = '';
+      const cached = sessionGet(SESSION.personalize);
+      personal = cached?.runId === runId ? cached : { runId, report: null, at: -Infinity };
+    }
+    renderPersonalization();
+    if (runId && !personalBusy && now() - personal.at >= 15000) void loadPersonalization();
+  }
+  async function loadPersonalization(force = false) {
+    const runId = personal.runId;
+    if (!runId || (personalLoad?.runId === runId && !force)) return personalLoad?.promise;
+    const revision = ++personalRevision;
+    const promise = (async () => {
+      try {
+        const response = await fetchImpl(`${baseUrl()}/runs/${encodeURIComponent(runId)}/personalize`,
+          { signal: AbortSignal.timeout(8000) });
+        if (!response.ok) throw new Error('读取失败');
+        const report = await response.json();
+        if (disposed || revision !== personalRevision || personal.runId !== runId) return;
+        personal = { runId, report, at: now() }; personalError = '';
+        sessionSet(SESSION.personalize, personal); renderPersonalization();
+      } catch {
+        if (!disposed && revision === personalRevision) {
+          personal.at = now(); personalError = '学习情况读取失败，请稍后重试'; renderPersonalization();
+        }
+      }
+    })().finally(() => { if (personalLoad?.promise === promise) personalLoad = null; });
+    personalLoad = { runId, promise }; return promise;
+  }
+  async function personalize(mode = 'apply') {
+    const runId = current.result?.runId;
+    if (current.state !== 'result' || personal.runId !== runId || personalBusy) return;
+    if (mode === 'apply') {
+      if (!personal.report?.ready || !personal.report.remainingGroups) return;
+      if (personalArmed === null || now() - personalArmed >= 3000) {
+        clearTimeout(personalTimer); personalArmed = now(); personalError = ''; renderPersonalization();
+        personalTimer = setTimeout(() => {
+          personalArmed = null; if (!disposed) renderPersonalization();
+        }, 3000); personalTimer?.unref?.(); return;
+      }
+    } else if (mode !== 'undo' || !personal.report?.applied) return;
+    clearTimeout(personalTimer); personalArmed = null; personalBusy = true; personalError = '';
+    personalRevision++; saving++; renderPersonalization();
+    try {
+      const response = await fetchImpl(`${baseUrl()}/runs/${encodeURIComponent(runId)}/personalize/${mode}`,
+        { method: 'POST', signal: AbortSignal.timeout(15000) });
+      if (disposed || personal.runId !== runId) return;
+      if (!response.ok) {
+        personalError = response.status === 409 ? '偏好尚未稳定优于默认建议，请继续挑选' : '操作失败，请稍后重试';
+        return;
+      }
+      await loadPersonalization(true);
+      await queueLoad?.promise;
+      staleQueue(); lastKey = ''; lastFetch = 0;
+      await loadQueue(runId); await refresh(true);
+    } catch {
+      if (personal.runId === runId) personalError = '操作未完成，请稍后刷新查看';
+    } finally { personalBusy = false; saving--; if (!disposed) renderPersonalization(); }
+  }
   function renderRun() {
     const rows = runRows(), result = current.state === 'result' ? current.result : null;
     const progress = runProgress(rows), groups = runGroups(rows);
@@ -393,6 +516,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
       button.disabled = saving > 0 || !count;
       button.textContent = armed?.mode === button.dataset.bulk ? `再点一次：${count} 张` : `${BULK[button.dataset.bulk].label}（${count}）`;
     }
+    renderAiTagActions();
     const box = el('neighbours'); if (!box) return;
     const neighbours = result ? neighbourGroups(groups, result.groupId) : [];
     box.hidden = !neighbours.length;
@@ -438,14 +562,16 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
       line.dataset.suggested = row.suggested;
       if (row.itemIds.some(id => chosen.has(id))) line.classList.add('current');
       const flags = (row.flags || []).map(flag => FLAG_LABELS[flag]).filter(Boolean);
-      line.title = [`第 ${row.rank} 名`, `AI 建议${ACTION_NAMES[row.suggested]}`,
-        row.human ? `你的决定：${MARKS[row.human]}` : '', ...flags].filter(Boolean).join(' · ');
+      line.title = [[row.name, `第 ${row.rank} 名`, `AI 建议${ACTION_NAMES[row.suggested]}`,
+        row.human ? `你的决定：${MARKS[row.human]}` : '', ...flags].filter(Boolean).join(' · '),
+      (row.reasons || []).join('，')].filter(Boolean).join('\n');
       const rank = cell('td', `${row.rank} ${BADGES[row.suggested] || '候'}${row.human ? ` ${MARKS[row.human]}` : ''}`);
       rank.className = 'rank';
       if (flags.length) rank.append(cell('span', ' !', flags.join('、')));
       const thumb = root.createElement('td'); thumb.className = 'thumb';
       const frame = root.createElement('div'); frame.className = 'frame';
       const image = pooledImage(previewUrl(result.runId, row.unitId));
+      rememberObservationFrame(row.unitId, frame, image);
       frame.append(image); drawMarks(frame, image, row.marks); thumb.append(frame);
       line.append(thumb, rank, ...row.cells.map(item => {
         const node = cell('td', item.text); if (item.best) node.className = 'best'; return node;
@@ -521,6 +647,64 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     sessionSet(SESSION.expanded, sessionGet(SESSION.expanded) === groupId ? null : groupId);
     render(current.state, current.result, current.selected);
   }
+  // Concrete differences first; the score summary only when nothing concrete separates the two photos.
+  function renderDifference(node, result) {
+    node.replaceChildren?.();
+    const lines = result ? contrastLines(result.groupMembers, result.unitId) : [];
+    if (lines.length && node.append) {
+      for (const line of lines) {
+        const row = root.createElement('span');
+        row.className = `contrast ${line.tone}`; row.textContent = line.text;
+        node.append(row);
+      }
+    } else node.textContent = result ? differenceLine(result.groupMembers, result.unitId) : '';
+    node.hidden = !lines.length && !node.textContent;
+  }
+  function rememberObservationFrame(unitId, frame, image) {
+    const frames = observationFrames.get(unitId) || [];
+    frames.push({ frame, image }); observationFrames.set(unitId, frames);
+  }
+  function clearObservationBoxes() {
+    for (const overlay of observationOverlays) overlay.remove?.();
+    observationOverlays = [];
+  }
+  function showObservationBox(unitId, box) {
+    clearObservationBoxes();
+    if (!root.createElementNS || !Array.isArray(box) || box.length !== 4
+      || !box.every(value => Number.isFinite(value) && value >= 0 && value <= 1) || box[2] <= box[0] || box[3] <= box[1]) return;
+    for (const { frame, image } of observationFrames.get(unitId) || []) {
+      const svg = root.createElementNS(SVG, 'svg'), rect = root.createElementNS(SVG, 'rect');
+      svg.setAttribute('class', 'marks observation-box'); svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+      rect.setAttribute('vector-effect', 'non-scaling-stroke'); svg.append(rect);
+      const draw = () => {
+        const w = image.naturalWidth, h = image.naturalHeight;
+        if (!w || !h) return;
+        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+        for (const [key, value] of Object.entries({ x: box[0] * w, y: box[1] * h,
+          width: (box[2] - box[0]) * w, height: (box[3] - box[1]) * h })) rect.setAttribute(key, String(value));
+      };
+      if (image.complete && image.naturalWidth) draw(); else image.addEventListener?.('load', draw, { once: true });
+      frame.append(svg); observationOverlays.push(svg);
+    }
+  }
+  function renderObservations(result) {
+    const section = el('observations'), list = el('observationList');
+    if (!section || !list) return;
+    const items = observationLines(result?.observations);
+    section.hidden = !items.length;
+    list.replaceChildren(...items.map(item => {
+      const row = root.createElement('span'); row.className = item.className;
+      row.textContent = item.text; row.title = item.title;
+      if (item.box) {
+        row.tabIndex = 0;
+        row.addEventListener?.('mouseenter', () => showObservationBox(result.unitId, item.box));
+        row.addEventListener?.('mouseleave', clearObservationBoxes);
+        row.addEventListener?.('focus', () => showObservationBox(result.unitId, item.box));
+        row.addEventListener?.('blur', clearObservationBoxes);
+      }
+      return row;
+    }));
+  }
   // The middle browser already shows the whole group; the panel only puts this photo next to the one it competes with.
   function renderPair(result) {
     const pair = el('pair'); if (!pair) return;
@@ -537,6 +721,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
       node.title = [`第 ${member.rank} 名`, `AI 建议${ACTION_NAMES[member.suggested]}`,
         member.human ? `你的决定：${MARKS[member.human]}` : '', ...flags].filter(Boolean).join(' · ');
       const image = pooledImage(previewUrl(result.runId, member.unitId));
+      rememberObservationFrame(member.unitId, node, image);
       const badge = root.createElement('span'); badge.className = 'badge';
       badge.textContent = `${label === '当前' ? `当前 · 第 ${member.rank} 名` : label} · ${BADGES[member.suggested] || '候'}`;
       node.append(image); drawMarks(node, image, member.marks); node.append(badge);
@@ -583,7 +768,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
       const libraryPath = eagle?.library?.path || '';
       const ids = JSON.stringify([baseUrl(), libraryPath, selectedIds(selected)]);
       const key = JSON.stringify([ids, selected.map(candidate => candidate.star ?? 0)]);
-      if (!force && lastKey === key && now() - lastFetch < 15000) return;
+      if (!force && lastKey === key && current.state !== 'offline' && now() - lastFetch < 15000) return;
       // A new star on the same photos is saved by a star watcher shortly after; read once more next poll.
       const starOnly = lastKey && JSON.parse(lastKey)[0] === ids && lastKey !== key;
       token = ++version; lastKey = key; lastFetch = starOnly ? 0 : now();
@@ -648,6 +833,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     if (!member) return false;
     render('result', { ...result, unitId: member.unitId, rank: member.rank, suggested: member.suggested,
       action: member.human || member.suggested, humanDecided: Boolean(member.human), flags: member.flags || [],
+      aiTags: member.aiTags || [], observations: member.observations || [],
       score: member.metrics?.score ?? null, reasons: [], humanReason: null }, ids.map(item => ({ id: item })));
     return true;
   }
@@ -785,6 +971,40 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
       await loadQueue(runId); await refresh(true);
     }
   }
+  function renderAiTagActions() {
+    const runId = current.state === 'result' ? current.result?.runId : null;
+    const count = new Set(runRows().flatMap(row => unitItems(row))).size;
+    for (const button of root.querySelectorAll?.('[data-ai-tags]') || []) {
+      const mode = button.dataset.aiTags;
+      const armed = aiTagsArmed?.runId === runId && aiTagsArmed.mode === mode;
+      button.disabled = aiTagsBusy || saving > 0 || !runId || !count;
+      button.textContent = armed ? `再点一次：${mode === 'apply' ? '写入' : '清除'} ${count} 张`
+        : mode === 'apply' ? '写入 AI 标签到 Eagle' : '清除 AI 标签';
+    }
+    const status = el('aiTagsStatus'); if (status) status.textContent = aiTagsStatus;
+  }
+  async function writeAiTags(mode) {
+    const runId = current.state === 'result' ? current.result?.runId : null;
+    if (!runId || aiTagsBusy || saving > 0 || !runRows().length || !['apply', 'clear'].includes(mode)) return;
+    if (aiTagsArmed?.runId !== runId || aiTagsArmed.mode !== mode || now() - aiTagsArmed.at >= 4000) {
+      clearTimeout(aiTagsTimer); aiTagsArmed = { runId, mode, at: now() }; aiTagsStatus = '';
+      renderAiTagActions(); saveSnapshot();
+      aiTagsTimer = setTimeout(() => {
+        aiTagsArmed = null; if (!disposed) { renderAiTagActions(); saveSnapshot(); }
+      }, 4000); aiTagsTimer?.unref?.(); return;
+    }
+    clearTimeout(aiTagsTimer); aiTagsArmed = null; aiTagsBusy = true; saving++;
+    aiTagsStatus = '正在处理 AI 标签…'; renderAiTagActions(); saveSnapshot();
+    try {
+      const response = await fetchImpl(`${baseUrl()}/runs/${encodeURIComponent(runId)}/ai-tags/${mode}`,
+        { method: 'POST' });
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(body.error || '操作失败');
+      aiTagsStatus = `${mode === 'apply' ? '已写入' : '已清除'} ${body.updated || 0} 张`
+        + (body.failed ? `，${body.failed} 张失败，可重试` : '');
+    } catch (error) { aiTagsStatus = `AI 标签操作失败：${error.message}`; }
+    finally { aiTagsBusy = false; saving--; if (!disposed) { renderAiTagActions(); saveSnapshot(); } }
+  }
   async function nextUndecidedPhoto() {
     const runId = current.result?.runId; if (!runId) return;
     await loadQueue(runId);
@@ -799,8 +1019,8 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     const result = current.result; if (!result) return;
     const target = groupTarget(runGroups(runRows()), result.groupId, mode);
     if (!target?.unit) return;
-    note(`已在 Eagle 中选中第 ${target.group.groupIndex + 1} 组第 ${target.unit.rank} 名。中间列表不会自动滚过去，`
-      + '看右栏顶部的预览；在中间按 5/3/1 可直接打星。', { carry: true });
+    note(`已在 Eagle 中选中第 ${target.group.groupIndex + 1} 组第 ${target.unit.rank} 名；在中间按 5/3/1 可直接打星。`,
+      { carry: true });
     select(unitItems(target.unit));
   }
   for (const button of root.querySelectorAll?.('[data-decision]') || [])
@@ -819,6 +1039,10 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     button.addEventListener?.('click', () => void regroup(button.dataset.regroup));
   for (const button of root.querySelectorAll?.('[data-bulk]') || [])
     button.addEventListener?.('click', () => void bulk(button.dataset.bulk));
+  for (const button of root.querySelectorAll?.('[data-ai-tags]') || [])
+    button.addEventListener?.('click', () => void writeAiTags(button.dataset.aiTags));
+  el('personalizeApply')?.addEventListener?.('click', () => void personalize());
+  el('personalizeUndo')?.addEventListener?.('click', () => void personalize('undo'));
   el('marksOn')?.addEventListener?.('change', () => {
     storage.setItem(MARKS_KEY, el('marksOn').checked ? '1' : '0');
     if (current.state === 'result') render(current.state, current.result, current.selected);
@@ -848,9 +1072,11 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   renderFromCache();
   if (visible) setVisible(true);
   const dispose = () => {
-    disposed = true; version++; clearTimeout(timer); watcher.stop(); codeReload.stop(); void live.flush();
+    disposed = true; version++; clearTimeout(timer); clearTimeout(personalTimer); clearTimeout(aiTagsTimer);
+    watcher.stop(); codeReload.stop(); void live.flush();
   };
   globalThis.addEventListener?.('pagehide', dispose);
-  return { refresh, setVisible, watcher, dispose, navigate, acceptGroup, loadQueue, regroup, bulk, stepKeep, applyKeep };
+  return { refresh, setVisible, watcher, dispose, navigate, acceptGroup, loadQueue, regroup, bulk, stepKeep, applyKeep,
+    personalize, loadPersonalization, writeAiTags };
 }
 if (typeof document !== 'undefined' && document.querySelector('#inspector')) mountInspector();

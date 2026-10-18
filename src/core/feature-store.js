@@ -1,3 +1,4 @@
+import { metricsWithoutAestheticReference } from './aesthetic-head.js';
 import { replaceFile } from './atomic-file.js';
 import { createHash, randomUUID } from 'node:crypto';
 import { createReadStream } from 'node:fs';
@@ -61,7 +62,7 @@ export class FeatureStore {
       genre: result.genre || NA, genreProbabilities: result.genreProbabilities || NA,
       embedding: Array.isArray(result.embedding) ? result.embedding : NA,
       metrics: Object.fromEntries(Object.entries({ sharpness: NA, exposure: NA, eyesClosed: NA, quality: NA,
-        aesthetic: NA, ...(result.metrics || {}), focus }).map(([key, value]) => [key, value == null ? NA : value])),
+        aesthetic: NA, ...metricsWithoutAestheticReference(result), focus }).map(([key, value]) => [key, value == null ? NA : value])),
       signals: result.signals || NA,
       faces: { count: result.metrics?.faces ?? NA, eyesClosed: result.metrics?.eyesClosed ?? NA, items: result.faces || [] },
       exif: item.exif || result.exif || NA, captureTime: result.captureTime || item.captureTime || NA,

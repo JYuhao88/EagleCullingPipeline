@@ -1,6 +1,6 @@
 import { touchCache } from './cache-budget.js';
 import { createRequire } from "node:module";
-import { access, mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import crypto from "node:crypto";
 import sharp from "sharp";
@@ -19,7 +19,8 @@ function modelPath(value) {
 
 async function getSession(model) {
   const provider = process.env.EAGLE_DINO_PROVIDER || 'cpu';
-  const key = `${model}:${provider}`;
+  const info = await stat(model);
+  const key = JSON.stringify([path.resolve(model), provider, info.size, info.mtimeMs]);
   if (!sessions.has(key)) {
     const options = { intraOpNumThreads: Number(process.env.EAGLE_DINO_THREADS || 2) };
     if (process.env.EAGLE_DINO_PROVIDER) options.executionProviders = [provider];
@@ -29,7 +30,7 @@ async function getSession(model) {
   return sessions.get(key);
 }
 
-async function embedRaw(filePath, model, signal) {
+export async function dinoImageVector(filePath, model, signal) {
   const { data } = await sharp(filePath)
     .resize(256, 256, { fit: "cover" })
     .extract({ left: 16, top: 16, width: 224, height: 224 })
@@ -86,7 +87,7 @@ export async function embedImage(
     return cached;
   } catch {
     signal?.throwIfAborted();
-    const vector = await embedRaw(filePath, selectedModel, signal);
+    const vector = await dinoImageVector(filePath, selectedModel, signal);
     await mkdir(path.dirname(cachePath), { recursive: true });
     await writeFile(cachePath, JSON.stringify(vector));
     return vector;

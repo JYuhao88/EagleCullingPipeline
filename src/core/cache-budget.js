@@ -8,7 +8,8 @@ export const GB = 1024 ** 3;
 export const DEFAULT_MAX_BYTES = 5 * GB;
 export const CACHE_CATEGORIES = [
   ['previews', '预览', 0], ['display', '显示图', 0], ['native-mid', '中间图', 0], ['focus-crops', '裁剪', 0],
-  ['embeddings', '特征', 1], ['focus', '对焦', 1], ['results-v2', '分析结果', 2],
+  ['embeddings', '特征', 1], ['ai-tags', '内容标签', 1], ['focus', '对焦', 1], ['results-v2', '分析结果', 2],
+  ['observations', 'AI 观察', 1],
   // Counted only: a single index file whose loss forces a full-library EXIF rescan, and the shared legacy journal.
   ['capture-metadata', '拍摄信息', 3], ['results.jsonl', '旧版结果（只读）', 3],
 ];

@@ -1,15 +1,47 @@
 import { readRows } from '../core/segmented-results.js';
 import { DecisionsStore } from '../core/decisions-store.js';
 import { json } from './http.js';
+import { deriveTags } from '../core/ai-tags.js';
+import { aestheticForResult } from '../core/aesthetic-head.js';
+import { photoFacts } from '../core/photo-facts.js';
+import { observationsFor } from '../core/observations.js';
+
+export function resultAiTags(data, result = {}) {
+  const unit = data.units?.find(row => row.id === result.unitId);
+  const item = data.items?.find(row => row.id === unit?.primaryItemId) || {};
+  return Array.isArray(result.aiTags) ? result.aiTags : deriveTags(result, item);
+}
 
 const finite = value => Number.isFinite(value) ? value : null;
-function memberMetrics(result = {}, ranking = {}) {
+// The least open eye among the assessed faces, 0 (shut) to 1 (wide open), from the per-eye blink probabilities.
+function eyesOpen(faces = []) {
+  const open = faces.filter(face => face?.eyesAssessed)
+    .map(face => [face.blinkLeft, face.blinkRight].filter(Number.isFinite))
+    .filter(blinks => blinks.length).map(blinks => 1 - Math.max(...blinks));
+  return open.length ? Math.min(...open) : null;
+}
+// Height of the largest face as a share of the frame height: how close or tight the shot is.
+function faceSize(faces = []) {
+  const heights = faces.map(face => face?.box).filter(box => Array.isArray(box) && box.length === 4 && box.every(Number.isFinite))
+    .map(box => box[3] - box[1]).filter(height => height > 0);
+  return heights.length ? Math.max(...heights) : null;
+}
+function cosine(a, b) {
+  if (!Array.isArray(a) || !Array.isArray(b) || !a.length || a.length !== b.length) return null;
+  let dot = 0, na = 0, nb = 0;
+  for (let index = 0; index < a.length; index++) { dot += a[index] * b[index]; na += a[index] ** 2; nb += b[index] ** 2; }
+  return na > 0 && nb > 0 ? Math.max(0, Math.min(1, dot / Math.sqrt(na * nb))) : null;
+}
+function memberMetrics(result = {}, ranking = {}, best = null) {
   const metrics = result.metrics || {};
   const clipped = [metrics.clippedHighlights, metrics.clippedShadows].filter(Number.isFinite);
   return { score: finite(ranking.score ?? result.score), quality: finite(metrics.quality),
+    aesthetic: finite(aestheticForResult(result)),
     sharpness: finite(metrics.sharpness), eye: finite(result.focus?.eyeSharpnessNative),
     exposure: finite(metrics.exposure), clipped: clipped.length ? clipped.reduce((a, b) => a + b, 0) : null,
-    faces: finite(metrics.faces), eyesClosed: finite(metrics.eyesClosed) };
+    faces: finite(metrics.faces), eyesClosed: finite(metrics.eyesClosed),
+    eyesOpen: finite(eyesOpen(result.faces)), faceSize: finite(faceSize(result.faces)),
+    similar: best && best !== result ? finite(cosine(result.embedding, best.embedding)) : null };
 }
 
 const round3 = value => Math.round(value * 1000) / 1000;
@@ -30,14 +62,17 @@ export function groupMembersModel(data, group, decisions = []) {
   if (!group) return [];
   const ranking = new Map((group.ranking || []).map(row => [row.unitId, row]));
   const human = new Map(decisions.filter(row => row.source === 'human').map(row => [row.unitId, row.action]));
+  const bestId = (group.ranking || []).find(row => row.rank === 1)?.unitId ?? group.unitIds[0];
+  const best = data.results.find(row => row.unitId === bestId) || null;
   return group.unitIds.map((id, index) => {
     const unit = data.units.find(row => row.id === id);
     const result = data.results.find(row => row.unitId === id);
     return { unitId: id, primaryItemId: unit?.primaryItemId || unit?.itemIds?.[0] || null,
       itemIds: unit?.itemIds?.length ? unit.itemIds : [unit?.primaryItemId].filter(Boolean),
       rank: ranking.get(id)?.rank ?? index + 1, suggested: group.suggested?.[id] || 'candidate',
-      human: human.get(id) || null, flags: result?.flags || [], metrics: memberMetrics(result, ranking.get(id)),
-      marks: memberMarks(result) };
+      human: human.get(id) || null, flags: result?.flags || [], metrics: memberMetrics(result, ranking.get(id), best),
+      aiTags: resultAiTags(data, result), name: result?.name || null, reasons: ranking.get(id)?.reasons || [], marks: memberMarks(result),
+      facts: result ? photoFacts(result) : null, observations: observationsFor(result) };
   }).sort((a, b) => a.rank - b.rank);
 }
 
@@ -69,6 +104,7 @@ export function itemAnalysisModel(data, unitId, decision, decisions = decision ?
     focus: flags.includes('blurry') ? '模糊' : flags.includes('possibly-blurry') ? '可能模糊'
       : result.focus?.status === 'ok' || Number.isFinite(result.metrics?.sharpness) ? '清晰' : '无法判断',
     eyeSharpness: result.focus?.eyeSharpnessNative ?? null,
+    observations: observationsFor(result), aiTags: resultAiTags(data, result),
     flags, reasons: ranking.reasons || [], humanReason: decision?.reason || null };
 }
 

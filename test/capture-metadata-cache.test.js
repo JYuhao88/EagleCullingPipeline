@@ -82,7 +82,7 @@ test('parser version, broken JSON, modified valid JSON and oversize cache are sa
     const before = f.calls.length;
     await run();
     assert.equal(f.calls.length, before + 1);
-    assert.equal(JSON.parse(await readFile(file, 'utf8')).version, 'capture-v1');
+    assert.equal(JSON.parse(await readFile(file, 'utf8')).version, 'capture-v2');
     assert.deepEqual(await readdir(f.directory), ['metadata.json']);
   }
   await run({ maxBytes: 500 });

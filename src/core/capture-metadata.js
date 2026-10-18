@@ -29,7 +29,9 @@ export function parseCaptureMetadata(row = {}) {
     ['serial', row.SerialNumber || row.BodySerialNumber],
   ].filter(([, value]) => value != null && String(value).trim()).map(([key, value]) => [key, String(value).trim()]));
   return { captureTime, exif: { dateTimeOriginal: row.DateTimeOriginal || null,
-    subSecTimeOriginal: subsec, offsetTimeOriginal: offset, localDate: captureTime ? localDate : null },
+    subSecTimeOriginal: subsec, offsetTimeOriginal: offset, localDate: captureTime ? localDate : null,
+    ...(Number(row.FocalLengthIn35mmFormat) > 0 ? { focalLength35mm: Number(row.FocalLengthIn35mmFormat) } : {}),
+    ...(Number(row.FocalLength) > 0 ? { focalLength: Number(row.FocalLength) } : {}) },
     device: Object.keys(device).length ? device : null };
 }
 
@@ -38,7 +40,8 @@ export function runExiftool(paths, { signal } = {}) {
     const child = execFile(localSetting('EAGLE_EXIFTOOL', 'exiftool'),
       ['-json', '-DateTimeOriginal', '-SubSecDateTimeOriginal',
       '-SubSecTimeOriginal', '-OffsetTimeOriginal', '-Make', '-Model', '-SerialNumber',
-      '-BodySerialNumber', ...(process.platform === 'win32' ? ['-charset', 'filename=UTF8'] : []), '-@', '-'],
+      '-BodySerialNumber', '-FocalLength', '-FocalLengthIn35mmFormat', '-n',
+      ...(process.platform === 'win32' ? ['-charset', 'filename=UTF8'] : []), '-@', '-'],
     { maxBuffer: 4 * 1024 * 1024, timeout: 30_000, signal },
     (error, stdout) => {
       // exiftool may return 1 for one unreadable file alongside valid rows.
