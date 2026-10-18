@@ -58,7 +58,8 @@ button:disabled { opacity: .45; cursor: default; }
 .bar[data-action="rejected"] { background: var(--ec-reject); }
 .bar.decided { opacity: 1; }
 .bar.current { outline: 2px solid var(--ec-text); outline-offset: 1px; opacity: 1; }
-.keep-top { display: flex; align-items: center; gap: 4px; margin: 0 0 6px; color: var(--ec-text-dim); }
+.keep-top { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 0 0 6px; color: var(--ec-text-dim); }
+.keep-top > * { white-space: nowrap; }
 .keep-top button { padding: 2px 7px; }
 .keep-top strong { min-width: 1.5em; text-align: center; color: var(--ec-text); }
 .keep-top #keepApply { margin-left: auto; }

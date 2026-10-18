@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { compareTable, contrastLines, differenceLine, keepTopDecisions, scoreBars, visibleRows }
+import { columnSlots, compareTable, contrastLines, differenceLine, keepTopDecisions, scoreBars, visibleRows }
   from '../src/plugin/inspector/inspector-compare.js';
 
 test('aesthetic column follows quality and stays neutral in cells and comparison explanations', () => {
@@ -47,6 +47,21 @@ test('comparison table keeps only columns that differ, scales sharpness to the s
   assert.deepEqual(compareTable([group[0]]), { columns: [], rows: [] });
   const tie = compareTable([member('x', 1, { score: 0.5 }), member('y', 2, { score: 0.5 })]);
   assert.equal(tie.rows.some(row => row.cells.some(cell => cell.best)), false);
+});
+
+test('a narrow panel keeps the most telling columns in table order and names the rest as hidden', () => {
+  assert.deepEqual([60, 216, 217, 420].map(width => columnSlots(width)), [1, 3, 4, 10]);
+  assert.equal(columnSlots(217, 13), 3);
+  assert.deepEqual([undefined, NaN, 0].map(width => columnSlots(width)), [Infinity, Infinity, Infinity]);
+  const label = list => list.map(column => column.label);
+  const narrow = compareTable(group, { slots: 3 });
+  assert.deepEqual([label(narrow.columns), label(narrow.hidden)], [['总分', '画质', '清晰'], ['溢出']]);
+  assert.deepEqual(narrow.rows.map(row => row.cells.map(cell => cell.text)), [['62', '70', '100'], ['55', '64', '75'],
+    ['62', '70', '100']]);
+  const two = compareTable(group, { slots: 2 });
+  assert.deepEqual([label(two.columns), label(two.hidden)], [['总分', '清晰'], ['画质', '溢出']]);
+  assert.deepEqual(label(compareTable(group, { slots: 0 }).columns), ['总分']);
+  assert.deepEqual(compareTable(group).hidden, []);
 });
 
 test('difference line explains a lower rank against the best and the best against the runner-up', () => {

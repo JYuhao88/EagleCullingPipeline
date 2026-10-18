@@ -7,7 +7,7 @@ import { createCodeReload, fetchPluginStamp } from '../code-reload.js';
 import { canSelectInEagle, showInEagle } from '../eagle-select.js';
 import { groupTarget, neighbourGroups, patchRows, runGroups, runProgress, selectionSummary, unitItems }
   from './inspector-groups.js';
-import { COLUMNS, FOLD_OVER, compareTable, contrastLines, differenceLine, keepTopDecisions, scoreBars, visibleRows }
+import { COLUMNS, FOLD_OVER, columnSlots, compareTable, contrastLines, differenceLine, keepTopDecisions, scoreBars, visibleRows }
   from './inspector-compare.js';
 import { createLiveWriteback } from '../live-writeback.js';
 import { createDetailView } from './inspector-detail.js';
@@ -534,7 +534,17 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   }
   function renderTable(result, selected) {
     const table = el('compareTable'); if (!table) return;
-    const { columns, rows } = compareTable(result?.groupMembers || []);
+    const box = table.parentElement, boxStyle = box && globalThis.getComputedStyle?.(box);
+    const width = box?.clientWidth - (parseFloat(boxStyle?.paddingLeft) || 0) - (parseFloat(boxStyle?.paddingRight) || 0);
+    const fontSize = parseFloat(globalThis.getComputedStyle?.(table)?.fontSize) || undefined;
+    const { columns, rows, hidden = [] } = compareTable(result?.groupMembers || [],
+      { slots: columnSlots(width, fontSize) });
+    const note = el('compareHidden');
+    if (note) {
+      note.hidden = !rows.length || !hidden.length;
+      note.textContent = note.hidden ? ''
+        : `右栏较窄，未显示：${hidden.map(column => column.label).join('、')}。向左拖动右栏左边缘可加宽。`;
+    }
     table.hidden = !rows.length;
     if (table.hidden) { table.replaceChildren(); return; }
     const chosen = new Set(selectedIds(selected));
@@ -1047,6 +1057,15 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     storage.setItem(MARKS_KEY, el('marksOn').checked ? '1' : '0');
     if (current.state === 'result') render(current.state, current.result, current.selected);
   });
+  // Dragging Eagle's right panel wider or narrower changes how many comparison columns fit; height changes do not.
+  let resizeTimer, lastWidth = globalThis.innerWidth;
+  globalThis.addEventListener?.('resize', () => {
+    if (globalThis.innerWidth === lastWidth) return;
+    lastWidth = globalThis.innerWidth; clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (!disposed && current.state === 'result') render(current.state, current.result, current.selected);
+    }, 150);
+  });
   for (const fold of root.querySelectorAll?.('details') || []) fold.addEventListener?.('toggle', () => saveSnapshot());
   const advance = el('autoAdvance');
   if (advance) {
@@ -1072,7 +1091,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   renderFromCache();
   if (visible) setVisible(true);
   const dispose = () => {
-    disposed = true; version++; clearTimeout(timer); clearTimeout(personalTimer); clearTimeout(aiTagsTimer);
+    disposed = true; version++; clearTimeout(timer); clearTimeout(personalTimer); clearTimeout(aiTagsTimer); clearTimeout(resizeTimer);
     watcher.stop(); codeReload.stop(); void live.flush();
   };
   globalThis.addEventListener?.('pagehide', dispose);

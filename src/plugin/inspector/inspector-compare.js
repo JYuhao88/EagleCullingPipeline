@@ -21,6 +21,14 @@ export const COLUMNS = [
 ];
 // Smallest gap worth mentioning, in the column's own scale.
 const NOTABLE = { points: 0.03, relative: 0.1, percent: 0.005, count: 1 };
+// Which columns survive first when the panel is too narrow for all of them.
+const KEEP_ORDER = ['score', 'eyesOpen', 'closed', 'eye', 'aesthetic', 'sharpness', 'quality', 'exposure', 'clipped',
+  'faceSize', 'similar'];
+// Mirrors inspector.css: the thumbnail column is 41px, the rank column 5.2em, and a data column needs about 2.7em.
+export function columnSlots(width, fontSize = 11) {
+  if (!(width > 0)) return Infinity;
+  return Math.max(1, Math.floor(((width - 41) * 10 - 52 * fontSize) / (27 * fontSize)));
+}
 
 const metric = (member, key) => {
   if (key === 'closed') return member?.metrics?.faces > 0 ? member.metrics.eyesClosed ?? 0 : null;
@@ -48,13 +56,17 @@ const spreadOf = values => {
 
 // Columns where every photo of the group scores about the same say nothing about which to keep; the total score
 // always stays because it decides the rank. varyingOnly=false keeps every column with data (difference line).
-export function compareTable(members = [], { varyingOnly = true } = {}) {
+// slots caps the data columns; the ones that do not fit come back as hidden.
+export function compareTable(members = [], { varyingOnly = true, slots = Infinity } = {}) {
   if (members.length < 2) return { columns: [], rows: [] };
   const has = key => members.some(member => metric(member, key) !== null);
-  const columns = COLUMNS.filter(column => has(column.key) && !(column.fallbackFor && has(column.fallbackFor)))
+  const present = COLUMNS.filter(column => has(column.key) && !(column.fallbackFor && has(column.fallbackFor)))
     .filter(column => !varyingOnly || column.key === 'score' || column.always
       || spreadOf(scaled(members, column)) >= NOTABLE[column.unit]);
-  if (!columns.length) return { columns: [], rows: [] };
+  if (!present.length) return { columns: [], rows: [] };
+  const kept = new Set([...present].sort((a, b) => KEEP_ORDER.indexOf(a.key) - KEEP_ORDER.indexOf(b.key))
+    .slice(0, Math.max(1, slots)));
+  const columns = present.filter(column => kept.has(column)), hidden = present.filter(column => !kept.has(column));
   const values = new Map(columns.map(column => [column.key, scaled(members, column)]));
   // A column's best is marked only when it stands out: a real spread and at most two photos sharing it.
   // The total score always marks its leader, since it decides the rank.
@@ -66,7 +78,7 @@ export function compareTable(members = [], { varyingOnly = true } = {}) {
       && spread >= NOTABLE[column.unit] && known.filter(value => value === target).length <= 2;
     return [column.key, known.length > 1 && stands ? target : null];
   }));
-  return { columns, rows: members.map((member, index) => ({ ...member, cells: columns.map(column => {
+  return { columns, hidden, rows: members.map((member, index) => ({ ...member, cells: columns.map(column => {
     const value = values.get(column.key)[index];
     return { key: column.key, value, text: cellText(value, column.unit, member), best: value !== null && value === best.get(column.key) };
   }) })) };

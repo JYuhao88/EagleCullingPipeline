@@ -110,6 +110,35 @@ test('inspector group strip selects a whole unit in Eagle and stars typed in Eag
     assert.equal(posts[0].headers['x-eagle-stars'], '1');
   } finally { view.dispose(); }
 });
+test('a narrow right panel keeps the leading comparison columns and names the hidden ones until it is widened', async () => {
+  const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
+  const nodes = new Map();
+  const element = () => ({ textContent: '', children: [], hidden: false, dataset: {}, classList: { add() {}, toggle() {} },
+    replaceChildren(...children) { this.children = children; }, append(...children) { this.children.push(...children); },
+    addEventListener() {} });
+  const root = { hidden: false, querySelector: id => { if (!nodes.has(id)) nodes.set(id, element()); return nodes.get(id); },
+    querySelectorAll: () => [], createElement: element };
+  const metrics = (score, quality, sharpness, exposure, clipped) => ({ score, quality, sharpness, exposure, clipped });
+  const result = { runId: 'run-w', unitId: 'u1', groupSize: 2, groupMembers: [
+    { unitId: 'u1', itemIds: ['p1'], rank: 1, suggested: 'selected', flags: [], metrics: metrics(.7, .8, .3, .7, .001) },
+    { unitId: 'u2', itemIds: ['p2'], rank: 2, suggested: 'candidate', flags: [], metrics: metrics(.6, .7, .2, .9, .03) }] };
+  const fetchImpl = async () => ({ ok: true, status: 200, json: async () => result });
+  const eagle = { library: { path: '/fixture.library' }, item: { getSelected: async () => [{ id: 'p1' }] } };
+  const node = id => root.querySelector(`#${id}`);
+  const box = { clientWidth: 217 }; node('compareTable').parentElement = box;
+  const view = mountInspector({ root, eagle, storage: { getItem: () => null }, fetchImpl, session: null });
+  const labels = () => node('compareTable').children[0].children.slice(2).map(cell => cell.textContent);
+  const settle = () => new Promise(resolve => setTimeout(resolve, 10));
+  try {
+    view.watcher.stop(); await view.refresh(true); await settle();
+    assert.deepEqual(labels(), ['总分', '画质', '清晰', '曝光']);
+    assert.equal(node('compareHidden').hidden, false);
+    assert.equal(node('compareHidden').textContent, '右栏较窄，未显示：溢出。向左拖动右栏左边缘可加宽。');
+    box.clientWidth = 420; await view.refresh(true); await settle();
+    assert.deepEqual(labels(), ['总分', '画质', '清晰', '曝光', '溢出']);
+    assert.equal(node('compareHidden').hidden, true); assert.equal(node('compareHidden').textContent, '');
+  } finally { view.dispose(); }
+});
 test('inspector shows run progress, jumps between groups, accepts AI for a group and summarises multi-select', async () => {
   const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
   const nodes = new Map();
