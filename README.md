@@ -1,7 +1,7 @@
 # Eagle Culling v1.0
 
 Eagle Culling 是一个本地运行的 Eagle 照片筛选工具：把同一拍摄的 JPG/HEIC 与 RAW 组成拍摄单元，
-在代理预览上分析并分组排序，交由 Eagle 插件审阅后幂等写回 AI 标签。
+在代理预览上分析并分组排序，交由 Eagle 插件挑片；决定保存为 Eagle 星级，可选写回 AI 标签。
 
 ## 功能
 
@@ -11,8 +11,8 @@ Eagle Culling 是一个本地运行的 Eagle 照片筛选工具：把同一拍�
 - 可选 DINOv2 embedding 做相似分组；缺模型时退回 hash + 时间分组。
 - 组内排序并给出中文理由；结果按 SHA-256 指纹缓存，支持断点续跑。
 - Eagle 插件并排审阅、快捷键、人工决定记录。
-- 只写 AI 标签且幂等；保留人工标签和星级；配对 RAW 跟随。
-- 可选二次确认移入 Eagle 回收站；导出 CSV/JSON 报告。
+- 挑片决定保存为 Eagle 星级（精选 5、候选 3、淘汰 1）；AI 标签默认关闭，开启后幂等写回并保留人工标签；配对 RAW 跟随。
+- 可选把人工标为淘汰的照片二次确认后移入 Eagle 回收站；导出 CSV/JSON 报告。
 
 当前 `models/scorer` 不可用时，`src/core/scorer.js` 返回 `quality=null`、`aesthetic=null`、`calibrated=false`，
 并在结果中保留警告；可用时使用已校验的 TOPIQ-NR ONNX。模型评测见 `docs/model-eval.md`。
@@ -65,7 +65,7 @@ Unix 用 `nice -n 15`，Windows 直接用 `node`；两者都以并发 1 detached
 
 审阅页顶部保留返回、标题进度、筛选、帮助和更多。人脸对比、放大镜及候选集在「⋯」里；分组修正在折叠工具区。
 「个性化（实验，默认关闭）」在设置抽屉内，需要明确启用、验证和应用。首次提示可关闭，并从帮助重新打开。
-选片操作、导出报告与「写回 Eagle」分区展示。写回先预览再确认，只更新 AI 标签，默认不移入回收站。
+导出报告和回收站清理在「设置 › 分析记录」；开启「同时使用 AI 标签」后才能写回 AI 标签，写回先预览再确认。
 
 纯 CLI 流程：
 
@@ -144,7 +144,7 @@ node src/cli.js report --run run-<id> --format csv --out report.csv
 重复撤回不会再改写；失败项可重试。旧 `applied.json` 缺少 `previousTags` 时会明确拒绝撤回。
 撤回不会恢复回收站位置，也不撤销审阅决定或分组修正。
 
-回收站操作必须同时使用 `--move-rejected-to-trash` 与 `--confirm MOVE_TO_TRASH`；插件内勾选后也须输入确认词。
+回收站操作必须同时使用 `--move-rejected-to-trash` 与 `--confirm MOVE_TO_TRASH`；插件的「淘汰的移入回收站…」只移动人工标为淘汰的照片，也须输入确认词。
 默认是 dry-run，请先在测试库试用。
 
 ## 清理旧缩略图

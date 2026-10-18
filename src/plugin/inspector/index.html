@@ -82,7 +82,7 @@
     <p id="compareHidden" class="hint" hidden></p>
     <button id="expandTable" class="text-button" hidden></button>
     <p id="runProgress" class="run-progress"></p>
-    <p id="finishHint" class="finish-hint" hidden>这个任务已全部决定。回到「Eagle照片筛选」插件写回或清理。</p>
+    <p id="finishHint" class="finish-hint" hidden>这批照片已全部决定，结果已保存为 Eagle 星级。</p>
     <details id="groupTools" class="fold"><summary>本组操作</summary>
       <div class="group-actions" aria-label="本组">
         <button id="acceptGroup">按 AI 建议</button>
@@ -101,7 +101,7 @@
     <details id="nearby" class="fold"><summary>前后组</summary>
       <div id="neighbours" class="neighbours" aria-label="拍摄时间紧挨着的前后组" hidden></div>
     </details>
-    <details id="runTools" class="fold"><summary>整个任务</summary>
+    <details id="runTools" class="fold"><summary>整批照片</summary>
       <div id="personalize" class="personalize" hidden>
         <strong>按我的口味调整</strong>
         <p id="personalizeSummary"></p>
@@ -112,11 +112,13 @@
         <button id="personalizeUndo" class="text-button" hidden>撤销</button>
         <p id="personalizeError" role="status" hidden></p>
       </div>
-      <div class="run-buttons">
-        <button data-ai-tags="apply">写入 AI 标签到 Eagle</button>
-        <button data-ai-tags="clear">清除 AI 标签</button>
+      <div id="aiTagTools" hidden>
+        <div class="run-buttons">
+          <button data-ai-tags="apply">写入 AI 标签到 Eagle</button>
+          <button data-ai-tags="clear">清除 AI 标签</button>
+        </div>
+        <p id="aiTagsStatus" class="hint" role="status"></p>
       </div>
-      <p id="aiTagsStatus" class="hint" role="status"></p>
       <p class="hint">只处理还没决定的照片，已做的决定不变。点两次确认。</p>
       <div class="run-buttons">
         <button data-bulk="eyes">闭眼的标淘汰</button>

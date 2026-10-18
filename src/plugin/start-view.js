@@ -9,10 +9,6 @@ import { homeCard, taskView, sortTasks, friendlyFailure, libraryAnalysisText, li
   selectionCount } from "./task-model.js";
 import { eagleContext, isEagleEnvironment } from "./api.js";
 
-const HOME_TASKS = 5;
-const WIDE_TASKS = 20;
-const WIDE = "(min-width: 1000px)";
-
 export function createStartView({ root, api, getApi = () => api, onRun, autoCheck = true, autoRefresh = true,
   confirmImpl = text => globalThis.confirm(text), onOpen, loadedHidden = false }) {
   void initEagleTheme();
@@ -27,7 +23,6 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   let disposed = false, pollTimer = null, pollToken = 0, serviceTimer = null, contextTimer = null, healthTimer = null;
   let contextVersion = 0, contextKey = "", matchVersion = 0, tasksVersion = 0, serviceBase = getApi().base;
 
-  const wide = () => Boolean(globalThis.matchMedia?.(WIDE).matches);
   const setText = (id, value) => { const node = q(id); if (node) node.textContent = value ?? ""; };
   const setNotice = text => { view.notice = text || ""; setText("homeNotice", view.notice); };
 
@@ -122,14 +117,12 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     return row;
   }
 
+  // Earlier analyses live in 设置 › 分析记录; the home page only shows the one thing to do now.
   function renderTasks() {
     const ordered = sortTasks(view.tasks.filter(run => run.id !== view.active?.id || run.status !== "running"));
-    const limit = wide() ? WIDE_TASKS : HOME_TASKS;
-    q("recentRuns").replaceChildren(...ordered.slice(0, limit).map(taskRow));
     q("historyRuns")?.replaceChildren(...ordered.map(taskRow));
-    q("allRuns").hidden = ordered.length <= limit && view.nextCursor === null;
     q("moreRuns").hidden = view.nextCursor === null;
-    setText("recentStatus", view.tasks.length ? "" : view.connected ? "还没有任务。" : "");
+    setText("historyStatus", view.tasks.length ? "" : view.connected ? "还没有分析记录。" : "");
   }
 
   function render() { renderCard(); renderTasks(); }
@@ -153,7 +146,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
       }
       view.tasks = runs.filter(run => !view.context.libraryPath || run.libraryPath === view.context.libraryPath);
       view.nextCursor = null;
-      if (!runs.length) setText("recentStatus", `暂时无法读取任务：${error.message}`);
+      if (!runs.length) setText("historyStatus", `暂时无法读取分析记录：${error.message}`);
     }
     if (view.match) view.match = { ...view.match, run: view.tasks.find(run => run.id === view.match.runId) || view.match.run };
     render();
@@ -275,7 +268,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     await notify(run);
     if (run.status === "completed") setNotice(`「${run.scope?.label || "分析"}」已完成，可以开始挑选。`);
     else if (run.status === "failed") setNotice(friendlyFailure(run.error));
-    else setNotice("分析已暂停，可在任务中继续。");
+    else setNotice("分析已暂停，已完成的部分会保留，之后可以继续。");
     await refreshTasks();
     void refreshMatch();
   }
@@ -415,7 +408,6 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     if (visible) void refreshContext().then(() => refreshTasks()).catch(() => {});
   });
   root.addEventListener?.("visibilitychange", () => setVisible(!root.hidden));
-  globalThis.matchMedia?.(WIDE).addEventListener?.("change", () => render());
   if (autoRefresh) {
     prefetcher.start();
     setVisible(visible);

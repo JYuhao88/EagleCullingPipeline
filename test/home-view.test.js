@@ -52,10 +52,8 @@ test('task states cover the lifecycle and give exactly one primary action', () =
     [{ status: 'interrupted', resumable: false, rerunnable: true }, 'lost', 'rerun'],
     [{ status: 'failed', resumable: false, rerunnable: false }, 'lost', 'reselect'],
     [{ status: 'completed', groupCount: 4, reviewedGroupCount: 1 }, 'reviewing', 'review'],
-    [{ status: 'completed', groupCount: 4, reviewedGroupCount: 4 }, 'toWriteback', 'review'],
-    [{ status: 'completed', groupCount: 4, reviewedGroupCount: 4, writtenBackAt: '2026-10-13T11:00:00Z' }, 'writtenBack', 'review'],
-    [{ status: 'completed', groupCount: 4, reviewedGroupCount: 4, writtenBackAt: 'x', pendingWriteback: true },
-      'pendingWriteback', 'review'],
+    [{ status: 'completed', groupCount: 4, reviewedGroupCount: 4 }, 'done', 'review'],
+    [{ status: 'completed', groupCount: 4, reviewedGroupCount: 4, writtenBackAt: 'x', pendingWriteback: true }, 'done', 'review'],
     [{ status: 'completed', groupCount: 0 }, 'empty', 'review'],
   ];
   for (const [run, state, action] of cases) {
@@ -93,7 +91,9 @@ test('home card is decided by service, activity, Eagle selection and unfinished 
   assert.equal(append.kind, 'append'); assert.equal(append.action.label, '补充分析（新增 2 张）');
   assert.equal(append.secondary[0].action, 'openMatch');
   const resume = homeCard({ connected: true, tasks: [task] });
-  assert.equal(resume.kind, 'task'); assert.equal(resume.eyebrow, '继续上次的任务');
+  assert.equal(resume.kind, 'task'); assert.equal(resume.eyebrow, '接着上次');
+  assert.equal(homeCard({ connected: true, tasks: [{ ...task, reviewedGroupCount: 3 }] }).kind, 'empty',
+    'a fully decided batch needs nothing more: no tag writeback step');
   assert.equal(homeCard({ connected: true, tasks: [] }).kind, 'empty');
   assert.equal(homeCard({ connected: true, tasks: [] }).action, null, 'whole-library analysis is never the default');
 });
@@ -223,7 +223,7 @@ test('broken tasks resume, rerun or explain how to reselect; a busy service is a
       autoRefresh: false });
     try {
       await view.checkHealth();
-      const rows = () => $(root, 'recentRuns').children;
+      const rows = () => $(root, 'historyRuns').children;
       const byId = id => rows().find(row => row.dataset.runId === id);
       assert.equal(rowAction(byId('paused')).textContent, '继续分析');
       assert.equal(rowAction(byId('lost')).textContent, '重新分析');
@@ -262,7 +262,7 @@ test('offline home shows a service card and no review entry; retry connects', as
   });
 });
 
-test('home lists five tasks; history paginates and can include superseded versions', async () => {
+test('analysis records live in the history page, which paginates and can include superseded versions', async () => {
   await withGlobals({}, async () => {
     const root = fakeRoot(), urls = []; let pages = 0;
     const api = stubApi({ list: url => {
@@ -274,8 +274,7 @@ test('home lists five tasks; history paginates and can include superseded versio
     const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false });
     try {
       await view.checkHealth();
-      assert.equal($(root, 'recentRuns').children.length, 5);
-      assert.equal($(root, 'historyRuns').children.length, 6); assert.equal($(root, 'allRuns').hidden, false);
+      assert.equal($(root, 'historyRuns').children.length, 6); assert.equal($(root, 'moreRuns').hidden, false);
       await $(root, 'moreRuns').events.click(); await tick();
       assert.equal($(root, 'historyRuns').children.length, 12); assert.equal($(root, 'moreRuns').hidden, true);
       $(root, 'showSuperseded').checked = true; await $(root, 'showSuperseded').events.change(); await tick();
@@ -321,10 +320,10 @@ test('library change clears the old tasks immediately and reloads for the new li
     const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false });
     try {
       await view.refreshContext(); await view.checkHealth();
-      assert.equal($(root, 'recentRuns').children.length, 1);
+      assert.equal($(root, 'historyRuns').children.length, 1);
       eagle.library = { path: '/new.library', name: '新库' };
       libraryChanged('/new.library');
-      assert.equal($(root, 'recentRuns').children.length, 0);
+      assert.equal($(root, 'historyRuns').children.length, 0);
       assert.equal($(root, 'libraryName').textContent, 'new.library');
       await tick();
       assert.ok(urls.some(url => url.includes('libraryPath=%2Fnew.library')));
@@ -363,12 +362,11 @@ test('Eagle culling entry selects the first undecided primary photo and explains
   const older = { shell: { openExternal: async url => opened.push(url) } };
   assert.match(await startCullingInEagle(api, 'run', older), /^已在 Eagle 中打开第 7 组/);
   assert.deepEqual(opened, ['eagle://item/photo']);
-  assert.equal(await startCullingInEagle(async () => ({ queue: [] }), 'run', eagle),
-    '这个任务没有可挑选的照片，可以查看报告。');
-  assert.equal(cullStartNotice(null, 'none'), '这个任务没有可挑选的照片，可以查看报告。');
+  assert.equal(await startCullingInEagle(async () => ({ queue: [] }), 'run', eagle), '这次分析没有可挑选的照片。');
+  assert.equal(cullStartNotice(null, 'none'), '这次分析没有可挑选的照片。');
 });
 
-test('completed tasks expose Eagle culling and finish actions on the card and task rows', async () => {
+test('the home card only continues culling; reports and cleanup live on the history rows', async () => {
   await withGlobals({}, async () => {
     const run = { id: 'done', status: 'completed', groupCount: 2, reviewedGroupCount: 1 };
     const root = fakeRoot(), opened = [];
@@ -376,13 +374,12 @@ test('completed tasks expose Eagle culling and finish actions on the card and ta
     const view = createStartView({ root, api, onRun: async (...args) => opened.push(args), autoCheck: false, autoRefresh: false });
     try {
       await view.checkHealth();
-      const secondary = $(root, 'secondaryActions').children;
-      assert.equal(secondary[0].textContent, '写回 / 清理…');
-      await secondary[0].events.click({}); await tick();
-      const actions = $(root, 'recentRuns').children[0].children[1].children;
-      await actions.find(button => button.textContent === '写回 / 清理…').events.click({}); await tick();
+      assert.equal($(root, 'primaryAction').textContent, '在 Eagle 中挑片');
+      assert.equal($(root, 'secondaryActions').children.length, 0);
+      const actions = $(root, 'historyRuns').children[0].children[1].children;
       assert.equal(actions[0].textContent, '在 Eagle 中挑片');
-      assert.deepEqual(opened, [['done', { finish: true }], ['done', { finish: true }]]);
+      await actions.find(button => button.textContent === '报告与清理…').events.click({}); await tick();
+      assert.deepEqual(opened, [['done', { finish: true }]]);
     } finally { view.dispose(); }
   });
 });

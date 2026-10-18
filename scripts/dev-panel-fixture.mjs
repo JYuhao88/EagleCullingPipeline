@@ -219,6 +219,15 @@ if(initial.has('h'))frame.style.height=initial.get('h')+'px';</script>`); return
         addedTags: 0, removedTags: 0, tags: {}, byAction: {} }, results: [],
       warning: '假服务预览，不修改 Eagle。' });
     }
+    if (url.pathname.endsWith('/trash-rejected') && req.method === 'POST') {
+      let body = ''; for await (const chunk of req) body += chunk;
+      const request = JSON.parse(body || '{}');
+      if (request.apply && request.confirm !== 'MOVE_TO_TRASH') return json(res, 400, { error: '请输入 MOVE_TO_TRASH' });
+      const rows = queueRows.filter(row => row.human === 'rejected');
+      const ids = rows.flatMap(row => row.itemIds || [row.primaryItemId]);
+      return json(res, 200, { dryRun: !request.apply, verified: true, units: rows.length, count: ids.length, skipped: 0,
+        files: ids.slice(0, 50).map(id => `${id}.jpg`), ...(request.apply ? { trash: ids.map(id => ({ id, ok: true })) } : {}) });
+    }
     if (url.pathname.endsWith('/writeback/revert') && req.method === 'POST') {
       writebackAvailable = false;
       return json(res, 200, { summary: { unchanged: template.units.length }, results: [] });

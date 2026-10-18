@@ -3,8 +3,6 @@ import { formatApplySummary } from "./format.js";
 export function createWritebackDialog({ root, api, runId = null, getRunId = () => runId, onComplete,
   beforeApply, beforeRevert }) {
   const output = root.querySelector("#writeback");
-  const trash = root.querySelector("#moveTrash");
-  const confirm = root.querySelector("#trashConfirm");
   const dialog = root.querySelector("#writebackDialog");
   const summary = root.querySelector("#writebackSummary");
   const details = root.querySelector("#writebackDetails");
@@ -20,9 +18,6 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
     if (!runId) return;
     previewing = true;
     planRunId = null;
-    trash.checked = false;
-    confirm.hidden = true;
-    confirm.querySelector("input").value = "";
     try {
       plan = await api(`/runs/${runId}/apply`, {
         method: "POST",
@@ -64,12 +59,7 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
   async function apply() {
     if (applying || previewing) return;
     if (!planRunId || planRunId !== getRunId()) {
-      output.textContent = "请重新预览当前任务的写回更改";
-      return;
-    }
-    const confirmation = confirm.querySelector("input")?.value || "";
-    if (trash.checked && confirmation !== "MOVE_TO_TRASH") {
-      output.textContent = "请输入 MOVE_TO_TRASH 才能移入回收站";
+      output.textContent = "请重新预览写回更改";
       return;
     }
     applying = true;
@@ -80,11 +70,7 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
       const result = await api(`/runs/${runId}/apply`, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          apply: true,
-          moveRejectedToTrash: trash.checked,
-          confirm: confirmation
-        })
+        body: JSON.stringify({ apply: true })
       });
       const summary = formatApplySummary(result, {
         base: root.querySelector("#base")?.value || "", runId
@@ -92,7 +78,6 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
       output.innerHTML = `<div class="writeback-stats"><strong>${summary.changed}<small>已修改</small></strong>`
         + `<strong>${summary.unchanged}<small>未变化</small></strong>`
         + `<strong class="${summary.failed ? "has-error" : ""}">${summary.failed}<small>失败</small></strong></div>`
-        + (summary.trash ? ` · 回收站 ${summary.trash} 项` : "")
         + (summary.warning ? `<p>${summary.warning}</p>` : "")
         + (summary.csvUrl ? ` <a class="report-button" target="_blank" href="${summary.csvUrl}">下载 CSV 报告</a>` : "")
         + (summary.jsonUrl ? ` <a class="report-button" target="_blank" href="${summary.jsonUrl}">下载 JSON 报告</a>` : "");
@@ -118,7 +103,7 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
       const failures = result.results.filter(item => item.ok === false).length;
       const restored = result.results.filter(item => item.ok && item.changed).length;
       output.textContent = `撤回完成：恢复 ${restored} 个文件，无变化 ${result.summary.unchanged} 个文件`
-        + `，失败 ${failures} 个。恢复 AI 标签及本次设置的星级；回收站操作不会撤销。`;
+        + `，失败 ${failures} 个。恢复 AI 标签及本次设置的星级。`;
       onComplete?.(result);
     } catch (error) { output.textContent = `撤回失败：${error.message}`; }
     finally { applying = false; revertButton.disabled = false; }
@@ -145,6 +130,5 @@ export function createWritebackDialog({ root, api, runId = null, getRunId = () =
   confirmButton.addEventListener("click", () => {
     return apply().catch(error => { output.textContent = error.message; });
   });
-  trash.addEventListener("change", () => { confirm.hidden = !trash.checked; });
   return { dryRun, isBusy: () => applying || previewing };
 }

@@ -101,6 +101,7 @@ Group 可新增 `candidateSet`，不改变旧 `ranking`、`suggested` 字段：
 | GET | /runs/:id/personalize | 返回偏好学习报告（结构见下） | 审阅 |
 | POST | /runs/:id/personalize/apply | 无需 body；应用当前决定拟合的权重，只重排本 run 未审阅多张组 | 审阅 |
 | POST | /runs/:id/apply | body `{apply: false|true, moveRejectedToTrash?: bool, confirm?: "MOVE_TO_TRASH"}`，默认 dry-run | 审阅 |
+| POST | /runs/:id/trash-rejected | body `{apply: false|true, confirm?: "MOVE_TO_TRASH"}`，默认预览；只移动人工淘汰单元的全部 item，跳过已不在资源库的 | 审阅 |
 | POST | /runs/:id/writeback/revert | body `{apply?: boolean}`；默认执行，`false` 仅预览撤回 | 审阅 |
 | POST | /runs/:id/groups/move | `{unitId, targetGroupId: "组 ID" 或 "new"}`，移动一个拍摄单元 | 审阅 |
 | POST | /runs/:id/groups/split | `{groupId, unitIds}`，所选单元必须为原组的非空真子集 | 审阅 |
@@ -190,7 +191,8 @@ run ID 仅接受字母、数字、下划线和连字符；unit ID 解码后拒�
 - 动作标签：`AI精选` / `AI候选` / `AI淘汰`；问题标签：`AI闭眼` / `AI模糊` / `AI过曝` / `AI欠曝`。
 - 一个单元的决定会写到该单元的**所有** item 上（包括 RAW）。
 - 写回时只替换以 `AI` 开头的这 7 个标签，其它人工标签、星级、文件夹、注释一律保留。写回是幂等的。
-- 移入回收站：只处理 `AI淘汰`，需要 `moveRejectedToTrash: true` 且 `confirm: "MOVE_TO_TRASH"`，默认关闭，永不真删。
+- 移入回收站：`/apply` 只处理 `AI淘汰`，需要 `moveRejectedToTrash: true` 且 `confirm: "MOVE_TO_TRASH"`，默认关闭，永不真删。
+  插件使用 `/trash-rejected`：只处理人工决定为淘汰的单元（不含 AI 建议淘汰但未决定的），同样需要确认词，永不真删。
 - 不修改原片文件。
 
 ## 分阶段进度与分组修正

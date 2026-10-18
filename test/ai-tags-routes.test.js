@@ -54,7 +54,7 @@ test('old item analysis derives tags without mutating results and keeps stored s
   assert.ok(tags.includes('AI·模糊')); assert.ok(tags.includes('AI·竖构图'));
   assert.equal(data.results[0].aiTags, undefined);
 });
-test('inspector patches AI chips and requires two clicks for both task actions with exact paired item count', async () => {
+test('inspector patches AI chips; tag actions appear only with the AI tags setting and need two clicks', async () => {
   const nodes = new Map();
   const element = () => ({ textContent: '', children: [], hidden: false, disabled: false, dataset: {},
     classList: { add() {}, toggle() {} }, replaceChildren(...children) { this.children = children; },
@@ -66,10 +66,10 @@ test('inspector patches AI chips and requires two clicks for both task actions w
   const analysis = { runId: 'tags', unitId: 'u', runName: '旅行', focus: '清晰', groupMembers: [],
     aiTags: [{ tag: 'AI·海边', source: 'scene' }] };
   const queue = [{ unitId: 'u', primaryItemId: 'jpg', itemIds: ['jpg', 'raw'] }];
-  const posts = [];
+  const posts = [], values = new Map();
   const view = mountInspector({ root, eagle: { library: { path: '/fixture.library' },
     item: { getSelected: async () => [{ id: 'jpg' }], getByIds: async () => [] } },
-  storage: { getItem: () => null }, session: null, fetchImpl: async (url, options = {}) => {
+  storage: { getItem: key => values.get(key) ?? null }, session: null, fetchImpl: async (url, options = {}) => {
     if (options.method === 'POST') posts.push(url);
     return { ok: true, json: async () => options.method === 'POST' ? { updated: 2 }
       : url.includes('/queue') ? { queue } : analysis };
@@ -79,6 +79,10 @@ test('inspector patches AI chips and requires two clicks for both task actions w
     const chips = root.querySelector('#aiTags').children;
     assert.equal(chips[0].textContent, 'AI·海边');
     await view.refresh(true); assert.equal(root.querySelector('#aiTags').children, chips);
+    assert.equal(root.querySelector('#aiTagTools').hidden, true, 'tag actions stay hidden while AI tags are off');
+    await view.writeAiTags('apply'); await view.writeAiTags('apply'); assert.equal(posts.length, 0);
+    values.set('eagle-culling-ai-tags', '1'); await view.refresh(true);
+    assert.equal(root.querySelector('#aiTagTools').hidden, false);
     await view.writeAiTags('apply'); assert.equal(posts.length, 0); assert.match(buttons[0].textContent, /写入 2 张/);
     await view.writeAiTags('apply'); assert.equal(posts.length, 1); assert.match(posts[0], /ai-tags\/apply$/);
     await view.writeAiTags('clear'); assert.equal(posts.length, 1); assert.match(buttons[1].textContent, /清除 2 张/);

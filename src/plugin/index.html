@@ -39,14 +39,10 @@
           <p id="homeNotice" class="notice" role="status"></p>
           <button id="analyzeAll" class="text-button" hidden>分析整个资源库…</button>
         </div>
-        <section class="home-tasks" aria-labelledby="tasksHeading">
-          <div class="section-heading"><h2 id="tasksHeading">任务</h2><button id="allRuns" class="text-button">全部任务 ›</button></div>
-          <p id="recentStatus" class="note" role="status"></p>
-          <div id="recentRuns" class="task-list"></div>
-        </section>
       </div>
-      <section id="historyView" hidden><div class="section-heading"><button id="closeHistory" class="quiet">‹ 返回</button><h2>全部任务</h2>
+      <section id="historyView" hidden><div class="section-heading"><button id="closeHistory" class="quiet">‹ 返回</button><h2>分析记录</h2>
         <label class="inline"><input id="showSuperseded" type="checkbox">显示旧版本</label></div>
+        <p id="historyStatus" class="note" role="status"></p>
         <div id="historyRuns" class="task-list"></div><button id="moreRuns" hidden>加载更多</button></section>
       <section id="panelSettings" hidden><div class="section-heading"><button id="closeSettings" class="quiet">‹ 返回</button>
         <h2>设置</h2></div>
@@ -59,11 +55,20 @@
           <p class="setting-hint">插电、插件窗口关闭且电脑空闲时，分析最近 30 天导入的照片，挑片时直接可用；只读，不改 Eagle。</p>
           <p id="prefetchLast" class="setting-hint"></p>
         </fieldset>
-        <fieldset class="settings-group"><legend>写回 Eagle</legend>
-          <label><input id="liveWriteback" type="checkbox">挑片时实时写回标签</label>
-          <p class="setting-hint">每次决定立即给照片加 AI精选/AI候选/AI淘汰 标签；关闭时在「完成」页统一写回。都可撤回。</p>
-          <label><input id="liveStar" type="checkbox">精选同时写 5 星</label>
-          <label><input id="smartFolders" type="checkbox">自动创建智能文件夹</label><p id="apiCapability" class="setting-hint"></p>
+        <fieldset class="settings-group"><legend>保存到 Eagle</legend>
+          <p class="setting-hint">挑片决定保存为 Eagle 星级：精选 5 星、候选 3 星、淘汰 1 星；在 Eagle 里打星也会记为决定。</p>
+          <p class="setting-hint">星级存在 Eagle 资源库里，不改照片文件；在 Eagle 里改星或清零即可撤销。</p>
+          <label><input id="useAiTags" type="checkbox">同时使用 AI 标签</label>
+          <p class="setting-hint">开启后可把挑片结果写成 Eagle 标签（AI精选、AI候选、AI淘汰）和 AI 内容标签（如 AI·海边），方便建智能文件夹；写入前可预览，之后可撤回或清除。</p>
+          <div id="aiTagOptions" hidden>
+            <label><input id="liveWriteback" type="checkbox">挑片时实时写回标签</label>
+            <p class="setting-hint">不开启时，在「分析记录」里按批写回。</p>
+          </div>
+          <p id="apiCapability" class="setting-hint"></p>
+        </fieldset>
+        <fieldset class="settings-group"><legend>分析记录</legend>
+          <p class="setting-hint">以前分析过的照片：继续挑选或继续没完成的分析、导出报告、把标为淘汰的照片移入 Eagle 回收站。</p>
+          <button id="allRuns">查看分析记录 ›</button>
         </fieldset>
         <fieldset class="settings-group"><legend>存储</legend>
           <p id="cacheUsage" class="setting-hint" role="status">读取缓存占用…</p>
@@ -78,16 +83,22 @@
           <label>仓库路径<input id="repositoryPath" placeholder="自动检测，可覆盖"></label>
           <pre id="serviceCommand"></pre><button id="copyServiceCommand">复制启动命令</button><pre id="serviceDiagnostics" role="status"></pre>
           <label>资源库路径（浏览器预览）<input id="libraryPath" placeholder="资源库绝对路径"></label>
-          <label>按记录 ID 打开完成面板<input id="runId" placeholder="run-..."></label><button id="openRun">打开</button>
+          <label>按记录 ID 打开分析记录<input id="runId" placeholder="run-..."></label><button id="openRun">打开</button>
         </details>
       </section>
       <section id="finishPanel" hidden aria-labelledby="finishTitle">
-        <div class="section-heading"><button id="closeFinish" class="quiet">‹ 返回</button><h2 id="finishTitle">完成</h2></div>
+        <div class="section-heading"><button id="closeFinish" class="quiet">‹ 返回</button><h2 id="finishTitle">分析记录</h2></div>
         <h3 id="finishTask"></h3><p id="finishCounts" role="status"></p>
         <button id="refreshFinish">刷新决定</button>
-        <section class="settings-group" aria-label="写回与清理">
-          <h3>写回与清理</h3>
-          <p>将挑片结果作为 AI 标签保存到 Eagle。先预览更改并确认；默认不移入回收站。</p>
+        <section class="settings-group" aria-label="清理">
+          <h3>清理</h3>
+          <p>把你标为淘汰的照片移入 Eagle 回收站，RAW+JPEG 一起移；AI 建议淘汰但你没有决定的照片不会移动。可在 Eagle 回收站恢复。</p>
+          <button id="trashRejected" disabled>淘汰的移入回收站…</button>
+          <pre id="trashResult" role="status" aria-live="polite"></pre>
+        </section>
+        <section id="tagWriteback" class="settings-group" aria-label="AI 标签" hidden>
+          <h3>AI 标签</h3>
+          <p>把这批照片的挑片结果写成 Eagle 标签（AI精选、AI候选、AI淘汰）。先预览更改再确认，可撤回。</p>
           <button id="dryRun" disabled>预览写回更改…</button><button id="revertWriteback" hidden>撤回本次写回</button>
           <pre id="writeback" role="status" aria-live="polite"></pre>
         </section>
@@ -99,12 +110,16 @@
         <h2>确认写回</h2>
         <pre id="writebackSummary"></pre>
         <div id="writebackDetails"></div>
-        <label><input type="checkbox" id="moveTrash"> 将淘汰项移入回收站</label>
-        <label id="trashConfirm" hidden>
-          请输入 MOVE_TO_TRASH <input>
-        </label>
         <button id="cancelWriteback">取消</button>
         <button id="confirmWriteback">确认写回</button>
+      </dialog>
+      <dialog id="trashDialog">
+        <h2>移入 Eagle 回收站</h2>
+        <p id="trashSummary"></p>
+        <pre id="trashFiles"></pre>
+        <label>请输入 MOVE_TO_TRASH 确认<input id="trashConfirm" autocomplete="off"></label>
+        <button id="cancelTrash">取消</button>
+        <button id="confirmTrash">移入回收站</button>
       </dialog>
       <p id="loading" class="note" hidden>正在打开…</p>
     </section>

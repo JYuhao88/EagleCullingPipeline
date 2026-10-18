@@ -1,4 +1,4 @@
-// Pure presentation rules for tasks ("the culling work for one scope"); see docs/ux-design.md.
+// Pure presentation rules for analysis records ("the culling work for one scope"); see docs/ux-design.md.
 import { analysisProgress, durationText } from "./start-model.js";
 import { showInEagle } from "./eagle-select.js";
 
@@ -10,13 +10,10 @@ export function taskState(run = {}) {
   if (run.status !== "completed") return "lost";
   if (!run.groupCount) return "empty";
   if (run.reviewedGroupCount != null && run.reviewedGroupCount < run.groupCount) return "reviewing";
-  if (run.pendingWriteback) return "pendingWriteback";
-  if (run.writtenBackAt) return "writtenBack";
-  return "toWriteback";
+  return "done";
 }
 
-const URGENCY = ["analyzing", "reviewing", "interrupted", "cancelled", "toWriteback", "pendingWriteback", "failed", "lost",
-  "writtenBack", "empty"];
+const URGENCY = ["analyzing", "reviewing", "interrupted", "cancelled", "failed", "lost", "done", "empty"];
 
 export function sortTasks(runs = []) {
   return [...runs].sort((a, b) => URGENCY.indexOf(taskState(a)) - URGENCY.indexOf(taskState(b)) ||
@@ -68,23 +65,19 @@ export function taskView(run = {}, now = Date.now()) {
     progress: null, primary: run.rerunnable ? ["重新分析", "rerun"] : ["怎么做", "reselect"] },
     reviewing: { chip: `待挑选 ${reviewed}/${groups}`, detail: reviewed ? `还剩 ${left} 组` : `${groups} 组待挑选`,
       progress: groups ? Math.round(reviewed / groups * 100) : 0, primary: [reviewed ? "继续挑选" : "开始挑选", "review"] },
-    toWriteback: { chip: "待写回", detail: "已挑完，尚未写回 Eagle。", progress: 100, primary: ["写回 Eagle", "finish"] },
-    pendingWriteback: { chip: "有改动未写回", detail: `写回后又改过（上次写回 ${relativeTime(run.writtenBackAt, now)}）。`,
-      progress: 100, primary: ["再次写回", "finish"] },
-    writtenBack: { chip: "已写回", detail: `已写回 Eagle（${relativeTime(run.writtenBackAt, now)}）。`, progress: null,
-      primary: ["打开", "review"] },
+    done: { chip: "已挑完", detail: "全部决定，结果在 Eagle 星级里。", progress: null, primary: ["打开", "review"] },
     empty: { chip: "没有照片", detail: "这次分析没有找到可挑选的照片。", progress: null, primary: ["打开", "review"] },
   };
   const view = views[state];
   const inherited = run.inheritedCount ? `，${run.inheritedCount} 张沿用之前的决定` : "";
   return { state, title: run.scope?.label || "以前的分析", meta, chip: view.chip, detail: view.detail + (state === "reviewing" ? inherited : ""),
-    secondary: run.status === "completed" ? [{ label: "写回 / 清理…", action: "finish" }] : [],
+    secondary: run.status === "completed" ? [{ label: "报告与清理…", action: "finish" }] : [],
     progress: view.progress, primary: run.status === "completed" ? { label: "在 Eagle 中挑片", action: "review" }
       : { label: view.primary[0], action: view.primary[1] } };
 }
 
 export function needsAttention(run) {
-  return ["reviewing", "interrupted", "cancelled", "failed", "toWriteback", "pendingWriteback"].includes(taskState(run));
+  return ["reviewing", "interrupted", "cancelled", "failed"].includes(taskState(run));
 }
 
 export function selectionCount(context = {}) {
@@ -99,7 +92,7 @@ export function scopeName(context = {}) {
   return "";
 }
 
-// The main home card: one decision, derived from service state, Eagle's current selection and existing tasks.
+// The main home card: one decision, derived from service state, Eagle's current selection and earlier analyses.
 export function homeCard({ connected = false, launching = false, active = null, context = {}, match = null,
   tasks = [], submitting = false, secondsPerPhoto = null, now = Date.now() } = {}) {
   if (!connected) {
@@ -117,9 +110,8 @@ export function homeCard({ connected = false, launching = false, active = null, 
     const task = match?.run;
     if (task && match.missing === 0) {
       const view = taskView(task, now);
-      return { kind: "task", eyebrow: name, title: `已在任务「${view.title}」中`, detail: view.detail, task,
-        action: { label: view.primary.label, action: view.primary.action },
-        progress: view.progress, chip: view.chip, secondary: view.secondary };
+      return { kind: "task", eyebrow: name, title: `已分析过：${view.title}`, detail: view.detail, task,
+        action: { label: view.primary.label, action: view.primary.action }, progress: view.progress, chip: view.chip };
     }
     if (task && match.matched > 0) {
       const extra = match.missing;
@@ -136,8 +128,8 @@ export function homeCard({ connected = false, launching = false, active = null, 
   const unfinished = sortTasks(tasks).find(needsAttention);
   if (unfinished) {
     const view = taskView(unfinished, now);
-    return { kind: "task", eyebrow: "继续上次的任务", title: view.title, detail: view.detail, task: unfinished, chip: view.chip,
-      progress: view.progress, secondary: view.secondary, action: { label: view.primary.label, action: view.primary.action },
+    return { kind: "task", eyebrow: "接着上次", title: view.title, detail: view.detail, task: unfinished, chip: view.chip,
+      progress: view.progress, action: { label: view.primary.label, action: view.primary.action },
       note: "要挑新的一批，在 Eagle 里选中文件夹或照片。" };
   }
   return { kind: "empty", eyebrow: "开始", title: "在 Eagle 里选中要挑的照片", detail: "选中一个文件夹或一批照片，这里会出现「分析这 N 张」。",
@@ -163,7 +155,7 @@ export function libraryConfirmText(count, secondsPerPhoto = null) {
 }
 
 export function cullStartNotice(row, shown = "selected") {
-  if (!row) return "这个任务没有可挑选的照片，可以查看报告。";
+  if (!row) return "这次分析没有可挑选的照片。";
   if (shown === "none") return "请在 Eagle 中手动点击一张照片，在 Eagle 右栏查看分组和 AI 建议，按 5/3/1 打星。";
   return `已在 Eagle 中${shown === "opened" ? "打开" : "选中"}第 ${row.groupIndex + 1} 组的照片，`
     + "在 Eagle 右栏查看分组和 AI 建议，按 5/3/1 打星。";

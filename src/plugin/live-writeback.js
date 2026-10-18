@@ -1,9 +1,12 @@
-export const LIVE_KEYS = { enabled: 'eagle-culling-live-writeback', star: 'eagle-culling-live-star',
-  folders: 'eagle-culling-smart-folders' };
+export const LIVE_KEYS = { enabled: 'eagle-culling-live-writeback', folders: 'eagle-culling-smart-folders',
+  tags: 'eagle-culling-ai-tags' };
 const FOLDER_KEY = 'eagle-culling-smart-folders-created';
+// Decisions are saved as Eagle stars; writing them as tags too is an opt-in setting, off by default.
+export const aiTagsEnabled = storage => storage?.getItem(LIVE_KEYS.tags) === '1';
 
 export async function ensureSmartFolders(eagle, storage, onNotice = () => {}, options = {}) {
-  if (!options.force && (storage?.getItem(LIVE_KEYS.enabled) !== '1' || storage?.getItem(LIVE_KEYS.folders) === '0')) return;
+  if (!options.force && (!aiTagsEnabled(storage) || storage?.getItem(LIVE_KEYS.enabled) !== '1'
+    || storage?.getItem(LIVE_KEYS.folders) === '0')) return;
   const sf = eagle?.smartFolder;
   if (!sf?.create || !sf?.getAll || !sf?.getRules) {
     if (storage?.getItem(FOLDER_KEY) !== 'unsupported') onNotice('当前 Eagle 版本不支持自动创建智能文件夹');
@@ -31,7 +34,7 @@ export function createLiveWriteback({ api, storage = globalThis.localStorage, de
   onStatus = () => {}, onApplied = () => {}, setTimer = setTimeout, clearTimer = clearTimeout }) {
   const pending = new Map();
   let timer = null, tail = Promise.resolve(), failed = false;
-  const enabled = () => storage?.getItem(LIVE_KEYS.enabled) === '1';
+  const enabled = () => aiTagsEnabled(storage) && storage?.getItem(LIVE_KEYS.enabled) === '1';
   function schedule(runId, unitIds) {
     if (!enabled() || !runId) return;
     const ids = pending.get(runId) || new Set();
@@ -48,7 +51,7 @@ export function createLiveWriteback({ api, storage = globalThis.localStorage, de
         try {
           const result = await api(`/runs/${encodeURIComponent(runId)}/writeback/live`, {
             method: 'POST', headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({ unitIds, star: storage?.getItem(LIVE_KEYS.star) === '1' })
+            body: JSON.stringify({ unitIds })
           });
           if (result.results?.some(row => row.ok === true)) onApplied(runId, result);
           if (result.results?.some(row => row.ok === false)) throw new Error('部分照片未写回');

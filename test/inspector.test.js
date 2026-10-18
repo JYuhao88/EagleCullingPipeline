@@ -163,7 +163,7 @@ test('inspector shows run progress, jumps between groups, accepts AI for a group
     if (url.includes('/queue')) return { ok: true, status: 200, json: async () => ({ queue }) };
     return { ok: true, status: 200, json: async () => analysis };
   };
-  const storage = { getItem: key => key === 'eagle-culling-live-writeback' ? '1' : null };
+  const storage = { getItem: key => ['eagle-culling-live-writeback', 'eagle-culling-ai-tags'].includes(key) ? '1' : null };
   t.mock.timers.enable({ apis: ['setTimeout'] });
   const view = mountInspector({ root, eagle, storage, fetchImpl });
   try {

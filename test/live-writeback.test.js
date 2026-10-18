@@ -12,15 +12,16 @@ function storage(values = {}) {
   const map = new Map(Object.entries(values));
   return { getItem: key => map.get(key), setItem: (key, value) => map.set(key, value) };
 }
-test('live writeback is off by default and disabling cancels queued writes', async () => {
+test('live writeback is off by default, needs the AI tags setting, and disabling cancels queued writes', async () => {
   const saved = storage(); let writes = 0;
   const queue = createLiveWriteback({ api: async () => { writes++; }, storage: saved });
   queue.schedule('r', ['a']); await queue.flush(); assert.equal(writes, 0);
-  saved.setItem(LIVE_KEYS.enabled, '1'); queue.schedule('r', ['a']);
+  saved.setItem(LIVE_KEYS.enabled, '1'); queue.schedule('r', ['a']); await queue.flush(); assert.equal(writes, 0);
+  saved.setItem(LIVE_KEYS.tags, '1'); queue.schedule('r', ['a']);
   saved.setItem(LIVE_KEYS.enabled, '0'); await queue.flush(); assert.equal(writes, 0);
 });
 test('debounce merges repeated units and an undo sends the newest server decision', async () => {
-  const saved = storage({ [LIVE_KEYS.enabled]: '1' }); const requests = [];
+  const saved = storage({ [LIVE_KEYS.enabled]: '1', [LIVE_KEYS.tags]: '1' }); const requests = [];
   const timers = new Map(); let timerId = 0, newest = 'selected';
   const queue = createLiveWriteback({ storage: saved, setTimer: fn => { timers.set(++timerId, fn); return timerId; },
     clearTimer: id => timers.delete(id), api: async (_url, options) => {
@@ -29,10 +30,10 @@ test('debounce merges repeated units and an undo sends the newest server decisio
   queue.schedule('r', ['a']); queue.schedule('r', ['a', 'b']); newest = 'clear'; queue.schedule('r', ['a']);
   assert.equal(timers.size, 1); assert.equal(requests.length, 0);
   [...timers.values()][0](); await queue.flush();
-  assert.deepEqual(requests, [{ unitIds: ['a', 'b'], star: false, newest: 'clear' }]);
+  assert.deepEqual(requests, [{ unitIds: ['a', 'b'], newest: 'clear' }]);
 });
 test('failed live updates show one notice and remain retryable without blocking review', async () => {
-  const saved = storage({ [LIVE_KEYS.enabled]: '1' }); const notices = [];
+  const saved = storage({ [LIVE_KEYS.enabled]: '1', [LIVE_KEYS.tags]: '1' }); const notices = [];
   let failing = true, writes = 0;
   const queue = createLiveWriteback({ storage: saved, onStatus: (message, error) => notices.push({ message, error }),
     api: async () => { writes++; if (failing) throw new Error('offline'); return { results: [] }; } });
@@ -42,7 +43,7 @@ test('failed live updates show one notice and remain retryable without blocking 
   await queue.cancel();
 });
 test('smart folders use the tags schema, reuse matching names and create only once', async () => {
-  const saved = storage({ [LIVE_KEYS.enabled]: '1' }); const calls = [];
+  const saved = storage({ [LIVE_KEYS.enabled]: '1', [LIVE_KEYS.tags]: '1' }); const calls = [];
   const eagle = { library: { id: 'fake' }, smartFolder: {
     getAll: async () => [{ name: 'AI精选' }], getRules: async () => ({ tags: { methods: ['contain'], valueType: 'array' } }),
     create: async options => calls.push(options)
@@ -50,7 +51,7 @@ test('smart folders use the tags schema, reuse matching names and create only on
   await ensureSmartFolders(eagle, saved); await ensureSmartFolders(eagle, saved);
   assert.equal(calls.length, 1); assert.equal(calls[0].name, 'AI待淘汰');
   assert.deepEqual(calls[0].conditions, [{ match: 'AND', rules: [{ property: 'tags', method: 'contain', value: ['AI淘汰'] }] }]);
-  const notices = []; const missing = storage({ [LIVE_KEYS.enabled]: '1' });
+  const notices = []; const missing = storage({ [LIVE_KEYS.enabled]: '1', [LIVE_KEYS.tags]: '1' });
   await ensureSmartFolders({}, missing, message => notices.push(message));
   await ensureSmartFolders({}, missing, message => notices.push(message));
   assert.equal(notices.length, 1);
@@ -59,7 +60,7 @@ test('smart folders use the tags schema, reuse matching names and create only on
 
 test('partial live failures still expose successful history for finish-dialog revert', async () => {
   const applied = [], notices = [];
-  const queue = createLiveWriteback({ storage: storage({ [LIVE_KEYS.enabled]: '1' }),
+  const queue = createLiveWriteback({ storage: storage({ [LIVE_KEYS.enabled]: '1', [LIVE_KEYS.tags]: '1' }),
     api: async () => ({ results: [{ id: 'a', ok: true }, { id: 'b', ok: false }] }),
     onApplied: runId => applied.push(runId), onStatus: (_message, error) => notices.push(error) });
   queue.schedule('run', ['a', 'b']); await queue.flush();

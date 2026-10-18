@@ -9,7 +9,7 @@ import { groupTarget, neighbourGroups, patchRows, runGroups, runProgress, select
   from './inspector-groups.js';
 import { COLUMNS, FOLD_OVER, columnSlots, compareTable, contrastLines, differenceLine, keepTopDecisions, scoreBars, visibleRows }
   from './inspector-compare.js';
-import { createLiveWriteback } from '../live-writeback.js';
+import { aiTagsEnabled, createLiveWriteback } from '../live-writeback.js';
 import { displayUrl } from '../display-url.js';
 import { createWideWatcher, fillScreen, isWide, mainUrl, requestWide, setResident, showWindow, takeFill,
   unfillScreen } from '../wide-mode.js';
@@ -394,7 +394,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
       aiTags.hidden = !tags.length;
     }
     const tags = el('tagsState');
-    if (tags) tags.textContent = model.tagsOn ? 'AI 标签已开启' : 'AI 标签未开启';
+    if (tags) tags.textContent = !aiTagsEnabled(storage) ? '' : model.tagsOn ? 'AI 标签已开启' : 'AI 标签未开启';
     const fallback = el('eagleFallback');
     if (fallback) fallback.hidden = canSelect();
     renderRun();
@@ -1019,6 +1019,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     }
   }
   function renderAiTagActions() {
+    const tools = el('aiTagTools'); if (tools) tools.hidden = !aiTagsEnabled(storage);
     const runId = current.state === 'result' ? current.result?.runId : null;
     const count = new Set(runRows().flatMap(row => unitItems(row))).size;
     for (const button of root.querySelectorAll?.('[data-ai-tags]') || []) {
@@ -1033,6 +1034,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   async function writeAiTags(mode) {
     const runId = current.state === 'result' ? current.result?.runId : null;
     if (!runId || aiTagsBusy || saving > 0 || !runRows().length || !['apply', 'clear'].includes(mode)) return;
+    if (!aiTagsEnabled(storage)) return;
     if (aiTagsArmed?.runId !== runId || aiTagsArmed.mode !== mode || now() - aiTagsArmed.at >= 4000) {
       clearTimeout(aiTagsTimer); aiTagsArmed = { runId, mode, at: now() }; aiTagsStatus = '';
       renderAiTagActions(); saveSnapshot();

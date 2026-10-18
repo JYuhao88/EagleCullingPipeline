@@ -137,6 +137,9 @@ export async function handleReviewRoute(req, res, ctx) {
   if (req.method === "POST" && action === "apply") {
     return serializeWriteback(ctx, runId, fresh => applyRun(req, res, ctx, fresh, store));
   }
+  if (req.method === "POST" && action === "trash-rejected") {
+    return serializeWriteback(ctx, runId, fresh => trashRejected(req, res, ctx, fresh, store));
+  }
   if (req.method === "GET" && action === "report") {
     const decisions = await store.effective(data.results, data.groups);
     const rows = buildReport({ ...data, decisions });
@@ -354,6 +357,48 @@ async function liveItems(api, data, apply, requireTags = true) {
     if (apply) throw error;
     return { items: data.items, live: false, warning: `无法读取 Eagle 当前标签，预览基于分析时快照：${error.message}` };
   }
+}
+
+// Only photos the user marked 淘汰 go to Eagle's trash, never undecided photos the AI suggests rejecting. Files no longer
+// in the library (or already in its trash) are skipped so one stale ID cannot fail the batch.
+async function trashRejected(req, res, ctx, data, store) {
+  const body = await ctx.readBody(req);
+  const apply = body.apply === true;
+  if (apply && body.confirm !== "MOVE_TO_TRASH") {
+    ctx.json(res, 400, { error: "移入回收站需要 confirm MOVE_TO_TRASH" });
+    return true;
+  }
+  const rejected = new Set((await store.read()).filter(row => row.source === "human" && row.action === "rejected")
+    .map(row => row.unitId));
+  const units = (data.units || []).filter(unit => rejected.has(unit.id));
+  const ids = [...new Set(units.flatMap(unit => unit.itemIds || [unit.primaryItemId]).filter(Boolean))];
+  if (apply && (!ctx.api?.assertLibrary || !ctx.api?.itemInfo || !ctx.api?.moveToTrash || !data.run.libraryPath)) {
+    throw new Error("无法确认 Eagle 资源库，未移动任何照片");
+  }
+  let present = ids, verified = false;
+  if (ctx.api?.itemInfo) {
+    try {
+      if (ctx.api.assertLibrary && data.run.libraryPath) await ctx.api.assertLibrary(data.run.libraryPath);
+      present = [];
+      for (const id of ids) {
+        const info = await ctx.api.itemInfo(id).catch(() => null);
+        if (info && !info.isDeleted) present.push(id);
+      }
+      verified = true;
+    } catch (error) {
+      if (apply) throw error;
+      present = ids;
+    }
+  }
+  const names = new Map((data.items || []).map(item => {
+    const name = item.name || item.fileName || item.id;
+    return [item.id, item.ext && !name.toLowerCase().endsWith(`.${item.ext}`.toLowerCase()) ? `${name}.${item.ext}` : name];
+  }));
+  const result = { dryRun: !apply, verified, units: units.length, count: present.length, skipped: ids.length - present.length,
+    files: present.slice(0, 50).map(id => names.get(id) || id) };
+  if (apply) result.trash = await moveToTrash(ctx.api, present);
+  ctx.json(res, 200, result);
+  return true;
 }
 
 async function moveToTrash(api, ids) {

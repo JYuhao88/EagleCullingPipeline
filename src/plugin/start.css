@@ -7,6 +7,7 @@
 #start summary { cursor: pointer; }
 #start pre { background: var(--ec-surface); color: var(--ec-text-dim); font-size: var(--ec-font-size-small); padding: 8px;
   white-space: pre-wrap; word-break: break-all; border-radius: var(--ec-radius); }
+#start pre:empty { display: none; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .home-bar { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--ec-border); }
@@ -20,11 +21,8 @@
 #health[data-state="starting"]::before { color: var(--ec-pick); }
 .home-bar button { margin: 0; white-space: nowrap; }
 
-.home-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: .33rem 1.67rem; padding-top: .83rem; }
-@media (min-width: 760px) {
-  .home-layout { grid-template-columns: minmax(0, 1.1fr) minmax(23rem, .9fr); align-items: start; }
-  .home-tasks { border-left: 1px solid var(--ec-border); padding-left: 1.67rem; }
-}
+.home-layout { max-width: 48rem; margin: 0 auto; padding-top: .83rem; }
+.home-main { display: flex; flex-direction: column; gap: .33rem; }
 
 .primary-card { padding: 1.17rem; border: 1px solid var(--ec-border); border-radius: var(--ec-radius); background: var(--ec-surface); }
 .primary-card[data-kind="service"] { border-color: var(--ec-reject); }
@@ -36,9 +34,8 @@
 .task-row[data-state="analyzing"] .chip, .primary-card[data-kind="progress"] .chip { color: var(--ec-accent); }
 .task-row[data-state="interrupted"] .chip, .task-row[data-state="lost"] .chip,
 .task-row[data-state="failed"] .chip { color: var(--ec-reject); }
-.task-row[data-state="reviewing"] .chip, .task-row[data-state="toWriteback"] .chip,
-.task-row[data-state="pendingWriteback"] .chip { color: var(--ec-pick); }
-.task-row[data-state="writtenBack"] .chip { color: var(--ec-ok); }
+.task-row[data-state="reviewing"] .chip { color: var(--ec-pick); }
+.task-row[data-state="done"] .chip { color: var(--ec-ok); }
 
 #progress { margin: 8px 0; }
 #progress progress { width: 100%; height: .5rem; accent-color: var(--ec-accent); }
@@ -86,22 +83,16 @@
 #panelSettings .cache-row select { flex: 1; min-width: 0; }
 #panelSettings .cache-row button { margin: 0; white-space: nowrap; }
 
-@media (min-width: 1000px) {
-  #start { display: flex; flex-direction: column; height: calc(100vh - 2rem); max-width: 130rem; padding-bottom: 0; }
-  #start > #panelHome:not([hidden]) { flex: 1; min-height: 0; }
-  .home-layout { grid-template-columns: minmax(0, 1.6fr) minmax(24rem, 1fr); grid-template-rows: minmax(0, 1fr);
-    align-items: stretch; }
-  .home-main { display: flex; flex-direction: column; gap: .67rem; min-height: 0; }
-  .home-tasks { min-height: 0; overflow-y: auto; }
-}
 
 .task-actions { display: flex; flex-direction: column; gap: 4px; }
 .task-actions .secondary { font-size: .85em; color: var(--ec-text-dim); }
 
-#writebackDialog { width: min(46rem, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); overflow-y: auto;
+#writebackDialog, #trashDialog { width: min(46rem, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); overflow-y: auto;
   border: 1px solid var(--ec-border); border-radius: var(--ec-radius); background: var(--ec-bg); color: var(--ec-text); }
-#writebackDialog::backdrop { background: rgba(0, 0, 0, .55); }
-#writebackDetails pre { max-height: 15rem; overflow-y: auto; }
+#writebackDialog::backdrop, #trashDialog::backdrop { background: rgba(0, 0, 0, .55); }
+#writebackDetails pre, #trashFiles { max-height: 15rem; overflow-y: auto; }
+#trashDialog label { display: block; margin: 8px 0; }
+#trashDialog input { display: block; width: 100%; margin: 4px 0; box-sizing: border-box; }
 .writeback-stats { display: flex; gap: 1rem; }
 .writeback-stats strong { display: flex; flex-direction: column; }
 .writeback-stats .has-error { color: var(--ec-reject); }

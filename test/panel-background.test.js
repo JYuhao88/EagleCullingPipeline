@@ -17,8 +17,7 @@ test('settings exact keys and defaults persist without enabling writeback implic
     writeSetting(values, id, defaultValue); assert.equal(readSetting(values, id), defaultValue);
   }
   assert.equal(values.getItem('eagle-culling-live-writeback'), '0');
-  assert.equal(values.getItem('eagle-culling-live-star'), '0');
-  assert.equal(values.getItem('eagle-culling-smart-folders'), '1');
+  assert.equal(values.getItem('eagle-culling-ai-tags'), '0', 'AI tags are opt-in');
 });
 test('auto start refuses running, disabled, non-local, missing repo and concurrent starts', () => {
   const input = { connected: false, enabled: true, repository: fixtureRepository, base: 'http://127.0.0.1:43441' };
