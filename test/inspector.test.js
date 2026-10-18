@@ -19,6 +19,21 @@ async function fixture(t) {
       ['闭眼'] }] }] });
   return { store, save };
 }
+function fakeDom(extra = {}) {
+  const nodes = new Map();
+  const element = () => ({ textContent: '', children: [], hidden: false, disabled: false, dataset: {}, style: {}, listeners: {},
+    replacements: 0, classList: { names: new Set(), add(name) { this.names.add(name); }, toggle() {} },
+    replaceChildren(...children) { this.children = children; this.replacements++; },
+    append(...children) { this.children.push(...children); },
+    addEventListener(type, handler) { this.listeners[type] = handler; } });
+  const root = { hidden: false, querySelector: id => { if (!nodes.has(id)) nodes.set(id, element()); return nodes.get(id); },
+    querySelectorAll: () => [], createElement: element, ...extra };
+  return { root, node: id => root.querySelector(`#${id}`) };
+}
+const memorySession = (data = new Map()) => ({ getItem: key => data.get(key) ?? null,
+  setItem: (key, value) => data.set(key, value), removeItem: key => data.delete(key) });
+const settle = () => new Promise(resolve => setTimeout(resolve, 10));
+const flush = () => new Promise(resolve => setImmediate(resolve));
 test('item index hits paired IDs in latest matching library, misses clearly, and invalidates on publication', async t => {
   const { store, save } = await fixture(t);
   await save('run-a', '2026-10-01'); await save('run-other', '2026-10-04', '/other.library');
@@ -73,13 +88,7 @@ test('item analysis lists the whole group in rank order with AI suggestion, huma
 });
 test('inspector group strip selects a whole unit in Eagle and stars typed in Eagle become decisions', async () => {
   const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
-  const nodes = new Map();
-  const element = () => ({ textContent: '', children: [], hidden: false, dataset: {}, listeners: {},
-    classList: { names: new Set(), add(name) { this.names.add(name); }, toggle() {} },
-    replaceChildren(...children) { this.children = children; }, append(...children) { this.children.push(...children); },
-    addEventListener(type, handler) { this.listeners[type] = handler; } });
-  const root = { hidden: false, querySelector: id => { if (!nodes.has(id)) nodes.set(id, element()); return nodes.get(id); },
-    querySelectorAll: () => [], createElement: element };
+  const { root } = fakeDom();
   const items = { p1: { id: 'p1', star: 0 } }, selections = [], posts = [];
   const eagle = { library: { path: '/fixture.library' }, item: {
     getSelected: async () => [items.p1], getByIds: async ids => ids.map(id => items[id]).filter(Boolean),
@@ -94,7 +103,7 @@ test('inspector group strip selects a whole unit in Eagle and stars typed in Eag
   };
   const view = mountInspector({ root, eagle, storage: { getItem: () => null }, fetchImpl });
   try {
-    await view.refresh(true); await new Promise(resolve => setTimeout(resolve, 10));
+    await view.refresh(true); await settle();
     const pair = root.querySelector('#pair');
     assert.equal(pair.hidden, false); assert.equal(pair.children.length, 2);
     const [current, best] = pair.children;
@@ -112,41 +121,29 @@ test('inspector group strip selects a whole unit in Eagle and stars typed in Eag
 });
 test('a narrow right panel keeps the leading comparison columns and names the hidden ones until it is widened', async () => {
   const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
-  const nodes = new Map();
-  const element = () => ({ textContent: '', children: [], hidden: false, dataset: {}, classList: { add() {}, toggle() {} },
-    replaceChildren(...children) { this.children = children; }, append(...children) { this.children.push(...children); },
-    addEventListener() {} });
-  const root = { hidden: false, querySelector: id => { if (!nodes.has(id)) nodes.set(id, element()); return nodes.get(id); },
-    querySelectorAll: () => [], createElement: element };
+  const { root, node } = fakeDom();
   const metrics = (score, quality, sharpness, exposure, clipped) => ({ score, quality, sharpness, exposure, clipped });
   const result = { runId: 'run-w', unitId: 'u1', groupSize: 2, groupMembers: [
     { unitId: 'u1', itemIds: ['p1'], rank: 1, suggested: 'selected', flags: [], metrics: metrics(.7, .8, .3, .7, .001) },
     { unitId: 'u2', itemIds: ['p2'], rank: 2, suggested: 'candidate', flags: [], metrics: metrics(.6, .7, .2, .9, .03) }] };
   const fetchImpl = async () => ({ ok: true, status: 200, json: async () => result });
   const eagle = { library: { path: '/fixture.library' }, item: { getSelected: async () => [{ id: 'p1' }] } };
-  const node = id => root.querySelector(`#${id}`);
   const box = { clientWidth: 217 }; node('compareTable').parentElement = box;
   const view = mountInspector({ root, eagle, storage: { getItem: () => null }, fetchImpl, session: null });
   const labels = () => node('compareTable').children[0].children.slice(2).map(cell => cell.textContent);
-  const settle = () => new Promise(resolve => setTimeout(resolve, 10));
   try {
     view.watcher.stop(); await view.refresh(true); await settle();
     assert.deepEqual(labels(), ['总分', '画质', '清晰', '曝光']);
     assert.equal(node('compareHidden').hidden, false);
-    assert.equal(node('compareHidden').textContent, '右栏较窄，未显示：溢出。向左拖动右栏左边缘可加宽。');
+    assert.equal(node('compareHidden').textContent, '右栏较窄，未显示：溢出。向左拖动右栏左边缘可加宽，或点「宽屏查看」。');
     box.clientWidth = 420; await view.refresh(true); await settle();
     assert.deepEqual(labels(), ['总分', '画质', '清晰', '曝光', '溢出']);
     assert.equal(node('compareHidden').hidden, true); assert.equal(node('compareHidden').textContent, '');
   } finally { view.dispose(); }
 });
-test('inspector shows run progress, jumps between groups, accepts AI for a group and summarises multi-select', async () => {
+test('inspector shows run progress, jumps between groups, accepts AI for a group and summarises multi-select', async t => {
   const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
-  const nodes = new Map();
-  const element = () => ({ textContent: '', children: [], hidden: false, disabled: false, dataset: {},
-    classList: { add() {}, toggle() {} }, replaceChildren(...children) { this.children = children; },
-    append(...children) { this.children.push(...children); }, addEventListener() {} });
-  const root = { hidden: false, querySelector: id => { if (!nodes.has(id)) nodes.set(id, element()); return nodes.get(id); },
-    querySelectorAll: () => [], createElement: element };
+  const { root } = fakeDom();
   let selected = [{ id: 'b1', star: 0 }];
   const selections = [], posts = [];
   const eagle = { library: { path: '/lib' }, item: { getSelected: async () => selected, getByIds: async () => [],
@@ -167,11 +164,11 @@ test('inspector shows run progress, jumps between groups, accepts AI for a group
     return { ok: true, status: 200, json: async () => analysis };
   };
   const storage = { getItem: key => key === 'eagle-culling-live-writeback' ? '1' : null };
+  t.mock.timers.enable({ apis: ['setTimeout'] });
   const view = mountInspector({ root, eagle, storage, fetchImpl });
-  const settle = () => new Promise(resolve => setTimeout(resolve, 10));
   try {
     view.watcher.stop();
-    await view.refresh(true); await settle();
+    await view.refresh(true); await flush();
     assert.equal(root.querySelector('#runProgress').textContent, '旅行 · 已定 2/4 · 精选 1 · 候选 0 · 淘汰 1');
     assert.equal(root.querySelector('#finishHint').hidden, true);
     assert.equal(root.querySelector('#acceptGroup').textContent, '按 AI 建议 1');
@@ -181,10 +178,11 @@ test('inspector shows run progress, jumps between groups, accepts AI for a group
     await view.acceptGroup();
     assert.match(posts[0].url, /\/runs\/run-1\/decisions$/);
     assert.deepEqual(posts[0].body.decisions.map(row => [row.unitId, row.action]), [['b1', 'selected']]);
-    await new Promise(resolve => setTimeout(resolve, 600));
+    assert.equal(posts.length, 1);
+    t.mock.timers.tick(500); await flush();
     assert.match(posts[1].url, /\/runs\/run-1\/writeback\/live$/); assert.deepEqual(posts[1].body.unitIds, ['b1']);
     selected = [{ id: 'a1' }, { id: 'b1' }, { id: 'b2' }];
-    await view.refresh(true); await settle();
+    await view.refresh(true); await flush();
     assert.equal(root.querySelector('#status').textContent, '已选 3 张');
     assert.equal(root.querySelector('#selectedCount').textContent, '跨 2 组');
     assert.equal(root.querySelector('#details').hidden, true);
@@ -213,12 +211,7 @@ test('item analysis carries per-photo metrics for the comparison table', async t
 });
 test('inspector fixes groups for the selected photos and undoes only its own fixes', async () => {
   const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
-  const nodes = new Map();
-  const element = () => ({ textContent: '', children: [], hidden: false, disabled: false, dataset: {},
-    classList: { add() {}, toggle() {} }, replaceChildren(...children) { this.children = children; },
-    append(...children) { this.children.push(...children); }, addEventListener() {} });
-  const root = { hidden: false, querySelector: id => { if (!nodes.has(id)) nodes.set(id, element()); return nodes.get(id); },
-    querySelectorAll: () => [], createElement: element };
+  const { root } = fakeDom();
   let selected = [{ id: 'b2' }];
   const posts = [];
   const eagle = { library: { path: '/lib' }, item: { getSelected: async () => selected, getByIds: async () => [] } };
@@ -236,7 +229,6 @@ test('inspector fixes groups for the selected photos and undoes only its own fix
   };
   let clock = 0;
   const view = mountInspector({ root, eagle, storage: { getItem: () => null }, fetchImpl, now: () => clock });
-  const settle = () => new Promise(resolve => setTimeout(resolve, 10));
   try {
     view.watcher.stop();
     await view.refresh(true); await settle();
@@ -261,12 +253,7 @@ test('inspector fixes groups for the selected photos and undoes only its own fix
 });
 test('inspector survives Eagle reloading it on every photo switch: cached group, carried note, held height', async () => {
   const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
-  const element = () => ({ textContent: '', children: [], hidden: false, disabled: false, dataset: {}, style: {},
-    classList: { add() {}, toggle() {} }, replaceChildren(...children) { this.children = children; },
-    append(...children) { this.children.push(...children); }, addEventListener() {} });
-  const sessionData = new Map();
-  const session = { getItem: key => sessionData.get(key) ?? null, setItem: (key, value) => sessionData.set(key, value),
-    removeItem: key => sessionData.delete(key) };
+  const sessionData = new Map(), session = memorySession(sessionData);
   const members = [
     { unitId: 'u1', itemIds: ['p1'], rank: 1, suggested: 'selected', human: null, flags: [], metrics: { score: .6 } },
     { unitId: 'u2', itemIds: ['p2', 'r2'], rank: 2, suggested: 'candidate', human: 'rejected', flags: [], metrics: { score: .5 } }];
@@ -280,14 +267,11 @@ test('inspector survives Eagle reloading it on every photo switch: cached group,
     return new Promise(resolve => { pending = () => resolve({ ok: true, status: 200, json: async () => analysis }); });
   };
   const mount = (id, body) => {
-    const nodes = new Map();
-    const root = { hidden: false, body, querySelector: key => { if (!nodes.has(key)) nodes.set(key, element()); return nodes.get(key); },
-      querySelectorAll: () => [], createElement: element };
+    const { root } = fakeDom({ body });
     const eagle = { library: { path: '/lib' }, item: { getSelected: async () => [{ id }], getByIds: async () => [] } };
     return { root, view: mountInspector({ root, eagle, storage: { getItem: () => null }, fetchImpl, session,
       pageUrl: `file:///inspector/index.html?id=${id}` }) };
   };
-  const settle = () => new Promise(resolve => setTimeout(resolve, 10));
   const first = mount('p1', { style: {}, scrollHeight: 640 });
   try {
     first.view.watcher.stop(); await settle(); pending(); await settle(); await settle();
@@ -311,12 +295,7 @@ test('inspector survives Eagle reloading it on every photo switch: cached group,
 });
 test('inspector keeps the top K of a large group after a second click and leaves your decisions alone', async () => {
   const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
-  const nodes = new Map();
-  const element = () => ({ textContent: '', children: [], hidden: false, disabled: false, dataset: {}, style: {},
-    classList: { add() {}, toggle() {} }, replaceChildren(...children) { this.children = children; },
-    append(...children) { this.children.push(...children); }, addEventListener() {} });
-  const root = { hidden: false, querySelector: id => { if (!nodes.has(id)) nodes.set(id, element()); return nodes.get(id); },
-    querySelectorAll: () => [], createElement: element };
+  const { root } = fakeDom();
   const members = Array.from({ length: 6 }, (_, index) => ({ unitId: `u${index + 1}`, itemIds: [`p${index + 1}`],
     rank: index + 1, suggested: index ? 'candidate' : 'selected', human: index === 4 ? 'selected' : null, flags: [],
     metrics: { score: 0.6 - index / 50 } }));
@@ -328,14 +307,10 @@ test('inspector keeps the top K of a large group after a second click and leaves
     if (url.includes('/queue')) return { ok: true, status: 200, json: async () => ({ queue: [] }) };
     return { ok: true, status: 200, json: async () => analysis };
   };
-  const sessionData = new Map();
-  const session = { getItem: key => sessionData.get(key) ?? null, setItem: (key, value) => sessionData.set(key, value),
-    removeItem: key => sessionData.delete(key) };
   let clock = 0;
   const eagle = { library: { path: '/lib' }, item: { getSelected: async () => [{ id: 'p2' }], getByIds: async () => [] } };
-  const view = mountInspector({ root, eagle, storage: { getItem: () => null }, fetchImpl, session, now: () => clock,
-    pageUrl: 'file:///x' });
-  const settle = () => new Promise(resolve => setTimeout(resolve, 10));
+  const view = mountInspector({ root, eagle, storage: { getItem: () => null }, fetchImpl, session: memorySession(),
+    now: () => clock, pageUrl: 'file:///x' });
   try {
     view.watcher.stop(); await view.refresh(true); await settle();
     assert.equal(root.querySelector('#selectedCount').textContent, '第 1 组 · 已定 1/6');
@@ -370,11 +345,6 @@ test('inspector moves its Eagle section above 标签 once and then respects a dr
   assert.equal(placeInspectorFirst(storage), true);
   assert.deepEqual(JSON.parse(data.get('eagle.inspector.itemsOrder')), { tags: 0, folders: 2, [manifest.id]: 1 });
 });
-test('plugin ids work as a jQuery id selector so Eagle reuses the inspector webview', async () => {
-  for (const file of ['src/plugin/manifest.json', 'src/inspector/manifest.json']) {
-    assert.match(JSON.parse(await readFile(file, 'utf8')).id, /^[a-z][a-z0-9-]*$/);
-  }
-});
 test('group members carry face boxes with the blink verdict and the 17 body keypoints for thumbnail marks', async () => {
   const { memberMarks } = await import('../src/server/item-analysis.js');
   const points = Array.from({ length: 133 }, (_, index) => [index / 200, 0.123456, 0.9]);
@@ -396,9 +366,11 @@ test('inspector view model covers empty, loading, offline and compact score/reas
   assert.equal(model.badge, '精选 · 已人工决定'); assert.match(model.lines[0], /第 2 \/ 3 张.*质量 —/);
   assert.ok(model.lines.includes('闭眼')); assert.deepEqual(model.reasons, ['闭眼', '人工理由：保留']);
 });
-test('manifests use compact serviceMode and exact supported image/RAW inspector preview with matching versions', async () => {
+test('manifests use compact serviceMode, exact supported image/RAW inspector preview and matching versions', async () => {
   const main = JSON.parse(await readFile('src/plugin/manifest.json', 'utf8'));
   const inspector = JSON.parse(await readFile('src/inspector/manifest.json', 'utf8'));
+  // Eagle looks plugins up with a jQuery id selector; other characters make it rebuild the inspector webview.
+  for (const manifest of [main, inspector]) assert.match(manifest.id, /^[a-z][a-z0-9-]*$/);
   assert.equal(main.main.serviceMode, true); assert.equal(main.main.width, 420); assert.equal(main.main.height, 600);
     assert.equal(main.main.resizable, true);
   assert.equal(inspector.main, undefined); assert.notEqual(inspector.id, main.id);
@@ -428,12 +400,7 @@ test('version check rejects inspector divergence', async t => {
 
 test('inspector selection refresh ignores stale responses and never writes Eagle', async () => {
   const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
-  const nodes = new Map();
-  const root = { hidden: false, querySelector: id => {
-    if (!nodes.has(id)) nodes.set(id, { textContent: '', children: [], hidden: false,
-      replaceChildren() { this.children = []; }, append(node) { this.children.push(node); } });
-    return nodes.get(id);
-  }, createElement: () => ({ textContent: '' }) };
+  const { root } = fakeDom();
   let selected = 'a', oldResolve, writes = 0;
   const eagle = { library: { path: '/fixture.library' }, item: { getSelected: async () => [{ id: selected }], save: () => writes++ } };
   const fetchImpl = async url => {
@@ -480,14 +447,9 @@ test('personalization explains readiness, heldout agreement and the strongest fa
   assert.equal(personalizationModel({ applied: { at: '2026-10-13', changedGroups: 7 } }).applied, '已调整 7 组');
 });
 
-test('inspector personalizes locally after two clicks, expires confirmation and refreshes suggestions on undo', async () => {
+test('inspector personalizes locally after two clicks, expires confirmation and refreshes suggestions on undo', async t => {
   const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
-  const nodes = new Map();
-  const element = () => ({ textContent: '', children: [], hidden: false, disabled: false, dataset: {}, replacements: 0,
-    classList: { add() {}, toggle() {} }, replaceChildren(...children) { this.children = children; this.replacements++; },
-    append(...children) { this.children.push(...children); }, addEventListener() {} });
-  const root = { hidden: false, querySelector: id => { if (!nodes.has(id)) nodes.set(id, element()); return nodes.get(id); },
-    querySelectorAll: () => [], createElement: element };
+  const { root, node } = fakeDom();
   const member = { unitId: 'u1', itemIds: ['p1'], rank: 1, suggested: 'selected', flags: [] };
   const analysis = { runId: 'run-p', unitId: 'u1', groupId: 'g1', groupSize: 1, groupMembers: [member], focus: '清晰' };
   let report = { ready: false, labeledGroups: 2, remainingGroups: 8, reason: 'insufficient-data', applied: null };
@@ -505,9 +467,8 @@ test('inspector personalizes locally after two clicks, expires confirmation and 
   };
   const eagle = { library: { path: '/fixture.library' }, item: { getSelected: async () => [{ id: 'p1' }] } };
   const view = mountInspector({ root, eagle, storage: { getItem: () => null }, fetchImpl, session: null });
-  const node = id => root.querySelector(`#${id}`);
   try {
-    view.watcher.stop(); await view.refresh(true); await new Promise(resolve => setTimeout(resolve, 10));
+    view.watcher.stop(); await view.refresh(true); await settle();
     await view.loadPersonalization();
     assert.equal(node('personalizeApply').disabled, true); assert.match(node('personalizeHint').textContent, /更多/);
     await view.personalize(); assert.equal(posts.length, 0);
@@ -516,8 +477,10 @@ test('inspector personalizes locally after two clicks, expires confirmation and 
     await view.loadPersonalization(true);
     assert.equal(node('compareTable').replacements, before);
     assert.equal(node('personalizeApply').disabled, false);
+    t.mock.timers.enable({ apis: ['setTimeout'] });
     await view.personalize(); assert.equal(node('personalizeApply').textContent, '确认应用');
-    await new Promise(resolve => setTimeout(resolve, 3100));
+    t.mock.timers.tick(2999); assert.equal(node('personalizeApply').textContent, '确认应用');
+    t.mock.timers.tick(1);
     assert.equal(node('personalizeApply').textContent, '应用到剩余 8 组');
     assert.equal(posts.length, 0);
     assert.equal(node('compareTable').replacements, before);

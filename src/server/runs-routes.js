@@ -199,6 +199,8 @@ export function createRunsRouter({
   active = { run: null },
   scanItems = listEagleImages,
   progressIntervalMs = 250,
+  heartbeatMs = 1000,
+  now = () => performance.now(),
   isUpdating = () => false,
   beforeRun = async () => {},
   onFinished = () => {},
@@ -286,7 +288,7 @@ export function createRunsRouter({
       catch (error) { return json(res, 400, { error: error.message }); }
       if (!resumeId && checkpoint) await checkpoint.put('request', body);
       const history = store.list ? (await store.list({ limit: 20, cursor: 0 })).runs || [] : [];
-      const tracker = new RunProgress({ weights: measuredWeights(history) || undefined });
+      const tracker = new RunProgress({ now, weights: measuredWeights(history) || undefined });
       const run = {
         contractVersion: 1,
         id,
@@ -321,9 +323,9 @@ export function createRunsRouter({
       const progressWrites = new Set();
       const onProgress = progress => {
         run.progress = tracker.update(progress);
-        const now = performance.now();
-        if (progress.stage !== lastProgressStage || now - lastProgressAt >= progressIntervalMs) {
-          lastProgressAt = now;
+        const time = now();
+        if (progress.stage !== lastProgressStage || time - lastProgressAt >= progressIntervalMs) {
+          lastProgressAt = time;
           lastProgressStage = progress.stage;
           const pending = (store.saveProgress ? store.saveProgress(run) : store.save(run, { run })).catch(error => {
             run.progressWarning = error.message;
@@ -331,7 +333,7 @@ export function createRunsRouter({
           progressWrites.add(pending);
         }
       };
-      const heartbeat = setInterval(() => onProgress(tracker.last), 1000);
+      const heartbeat = setInterval(() => onProgress(tracker.last), heartbeatMs);
       heartbeat.unref?.();
       const execute = async () => {
         controller.signal.throwIfAborted();

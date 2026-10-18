@@ -1,4 +1,4 @@
-import test from 'node:test';
+import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -18,10 +18,15 @@ function command(cwd, command, args) {
     child.on('close', code => code ? reject(new Error(error || `exit ${code}`)) : resolve(output.trim()));
   });
 }
-async function fixture(t, { offMaster = false, lockChange = false, mismatch = false, ...options } = {}) {
-  const root = await mkdtemp(path.join(tmpdir(), 'culling-update-'));
-  t.after(() => rm(root, { recursive: true, force: true }));
-  const bare = path.join(root, 'origin.git'), source = path.join(root, 'source'), cwd = path.join(root, 'clone');
+
+let originsRoot;
+const origins = new Map();
+after(async () => { if (originsRoot) await rm(await originsRoot, { recursive: true, force: true }); });
+
+async function buildOrigin({ offMaster, lockChange, mismatch }) {
+  originsRoot ??= mkdtemp(path.join(tmpdir(), 'culling-update-origins-'));
+  const root = await mkdtemp(path.join(await originsRoot, 'variant-'));
+  const bare = path.join(root, 'origin.git'), source = path.join(root, 'source');
   await mkdir(source);
   const git = (...args) => command(source, 'git', args);
   await command(root, 'git', ['init', '--bare', bare]);
@@ -50,6 +55,20 @@ async function fixture(t, { offMaster = false, lockChange = false, mismatch = fa
   await git('tag', 'v9.0.0-beta.1');
   await git('remote', 'add', 'origin', bare);
   await git('push', 'origin', 'master', '--tags');
+  return bare;
+}
+
+function origin(variant) {
+  const key = JSON.stringify(variant);
+  if (!origins.has(key)) origins.set(key, buildOrigin(variant));
+  return origins.get(key);
+}
+
+async function fixture(t, { offMaster = false, lockChange = false, mismatch = false, ...options } = {}) {
+  const bare = await origin({ offMaster, lockChange, mismatch });
+  const root = await mkdtemp(path.join(tmpdir(), 'culling-update-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const cwd = path.join(root, 'clone');
   await command(root, 'git', ['clone', bare, cwd]);
   await command(cwd, 'git', ['checkout', '--detach', 'v1.0.0']);
   const updater = new Updater({ cwd, acceptOrigin: value => value === bare, restart: async () => {}, ...options });
@@ -87,7 +106,10 @@ test('dirty clone is refused without changing user edits', async t => {
 });
 
 test('active analysis is refused', async t => {
-  const { updater } = await fixture(t, { isBusy: () => true });
+  const cwd = await mkdtemp(path.join(tmpdir(), 'culling-update-busy-'));
+  t.after(() => rm(cwd, { recursive: true, force: true }));
+  const updater = new Updater({ cwd, isBusy: () => true, restart: async () => {},
+    run: async () => assert.fail('busy check must precede git') });
   await assert.rejects(updater.apply(), /正在分析/);
 });
 
@@ -104,8 +126,6 @@ test('npm ci failure restores original commit and dependencies', async t => {
   const run = updater.run; let installs = 0;
   updater.run = async (cmd, args, options) => {
     if (cmd.startsWith('npm')) {
-      assert.equal(args[0], 'ci');
-      assert.deepEqual(args.slice(0, 2), ['ci', '--ignore-scripts']);
       assert.deepEqual(args, ['ci', '--ignore-scripts']);
       if (++installs === 1) throw new Error('npm ci failed');
       await mkdir(path.join(options.cwd, 'node_modules'), { recursive: true });
@@ -157,10 +177,28 @@ test('mismatched package and plugin release versions are refused before checkout
   assert.equal(await git('rev-parse', 'HEAD'), old);
 });
 
-test('version check and automatic update safety policy', async t => {
-  const { cwd } = await fixture(t);
-  assert.equal(await checkUpdateVersion('v1.0.0', cwd), '1.0.0');
-  await assert.rejects(checkUpdateVersion('v1.1.0', cwd), /tag/);
+test('version check compares package, plugin and inspector manifests with the release tag', async t => {
+  const root = await mkdtemp(path.join(tmpdir(), 'culling-version-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  for (const [index, [pkg, plugin, inspector, tag, expected]] of [
+    ['1.0.0', '1.0.0', '1.0.0', 'v1.0.0', '1.0.0'],
+    ['1.0.0', '1.0.0', '1.0.0', undefined, '1.0.0'],
+    ['1.0.0', '1.0.0', '1.0.0', 'v1.1.0', /tag/],
+    ['1.0.0', '1.0.0', '1.0.0', 'v1.0', /tag/],
+    ['1.0.0', '1.1.0', '1.0.0', 'v1.0.0', /插件 manifest/],
+    ['1.0.0', '1.0.0', '1.1.0', 'v1.0.0', /检查器/],
+  ].entries()) {
+    const cwd = path.join(root, String(index));
+    for (const dir of ['src/plugin', 'src/inspector']) await mkdir(path.join(cwd, dir), { recursive: true });
+    await writeFile(path.join(cwd, 'package.json'), JSON.stringify({ version: pkg }));
+    await writeFile(path.join(cwd, 'src/plugin/manifest.json'), JSON.stringify({ version: plugin }));
+    await writeFile(path.join(cwd, 'src/inspector/manifest.json'), JSON.stringify({ version: inspector }));
+    if (typeof expected === 'string') assert.equal(await checkUpdateVersion(tag, cwd), expected);
+    else await assert.rejects(checkUpdateVersion(tag, cwd), expected);
+  }
+});
+
+test('automatic update safety policy', () => {
   const options = { status: { hasUpdate: true, canUpdate: true }, enabled: true, reviewing: false, postponed: false };
   assert.equal(shouldAutoUpdate(options), true);
   for (const override of [{ reviewing: true }, { enabled: false }, { postponed: true }, { status: { hasUpdate: true } }]) {

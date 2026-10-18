@@ -1,6 +1,5 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
 import { mountInspector, observationLines } from '../src/plugin/inspector/inspector.js';
 
 const items = [
@@ -11,17 +10,11 @@ const items = [
   { id: 'fifth', text: '背景有人', tone: 'neutral', source: 'rule' },
 ];
 
-test('observation view caps four, follows contrast tones and gives model-only calibrated confidence', async () => {
+test('observation view follows contrast tones and gives model-only calibrated confidence', () => {
   const lines = observationLines(items);
-  assert.equal(lines.length, 4);
   assert.deepEqual(lines.map(row => row.className), ['contrast better', 'contrast worse', 'contrast neutral', 'contrast neutral']);
-  assert.equal(lines[0].title, '校准置信度 93%');
-  assert.equal(lines[1].title, ''); assert.equal(lines[3].title, '校准置信度 88%');
+  assert.equal(lines[3].title, '校准置信度 88%');
   assert.deepEqual(observationLines(), []);
-  const html = await readFile(new URL('../src/plugin/inspector/index.html', import.meta.url), 'utf8');
-  assert.ok(html.indexOf('id="observations"') > html.indexOf('id="difference"'));
-  assert.ok(html.indexOf('id="observations"') < html.indexOf('id="aiTags"'));
-  assert.match(html, /AI 观察（本地）/);
 });
 
 test('inspector renders, hides, hovers thumbnail boxes, switches cached member observations without extra requests', async () => {

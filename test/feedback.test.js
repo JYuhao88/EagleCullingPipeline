@@ -118,23 +118,6 @@ test("feedback append serialization preserves concurrent events and empty metric
   assert.equal(new Set(catalog.rules.map(rule => rule.id)).size, catalog.rules.length);
   assert.equal(catalog.rules.find(rule => rule.id === 'P-CROP-KNEE').title, '不切膝盖');
   assert.equal(catalog.rules.find(rule => rule.id === 'P-CROP-KNEE').severity, 'gate');
-});
-
-test("feedback evaluation CLI explains absent denominators and accepts a JSONL file", async t => {
-  const { execFile } = await import("node:child_process");
-  const { promisify } = await import("node:util");
-  const exec = promisify(execFile);
-  const root = await mkdtemp(path.join(os.tmpdir(), "feedback-eval-"));
-  t.after(() => rm(root, { recursive: true, force: true }));
-  const empty = await exec(process.execPath, ["scripts/feedback-eval.mjs", root]);
-  assert.match(empty.stdout, /暂无有效反馈数据/);
-  assert.doesNotMatch(empty.stdout, /0%/);
-  const file = path.join(root, "sample.jsonl");
-  await writeFile(file, JSON.stringify({ id: "x", action: "keep", reasons: [],
-    toolSuggestion: { decision: "reject", gates: [], violations: [] } }) + "\n");
-  const report = await exec(process.execPath, ["scripts/feedback-eval.mjs", file]);
-  assert.match(report.stdout, /误删代理率：100.00%/);
-  assert.match(report.stdout, /理由与工具 verdict 一致率：无可评估数据/);
   const gate = feedbackStats([{ id: "gate", action: "reject", reasons: ["R-G-BLUR"],
     toolSuggestion: { gates: ["blurry"], violations: [] } }], [{ id: "R-G-BLUR", ruleIds: ["G-PROXY-BLUR"] }]);
   assert.equal(gate.reasonVerdictAgreement.rate, 1);

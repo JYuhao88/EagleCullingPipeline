@@ -710,8 +710,7 @@ export async function main() {
     report.counts = Object.fromEntries(['pass', 'fail', '未完成'].map(s => [s, report.assertions.filter(a => a.status === s).length]));
     if (report.policy?.regression && !report.counts['未完成']) {
       console.log('[regression] START serial Node suite (browser and services closed)');
-      const args = ['--test', '--test-concurrency=1',
-        '--test-skip-pattern=fixture face detection recall|fixture grouping reaches'];
+      const args = ['--test', '--test-concurrency=1'];
       const regression = spawnSync(process.execPath, args, { cwd: repo, encoding: 'utf8',
         timeout: 300000, maxBuffer: 20 * 1024 * 1024 });
       const log = path.join(out, 'node-tests.log');

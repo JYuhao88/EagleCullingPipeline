@@ -17,6 +17,89 @@ const python = code => {
   assert.equal(result.status, 0, result.stderr);
   return result.stdout.trim();
 };
+let pythonResults;
+const checked = name => {
+  pythonResults ??= JSON.parse(python(`
+import hashlib, json, tempfile, traceback
+from pathlib import Path
+import numpy as np
+from ml.observe.gaze_geometry import EYES, geometry_features, geometry_terms_vector, pose_from_matrix
+from python_worker.gaze_worker import GazeWorker
+results = {}
+def check(function):
+    try: results[function.__name__] = {'value': function()}
+    except Exception: results[function.__name__] = {'error': traceback.format_exc()}
+
+@check
+def terms():
+    raw = np.linspace(-.9, .9, 19, dtype=np.float32)
+    actual = geometry_terms_vector(raw)
+    assert actual.dtype == np.float64 and actual.shape == (228,)
+    for invalid in [np.zeros(18), np.zeros((1,19)), [float('nan')] * 19, [1e300] * 19]:
+        try:
+            geometry_terms_vector(invalid)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError('invalid vector accepted')
+    return {'raw':raw.tolist(), 'terms':actual.tolist()}
+
+@check
+def worker():
+    created, closed = [], []
+    class Fake:
+        def __init__(self, path): self.path=path; created.append(path)
+        def close(self): closed.append(self.path)
+        def extract(self, path):
+            return None if path == 'missing' else np.arange(19, dtype=np.float32) / 100
+    with tempfile.TemporaryDirectory(prefix='gaze-worker-test-') as folder:
+        first, second = Path(folder).resolve() / 'first.task', Path(folder).resolve() / 'second.task'
+        first.write_bytes(b'first'); second.write_bytes(b'second')
+        sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+        worker = GazeWorker(Fake, lambda path: (384,384) if path != 'wrong-size' else (383,384))
+        record = {'id':1, 'filePath':'face', 'modelPath':str(first), 'modelSha256':sha(first)}
+        a, b = worker.handle(record), worker.handle({**record, 'id':2})
+        assert a['available'] and len(a['features']) == 228 and len(created) == 1
+        assert a['features'] == b['features'] and a['modelSha256'] == sha(first)
+        assert worker.handle({**record, 'filePath':'missing'})['features'] is None
+        for invalid in [{**record, 'filePath':'wrong-size'}, {**record, 'modelSha256':'b'*64}]:
+            try: worker.handle(invalid)
+            except ValueError: pass
+            else: raise AssertionError('invalid input accepted')
+        assert closed == [first]
+        worker.handle({**record, 'modelPath':str(second), 'modelSha256':sha(second)})
+        assert created == [first, second]
+        worker.close()
+        assert closed == [first, second]
+
+@check
+def iris():
+    points = [{'x': .5, 'y': .5, 'z': 0} for _ in range(478)]
+    for index, (corners, iris, uppers, lowers) in enumerate(EYES):
+        center = .3 + .4 * index
+        points[corners[0]] = {'x': center - .1, 'y': .4, 'z': 0}
+        points[corners[1]] = {'x': center + .1, 'y': .4, 'z': 0}
+        for i, (dx, dy) in zip(iris, [(0, 0), (.025, 0), (0, .025), (-.025, 0), (0, -.025)]):
+            points[i] = {'x': center + dx, 'y': .4 + dy, 'z': 0}
+        for i in uppers: points[i] = {'x': center, 'y': .37, 'z': 0}
+        for i in lowers: points[i] = {'x': center, 'y': .43, 'z': 0}
+    result = geometry_features(points, np.eye(4))
+    assert result['poseAvailable'] and len(result['features']) == 19
+    assert np.isfinite(result['features']).all()
+    assert max(abs(x) for x in result['irisX']) < 1e-12
+    expanded = geometry_terms_vector(result['features'])
+    assert len(expanded) == 228 and np.isfinite(expanded).all()
+    assert geometry_features(points[:477], np.eye(4)) is None
+    assert pose_from_matrix(np.zeros((4, 4))) is None
+    points[133] = points[33]
+    assert geometry_features(points, np.eye(4)) is None
+
+print(json.dumps(results))
+`));
+  const result = pythonResults[name];
+  assert.equal(result.error, undefined, result.error);
+  return result.value;
+};
 
 function fakeSpawn(answer = record => ({ id: record.id, available: true, modelSha256: sha, features: vector })) {
   const children = [], records = [];
@@ -46,61 +129,19 @@ function fakeSpawn(answer = record => ({ id: record.id, available: true, modelSh
 }
 
 test('geometry expansion matches frozen float64 ordering and rejects invalid products', () => {
-  const result = JSON.parse(python(`
-import json
-import numpy as np
-from ml.observe.gaze_geometry import geometry_terms_vector
-from ml.observe.gaze_probe import geometry_terms
-raw = np.linspace(-.9, .9, 19, dtype=np.float32)
-actual = geometry_terms_vector(raw)
-assert actual.dtype == np.float64 and actual.shape == (228,)
-assert np.array_equal(actual, geometry_terms({'x': raw})['x'])
-for invalid in [np.zeros(18), np.zeros((1,19)), [float('nan')] * 19, [1e300] * 19]:
-    try:
-        geometry_terms_vector(invalid)
-    except ValueError:
-        pass
-    else:
-        raise AssertionError('invalid vector accepted')
-print(json.dumps({'raw':raw.tolist(), 'terms':actual.tolist()}))
-`));
+  const result = checked('terms');
   const expected = [...result.raw, ...result.raw.map(Math.abs)];
   for (let i = 0; i < 19; i++) for (let j = i; j < 19; j++) expected.push(result.raw[i] * result.raw[j]);
   assert.deepEqual(result.terms, expected);
 });
 
-test('Python worker reuses verified models, closes replacements and requires exact crops', () => python(`
-import hashlib
-from pathlib import Path
-import tempfile
-import numpy as np
-from python_worker.gaze_worker import GazeWorker
-created, closed = [], []
-class Fake:
-    def __init__(self, path): self.path=path; created.append(path)
-    def close(self): closed.append(self.path)
-    def extract(self, path):
-        return None if path == 'missing' else np.arange(19, dtype=np.float32) / 100
-with tempfile.TemporaryDirectory(prefix='gaze-worker-test-') as folder:
-    first, second = Path(folder).resolve() / 'first.task', Path(folder).resolve() / 'second.task'
-    first.write_bytes(b'first'); second.write_bytes(b'second')
-    sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
-    worker = GazeWorker(Fake, lambda path: (384,384) if path != 'wrong-size' else (383,384))
-    record = {'id':1, 'filePath':'face', 'modelPath':str(first), 'modelSha256':sha(first)}
-    a, b = worker.handle(record), worker.handle({**record, 'id':2})
-    assert a['available'] and len(a['features']) == 228 and len(created) == 1
-    assert a['features'] == b['features'] and a['modelSha256'] == sha(first)
-    assert worker.handle({**record, 'filePath':'missing'})['features'] is None
-    for invalid in [{**record, 'filePath':'wrong-size'}, {**record, 'modelSha256':'b'*64}]:
-        try: worker.handle(invalid)
-        except ValueError: pass
-        else: raise AssertionError('invalid input accepted')
-    assert closed == [first]
-    worker.handle({**record, 'modelPath':str(second), 'modelSha256':sha(second)})
-    assert created == [first, second]
-    worker.close()
-    assert closed == [first, second]
-`));
+test('Python worker reuses verified models, closes replacements and requires exact crops', () => {
+  checked('worker');
+});
+
+test('iris geometry requires both valid eyes and a nondegenerate head transform', () => {
+  checked('iris');
+});
 
 test('gaze bridge serializes requests and reuses one worker with explicit SHA', async () => {
   const fake = fakeSpawn(), bridge = new GazeGeometryBridge({ ...fake, idleMs: 5 });

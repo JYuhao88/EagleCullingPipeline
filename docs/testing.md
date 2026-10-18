@@ -6,16 +6,29 @@
 npm test
 ```
 
-脚本是 `node --test --test-concurrency=1`。测试文件覆盖：
+脚本是 `node --test --test-concurrency=1`，只跑 `test/*.test.js`，不需要 `--test-skip-pattern`。按主题的主要文件：
 
-- `analysis-capture.test.js`：JPG/RAW 配对、删除项跳过、哈希和时间阈值分组。
-- `analysis-fixture-faces.test.js`：`test/fixtures/fixture-faces.json` 的人脸召回/误报；缺少 `models/mediapipe/face_landmarker.task` 或 `python_worker/.venv` 时跳过真实检测。
-- `analysis-fixture-groups.test.js`：`test/fixtures/fixture-groups.json` 标注组的分组 F1 目标；缺少 `models/dinov2-small/model.onnx` 时跳过模型路径测试。
-- `analysis-quality.test.js`：EXIF 方向、均匀代理拒绝、排序理由和建议决定。
-- `core.test.js`：合同、指纹缓存续跑、取消、服务审阅流、缩略图恢复和 library mismatch 拒绝。
-- `plugin-logic.test.js`：插件状态过滤、快捷键、撤销、组内焦点和 select-best。
-- `review-worker-b.test.js`：决定持久化、RAW 跟随、人工标签保留、CSV 中文列。
+- 拍摄单元与分组：`capture-metadata.test.js`（JPG/RAW 配对、删除项跳过、EXIF 分批读取与缓存）、`grouping.test.js`（哈希和时间阈值分组、规模）。
+- 分析与排序：`analysis-quality.test.js`（EXIF 方向、均匀代理拒绝、排序理由和建议决定）、`rules-engine.test.js`（含规则库结构校验）、`gate-verdict-ranking.test.js`。
+- 服务与存储：`core.test.js`（服务审阅流、缩略图恢复、library mismatch 拒绝）、`decisions-store.test.js`（决定持久化与批量原子性）、`runs-list.test.js`、`run-progress.test.js`。
+- 写回 Eagle：`writeback-revert.test.js`（RAW 跟随、人工标签保留、撤销）、`eagle-readonly-proxy.test.js`、`report-format.test.js`（CSV 中文列）。
+- 插件与右栏：`plugin-logic.test.js`（状态过滤、快捷键、撤销、组内焦点、select-best）、`inspector*.test.js`、`home-view.test.js`。
+- 更新：`updater.test.js`、`update-restart.test.js`（含更新路由）。
+- 规则候选与审核：`rule-candidates.test.js`（只作提示、转述长度、无私有身份）、`rules-review.test.js`。
+- Python：`python-units.test.js` 运行 `python_worker/test_*.py`（缺少 `python_worker/.venv` 时跳过）和 `ml/common`、`ml/observe`、`scripts/test_aihub_ray.py` 的共享单元测试；
+  `references-extraction.test.js` 运行私有配置与 Ray 提交的失败即关闭检查。
 - `style.test.js`：源码单行不超过 140 字符。
+
+需要真实模型或测试图库的检查默认跳过，按需打开：
+
+```bash
+EAGLE_SLOW_TESTS=1 npm test                              # 本机姿态 worker 与 ONNX 质量模型冒烟
+EAGLE_FIXTURE_LIBRARY="/path/to/test.library" npm test   # fixture-library：人脸召回/误报与分组 F1
+```
+
+`fixture-library.test.js` 打开后缺少模型或 `python_worker/.venv` 会直接失败，缓存写到临时目录。
+已结束实验（W2 关节裁切、W4 课程与书籍提取、W7 个性化模拟、W31/W33 编码器与视线验收、W32 满意度等）的研究测试已删除，
+脚本保留；重跑这些实验前先从 git 历史恢复对应测试。下文各节是当时的验证记录，其中部分测试文件已合并或删除。
 
 ## fixture 与完整性
 
@@ -30,7 +43,7 @@ npm test
 5. 运行 `node scripts/verify-fixture-integrity.mjs "/path/to/test.library"`。验收前后 `mismatched` 应为 0，`matched` 应等于 manifest `total`。
 6. 抽查人工标签、星级、文件夹、RAW 成员和报告；重复写回应保持 `unchanged`，证明幂等。
 
-SHA-256 校验针对原文件字节，不以预览或 Eagle 缩略图代替。人脸测试缺少 `python_worker/.venv` 时是跳过，不是通过。
+SHA-256 校验针对原文件字节，不以预览或 Eagle 缩略图代替。
 
 ## W6 规模与性能（2026-10-11）
 

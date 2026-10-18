@@ -41,10 +41,14 @@ test('normal keeps caps and priority; turbo divides cores and is memory bounded'
   });
   assert.doesNotMatch(POSE_CACHE_KEY, /threads|turbo/);
 });
-test('explicit ordinary threads are clamped to the six-core budget', () => {
+test('explicit ordinary threads are clamped to the six-core budget; invalid ones fail before model jobs', () => {
   const saved = process.env.EAGLE_POSE_THREADS;
   try { process.env.EAGLE_POSE_THREADS='8';
     assert.equal(poseThreads(2, 'normal'),3); assert.equal(poseThreads(1, 'normal'),6);
+    for(const value of ['0','9','invalid']) {
+      process.env.EAGLE_POSE_THREADS=value;
+      assert.throws(()=>new PoseWorkerPool({mode:'normal'}),/EAGLE_POSE_THREADS/);
+    }
   } finally { if(saved===undefined) delete process.env.EAGLE_POSE_THREADS; else process.env.EAGLE_POSE_THREADS=saved; }
 });
 test('parallel async contexts and pipeline instances do not leak modes', async () => {
@@ -96,18 +100,6 @@ test('thread-one pose cache remains reusable under the new default', async () =>
   const result=await pipeline.run([{unitId:'cached'}],{performanceMode:'normal'});
   assert.equal(result.results[0].pose.diagnostics.intraOpThreads.pose,1);
 });
-
-
-test('invalid local threads fail before model jobs can be scheduled', () => {
-  const saved=process.env.EAGLE_POSE_THREADS;
-  try {
-    for(const value of ['0','9','invalid']) {
-      process.env.EAGLE_POSE_THREADS=value;
-      assert.throws(()=>new PoseWorkerPool({mode:'normal'}),/EAGLE_POSE_THREADS/);
-    }
-  } finally {if(saved===undefined)delete process.env.EAGLE_POSE_THREADS;else process.env.EAGLE_POSE_THREADS=saved;}
-});
-
 
 test('turbo native decode cap cannot be bypassed by configuration; normal is unchanged', async () => {
   const saved = process.env.EAGLE_NATIVE_CONCURRENCY;

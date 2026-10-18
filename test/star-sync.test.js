@@ -6,7 +6,7 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { createAnalysisServer } from '../src/server.js';
 import { RunStore } from '../src/server/run-store.js';
 import { DecisionsStore } from '../src/core/decisions-store.js';
-import { applyEagleStars, createStarWatcher, STAR_ACTIONS, STAR_SYNC_KEY, starLabel, takeOwnWrite } from '../src/plugin/star-sync.js';
+import { applyEagleStars, createStarWatcher, STAR_ACTIONS, STAR_SYNC_KEY, takeOwnWrite } from '../src/plugin/star-sync.js';
 import { createApi } from '../src/plugin/api.js';
 
 const memory = (values = {}) => {
@@ -28,7 +28,6 @@ function fakeLibrary(stars) {
 test('star keys match Eagle ratings everywhere', () => {
   assert.deepEqual([5, 4, 3, 2, 1, 0].map(star => STAR_ACTIONS[star]),
     ['selected', 'selected', 'candidate', 'rejected', 'rejected', 'clear']);
-  assert.equal(starLabel(3), '★★★☆☆'); assert.equal(starLabel(0), '未打星');
 });
 
 test('star watcher: first sight is a baseline, later ratings become decisions, Shift+number advance is caught', async () => {

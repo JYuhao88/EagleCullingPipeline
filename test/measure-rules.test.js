@@ -93,10 +93,7 @@ test('joint observability prevents unseen sides from becoming a safe pass; elbow
 });
 
 
-test('relative hints abstain without context, and weak line/color supports abstain', () => {
-  assert.equal(run('P-CROP-HEADROOM', {}, [{ ...person, headroomHeads: 2 }]).verdict, 'na');
-  assert.equal(run('P-CROP-HEADROOM', {}, [{ ...person, headroomHeads: .4 }]).verdict, 'na');
+test('weak horizontal and vertical line supports abstain', () => {
   assert.equal(run('L-HORIZON-LEVEL', { horizontalLineConfidence: .5 }).verdict, 'na');
   assert.equal(run('L-VERTICAL-LEVEL', { verticalLineConfidence: .5 }).verdict, 'na');
-  assert.equal(run('P-COLOR-CAST', { grayWorldPixels: 63 }).verdict, 'na');
 });

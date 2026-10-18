@@ -50,7 +50,8 @@ export async function mainRealEagle() {
   const out = '/tmp/w10-real-eagle'; await mkdir(out, { recursive: true });
   const root = await mkdtemp(path.join(out, 'execution-'));
   if (process.argv.includes('--verify-only')) {
-    const env = { EAGLE_PYTHON: localSetting('EAGLE_PYTHON'), EAGLE_BENCH_CACHE_ONLY: '1' };
+    const env = { EAGLE_PYTHON: localSetting('EAGLE_PYTHON'), EAGLE_BENCH_CACHE_ONLY: '1', EAGLE_SLOW_TESTS: '1',
+      EAGLE_FIXTURE_LIBRARY: '' };
     const manifestHash = createHash('sha256').update(await readFile('test/fixtures/bench-syn-manifest.json')).digest('hex');
     let baseline;
     for (const name of (await readdir('data/cache/bench/reports')).sort().reverse()) {
@@ -61,7 +62,7 @@ export async function mainRealEagle() {
     if (!baseline) throw new Error('No matching baseline');
     const commands = [];
     for (const [name, args] of [
-      ['node-tests', ['--test', '--test-concurrency=1', '--test-skip-pattern=fixture face detection recall|fixture grouping reaches']],
+      ['node-tests', ['--test', '--test-concurrency=1']],
       ['bench', ['scripts/bench.mjs', '--compare', baseline]],
       ['public', ['scripts/check-public-release.mjs']],
     ]) {

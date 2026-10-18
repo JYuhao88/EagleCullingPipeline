@@ -72,15 +72,18 @@ const fixture = {
   allStems: ["a", "b", "c", "d"],
   selectedStems: ["a", "c"],
 };
-test("AUC ties, reversed ordering and absent classes", () => {
+test("AUC, metrics, global budget and grouped browse order without mutating inputs", () => {
   assert.equal(auc([1], [1]), 0.5);
   assert.equal(auc([2], [1]), 1);
   assert.equal(auc([1], [2]), 0);
   assert.equal(auc([], [1]), null);
-});
-test("metrics, global budget and grouped browse order", () => {
-  const r = evaluatePicks(sample(), fixture, options),
+  const data = sample(),
+    f = structuredClone(fixture),
+    opts = structuredClone(options);
+  const before = structuredClone({ data, f, opts });
+  const r = evaluatePicks(data, f, opts),
     m = r.model;
+  assert.deepEqual({ data, f, opts }, before);
   assert.equal(m.falseRejectionRate, 0.5);
   assert.deepEqual(m.budgetRecall, { 0.5: 0.5, 1: 1 });
   assert.deepEqual(m.browse, { count: 4, fraction: 1 });
@@ -220,6 +223,11 @@ test("empty populations and invalid options", () => {
   assert.throws(() =>
     evaluatePicks(sample(), fixture, { randomIterations: 0 }),
   );
+  const inventory = { kind: "unlabeled-camera-samples", allStems: ["a", "b", "c", "d"],
+    folders: [{ stems: ["a"], meaning: "unknown-folder, not photographer picks" }] };
+  assert.throws(() => evaluatePicks(sample(), inventory, options), /直出样本清单不是真值/);
+  assert.throws(() => evaluatePicks(sample(), undefined, options), /显式 --truth/);
+  assert.equal(evaluatePicks(sample(), inventory, { ...options, truth: ["star>=4"] }).picks, 1);
 });
 test("CLI repeated pairs, budgets and strict option errors", () => {
   const r = parseArgs([
@@ -242,105 +250,4 @@ test("CLI repeated pairs, budgets and strict option errors", () => {
   assert.throws(() => parseArgs(["--run", "../x"]));
   assert.throws(() => parseArgs(["--fixture", "a"]));
   assert.throws(() => parseArgs(["--run", "one", "--bootstrap", "0"]));
-});
-
-test("CLI loads relative config fixtures and writes JSON/Markdown for merged sessions", async () => {
-  const { mkdtemp, mkdir, writeFile, readFile, rm } =
-    await import("node:fs/promises");
-  const { tmpdir } = await import("node:os");
-  const path = await import("node:path");
-  const { execFile } = await import("node:child_process");
-  const { promisify } = await import("node:util");
-  const root = await mkdtemp(path.join(tmpdir(), "w1-eval-cli-"));
-  try {
-    await mkdir(path.join(root, "data/runs/a"), { recursive: true });
-    await mkdir(path.join(root, "config"));
-    await writeFile(
-      path.join(root, "data/runs/a/results.json"),
-      JSON.stringify(sample()),
-    );
-    await writeFile(
-      path.join(root, "config/picks.json"),
-      JSON.stringify(fixture),
-    );
-    await writeFile(
-      path.join(root, "config/sessions.json"),
-      JSON.stringify([
-        { run: "a", fixture: "picks.json" },
-        { run: "a", fixture: "picks.json" },
-      ]),
-    );
-    const cli = path.resolve("scripts/eval-picks.mjs");
-    const { stdout, stderr } = await promisify(execFile)(
-      process.execPath,
-      [
-        cli,
-        "--config",
-        "config/sessions.json",
-        "--bootstrap",
-        "5",
-        "--random-iterations",
-        "3",
-        "--out",
-        "out.json",
-        "--md",
-        "out.md",
-      ],
-      { cwd: root },
-    );
-    const r = JSON.parse(stdout);
-    assert.equal(r.summary.units, 8);
-    assert.equal(r.summary.picks, 4);
-    assert.equal(r.sessions.length, 2);
-    assert.equal(stdout, await readFile(path.join(root, "out.json"), "utf8"));
-    assert.equal(stderr, await readFile(path.join(root, "out.md"), "utf8"));
-    const truth = await promisify(execFile)(
-      process.execPath,
-      [
-        cli,
-        "--run",
-        "a",
-        "--truth",
-        "star>=4",
-        "--bootstrap",
-        "5",
-        "--random-iterations",
-        "3",
-      ],
-      { cwd: root },
-    );
-    assert.equal(JSON.parse(truth.stdout).summary.picks, 1);
-    await assert.rejects(
-      promisify(execFile)(process.execPath, [cli, "--run", "a"], { cwd: root }),
-      (error) => /显式 --truth/.test(error.stderr) && error.stdout === "",
-    );
-  } finally {
-    await rm(root, { recursive: true, force: true });
-  }
-});
-
-test("evaluation does not mutate input snapshots, fixture or options", () => {
-  const data = sample(),
-    f = structuredClone(fixture),
-    opts = structuredClone(options);
-  const before = structuredClone({ data, f, opts });
-  evaluatePicks(data, f, opts);
-  assert.deepEqual({ data, f, opts }, before);
-});
-
-
-test("camera sample inventories require explicit truth and never infer picks from folders", async () => {
-  const { readFile } = await import("node:fs/promises");
-  const inventory = JSON.parse(await readFile(
-    new URL("./fixtures/shantou-20260718-samples.json", import.meta.url), "utf8",
-  ));
-  assert.equal(inventory.kind, "unlabeled-camera-samples");
-  assert.ok(!("selectedStems" in inventory));
-  assert.equal(inventory.allStems.length, 253);
-  assert.equal(inventory.folders[0].stems.length, 40);
-  assert.equal(inventory.folders[0].meaning, "unknown-folder, not photographer picks");
-  assert.throws(() => evaluatePicks(sample(), inventory, options), /直出样本清单不是真值/);
-  assert.throws(() => evaluatePicks(sample(), undefined, options), /显式 --truth/);
-  const scoped = { ...inventory, allStems: ["a", "b", "c", "d"] };
-  assert.equal(evaluatePicks(sample(), scoped, { ...options, truth: ["star>=4"] }).picks, 1);
 });

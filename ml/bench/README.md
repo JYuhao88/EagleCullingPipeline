@@ -34,7 +34,6 @@ T-triage 当前不可用，来源核验、替代许可与 CPU Ray 恢复命令�
 
 ```sh
 nice -n 10 node --test test/bench.test.js test/pick-eval.test.js
-nice -n 10 python3 -m unittest discover -s ml/bench -p 'test_*.py'
 ```
 
 ### W5 像素候选规则敏感性

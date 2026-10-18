@@ -1,4 +1,4 @@
-"""Single-GPU, fixed-questionnaire VLM inference; no training or model-service calls."""
+"""Single-GPU, versioned VLM research tasks; no training or model-service calls."""
 import base64
 import hashlib
 import importlib.metadata
@@ -192,11 +192,75 @@ def select_rows(rows, limit):
     return selected
 
 
+def critique_rows(rows, limit=0):
+    selected, counts = [], {}
+    for row in rows:
+        subset = row.get('set')
+        if row.get('kind') == 'group' or subset not in ('photos', 'openimages'):
+            continue
+        if 'full' not in row.get('images', {}):
+            raise ValueError('critique requires the sanitized full image')
+        if not isinstance(row.get('specialist_facts', []), list):
+            raise ValueError('specialist facts must be a list')
+        cap = min(limit, 200) if subset == 'openimages' and limit else 200 if subset == 'openimages' else limit
+        if not cap or counts.get(subset, 0) < cap:
+            selected.append(row)
+            counts[subset] = counts.get(subset, 0) + 1
+    return selected
+
+
+def critique_variants(item, config):
+    return [variant for variant in config.get('variants', ['A', 'B'])
+            if variant == 'A' or item['set'] == 'photos' or item.get('specialist_facts')]
+
+
+def critique_prediction(item, ask, variant, content, artifact, config):
+    from ml.observe.critique import parse_critique, split_statements
+    parsed = parse_critique(content, artifact)
+    return {'id': item['id'], 'image_id': item['id'], 'set': item['set'], 'split': item.get('split', item['set']),
+            'key': f"{item['id']}|{variant}|{ask}", 'ask': ask, 'repeat': ask,
+            'variant': variant, 'model': config['model'], 'model_revision': config['revision'],
+            'seed': config['seeds'][ask], 'temperature': 0, 'prompt_sha256': artifact['sha256'],
+            'prompt_id': artifact['id'], 'prompt_version': artifact['version'],
+            'specialist_facts': item.get('specialist_facts', []), 'content': content,
+            'critique': parsed, 'statements': split_statements(parsed) if parsed is not None else [],
+            'parse_error': None if parsed is not None else 'invalid_critique_json'}
+
+
+def latency_summary(values):
+    ordered = sorted(values)
+    return {'n': len(ordered), 'p50_s': statistics.median(ordered) if ordered else None,
+            'p95_s': ordered[min(len(ordered) - 1, int(len(ordered) * .95))] if ordered else None}
+
+
+def critique_report(rows, predictions, config):
+    from ml.observe.critique import critique_stability
+    by_variant = {}
+    for variant in config.get('variants', ['A', 'B']):
+        values = [p for p in predictions if p.get('variant') == variant]
+        valid = [p for p in values if not p.get('error') and p.get('critique') is not None]
+        by_variant[variant] = {'calls': len(values), 'valid_json_calls': len(valid),
+                               'failed_calls': sum(bool(p.get('error')) for p in values),
+                               'invalid_json_calls': sum(bool(p.get('parse_error')) for p in values),
+                               'statements': sum(len(p.get('statements', [])) for p in valid),
+                               'stability': critique_stability(values)}
+    return {'task': 'critique', 'status': 'awaiting_three_family_judges', 'items': len(rows),
+            'calls': len(predictions), 'prompt_sha256': config['prompt_sha256'], 'variants': by_variant,
+            'reference_caveat': 'Teachers are references, not truth; style and self-preference bias remain possible.'}
+
+
 def main():
     config = json.loads(Path('vlm-config.json').read_text())
     family = family_config(config)
-    rows = select_rows([json.loads(line) for line in Path('manifest.jsonl').read_text().splitlines() if line],
-                       config['limit_per_set'])
+    critique = config.get('task') == 'critique'
+    manifest = [json.loads(line) for line in Path('manifest.jsonl').read_text().splitlines() if line]
+    rows = (critique_rows if critique else select_rows)(manifest, config['limit_per_set'])
+    artifact = None
+    if critique:
+        from ml.observe.critique import load_prompt
+        artifact = load_prompt('ml/observe/prompts/critique-v1.md')
+        if artifact['sha256'] != config['prompt_sha256'] or config.get('asks') != 2:
+            raise ValueError('critique prompt hash or ask count differs from submitted configuration')
     started = time.monotonic()
     predictions = []
     sampler = None
@@ -206,7 +270,7 @@ def main():
         import torch
         from PIL import Image
         from transformers import AutoProcessor, BitsAndBytesConfig
-        questions = json.loads(Path('questions.json').read_text())['questions']
+        questions = {} if critique else json.loads(Path('questions.json').read_text())['questions']
         if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
             raise RuntimeError('exactly one assigned CUDA GPU is required')
         torch.set_num_threads(2)
@@ -246,12 +310,13 @@ def main():
         model_id = config['model']
         from huggingface_hub import snapshot_download
         snapshot = snapshot_download(model_id, revision=config['revision'], token=False, max_workers=2,
+                                     local_files_only=config.get('local_files_only', False),
                                      allow_patterns=['*.json', '*.safetensors', '*.txt', '*.model', '*.jinja',
                                                      'LICENSE*', *(['*.py'] if config.get('trust_remote_code') else [])])
         local_model = Path(snapshot)
         performance['weight_files_bytes'] = sum(file.stat().st_size for file in local_model.rglob('*.safetensors'))
         if config.get('cache', 'shared') == 'shared':
-            staged = tempfile.TemporaryDirectory(prefix='w34-vlm-')
+            staged = tempfile.TemporaryDirectory(prefix=config.get('line', 'w34-vlm') + '-')
             local_model = Path(staged.name) / 'model'
             shutil.copytree(snapshot, local_model, symlinks=False)
         performance['download_and_stage_s'] = time.monotonic() - started
@@ -312,8 +377,10 @@ def main():
         print('VLM_PROGRESS ' + json.dumps({'loaded': model_id, 'load_s': performance['load_s'],
                                            'allocated_gib': performance['loaded_allocated_gib']}), flush=True)
 
-        def infer(item, ask):
-            if item.get('kind') == 'group':
+        def infer(item, ask, variant=None):
+            if critique:
+                images = [checked_image(image_path(item, 'full'))]
+            elif item.get('kind') == 'group':
                 left, right = [checked_image(image_path(item, name)) for name in ('left', 'right')]
                 # Each source is already sanitized; the composite also remains <=768 pixels.
                 left.thumbnail((380, 736))
@@ -324,12 +391,26 @@ def main():
                 images = [canvas]
             else:
                 images = [checked_image(image_path(item, name)) for name in ('full', 'face') if name in item['images']]
-            content = [{'type': 'text', 'text': prompt(item, ask, questions, config['seed'],
-                                                    config.get('prompt_format', 'plain'))},
+            if critique:
+                from ml.observe.critique import build_prompt
+                rendered = build_prompt(artifact, facts=item.get('specialist_facts', []), variant=variant)
+                text = rendered['user']
+                torch.manual_seed(config['seeds'][ask])
+            else:
+                text = prompt(item, ask, questions, config['seed'], config.get('prompt_format', 'plain'))
+            content = [{'type': 'text', 'text': text},
                        *[{'type': 'image', 'image': image} for image in images]]
-            messages = [{'role': 'user', 'content': content}]
+            messages = ([{'role': 'system', 'content': rendered['system']}] if critique else []) + [
+                {'role': 'user', 'content': content}]
             inputs, generation_options = prepare_inputs(processor, messages, images, config)
             inputs = inputs.to('cuda')
+            if critique and 'prompt_integrity' not in performance:
+                decoded = processor.tokenizer.decode(inputs.input_ids[0], skip_special_tokens=False)
+                performance['prompt_integrity'] = {
+                    'system_present': rendered['system'] in decoded,
+                    'user_present': rendered['user'] in decoded,
+                    'input_text_sha256': hashlib.sha256(decoded.encode()).hexdigest()}
+                print('VLM_PROGRESS ' + json.dumps({'prompt_integrity': performance['prompt_integrity']}), flush=True)
             input_length = inputs.input_ids.shape[1]
             if input_length + config['max_new_tokens'] > 4096:
                 raise ValueError('bounded 4096-token context exceeded')
@@ -344,27 +425,42 @@ def main():
             return result, elapsed, int(output.shape[1] - input_length), input_length
 
         if rows:
-            infer(rows[0], 0)
+            first = next(((row, variant) for row in rows for variant in critique_variants(row, config)), None) if critique else (rows[0], None)
+            if first:
+                infer(first[0], 0, first[1])
         torch.cuda.reset_peak_memory_stats()
         inference_started = time.monotonic()
-        for index, row in enumerate(rows):
-            for ask in range(config['asks']):
-                t0 = time.monotonic()
-                try:
-                    content, elapsed, tokens, input_tokens = infer(row, ask)
-                    prediction = {'id': row['id'], 'ask': ask, 'content': content, 'elapsed_s': elapsed,
-                                  'output_tokens': tokens, 'input_tokens': input_tokens,
-                                  'wall_s': time.monotonic() - t0}
-                except Exception as exc:
-                    prediction = {'id': row['id'], 'ask': ask, 'content': '', 'error': type(exc).__name__,
-                                  'elapsed_s': time.monotonic() - t0}
-                    if isinstance(exc, torch.cuda.OutOfMemoryError):
-                        raise
-                predictions.append(prediction)
-                print('VLM_ROW ' + json.dumps(prediction, ensure_ascii=False), flush=True)
-            if index % 20 == 0:
-                print('VLM_PROGRESS ' + json.dumps({'items': index + 1, 'total': len(rows),
-                                                   'elapsed_s': time.monotonic() - inference_started}), flush=True)
+        variants = config.get('variants', ['A', 'B']) if critique else [None]
+        performance['memory_by_variant'] = {}
+        for variant in variants:
+            batch = [row for row in rows if not critique or variant in critique_variants(row, config)]
+            if critique:
+                torch.cuda.reset_peak_memory_stats()
+            for index, row in enumerate(batch):
+                for ask in range(config['asks']):
+                    t0 = time.monotonic()
+                    try:
+                        content, elapsed, tokens, input_tokens = infer(row, ask, variant)
+                        prediction = (critique_prediction(row, ask, variant, content, artifact, config) if critique else
+                                      {'id': row['id'], 'ask': ask, 'content': content})
+                        prediction.update(elapsed_s=elapsed, output_tokens=tokens, input_tokens=input_tokens,
+                                          wall_s=time.monotonic() - t0)
+                    except Exception as exc:
+                        prediction = (critique_prediction(row, ask, variant, '', artifact, config) if critique else
+                                      {'id': row['id'], 'ask': ask, 'content': ''})
+                        prediction.update(error=type(exc).__name__, elapsed_s=time.monotonic() - t0)
+                        if isinstance(exc, torch.cuda.OutOfMemoryError):
+                            predictions.append(prediction)
+                            raise
+                    predictions.append(prediction)
+                    print('VLM_ROW ' + json.dumps(prediction, ensure_ascii=False), flush=True)
+                if index % 20 == 0:
+                    print('VLM_PROGRESS ' + json.dumps({'items': index + 1, 'total': len(batch), 'variant': variant,
+                                                       'elapsed_s': time.monotonic() - inference_started}), flush=True)
+            if critique:
+                performance['memory_by_variant'][variant] = {
+                    'peak_allocated_gib': torch.cuda.max_memory_allocated() / 1024 ** 3,
+                    'peak_reserved_gib': torch.cuda.max_memory_reserved() / 1024 ** 3}
         performance['inference_wall_s'] = time.monotonic() - inference_started
         performance['calls'] = len(predictions)
         good = [p for p in predictions if not p.get('error')]
@@ -372,19 +468,23 @@ def main():
         times = sorted(p['elapsed_s'] for p in good)
         performance['latency_p50_s'] = statistics.median(times) if times else None
         performance['latency_p95_s'] = times[min(len(times) - 1, int(len(times) * .95))] if times else None
-        def latencies(values):
-            ordered = sorted(values)
-            return {'n': len(ordered), 'p50_s': statistics.median(ordered) if ordered else None,
-                    'p95_s': ordered[min(len(ordered) - 1, int(len(ordered) * .95))] if ordered else None}
-        performance['wall_latency'] = latencies([p['wall_s'] for p in good])
+        performance['wall_latency'] = latency_summary([p['wall_s'] for p in good])
         sets = {row['id']: row['set'] for row in rows}
-        performance['wall_latency_by_set'] = {key: latencies([p['wall_s'] for p in good if sets[p['id']] == key])
+        performance['wall_latency_by_set'] = {key: latency_summary([p['wall_s'] for p in good if sets[p['id']] == key])
                                                for key in sorted(set(sets.values()))}
-        performance['generation_latency_by_set'] = {key: latencies([p['elapsed_s'] for p in good if sets[p['id']] == key])
+        performance['generation_latency_by_set'] = {key: latency_summary([p['elapsed_s'] for p in good if sets[p['id']] == key])
                                                      for key in sorted(set(sets.values()))}
+        if critique:
+            performance['wall_latency_by_variant'] = {v: latency_summary([p['wall_s'] for p in good if p['variant'] == v])
+                                                      for v in variants}
+            performance['generation_latency_by_variant'] = {v: latency_summary([p['elapsed_s'] for p in good if p['variant'] == v])
+                                                            for v in variants}
         performance['calls_per_second'] = len(good) / performance['inference_wall_s']
         performance['peak_allocated_gib'] = torch.cuda.max_memory_allocated() / 1024 ** 3
         performance['peak_reserved_gib'] = torch.cuda.max_memory_reserved() / 1024 ** 3
+        if critique and performance['memory_by_variant']:
+            for key in ('peak_allocated_gib', 'peak_reserved_gib'):
+                performance[key] = max(value[key] for value in performance['memory_by_variant'].values())
         memory = subprocess.run(['nvidia-smi', '--query-compute-apps=pid,used_gpu_memory', '--format=csv,noheader,nounits'],
                                 capture_output=True, text=True, timeout=10)
         process_memory = []
@@ -397,7 +497,9 @@ def main():
         performance['generated_tokens_per_second'] = sum(p.get('output_tokens', 0) for p in good) / sum(times) if times else None
         performance['within_12_gib_allocator'] = performance['peak_reserved_gib'] <= 12
         performance['within_configured_gib_allocator'] = performance['peak_reserved_gib'] <= config['vram_limit_gib']
-        if Path('ml/observe/vlm_eval.py').exists():
+        if critique:
+            emit('report.json', critique_report(rows, predictions, config))
+        elif Path('ml/observe/vlm_eval.py').exists():
             from ml.observe.vlm_eval import evaluate
             emit('report.json', evaluate(rows, predictions))
         else:

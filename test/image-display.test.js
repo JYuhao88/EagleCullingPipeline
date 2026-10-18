@@ -28,13 +28,8 @@ test('embedded preview threshold depends on purpose', () => {
   assert.equal(embeddedPreviewAccepted(preview, raw, { minEdge: 0 }), true);
 });
 
-test('WIC script decodes via WPF, converts to 8-bit and reports orientation', () => {
-  const script = windowsWicScript();
-  assert.match(script, /BitmapDecoder\]::Create\(\$stream/);
-  assert.match(script, /FormatConvertedBitmap/);
-  assert.match(script, /TransformedBitmap/);
-  assert.match(script, /QualityLevel = 95/);
-  assert.doesNotMatch(script, /\[Uri\]/, 'paths with # or % must not go through Uri');
+test('WIC script avoids Uri paths and its JSON report is parsed from noisy output', () => {
+  assert.doesNotMatch(windowsWicScript(), /\[Uri\]/, 'paths with # or % must not go through Uri');
   assert.deepEqual(parseWicOutput('noise\r\n{"width":8742,"height":11656,"orientation":1,"applied":1,"codec":"Microsoft HEIF Decoder"}'),
     { width: 8742, height: 11656, orientation: 1, applied: 1, codec: 'Microsoft HEIF Decoder' });
   assert.throws(() => parseWicOutput('Exception calling Create'), /WIC/);

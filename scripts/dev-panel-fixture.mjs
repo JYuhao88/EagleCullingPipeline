@@ -148,6 +148,10 @@ if(initial.has('bare')){document.body.style.margin='0';for(const node of [...doc
 if(initial.has('w'))frame.style.width=initial.get('w')+'px';
 if(initial.has('h'))frame.style.height=initial.get('h')+'px';</script>`); return;
     }
+    if (url.pathname === '/ui/wide') {
+      if (req.method === 'POST') return json(res, 200, { boot: 'fixture', seq: 0 });
+      setTimeout(() => json(res, 200, { boot: 'fixture', seq: 0 }), url.searchParams.has('boot') ? 25000 : 0); return;
+    }
     if (url.pathname === '/health') return json(res, ['offline', 'starting', 'inspector-offline'].includes(state) ? 503 : 200,
       { service: 'eagle-culling', ok: true, activeRunId: state === 'running' ? 'run-fixture' : null });
     if (url.pathname === '/runs/status') return json(res, 200, { active: state === 'running' ? run(state) : null, recent: [],

@@ -9,16 +9,33 @@ With imageRoot set, image_file is relative to that subdirectory of ECP_CEPH_ROOT
 """
 import base64
 import json
+import math
 import os
 import threading
 import time
 import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import ExitStack
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 RETRY = (429, 500, 502, 503, 504)
+SINGLE_TRANSPORT = 'single-request-v1'
+RATE_LIMIT_POLICY = 'unprocessed-429-v1'
+
+
+def rate_limit_settings(config):
+    retries = config.get('rateLimitRetries', 0)
+    delay = config.get('rateLimitBackoffSeconds', 2)
+    maximum = config.get('rateLimitBackoffMaxSeconds', 30)
+    if (type(retries) is not int or not 0 <= retries <= 6
+            or any(type(value) not in (int, float) or not math.isfinite(value) for value in (delay, maximum))
+            or not 1 <= delay <= 30 or not delay <= maximum <= 60
+            or any(key in config for key in ('rateLimitRetries', 'rateLimitBackoffSeconds', 'rateLimitBackoffMaxSeconds',
+                                            'rateLimitPolicy')) and config.get('rateLimitPolicy') != RATE_LIMIT_POLICY):
+        raise ValueError('invalid bounded HTTP429 retry policy')
+    return retries, delay, maximum
 
 
 def opener(proxy):
@@ -82,6 +99,7 @@ class Runner:
         self.lock = threading.Lock()
         self.spent = 0.0
         self.gates = {}
+        self.rate_limits = rate_limit_settings(config) if config.get('strictBudget') else (0, 2, 30)
 
     def cost(self, model, usage):
         price = (self.config.get('pricing') or {}).get(model)
@@ -98,16 +116,24 @@ class Runner:
             return self.gates[model]
 
     def attempt(self, body):
+        strict = self.config.get('strictBudget', False)
+        with self.lock:
+            routes = list(self.routes)[:1] if strict else list(self.routes)
         last = None
-        for proxy in list(self.routes):
+        for proxy in routes:
             try:
                 return call(self.secret['url'], self.secret['key'], body, proxy), None
             except urllib.error.HTTPError as error:
-                last = {'status': error.code, 'error': error.read().decode(errors='replace')[:300]}
+                last = {'status': error.code, 'error': 'HTTPError'}
+                if strict:
+                    with self.lock:
+                        if error.code != 429 and len(self.routes) > 1 and self.routes[0] == proxy:
+                            self.routes.append(self.routes.pop(0))
+                    return None, last
                 if error.code not in (403, 407):
                     return None, last
             except Exception as error:  # this route failed; prefer the next one from now on
-                last = {'status': 0, 'error': type(error).__name__ + ': ' + str(error)[:200]}
+                last = {'status': 0, 'error': type(error).__name__}
                 with self.lock:
                     if len(self.routes) > 1 and self.routes[0] == proxy:
                         self.routes.append(self.routes.pop(0))
@@ -118,7 +144,16 @@ class Runner:
         model = body.get('model')
         out = {'id': row['id']}
         budget = self.config.get('budgetCny')
-        reserve = self.cost(model, {'prompt_tokens': 6000, 'completion_tokens': body.get('max_completion_tokens', 2048)})
+        strict = self.config.get('strictBudget', False)
+        rate_limited = strict and self.config.get('rateLimitPolicy') == RATE_LIMIT_POLICY
+        if strict:
+            out.update(transportPolicy=SINGLE_TRANSPORT, transportAttempts=0)
+            if rate_limited:
+                out.update(httpAttempts=0, paidAttempts=0, rejected429Attempts=0, rateLimitPolicy=RATE_LIMIT_POLICY)
+        if strict and not (self.config.get('pricing') or {}).get(model):
+            raise ValueError('strict budget requires saved pricing')
+        reserve = self.cost(model, {'prompt_tokens': self.config.get('inputTokenReserve', 6000),
+                                    'completion_tokens': body.get('max_completion_tokens', 2048)})
         with self.gate(model):
             with self.lock:
                 if budget is not None and self.spent + reserve > budget:
@@ -127,24 +162,72 @@ class Runner:
                 self.spent += reserve
             try:
                 resolved = resolve(json.loads(json.dumps(body)), self.config)
-                for attempt in range(3):
+                retries, backoff, backoff_max = self.rate_limits
+                for attempt in range(1 + retries if strict else 3):
+                    if strict:
+                        out['transportAttempts'] += 1
+                        if rate_limited:
+                            out['httpAttempts'] += 1
                     response, failure = self.attempt(resolved)
+                    if strict:
+                        if response is None and failure['status'] == 429:
+                            if rate_limited:
+                                out['rejected429Attempts'] += 1
+                            if attempt < retries:
+                                time.sleep(min(backoff * 2 ** attempt, backoff_max))
+                                continue
+                        elif rate_limited:
+                            out['paidAttempts'] += 1
+                        break
                     if response is not None or failure['status'] not in RETRY + (0,):
                         break
-                    time.sleep(10 * (attempt + 1) ** 2)
+                    if not strict:
+                        time.sleep(10 * (attempt + 1) ** 2)
             finally:
-                with self.lock:
-                    self.spent -= reserve
+                if not strict:
+                    with self.lock:
+                        self.spent -= reserve
             if response is None:
                 out.update(failure, attempts=attempt + 1)
+                if strict:
+                    if rate_limited and out['paidAttempts'] == 0 and failure['status'] == 429:
+                        with self.lock:
+                            self.spent -= reserve
+                        out.update(reservedCny=0, costStatus='unprocessed_429')
+                    else:
+                        out.update(reservedCny=reserve, costStatus='reserved_unknown')
                 return out
             usage = response.get('usage') or {}
+            known = all(isinstance(usage.get(key), int) and not isinstance(usage.get(key), bool)
+                        and usage[key] >= 0 for key in ('prompt_tokens', 'completion_tokens'))
             with self.lock:
-                self.spent += self.cost(model, usage)
+                if strict and known:
+                    self.spent -= reserve
+                if known or not strict:
+                    self.spent += self.cost(model, usage)
+            if strict and not known:
+                out.update(reservedCny=reserve, costStatus='reserved_unknown')
             out.update(status=200, usage=usage, attempts=attempt + 1,
                        content=(response.get('choices') or [{}])[0].get('message', {}).get('content'))
             time.sleep(self.config.get('pauseSeconds', 1.5))
             return out
+
+
+def run_rows(runner, rows, one):
+    limits = runner.config.get('concurrency') or {}
+    if runner.config.get('rateLimitPolicy') == RATE_LIMIT_POLICY:
+        with ExitStack() as stack:
+            pools, futures = {}, []
+            for row in rows:
+                model = row['body']['model']
+                if model not in pools:
+                    pools[model] = stack.enter_context(ThreadPoolExecutor(max_workers=max(1, limits.get(model, 1))))
+                futures.append(pools[model].submit(one, row))
+            for future in futures:
+                future.result()
+    else:
+        with ThreadPoolExecutor(max_workers=max(1, sum(limits.values()) or 1)) as pool:
+            list(pool.map(one, rows))
 
 
 def main():
@@ -152,7 +235,6 @@ def main():
     config = json.loads((HERE / 'config.json').read_text()) if (HERE / 'config.json').exists() else {}
     rows = [json.loads(line) for line in (HERE / 'requests.jsonl').read_text().splitlines() if line.strip()]
     runner = Runner(secret, config)
-    workers = max(1, sum((config.get('concurrency') or {}).values()) or 1)
     printer = threading.Lock()
 
     def one(row):
@@ -160,8 +242,7 @@ def main():
         with printer:
             print('MN_RESULT ' + json.dumps(out, ensure_ascii=False), flush=True)
 
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        list(pool.map(one, rows))
+    run_rows(runner, rows, one)
     print('MN_DONE ' + json.dumps({'requests': len(rows), 'spentCny': round(runner.spent, 4)}), flush=True)
 
 

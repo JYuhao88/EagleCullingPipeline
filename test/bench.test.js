@@ -1,6 +1,14 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import path from 'node:path';
 import { evaluateSynthetic, evaluateTriage, evaluateCandidateSensitivity, compareSynthetic } from '../ml/bench/evaluate.mjs';
+import { benchmarkRoot } from '../scripts/bench.mjs';
+
+test('bench cache directory defaults to legacy location and supports an isolated provider namespace', () => {
+  assert.equal(benchmarkRoot({}), path.resolve('data/cache/bench'));
+  assert.equal(benchmarkRoot({ EAGLE_BENCH_ROOT: 'data/cache/pose-provider/bench' }),
+    path.resolve('data/cache/pose-provider/bench'));
+});
 
 const result = (unitId, sharpness, flags = []) => ({ unitId, metrics: { sharpness }, flags });
 test('synthetic ties get half credit; severe gate and source false reject have independent denominators', () => {

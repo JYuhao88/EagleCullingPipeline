@@ -6,7 +6,6 @@ from collections import Counter
 import hashlib
 import io
 import json
-import math
 import os
 from pathlib import Path
 import re
@@ -19,11 +18,12 @@ import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from ml.common.private_env import dashboard_url, require_path, setting
+from ml.common.ray_admission import admission
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCK = Path('/tmp/w29-ray.lock')
 PREFIX = 'w34-vlm-'
-LINES = ('w34-vlm', 'w35-vlm-moe')
+LINES = ('w34-vlm', 'w35-vlm-moe', 'w36-vlm-critique')
 DEFAULT_MODEL = 'Qwen/Qwen3-VL-4B-Instruct'
 DEFAULT_REVISION = 'ebb281ec70b05090aa6165b016eac8ec08e71b17'
 TERMINAL = ('SUCCEEDED', 'FAILED', 'STOPPED')
@@ -58,39 +58,11 @@ def checked_output(output, line='w34-vlm'):
     return path
 
 
-def requested_gpus(job):
-    direct = []
-    if 'entrypoint_num_gpus' in job:
-        direct.append(job['entrypoint_num_gpus'])
-    resources = job.get('entrypoint_resources')
-    if isinstance(resources, dict) and 'GPU' in resources:
-        direct.append(resources['GPU'])
-    if direct:
-        if any(type(value) not in (int, float) or not math.isfinite(value) or value < 0 for value in direct):
-            return None
-        return max(direct)
-    metadata = job.get('metadata')
-    value = metadata.get('ecp_requested_gpus') if isinstance(metadata, dict) else None
-    if not isinstance(value, str) or not re.fullmatch(r'(?:0|[1-9][0-9]*)(?:\.[0-9]+)?', value):
-        return None
-    value = float(value)
-    return value if math.isfinite(value) else None
-
-
-def uses_gpu(job):
-    count = requested_gpus(job)
-    return count is None or count > 0
-
-
 def submit_locked(body, wait_seconds=600, line='w34-vlm'):
-    requested = requested_gpus({key: value for key, value in body.items() if key != 'metadata'})
-    explicit = 'entrypoint_num_gpus' in body or 'GPU' in (body.get('entrypoint_resources') or {})
-    if explicit and (requested is None or requested > 2):
-        raise ValueError('each project job must request a finite GPU count from zero to two')
-    body = {**body, 'metadata': {**(body.get('metadata') or {}),
-             'ecp_requested_gpus': str(requested) if requested is not None else 'unknown'}}
+    if body.get('entrypoint_num_gpus', 1) not in (1, 2):
+        raise ValueError('VLM jobs require one or two GPUs')
     deadline = time.monotonic() + wait_seconds
-    prefix = checked_line(line) + '-'
+    checked_line(line)
     owner = {'line': line, 'pid': os.getpid(), 'nonce': uuid.uuid4().hex}
     while True:
         try:
@@ -104,11 +76,7 @@ def submit_locked(body, wait_seconds=600, line='w34-vlm'):
             (LOCK / 'owner.json').write_text(json.dumps(owner))
             jobs = request('/api/jobs/')
             active = [j for j in jobs if j.get('status') in ('RUNNING', 'PENDING')]
-            if any(str(j.get('submission_id', '')).startswith(prefix) for j in active):
-                raise RuntimeError('an own VLM job is already active')
-            project = [j for j in active if re.match(r'^w(?:[1-9]|[12][0-9]|3[0-9])-',
-                                                    str(j.get('submission_id', '')))]
-            if len(project) < 3 and sum(uses_gpu(job) for job in project) + int(uses_gpu(body)) <= 2:
+            if admission(active, line, 'gpu'):
                 return request('/api/jobs/', body=body)
         finally:
             marker = LOCK / 'owner.json'
@@ -116,15 +84,20 @@ def submit_locked(body, wait_seconds=600, line='w34-vlm'):
                 marker.unlink()
                 LOCK.rmdir()
         if time.monotonic() >= deadline:
-            raise TimeoutError('project admission remains full: maximum three jobs and two GPU jobs')
+            raise TimeoutError('project GPU or total job quota remains occupied')
         time.sleep(10)
 
 
 def package(prepared, config):
     stream = io.BytesIO()
     with zipfile.ZipFile(stream, 'w', compression=zipfile.ZIP_STORED) as archive:
-        for name in ('ml/__init__.py', 'ml/observe/__init__.py', 'ml/observe/vlm_eval.py',
-                     'ml/observe/vlm_eval_ray.py'):
+        names = ['ml/__init__.py', 'ml/observe/__init__.py', 'ml/observe/vlm_eval.py',
+                 'ml/observe/vlm_eval_ray.py']
+        if config.get('task') == 'critique':
+            names.append('ml/observe/critique.py')
+            if config.get('replicas', 1) == 2:
+                names.append('ml/observe/vlm_eval_replicas.py')
+        for name in names:
             source = ROOT / name
             if source.exists():
                 archive.write(source, name)
@@ -136,9 +109,16 @@ def package(prepared, config):
                 raise FileNotFoundError(name)
         archive.writestr('vlm-config.json', json.dumps(config))
         archive.write(prepared / 'manifest.jsonl', 'manifest.jsonl')
-        archive.write(prepared / 'questions.json', 'questions.json')
+        if config.get('task') == 'critique':
+            source = Path(config['critique_prompt'])
+            if hashlib.sha256(source.read_bytes()).hexdigest() != config['prompt_sha256']:
+                raise ValueError('critique prompt changed during packaging')
+            archive.write(source, 'ml/observe/prompts/critique-v1.md')
+        else:
+            archive.write(prepared / 'questions.json', 'questions.json')
         rows = [json.loads(line) for line in (prepared / 'manifest.jsonl').read_text().splitlines() if line]
-        images = {p for row in rows if row.get('storage') == 'package' for p in row['images'].values()}
+        images = {p for row in rows if row.get('storage') == 'package'
+                  for key, p in row['images'].items() if config.get('task') != 'critique' or key == 'full'}
         for name in sorted(images):
             source = (prepared / name).resolve()
             if not source.is_relative_to(prepared.resolve()) or not name.endswith('.jpg'):
@@ -174,6 +154,9 @@ print('VLM_PROBE '+json.dumps(result),flush=True)
 
 def submit(args):
     line = checked_line(args.line)
+    replicas = args.replicas
+    if replicas != 1 and (line != 'w36-vlm-critique' or args.task != 'critique' or args.action != 'submit'):
+        raise ValueError('two replicas are only available for W36 critique submission')
     if args.model != DEFAULT_MODEL and args.revision == DEFAULT_REVISION:
         raise ValueError('changing the model requires an explicit matching revision')
     if not re.fullmatch('[0-9a-f]{40}', args.revision):
@@ -182,7 +165,7 @@ def submit(args):
         raise ValueError('pin an exact transformers release version')
     if not 1 <= args.vram_limit_gib <= 192:
         raise ValueError('VRAM limit must be 1..192 GiB')
-    if args.action != 'probe' and (line == 'w35-vlm-moe' or args.family != 'qwen-vl') and not args.license:
+    if args.action != 'probe' and (line != 'w34-vlm' or args.family != 'qwen-vl') and not args.license:
         raise ValueError('record the reviewed model license explicitly')
     if args.license is not None and (not args.license.strip() or len(args.license) > 512):
         raise ValueError('license descriptor must be nonempty and at most 512 characters')
@@ -200,9 +183,11 @@ def submit(args):
                     'family': args.family, 'trust_remote_code': args.trust_remote_code,
                     'code_revision': args.revision if args.trust_remote_code else None,
                     'license': args.license or 'Apache-2.0', 'compression': args.compression,
-                    'transformers_version': args.transformers_version, 'line': line}
-    hf_home = ('/tmp/' + line + '-hf-cache' if args.cache == 'local' else
-               str(Path(require_path('ECP_CEPH_ROOT')) / 'research' / line / 'hf-cache'))
+                    'transformers_version': args.transformers_version, 'line': line,
+                    'cache_line': args.cache_line or line, 'local_files_only': args.local_files_only}
+    cache_line = checked_line(args.cache_line or line)
+    hf_home = ('/tmp/' + cache_line + '-hf-cache' if args.cache == 'local' else
+               str(Path(require_path('ECP_CEPH_ROOT')) / 'research' / cache_line / 'hf-cache'))
     config = None
     if args.action == 'probe':
         entrypoint = 'timeout 100s python -c ' + shlex.quote(PROBE)
@@ -215,23 +200,43 @@ def submit(args):
         code = ('from huggingface_hub import snapshot_download\nimport json,time\n'
                 't=time.monotonic()\n'
                 f'p=snapshot_download({args.model!r},revision={args.revision!r},token=False,max_workers=2,\n'
-                f' allow_patterns={patterns!r})\n'
+                f' allow_patterns={patterns!r},local_files_only={args.local_files_only!r})\n'
                 "print('VLM_DOWNLOAD '+json.dumps({'elapsed_s':time.monotonic()-t,'complete':True}),flush=True)\n")
         entrypoint = 'timeout 1800s python -c ' + shlex.quote(code)
     else:
-        if not 60 <= args.timeout <= 21600 or args.asks != 3:
-            raise ValueError('timeout must be 60..21600 and asks must be 3')
+        expected_asks = 2 if args.task == 'critique' else 3
+        if not 60 <= args.timeout <= 21600 or args.asks != expected_asks:
+            raise ValueError(f'timeout must be 60..21600 and asks must be {expected_asks}')
         env.update(ECP_CEPH_ROOT=require_path('ECP_CEPH_ROOT'), HF_ENDPOINT=args.hub, HF_HOME=hf_home)
-        config = {**model_config, 'quantization': args.quantization, 'asks': args.asks,
+        config = {**model_config, 'task': args.task, 'quantization': args.quantization, 'asks': args.asks,
                   'limit_per_set': args.limit_per_set, 'max_new_tokens': 256, 'seed': 20261017,
                   'vram_limit_gib': args.vram_limit_gib,
                   'prompt_format': args.prompt_format}
+        if args.task == 'critique':
+            from ml.observe.critique import load_prompt
+            source = Path(args.critique_prompt).resolve()
+            artifact = load_prompt(source)
+            generation = artifact['generation']
+            if generation.get('temperature') != 0 or generation.get('asks') != 2:
+                raise ValueError('critique requires temperature 0 and exactly two asks')
+            seeds = generation.get('seeds')
+            if not isinstance(seeds, list) or len(seeds) != 2 or len(set(seeds)) != 2 or any(type(s) is not int for s in seeds):
+                raise ValueError('critique requires two different fixed integer seeds')
+            tokens = generation.get('max_new_tokens')
+            if type(tokens) is not int or not 128 <= tokens <= 2048:
+                raise ValueError('critique generation limit must be 128..2048 tokens')
+            config.update(replicas=replicas, critique_prompt=str(source), prompt_sha256=artifact['sha256'],
+                          prompt_id=artifact['id'], prompt_version=artifact['version'],
+                          variants=args.variants, seeds=seeds, temperature=0, max_new_tokens=tokens)
         config['source_sha256'] = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
                                    for name in ('ml/observe/vlm_eval.py', 'ml/observe/vlm_eval_ray.py',
-                                                'scripts/observe-vlm-prepare.mjs', 'scripts/observe-vlm-ray.py')
+                                                'scripts/observe-vlm-prepare.mjs', 'scripts/observe-vlm-ray.py',
+                                                *(['ml/observe/critique.py'] if args.task == 'critique' else []),
+                                                *(['ml/observe/vlm_eval_replicas.py'] if replicas == 2 else []))
                                    if (ROOT / name).exists()}
         config['manifest_sha256'] = hashlib.sha256((Path(args.prepared) / 'manifest.jsonl').read_bytes()).hexdigest()
-        config['questions_sha256'] = hashlib.sha256((Path(args.prepared) / 'questions.json').read_bytes()).hexdigest()
+        if args.task != 'critique':
+            config['questions_sha256'] = hashlib.sha256((Path(args.prepared) / 'questions.json').read_bytes()).hexdigest()
         payload = package(Path(args.prepared), config)
         name = '_ray_pkg_' + hashlib.sha256(payload).hexdigest()[:16] + '.zip'
         request('/api/packages/gcs/' + name, data=payload, method='PUT')
@@ -240,9 +245,11 @@ def submit(args):
                             'Pillow==11.3.0', 'qwen-vl-utils==0.0.14', 'numpy==2.2.6'])
         if args.quantization == 'native':
             runtime['pip'].append('compressed-tensors==0.18.0')
-        entrypoint = f'timeout --signal=TERM --kill-after=20s {args.timeout}s python -m ml.observe.vlm_eval_ray'
-    body = {'submission_id': job, 'entrypoint': entrypoint, 'entrypoint_num_cpus': 2,
-            'entrypoint_num_gpus': 1, 'entrypoint_memory': 24 * 1024 ** 3, 'runtime_env': runtime}
+        module = 'ml.observe.vlm_eval_replicas' if replicas == 2 else 'ml.observe.vlm_eval_ray'
+        entrypoint = f'timeout --signal=TERM --kill-after=20s {args.timeout}s python -m {module}'
+    body = {'submission_id': job, 'entrypoint': entrypoint, 'entrypoint_num_cpus': 2 * replicas,
+            'entrypoint_num_gpus': replicas, 'entrypoint_memory': 24 * replicas * 1024 ** 3, 'runtime_env': runtime,
+            'metadata': {'ecp_job_kind': 'vlm', 'ecp_requested_gpus': str(replicas)}}
     (output / 'job.json').write_text(json.dumps({'job': job, 'config': config, 'phase': 'submitting'}, indent=2) + '\n')
     response = submit_locked(body, line=line)
     (output / 'job.json').write_text(json.dumps({'job': job, 'config': config, 'phase': 'submitted',
@@ -309,9 +316,12 @@ def watch(job, output, poll, line='w34-vlm'):
         state = collect(job, output, line)
         file = output / 'predictions.jsonl'
         rows = [json.loads(line) for line in file.read_text().splitlines() if line] if file.exists() else []
-        counts = Counter(row['id'] for row in rows)
+        config_file = output / 'job.json'
+        config = (json.loads(config_file.read_text()).get('config') or {}) if config_file.exists() else {}
+        asks = config.get('asks', 2 if any('variant' in row for row in rows) else 3)
+        counts = Counter((row['id'], row.get('variant')) for row in rows)
         progress = {'job': job, 'status': state.get('status'), 'calls': len(rows),
-                    'complete_items': sum(n == 3 for n in counts.values()),
+                    'complete_items': sum(n == asks for n in counts.values()),
                     'errors': sum(bool(row.get('error')) for row in rows)}
         (output / 'progress.json').write_text(json.dumps(progress, indent=2) + '\n')
         print(json.dumps(progress), flush=True)
@@ -325,6 +335,8 @@ def arguments(argv=None):
     parser.add_argument('action', choices=('probe', 'download', 'submit', 'status', 'collect', 'watch', 'stop'))
     parser.add_argument('job', nargs='?')
     parser.add_argument('--line', choices=LINES, default='w34-vlm')
+    parser.add_argument('--task', choices=('questionnaire', 'critique'), default='questionnaire')
+    parser.add_argument('--replicas', type=int, choices=(1, 2), default=1)
     parser.add_argument('--output')
     parser.add_argument('--prepared', default='data/cache/w34-vlm/prepared')
     parser.add_argument('--model', default=DEFAULT_MODEL)
@@ -337,13 +349,24 @@ def arguments(argv=None):
     parser.add_argument('--vram-limit-gib', type=float, default=12)
     parser.add_argument('--hub', choices=('https://huggingface.co', 'https://hf-mirror.com'), default='https://huggingface.co')
     parser.add_argument('--cache', choices=('local', 'shared'), default='local')
+    parser.add_argument('--cache-line', choices=LINES)
+    downloads = parser.add_mutually_exclusive_group()
+    downloads.add_argument('--local-files-only', action='store_true', default=None)
+    downloads.add_argument('--allow-download', dest='local_files_only', action='store_false')
     parser.add_argument('--quantization', choices=('none', 'bnb4', 'native'), default='none')
     parser.add_argument('--prompt-format', choices=('plain', 'schema'), default='plain')
-    parser.add_argument('--asks', type=int, default=3)
+    parser.add_argument('--asks', type=int)
+    parser.add_argument('--variants', nargs='+', choices=('A', 'B'), default=['A', 'B'])
+    parser.add_argument('--critique-prompt', default=str(ROOT / 'ml/observe/prompts/critique-v1.md'))
     parser.add_argument('--limit-per-set', type=int, default=0)
     parser.add_argument('--timeout', type=int, default=21600)
     parser.add_argument('--poll', type=int, choices=range(30, 61), default=45)
     args = parser.parse_args(argv)
+    args.asks = args.asks if args.asks is not None else 2 if args.task == 'critique' else 3
+    if args.local_files_only is None:
+        args.local_files_only = args.task == 'critique'
+    if len(set(args.variants)) != len(args.variants):
+        parser.error('prompt variants must be unique')
     args.output = args.output or 'data/cache/' + args.line + '/probe'
     return args
 

@@ -1,22 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { resolveBase } from "../src/plugin/api.js";
-import { formatTotalScore, scoreParts } from "../src/plugin/score.js";
 import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import sharp from "sharp";
 import { RunStore } from "../src/server/run-store.js";
 import { createRunsRouter } from "../src/server/runs-routes.js";
-
-test("score formatting keeps missing metrics distinct from zero", () => {
-  assert.equal(formatTotalScore(0.876), "88 分");
-  assert.equal(scoreParts({ metrics: { sharpness: null, exposure: 0 } })[0].display, "—");
-  assert.equal(scoreParts({ metrics: { sharpness: null, exposure: 0 } })[1].display, "0");
-  const eyes = metrics => scoreParts({ metrics }).find(part => part.key === "eyesOpen").display;
-  assert.equal(eyes({ faces: 2, eyesClosed: 1 }), "50");
-  assert.equal(eyes({ faces: 0, eyesClosed: 0 }), "—");
-});
 
 test("base resolution prefers Eagle service health over static page origin", async () => {
   const calls = [];

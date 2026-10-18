@@ -474,6 +474,23 @@ size、mtimeMs 的 JSON 数组的 SHA-256；Windows 使用 win32 路径规范化
 
 ## 本地模型观察（W30，展示字段）
 
+W36 的单张评片与后期建议目前只提供离线研究工具与研究结果：版本化提示词在
+`ml/observe/prompts/critique-v1.md`，每条研究结果记录原文件 SHA-256、模型 revision、A/B 变体和固定种子。
+A 只看最长边 768 的无元数据整图，B 另读已有分析结果中的已上线专科正类事实；没有发言不推断为否定。
+研究输出含 `summary/strengths/issues/edits/verdict`，其中 `verdict` 只是待评估的模型文字，
+不映射到生产规则 verdict、评分、排序、分组或人工决定。本轮不新增 HTTP 字段、检查器 UI 或运行时模型调用。
+门槛、费用及全量/部分参照结果见研究文档 6.9 节；通过离线门槛也不等于 Windows GGUF 或真实 Eagle 端到端验收。
+两个候选的全部计划推理与新增教师请求已结束；8B 基线保留部分核验，未追加。
+格式合格率、三家票覆盖和冻结统计门槛分别报告；格式失败或缺参照不缩减完整计划分母。
+本轮没有已验收的部署方案。回执确认金额、新增未知费用预留、429 次数与旧路径账务不确定性分开报告。
+`python3 -m ml.observe.critique_sensitivity` 只从相同冻结输入和已收回的教师票生成事后描述，不覆盖验收报告或更改 v1 判定。
+其多数条件精度、完整三票支持率、无人判错比例及两两 κ 使用各自明确分母；全弃权不能视为正确。
+v2 的提示词方向与前瞻参照草案见 `ml/observe/prompts/critique-v2-plan.md` 及配套 JSON；尚未冻结完整提示词和独立留出，本轮未运行。
+离线 W36 可用 `--replicas 2` 在同一个已准入 Ray 作业内运行两份独立单卡模型；同一照片的全部变体和复问留在同一卡。
+提示词、生成设置及门槛不变。显存报告分别保留单卡最大峰值与两卡各自峰值之和；后者只是上界，不是同时峰值。
+本轮获授权的并行准入为项目最多三个作业、其中最多两个申请 GPU，本线最多一个 GPU 推理和一个 CPU 教师评判作业。
+MiniCPM 本次 loader 的参数驻留记录为 BF16；官方 int4 检查点身份不代表已验证 4-bit 驻留或 Windows GGUF 性能。
+
 当前上线头为 `src/core/observation-heads/clip-face-v1.json`（在笑、嘴张开）与
 `gaze-iris-q2-clip-v1.json`（看镜头，740 维虹膜二次项与 CLIP 整脸组合）；均只在 Open Images 上训练和校准，
 验收数字见 [research-local-observations.md](research-local-observations.md) 6.2、6.7 节。每次分析开始只枚举一次此目录；
@@ -614,10 +631,10 @@ W32 新增 `focus-eye`「对焦点在眼部」，为 `neutral`（「对焦点在
 W34 的 `scripts/observe-vlm-prepare.mjs`、`scripts/observe-vlm-ray.py` 和 `ml/observe/vlm_eval*.py`
 仅为独立离线研究入口，不由分析管线或检查器导入，不新增观察来源或运行时下载。
 研究作业只允许在 Ray 上显式执行；提交前校验包内照片为无元数据、长边不超过 768 的 JPEG。
-原生作业只预留一张 GPU，提交时持共享锁检查本线单作业与项目资源上限，提交返回后立即释放锁。
-经用户批准，项目最多三个活动作业，其中申请 GPU 的最多两个，每作业最多两张 GPU；第三个必须显式不申请 GPU。
-按提交的 entrypoint 资源分类，正数申请即 GPU 作业；资源不明按 GPU 计，不根据进程命令或 CUDA 使用量猜测。
-Ray 列表若省略 entrypoint 字段，则读取提交器从实际资源生成的 `ecp_requested_gpus` 元数据回执；该回执覆盖调用者提供的同名值。
+VLM 作业申请一或两张 GPU，提交时持共享锁按 `ml/common/ray_admission.py` 检查本线同类单作业与项目资源上限，提交返回后立即释放锁。
+经用户批准，项目最多三个活动作业，其中申请 GPU 的最多两个，每作业最多两张 GPU；第三个只留给显式不申请 GPU 的老师评判作业。
+按提交的 entrypoint 资源分类，正数申请或 `entrypoint_resources.GPU` 即 GPU 作业；资源不明或元数据异常按 GPU 计，不根据进程命令或 CUDA 使用量猜测。
+Ray 列表若省略 entrypoint 字段，则读取提交器写入的 `ecp_job_kind`、`ecp_requested_gpus` 元数据回执。
 计分把缺答、解析失败和“看不清”保留为弃权；报告三次复问一致策略的正例精确率、Wilson 下限和条数，
 不用多数负例形成的整体准确率替代上线门槛。具体许可与实测结论见观察研究文档 6.6、6.8 节。
 W35 复用同一清单、问卷与计分，模型家族适配只改变加载及原生视觉预处理。

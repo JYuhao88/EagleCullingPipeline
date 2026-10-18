@@ -28,6 +28,17 @@ test("writeback preview counts exact AI changes by action and records previous t
   assert.deepEqual(writebackRecords(plan, result)[0].previousTags, ["人工", "AI精选"]);
 });
 
+test("writeback applies a unit decision to RAW and preserves human tags", () => {
+  const plan = planWriteback({
+    units: [{ id: "unit:a", itemIds: ["jpg", "raw"] }],
+    results: [{ unitId: "unit:a", flags: ["blurry"] }],
+    decisions: [{ unitId: "unit:a", action: "rejected", flags: [] }],
+    items: [{ id: "jpg", tags: ["人工"] }, { id: "raw", tags: ["人工", "AI精选"] }]
+  });
+  assert.equal(plan.items.length, 2);
+  assert.deepEqual(plan.items[1].tags, ["人工", "AI淘汰", "AI模糊"]);
+});
+
 test("revert restores only managed AI tags and preserves live user tags and metadata", async () => {
   const applied = [{ id: "a", previousTags: ["写回前用户标签", "AI精选"], tags: ["AI淘汰", "AI模糊"] }];
   const items = [{ id: "a", tags: ["新用户标签", "AI自定义", "AI淘汰", "AI模糊"], star: 5, folders: ["folder"] }];

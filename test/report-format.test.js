@@ -1,7 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { buildReport, reportCsv, reportJson } from "../src/core/report.js";
-import { formatApplyResult } from "../src/plugin/format.js";
 import { createWritebackDialog } from "../src/plugin/writeback-dialog.js";
 
 class FakeElement {
@@ -13,7 +12,9 @@ class FakeElement {
   append() {}
 }
 
-function fakeRoot(ids) {
+function dialogRoot() {
+  const ids = ["#writeback", "#moveTrash", "#trashConfirm", "#writebackDialog", "#writebackSummary",
+    "#confirmWriteback", "#dryRun", "#cancelWriteback", "#writebackDetails", "#revertWriteback"];
   const elements = Object.fromEntries(ids.map(id => [id, new FakeElement()]));
   return { querySelector: id => elements[id], elements };
 }
@@ -48,27 +49,26 @@ test("report falls back to planned tags and emits null in JSON", () => {
   assert.equal(JSON.parse(reportJson(rows))[0].sharpness, null);
 });
 
-test("apply result formatter summarizes failures, warning and report links", () => {
-  const summary = formatApplyResult({
-    summary: { changed: 2, unchanged: 1 },
-    results: [{ id: "a", fileName: "a.jpg", ok: false, error: "权限不足" }],
-    liveTags: false,
-    warning: "预览标签可能过期",
-    trash: { ids: ["b"] }
-  }, { base: "http://localhost/", runId: "run-1" });
-  assert.match(summary, /已修改 2 项/);
-  assert.match(summary, /失败 1 项/);
-  assert.match(summary, /a\.jpg：权限不足/);
-  assert.match(summary, /移入回收站 1 项/);
-  assert.match(summary, /使用 Eagle 实时标签：否/);
-  assert.match(summary, /runs\/run-1\/report\?format=csv/);
+test("report CSV has Chinese columns and ranking reasons", () => {
+  const csv = reportCsv(buildReport({
+    units: [{ id: "unit:a", itemIds: ["a"], pairing: "single" }],
+    results: [{ unitId: "unit:a", flags: [], metrics: {} }],
+    groups: [{ id: "group:a", unitIds: ["unit:a"], ranking: [{ unitId: "unit:a", rank: 1, score: 1, reasons: ["清晰"] }] }],
+    items: [{ id: "a", name: "照片", ext: "jpg", tags: [] }]
+  }));
+  assert.match(csv, /itemId,.*decisionSource/);
+  assert.match(csv, /清晰/);
+});
+
+test("free reason included in JSON/CSV export with quote escaping", () => {
+  const rows = buildReport({ units: [{ id: "unit:a", itemIds: ["a"] }], results: [{ unitId: "unit:a" }],
+    groups: [{ unitIds: ["unit:a"], ranking: [{ unitId: "unit:a" }] }], items: [{ id: "a" }],
+    decisions: [{ unitId: "unit:a", action: "selected", reason: '手势 "自然"' }] });
+  assert.equal(rows[0].decisionReason, '手势 "自然"'); assert.match(reportCsv(rows), /手势 ""自然""/);
 });
 
 test("writeback confirmation is re-entry safe", async () => {
-  const root = fakeRoot([
-    "#writeback", "#moveTrash", "#trashConfirm", "#writebackDialog", "#writebackSummary",
-    "#confirmWriteback", "#dryRun", "#cancelWriteback", "#writebackDetails", "#revertWriteback"
-  ]);
+  const root = dialogRoot();
   const dialog = root.elements["#writebackDialog"];
   dialog.close = () => {};
   let calls = 0;
@@ -88,10 +88,7 @@ test("writeback confirmation is re-entry safe", async () => {
 });
 
 test("slow writeback preview shows progress, blocks repeat clicks and reports failures", async () => {
-  const root = fakeRoot([
-    "#writeback", "#moveTrash", "#trashConfirm", "#writebackDialog", "#writebackSummary",
-    "#confirmWriteback", "#dryRun", "#cancelWriteback", "#writebackDetails", "#revertWriteback"
-  ]);
+  const root = dialogRoot();
   let calls = 0;
   let fail;
   const pending = new Promise((_, reject) => { fail = reject; });
@@ -108,10 +105,7 @@ test("slow writeback preview shows progress, blocks repeat clicks and reports fa
 });
 
 test("writeback preview renders counts and only first 50 changed names without executing", async () => {
-  const root = fakeRoot([
-    "#writeback", "#moveTrash", "#trashConfirm", "#writebackDialog", "#writebackSummary",
-    "#confirmWriteback", "#dryRun", "#cancelWriteback", "#writebackDetails", "#revertWriteback"
-  ]);
+  const root = dialogRoot();
   const originalDocument = globalThis.document;
   globalThis.document = { createElement: () => {
     const element = new FakeElement();

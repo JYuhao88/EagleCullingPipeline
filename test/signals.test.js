@@ -1,7 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import sharp from 'sharp';
 import { validateUnitResult, validateSignals, validateRuleVerdict, contractError } from '../src/core/contracts.js';
 import { computeSignals } from '../src/core/signals.js';
+import { detectPose, POSE_SIGNALS_CACHE_KEY } from '../src/core/pose.js';
+import { evaluateRules } from '../src/core/rules-engine.js';
 
 function pose() {
   const points = Array.from({ length: 133 }, () => [0.5, 0.5, 0]);
@@ -189,4 +195,49 @@ test('compressed lower limb at frame border is unobservable, even with high mode
   assert.ok(!result.edgeAtJoint.some(w=>['knee','ankle','foot'].includes(w.joint)));
   assert.equal(result.framingTier,undefined);
   assert.equal(result.keypoints.points[15][2],.95);
+});
+
+const jointIndices = { wrist: [9, 10, 91, 112], elbow: [7, 8], knee: [13, 14], ankle: [15, 16], neck: [5, 6] };
+function jointPrediction(person, joint) {
+  if (person?.edgeAtJoint?.some((hit) => hit.joint === joint)) return 'crop';
+  if (!person?.edgeAtJoint) return 'na';
+  if (person.jointObservability) return person.jointObservability[joint] === true ? 'safe' : 'na';
+  if (joint === 'hairline') return Number.isFinite(person.headHeight) ? 'safe' : 'na';
+  return jointIndices[joint]?.some((i) => person.keypoints?.points?.[i]?.[2] >= .3) ? 'safe' : 'na';
+}
+
+test('pixel crop regression: localized knee, bent-leg ankle, truncated-face neck and edge wrist', async () => {
+  const fixture = JSON.parse(await fs.readFile(new URL('./fixtures/w2-measure-joints.json', import.meta.url), 'utf8'));
+  for (const row of fixture.rows) {
+    const raw = structuredClone(row.pose), saved = structuredClone(raw);
+    const person = computeSignals(raw).persons.find((p) => p.isMain);
+    assert.equal(jointPrediction(person, row.joint), row.expected, row.id);
+    assert.deepEqual(raw, saved, 'validity guards must preserve original model coordinates/scores');
+    if (row.joint === 'neck') {
+      assert.equal(person.headScaleSource, 'shoulder-estimate');
+      assert.equal(person.headroomHeads, undefined);
+      assert.equal(jointPrediction(person, 'hairline'), 'na');
+    }
+  }
+});
+
+test('pose stage enriches real proxies with image and matched face measurements without another model', async () => {
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'measure-pose-'));
+  try {
+    const file = path.join(dir, 'white.png');
+    await sharp({ create: { width: 64, height: 64, channels: 3, background: 'white' } }).png().toFile(file);
+    const fake = { run: async (items) => items.map(({ id }) => ({ id, available: true,
+      source: { width: 64, height: 64, proxyWidth: 64, proxyHeight: 64, kind: 'jpeg' },
+      persons: [{ isMain: true, box: [.1, .1, .9, .9], score: .9,
+        keypoints: { format: 'coco-wholebody-133', points: Array.from({ length: 133 }, () => [.5, .5, 0]) } }] })) };
+    const [pose] = await detectPose([{ id: 'one', filePath: file, faces: [{ box: [.3, .2, .7, .5] }] }], { pool: fake });
+    const signals = computeSignals(pose), verdicts = evaluateRules(signals);
+    assert.equal(signals.imageMeasurements.clippedHighlights, 1);
+    assert.equal(signals.persons[0].faceClippedHighlights, 1);
+    assert.equal(verdicts.find((v) => v.ruleId === 'P-EXPOSURE-INTENT').verdict, 'violate');
+    assert.match(POSE_SIGNALS_CACHE_KEY, /^signals-v3/);
+    const [missing] = await detectPose([{ id: 'missing', filePath: path.join(dir, 'absent') }], { pool: fake });
+    assert.ok(missing.measurementError);
+    assert.equal(computeSignals(missing).imageMeasurements.clippedHighlights, undefined);
+  } finally { await fs.rm(dir, { recursive: true, force: true }); }
 });

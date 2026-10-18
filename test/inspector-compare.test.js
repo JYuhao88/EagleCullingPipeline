@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { columnSlots, compareTable, contrastLines, differenceLine, keepTopDecisions, scoreBars, visibleRows }
   from '../src/plugin/inspector/inspector-compare.js';
 
-test('aesthetic column follows quality and stays neutral in cells and comparison explanations', () => {
+test('aesthetic column follows quality, stays visible when scores are close and stays neutral in explanations', () => {
   const members = [member('x', 1, { score: 0.6, quality: 0.8, aesthetic: 0.3 }),
     member('y', 2, { score: 0.5, quality: 0.7, aesthetic: 0.9 })];
   const table = compareTable(members);
@@ -13,12 +13,9 @@ test('aesthetic column follows quality and stays neutral in cells and comparison
   assert.deepEqual(table.rows.map(row => row.cells[2].text), ['30', '90']);
   assert.equal(table.rows.some(row => row.cells[2].best), false);
   assert.doesNotMatch(differenceLine(members, 'y'), /美感/);
-});
-
-test('aesthetic column stays visible even when the group scores about the same', () => {
-  const members = [member('x', 1, { score: 0.6, quality: 0.8, aesthetic: 0.45 }),
+  const close = [member('x', 1, { score: 0.6, quality: 0.8, aesthetic: 0.45 }),
     member('y', 2, { score: 0.5, quality: 0.8, aesthetic: 0.46 })];
-  assert.deepEqual(compareTable(members).columns.map(column => column.key), ['score', 'aesthetic']);
+  assert.deepEqual(compareTable(close).columns.map(column => column.key), ['score', 'aesthetic']);
 });
 
 const member = (unitId, rank, metrics, flags = []) => ({ unitId, rank, itemIds: [unitId], suggested: 'candidate',
@@ -135,57 +132,60 @@ test('contrast lines name concrete differences against the photo this one compet
     ['主体睁眼，第 2 名闭眼', '眼部比第 2 名清楚', '第 2 名脚被画面边切到']);
 });
 
-test('contrast lines stay silent on small or unmeasured differences', () => {
-  const group = [{ unitId: 'a', facts: facts() }, { unitId: 'b', facts: facts({ eyeSharpness: 45, subjectLuma: 110 }) }];
-  assert.deepEqual(contrastLines(group, 'b'), []);
-  assert.deepEqual(contrastLines([{ unitId: 'a', facts: facts() }, { unitId: 'b', facts: null }], 'b'), []);
-  const unknown = [{ unitId: 'a', facts: facts({ eyes: null }) }, { unitId: 'b', facts: facts({ eyes: 'closed' }) }];
-  assert.deepEqual(contrastLines(unknown, 'b'), [{ tone: 'neutral', text: '这张主体闭眼' }]);
-});
-
-test('observation differences are appended after the existing eye, crop and focus comparisons', () => {
-  const group = [{ unitId: 'a', facts: facts(), observations: [
-    { id: 'face-side', text: '侧脸', tone: 'neutral', source: 'rule' },
-  ] }, { unitId: 'b', facts: facts(), observations: [
-    { id: 'face-front', text: '正脸', tone: 'neutral', source: 'rule' },
-    { id: 'background-person', text: '右侧背景有人', tone: 'bad', source: 'rule' },
-  ] }];
-  assert.deepEqual(contrastLines(group, 'b', { limit: 9 }), [
-    { tone: 'neutral', text: '这张是正脸，第 1 名是侧脸' },
-  ]);
-  assert.deepEqual(contrastLines([{ unitId: 'a', facts: facts() }, { unitId: 'b', facts: facts(), observations: [] }], 'b'), []);
-});
-
 const observation = (id, text, tone = 'neutral', extra = {}) => ({ id, text, tone, source: 'rule', ...extra });
 
-test('model silence stays unknown, even when one side has no observation field', () => {
-  const members = [{ unitId: 'a', observations: [observation('smile', '在笑', 'good', { source: 'model' })] },
+test('contrast lines state only measured, paired differences and never invent the missing side', () => {
+  const neutral = text => ({ tone: 'neutral', text });
+  const pair = (a, b) => [{ unitId: 'a', ...a }, { unitId: 'b', ...b }];
+  const obs = (...observations) => ({ observations });
+  const smile = observation('smile', '在笑', 'good'), closed = observation('eyes-closed', '主体闭眼', 'bad');
+  const silent = [{ unitId: 'a', observations: [observation('smile', '在笑', 'good', { source: 'model' })] },
     { unitId: 'b', observations: [observation('mouth', '嘴张开')] }, { unitId: 'c' }];
-  assert.deepEqual(contrastLines(members, 'a'), [
-    { tone: 'neutral', text: '这张在笑' }, { tone: 'neutral', text: '第 2 名嘴张开' }]);
-  assert.deepEqual(contrastLines(members, 'c'), [{ tone: 'neutral', text: '第 1 名在笑' }]);
-  assert.deepEqual(contrastLines(members, 'missing'), []);
-});
-
-test('opposite statements sharing an id are contrasted only when both are stated', () => {
-  const members = [{ unitId: 'a', observations: [observation('smile', '在笑', 'good')] },
-    { unitId: 'b', observations: [observation('smile', '没笑', 'bad')] }];
-  assert.deepEqual(contrastLines(members, 'a'), [{ tone: 'better', text: '这张在笑，第 2 名没笑' }]);
-  assert.deepEqual(contrastLines(members, 'b'), [{ tone: 'worse', text: '这张没笑，第 1 名在笑' }]);
-  members[1].observations = [observation('smile', '在笑', 'good')];
-  assert.deepEqual(contrastLines(members, 'a'), []);
-});
-
-test('closed-eye observations are a fallback without duplicates or invented open eyes', () => {
-  const members = [{ unitId: 'a', facts: facts(), observations: [] },
-    { unitId: 'b', facts: facts({ eyes: 'closed' }), observations: [observation('eyes-closed', '主体闭眼', 'bad')] }];
-  assert.deepEqual(contrastLines(members, 'b'), [{ tone: 'worse', text: '主体闭眼，第 1 名睁眼' }]);
-  members[0].facts.eyes = null;
-  assert.deepEqual(contrastLines(members, 'b'), [{ tone: 'neutral', text: '这张主体闭眼' }]);
-  members[1].facts = null;
-  assert.deepEqual(contrastLines(members, 'a'), [{ tone: 'neutral', text: '第 2 名主体闭眼' }]);
-  members[0].observations = [observation('eyes-closed', '主体闭眼', 'bad')];
-  assert.deepEqual(contrastLines(members, 'a'), []);
+  const opposite = pair(obs(smile), obs(observation('smile', '没笑', 'bad')));
+  const focus = pair({ facts: facts({ afPointOnEye: true }), ...obs(observation('focus-eye', '对焦点在眼部')) },
+    { facts: facts({ afPointOnEye: false }), ...obs() });
+  const large = observation('background-person', '右侧背景有人', 'bad', { box: [0.7, 0.2, 0.9, 0.7] });
+  const small = observation('background-person', '左侧背景有人', 'bad', { box: [0.1, 0.2, 0.2, 0.4] });
+  const right = observation('background-person', '右侧背景有人', 'bad');
+  const tiny = box => observation('background-person', '背景有人', 'bad', { box });
+  const cases = [
+    ['small differences', pair({ facts: facts() }, { facts: facts({ eyeSharpness: 45, subjectLuma: 110 }) }), 'b', []],
+    ['unmeasured facts', pair({ facts: facts() }, { facts: null }), 'b', []],
+    ['unknown eyes', pair({ facts: facts({ eyes: null }) }, { facts: facts({ eyes: 'closed' }) }), 'b', [neutral('这张主体闭眼')]],
+    ['observations follow facts', pair({ facts: facts(), ...obs(observation('face-side', '侧脸')) },
+      { facts: facts(), ...obs(observation('face-front', '正脸'), right) }), 'b', [neutral('这张是正脸，第 1 名是侧脸')], { limit: 9 }],
+    ['no observations', pair({ facts: facts() }, { facts: facts(), ...obs() }), 'b', []],
+    ['model silence', silent, 'a', [neutral('这张在笑'), neutral('第 2 名嘴张开')]],
+    ['missing observation field', silent, 'c', [neutral('第 1 名在笑')]],
+    ['missing unit', silent, 'missing', []],
+    ['opposite statements', opposite, 'a', [{ tone: 'better', text: '这张在笑，第 2 名没笑' }]],
+    ['opposite statements reversed', opposite, 'b', [{ tone: 'worse', text: '这张没笑，第 1 名在笑' }]],
+    ['same statement', pair(obs(smile), obs(smile)), 'a', []],
+    ['closed-eye fact', pair({ facts: facts(), ...obs() }, { facts: facts({ eyes: 'closed' }), ...obs(closed) }), 'b',
+      [{ tone: 'worse', text: '主体闭眼，第 1 名睁眼' }]],
+    ['closed-eye fallback', pair({ facts: facts({ eyes: null }), ...obs() }, { facts: facts({ eyes: 'closed' }), ...obs(closed) }),
+      'b', [neutral('这张主体闭眼')]],
+    ['closed-eye observation only', pair({ facts: facts({ eyes: null }), ...obs() }, { facts: null, ...obs(closed) }), 'a',
+      [neutral('第 2 名主体闭眼')]],
+    ['closed eyes on both sides', pair({ facts: facts({ eyes: null }), ...obs(closed) }, { facts: null, ...obs(closed) }), 'a', []],
+    ['one-sided focus location', focus, 'a', []],
+    ['raw AF flags', focus, 'b', []],
+    ['larger background person', pair(obs(large, small), obs(small)), 'a', [{ tone: 'worse', text: '这张入镜路人占比更大' }]],
+    ['smaller background person', pair(obs(large, small), obs(small)), 'b', [{ tone: 'better', text: '这张入镜路人占比更小' }]],
+    ['equal background boxes', pair(obs({ ...large, box: small.box }), obs(small)), 'a', []],
+    ['invalid background box', pair(obs({ ...large, box: [0, 0, -1, 2] }), obs(small)), 'a', []],
+    ['same background box', pair(obs(small), obs(small)), 'a', []],
+    ['background presence', pair(obs(right), obs()), 'a', []],
+    ['background absence', pair(obs(right), obs()), 'b', []],
+    ['background position', pair(obs(right), obs(observation('background-person', '左侧背景有人', 'bad'))), 'a', []],
+    ['background position reversed', pair(obs(right), obs(observation('background-person', '左侧背景有人', 'bad'))), 'b', []],
+    ['background without observation field', pair(obs(right), {}), 'a', []],
+    ['tiny background change', pair(obs(tiny([0, 0, 0.01, 0.1])), obs(tiny([0, 0, 0.02, 0.2]))), 'a', []],
+    ['absent facts and empty observations', pair({}, obs(null, {})), 'a', []],
+  ];
+  for (const [label, members, unitId, expected, options] of cases) {
+    assert.deepEqual(contrastLines(members, unitId, options), expected, label);
+  }
 });
 
 test('eye focus and expressions precede framing, background and brightness within the three-line limit', () => {
@@ -200,14 +200,6 @@ test('eye focus and expressions precede framing, background and brightness withi
   assert.deepEqual(members, snapshot);
 });
 
-test('a one-sided focus location is not a contrast, and raw AF flags are never compared', () => {
-  const members = [{ unitId: 'a', facts: facts({ afPointOnEye: true }),
-    observations: [{ id: 'focus-eye', text: '对焦点在眼部', tone: 'neutral', source: 'rule' }] },
-  { unitId: 'b', facts: facts({ afPointOnEye: false }), observations: [] }];
-  assert.deepEqual(contrastLines(members, 'a'), []);
-  assert.deepEqual(contrastLines(members, 'b'), []);
-});
-
 test('unknown tilt and blur cannot be described as straight or clear; missing cuts cannot mean intact', () => {
   const members = [{ unitId: 'a', facts: { tilted: true, blur: true, cuts: ['手'] } },
     { unitId: 'b', facts: { tilted: null, blur: null, cuts: [] } }];
@@ -218,32 +210,6 @@ test('unknown tilt and blur cannot be described as straight or clear; missing cu
   assert.equal(contrastLines(members, 'b')[0].tone, 'better');
   assert.doesNotMatch(differenceLine([member('a', 1, { score: 0.6 }),
     member('b', 2, { score: 0.5 }, ['eyes-closed'])], 'a'), /没有闭眼/);
-});
-
-test('background comparison uses the largest valid stated box without identifying a person across frames', () => {
-  const large = observation('background-person', '右侧背景有人', 'bad', { box: [0.7, 0.2, 0.9, 0.7] });
-  const small = observation('background-person', '左侧背景有人', 'bad', { box: [0.1, 0.2, 0.2, 0.4] });
-  const members = [{ unitId: 'a', observations: [large, small] }, { unitId: 'b', observations: [small] }];
-  assert.deepEqual(contrastLines(members, 'a'), [{ tone: 'worse', text: '这张入镜路人占比更大' }]);
-  assert.deepEqual(contrastLines(members, 'b'), [{ tone: 'better', text: '这张入镜路人占比更小' }]);
-  members[0].observations = [{ ...large, box: small.box }];
-  assert.deepEqual(contrastLines(members, 'a'), []);
-  members[0].observations = [{ ...large, box: [0, 0, -1, 2] }];
-  assert.deepEqual(contrastLines(members, 'a'), []);
-  members[0].observations = [small];
-  assert.deepEqual(contrastLines(members, 'a'), []);
-});
-
-test('background presence and position alone do not produce contrast lines on either side', () => {
-  const members = [{ unitId: 'a', observations: [observation('background-person', '右侧背景有人', 'bad')] },
-    { unitId: 'b', observations: [] }];
-  assert.deepEqual(contrastLines(members, 'a'), []);
-  assert.deepEqual(contrastLines(members, 'b'), []);
-  members[1].observations = [observation('background-person', '左侧背景有人', 'bad')];
-  assert.deepEqual(contrastLines(members, 'a'), []);
-  assert.deepEqual(contrastLines(members, 'b'), []);
-  members[1].observations = undefined;
-  assert.deepEqual(contrastLines(members, 'a'), []);
 });
 
 test('face direction needs paired front versus side statements, leaving other observations unchanged', () => {
@@ -259,11 +225,4 @@ test('face direction needs paired front versus side statements, leaving other ob
       { tone: 'neutral', text: '这张在笑' },
       { tone: 'neutral', text: `这张是${text}，第 2 名是${id === 'face-front' ? '侧脸' : '正脸'}` }]);
   }
-});
-
-test('tiny background changes and absent facts produce no fabricated differences', () => {
-  const members = [{ unitId: 'a', observations: [observation('background-person', '背景有人', 'bad', { box: [0, 0, 0.01, 0.1] })] },
-    { unitId: 'b', observations: [observation('background-person', '背景有人', 'bad', { box: [0, 0, 0.02, 0.2] })] }];
-  assert.deepEqual(contrastLines(members, 'a'), []);
-  assert.deepEqual(contrastLines([{ unitId: 'a' }, { unitId: 'b', observations: [null, {}] }], 'a'), []);
 });

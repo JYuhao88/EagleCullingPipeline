@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { normalizeTheme, isDarkTheme, applyTheme, initEagleTheme, EAGLE_THEMES } from '../src/plugin/theme.js';
+import { normalizeTheme, isDarkTheme, applyTheme, initEagleTheme } from '../src/plugin/theme.js';
 
 function fakeDocument() {
   const attributes = {};
@@ -32,12 +31,4 @@ test('initEagleTheme resolves Auto through isDarkColors and follows theme change
   assert.equal(await initEagleTheme({ eagle, doc }), 'LIGHT');
   listener('BLUE');
   assert.equal(doc.documentElement.dataset.theme, 'BLUE');
-});
-
-test('theme.css defines variables for every Eagle theme', async () => {
-  const css = await readFile(new URL('../src/plugin/theme.css', import.meta.url), 'utf8');
-  for (const theme of EAGLE_THEMES) assert.match(css, new RegExp(`data-theme="${theme}"`));
-  for (const name of ['--ec-bg', '--ec-text', '--ec-accent', '--ec-pick', '--ec-reject', '--ec-font-size']) {
-    assert.match(css, new RegExp(name));
-  }
 });

@@ -6,6 +6,29 @@ import { cp, mkdtemp, rm, stat } from "node:fs/promises";
 import sharp from "sharp";
 import { AnalysisPipeline } from "../src/core/pipeline.js";
 import { completeEyeRois, detectorFaces } from "../src/core/eye-roi.js";
+import { focusRegionBox } from "../src/server/focus-image.js";
+
+function person() {
+  const points = Array.from({ length: 133 }, (_, i) => [.35 + (i % 8) * .01, .2 + Math.floor(i % 68 / 8) * .01, .95]);
+  for (let i = 0; i < 12; i++) points[59 + i] = [.39 + (i >= 6 ? .06 : 0) + (i % 6) * .002, .23 + (i % 2) * .005, .95];
+  return { box: [.1, .1, .9, .9], score: .9, keypoints: { points } };
+}
+
+test("RTMW eyes complete missing ROI, preserve explicit eyes and leave inputs untouched", () => {
+  const p = person(), face = { box: [.3, .15, .6, .4], eyesAssessed: false };
+  const next = completeEyeRois([face], [p]); assert.equal(next.length, 1);
+  assert.equal(next[0].eyeRoiSource, "rtmw-68"); assert.ok(focusRegionBox(next[0], "eyes")); assert.equal(face.eyeBoxes, undefined);
+  const explicit = { ...face, eyeBoxes: [[.35, .2, .4, .25]] };
+  assert.deepEqual(completeEyeRois([explicit], [p])[0], explicit);
+  const inferred = completeEyeRois([], [p]); assert.equal(inferred.length, 1); assert.equal(inferred[0].eyesAssessed, false);
+});
+
+test("ROI abstains for low confidence, invalid coordinates and ambiguous faces", () => {
+  const p = person(), faces = [{ box: [.3, .15, .6, .4] }, { box: [.31, .16, .61, .41] }];
+  assert.ok(completeEyeRois(faces, [p]).every(f => !f.eyeBoxes));
+  p.keypoints.points[60][2] = .1; assert.deepEqual(completeEyeRois([], [p]), []);
+  p.keypoints.points[60] = [NaN, .2, .9]; assert.deepEqual(completeEyeRois([], [p]), []);
+});
 
 test("detectorFaces removes pose-completed faces and eye ROIs", () => {
   const detector = { box: [0.1, 0.1, 0.5, 0.5], confidence: 0.9, eyeBoxes: [[0.2, 0.2, 0.25, 0.25]] };

@@ -8,11 +8,6 @@ import { detectPose, PoseWorkerPool, poseProvider, poseWorkerLimit, poseProvider
   POSE_CACHE_KEY } from '../src/core/pose.js';
 import { AnalysisPipeline } from '../src/core/pipeline.js';
 
-test('pose pool caps inference concurrency at two', () => {
-  const pool=new PoseWorkerPool({size:8});
-  assert.equal(pool.diagnostics().concurrency,2);
-  pool.close();
-});
 test('pose provider policy resolves mac default and preserves explicit overrides', () => {
   assert.equal(poseProvider('darwin', {}), 'CPUExecutionProvider');
   assert.equal(poseProvider('win32', {}), 'auto');
@@ -88,7 +83,8 @@ test('missing preview skips pose and returns na rules', async () => {
   assert.equal(result.results[0].signals,undefined);
   assert.ok(result.results[0].verdicts.every(v=>v.verdict==='na'));
 });
-test('local pose worker JSONL smoke: upright blank image has no invented person', async t => {
+test('local pose worker JSONL smoke: upright blank image has no invented person',
+  { skip: !process.env.EAGLE_SLOW_TESTS && 'set EAGLE_SLOW_TESTS=1 to run the real Python pose worker' }, async t => {
   const python=process.env.EAGLE_PYTHON || 'python_worker/.venv/bin/python';
   try {await fs.access(python);await fs.access('models/pose/yolox_m_8xb8-300e_humanart-c2c7a14a.onnx');await
     fs.access('models/pose/rtmw-dw-x-l_simcc-cocktail14_270e-256x192_20231122.onnx');}

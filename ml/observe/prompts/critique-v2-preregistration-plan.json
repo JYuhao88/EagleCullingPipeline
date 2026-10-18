@@ -1,0 +1,125 @@
+{
+  "id": "critique-v2-prospective-reference-plan",
+  "status": "proposed_not_frozen_not_executed",
+  "appliesTo": "v2_only",
+  "modifiesV1": false,
+  "designUsesV1Results": true,
+  "reference": {
+    "families": [
+      "flash",
+      "gpt",
+      "claude"
+    ],
+    "requireThreeValidVotes": true,
+    "correct": "at_least_two_correct_and_zero_wrong",
+    "wrong": "at_least_two_wrong",
+    "otherwise": "disputed",
+    "missingOrInvalid": "missing_reference_never_abstention_or_correct",
+    "editReasonable": "at_least_two_reasonable_and_zero_unreasonable",
+    "editUnreasonable": "at_least_two_unreasonable",
+    "editOtherwise": "disputed",
+    "cannotJudgeReason": [
+      "subjective_preference",
+      "insufficient_visible_detail",
+      "ambiguous_statement",
+      "other"
+    ],
+    "incompleteTwoWrongVotes": "observed_error_lower_bound_only_completeness_still_fails"
+  },
+  "gates": {
+    "statementPrecision": 0.9,
+    "statementWilsonLow": 0.85,
+    "minStatements": 140,
+    "editReasonableness": 0.85,
+    "editWilsonLow": 0.8,
+    "minEdits": 140
+  },
+  "prospectiveCoverageSafeguards": {
+    "retainFullyFormattedAndJudgedRequirement": true,
+    "threeFamilyValidReceiptCoverage": 1,
+    "minStatementResolutionCoverage": 0.8,
+    "minSubstantiveEditResolutionCoverage": 0.8,
+    "minEachPresentStatementKindResolutionCoverage": 0.8,
+    "statementKinds": [
+      "strength",
+      "issue",
+      "edit",
+      "verdict"
+    ],
+    "unit": "each_model_variant_confirmatory_dataset",
+    "poolSplitsToReachMinimum": false,
+    "poolPairedVariantsAsIndependentSamples": false,
+    "categoryPassClaimRequiresSameQualitySizeAndCoverageGates": true,
+    "noneEditsExcluded": true,
+    "zeroDenominator": null
+  },
+  "denominators": {
+    "precision": "correct/(correct+wrong)",
+    "resolutionCoverage": "(correct+wrong)/all_output_statements_including_disputed_and_missing_reference",
+    "disputedRate": "disputed/all_output_statements",
+    "missingReferenceRate": "missing_reference/all_output_statements",
+    "confirmedCorrectCoverage": "correct/all_output_statements",
+    "photoCountsRequired": [
+      "planned",
+      "returned",
+      "schema_valid_primary",
+      "three_family_judged",
+      "observed_wrong",
+      "resolved",
+      "unresolved"
+    ],
+    "statementCountsRequired": [
+      "all_output",
+      "three_valid_votes",
+      "correct",
+      "wrong",
+      "disputed",
+      "missing_reference"
+    ]
+  },
+  "evidenceRequirements": {
+    "issueRequired": [
+      "id",
+      "category",
+      "text",
+      "region",
+      "evidence"
+    ],
+    "editRequired": [
+      "action",
+      "direction",
+      "reason",
+      "region",
+      "evidence",
+      "issue_id"
+    ],
+    "maxShortChineseTextLength": 12,
+    "maxSummaryLength": 30,
+    "editReferencesExistingIssue": true,
+    "noneCannotReplaceAbstention": true,
+    "cropStraighten": "only_visible_reliable_geometry_or_safe_edge_distraction_removal",
+    "exposure": "only_localized_visible_large_scale_problem_no_raw_recovery_claim",
+    "removeDistraction": "only_located_small_separate_object_with_visible_problem_and_safe_removal",
+    "retouchSkinBlemish": "abstain_at_768",
+    "sharpenDenoise": "abstain_at_768"
+  },
+  "freezeBeforeAnyV2OutputOrTeacherCall": [
+    "prompt_and_output_schema_sha256",
+    "judge_rubric_and_schema_sha256",
+    "parser_statement_splitter_commit",
+    "model_revision_quantization_runtime_parameters",
+    "specialist_fact_snapshot_sha256",
+    "development_and_independent_confirmatory_manifest_sha256",
+    "fixed_sample_sizes_hash_sampling_seed_and_primary_repeat_seeds",
+    "reference_quality_coverage_gates_and_planned_comparisons",
+    "budget_and_failure_missing_output_policy"
+  ],
+  "confirmatoryManifest": null,
+  "promptSha256": null,
+  "teacherRubricSha256": null,
+  "fixedSampleSizes": null,
+  "existingV1DataRole": "development_only_replay_is_not_independent_confirmation",
+  "adaptiveTopUpOrBestRepeatSelection": false,
+  "insufficientNOrCoverage": "fail_or_insufficient_evidence_never_lower_gates",
+  "runtimeAcceptance": "not_evaluated"
+}

@@ -92,48 +92,6 @@ with tempfile.TemporaryDirectory() as tmp:
 `);
 });
 
-test('VLM admission distinguishes requested GPU resources from CPU jobs and treats unknowns conservatively', () => {
-  python(load + `
-for job in [{}, {'entrypoint_num_gpus':None}, {'entrypoint_num_gpus':True},
-            {'entrypoint_num_gpus':-1}, {'entrypoint_num_gpus':float('nan')},
-            {'metadata':'malformed'}, {'metadata':{'ecp_requested_gpus':'unknown'}}, {'metadata':{'ecp_requested_gpus':'NaN'}},
-            {'entrypoint_num_gpus':None,'metadata':{'ecp_requested_gpus':'0'}}]:
- assert m.uses_gpu(job), job
-assert not m.uses_gpu({'entrypoint_num_gpus':0})
-assert not m.uses_gpu({'metadata':{'ecp_requested_gpus':'0'}})
-assert m.uses_gpu({'entrypoint_num_gpus':0,'entrypoint_resources':{'GPU':1}})
-assert m.uses_gpu({'metadata':{'ecp_requested_gpus':'0.5'}})
-with tempfile.TemporaryDirectory() as tmp:
- m.LOCK = Path(tmp)/'lock'; submitted = []
- gpu = {'submission_id':'w36-gpu','status':'RUNNING','metadata':{'ecp_requested_gpus':'2'}}
- cpu = {'submission_id':'w36-cpu','status':'RUNNING','metadata':{'ecp_requested_gpus':'0'}}
- active = [gpu,cpu]
- def request(path,body=None):
-  assert m.LOCK.exists()
-  if body is None: return active
-  submitted.append(body); return {'submitted':True}
- m.request = request
- assert m.submit_locked({'entrypoint_num_gpus':2,'metadata':{'ecp_requested_gpus':'0'}},line='w35-vlm-moe') == {'submitted':True}
- assert submitted[-1]['metadata']['ecp_requested_gpus'] == '2' and not m.LOCK.exists()
- active = [gpu,{'submission_id':'w1-unknown','status':'PENDING'}]
- try: m.submit_locked({'entrypoint_num_gpus':1},wait_seconds=0,line='w35-vlm-moe')
- except TimeoutError: pass
- else: raise AssertionError('unknown job was treated as CPU')
- active = [cpu,dict(cpu,submission_id='w1-cpu'),dict(cpu,submission_id='w39-cpu')]
- try: m.submit_locked({'entrypoint_num_gpus':1},wait_seconds=0,line='w35-vlm-moe')
- except TimeoutError: pass
- else: raise AssertionError('total job cap exceeded')
- active = [gpu,dict(gpu,submission_id='w39-gpu')]
- assert m.submit_locked({'entrypoint_num_gpus':0},wait_seconds=0,line='w35-vlm-moe') == {'submitted':True}
- assert submitted[-1]['metadata']['ecp_requested_gpus'] == '0'
- for value in (3,-1,float('nan'),float('inf'),True,None):
-  try: m.submit_locked({'entrypoint_num_gpus':value},line='w35-vlm-moe')
-  except ValueError: pass
-  else: raise AssertionError('invalid GPU request accepted')
- assert not m.LOCK.exists()
-`);
-});
-
 test('VLM W35 configuration pins loader code and pip without forwarding unrelated environment', () => {
   python(load + `
 with tempfile.TemporaryDirectory() as tmp:

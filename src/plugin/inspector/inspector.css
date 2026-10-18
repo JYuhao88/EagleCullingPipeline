@@ -126,3 +126,32 @@ summary { cursor: pointer; }
 .ai-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
 .ai-tags[hidden] { display: none; }
 .ai-tags span { border: 1px solid var(--ec-border, #999); border-radius: 10px; padding: 2px 7px; font-size: 11px; }
+
+/* 宽屏检查器：同一页面在插件主窗口里打开（?mode=wide）。右栏里 .wide-left 不占布局；窗口够宽时它固定在左侧放大照片，
+   检查器其余部分在右侧单独滚动。字号由 theme.css 按窗口大小放大。 */
+.wide-left { display: contents; }
+html:not([data-mode="wide"]) .wide-only, html[data-mode="wide"] .panel-only { display: none; }
+.head .text-button { margin-left: auto; }
+.head .text-button + .text-button { margin-left: 0; }
+.member img.sharp:not(.ready) { opacity: 0; }
+.member:has(> img.sharp.ready) > img:not(.sharp) { visibility: hidden; }
+html[data-mode="wide"] { --wide-side: clamp(380px, 36vw, 780px); }
+html[data-mode="wide"] .hint, html[data-mode="wide"] .marks-toggle, html[data-mode="wide"] .ai-tags span,
+html[data-mode="wide"] .compare tr.gap td { font-size: var(--ec-font-size-small); }
+html[data-mode="wide"] .member span { padding: 1px 6px; font-size: var(--ec-font-size-small); line-height: 1.45; }
+html[data-mode="wide"] .compare th, html[data-mode="wide"] .compare td { line-height: 1.5; }
+html[data-mode="wide"] .compare th:first-child { width: 4.6em; }
+html[data-mode="wide"] .compare .frame { width: 4.3em; height: 2.9em; }
+html[data-mode="wide"] .neighbour img { width: 4.2em; height: 4.2em; }
+html[data-mode="wide"] .pair .member:only-child { grid-column: 1 / -1; }
+html[data-mode="wide"] .pair .member { max-height: calc(100vh - 7rem); }
+@media (min-width: 960px) {
+  html[data-mode="wide"] body { padding: 0; }
+  html[data-mode="wide"] #inspector { box-sizing: border-box; margin-left: calc(100vw - var(--wide-side));
+    padding: 12px 18px 24px 8px; }
+  html[data-mode="wide"] .wide-left { display: block; position: fixed; inset: 0 auto 0 0; box-sizing: border-box;
+    width: calc(100vw - var(--wide-side)); padding: 12px 10px 24px 18px; overflow-y: auto; }
+  html[data-mode="wide"] .pair { gap: 10px; margin-bottom: 8px; align-items: start; }
+  html[data-mode="wide"] .pair .member { aspect-ratio: 3 / 2; }
+  html[data-mode="wide"] .detail-frame { aspect-ratio: 16 / 10; }
+}

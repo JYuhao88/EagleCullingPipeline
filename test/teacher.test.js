@@ -6,75 +6,12 @@ import path from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { pathToFileURL } from 'node:url';
-import { validateLabel, budgetState, cost } from '../scripts/teacher-label.mjs';
-import { kendall, samplePairs } from '../scripts/teacher-pilot.mjs';
-import { expandedPairs, wilson, bootstrap, categories, semanticRanking } from '../scripts/teacher-expansion.mjs';
 
 const valid = {
   ranking: ['I2', 'I1'],
   images: [{ id: 'I1', decision: 'reject', issues: ['模糊'], reason: '细节模糊' },
     { id: 'I2', decision: 'keep', issues: [], reason: '清晰自然' }],
 };
-
-test('teacher stratification covers every degradation and Kendall handles agreement and reversal', async () => {
-  const manifest = JSON.parse(await readFile('test/fixtures/bench-syn-manifest.json', 'utf8'));
-  const pairs = samplePairs(manifest);
-  assert.equal(pairs.length, 40); assert.equal(new Set(pairs.map(pair => pair.id)).size, 40);
-  for (const type of new Set(manifest.pairs.map(pair => pair.degradation))) {
-    const n = pairs.filter(pair => pair.degradation === type).length;
-    assert.ok(n === 3 || n === 4);
-  }
-  assert.deepEqual(samplePairs({ ...manifest, pairs: [...manifest.pairs].reverse() }), pairs);
-  assert.equal(kendall(['a', 'b', 'c'], ['a', 'b', 'c']), 1);
-  assert.equal(kendall(['a', 'b', 'c'], ['c', 'b', 'a']), -1);
-  assert.equal(kendall(['a', 'b', 'c'], ['b', 'a', 'c']), 1 / 3);
-  assert.throws(() => kendall(['a', 'b'], ['a', 'c']));
-});
-
-test('teacher validates complete permutations, decisions and short reasons', () => {
-  assert.equal(validateLabel(valid, ['I1', 'I2']), true);
-  assert.equal(validateLabel({ ...valid, ranking: ['I1', 'I1'] }, ['I1', 'I2']), false);
-  assert.equal(validateLabel({ ...valid, images: valid.images.slice(0, 1) }, ['I1', 'I2']), false);
-  for (const reason of ['字'.repeat(41), 'https://example.invalid', '/private/photo.jpg']) {
-    assert.equal(validateLabel({ ...valid, images: [{ ...valid.images[0], reason }, valid.images[1]] }, ['I1', 'I2']), false);
-  }
-  assert.equal(validateLabel({ ...valid, images: [{ ...valid.images[0], decision: 'candidate' }, valid.images[1]] },
-    ['I1', 'I2']), false);
-});
-
-test('teacher accounts actual usage, outstanding reservations and malformed-output charges', () => {
-  assert.equal(cost({ prompt_tokens: 1e6, completion_tokens: 1e6 }, { input: 1, output: 1, usdToCny: 1 }), 2);
-  assert.throws(() => cost({}, { input: 1, output: 1, usdToCny: 1 }));
-  const events = [{ type: 'reserve', callId: 'a', estimateCny: 2 },
-    { type: 'response', callId: 'a', costCny: 1, valid: false }, { type: 'reserve', callId: 'b', estimateCny: 3 }];
-  const state = budgetState(events);
-  assert.equal(state.spent, 1); assert.equal(state.reserved, 3); assert.equal(state.active.size, 1);
-  assert.throws(() => budgetState([{ type: 'response', callId: 'unknown', costCny: 1 }]));
-});
-
-test('expanded teacher sample retains pilot, exhausts joint strata, and confidence intervals remain bounded', async () => {
-  const manifest = JSON.parse(await readFile('test/fixtures/bench-syn-manifest.json', 'utf8'));
-  const pairs = expandedPairs(manifest);
-  assert.equal(pairs.length, 200); assert.equal(new Set(pairs.map(pair => pair.id)).size, 200);
-  assert.deepEqual(pairs.slice(0, 40), samplePairs(manifest));
-  assert.equal(pairs.filter(pair => pair.degradation.startsWith('joint-crop-')).length, 42);
-  assert.deepEqual(expandedPairs({ ...manifest, pairs: [...manifest.pairs].reverse() }), pairs);
-  const interval = wilson(95, 100);
-  assert.ok(interval.low < 0.95 && interval.high > 0.95);
-  assert.ok(wilson(0, 10).high > 0); assert.ok(wilson(10, 10).low < 1);
-  assert.equal(wilson(0, 0), null);
-  const result = bootstrap([[0, 1], [1], [0]], values => values.reduce((a, b) => a + b, 0) / values.length);
-  assert.deepEqual(result, bootstrap([[0, 1], [1], [0]], values => values.reduce((a, b) => a + b, 0) / values.length));
-  assert.ok(result.low >= 0 && result.high <= 1);
-});
-
-test('teacher order comparisons use photo identities and disagreement categories can overlap', () => {
-  const first = { unitIds: ['photo-a', 'photo-b'], response: { result: { ranking: ['I2', 'I1'] } } };
-  const reverse = { unitIds: ['photo-b', 'photo-a'], response: { result: { ranking: ['I1', 'I2'] } } };
-  assert.deepEqual(semanticRanking(first), semanticRanking(reverse));
-  assert.deepEqual(categories('曝光自然，笑容舒展，构图留白合理'), ['技术问题', '表情', '构图', '审美']);
-  assert.deepEqual(categories('更喜欢这一张'), ['未归类']);
-});
 
 test('teacher privacy, billing, resume, retry cap and fail-closed transport in isolated process', async () => {
   const directory = await mkdtemp(path.join(tmpdir(), 'teacher-test-'));

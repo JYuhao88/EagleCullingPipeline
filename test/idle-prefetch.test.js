@@ -5,7 +5,6 @@ import path from 'node:path';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { inWindow, parseWindow, prefetchDecision, shouldCancelPrefetch, prefetchCandidates, createIdlePrefetcher, systemSignals }
   from '../src/plugin/idle-prefetch.js';
-import { createRunNotifier } from '../src/plugin/background.js';
 import { createAnalysisServer } from '../src/server.js';
 import { RunStore } from '../src/server/run-store.js';
 
@@ -100,16 +99,6 @@ test('prefetcher starts read-only prefetch runs, throttles, and cancels on user 
   calls.length = 0;
   assert.equal((await prefetcher.tick()).action, 'skip');
   assert.deepEqual(calls, [], 'disabled prefetch makes no requests');
-});
-
-test('notifier ignores prefetch runs', async () => {
-  const shown = [];
-  const storage = new Map();
-  const notify = createRunNotifier({
-    storage: { getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value) },
-    eagle: { notification: { show: async row => shown.push(row) } } });
-  assert.equal(await notify({ id: 'run-p', status: 'completed', purpose: 'prefetch' }), false);
-  assert.deepEqual(shown, []);
 });
 
 test('server hides prefetch runs, yields them to user analysis, and prunes old prefetch runs', async t => {

@@ -33,11 +33,6 @@ export async function applyEagleStars(eagle, rows) {
   return errors.length ? `决定已保存，但 Eagle 星级未更新：${errors[0].message}` : null;
 }
 
-export function starLabel(star) {
-  const value = Number(star) || 0;
-  return value ? `${'★'.repeat(value)}${'☆'.repeat(5 - value)}` : '未打星';
-}
-
 // The first star seen for an item is its baseline; only later changes in Eagle become decisions,
 // so ratings made before culling never turn into decisions on their own.
 export function createStarWatcher({ eagle, storage = globalThis.localStorage, post, interval = 800, recentLimit = 40,

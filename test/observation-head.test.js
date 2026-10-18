@@ -9,6 +9,9 @@ import { loadObservationHeads, observationCacheKey, observationsFromVector, vali
   from '../src/core/observation-head.js';
 
 const fixture = JSON.parse(await readFile(new URL('./fixtures/observation-head.json', import.meta.url), 'utf8'));
+const productionGazeBytes = await readFile(new URL('../src/core/observation-heads/gaze-iris-q2-clip-v1.json', import.meta.url));
+const productionGaze = JSON.parse(productionGazeBytes);
+const gazeRuntime = JSON.parse(await readFile(new URL('./fixtures/observation-gaze-runtime.json', import.meta.url), 'utf8'));
 const model = () => structuredClone(fixture);
 const vector = first => [first, ...Array(383).fill(0)];
 const close = (actual, expected) => assert.ok(Math.abs(actual - expected) < 1e-12, `${actual} != ${expected}`);
@@ -195,4 +198,46 @@ test('iris-pose/CLIP loader verifies both files and binds auxiliary SHA into hea
   assert.notEqual(cache(replaced), cache(original));
   await rm(model);
   assert.deepEqual(await loadObservationHeads({ root, directory }), []);
+});
+
+test('production gaze head preserves the accepted coefficients, calibration and both pinned models', () => {
+  assert.equal(sha(productionGazeBytes), 'f3350621868b444d573179bd887fa1bffd1917f17bcee198a15b4efa4092eacc');
+  assert.equal(validObservationHead(productionGaze), true);
+  assert.equal(productionGaze.version, 'gaze-iris-q2-clip-v1');
+  assert.deepEqual(productionGaze.encoder, { id: 'mediapipe-iris-pose-q2-clip-b32-q', dimensions: 740,
+    modelSha256: '64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff',
+    clipModelSha256: '583fd1110a514667812fee7d684952aaf82a99b959760c8d7dca7e0ab9839299' });
+  assert.deepEqual(productionGaze.input, { type: 'face-crop', expansion: 1.8, size: 384, minFaceHeight: .05 });
+  assert.equal(productionGaze.attributes.length, 1);
+  const attribute = productionGaze.attributes[0];
+  assert.equal(attribute.id, 'gaze');
+  assert.equal(attribute.type, 'logistic');
+  assert.equal(attribute.showThreshold, .91);
+  assert.equal(attribute.temperature, 1.076452351253655);
+  assert.deepEqual(attribute.positive, { text: '看镜头', tone: 'neutral' });
+  assert.equal(Object.hasOwn(attribute, 'negative'), false);
+  assert.equal(Object.hasOwn(attribute, 'quantization'), false);
+  for (const values of [attribute.weights, attribute.normalization.mean, attribute.normalization.scale]) {
+    assert.equal(Array.isArray(values) && values.length === 740 && values.every(Number.isFinite), true);
+    assert.equal(values.some(value => value !== Math.fround(value)), true);
+  }
+  assert.equal(attribute.normalization.scale.every(value => value > 0), true);
+});
+
+test('production gaze inference reproduces accepted public Node vectors beside the display threshold', () => {
+  assert.equal(gazeRuntime.sourceJob, 'w33-gaze-ffd7236efe3e');
+  assert.equal(gazeRuntime.rows.length, 2);
+  assert.deepEqual(gazeRuntime.rows.map(row => row.items.length).sort(), [0, 1]);
+  for (const row of gazeRuntime.rows) {
+    assert.match(row.id, /^openimages-[a-f0-9]{16}$/);
+    assert.deepEqual(Object.keys(row).sort(), ['box', 'features', 'id', 'items']);
+    assert.equal(row.features.length, 740);
+    assert.equal(row.features.every(Number.isFinite), true);
+    const actual = observationsFromVector(row.features, productionGaze, { box: row.box });
+    const withoutConfidence = items => items.map(({ confidence, ...item }) => item);
+    assert.deepEqual(withoutConfidence(actual), withoutConfidence(row.items), row.id);
+    for (let index = 0; index < actual.length; index++)
+      assert.ok(Math.abs(actual[index].confidence - row.items[index].confidence) <= 1e-10, row.id);
+    assert.deepEqual(observationsFromVector(row.features, productionGaze, { box: [0, 0, .1, .0499] }), []);
+  }
 });

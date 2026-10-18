@@ -18,6 +18,17 @@ function fakeRoot() {
     return elements.get(selector);
   }, createElement: node, addEventListener() {} };
 }
+const page = runs => ({ runs, page: { nextCursor: null } });
+function stubApi({ runs = [], list = () => page(runs), active = () => null, route = () => undefined } = {}) {
+  return async (url, options) => {
+    if (url === '/health') return { service: 'eagle-culling' };
+    if (url === '/runs/status') return { active: active() };
+    if (url.startsWith('/runs?')) return list(url);
+    const routed = await route(url, options);
+    if (routed === undefined) throw new Error(`unexpected ${url}`);
+    return routed;
+  };
+}
 const $ = (root, id) => root.querySelector(`#${id}`);
 const rowAction = row => row.children.at(-1).children[0];
 const rowDetail = row => row.children[0].children[2].textContent;
@@ -107,13 +118,8 @@ test('progress is shown in the primary card while analysing and completion waits
     const root = fakeRoot(); const opened = [];
     let run = { id: 'r1', libraryPath: '/fixture.library', status: 'running', scope: { label: '选中的 10 张' },
       progress: { stage: 'pose', completed: 4, total: 10, overallPercent: 60, elapsedSeconds: 120, remainingSeconds: 80 } };
-    const api = async url => {
-      if (url === '/health') return { service: 'eagle-culling' };
-      if (url === '/runs/status') return { active: run.status === 'running' ? run : null };
-      if (url.startsWith('/runs?')) return { runs: [run], page: { nextCursor: null } };
-      if (url === '/runs/r1') return run;
-      throw new Error(`unexpected ${url}`);
-    };
+    const api = stubApi({ list: () => page([run]), active: () => run.status === 'running' ? run : null,
+      route: url => url === '/runs/r1' ? run : undefined });
     api.base = 'fixture';
     const view = createStartView({ root, api, onRun: async (...args) => opened.push(args), autoCheck: false, autoRefresh: false });
     try {
@@ -144,14 +150,11 @@ test('selection analysis sends the selection or folder scope; whole library need
   await withGlobals({ eagle }, async () => {
     const root = fakeRoot(), calls = [], confirms = [];
     let allow = false;
-    const api = async (url, options) => {
-      if (url === '/health') return { service: 'eagle-culling' };
-      if (url === '/runs/status') return { active: null };
-      if (url.startsWith('/runs?')) return { runs: [], page: { nextCursor: null } };
+    const api = stubApi({ route: (url, options) => {
       if (url === '/runs/match') return { match: null };
       if (url === '/runs') { calls.push(JSON.parse(options.body)); return { id: `run-${calls.length}` }; }
       return { id: url.split('/').pop(), status: 'completed', groupCount: 1, progress: { stage: 'done' } };
-    };
+    } });
     const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false,
       confirmImpl: text => { confirms.push(text); return allow; } });
     try {
@@ -184,14 +187,10 @@ test('a selection already covered by a task offers that task instead of a new an
     const root = fakeRoot(), opened = [], posted = [];
     const task = { id: 'task-1', status: 'completed', groupCount: 2, reviewedGroupCount: 1, scope: { label: '旅行' } };
     let missing = 0;
-    const api = async (url, options) => {
-      if (url === '/health') return { service: 'eagle-culling' };
-      if (url === '/runs/status') return { active: null };
-      if (url.startsWith('/runs?')) return { runs: [task], page: { nextCursor: null } };
+    const api = stubApi({ runs: [task], route: (url, options) => {
       if (url === '/runs/match') { posted.push(JSON.parse(options.body)); return { match: { runId: 'task-1', matched: 2 - missing,
         missing, sameScope: true } }; }
-      throw new Error(`unexpected ${url}`);
-    };
+    } });
     const view = createStartView({ root, api, onRun: async id => opened.push(id), autoCheck: false, autoRefresh: false });
     try {
       await view.checkHealth(); await view.refreshContext(); await tick();
@@ -211,10 +210,7 @@ test('broken tasks resume, rerun or explain how to reselect; a busy service is a
       { id: 'lost', status: 'interrupted', resumable: false, rerunnable: true },
       { id: 'gone', status: 'failed', resumable: false, rerunnable: false, scope: { label: '旧文件夹' } }];
     let busy = false;
-    const api = async (url, options) => {
-      if (url === '/health') return { service: 'eagle-culling' };
-      if (url === '/runs/status') return { active: null };
-      if (url.startsWith('/runs?')) return { runs: busy ? [busyRun] : runs, page: { nextCursor: null } };
+    const api = stubApi({ list: () => page(busy ? [busyRun] : runs), route: (url, options) => {
       if (url === '/runs') {
         posted.push(JSON.parse(options.body));
         if (posted.length === 2) { busy = true; throw Object.assign(new Error('busy'), { status: 409, body: { run: busyRun } }); }
@@ -222,8 +218,7 @@ test('broken tasks resume, rerun or explain how to reselect; a busy service is a
       }
       if (url === '/runs/busy') return busyRun;
       if (url === '/runs/resumed') return { id: 'resumed', status: 'completed', groupCount: 1 };
-      throw new Error(`unexpected ${url}`);
-    };
+    } });
     const view = createStartView({ root, api, onRun: () => assert.fail('unfinished run must not open'), autoCheck: false,
       autoRefresh: false });
     try {
@@ -249,13 +244,8 @@ test('broken tasks resume, rerun or explain how to reselect; a busy service is a
 test('offline home shows a service card and no review entry; retry connects', async () => {
   const repository = process.platform === 'win32' ? 'C:\\photo repo' : '/tmp/photo repo';
   await withGlobals({ storage: new Map([['eagle-culling-repository', repository]]) }, async () => {
-    const root = fakeRoot(); let connected = false;
-    const api = async url => {
-      if (!connected) throw new Error('offline');
-      if (url === '/health') return { service: 'eagle-culling' };
-      if (url === '/runs/status') return { active: null };
-      return { runs: [], page: { nextCursor: null } };
-    };
+    const root = fakeRoot(), service = stubApi(); let connected = false;
+    const api = async url => { if (!connected) throw new Error('offline'); return service(url); };
     api.base = 'http://127.0.0.1:43210';
     const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false });
     try {
@@ -274,15 +264,13 @@ test('offline home shows a service card and no review entry; retry connects', as
 
 test('home lists five tasks; history paginates and can include superseded versions', async () => {
   await withGlobals({}, async () => {
-    const root = fakeRoot(), urls = []; let page = 0;
-    const api = async url => {
-      if (url === '/health') return { service: 'eagle-culling' };
-      if (url === '/runs/status') return { active: null };
+    const root = fakeRoot(), urls = []; let pages = 0;
+    const api = stubApi({ list: url => {
       urls.push(url);
       const first = !url.includes('cursor=6');
-      return { runs: Array.from({ length: 6 }, (_, index) => ({ id: `run-${page}-${index}`, status: 'completed', groupCount: 1,
-        reviewedGroupCount: 1, writtenBackAt: 'x' })), page: { nextCursor: first && page++ === 0 ? '6' : null } };
-    };
+      return { runs: Array.from({ length: 6 }, (_, index) => ({ id: `run-${pages}-${index}`, status: 'completed', groupCount: 1,
+        reviewedGroupCount: 1, writtenBackAt: 'x' })), page: { nextCursor: first && pages++ === 0 ? '6' : null } };
+    } });
     const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false });
     try {
       await view.checkHealth();
@@ -302,14 +290,11 @@ test('turbo preference persists and travels with analysis requests', async () =>
     item: { getSelected: async () => [{ id: 'a' }], countSelected: async () => 1, countAll: async () => 1 } };
   await withGlobals({ storage, eagle }, async () => {
     const calls = [];
-    const api = async (url, options) => {
-      if (url === '/health') return { service: 'eagle-culling' };
-      if (url === '/runs/status') return { active: null };
-      if (url.startsWith('/runs?')) return { runs: [], page: { nextCursor: null } };
+    const api = stubApi({ route: (url, options) => {
       if (url === '/runs/match') return { match: null };
       if (url === '/runs') { calls.push(JSON.parse(options.body)); return { id: 'x' }; }
       return { id: 'x', status: 'completed', groupCount: 1 };
-    };
+    } });
     const root = fakeRoot();
     const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false });
     try {
@@ -329,13 +314,10 @@ test('library change clears the old tasks immediately and reloads for the new li
     folder: { getSelected: async () => [] }, item: { countSelected: async () => 0, countAll: async () => 10 } };
   await withGlobals({ eagle }, async () => {
     const root = fakeRoot(), urls = [];
-    const api = async url => {
+    const api = stubApi({ list: url => {
       urls.push(url);
-      if (url === '/health') return { service: 'eagle-culling' };
-      if (url === '/runs/status') return { active: null };
-      return { runs: url.includes('old.library') ? [{ id: 'old', status: 'completed', groupCount: 2, reviewedGroupCount: 0 }] : [],
-        page: { nextCursor: null } };
-    };
+      return page(url.includes('old.library') ? [{ id: 'old', status: 'completed', groupCount: 2, reviewedGroupCount: 0 }] : []);
+    } });
     const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false });
     try {
       await view.refreshContext(); await view.checkHealth();
@@ -354,12 +336,9 @@ test('changing the service address drops the old monitor and adopts the new serv
   await withGlobals({}, async () => {
     const root = fakeRoot(), reads = [];
     function service(name) {
-      const api = async url => {
-        if (url === '/health') return { service: 'eagle-culling' };
-        if (url.startsWith('/runs?')) return { runs: [], page: { nextCursor: null } };
-        if (url === '/runs/status') return { active: { id: `run-${name}`, status: 'running' } };
+      const api = stubApi({ active: () => ({ id: `run-${name}`, status: 'running' }), route: url => {
         reads.push([name, url]); return { id: `run-${name}`, status: 'running', progress: { stage: 'metrics' } };
-      };
+      } });
       api.base = name; return api;
     }
     let api = service('old');
@@ -393,8 +372,7 @@ test('completed tasks expose Eagle culling and finish actions on the card and ta
   await withGlobals({}, async () => {
     const run = { id: 'done', status: 'completed', groupCount: 2, reviewedGroupCount: 1 };
     const root = fakeRoot(), opened = [];
-    const api = async url => url === '/health' ? { service: 'eagle-culling' }
-      : url === '/runs/status' ? { active: null } : { runs: [run], page: { nextCursor: null } };
+    const api = stubApi({ runs: [run] });
     const view = createStartView({ root, api, onRun: async (...args) => opened.push(args), autoCheck: false, autoRefresh: false });
     try {
       await view.checkHealth();

@@ -10,6 +10,9 @@ import { groupTarget, neighbourGroups, patchRows, runGroups, runProgress, select
 import { COLUMNS, FOLD_OVER, columnSlots, compareTable, contrastLines, differenceLine, keepTopDecisions, scoreBars, visibleRows }
   from './inspector-compare.js';
 import { createLiveWriteback } from '../live-writeback.js';
+import { displayUrl } from '../display-url.js';
+import { createWideWatcher, fillScreen, isWide, mainUrl, requestWide, showWindow, takeFill, unfillScreen }
+  from '../wide-mode.js';
 import { createDetailView } from './inspector-detail.js';
 
 const BADGES = { selected: '精', candidate: '候', rejected: '汰' };
@@ -153,7 +156,10 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     globalThis.addEventListener?.('blur', () => trace('window blur', storage));
   }
   void initEagleTheme({ eagle, doc: root });
-  try { placeInspectorFirst(storage); } catch {}
+  // The same page inside the main plugin window: no Eagle panel order, height or snapshot to keep.
+  const wide = isWide(pageUrl);
+  if (wide && root.documentElement?.dataset) root.documentElement.dataset.mode = 'wide';
+  try { if (!wide) placeInspectorFirst(storage); } catch {}
   let version = 0, timer, visible = !root.hidden, disposed = false, lastKey = '', lastFetch = 0;
   let current = { state: 'empty', result: null, selected: [] };
   // The run queue is cached per run; the selected photo's analysis keeps its own group fresh in between.
@@ -298,7 +304,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     if (!body?.style) return;
     root.getElementById?.('earlyHold')?.remove?.();
     body.style.minHeight = '';
-    try { session?.setItem(SESSION.height, String(body.scrollHeight || 0)); } catch { /* ignore */ }
+    if (!wide) try { session?.setItem(SESSION.height, String(body.scrollHeight || 0)); } catch { /* ignore */ }
   }
   // 「挑片时实时写回标签」 in the main window's settings shares this storage.
   const live = createLiveWriteback({ storage, onStatus: (text, failed) => { if (failed) note(text); },
@@ -358,7 +364,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     if (position) position.textContent = state === 'result' && !multi && result.groupSize > 1
       ? `第 ${result.rank ?? '—'} / ${result.groupSize} 名` : '';
     renderTable(compared ? result : null, selected);
-    renderPair(compared && !multi ? result : null);
+    renderPair((compared || (wide && state === 'result')) && !multi ? result : null);
     renderObservations(state === 'result' && !multi ? result : null);
     renderChart(compared ? result : null, selected);
     renderKeep(compared && !multi ? result : null);
@@ -407,7 +413,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   function saveSnapshot() {
     const section = el('inspector') || root.querySelector?.('#inspector');
     const sig = root.documentElement?.dataset?.layout;
-    if (current.state !== 'result' || !sig || typeof section?.innerHTML !== 'string') return;
+    if (wide || current.state !== 'result' || !sig || typeof section?.innerHTML !== 'string') return;
     const ids = (current.result.groupMembers || []).flatMap(member => member.itemIds || []);
     let html = section.innerHTML;
     const copy = section.cloneNode?.(true);
@@ -537,13 +543,16 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     const box = table.parentElement, boxStyle = box && globalThis.getComputedStyle?.(box);
     const width = box?.clientWidth - (parseFloat(boxStyle?.paddingLeft) || 0) - (parseFloat(boxStyle?.paddingRight) || 0);
     const fontSize = parseFloat(globalThis.getComputedStyle?.(table)?.fontSize) || undefined;
+    // inspector.css widens the thumbnail column to 4.6em in the wide window.
+    const frame = wide ? 4.6 * (fontSize || 11) - 41 : 0;
     const { columns, rows, hidden = [] } = compareTable(result?.groupMembers || [],
-      { slots: columnSlots(width, fontSize) });
+      { slots: columnSlots(width - frame, fontSize) });
     const note = el('compareHidden');
     if (note) {
       note.hidden = !rows.length || !hidden.length;
-      note.textContent = note.hidden ? ''
-        : `右栏较窄，未显示：${hidden.map(column => column.label).join('、')}。向左拖动右栏左边缘可加宽。`;
+      const labels = hidden.map(column => column.label).join('、');
+      note.textContent = note.hidden ? '' : wide ? `窗口较窄，未显示：${labels}。放大窗口可显示全部。`
+        : `右栏较窄，未显示：${labels}。向左拖动右栏左边缘可加宽，或点「宽屏查看」。`;
     }
     table.hidden = !rows.length;
     if (table.hidden) { table.replaceChildren(); return; }
@@ -715,15 +724,31 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
       return row;
     }));
   }
+  // The wide window shows the pair large: a display-size image covers the small preview once it has loaded.
+  const sharp = new Map();
+  function sharpImage(runId, unitId, count) {
+    const box = el('pair');
+    const src = displayUrl(baseUrl(), encodeURIComponent(runId), unitId, (box?.clientWidth || globalThis.innerWidth || 1600) / count,
+      globalThis.innerHeight || 900, globalThis.devicePixelRatio || 1);
+    let image = sharp.get(src);
+    if (!image) {
+      image = root.createElement('img'); image.alt = ''; image.className = 'sharp';
+      image.addEventListener?.('load', () => image.classList.add('ready'));
+      image.src = src; sharp.set(src, image);
+      if (sharp.size > 12) sharp.delete(sharp.keys().next().value);
+    }
+    return image;
+  }
   // The middle browser already shows the whole group; the panel only puts this photo next to the one it competes with.
   function renderPair(result) {
     const pair = el('pair'); if (!pair) return;
     const members = result?.groupMembers || [];
     const index = members.findIndex(member => member.unitId === result?.unitId);
-    pair.hidden = index < 0 || members.length < 2;
+    pair.hidden = index < 0 || (members.length < 2 && !wide);
     if (pair.hidden) { pair.replaceChildren(); return; }
     const other = members[index === 0 ? 1 : 0];
-    pair.replaceChildren(...[[members[index], '当前'], [other, `第 ${other.rank} 名`]].map(([member, label]) => {
+    const shown = [[members[index], '当前'], ...other ? [[other, `第 ${other.rank} 名`]] : []];
+    pair.replaceChildren(...shown.map(([member, label]) => {
       const node = root.createElement('button');
       node.type = 'button'; node.className = 'member'; node.dataset.suggested = member.suggested;
       if (member === members[index]) node.classList.add('current');
@@ -734,7 +759,14 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
       rememberObservationFrame(member.unitId, node, image);
       const badge = root.createElement('span'); badge.className = 'badge';
       badge.textContent = `${label === '当前' ? `当前 · 第 ${member.rank} 名` : label} · ${BADGES[member.suggested] || '候'}`;
-      node.append(image); drawMarks(node, image, member.marks); node.append(badge);
+      node.append(image);
+      if (wide) {
+        // Landscape and portrait photos each get a box of their own shape, capped at the window height.
+        const fit = () => { if (image.naturalWidth) node.style.aspectRatio = `${image.naturalWidth} / ${image.naturalHeight}`; };
+        fit(); image.addEventListener?.('load', fit, { once: true });
+        node.append(sharpImage(result.runId, member.unitId, shown.length));
+      }
+      drawMarks(node, image, member.marks); node.append(badge);
       if (member.human) {
         const mark = root.createElement('span'); mark.className = 'mark'; mark.textContent = MARKS[member.human]; node.append(mark);
       }
@@ -853,7 +885,11 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     if (value) {
       lastKey = ''; void poll();
       if (eagle?.item?.getSelected) { watcher.start(); codeReload.start(); }
-    } else { watcher.stop(); codeReload.stop(); void live.flush(); }
+    } else {
+      // A hidden wide window stands in for the main page, whose star watcher is not loaded.
+      if (!wide) watcher.stop();
+      codeReload.stop(); void live.flush();
+    }
   }
   async function decide(action) {
     if (current.state !== 'result' || !current.selected.length) return;
@@ -1085,6 +1121,28 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     lastKey = ''; version++; watcher.reset(); queue = { runId: null, rows: [], at: 0 }; if (visible) void refresh(true);
   });
   root.addEventListener?.('visibilitychange', () => setVisible(!root.hidden));
+  async function leaveWide() {
+    await unfillScreen(eagle);
+    let search = '';
+    try { search = new URL(pageUrl).search; } catch { /* keep the defaults */ }
+    globalThis.location?.assign(mainUrl(search));
+  }
+  el('wideBack')?.addEventListener?.('click', () => void leaveWide());
+  el('wideOpen')?.addEventListener?.('click', () => void requestWide(baseUrl(), fetchImpl)
+    .then(() => note('已请求在插件窗口打开宽屏检查器；没出现时，从插件菜单打开「Eagle照片筛选」再点「宽屏检查器」。'))
+    .catch(() => note('本地服务没有响应，没能打开宽屏检查器。')));
+  let wideWatcher = null;
+  if (wide) {
+    // Eagle sends plugin-run on every page load and again when the plugin is picked from its menu: the menu means
+    // the main page.
+    let runs = 0;
+    eagle?.onPluginRun?.(() => { if (runs++) void leaveWide(); });
+    wideWatcher = createWideWatcher({ getBase: baseUrl, fetchImpl,
+      onRequest: async () => { await showWindow(eagle); await fillScreen(eagle); } });
+    wideWatcher.start();
+    if (eagle?.item?.getSelected) watcher.start();
+    if (takeFill(globalThis.window)) void fillScreen(eagle);
+  }
   const carried = sessionGet(SESSION.note);
   try { session?.removeItem(SESSION.note); } catch { /* ignore */ }
   if (carried?.text && now() - carried.at < 10000) note(carried.text);
@@ -1092,7 +1150,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   if (visible) setVisible(true);
   const dispose = () => {
     disposed = true; version++; clearTimeout(timer); clearTimeout(personalTimer); clearTimeout(aiTagsTimer); clearTimeout(resizeTimer);
-    watcher.stop(); codeReload.stop(); void live.flush();
+    watcher.stop(); codeReload.stop(); wideWatcher?.stop(); void live.flush();
   };
   globalThis.addEventListener?.('pagehide', dispose);
   return { refresh, setVisible, watcher, dispose, navigate, acceptGroup, loadQueue, regroup, bulk, stepKeep, applyKeep,

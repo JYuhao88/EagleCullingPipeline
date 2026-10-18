@@ -1,6 +1,5 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
 import { createFinishPanel, finishModel } from '../src/plugin/finish-panel.js';
 
 function rootFixture() {
@@ -94,13 +93,4 @@ test('finish panel ignores a previous task response after switching tasks', asyn
   assert.equal(q('finishTask').textContent, '新任务');
   assert.match(q('reportCsv').href, /run-new/);
   assert.equal(panel.isBusy(), false);
-});
-
-test('main markup has only home workflows and a home-owned writeback dialog', async () => {
-  const html = await readFile(new URL('../src/plugin/index.html', import.meta.url), 'utf8');
-  for (const id of ['review', 'cull', 'homePreview', 'previewDialog', 'reviewSettings', 'shortcutHelp'])
-    assert.doesNotMatch(html, new RegExp(`id="${id}"`));
-  for (const id of ['panelSettings', 'historyView', 'finishPanel', 'writebackDialog', 'moveTrash', 'trashConfirm'])
-    assert.match(html, new RegExp(`id="${id}"`));
-  assert.ok(html.indexOf('id="writebackDialog"') < html.indexOf('  </main>'));
 });

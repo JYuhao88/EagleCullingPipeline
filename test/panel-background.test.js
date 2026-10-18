@@ -3,36 +3,11 @@ import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { SETTINGS, readSetting, writeSetting } from '../src/plugin/panel-settings.js';
 import { shouldAutoStart, launchLocalService, launchEnv, createRunNotifier, mountBackgroundLifecycle } from '../src/plugin/background.js';
-import { scopeLabel, primaryAnalysis } from '../src/plugin/start-model.js';
-import { eagleContext } from '../src/plugin/api.js';
 import { createWindowSizer, readSavedSize } from '../src/plugin/window-mode.js';
 const fixtureRepository = process.platform === 'win32' ? 'C:\\fixture' : '/tmp/fixture';
 const storage = () => { const map = new Map(); return { getItem: key => map.get(key) ?? null,
   setItem: (key, value) => map.set(key, value), removeItem: key => map.delete(key) }; };
 
-test('scope card and main button prioritize selection, folder, then entire library', () => {
-  const context = { libraryPath: '/fixture.library', libraryCount: 40, selectionCount: 3, folders: [{ name: '旅行' }], folderCount: 12 };
-  assert.equal(scopeLabel(context), '选中 3 张');
-  assert.equal(primaryAnalysis(context).label, '分析选中的 3 张');
-  const folder = { ...context, selectionCount: 0 };
-  assert.equal(scopeLabel(folder), '文件夹 旅行（12 张）');
-  assert.equal(primaryAnalysis(folder).disabled, false);
-  const library = { ...folder, folders: [] };
-  assert.equal(scopeLabel(library), '整个资源库（40 张）');
-  assert.equal(primaryAnalysis(library).itemIds, null);
-  for (const change of [{ libraryCount: 0 }, { libraryPath: '' }]) assert.equal(primaryAnalysis({ ...library, ...change }).disabled, true);
-  assert.equal(primaryAnalysis(context, false).disabled, true);
-  assert.equal(primaryAnalysis(context, true, true).disabled, true);
-});
-test('lightweight scope uses countSelected without loading full selection IDs', async () => {
-  const old = globalThis.eagle; let calls = 0;
-  globalThis.eagle = { library: { path: '/fixture.library' }, item: {
-    countSelected: async () => 5000, getSelected: async () => { calls++; return [{ id: 'a' }]; }, countAll: async () => 6000 } };
-  try {
-    assert.equal((await eagleContext({ lightweight: true })).selectionCount, 5000); assert.equal(calls, 0);
-    assert.deepEqual((await eagleContext()).itemIds, ['a']); assert.equal(calls, 1);
-  } finally { globalThis.eagle = old; }
-});
 test('settings exact keys and defaults persist without enabling writeback implicitly', () => {
   const values = storage();
   for (const [id, [, defaultValue]] of Object.entries(SETTINGS)) {
@@ -86,7 +61,7 @@ test('Dock-launched apps get the usual Node install folders appended to PATH', (
   assert.ok(nvm('v22.9.0') < nvm('v20.1.0'));
   assert.deepEqual(launchEnv({ PATH: 'C:\\Windows' }, 'win32'), { PATH: 'C:\\Windows' });
 });
-test('completion and failure notify once across fresh notifier instances and skip missing API', async () => {
+test('completion and failure notify once across fresh notifier instances and skip missing API and prefetch runs', async () => {
   const values = storage(), calls = [], eagle = { notification: { show: async row => calls.push(row) } };
   const input = { storage: values, eagle, base: () => 'fixture' };
   const run = { id: 'run-complete', status: 'completed', groupCount: 12, selectedCount: 8, rejectedCount: 3 };
@@ -96,6 +71,7 @@ test('completion and failure notify once across fresh notifier instances and ski
   assert.equal(await createRunNotifier(input)(run), false);
   assert.equal(await notify({ id: 'run-failed', status: 'failed', error: 'fixture failure' }), true);
   assert.equal(calls.length, 2); assert.equal(calls[1].title, '照片分析失败');
+  assert.equal(await notify({ id: 'run-p', status: 'completed', purpose: 'prefetch' }), false); assert.equal(calls.length, 2);
   assert.equal(await createRunNotifier({ ...input, eagle: {} })({ ...run, id: 'unavailable' }), false);
 });
 test('background lifecycle hides on close, shows on run, and permits updater reload', async () => {

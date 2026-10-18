@@ -42,12 +42,3 @@ test("pairwise fitting gives a higher weight to clearer images", () => {
   assert.ok(weights[0] > weights[1]);
   assert.equal(weights.reduce((sum, value) => sum + value, 0), 1);
 });
-
-test("weight evaluation uses fitted weights for top-1", () => {
-  const result = data([{ id: "g", unitIds: ["a", "b"] }], [
-    { unitId: "a", metrics: { sharpness: 0.9, exposure: 0.1, faces: 1, eyesClosed: 0, quality: 0.1 } },
-    { unitId: "b", metrics: { sharpness: 0.1, exposure: 0.9, faces: 1, eyesClosed: 0, quality: 0.9 } },
-  ]);
-  const report = evaluateWeights(result, [{ groupId: "g", bestUnitId: "a" }], [1, 0, 0, 0]);
-  assert.equal(report.top1.rate, 1);
-});

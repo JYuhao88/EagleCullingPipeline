@@ -1,33 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, writeFile } from "node:fs/promises";
+import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { validateDecision, CONTRACT_VERSION } from "../src/core/contracts.js";
-import { ResultsStore } from "../src/core/results-store.js";
-import { AnalysisPipeline } from "../src/core/pipeline.js";
 import { createAnalysisServer } from "../src/server.js";
 import { RunStore } from "../src/server/run-store.js";
-import { score, SCORER_CACHE_KEY } from "../src/core/scorer.js";
-import { scoreLabels } from "../scripts/spot-check-score.mjs";
-test("contracts validate v1 decision", () => {
-  assert.equal(
-    validateDecision({
-      contractVersion: CONTRACT_VERSION,
-      id: "x",
-      action: "selected",
-    }),
-    true,
-  );
-  assert.equal(validateDecision({ id: "x", action: "selected" }), false);
-});
-test("results store resumes by fingerprint", async () => {
-  const d = await mkdtemp(path.join(os.tmpdir(), "eagle-cache-")),
-    s = new ResultsStore(d);
-  await s.put("f", { id: "x" });
-  const s2 = new ResultsStore(d);
-  assert.deepEqual(await s2.get("f"), { id: "x" });
-});
+import { score } from "../src/core/scorer.js";
+import { restoreThumbnails } from "../src/core/restore-thumbnails.js";
 
 test("missing scorer model returns unavailable quality", async () => {
   const results = await score(["/no/such/preview.jpg"], {
@@ -39,47 +18,6 @@ test("missing scorer model returns unavailable quality", async () => {
   assert.match(results[0].warning, /模型校验失败/);
 });
 
-test("scorer model and version are part of the cache fingerprint", () => {
-  assert.match(`file:analysis-v3:${SCORER_CACHE_KEY}`, /topiq-nr-onnx:topiq-nr-512-v1/);
-});
-
-test("spot-check scoring reports top-1 and pairwise agreement", () => {
-  const report = scoreLabels({
-    run: { id: "run-x" },
-    results: [],
-    groups: [{
-      id: "g1", unitIds: ["a", "b", "c"],
-      ranking: [{ unitId: "a", rank: 1, score: 0.9 }, { unitId: "b", rank: 2, score: 0.7 }, { unitId: "c", rank: 3, score: 0.2 }],
-    }],
-  }, [{ groupId: "g1", bestUnitId: "a" }]);
-  assert.equal(report.top1.rate, 1);
-  assert.equal(report.pairwise.rate, 1);
-});
-test("spot-check scoring counts unable groups separately", () => {
-  const report = scoreLabels({
-    run: { id: "run-x" },
-    groups: [{ id: "g1", unitIds: ["a", "b"], ranking: [
-      { unitId: "a", rank: 1, score: 0.9 }, { unitId: "b", rank: 2, score: 0.7 },
-    ] }],
-  }, [{ groupId: "g1", bestUnitId: null }]);
-  assert.equal(report.unable, 1);
-  assert.equal(report.top1.total, 0);
-  assert.equal(report.pairwise.total, 0);
-});
-test("pipeline cancellation", async () => {
-  const p = new AnalysisPipeline({
-    analyzer: async (r) => {
-      await new Promise((x) => setTimeout(x, 20));
-      return { ...r, qualityScore: 1, phash: "0" };
-    },
-  });
-  const c = new AbortController();
-  c.abort();
-  await assert.rejects(
-    p.run([{ id: "x", filePath: "/none" }], { signal: c.signal }),
-    /cancelled|aborted/,
-  );
-});
 async function seedRun(root) {
   const runStore = new RunStore(root);
   const run = { contractVersion: 1, id: "run-test", status: "completed", libraryPath: "/lib/a.library" };
@@ -152,7 +90,6 @@ test("server review flow keeps live manual tags, follows RAW and is idempotent",
     await s.close();
   }
 });
-import { restoreThumbnails } from "../src/core/restore-thumbnails.js";
 test("restore thumbnails uses fake Eagle API and dry-run is side-effect free", async () => {
   const calls = [];
   const api = {

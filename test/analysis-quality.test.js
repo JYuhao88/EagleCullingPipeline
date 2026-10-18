@@ -116,35 +116,22 @@ test("leader reasons name only metrics the top unit clearly leads", () => {
   assert.ok(!ranking[0].reasons.includes("睁眼率组内最高"));
 });
 
-test("ranking drops missing metrics and normalizes the remaining weights", () => {
-  const ranking = rankGroup([
-    { unitId: "a", metrics: { sharpness: 1, exposure: 1, quality: null } },
-    { unitId: "b", metrics: { sharpness: 0, exposure: 1, quality: null } },
-  ]);
-  assert.equal(ranking[0].score, 1);
-  assert.equal(ranking[1].score, 0.4);
+test("ranking renormalizes weights over metrics present and shared by every group member", () => {
+  for (const [label, a, b, expected] of [
+    ["missing metrics", { sharpness: 1, exposure: 1, quality: null }, { sharpness: 0, exposure: 1, quality: null },
+      [["a", 1], ["b", 0.4]]],
+    ["shared metrics", { sharpness: 1, exposure: 0, faces: 1, eyesClosed: 0 },
+      { sharpness: 0, exposure: 1, faces: 0, eyesClosed: null }, [["a", 0.6], ["b", 0.4]]],
+    ["partial quality", { sharpness: 0.2, exposure: 1, quality: 0.99 }, { sharpness: 0.8, exposure: 1, quality: null },
+      [["b", 0.88], ["a", 0.52]]],
+  ]) {
+    const ranking = rankGroup([{ unitId: "a", metrics: a }, { unitId: "b", metrics: b }]);
+    assert.deepEqual(ranking.map((entry) => [entry.unitId, entry.score]), expected, label);
+  }
 });
 
-test("ranking uses only metrics shared by every group member", () => {
-  const ranking = rankGroup([
-    { unitId: "a", metrics: { sharpness: 1, exposure: 0, faces: 1, eyesClosed: 0 } },
-    { unitId: "b", metrics: { sharpness: 0, exposure: 1, faces: 0, eyesClosed: null } },
-  ]);
-  assert.equal(ranking[0].score, 0.6);
-  assert.equal(ranking[1].score, 0.4);
-});
-
-test("ranking ignores quality for a partially scored group", () => {
-  const ranking = rankGroup([
-    { unitId: "a", metrics: { sharpness: 0.2, exposure: 1, quality: 0.99 } },
-    { unitId: "b", metrics: { sharpness: 0.8, exposure: 1, quality: null } },
-  ]);
-  assert.equal(ranking[0].unitId, "b");
-  assert.equal(ranking[0].score, 0.88);
-  assert.equal(ranking[1].score, 0.52);
-});
-
-test("ONNX scorer returns a calibrated result when the model is available", async (t) => {
+test("ONNX scorer returns a calibrated result when the model is available",
+  { skip: !process.env.EAGLE_SLOW_TESTS && "set EAGLE_SLOW_TESTS=1 to run real TOPIQ-NR inference" }, async (t) => {
   try {
     await access(path.join(process.cwd(), "models/scorer/topiq_nr_512.onnx"));
   } catch {
