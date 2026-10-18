@@ -7,7 +7,7 @@ import os from 'node:os';
 import crypto from 'node:crypto';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { mkdir, mkdtemp, rm, stat, readFile, writeFile, readdir, utimes } from 'node:fs/promises';
+import { mkdir, mkdtemp, open, rm, stat, readFile, writeFile, readdir, utimes } from 'node:fs/promises';
 import sharp from 'sharp';
 import { isRaw, isHeif } from './image-formats.js';
 import { decodeHeif, decodeWic } from './heif-decode.js';
@@ -105,6 +105,30 @@ export function normalizedRect(box, width, height) {
     height: Math.min(height, Math.ceil(box[3] * height)) - top };
 }
 
+// Some RAWs keep the camera's own JPEG where the standard tags miss it: Ricoh DNGs hold a full-size one in a SubIFD next to
+// a small maker-note preview, and Hasselblad 3FR files store theirs as the IFD0 image.
+export function largestPreviewGroup(meta = {}) {
+  return Object.entries(meta)
+    .map(([key, value]) => [key, Number(String(value).match(/Binary data (\d+) bytes/)?.[1] || 0)])
+    .filter(([key, bytes]) => /:PreviewImage$/.test(key) && bytes > 0)
+    .sort((a, b) => b[1] - a[1])[0]?.[0] || null;
+}
+
+export function ifd0JpegStrip(meta = {}) {
+  const offset = Number(meta.StripOffsets), length = Number(meta.StripByteCounts);
+  return [6, 7].includes(Number(meta.Compression)) && Number.isInteger(offset) && Number.isInteger(length)
+    && length > 0 && length <= 128 * 1024 * 1024 ? { offset, length } : null;
+}
+
+async function readJpegSlice(file, { offset, length }) {
+  const handle = await open(file, 'r');
+  try {
+    const buffer = Buffer.alloc(length);
+    const { bytesRead } = await handle.read(buffer, 0, length, offset);
+    return bytesRead === length && buffer[0] === 0xff && buffer[1] === 0xd8 ? buffer : null;
+  } finally { await handle.close(); }
+}
+
 export function embeddedPreviewAccepted(meta, rawMeta, { minEdge = 0.95 } = {}) {
   const width = rawMeta?.ExifImageWidth || rawMeta?.ImageWidth || rawMeta?.width;
   const height = rawMeta?.ExifImageHeight || rawMeta?.ImageHeight || rawMeta?.height;
@@ -128,9 +152,24 @@ async function openNative(record, options, callback) {
         const args = ['-j', '-n', '-ImageWidth', '-ImageHeight', '-ExifImageWidth',
           '-ExifImageHeight', '-Orientation', rawSource];
         rawMeta ||= JSON.parse(await runCommand('exiftool', args))[0];
-        for (const tag of ['JpgFromRaw', 'PreviewImage']) {
+        const exifJson = async args => JSON.parse(await runCommand('exiftool', [...args, rawSource]))[0];
+        const previews = ['JpgFromRaw', 'PreviewImage'].map(tag =>
+          [tag, () => runCommand('exiftool', ['-b', `-${tag}`, rawSource], { binary: true })]);
+        // Display only: analysis keeps its established sources, so scores and ranking do not move.
+        if (options.purpose === 'display') previews.push(
+          ['largest PreviewImage', async () => {
+            const group = largestPreviewGroup(await exifJson(['-j', '-a', '-G1', '-PreviewImage']));
+            return group ? runCommand('exiftool', ['-b', `-${group}`, rawSource], { binary: true }) : null;
+          }],
+          ['IFD0 JPEG', async () => {
+            const strip = ifd0JpegStrip(await exifJson(['-j', '-n', '-IFD0:Compression', '-IFD0:StripOffsets',
+              '-IFD0:StripByteCounts']));
+            return strip ? readJpegSlice(rawSource, strip) : null;
+          }]);
+        for (const [tag, read] of previews) {
           try {
-            const data = await runCommand('exiftool', ['-b', `-${tag}`, rawSource], { binary: true });
+            const data = await read();
+            if (!data?.length) throw new Error('none');
             const meta = await sharp(data).metadata();
             if (!embeddedPreviewAccepted(meta, {
               ...rawMeta, width: rawMeta?.width || raw.width, height: rawMeta?.height || raw.height,

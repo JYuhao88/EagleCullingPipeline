@@ -66,9 +66,12 @@ function decodeUnitId(value) {
 const pendingDetails = new Map();
 const pendingDisplays = new Map();
 // A thumbnail fallback is retried once per service start (decoders may have been installed since), not per request.
+// RAW images cached before the current preview probe are rebuilt once, so a camera JPEG found since replaces a generic decode.
 const reprobedFallbacks = new Set();
-const retryFallback = (file, source, ext) => source === 'eagle-thumbnail' && (isRaw(ext) || isHeif(ext)) && !reprobedFallbacks.has(file)
-  && reprobedFallbacks.add(file);
+const PREVIEW_PROBE = 2;
+const retryFallback = (file, metadata, ext) => (isRaw(ext) && (metadata?.probe || 1) < PREVIEW_PROBE)
+  || (metadata?.previewSource === 'eagle-thumbnail' && (isRaw(ext) || isHeif(ext)) && !reprobedFallbacks.has(file)
+    && Boolean(reprobedFallbacks.add(file)));
 
 async function detailImage(store, id, unitId, state) {
   const key = path.join(store.dir(id), "detail", `${encodeURIComponent(unitId)}.jpg`);
@@ -89,7 +92,7 @@ async function createDetailImage(store, id, unitId, state) {
   try {
     await access(file);
     const cached = JSON.parse(await readFile(`${file}.json`, 'utf8').catch(() => '{"previewSource":"eagle-thumbnail"}'));
-    if (!retryFallback(file, cached.previewSource, item?.ext)) return file;
+    if (!retryFallback(file, cached, item?.ext)) return file;
   } catch {
     /* rebuild old or incomplete entries */
   }
@@ -112,7 +115,7 @@ async function createDetailImage(store, id, unitId, state) {
           if (!native?.available && native?.warnings) throw new Error(native.warnings.join('；'));
         }
         if (candidate === result.previewPath && (isRaw(item?.ext) || isHeif(item?.ext))) previewSource = 'eagle-thumbnail';
-        await writeFile(`${file}.json`, JSON.stringify({ previewSource }));
+        await writeFile(`${file}.json`, JSON.stringify({ previewSource, probe: PREVIEW_PROBE }));
         return file;
       } catch {
         continue;
@@ -141,7 +144,7 @@ export async function displayImage(store, id, unitId, state, requestedEdge) {
   const sidecar = `${file}.json`;
   try {
     const metadata = JSON.parse(await readFile(sidecar, 'utf8'));
-    if (!retryFallback(file, metadata.previewSource, primary.ext)) {
+    if (!retryFallback(file, metadata, primary.ext)) {
       await access(file); await touchCache(file); await touchCache(sidecar);
       return { path: file, edge: metadata.edge || edge, source: metadata.previewSource || 'display', warning: metadata.warning };
     }
@@ -158,7 +161,9 @@ export async function displayImage(store, id, unitId, state, requestedEdge) {
       };
       let dimensions;
       const mid = await readMid(primary, { pairedItems: items.filter(item => item !== primary) });
-      if (mid && Math.max(mid.width, mid.height) >= edge) {
+      // A mid image decoded generically from a RAW would hide the camera's own JPEG colours, so the RAW is probed again.
+      const genericRaw = ['decoded-raw', 'raw-wic'].includes(mid?.source?.kind);
+      if (mid && !genericRaw && Math.max(mid.width, mid.height) >= edge) {
         dimensions = await write(sharp(mid.path), 'native-mid');
       } else {
         try {
@@ -179,7 +184,7 @@ export async function displayImage(store, id, unitId, state, requestedEdge) {
           warning = warning || '已降级到 Eagle 缩略图';
         }
       }
-      const metadata = { edge: Math.max(dimensions.width, dimensions.height), previewSource: displaySource, warning };
+      const metadata = { edge: Math.max(dimensions.width, dimensions.height), previewSource: displaySource, warning, probe: PREVIEW_PROBE };
       await writeFile(sidecar, JSON.stringify(metadata));
       await touchCache(file); await touchCache(sidecar);
       return { path: file, edge: Math.max(dimensions.width, dimensions.height), source: displaySource, warning };

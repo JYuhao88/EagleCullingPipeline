@@ -6,7 +6,7 @@ import path from 'node:path';
 import { EventEmitter } from 'node:events';
 import sharp from 'sharp';
 import { RAW_EXTENSIONS, HEIF_EXTENSIONS, isRaw, isHeif } from '../src/core/image-formats.js';
-import { embeddedPreviewAccepted } from '../src/core/native-image.js';
+import { embeddedPreviewAccepted, ifd0JpegStrip, largestPreviewGroup } from '../src/core/native-image.js';
 import { decodeHeif, decodeWic, parseWicOutput, resetWicHealth, wicAvailable, windowsWicScript } from '../src/core/heif-decode.js';
 import { snapDisplayEdge } from '../src/core/display.js';
 import { createRunsRouter } from '../src/server/runs-routes.js';
@@ -20,6 +20,16 @@ test('image format helpers cover the complete RAW and HEIF lists', () => {
 test('display edges snap upward and never upscale a smaller source', () => {
   assert.equal(snapDisplayEdge(1100), 2048); assert.equal(snapDisplayEdge(5000), 6144);
   assert.equal(snapDisplayEdge(5000, 3500), 3500); assert.equal(snapDisplayEdge(500, 800), 800);
+});
+
+test('camera JPEGs outside the standard tags are found: the largest SubIFD preview and a JPEG IFD0 image', () => {
+  assert.equal(largestPreviewGroup({ SourceFile: 'a.dng', 'SubIFD1:PreviewImage': '(Binary data 2920817 bytes, use -b option to extract)',
+    'Pentax:PreviewImage': '(Binary data 54531 bytes, use -b option to extract)' }), 'SubIFD1:PreviewImage');
+  assert.equal(largestPreviewGroup({ SourceFile: 'a.arw' }), null);
+  assert.deepEqual(ifd0JpegStrip({ Compression: 7, StripOffsets: 210542592, StripByteCounts: 1908736 }),
+    { offset: 210542592, length: 1908736 });
+  assert.equal(ifd0JpegStrip({ Compression: 1, StripOffsets: 8, StripByteCounts: 100 }), null, 'uncompressed strips are not JPEG');
+  assert.equal(ifd0JpegStrip({ Compression: 7, StripOffsets: '8 108', StripByteCounts: '100 100' }), null, 'multi-strip images');
 });
 
 test('embedded preview threshold depends on purpose', () => {
