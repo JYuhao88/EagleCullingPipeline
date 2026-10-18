@@ -98,6 +98,7 @@ Group 可新增 `candidateSet`，不改变旧 `ranking`、`suggested` 字段：
 | GET | /runs/:id/detail/:unitId | 按需生成并缓存长边 2048 的 JPEG 细节图（image/jpeg） | 分析 |
 | GET | /runs/:id/face/:unitId/:faceIndex | 按需裁剪指定人脸，长边不超过 320 的 JPEG（image/jpeg） | 分析 |
 | GET/POST | /runs/:id/decisions | 读取或批量写入 Decision（持久化到 `data/runs/<id>/decisions.json`） | 审阅 |
+| GET/PUT | /runs/:id/adjustments[/:unitId] | 检查器的查看调节，按照片存到 `data/runs/<id>/adjustments.json`；PUT `{}` 清除，全部清除时删除文件；只影响显示 | 审阅 |
 | GET | /runs/:id/personalize | 返回偏好学习报告（结构见下） | 审阅 |
 | POST | /runs/:id/personalize/apply | 无需 body；应用当前决定拟合的权重，只重排本 run 未审阅多张组 | 审阅 |
 | POST | /runs/:id/apply | body `{apply: false|true, moveRejectedToTrash?: bool, confirm?: "MOVE_TO_TRASH"}`，默认 dry-run | 审阅 |

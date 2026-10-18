@@ -1,15 +1,18 @@
 import { displayUrl } from '../display-url.js';
+import { DEFAULT_ADJUSTMENTS, adjustmentTables, clampAdjustment, isNeutral, normalizeAdjustments, toLinear }
+  from '../adjust.js';
 
-// View-only exposure on a zoomed crop next to Eagle's own preview; originals, scores and Eagle never change.
-export const EXPOSURE_RANGE = Object.freeze([-3, 3]);
+// View-only adjustments on a zoomed crop and the compared pair next to Eagle's own preview; originals, scores and Eagle never
+// change. Each photo's values are kept in its analysis record.
 export const ZOOMS = Object.freeze([1, 2, 4]);
 const STORE_KEY = 'eagle-culling-detail';
-const FILTER_ID = 'ec-exposure';
+const LAST_KEY = 'eagle-culling-detail-last';
+const FILTER_ID = 'ec-adjust';
 const SVG = 'http://www.w3.org/2000/svg';
+const SAVE_DELAY_MS = 500;
 
 export function clampExposure(value) {
-  const number = Number(value);
-  return Math.round(Math.min(EXPOSURE_RANGE[1], Math.max(EXPOSURE_RANGE[0], Number.isFinite(number) ? number : 0)) * 10) / 10 + 0;
+  return Math.round(clampAdjustment('exposure', value) * 10) / 10 + 0;
 }
 
 export function exposureLabel(ev) {
@@ -17,17 +20,35 @@ export function exposureLabel(ev) {
   return value === 0 ? '0 EV' : `${value > 0 ? '+' : '−'}${Math.abs(value).toFixed(1)} EV`;
 }
 
-// Exposure is a gain on linear light, so one stop doubles the linear value regardless of the sRGB encoding.
-export function exposureSlope(ev) { return Number((2 ** clampExposure(ev)).toFixed(4)); }
+export function adjustmentLabel(name, value) {
+  if (name === 'exposure') return exposureLabel(value);
+  const number = Math.round(clampAdjustment(name, value) * 100);
+  return number === 0 ? '0' : `${number > 0 ? '+' : '−'}${Math.abs(number)}`;
+}
 
-const toLinear = v => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+// Sliders show exposure in EV and the rest as −100…+100, like Lightroom; stored values are EV and −1…1.
+export const sliderValue = (name, value) => String(name === 'exposure' ? clampExposure(value) : Math.round(value * 100));
+export const fromSlider = (name, text) => name === 'exposure' ? clampExposure(text) : clampAdjustment(name, Number(text) / 100);
 
-// Puts the median luminance of what is visible on middle grey (18 % linear).
+// Linear luminance of an 8-bit sRGB pixel: each channel is decoded before the Rec. 709 weights apply.
+export const luminance = (r, g, b) => 0.2126 * toLinear(r / 255) + 0.7152 * toLinear(g / 255) + 0.0722 * toLinear(b / 255);
+
+// Puts the median linear luminance of what is visible on middle grey (18 %).
 export function autoExposure(samples = []) {
   const values = samples.map(Number).filter(Number.isFinite).sort((a, b) => a - b);
   if (!values.length) return 0;
-  const median = toLinear(Math.min(1, Math.max(0.002, values[Math.floor(values.length / 2)])));
+  const median = Math.min(1, Math.max(0.0002, values[Math.floor(values.length / 2)]));
   return clampExposure(Math.log2(0.18 / median));
+}
+
+// The SVG filter for a set of adjustments: three lookup tables, then saturation, all on sRGB-encoded values.
+export function filterMarkup(value) {
+  const adjustments = normalizeAdjustments(value);
+  const tables = adjustmentTables(adjustments).map(table => table.map(v => +v.toFixed(4)).join(' '));
+  const saturation = 1 + (adjustments.saturation || 0);
+  return `<feComponentTransfer><feFuncR type="table" tableValues="${tables[0]}"/><feFuncG type="table" tableValues="${tables[1]}"/>`
+    + `<feFuncB type="table" tableValues="${tables[2]}"/></feComponentTransfer>`
+    + (saturation === 1 ? '' : `<feColorMatrix type="saturate" values="${saturation}"/>`);
 }
 
 const overlap = (a, b) => {
@@ -58,17 +79,22 @@ export function placement({ frameWidth, frameHeight, imageWidth, imageHeight, zo
 export function readDetailState(storage) {
   try {
     const value = JSON.parse(storage?.getItem(STORE_KEY) || '{}');
-    return { ev: clampExposure(value.ev), zoom: ZOOMS.includes(value.zoom) ? value.zoom : 2, open: value.open === true };
-  } catch { return { ev: 0, zoom: 2, open: false }; }
+    return { zoom: ZOOMS.includes(value.zoom) ? value.zoom : 2, open: value.open === true };
+  } catch { return { zoom: 2, open: false }; }
 }
 
-export function createDetailView({ root = globalThis.document, storage = globalThis.localStorage, baseUrl, win = globalThis.window }) {
+export function createDetailView({ root = globalThis.document, storage = globalThis.localStorage, baseUrl, fetchImpl = globalThis.fetch,
+  win = globalThis.window, setTimer = setTimeout, clearTimer = clearTimeout }) {
   const el = id => root.getElementById?.(id);
   const fold = el('detailView'), frame = el('detailFrame'), image = el('detailImage');
-  const slider = el('detailExposure'), output = el('detailEv');
-  if (!fold || !frame || !image || !slider) return { render() {} };
+  if (!fold || !frame || !image) return { render() {} };
+  const sliders = [...root.querySelectorAll?.('[data-adjust]') || []];
   let state = readDetailState(storage), current = null, focus = [0.5, 0.5];
+  let adjustments = {}, loadToken = 0, loaded = false, pending = null, saveTimer = null;
+  const readLast = () => { try { return normalizeAdjustments(JSON.parse(storage?.getItem(LAST_KEY) || '{}')); } catch { return {}; } };
+  let previous = readLast();
   const save = () => storage?.setItem(STORE_KEY, JSON.stringify(state));
+  const url = (runId, unitId) => `${baseUrl()}/runs/${encodeURIComponent(runId)}/adjustments/${encodeURIComponent(unitId)}`;
   fold.open = state.open;
   ensureFilter();
 
@@ -77,17 +103,51 @@ export function createDetailView({ root = globalThis.document, storage = globalT
     const svg = root.createElementNS(SVG, 'svg');
     svg.setAttribute('width', '0'); svg.setAttribute('height', '0'); svg.setAttribute('aria-hidden', 'true');
     svg.style.position = 'absolute';
-    svg.innerHTML = `<filter id="${FILTER_ID}" color-interpolation-filters="linearRGB"><feComponentTransfer>`
-      + '<feFuncR type="linear" slope="1"/><feFuncG type="linear" slope="1"/><feFuncB type="linear" slope="1"/>'
-      + '</feComponentTransfer></filter>';
+    svg.innerHTML = `<filter id="${FILTER_ID}" color-interpolation-filters="sRGB"></filter>`;
     fold.append(svg);
   }
-  function applyExposure() {
-    const slope = String(exposureSlope(state.ev));
-    for (const node of el(FILTER_ID)?.querySelectorAll?.('feFuncR, feFuncG, feFuncB') || []) node.setAttribute('slope', slope);
-    image.style.filter = state.ev === 0 ? '' : `url(#${FILTER_ID})`;
-    slider.value = String(state.ev);
-    if (output) output.textContent = exposureLabel(state.ev);
+  function applyAdjustments() {
+    const neutral = isNeutral(adjustments);
+    const filter = el(FILTER_ID);
+    if (filter && !neutral) filter.innerHTML = filterMarkup(adjustments);
+    root.documentElement?.classList?.toggle('ec-adjusted', !neutral);
+    for (const slider of sliders) {
+      const name = slider.dataset.adjust, value = adjustments[name] || 0;
+      slider.value = sliderValue(name, value);
+      slider.closest?.('.adjust-row')?.classList.toggle('changed', value !== 0);
+      const output = root.querySelector?.(`[data-adjust-value="${name}"]`);
+      if (output) output.textContent = adjustmentLabel(name, value);
+    }
+    const badge = el('detailAdjusted'); if (badge) badge.hidden = neutral;
+    const copy = el('detailCopy'); if (copy) copy.hidden = !loaded || !neutral || isNeutral(previous);
+  }
+  async function flush() {
+    clearTimer(saveTimer); saveTimer = null;
+    const job = pending; pending = null;
+    if (!job) return;
+    try {
+      await fetchImpl(url(job.runId, job.unitId), { method: 'PUT', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(job.values), keepalive: true });
+    } catch { /* the view keeps the values; the next change retries */ }
+  }
+  function change(next) {
+    adjustments = normalizeAdjustments(next);
+    loadToken++; loaded = true;
+    if (!isNeutral(adjustments)) storage?.setItem(LAST_KEY, JSON.stringify(adjustments));
+    applyAdjustments();
+    if (!current) return;
+    pending = { ...current, values: adjustments };
+    clearTimer(saveTimer); saveTimer = setTimer(() => void flush(), SAVE_DELAY_MS);
+  }
+  async function loadAdjustments({ runId, unitId }) {
+    const token = ++loadToken;
+    loaded = false;
+    let value = {};
+    try {
+      const response = await fetchImpl(url(runId, unitId));
+      if (response.ok) value = await response.json();
+    } catch { /* an older service without adjustments shows the photo unadjusted */ }
+    if (token === loadToken) { adjustments = normalizeAdjustments(value); loaded = true; applyAdjustments(); }
   }
   function layout() {
     if (!image.naturalWidth || !frame.clientWidth) return;
@@ -99,14 +159,15 @@ export function createDetailView({ root = globalThis.document, storage = globalT
   function load() {
     if (!current || !fold.open) return;
     const width = frame.clientWidth || 300, height = frame.clientHeight || 300;
-    const url = displayUrl(baseUrl(), current.runId, current.unitId, width * state.zoom, height * state.zoom, win?.devicePixelRatio || 1);
-    if (image.dataset.src !== url) { image.crossOrigin = 'anonymous'; image.dataset.src = url; image.src = url; }
+    const src = displayUrl(baseUrl(), current.runId, current.unitId, width * state.zoom, height * state.zoom, win?.devicePixelRatio || 1);
+    if (image.dataset.src !== src) { image.crossOrigin = 'anonymous'; image.dataset.src = src; image.src = src; }
     else layout();
   }
   function renderZoom() {
     for (const button of root.querySelectorAll?.('[data-detail-zoom]') || [])
       button.classList.toggle('active', Number(button.dataset.detailZoom) === state.zoom);
   }
+  // Meters the unfiltered image, so the result is an absolute exposure rather than a step from the current one.
   function meter() {
     if (!image.naturalWidth) return;
     const canvas = root.createElement('canvas'), size = 96;
@@ -120,15 +181,20 @@ export function createDetailView({ root = globalThis.document, storage = globalT
     try {
       context.drawImage(image, sx, sy, sw, sh, 0, 0, size, size);
       const data = context.getImageData(0, 0, size, size).data, samples = [];
-      for (let i = 0; i < data.length; i += 4) samples.push((0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]) / 255);
-      state.ev = autoExposure(samples); save(); applyExposure();
-    } catch { /* a tainted canvas only disables 自动 */ }
+      for (let i = 0; i < data.length; i += 4) samples.push(luminance(data[i], data[i + 1], data[i + 2]));
+      change({ ...adjustments, exposure: autoExposure(samples) });
+    } catch { /* a tainted canvas only disables 自动曝光 */ }
   }
 
   image.addEventListener('load', layout);
-  slider.addEventListener('input', () => { state.ev = clampExposure(slider.value); save(); applyExposure(); });
+  for (const slider of sliders) {
+    const name = slider.dataset.adjust;
+    slider.addEventListener('input', () => change({ ...adjustments, [name]: fromSlider(name, slider.value) }));
+    slider.closest?.('.adjust-row')?.addEventListener('dblclick', () => change({ ...adjustments, [name]: DEFAULT_ADJUSTMENTS[name] }));
+  }
   el('detailAuto')?.addEventListener('click', meter);
-  el('detailReset')?.addEventListener('click', () => { state.ev = 0; save(); applyExposure(); });
+  el('detailReset')?.addEventListener('click', () => change({}));
+  el('detailCopy')?.addEventListener('click', () => { if (previous) change(previous); });
   for (const button of root.querySelectorAll?.('[data-detail-zoom]') || []) button.addEventListener('click', () => {
     state.zoom = Number(button.dataset.detailZoom); save(); renderZoom(); load();
   });
@@ -140,15 +206,24 @@ export function createDetailView({ root = globalThis.document, storage = globalT
     if (state.zoom === 1) { state.zoom = 2; save(); renderZoom(); load(); } else layout();
   });
   fold.addEventListener('toggle', () => { state.open = fold.open; save(); load(); });
+  // Eagle may rebuild the inspector page when the selection changes; a change still waiting to save goes out first.
+  win?.addEventListener?.('pagehide', () => void flush());
 
   return {
     render(result) {
-      fold.hidden = !result?.runId || !result?.unitId;
-      if (fold.hidden) { current = null; return; }
+      const next = result?.runId && result?.unitId ? { runId: result.runId, unitId: result.unitId } : null;
+      fold.hidden = !next;
+      if (current && (current.runId !== next?.runId || current.unitId !== next?.unitId)) {
+        void flush();
+        previous = readLast();
+        adjustments = {}; loadToken++;
+        if (next) void loadAdjustments(next);
+      } else if (!current && next) void loadAdjustments(next);
+      if (!next) { current = null; applyAdjustments(); return; }
       const member = (result.groupMembers || []).find(row => row.unitId === result.unitId);
       if (current?.unitId !== result.unitId) focus = focusPoint(member?.marks || result.marks);
-      current = { runId: result.runId, unitId: result.unitId };
-      renderZoom(); applyExposure(); load();
+      current = next;
+      renderZoom(); applyAdjustments(); load();
     },
   };
 }

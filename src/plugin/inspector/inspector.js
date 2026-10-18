@@ -172,7 +172,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   const el = id => root.querySelector(`#${id}`);
   const baseUrl = () => (storage.getItem('eagle-culling-base') || 'http://127.0.0.1:43125').replace(/\/$/, '');
   const runRows = () => queue.runId && queue.runId === current.result?.runId ? queue.rows : [];
-  const detail = createDetailView({ root, storage, baseUrl });
+  const detail = createDetailView({ root, storage, baseUrl, fetchImpl });
   const selectedIds = (selected = current.selected) => selected.map(item => item?.id || item).filter(Boolean);
   const canSelect = () => canSelectInEagle(eagle);
   // A switch started from this panel is drawn at once; the snapshot it leaves covers the page Eagle builds next.

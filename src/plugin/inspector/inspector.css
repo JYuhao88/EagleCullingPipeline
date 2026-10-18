@@ -119,11 +119,17 @@ summary { cursor: pointer; }
 .detail-zoom button, .detail-actions button { padding: 3px 4px; font-size: var(--ec-font-size-small); white-space: nowrap; }
 .detail-actions button { flex: none; padding: 3px 10px; }
 .detail-zoom button.active { outline: 2px solid var(--ec-pick); }
-.detail-exposure { display: flex; align-items: center; gap: 6px; color: var(--ec-text-dim); }
-.detail-exposure input { flex: 1; min-width: 0; }
-.detail-exposure output { min-width: 4.2em; text-align: right; color: var(--ec-text); font-variant-numeric: tabular-nums; }
+.adjust-list { display: grid; gap: 1px; }
+.adjust-row { display: grid; grid-template-columns: 4.6em 1fr 4.4em; align-items: center; gap: 6px; color: var(--ec-text-dim);
+  font-size: var(--ec-font-size-small); }
+.adjust-row[data-group="color"] { margin-top: 5px; }
+.adjust-row input { min-width: 0; margin: 0; }
+.adjust-row output { text-align: right; white-space: nowrap; color: var(--ec-text); font-variant-numeric: tabular-nums; }
+.adjust-row.changed span { color: var(--ec-text); }
+.adjusted-badge { margin-left: 6px; color: var(--ec-pick); font-size: var(--ec-font-size-small); }
+html.ec-adjusted #detailImage, html.ec-adjusted #pair img { filter: url(#ec-adjust); }
 .detail-actions { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
-.detail-actions .hint { margin: 0 0 0 4px; }
+#detailHint { margin: 4px 0 0; }
 
 .ai-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
 .ai-tags[hidden] { display: none; }

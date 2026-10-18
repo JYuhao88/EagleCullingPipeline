@@ -13,6 +13,15 @@ async function readAdjustments(dir) {
   catch (error) { if (error.code === "ENOENT") return {}; throw error; }
 }
 
+// Saves for different photos of one run rewrite the same file; they run one at a time so none is lost.
+const writes = new Map();
+function serialized(key, task) {
+  const run = (writes.get(key) || Promise.resolve()).then(task);
+  const tail = run.catch(() => {}); writes.set(key, tail);
+  tail.then(() => { if (writes.get(key) === tail) writes.delete(key); });
+  return run;
+}
+
 export function validateAdjustments(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("adjustments must be an object");
   for (const [name, number] of Object.entries(value)) {
@@ -39,11 +48,13 @@ export async function handleAdjustmentsRoute(req, res, ctx) {
   if (req.method === "GET") { ctx.json(res, 200, all[id] || {}); return true; }
   if (req.method !== "PUT") return false;
   try {
-    const body = await ctx.readBody(req);
-    const value = validateAdjustments(body);
-    if (Object.keys(value).length) all[id] = value; else delete all[id];
-    if (Object.keys(all).length) await atomicJson(path.join(dir, "adjustments.json"), all);
-    else await unlink(path.join(dir, "adjustments.json")).catch(error => { if (error.code !== "ENOENT") throw error; });
+    const value = validateAdjustments(await ctx.readBody(req));
+    await serialized(dir, async () => {
+      const latest = await readAdjustments(dir);
+      if (Object.keys(value).length) latest[id] = value; else delete latest[id];
+      if (Object.keys(latest).length) await atomicJson(path.join(dir, "adjustments.json"), latest);
+      else await unlink(path.join(dir, "adjustments.json")).catch(error => { if (error.code !== "ENOENT") throw error; });
+    });
     ctx.json(res, 200, value);
   } catch (error) { ctx.json(res, 400, { error: error.message }); }
   return true;
