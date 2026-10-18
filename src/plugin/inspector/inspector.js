@@ -11,8 +11,8 @@ import { COLUMNS, FOLD_OVER, columnSlots, compareTable, contrastLines, differenc
   from './inspector-compare.js';
 import { createLiveWriteback } from '../live-writeback.js';
 import { displayUrl } from '../display-url.js';
-import { createWideWatcher, fillScreen, isWide, mainUrl, requestWide, showWindow, takeFill, unfillScreen }
-  from '../wide-mode.js';
+import { createWideWatcher, fillScreen, isWide, mainUrl, requestWide, setResident, showWindow, takeFill,
+  unfillScreen } from '../wide-mode.js';
 import { createDetailView } from './inspector-detail.js';
 
 const BADGES = { selected: '精', candidate: '候', rejected: '汰' };
@@ -331,7 +331,10 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     const units = state === 'result' ? selectedUnits(selected) : { count: selected.length, units: [], groupCount: 0 };
     const multi = units.count > 1 || state === 'many';
     const status = el('status');
-    status.textContent = multi ? `已选 ${state === 'many' ? selected.length : units.count} 张` : model.badge;
+    // The wide page is where the plugin opens, before anything is selected or analyzed.
+    const badge = wide && state === 'empty'
+      ? (selected.length ? '这张照片尚未分析：点「返回主界面」去分析' : '在 Eagle 里选中照片后显示') : model.badge;
+    status.textContent = multi ? `已选 ${state === 'many' ? selected.length : units.count} 张` : badge;
     if (status.dataset) status.dataset.tone = multi ? '' : model.tone || '';
     const lines = el('lines'); lines.replaceChildren();
     const compared = state === 'result' && (result.groupMembers || []).length > 1;
@@ -886,9 +889,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
       lastKey = ''; void poll();
       if (eagle?.item?.getSelected) { watcher.start(); codeReload.start(); }
     } else {
-      // A hidden wide window stands in for the main page, whose star watcher is not loaded.
-      if (!wide) watcher.stop();
-      codeReload.stop(); void live.flush();
+      watcher.stop(); codeReload.stop(); void live.flush();
     }
   }
   async function decide(action) {
@@ -1121,22 +1122,31 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     lastKey = ''; version++; watcher.reset(); queue = { runId: null, rows: [], at: 0 }; if (visible) void refresh(true);
   });
   root.addEventListener?.('visibilitychange', () => setVisible(!root.hidden));
-  async function leaveWide() {
-    await unfillScreen(eagle);
+  function toMain() {
     let search = '';
     try { search = new URL(pageUrl).search; } catch { /* keep the defaults */ }
     globalThis.location?.assign(mainUrl(search));
   }
+  async function leaveWide() {
+    await unfillScreen(eagle);
+    setResident(false); toMain();
+  }
+  // Leaves the window size alone: unmaximizing a hidden window shows it again.
+  async function retire() {
+    let timer;
+    await Promise.race([live.flush(), new Promise(resolve => { timer = setTimeout(resolve, 5000); })]);
+    clearTimeout(timer);
+    for (let left = 50; saving && left; left--) await new Promise(resolve => setTimeout(resolve, 100));
+    if (visible || disposed) return;
+    setResident(true); toMain();
+  }
   el('wideBack')?.addEventListener?.('click', () => void leaveWide());
   el('wideOpen')?.addEventListener?.('click', () => void requestWide(baseUrl(), fetchImpl)
-    .then(() => note('已请求在插件窗口打开宽屏检查器；没出现时，从插件菜单打开「Eagle照片筛选」再点「宽屏检查器」。'))
+    .then(() => note('已请求在插件窗口打开宽屏检查器；没出现时，从插件菜单打开「Eagle照片筛选」。'))
     .catch(() => note('本地服务没有响应，没能打开宽屏检查器。')));
   let wideWatcher = null;
   if (wide) {
-    // Eagle sends plugin-run on every page load and again when the plugin is picked from its menu: the menu means
-    // the main page.
-    let runs = 0;
-    eagle?.onPluginRun?.(() => { if (runs++) void leaveWide(); });
+    eagle?.onPluginHide?.(() => void retire());
     wideWatcher = createWideWatcher({ getBase: baseUrl, fetchImpl,
       onRequest: async () => { await showWindow(eagle); await fillScreen(eagle); } });
     wideWatcher.start();

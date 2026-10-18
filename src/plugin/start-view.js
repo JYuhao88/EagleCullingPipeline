@@ -14,7 +14,7 @@ const WIDE_TASKS = 20;
 const WIDE = "(min-width: 1000px)";
 
 export function createStartView({ root, api, getApi = () => api, onRun, autoCheck = true, autoRefresh = true,
-  confirmImpl = text => globalThis.confirm(text) }) {
+  confirmImpl = text => globalThis.confirm(text), onOpen, loadedHidden = false }) {
   void initEagleTheme();
   const q = id => root.querySelector(`#${id}`);
   const storage = globalThis.localStorage;
@@ -404,7 +404,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     if (!q("start")?.hidden) { try { await refreshContext(); } catch (error) { setNotice(error.message); } }
     if (visible && !disposed) { clearTimeout(contextTimer); contextTimer = setTimeout(refreshVisible, 1500); }
   }
-  const lifecycle = mountBackgroundLifecycle({ onVisible: setVisible,
+  const lifecycle = mountBackgroundLifecycle({ onVisible: setVisible, onOpen, loadedHidden,
     onCreate: async () => { await checkHealth(); await startService(true); } });
   globalThis.eagle?.onLibraryChanged?.(libraryPath => {
     contextVersion++; contextKey = ""; matchVersion++;

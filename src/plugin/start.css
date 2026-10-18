@@ -106,3 +106,5 @@
 .writeback-stats strong { display: flex; flex-direction: column; }
 .writeback-stats .has-error { color: var(--ec-reject); }
 #finishPanel a { color: var(--ec-accent); }
+/* Hidden behind a closed wide window: blank until the next open turns it into the wide inspector. */
+html[data-resident] #app { visibility: hidden; }

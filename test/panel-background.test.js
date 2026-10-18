@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { SETTINGS, readSetting, writeSetting } from '../src/plugin/panel-settings.js';
-import { shouldAutoStart, launchLocalService, launchEnv, createRunNotifier, mountBackgroundLifecycle } from '../src/plugin/background.js';
+import { shouldAutoStart, launchLocalService, launchEnv, createRunNotifier, mountBackgroundLifecycle, RELOAD_KEY }
+  from '../src/plugin/background.js';
 import { createWindowSizer, readSavedSize } from '../src/plugin/window-mode.js';
 const fixtureRepository = process.platform === 'win32' ? 'C:\\fixture' : '/tmp/fixture';
 const storage = () => { const map = new Map(); return { getItem: key => map.get(key) ?? null,
@@ -83,6 +84,21 @@ test('background lifecycle hides on close, shows on run, and permits updater rel
   assert.equal(shown, 1); assert.equal(created, 1); assert.deepEqual(visibility, [false, true, false, true]);
   assert.equal(win.onbeforeunload({}), false); assert.equal(hidden, 1);
   win.__ecAllowUnload = true; assert.equal(win.onbeforeunload({}), undefined);
+});
+test('a page loaded into a hidden window stays hidden on its own plugin-run and hands menu opens to onOpen', () => {
+  for (const [options, saved] of [[{ loadedHidden: true }, null], [{}, '0']]) {
+    const hooks = {}, visibility = [], session = new Map(saved ? [[RELOAD_KEY, saved]] : []);
+    let shown = 0, opened = 0;
+    const eagle = { window: { show: async () => shown++ } };
+    for (const event of ['Create', 'Run', 'Show', 'Hide']) eagle[`onPlugin${event}`] = cb => { hooks[event] = cb; };
+    const win = { sessionStorage: { getItem: key => session.get(key) ?? null, removeItem: key => session.delete(key) } };
+    mountBackgroundLifecycle({ eagle, win, ...options, onVisible: value => visibility.push(value), onCreate: async () => {},
+      onOpen: () => opened++ });
+    hooks.Create(); hooks.Run();
+    assert.equal(shown, 0); assert.equal(opened, 0); assert.equal(visibility.at(-1), false);
+    hooks.Run(); hooks.Run();
+    assert.equal(shown, 2); assert.equal(opened, 2); assert.equal(visibility.at(-1), true);
+  }
 });
 test('window sizer remembers the user size, zooms on request and restores the remembered size', async () => {
   const calls = [], store = new Map(), listeners = {};

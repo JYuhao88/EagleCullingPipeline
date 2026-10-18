@@ -33,6 +33,21 @@ export function takeFill(win = globalThis.window) {
   } catch { return false; }
 }
 
+// Closing the wide window only hides it; the page then turns back into the main page, still hidden. That page keeps
+// the service, updates and idle prefetch going, and the next open from the plugin menu brings the wide page back.
+const RESIDENT_KEY = 'eagle-culling-resident';
+
+export function isResident(win = globalThis.window) {
+  try { return win?.sessionStorage?.getItem(RESIDENT_KEY) === '1'; } catch { return false; }
+}
+
+export function setResident(value, win = globalThis.window) {
+  try {
+    if (value) win.sessionStorage.setItem(RESIDENT_KEY, '1');
+    else win.sessionStorage.removeItem(RESIDENT_KEY);
+  } catch { /* without session storage the main page loads as usual */ }
+}
+
 export async function requestWide(base, fetchImpl = globalThis.fetch) {
   const response = await fetchImpl(`${base}/ui/wide`, { method: 'POST', signal: AbortSignal.timeout(3000) });
   if (!response.ok) throw new Error('宽屏请求失败');

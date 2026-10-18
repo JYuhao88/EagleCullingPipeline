@@ -99,21 +99,24 @@ smartFolder:{create:async()=>{throw new Error('fixture is read only');}}};
 const fixtureState=${JSON.stringify(state)}, fixtureTheme=${JSON.stringify(theme)};
 localStorage.setItem('eagle-culling-base',location.origin); localStorage.setItem('eagle-culling-autostart','0');
 localStorage.setItem('eagle-culling-auto-update','false'); localStorage.setItem('eagle-culling-welcome-dismissed','1');
-const events={}, notices=[];
+const events={}, notices=[], fire=(event,value)=>(events[event]||[]).forEach(callback=>callback(value));
 window.fixture={selectedCount:${selectedCount},folder:fixtureState==='folder',theme:fixtureTheme,notices,
 setSelection(n){this.selectedCount=n;this.folder=false;},setFolder(enabled){this.selectedCount=0;this.folder=enabled;},
-setTheme(theme){this.theme=theme;events.ThemeChanged?.(theme);},hide(){events.PluginHide?.();},show(){events.PluginShow?.();},
-changeLibrary(){events.LibraryChanged?.('/fixture.library');}};
+setTheme(theme){this.theme=theme;fire('ThemeChanged',theme);},
+hide(){sessionStorage.setItem('fixture-hidden','1');fire('PluginHide');},
+show(){sessionStorage.removeItem('fixture-hidden');fire('PluginShow');},
+run(){if(sessionStorage.getItem('fixture-hidden'))this.show();fire('PluginRun');},
+changeLibrary(){fire('LibraryChanged','/fixture.library');}};
 ${eagleHost}
 for(const event of ['PluginCreate','PluginRun','PluginShow','PluginHide','LibraryChanged','ThemeChanged'])
-  eagle['on'+event]=${fakeEagle ? '()=>{}' : 'callback=>{events[event]=callback;}'};
+  eagle['on'+event]=${fakeEagle ? '()=>{}' : 'callback=>{(events[event]||=[]).push(callback);}'};
 const nativeFetch=window.fetch.bind(window); window.fetch=(input,options)=>{
 const url=new URL(typeof input==='string'?input:input.url,location.href);
 if(url.origin===location.origin){url.searchParams.set('fixture',fixtureState);return nativeFetch(url,options);} throw new
   Error('fixture only');};
 // Module init and the first health check race the load event; retry until the target view is shown.
 const targets={settings:['#openSettings','#panelSettings'],history:['#allRuns','#historyView']};
-window.addEventListener('load',()=>{events.PluginShow?.();let tries=0;const open=()=>{
+window.addEventListener('load',()=>{if(!sessionStorage.getItem('fixture-hidden'))fire('PluginShow');let tries=0;const open=()=>{
 const target=targets[fixtureState];
 if(target){const view=document.querySelector(target[1]);if(view&&!view.hidden&&document.querySelector('#health')?.dataset.state===
   'connected')return;document.querySelector(target[0])?.click();}

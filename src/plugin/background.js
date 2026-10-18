@@ -72,11 +72,21 @@ export function createRunNotifier({ storage, eagle = globalThis.eagle, base = ()
   };
 }
 export const RELOAD_KEY = 'eagle-culling-reloaded';
-export function mountBackgroundLifecycle({ eagle = globalThis.eagle, win = globalThis.window, onVisible, onCreate }) {
-  let shown = false;
+export function mountBackgroundLifecycle({ eagle = globalThis.eagle, win = globalThis.window, onVisible, onCreate,
+  onOpen = () => {}, loadedHidden = false }) {
+  let shown = false, runs = 0;
   const visible = value => { shown = value; onVisible(value); };
+  const reloaded = win?.sessionStorage?.getItem(RELOAD_KEY);
+  const quiet = loadedHidden || reloaded === '0';
   eagle?.onPluginCreate?.(() => { visible(false); void onCreate(); });
-  eagle?.onPluginRun?.(() => { void Promise.resolve(eagle.window?.show?.()).catch(() => {}); visible(true); });
+  // Eagle sends plugin-run once for loading the page and again for every open from its plugin menu. A page loaded
+  // into a hidden window must leave it hidden.
+  eagle?.onPluginRun?.(() => {
+    const opened = runs++ > 0;
+    if (!opened && quiet) return;
+    void Promise.resolve(eagle.window?.show?.()).catch(() => {}); visible(true);
+    if (opened) onOpen();
+  });
   eagle?.onPluginShow?.(() => visible(true));
   eagle?.onPluginHide?.(() => visible(false));
   if (win && eagle?.window?.hide) win.onbeforeunload = event => {
@@ -85,7 +95,6 @@ export function mountBackgroundLifecycle({ eagle = globalThis.eagle, win = globa
     event.returnValue = false; return false;
   };
   // A reloaded page gets no create/show events from Eagle; restore what it was before reloading.
-  const reloaded = win?.sessionStorage?.getItem(RELOAD_KEY);
   if (reloaded === '0' || reloaded === '1') {
     win.sessionStorage.removeItem(RELOAD_KEY); visible(reloaded === '1'); void onCreate();
   }

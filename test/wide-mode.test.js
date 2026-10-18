@@ -7,7 +7,8 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { createAnalysisServer } from '../src/server.js';
 import { RunStore } from '../src/server/run-store.js';
 import { createWideRouter } from '../src/server/wide-routes.js';
-import { createWideWatcher, enterWide, isWide, mainUrl, takeFill, wideUrl } from '../src/plugin/wide-mode.js';
+import { createWideWatcher, enterWide, isResident, isWide, mainUrl, setResident, takeFill, wideUrl }
+  from '../src/plugin/wide-mode.js';
 
 const settle = () => new Promise(resolve => setTimeout(resolve, 10));
 function fakeDom(extra = {}) {
@@ -88,9 +89,13 @@ test('the main page and the wide page switch by URL, keep Eagle theme and locale
   enterWide(win);
   assert.deepEqual(assigned, ['inspector/index.html?theme=LIGHT&mode=wide']); assert.equal(win.__ecAllowUnload, true);
   assert.equal(takeFill(win), true); assert.equal(takeFill(win), false);
+  assert.equal(isResident(win), false);
+  setResident(true, win); assert.equal(isResident(win), true);
+  setResident(false, win); assert.equal(isResident(win), false);
+  assert.equal(isResident({}), false); assert.doesNotThrow(() => setResident(true, {}));
 });
 
-test('the wide inspector shows even a single photo large, keeps no panel state and returns to the main page', async () => {
+test('the wide inspector shows a single photo large, keeps no panel state, and goes back to the main page', async () => {
   const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
   const { root, node } = fakeDom({ documentElement: { dataset: {}, style: {} },
     body: { style: {}, scrollHeight: 900, setAttribute() {} } });
@@ -102,12 +107,14 @@ test('the wide inspector shows even a single photo large, keeps no panel state a
     if (polls++ === 0) return { ok: true, json: async () => ({ boot: 'b', seq: 0 }) };
     return new Promise((resolve, reject) => options.signal.addEventListener('abort', () => reject(new Error('aborted'))));
   };
-  const runs = [], calls = [], session = memory();
+  const runs = [], hides = [], calls = [], session = memory(), tab = memory();
   const eagle = { library: { path: '/lib' }, onPluginRun: handler => runs.push(handler),
+    onPluginHide: handler => hides.push(handler),
     item: { getSelected: async () => [{ id: 'p1', star: 0 }], getByIds: async () => [] },
     window: { unmaximize: async () => calls.push('unmaximize') } };
   const assigned = [];
   globalThis.location = { assign: url => assigned.push(url) };
+  globalThis.window = { sessionStorage: tab };
   const view = mountInspector({ root, eagle, storage: { getItem: () => null, setItem() {} }, fetchImpl, session,
     pageUrl: 'eagleplugin://abc/inspector/index.html?theme=DARK&locale=zh_CN&mode=wide' });
   try {
@@ -121,11 +128,34 @@ test('the wide inspector shows even a single photo large, keeps no panel state a
     assert.equal(session.data.has('eagle-culling-inspector-height'), false);
     assert.equal(session.data.has('eagle-culling-inspector-snapshot'), false);
     assert.equal(polls, 2, 'the wide page waits for 宽屏查看 itself');
-    assert.equal(runs.length, 1);
-    runs[0](); await settle(); assert.deepEqual(assigned, [], 'the plugin-run of its own page load is ignored');
-    runs[0](); await settle();
-    assert.deepEqual(calls, ['unmaximize']); assert.deepEqual(assigned, ['../index.html?theme=DARK&locale=zh_CN']);
-  } finally { view.dispose(); delete globalThis.location; }
+    assert.equal(runs.length, 0, 'an open from the plugin menu keeps the wide page');
+    for (const hide of hides) hide();
+    await settle();
+    assert.deepEqual(calls, [], 'a hidden window keeps its size');
+    assert.deepEqual(assigned, ['../index.html?theme=DARK&locale=zh_CN']); assert.equal(tab.data.get('eagle-culling-resident'), '1');
+    node('wideBack').listeners.click(); await settle();
+    assert.deepEqual(calls, ['unmaximize']); assert.equal(assigned[1], '../index.html?theme=DARK&locale=zh_CN');
+    assert.equal(tab.data.has('eagle-culling-resident'), false);
+  } finally { view.dispose(); delete globalThis.location; delete globalThis.window; }
+});
+
+test('the wide inspector says what to do when nothing is selected or the photo is not analyzed', async () => {
+  const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
+  const { root, node } = fakeDom({ documentElement: { dataset: {}, style: {} },
+    body: { style: {}, scrollHeight: 900, setAttribute() {} } });
+  const fetchImpl = async (url, options = {}) => url.includes('/ui/wide')
+    ? new Promise((resolve, reject) => options.signal.addEventListener('abort', () => reject(new Error('aborted'))))
+    : { ok: false, status: 404, json: async () => ({ error: 'not analyzed' }) };
+  let selected = [];
+  const eagle = { library: { path: '/lib' }, item: { getSelected: async () => selected, getByIds: async () => [] } };
+  const view = mountInspector({ root, eagle, storage: { getItem: () => null, setItem() {} }, fetchImpl, session: null,
+    pageUrl: 'eagleplugin://abc/inspector/index.html?mode=wide' });
+  try {
+    await view.refresh(true);
+    assert.equal(node('status').textContent, '在 Eagle 里选中照片后显示');
+    selected = [{ id: 'p9', star: 0 }]; await view.refresh(true);
+    assert.equal(node('status').textContent, '这张照片尚未分析：点「返回主界面」去分析');
+  } finally { view.dispose(); }
 });
 
 test('宽屏查看 in the right panel asks the main window through the service and says what to do if nothing opens', async () => {
@@ -143,7 +173,7 @@ test('宽屏查看 in the right panel asks the main window through the service a
     view.watcher.stop();
     node('wideOpen').listeners.click(); await settle();
     assert.deepEqual(posts, ['http://127.0.0.1:43125/ui/wide']);
-    assert.match(node('actionStatus').textContent, /^已请求在插件窗口打开宽屏检查器/);
+    assert.equal(node('actionStatus').textContent, '已请求在插件窗口打开宽屏检查器；没出现时，从插件菜单打开「Eagle照片筛选」。');
     fail = true; node('wideOpen').listeners.click(); await settle();
     assert.equal(node('actionStatus').textContent, '本地服务没有响应，没能打开宽屏检查器。');
   } finally { view.dispose(); }
