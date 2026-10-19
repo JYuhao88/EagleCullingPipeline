@@ -1,3 +1,5 @@
+import { RECORD_TAG } from "../plugin/star-sync.js";
+
 const ACTION_TAGS = {
   selected: "AI精选",
   candidate: "AI候选",
@@ -44,7 +46,9 @@ export function planWriteback({
     const flags = [...new Set([...(result.flags || []), ...(decision.flags || [])])];
     const targetTags = [
       ACTION_TAGS[decision.action],
-      ...flags.map(flag => FLAG_TAGS[flag]).filter(Boolean)
+      ...flags.map(flag => FLAG_TAGS[flag]).filter(Boolean),
+      // The plugin writes 留存 itself; listing it here keeps a tag rewrite from dropping it.
+      decision.action === "record" ? RECORD_TAG : null
     ];
     const members = items.filter(item =>
       (unitItems.get(result.unitId) || []).includes(item.id) ||

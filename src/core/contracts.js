@@ -59,11 +59,13 @@ export function validateGroup(v) {
     v?.contractVersion === 1 && nonEmpty(v.id) && Array.isArray(v.unitIds),
   );
 }
+// record (留存) keeps a photo as a record without judging its quality; learning and evaluation leave it out.
+export const DECISION_ACTIONS = Object.freeze(["selected", "candidate", "rejected", "record"]);
 export function validateDecision(v) {
   return Boolean(
     v?.contractVersion === 1 &&
       nonEmpty(v.unitId || v.id) &&
-      ["selected", "candidate", "rejected"].includes(v.action),
+      DECISION_ACTIONS.includes(v.action),
   );
 }
 export function validateAnalysisRun(v) {

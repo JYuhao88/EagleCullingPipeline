@@ -69,11 +69,14 @@ gate 理由沿用 `ranking[].reasons`，未新增主结构字段。score 仍表�
 
 ## Decision（人工审阅决定，按拍摄单元记录）
 ```json
-{ "contractVersion": 1, "unitId": "unit:A", "action": "selected|candidate|rejected", "flags": ["eyes-closed"],
+{ "contractVersion": 1, "unitId": "unit:A", "action": "selected|candidate|rejected|record", "flags": ["eyes-closed"],
   "source": "human|suggested", "updatedAt": "ISO", "category": "candidate|group|null",
   "tie": false, "reason": "各有所长或整组拒绝的简短理由" }
 ```
 - 自由理由 `reason` 为最多 500 个 UTF-16 code units 的字符串；审阅卡片输入随保留/候选/淘汰提交，数字键在输入框焦点内不触发决定。服务端整批校验后原子写入，学习事件保存同一理由，报告新增 `decisionReason`。预设 feedback 理由仍保留。
+- `record`（留存）是人工决定：保留这张但不评画质。批量淘汰、「其余淘汰」、跨批继承都不改动它；它不进入偏好学习的组、
+  spot-eval 标签与配对样本。Eagle 中表示为 0★ 加资源库标签「留存」（不改照片文件）；在 Eagle 里加上这个标签记为留存，
+  去掉它只清除留存，不影响其它决定。选精选/候选/淘汰会替换它，「恢复 AI」清除它及标签。
 - `category`、`tie`、`reason` 是可选新增字段；旧决定缺失时按普通单张决定读取。`tie:true` 表示用户明确接受并列候选，`category:"group"` 可表示整组拒绝。
 
 Group 可新增 `candidateSet`，不改变旧 `ranking`、`suggested` 字段：

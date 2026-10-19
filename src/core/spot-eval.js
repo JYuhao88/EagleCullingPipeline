@@ -9,7 +9,10 @@ export function decisionsToLabels(resultsData, decisions = []) {
     if ((group.unitIds || []).length < 2) return [];
     if (group.unitIds.some(unitId => human.get(unitId)?.tie)) return [];
     const selected = group.unitIds.filter(unitId => human.get(unitId)?.action === "selected");
-    return selected.length === 1 ? [{ groupId: group.id, bestUnitId: selected[0] }] : [];
+    // 留存 photos were kept as a record, not judged against the rest, so they are neither winners nor losers.
+    const excluded = group.unitIds.filter(unitId => human.get(unitId)?.action === "record");
+    if (selected.length !== 1 || group.unitIds.length - excluded.length < 2) return [];
+    return [{ groupId: group.id, bestUnitId: selected[0], ...(excluded.length ? { excluded } : {}) }];
   });
 }
 
@@ -28,14 +31,15 @@ export function scoreLabels(resultsData, labels) {
     }
     const group = groups.get(label.groupId);
     if (!group) continue;
-    const ranking = group.ranking || [];
-    const modelBest = ranking.find((entry) => entry.rank === 1)?.unitId;
+    const excluded = new Set(label.excluded || []);
+    const ranking = (group.ranking || []).filter((entry) => !excluded.has(entry.unitId));
+    const modelBest = ranking.reduce((best, entry) => !best || entry.rank < best.rank ? entry : best, null)?.unitId;
     topTotal += 1;
     if (modelBest === label.bestUnitId) topHits += 1;
     const bestScore = ranking.find((entry) => entry.unitId === label.bestUnitId)?.score;
     if (!Number.isFinite(bestScore)) continue;
     for (const unitId of group.unitIds) {
-      if (unitId === label.bestUnitId) continue;
+      if (unitId === label.bestUnitId || excluded.has(unitId)) continue;
       const otherScore = ranking.find((entry) => entry.unitId === unitId)?.score;
       if (!Number.isFinite(otherScore)) continue;
       pairTotal += 1;
@@ -72,7 +76,8 @@ export function pairwiseSamples(resultsData, labels) {
     if (!group || !group.unitIds.includes(label.bestUnitId)) continue;
     const chosen = results.get(label.bestUnitId);
     const chosenValues = Object.fromEntries(FIT_KEYS.map((key) => [key, metricValue(chosen, key)]));
-    const others = group.unitIds.filter((unitId) => unitId !== label.bestUnitId);
+    const excluded = new Set(label.excluded || []);
+    const others = group.unitIds.filter((unitId) => unitId !== label.bestUnitId && !excluded.has(unitId));
     let added = 0;
     for (const unitId of others) {
       const otherValues = Object.fromEntries(FIT_KEYS.map((key) => [key, metricValue(results.get(unitId), key)]));

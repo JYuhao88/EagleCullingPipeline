@@ -6,7 +6,7 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { createAnalysisServer } from '../src/server.js';
 import { RunStore } from '../src/server/run-store.js';
 import { DecisionsStore } from '../src/core/decisions-store.js';
-import { applyEagleStars, createStarWatcher, STAR_ACTIONS, STAR_SYNC_KEY, takeOwnWrite } from '../src/plugin/star-sync.js';
+import { applyEagleStars, createStarWatcher, RECORD_TAG, STAR_ACTIONS, STAR_SYNC_KEY, takeOwnWrite } from '../src/plugin/star-sync.js';
 import { createApi } from '../src/plugin/api.js';
 
 const memory = (values = {}) => {
@@ -45,7 +45,7 @@ test('star watcher: first sight is a baseline, later ratings become decisions, S
   await watcher.tick();
   assert.deepEqual(posts.map(row => [row.id, row.action]), [['a', 'selected'], ['b', 'rejected']]);
   eagle.items.get('a').star = 0; await watcher.tick();
-  assert.deepEqual(posts.at(-1), { id: 'a', star: 0, before: 5, action: 'clear' });
+  assert.deepEqual(posts.at(-1), { id: 'a', star: 0, before: 5, action: 'clear', via: 'eagle-star' });
 });
 
 test('star watcher retries a failed save, stays off when disabled and skips huge selections', async () => {
@@ -77,7 +77,7 @@ test('applyEagleStars saves only changed ratings and reports failures as a warni
   assert.equal(await applyEagleStars(eagle, [{ id: 'a', star: 5 }, { id: 'b', star: 0 }]), null);
   assert.deepEqual(saved, [['b', 0]]);
   const broken = { item: { async getByIds() { throw new Error('busy'); } } };
-  assert.match(await applyEagleStars(broken, [{ id: 'a', star: 1 }]), /星级未更新：busy/);
+  assert.match(await applyEagleStars(broken, [{ id: 'a', star: 1 }]), /星级或标签未更新：busy/);
 });
 
 test('star writes for one item land in order with the newest star, and are not read back as decisions', async () => {
@@ -155,17 +155,57 @@ test('decisions write Eagle stars on request; ratings read from Eagle are saved 
 
   assert.equal((await decide('a', 'candidate')).body.eagleStars, undefined, 'no stars without the header');
   const picked = await decide('a', 'selected', {}, { 'x-eagle-stars': '1' });
-  assert.deepEqual(picked.body.eagleStars, [{ id: 'a', star: 5 }]);
+  assert.deepEqual(picked.body.eagleStars, [{ id: 'a', star: 5, record: false }]);
   assert.deepEqual(writes, [], 'the service never writes stars through the Web API');
 
   const echo = await decide('a', 'selected', { via: 'eagle-star' }, { 'x-eagle-stars': '1' });
   assert.equal(echo.body.unchanged, true, 'our own star coming back is a no-op');
   assert.equal((await decide('b', 'clear', { via: 'eagle-star' })).body.unchanged, true);
   const fromEagle = await decide('b', 'rejected', { via: 'eagle-star' }, { 'x-eagle-stars': '1' });
-  assert.deepEqual(fromEagle.body.eagleStars, [{ id: 'b-raw', star: 1 }], 'only the RAW of the pair follows the JPEG rating');
+  assert.deepEqual(fromEagle.body.eagleStars, [{ id: 'b', record: false }, { id: 'b-raw', star: 1, record: false }],
+    'the rated JPEG keeps its star; only the RAW of the pair follows it');
   assert.deepEqual(await human(), { 'unit:a': 'selected', 'unit:b': 'rejected' });
 
   const cleared = await call(`/runs/${runId}/decisions`, { decisions: [{ unitId: 'unit:b', clear: true }] }, { 'x-eagle-stars': '1' });
-  assert.deepEqual(cleared.body.eagleStars, [{ id: 'b', star: 0 }, { id: 'b-raw', star: 0 }]);
+  assert.deepEqual(cleared.body.eagleStars, [{ id: 'b', star: 0, record: false }, { id: 'b-raw', star: 0, record: false }]);
   assert.deepEqual(await human(), { 'unit:a': 'selected' });
+
+  const kept = await decide('b', 'record', {}, { 'x-eagle-stars': '1' });
+  assert.deepEqual(kept.body.eagleStars, [{ id: 'b', star: 0, record: true }, { id: 'b-raw', star: 0, record: true }],
+    '留存 clears the star and tags both files');
+  assert.equal((await decide('b', 'record', { via: 'eagle-tag' })).body.unchanged, true, 'our own tag coming back');
+  assert.equal((await decide('b', 'clear', { via: 'eagle-star' })).body.unchanged, true, '0★ on a 留存 photo is not a clear');
+  assert.equal((await decide('a', 'clear', { via: 'eagle-tag' })).body.unchanged, true, 'removing 留存 never clears 精选');
+  assert.deepEqual(await human(), { 'unit:a': 'selected', 'unit:b': 'record' });
+  const untagged = await decide('b', 'clear', { via: 'eagle-tag' }, { 'x-eagle-stars': '1' });
+  assert.deepEqual(untagged.body.eagleStars, [{ id: 'b', star: 0 }, { id: 'b-raw', star: 0, record: false }]);
+  assert.deepEqual(await human(), { 'unit:a': 'selected' });
+  const invalid = await call(`/runs/${runId}/decisions`, { decisions: [{ unitId: 'unit:a', action: 'keep' }] });
+  assert.equal(invalid.status, 400);
+});
+
+test('留存 is an Eagle tag: written with the star, read back only when you change it in Eagle', async () => {
+  const items = new Map([['p', { id: 'p', star: 1, tags: ['旅行'] }], ['q', { id: 'q', star: 0, tags: [RECORD_TAG] }]]);
+  let selected = [];
+  const eagle = { item: {
+    async countSelected() { return selected.length; },
+    async getSelected() { return selected.map(id => ({ ...items.get(id), tags: [...items.get(id).tags] })); },
+    async getByIds(ids) {
+      return ids.map(id => ({ ...items.get(id), tags: [...items.get(id).tags],
+        async save() { items.set(id, { id, star: this.star, tags: this.tags }); } }));
+    } } };
+  const posts = [];
+  const post = async change => { posts.push([change.id, change.action, change.via]); };
+  const watcher = createStarWatcher({ eagle, storage: memory(), post });
+  selected = ['p', 'q']; await watcher.tick();
+  assert.deepEqual(posts, [], 'a tag that was already there is a baseline');
+  await applyEagleStars(eagle, [{ id: 'p', star: 0, record: true }]);
+  assert.deepEqual(items.get('p'), { id: 'p', star: 0, tags: ['旅行', RECORD_TAG] }, 'your other tags stay');
+  await watcher.tick();
+  assert.deepEqual(posts, [], 'the plugin\'s own tag is not a new decision');
+  items.get('q').tags = []; await watcher.tick();
+  items.get('p').tags = ['旅行']; items.get('p').star = 5; await watcher.tick();
+  assert.deepEqual(posts, [['q', 'clear', 'eagle-tag'], ['p', 'selected', 'eagle-star'], ['p', 'clear', 'eagle-tag']]);
+  await applyEagleStars(eagle, [{ id: 'q', record: true }]);
+  assert.deepEqual(items.get('q').tags, [RECORD_TAG]); assert.equal(items.get('q').star, 0, 'a tag-only row leaves the star');
 });

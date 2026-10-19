@@ -18,7 +18,7 @@ export function runProgress(rows = []) {
   const count = action => rows.filter(row => row.human === action).length;
   const decided = rows.filter(row => row.human).length;
   return { total: rows.length, decided, selected: count('selected'), candidate: count('candidate'),
-    rejected: count('rejected'), done: rows.length > 0 && decided === rows.length };
+    rejected: count('rejected'), record: count('record'), done: rows.length > 0 && decided === rows.length };
 }
 
 const unitItems = unit => unit?.itemIds?.length ? unit.itemIds : [unit?.primaryItemId].filter(Boolean);

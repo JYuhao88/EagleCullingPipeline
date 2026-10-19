@@ -6,10 +6,11 @@ body { margin: 0; padding: 8px 10px; }
   var(--ec-font-size); }
 #status[data-tone="selected"] { color: var(--ec-pick); }
 #status[data-tone="rejected"] { color: var(--ec-reject); }
+#status[data-tone="record"] { color: var(--ec-text); }
 p { margin: 5px 0; line-height: 1.45; color: var(--ec-text-dim); overflow-wrap: anywhere; }
 button { border: 1px solid var(--ec-border, #999); background: var(--ec-surface-2); color: var(--ec-text);
   border-radius: 6px; padding: 7px 8px; cursor: pointer; }
-.decisions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: 6px 0 4px; }
+.decisions { display: grid; grid-template-columns: repeat(5, auto); gap: 4px; margin: 6px 0 4px; }
 .decisions button { min-height: 34px; padding: 5px 2px; font-weight: 600; white-space: nowrap; }
 .decisions button.active { outline: 2px solid var(--ec-pick); }
 .decisions button[data-decision="rejected"] { color: var(--ec-reject); }

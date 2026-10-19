@@ -272,11 +272,16 @@ export function eventsToPreferenceGroups(events, features) {
   const groups = [];
   const prior = new Map();
   const negatives = new Map();
+  // 留存 photos were kept as a record, not judged: from the decision that marks them on they drop out of their group.
+  const recorded = new Map();
   for (const event of [...events].sort((a, b) => time(a.timestamp) - time(b.timestamp))) {
     if (undone.has(event.id) || !["decision", "tombstone", "undo", "exposure"].includes(event.type)) continue;
     const key = `${event.profileId || "default"}:${event.runId || ""}:${event.groupId}`;
     const previous = prior.get(key);
-    const hashes = event.candidateHashes || previous?.candidates.map(candidate => candidate.hash);
+    if (["decision", "undo"].includes(event.type)) recorded.set(key, new Set((event.decisions || [])
+      .filter(decision => decision.action === "record" && decision.hash).map(decision => decision.hash)));
+    const skip = recorded.get(key) || new Set();
+    const hashes = (event.candidateHashes || previous?.candidates.map(candidate => candidate.hash))?.filter(hash => !skip.has(hash));
     if (!Array.isArray(hashes)) continue;
     const ranking = event.ai?.ranking || [];
     const candidates = hashes.map(hash => {

@@ -1,6 +1,6 @@
 import { initEagleTheme } from '../theme.js';
 import { percentScore } from '../score.js';
-import { STAR_ACTIONS, STAR_HEADER, applyEagleStars, createStarWatcher, starSyncEnabled }
+import { RECORD_TAG, STAR_ACTIONS, STAR_HEADER, applyEagleStars, createStarWatcher, starSyncEnabled }
   from '../star-sync.js';
 import { FLAG_LABELS } from '../cull-model.js';
 import { createCodeReload, fetchPluginStamp } from '../code-reload.js';
@@ -16,7 +16,8 @@ import { createWideWatcher, fillScreen, isWide, mainUrl, requestWide, setResiden
 import { createDetailView } from './inspector-detail.js';
 
 const BADGES = { selected: '精', candidate: '候', rejected: '汰' };
-const MARKS = { selected: '★5', candidate: '★3', rejected: '★1' };
+const MARKS = { selected: '★5', candidate: '★3', rejected: '★1', record: '留存' };
+const ACTION_NAMES = { selected: '精选', candidate: '候选', rejected: '淘汰', record: '留存' };
 export function observationLines(items = []) {
   return (Array.isArray(items) ? items : []).filter(item => item && typeof item.text === 'string'
     && ['good', 'bad', 'neutral'].includes(item.tone)).slice(0, 4).map(item => ({ ...item,
@@ -38,7 +39,7 @@ export function groupSummary(result) {
 export function inspectorModel({ state, result } = {}) {
   if (state !== 'result') return { badge: { loading: '加载中…', offline: '分析服务未运行',
     empty: '尚未分析，在插件中分析后显示' }[state] || '尚未分析，在插件中分析后显示', lines: [], reasons: [] };
-  const action = { selected: '精选', candidate: '候选', rejected: '淘汰' };
+  const action = ACTION_NAMES;
   return { tone: action[result.action] ? result.action : 'candidate', currentAction: result.humanDecided ? result.action : null,
     tagsOn: result.eagleTagsEnabled === true, groupId: result.groupId, groupItemIds: result.groupItemIds || [],
     bestItemId: result.bestItemId || null, groupIndex: result.groupIndex, selectedCount: result.selectedCount || 1,
@@ -82,7 +83,6 @@ export function nextInQueue(rows, unitId, order = null) {
   return candidates.reduce((best, row) => rank(row.unitId) < rank(best.unitId) ? row : best);
 }
 const MULTI_LIMIT = 300;
-const ACTION_NAMES = { selected: '精选', candidate: '候选', rejected: '淘汰' };
 // Eagle reloads this page whenever the first selected photo changes, so anything that should survive a photo switch
 // (run queue, last group analysis, page height, a pending note) lives in localStorage: Eagle builds a fresh page each
 // time, so sessionStorage does not carry over.
@@ -513,7 +513,8 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     const progress = runProgress(rows), groups = runGroups(rows);
     const line = el('runProgress');
     if (line) line.textContent = rows.length ? [result.runName, `已定 ${progress.decided}/${progress.total}`,
-      `精选 ${progress.selected}`, `候选 ${progress.candidate}`, `淘汰 ${progress.rejected}`].filter(Boolean).join(' · ') : '';
+      `精选 ${progress.selected}`, `候选 ${progress.candidate}`, `淘汰 ${progress.rejected}`,
+      progress.record ? `留存 ${progress.record}` : ''].filter(Boolean).join(' · ') : '';
     const finish = el('finishHint'); if (finish) finish.hidden = !progress.done;
     for (const button of root.querySelectorAll?.('[data-nav]') || [])
       button.disabled = !result || !groupTarget(groups, result.groupId, button.dataset.nav);
@@ -812,7 +813,8 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
       const item = selected[0] || null;
       const libraryPath = eagle?.library?.path || '';
       const ids = JSON.stringify([baseUrl(), libraryPath, selectedIds(selected)]);
-      const key = JSON.stringify([ids, selected.map(candidate => candidate.star ?? 0)]);
+      const key = JSON.stringify([ids, selected.map(candidate => [candidate.star ?? 0,
+        Array.isArray(candidate.tags) && candidate.tags.includes(RECORD_TAG)])]);
       if (!force && lastKey === key && current.state !== 'offline' && now() - lastFetch < 15000) return;
       // A new star on the same photos is saved by a star watcher shortly after; read once more next poll.
       const starOnly = lastKey && JSON.parse(lastKey)[0] === ids && lastKey !== key;
@@ -844,11 +846,11 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     if (visible && !disposed) timer = setTimeout(poll, 1500);
   }
   // Stars typed in Eagle become decisions even when the main plugin window is closed.
-  const watcher = createStarWatcher({ eagle, storage, post: async ({ id, action }) => {
+  const watcher = createStarWatcher({ eagle, storage, post: async ({ id, action, via }) => {
     const libraryPath = eagle?.library?.path || '';
     const response = await fetchImpl(`${baseUrl()}/items/${encodeURIComponent(id)}/decision`, { method: 'POST',
       headers: { 'content-type': 'application/json', [STAR_HEADER]: '1' },
-      body: JSON.stringify({ libraryPath, action, via: 'eagle-star' }) });
+      body: JSON.stringify({ libraryPath, action, via }) });
     if (response.status >= 400 && response.status < 500) return;
     if (!response.ok) throw new Error('决定保存失败');
     const body = await response.json().catch(() => ({}));
@@ -1113,7 +1115,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   }
   root.addEventListener?.('keydown', event => {
     if (['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target?.tagName)) return;
-    const action = STAR_ACTIONS[event.key];
+    const action = STAR_ACTIONS[event.key] || (event.key?.toLowerCase?.() === 'r' && !event.metaKey && !event.ctrlKey ? 'record' : null);
     if (action) { event.preventDefault(); void decide(action); }
   });
   // The theme may not be readable while the page loads; read it again once Eagle has created the panel.

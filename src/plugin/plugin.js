@@ -30,11 +30,11 @@ root.querySelector('#base').addEventListener('change', event => {
   void startView.checkHealth();
 });
 
-const starWatcher = createStarWatcher({ eagle: globalThis.eagle, post: async ({ id, action }) => {
+const starWatcher = createStarWatcher({ eagle: globalThis.eagle, post: async ({ id, action, via }) => {
   try {
     await api(`/items/${encodeURIComponent(id)}/decision`, { method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ libraryPath: globalThis.eagle?.library?.path || '', action, via: 'eagle-star' }) });
+      body: JSON.stringify({ libraryPath: globalThis.eagle?.library?.path || '', action, via }) });
   } catch (error) { if (!(error.status >= 400 && error.status < 500)) throw error; }
 }, onLargeSelection: (count, limit) => startView.setNotice(
   `已选 ${count} 张，超过 ${limit} 张时不读取星级；请分批打星，否则不会记为决定。`) });

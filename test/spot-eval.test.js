@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { evaluateWeights, fitPairwiseWeights, pairwiseSamples, scoreLabels } from "../src/core/spot-eval.js";
+import { decisionsToLabels, evaluateWeights, fitPairwiseWeights, pairwiseSamples, scoreLabels } from "../src/core/spot-eval.js";
 
 const data = (groups, results) => ({ run: { id: "toy" }, groups, results });
 
@@ -41,4 +41,21 @@ test("pairwise fitting gives a higher weight to clearer images", () => {
   const weights = fitPairwiseWeights(samples);
   assert.ok(weights[0] > weights[1]);
   assert.equal(weights.reduce((sum, value) => sum + value, 0), 1);
+});
+
+test("留存 photos are left out of labels, pairwise samples and evaluation", () => {
+  const metrics = value => ({ metrics: { sharpness: value, exposure: value, quality: value, faces: 1, eyesClosed: 0 } });
+  const data = { groups: [
+      { id: "g1", unitIds: ["a", "b", "k"], ranking: [{ unitId: "k", rank: 1, score: 0.9 }, { unitId: "a", rank: 2, score: 0.8 },
+        { unitId: "b", rank: 3, score: 0.1 }] },
+      { id: "g2", unitIds: ["c", "k2"] }],
+    results: [{ unitId: "a", ...metrics(0.8) }, { unitId: "b", ...metrics(0.2) }, { unitId: "k", ...metrics(0.9) },
+      { unitId: "c", ...metrics(0.5) }, { unitId: "k2", ...metrics(0.4) }] };
+  const human = (unitId, action) => ({ unitId, action, source: "human" });
+  const labels = decisionsToLabels(data, [human("a", "selected"), human("k", "record"), human("c", "selected"), human("k2", "record")]);
+  assert.deepEqual(labels, [{ groupId: "g1", bestUnitId: "a", excluded: ["k"] }], "a group left with one judged photo teaches nothing");
+  const { samples } = pairwiseSamples(data, labels);
+  assert.deepEqual(samples.map(sample => sample.otherUnitId), ["b"]);
+  const score = scoreLabels(data, labels);
+  assert.deepEqual([score.top1.hits, score.pairwise.total], [1, 1], "the model is judged on the photos you compared");
 });

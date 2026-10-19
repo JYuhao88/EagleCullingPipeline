@@ -219,3 +219,12 @@ test('normal apply without live history retains the previous latest-write snapsh
   assert.deepEqual(data.applied.find(row => row.id === 'a').previousTags, afterFirst);
   assert.equal(data.applied.some(row => row.live), false);
 });
+
+test("a tag rewrite keeps 留存 on 留存 photos and never adds it elsewhere", () => {
+  const base = fixture();
+  const kept = planWriteback({ ...base, decisions: [{ unitId: "unit:a", action: "record", source: "human" }] });
+  assert.ok(kept.items.every(item => item.tags.includes("留存")));
+  assert.ok(kept.items.every(item => !item.tags.some(tag => ["AI精选", "AI淘汰"].includes(tag))));
+  const judged = planWriteback(base);
+  assert.ok(judged.items.every(item => !item.tags.includes("留存")));
+});

@@ -22,7 +22,7 @@ test('finish counts include only human decisions and cover the whole task', () =
     { suggested: 'selected' }, { human: null }, { human: 'clear' }
   ] }, 'http://localhost:43125', 'run-a');
   assert.equal(model.title, '旅行');
-  assert.deepEqual(model.counts, { selected: 1, candidate: 1, rejected: 1 });
+  assert.deepEqual(model.counts, { selected: 1, candidate: 1, rejected: 1, record: 0 });
   assert.equal(model.decided, 3);
   assert.match(model.text, /已决定 3 \/ 6 张/);
   assert.equal(model.canRevert, true);

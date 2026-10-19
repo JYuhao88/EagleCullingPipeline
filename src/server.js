@@ -13,6 +13,7 @@ import { handleReviewRoute, decideUnits, wantsStars } from "./server/review-rout
 import { json, parseBody } from "./server/http.js";
 import { createRulesRouter } from "./server/rules-routes.js";
 import { CLEARABLE_TAGS } from './core/writeback.js';
+import { DECISION_ACTIONS } from './core/contracts.js';
 import { createPluginStamp } from './server/plugin-stamp.js';
 import { createWideRouter } from './server/wide-routes.js';
 
@@ -49,12 +50,13 @@ export function createAnalysisServer({
   const wide = createWideRouter();
   const itemAnalysis = createItemAnalysisRouter(runStore, { readBody: parseBody, onDecision: async (req, res, entry) => {
     const body = entry.body || {};
-    if (!['selected', 'candidate', 'rejected', 'clear'].includes(body.action)) return json(res, 400, { error: 'action 无效' });
+    if (![...DECISION_ACTIONS, 'clear'].includes(body.action)) return json(res, 400, { error: 'action 无效' });
     const decision = body.action === 'clear' ? { unitId: entry.unitId, clear: true }
       : { unitId: entry.unitId, action: body.action, ...(typeof body.reason === 'string' ? { reason: body.reason } : {}) };
     const fromStarItem = body.via === 'eagle-star' ? entry.itemId : null;
+    const fromTagItem = body.via === 'eagle-tag' ? entry.itemId : null;
     try {
-      const result = await decideUnits(ctx, entry.runId, [decision], {}, { stars: wantsStars(req), fromStarItem });
+      const result = await decideUnits(ctx, entry.runId, [decision], {}, { stars: wantsStars(req), fromStarItem, fromTagItem });
       if (result.unchanged) return json(res, 200, { runId: entry.runId, unitId: entry.unitId, unchanged: true });
       return json(res, 200, { runId: entry.runId, unitId: entry.unitId, decisions: result.decisions.filter(row =>
         row.unitId === entry.unitId), ...(result.tagWarning ? { tagWarning: result.tagWarning } : {}),

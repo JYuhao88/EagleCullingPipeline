@@ -15,7 +15,7 @@ test('run groups follow group order, sort by rank and count decisions', () => {
   const groups = runGroups(rows);
   assert.deepEqual(groups.map(group => [group.groupId, group.best.unitId, group.decided, group.done]),
     [['g0', 'a1', 1, false], ['g1', 'b1', 1, false], ['g2', 'c1', 1, true], ['g3', 'd1', 0, false]]);
-  assert.deepEqual(runProgress(rows), { total: 6, decided: 3, selected: 1, candidate: 1, rejected: 1, done: false });
+  assert.deepEqual(runProgress(rows), { total: 6, decided: 3, selected: 1, candidate: 1, rejected: 1, record: 0, done: false });
   assert.equal(runProgress(rows.map(item => ({ ...item, human: 'selected' }))).done, true);
   assert.equal(runProgress([]).done, false);
 });

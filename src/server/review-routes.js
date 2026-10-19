@@ -4,6 +4,7 @@ import { pageOptions } from "./pagination.js";
 import { handleLearningRoute, learningServices } from "./learning-routes.js";
 import { handleFeedbackRoute } from "./feedback-routes.js";
 import { DecisionsStore } from "../core/decisions-store.js";
+import { DECISION_ACTIONS } from "../core/contracts.js";
 import {
   planWriteback, applyWriteback, withLiveTags, planRevertWriteback,
   validateRevertRecords, writebackRecords, revertedRecords, mergeWritebackRecords, addLiveStars, summarizeWriteback
@@ -122,6 +123,9 @@ export async function handleReviewRoute(req, res, ctx) {
   if (req.method === "POST" && action === "decisions") {
     const body = await ctx.readBody(req);
     const decisions = Array.isArray(body) ? body : body.decisions || [body];
+    if (decisions.some(row => typeof row?.unitId !== 'string' || (row.clear !== true && !DECISION_ACTIONS.includes(row.action)))) {
+      ctx.json(res, 400, { error: 'decision 需要 unitId 和有效的 action' }); return true;
+    }
     const result = await decideUnits(ctx, runId, decisions, Array.isArray(body) ? {} : body.learning || {},
       { stars: wantsStars(req) });
     res.setHeader?.('Server-Timing', result.timing);
@@ -181,36 +185,45 @@ export async function saveDecisionBatch(ctx, data, store, decisions, context = {
 }
 
 // Decisions and the task's Eagle tags change in the same per-run queue, so tags never lag a newer decision.
-// stars: the plugin records decisions as Eagle ratings, so each decision also sets its star.
-// fromStarItem: a rating read from that Eagle item; it is checked against the decision current at its turn in the queue,
-// and only the unit's other files (RAW+JPEG) get the star.
-export function decideUnits(ctx, runId, decisions, context = {}, { stars = false, fromStarItem = null } = {}) {
+// stars: the plugin records decisions as Eagle ratings (and 留存 as a tag), so each decision also sets them.
+// fromStarItem / fromTagItem: a rating or 留存 tag read from that Eagle item; it is checked against the decision current at
+// its turn in the queue, because the main window and the inspector both watch Eagle and may report the same change.
+export function decideUnits(ctx, runId, decisions, context = {}, { stars = false, fromStarItem = null, fromTagItem = null } = {}) {
   const store = new DecisionsStore(ctx.runStore.dir(runId));
   const unitIds = decisions.map(row => row.unitId);
   return serializeWriteback(ctx, runId, async data => {
-    if (fromStarItem) {
+    if (fromStarItem || fromTagItem) {
       const current = new Map((await store.read()).filter(row => row.source === 'human').map(row => [row.unitId, row.action]));
-      if (decisions.every(row => row.clear ? !current.has(row.unitId) : current.get(row.unitId) === row.action)) {
-        return { decisions: [], unchanged: true };
-      }
+      const unchanged = row => {
+        const now = current.get(row.unitId);
+        // Removing the tag only undoes 留存, and 留存 sets no star, so 0 stars on it is not a change either.
+        if (row.clear && (fromTagItem ? now !== 'record' : now === 'record')) return true;
+        return row.clear ? now === undefined : now === row.action;
+      };
+      if (decisions.every(unchanged)) return { decisions: [], unchanged: true };
     }
     const result = await saveDecisionBatch(ctx, data, store, decisions, context);
     if (data.run?.eagleTagsEnabled) {
       try { await applyLiveUnits(ctx, data, store, [...new Set(unitIds)], false, { suggestions: true }); }
       catch (error) { result.tagWarning = `决定已保存，但 Eagle 标签未更新：${error.message}`; }
     }
-    if (stars) result.eagleStars = decisionStars(data, decisions).filter(row => row.id !== fromStarItem);
+    if (stars) {
+      // The item Eagle reported from already shows that change; it only needs the other one.
+      result.eagleStars = decisionStars(data, decisions).map(({ id, star, record }) =>
+        id === fromStarItem ? { id, record } : id === fromTagItem ? { id, star } : { id, star, record });
+    }
     return result;
   }, unitIds);
 }
 
-// The plugin applies these through Eagle's item API to keep the native grid in sync.
+// The plugin applies these through Eagle's item API to keep the native grid in sync: a star, and whether it has 留存.
 export function decisionStars(data, decisions) {
   const units = new Map(data.units.map(unit => [unit.id, unit]));
   return decisions.flatMap(row => {
     const star = row.clear ? 0 : ACTION_STARS[row.action];
     const unit = units.get(row.unitId);
-    return star === undefined || !unit ? [] : (unit.itemIds || [unit.primaryItemId]).filter(Boolean).map(id => ({ id, star }));
+    return star === undefined || !unit ? [] : (unit.itemIds || [unit.primaryItemId]).filter(Boolean)
+      .map(id => ({ id, star, record: row.action === 'record' }));
   });
 }
 

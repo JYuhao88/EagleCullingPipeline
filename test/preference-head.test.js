@@ -170,3 +170,21 @@ test('stationary drift calibration reports reproducible false alarms below ten p
   assert.ok(calibration.conditions.every(c => c.falseAlarmRate < 0.1));
   assert.ok(calibration.conditions.every(c => c.windows === 100 && c.falseAlarmRate === c.falseAlarms / c.windows));
 });
+
+test("留存 photos leave their group from the decision that marks them, so they are neither winners nor losers", () => {
+  const extra = { hash: "kept", baselineScore: 0.5, feature: { metrics: { exposure: 0.7, raw: { meanLuma: 120 } } } };
+  const group = fixture(1)[0];
+  const candidates = [...group.candidates, extra];
+  const features = new Map(candidates.map(candidate => [candidate.hash, candidate.feature]));
+  const event = { id: "r1", type: "decision", timestamp: group.time, runId: "r", groupId: "g",
+    candidateHashes: candidates.map(candidate => candidate.hash), winners: group.winners,
+    decisions: [{ hash: group.winners[0], action: "selected" }, { hash: "kept", action: "record" }],
+    ai: { ranking: candidates.map(candidate => ({ hash: candidate.hash, score: candidate.baselineScore })) } };
+  const [adapted] = eventsToPreferenceGroups([event], features);
+  assert.deepEqual(adapted.candidates.map(candidate => candidate.hash), group.candidates.map(candidate => candidate.hash));
+  assert.ok(preferenceSamples([adapted]).every(sample => !JSON.stringify(sample).includes("kept")));
+  const later = { ...event, id: "r2", type: "tombstone", timestamp: "2026-12-01T00:00:00Z", hash: group.candidates[0].hash,
+    decisions: undefined, winners: [] };
+  const [deleted] = eventsToPreferenceGroups([event, later], features);
+  assert.ok(!deleted.candidates.some(candidate => candidate.hash === "kept"), "later events of the group skip it too");
+});

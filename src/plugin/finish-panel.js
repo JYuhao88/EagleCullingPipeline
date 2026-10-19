@@ -2,13 +2,14 @@ import { createWritebackDialog } from './writeback-dialog.js';
 import { aiTagsEnabled } from './live-writeback.js';
 
 export function finishModel(data, response, base, runId) {
-  const counts = { selected: 0, candidate: 0, rejected: 0 };
+  const counts = { selected: 0, candidate: 0, rejected: 0, record: 0 };
   for (const row of response.queue || response.items || []) if (Object.hasOwn(counts, row.human)) counts[row.human]++;
-  const decided = counts.selected + counts.candidate + counts.rejected;
+  const decided = counts.selected + counts.candidate + counts.rejected + counts.record;
   const total = response.total ?? (response.queue || response.items || []).length;
   const path = `${base}/runs/${encodeURIComponent(runId)}/report?format=`;
   return { title: data.run?.scope?.label || runId, counts, decided, total,
-    text: `已决定 ${decided} / ${total} 张 · 精选 ${counts.selected} · 候选 ${counts.candidate} · 淘汰 ${counts.rejected}`,
+    text: `已决定 ${decided} / ${total} 张 · 精选 ${counts.selected} · 候选 ${counts.candidate} · 淘汰 ${counts.rejected}`
+      + (counts.record ? ` · 留存 ${counts.record}` : ''),
     canRevert: Boolean(data.writebackAvailable), csvUrl: `${path}csv`, jsonUrl: `${path}json` };
 }
 
