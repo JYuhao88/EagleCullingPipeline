@@ -5,6 +5,7 @@ import { deriveTags } from '../core/ai-tags.js';
 import { aestheticForResult } from '../core/aesthetic-head.js';
 import { photoFacts } from '../core/photo-facts.js';
 import { observationsFor } from '../core/observations.js';
+import { groupMoments } from '../core/moments.js';
 
 export function resultAiTags(data, result = {}) {
   const unit = data.units?.find(row => row.id === result.unitId);
@@ -57,9 +58,26 @@ export function memberMarks(result = {}) {
   return faces.length || persons.length ? { faces, persons } : null;
 }
 
+const momentCache = new Map();
+function cachedMoments(data, members) {
+  const key = `${data.run?.id}\n${members.map(member => member.unitId).join('\n')}`;
+  if (!momentCache.has(key)) {
+    const results = new Map(data.results.map(row => [row.unitId, row]));
+    const moments = groupMoments(members, member => results.get(member.unitId)?.embedding);
+    momentCache.set(key, moments && new Map([...moments].map(([member, moment]) => [member.unitId, moment])));
+    while (momentCache.size > 32) momentCache.delete(momentCache.keys().next().value);
+  }
+  return momentCache.get(key);
+}
+
 // One row per photo unit in the group, in AI rank order, for the inspector's group strip and comparison table.
 export function groupMembersModel(data, group, decisions = []) {
   if (!group) return [];
+  const members = groupMemberRows(data, group, decisions);
+  const moments = cachedMoments(data, members);
+  return moments ? members.map(member => ({ ...member, moment: moments.get(member.unitId) })) : members;
+}
+function groupMemberRows(data, group, decisions) {
   const ranking = new Map((group.ranking || []).map(row => [row.unitId, row]));
   const human = new Map(decisions.filter(row => row.source === 'human').map(row => [row.unitId, row.action]));
   const bestId = (group.ranking || []).find(row => row.rank === 1)?.unitId ?? group.unitIds[0];

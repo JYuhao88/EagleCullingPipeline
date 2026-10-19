@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { columnSlots, compareTable, contrastLines, differenceLine, keepTopDecisions, scoreBars, visibleRows }
+import { columnSlots, compareTable, contrastLines, differenceLine, keepTopDecisions, opponentIndex, scoreBars, visibleRows }
   from '../src/plugin/inspector/inspector-compare.js';
 
 test('aesthetic column follows quality, stays visible when scores are close and stays neutral in explanations', () => {
@@ -225,4 +225,20 @@ test('face direction needs paired front versus side statements, leaving other ob
       { tone: 'neutral', text: '这张在笑' },
       { tone: 'neutral', text: `这张是${text}，第 2 名是${id === 'face-front' ? '侧脸' : '正脸'}` }]);
   }
+});
+test('a group folded into moments shows the leads and the current photo, and compares within the moment', () => {
+  const moments = [[1, 3, true], [1, 3, false], [2, 2, true], [1, 3, false], [2, 2, false], [3, 1, true],
+    [4, 3, true], [4, 3, false], [4, 3, false]];
+  const rows = moments.map(([index, size, lead], i) => ({ ...member(`m${i + 1}`, i + 1,
+    { score: 0.7 - i / 50, sharpness: i === 3 ? 0.1 : 0.2 }), moment: { index, size, lead } }));
+  const shape = list => list.map(entry => entry.gap ? `…${entry.gap}` : entry.row.rank).join(' ');
+  assert.equal(shape(visibleRows(rows, -1)), '1 …1 3 …2 6 7 …2');
+  assert.equal(shape(visibleRows(rows, 7)), '1 …1 3 …2 6 7 8 …1');
+  assert.equal(visibleRows(rows, 7, true).length, 9);
+  assert.deepEqual(rows.map((_, i) => opponentIndex(rows, i)), [2, 0, 0, 0, 2, 0, 0, 6, 6]);
+  assert.equal(opponentIndex(group, 0), 1); assert.equal(opponentIndex(group, 2), 0);
+  assert.equal(differenceLine(rows, 'm4'), '同一瞬间里，比第 1 名总分低 6 分，主要是清晰度低 50%');
+  assert.match(differenceLine(rows, 'm1'), /^本组第 1 名.*第 3 名/);
+  rows[3].facts = { eyeSharpness: 10 }; rows[0].facts = { eyeSharpness: 30 };
+  assert.deepEqual(contrastLines(rows, 'm4').map(line => line.text), ['眼部比第 1 名糊']);
 });

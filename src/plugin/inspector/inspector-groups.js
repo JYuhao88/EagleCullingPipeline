@@ -42,6 +42,14 @@ export function groupTarget(groups, currentId, mode) {
   return null;
 }
 
+// In a group folded into moments, the next undecided moment lead after the current photo, wrapping; leads come
+// before the similar frames they stand for.
+export function nextMomentLead(members = [], unitId) {
+  const position = members.findIndex(member => member.unitId === unitId);
+  const leads = members.filter(member => member.moment?.lead && !member.human && member.unitId !== unitId);
+  return leads.find(member => members.indexOf(member) > position) || leads[0] || null;
+}
+
 export function neighbourGroups(groups, currentId) {
   const position = groups.findIndex(group => group.groupId === currentId);
   if (position < 0) return [];

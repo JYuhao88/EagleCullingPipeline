@@ -5,10 +5,10 @@ import { RECORD_TAG, STAR_ACTIONS, STAR_HEADER, applyEagleStars, createStarWatch
 import { FLAG_LABELS } from '../cull-model.js';
 import { createCodeReload, fetchPluginStamp } from '../code-reload.js';
 import { canSelectInEagle, showInEagle } from '../eagle-select.js';
-import { groupTarget, neighbourGroups, patchRows, runGroups, runProgress, selectionSummary, unitItems }
+import { groupTarget, neighbourGroups, nextMomentLead, patchRows, runGroups, runProgress, selectionSummary, unitItems }
   from './inspector-groups.js';
-import { COLUMNS, FOLD_OVER, columnSlots, compareTable, contrastLines, differenceLine, keepTopDecisions, scoreBars, visibleRows }
-  from './inspector-compare.js';
+import { COLUMNS, FOLD_OVER, columnSlots, compareTable, contrastLines, differenceLine, keepTopDecisions, opponentIndex, scoreBars,
+  visibleRows } from './inspector-compare.js';
 import { aiTagsEnabled, createLiveWriteback } from '../live-writeback.js';
 import { displayUrl } from '../display-url.js';
 import { createWideWatcher, fillScreen, isWide, mainUrl, requestWide, setResident, showWindow, takeFill,
@@ -31,7 +31,8 @@ export function groupSummary(result) {
   if (members.length < 2) return members.length ? '单张，无需对比' : '';
   const count = action => members.filter(row => row.suggested === action).length;
   const decided = members.filter(row => row.human).length;
-  return [`第 ${(result.groupIndex ?? -1) + 1 || '—'} 组 · ${members.length} 张`,
+  const moments = members.filter(row => row.moment?.lead).length;
+  return [`第 ${(result.groupIndex ?? -1) + 1 || '—'} 组 · ${members.length} 张`, moments ? `${moments} 个瞬间` : '',
     `AI 建议 精选 ${count('selected')} · 候选 ${count('candidate')} · 淘汰 ${count('rejected')}`,
     decided === members.length ? '已全部决定' : `已定 ${decided}/${members.length}`,
     result.groupConfidence === 'low' ? '分组没把握，建议确认' : ''].filter(Boolean).join(' · ');
@@ -376,6 +377,8 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     for (const [id, enabled] of [['selectGroup', members.length > 1], ['selectUndecided', undecided.length > 0],
       ['acceptGroup', undecided.length > 0]]) { const button = el(id); if (button) button.disabled = !enabled; }
     for (const id of ['selectGroup', 'selectUndecided']) { const button = el(id); if (button) button.hidden = !canSelect(); }
+    const leads = el('selectLeads');
+    if (leads) leads.hidden = !canSelect() || !members.some(member => member.moment);
     const accept = el('acceptGroup');
     if (accept) {
       accept.textContent = undecided.length ? `按 AI 建议 ${undecided.length}` : '已全部决定';
@@ -591,6 +594,10 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
       const rank = cell('td', `${row.rank} ${BADGES[row.suggested] || '候'}${row.human ? ` ${MARKS[row.human]}` : ''}`);
       rank.className = 'rank';
       if (flags.length) rank.append(cell('span', ' !', flags.join('、')));
+      if (row.moment?.lead && row.moment.size > 1) {
+        const more = cell('span', ` +${row.moment.size - 1}`, `同一瞬间另有 ${row.moment.size - 1} 张相似的，点「展开全部」查看`);
+        more.className = 'moment'; rank.append(more);
+      }
       const thumb = root.createElement('td'); thumb.className = 'thumb';
       const frame = root.createElement('div'); frame.className = 'frame';
       const image = pooledImage(previewUrl(result.runId, row.unitId));
@@ -750,7 +757,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     const index = members.findIndex(member => member.unitId === result?.unitId);
     pair.hidden = index < 0 || (members.length < 2 && !wide);
     if (pair.hidden) { pair.replaceChildren(); return; }
-    const other = members[index === 0 ? 1 : 0];
+    const other = members[opponentIndex(members, index)];
     const shown = [[members[index], '当前'], ...other ? [[other, `第 ${other.rank} 名`]] : []];
     pair.replaceChildren(...shown.map(([member, label]) => {
       const node = root.createElement('button');
@@ -1058,6 +1065,11 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   }
   async function nextUndecidedPhoto() {
     const runId = current.result?.runId; if (!runId) return;
+    const lead = nextMomentLead(current.result.groupMembers, current.result.unitId);
+    if (lead) {
+      note(`已跳到本组下一个瞬间（第 ${lead.rank} 名）`, { carry: true });
+      select(unitItems(lead)); return;
+    }
     await loadQueue(runId);
     const rows = runRows();
     const next = nextInQueue(rows.filter(row => !row.human), current.result?.unitId, rows.map(row => row.unitId));
@@ -1081,6 +1093,8 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
   el('selectGroup')?.addEventListener?.('click', () => select(current.result?.groupItemIds || []));
   el('selectUndecided')?.addEventListener?.('click', () =>
     select((current.result?.groupMembers || []).filter(member => !member.human).flatMap(member => member.itemIds)));
+  el('selectLeads')?.addEventListener?.('click', () =>
+    select((current.result?.groupMembers || []).filter(member => member.moment?.lead).flatMap(member => member.itemIds)));
   el('acceptGroup')?.addEventListener?.('click', () => void acceptGroup());
   el('expandTable')?.addEventListener?.('click', () => { if (current.result?.groupId) toggleExpanded(current.result.groupId); });
   for (const button of root.querySelectorAll?.('[data-keep]') || [])

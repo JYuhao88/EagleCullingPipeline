@@ -5,35 +5,15 @@ import path from 'node:path';
 import { readManifest, readRows } from '../src/core/segmented-results.js';
 import { EagleApi } from '../src/core/eagle-api.js';
 import { locatedIssues } from '../src/core/photo-facts.js';
+import { momentClusters } from '../src/core/moments.js';
 
 export const PREFIX = 'AI·';
 export const TAG_REP = 'AI·代表';
 export const TAG_DUP = 'AI·同簇';
-const CLUSTER_MIN_UNITS = 8;
-const CLUSTER_THRESHOLD = 0.1;
-const unit = vector => { const n = Math.hypot(...vector) || 1; return vector.map(x => x / n); };
-const dot = (a, b) => a.reduce((sum, x, i) => sum + x * b[i], 0);
-
-// Average-link clustering on group-centred embeddings: raw embeddings of one scene are all ~0.9 similar.
-export function clusterGroup(results, { threshold = CLUSTER_THRESHOLD, minUnits = CLUSTER_MIN_UNITS } = {}) {
+export function clusterGroup(results, options) {
   const members = results.filter(result => Array.isArray(result?.embedding));
-  if (members.length < minUnits) return null;
-  const raw = members.map(result => unit(result.embedding));
-  const mean = raw[0].map((_, k) => raw.reduce((sum, v) => sum + v[k], 0) / raw.length);
-  const centred = raw.map(v => unit(v.map((x, k) => x - mean[k])));
-  let clusters = members.map((_, i) => [i]);
-  for (;;) {
-    let best = -Infinity, bi = -1, bj = -1;
-    for (let i = 0; i < clusters.length; i++) for (let j = i + 1; j < clusters.length; j++) {
-      let sum = 0;
-      for (const a of clusters[i]) for (const b of clusters[j]) sum += dot(centred[a], centred[b]);
-      const similarity = sum / (clusters[i].length * clusters[j].length);
-      if (similarity > best) { best = similarity; bi = i; bj = j; }
-    }
-    if (bi < 0 || best < threshold) break;
-    clusters[bi] = clusters[bi].concat(clusters[bj]);
-    clusters.splice(bj, 1);
-  }
+  const clusters = momentClusters(members.map(result => result.embedding), options);
+  if (!clusters) return null;
   return clusters.map(indexes => indexes.map(i => members[i]).sort((a, b) => (b.score ?? 0) - (a.score ?? 0)))
     .sort((a, b) => (b[0].score ?? 0) - (a[0].score ?? 0));
 }

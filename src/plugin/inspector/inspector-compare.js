@@ -97,12 +97,30 @@ function gapText(column, gap) {
   return `${column.name}${better ? '高' : '低'} ${amount}`;
 }
 
-// One sentence on why this photo ranks where it does: against the best photo, or against the runner-up for the best.
+// Who a photo is compared with: the top pick, or the runner-up for the top pick. In a group folded into moments a
+// near-duplicate faces its moment's lead, and the top pick the best lead of another moment.
+export function opponentIndex(members = [], index) {
+  const own = members[index]?.moment;
+  if (own && !own.lead) {
+    const lead = members.findIndex(member => member.moment?.index === own.index && member.moment.lead);
+    if (lead >= 0) return lead;
+  }
+  if (own && index === 0) {
+    const lead = members.findIndex(member => member.moment?.lead && member.moment.index !== own.index);
+    if (lead >= 0) return lead;
+  }
+  return index === 0 ? 1 : 0;
+}
+const rankName = index => `第 ${index + 1} 名`;
+const sameMoment = (a, b) => Boolean(a?.moment && a.moment.index === b?.moment?.index);
+
+// One sentence on why this photo ranks where it does, against the photo it is compared with.
 export function differenceLine(members = [], unitId) {
   if (members.length < 2) return '';
   const index = members.findIndex(member => member.unitId === unitId);
   if (index < 0) return '';
-  const other = index === 0 ? 1 : 0;
+  const other = opponentIndex(members, index), them = rankName(other);
+  const within = sameMoment(members[index], members[other]) ? '同一瞬间里，' : '';
   const { columns, rows } = compareTable(members, { varyingOnly: false });
   const worse = [], better = [];
   for (const [position, column] of columns.entries()) {
@@ -118,13 +136,14 @@ export function differenceLine(members = [], unitId) {
   const scoreGap = (metric(members[index], 'score') ?? 0) - (metric(members[other], 'score') ?? 0);
   const close = Math.abs(scoreGap) < 0.01 ? `，总分只差 ${Math.abs(scoreGap * 100).toFixed(1)}` : '';
   if (index === 0) {
-    if (better.length) return `本组第 1 名。比第 2 名：${better.join('、')}${worse.length ? `；但${worse.join('、')}` : ''}`;
-    return worse.length ? `本组第 1 名，但比第 2 名${worse.join('、')}，综合分仍更高`
-      : `本组第 1 名，和第 2 名几乎一样${close}，看个人喜好`;
+    if (better.length) return `本组第 1 名。比${them}：${better.join('、')}${worse.length ? `；但${worse.join('、')}` : ''}`;
+    return worse.length ? `本组第 1 名，但比${them}${worse.join('、')}，综合分仍更高`
+      : `本组第 1 名，和${them}几乎一样${close}，看个人喜好`;
   }
   const behind = -scoreGap >= 0.01 ? `总分低 ${Math.round(-scoreGap * 100)} 分` : '';
-  if (!worse.length) return behind ? `比第 1 名${behind}，各项差别都不大` : `和第 1 名几乎一样${close}，看个人喜好`;
-  return `比第 1 名${behind ? `${behind}，主要是` : '：'}${worse.join('、')}${better.length ? `；但${better.join('、')}` : ''}`;
+  if (!worse.length) return within + (behind ? `比${them}${behind}，各项差别都不大` : `和${them}几乎一样${close}，看个人喜好`);
+  return `${within}比${them}${behind ? `${behind}，主要是` : '：'}${worse.join('、')}`
+    + (better.length ? `；但${better.join('、')}` : '');
 }
 
 // Sharpness ratio and brightness gap (in stops) below which two photos read as the same to the eye.
@@ -132,15 +151,16 @@ const SHARPER = 1.3, STOPS = 0.7, CLIPPED_FACE = 0.02, CLEAN_FACE = 0.005;
 const toLinear = luma => { const v = luma / 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
 const stopsText = stops => `${Math.round(Math.abs(stops) * 2) / 2} 档`;
 
-// The top pick compares with the runner-up; everyone else compares with the top pick. Missing evidence is
-// unknown, including a missing observation or a rule that did not run. These sentences never change ranking.
+// Each photo compares with its opponent (see opponentIndex). Missing evidence is unknown, including a missing
+// observation or a rule that did not run. These sentences never change ranking.
 export function contrastLines(members = [], unitId, { limit = 3 } = {}) {
   const index = members.findIndex(member => member.unitId === unitId);
   if (members.length < 2 || index < 0) return [];
-  const current = members[index], other = members[index === 0 ? 1 : 0];
+  const opponent = opponentIndex(members, index);
+  const current = members[index], other = members[opponent];
   const mine = current.facts || {}, theirs = other.facts || {};
   const own = observationMap(current.observations), peer = observationMap(other.observations);
-  const them = index === 0 ? '第 2 名' : '第 1 名';
+  const them = rankName(opponent);
   const lines = [];
   const add = (tone, text) => lines.push({ tone, text });
   // Closed-eye observations repeat the same rule as photoFacts; use them only as a fallback.
@@ -234,11 +254,13 @@ function addObservationContrast(lines, mine, theirs, them, ids) {
 
 export const FOLD_OVER = 7;
 // Large groups keep at most eight rows whatever their size: the top three, the current photo with one neighbour
-// either side, and the last one. Skipped runs become one gap row; the distribution bars cover the rest.
+// either side, and the last one. A group folded into moments keeps each moment's lead and the current photo.
+// Skipped runs become one gap row; the distribution bars cover the rest.
 export function visibleRows(rows = [], currentIndex = -1, expanded = false) {
   if (expanded || rows.length <= FOLD_OVER) return rows.map(row => ({ row }));
-  const keep = rows.map((row, index) => index < 3 || index === rows.length - 1
-    || (currentIndex >= 0 && Math.abs(index - currentIndex) <= 1));
+  const moments = rows.some(row => row.moment);
+  const keep = rows.map((row, index) => moments ? row.moment?.lead !== false || index === currentIndex
+    : index < 3 || index === rows.length - 1 || (currentIndex >= 0 && Math.abs(index - currentIndex) <= 1));
   const out = [];
   for (let index = 0; index < rows.length; index++) {
     if (keep[index]) { out.push({ row: rows[index] }); continue; }

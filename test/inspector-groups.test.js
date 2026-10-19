@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { groupTarget, neighbourGroups, patchRows, runGroups, runProgress, selectionSummary }
+import { groupTarget, neighbourGroups, nextMomentLead, patchRows, runGroups, runProgress, selectionSummary }
   from '../src/plugin/inspector/inspector-groups.js';
 
 const row = (unitId, groupIndex, rank, extra = {}) => ({ unitId, groupId: `g${groupIndex}`, groupIndex, rank,
@@ -46,4 +46,16 @@ test('neighbours, fresh group decisions and multi-select summary', () => {
   assert.equal(pair.units.length, 1); assert.equal(pair.groupIndex, 0);
   const spread = selectionSummary(rows, ['a1-jpg', 'b2-raw', 'other']);
   assert.deepEqual([spread.units.length, spread.groupCount, spread.unknown, spread.groupIndex], [2, 2, 1, null]);
+});
+
+test('after a decision the next undecided moment lead comes before the similar frames, wrapping in rank order', () => {
+  const moment = (index, lead) => ({ index, size: 2, lead });
+  const members = [row('l1', 0, 1, { moment: moment(1, true), human: 'selected' }), row('s1', 0, 2, { moment: moment(1, false) }),
+    row('l2', 0, 3, { moment: moment(2, true) }), row('l3', 0, 4, { moment: moment(3, true) }),
+    row('s2', 0, 5, { moment: moment(2, false) })];
+  assert.equal(nextMomentLead(members, 'l1').unitId, 'l2');
+  assert.equal(nextMomentLead(members, 'l2').unitId, 'l3');
+  assert.equal(nextMomentLead(members, 's2').unitId, 'l2', 'wraps to the first undecided lead');
+  assert.equal(nextMomentLead(members.map(member => ({ ...member, human: 'candidate' })), 'l1'), null);
+  assert.equal(nextMomentLead(members.map(({ moment: _, ...member }) => member), 'l1'), null, 'no moments, queue order');
 });

@@ -14,7 +14,8 @@ button { border: 1px solid var(--ec-border, #999); background: var(--ec-surface-
 .decisions button { min-height: 34px; padding: 5px 2px; font-weight: 600; white-space: nowrap; }
 .decisions button.active { outline: 2px solid var(--ec-pick); }
 .decisions button[data-decision="rejected"] { color: var(--ec-reject); }
-.group-actions, .group-nav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 4px; }
+.group-nav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 4px; }
+.group-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(5.5em, 1fr)); gap: 4px; margin-bottom: 4px; }
 .group-actions button, .group-nav button { padding: 5px 4px; font-size: var(--ec-font-size-small); }
 button:disabled { opacity: .45; cursor: default; }
 .run-progress { margin: 6px 0 0; color: var(--ec-text); }
@@ -49,6 +50,7 @@ button:disabled { opacity: .45; cursor: default; }
 .compare tr[data-suggested="rejected"] td { color: var(--ec-text-dim); }
 .compare td.best { color: var(--ec-pick); font-weight: 600; }
 .compare td.rank span { color: var(--ec-reject); font-weight: 700; }
+.compare td.rank span.moment { color: var(--ec-text-dim); font-weight: 400; }
 .top { padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1px solid var(--ec-border, #999); }
 #position { color: var(--ec-text); font-weight: 600; }
 .pair { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; margin-bottom: 6px; }

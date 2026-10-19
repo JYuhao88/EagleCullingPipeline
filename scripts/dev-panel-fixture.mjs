@@ -10,8 +10,11 @@ const template = JSON.parse(await readFile(path.join(root, 'test/fixtures/review
 const FLAGS = [[], [], ['eyes-closed'], [], ['blurry'], [], ['overexposed'], [], ['possibly-blurry'], ['underexposed']];
 const ACTION_STARS = { selected: 5, candidate: 3, rejected: 1, clear: 0 };
 const queueRows = [];
+// Group 3 folds into four moments: ranks 1, 2, 4 | 3, 5 | 6 | 7, 8, 9.
+const FIXTURE_MOMENTS = [[1, 3, true], [1, 3, false], [2, 2, true], [1, 3, false], [2, 2, false], [3, 1, true],
+  [4, 3, true], [4, 3, false], [4, 3, false]].map(([index, size, lead]) => ({ index, size, lead }));
 for (let g = 0, n = 0; g < 20; g++) {
-  const size = [1, 3, 2, 4, 5][g % 5];
+  const size = [1, 3, 2, 9, 5][g % 5];
   for (let r = 1; r <= size; r++, n++) {
     const score = Math.round((0.9 - r * 0.07 - (g % 7) * 0.03) * 100) / 100;
     queueRows.push({ unitId: `unit-${n}`, primaryItemId: `photo-${n}`, fileName: `IMG_${String(4100 + n)}.${['JPG', 'CR3', 'HEIC'][n % 3]}`,
@@ -268,7 +271,7 @@ if(initial.has('h'))frame.style.height=initial.get('h')+'px';</script>`); return
     if (url.pathname.startsWith('/items/')) {
       if (state === 'inspector-offline') return json(res, 503, { error: 'offline' });
       if (state === 'inspector-empty') return json(res, 404, { error: '尚未分析，在插件中分析后显示' });
-      return json(res, 200, { action: 'selected', suggested: 'selected', humanDecided: false, rank: 1, groupSize: 4,
+      return json(res, 200, { action: 'selected', suggested: 'selected', humanDecided: false, rank: 1, groupSize: 9,
         score: .86, quality: .78, focus: '清晰', eyeSharpness: 140, flags: [], reasons: ['综合分最高', '曝光正常'], runName: '旅行照片',
           analyzedAt: '2026-10-12T08:00:00Z', runId: 'run-fixture', unitId: 'unit-6', groupId: 'group-3', groupIndex: 3,
           groupConfidence: 'high', groupItemIds: queueRows.filter(row => row.groupId === 'group-3').map(row => row.primaryItemId),
@@ -276,7 +279,7 @@ if(initial.has('h'))frame.style.height=initial.get('h')+'px';</script>`); return
             itemIds: row.itemIds, rank: row.rank, suggested: row.suggested, human: row.human, flags: row.flags,
             metrics: { score: row.score, quality: .8 - row.rank * .04, sharpness: .3 - row.rank * .03 * (row.rank % 2 + 1),
               eye: row.flags.includes('eyes-closed') ? null : 140 - row.rank * 12, exposure: .85 + (row.rank % 3) * .04,
-              clipped: row.rank * .004 } })) });
+              clipped: row.rank * .004 }, moment: FIXTURE_MOMENTS[row.rank - 1] })) });
     }
     let relative = url.pathname === '/' ? (state.startsWith('inspector') ? 'src/plugin/inspector/index.html' : 'src/plugin/index.html')
       : url.pathname.startsWith('/src/') ? url.pathname.slice(1) : `src/plugin${url.pathname}`;
