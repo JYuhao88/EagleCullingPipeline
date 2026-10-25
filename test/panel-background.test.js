@@ -50,7 +50,7 @@ test('launch reports a missing Node instead of waiting for a service that alread
     const child = new EventEmitter(); child.unref = () => {};
     queueMicrotask(() => { child.emit('spawn'); child.emit('exit', 127); }); return child; }, readdirSync: () => [] });
   const input = { repository: fixtureRepository, base: 'http://127.0.0.1:43441', requireImpl, occupied: async () => false };
-  await assert.rejects(launchLocalService(input), process.platform === 'win32' ? /退出/ : /找不到 Node/);
+  await assert.rejects(launchLocalService(input), /找不到 Node/);
 });
 test('Dock-launched apps get the usual Node install folders appended to PATH', () => {
   const env = launchEnv({ PATH: '/usr/bin:/bin', HOME: '/tmp/fixture-home' }, 'darwin', () => ['v20.1.0', 'v22.9.0']);

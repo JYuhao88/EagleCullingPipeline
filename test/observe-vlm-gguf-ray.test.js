@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+const posixOnly = { skip: process.platform === 'win32' && 'needs POSIX process groups' };
 
 function python(code) {
   const result = spawnSync('python3', ['-c', code], {
@@ -101,7 +102,7 @@ with tempfile.TemporaryDirectory() as tmp:
 `);
 });
 
-test('GGUF runtime reserves one GPU and shares admission with native W35 jobs without sending credentials', () => {
+test('GGUF runtime reserves one GPU and shares admission with native W35 jobs without sending credentials', posixOnly, () => {
   python(load + `
 with tempfile.TemporaryDirectory() as tmp:
  root = Path(tmp); m.ROOT = root; m.native.ROOT = root

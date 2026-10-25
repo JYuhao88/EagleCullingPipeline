@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+const posixOnly = { skip: process.platform === 'win32' && 'needs POSIX process groups' };
 
 function python(code) {
   const result = spawnSync('python3', ['-c', code], {
@@ -244,7 +245,7 @@ assert perf['calls'] == 1 and perf['failed_calls'] == 0 and perf['parse_sanity']
 `);
 });
 
-test('GGUF replica coordinator stages once, isolates CUDA devices and emits one merged artifact set', () => {
+test('GGUF replica coordinator stages once, isolates CUDA devices and emits one merged artifact set', posixOnly, () => {
   python(`import io, json
 from pathlib import Path
 from unittest.mock import patch
@@ -287,7 +288,7 @@ assert emitted['performance.json']['inference_wall_s'] == 11
 `);
 });
 
-test('GGUF replica coordinator cleans detached children on TERM and preserves streamed partial answers', () => {
+test('GGUF replica coordinator cleans detached children on TERM and preserves streamed partial answers', posixOnly, () => {
   python(`import io, json, signal, threading
 from pathlib import Path
 from unittest.mock import patch
@@ -326,7 +327,7 @@ assert [json.loads(s) for s in emitted['predictions.jsonl'].splitlines()] == [ro
 `);
 });
 
-test('GGUF cleanup kills descendant groups even when their replica leader already exited', () => {
+test('GGUF cleanup kills descendant groups even when their replica leader already exited', posixOnly, () => {
   python(`import signal
 from types import SimpleNamespace
 from unittest.mock import patch
