@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { Updater, officialOrigin, UPDATE_INTERVAL, MANUAL_CHECK_INTERVAL } from '../src/core/updater.js';
+import { Updater, officialOrigin, ownershipMessage, UPDATE_INTERVAL, MANUAL_CHECK_INTERVAL } from '../src/core/updater.js';
 import { lowPriority } from '../src/core/update-process.js';
 import { checkUpdateVersion } from '../scripts/check-update-version.mjs';
-import { shouldAutoUpdate } from '../src/plugin/update-banner.js';
+import { rootMismatch, shouldAutoUpdate } from '../src/plugin/update-banner.js';
 
 function command(cwd, command, args) {
   return new Promise((resolve, reject) => {
@@ -111,6 +111,27 @@ test('active analysis is refused', async t => {
   const updater = new Updater({ cwd, isBusy: () => true, restart: async () => {},
     run: async () => assert.fail('busy check must precede git') });
   await assert.rejects(updater.apply(), /正在分析/);
+});
+
+test('a clone git refuses for its owner says why and how to fix it; status names the service directory', async t => {
+  const cwd = await mkdtemp(path.join(tmpdir(), 'culling-update-owner-'));
+  t.after(() => rm(cwd, { recursive: true, force: true }));
+  assert.equal(ownershipMessage('D:\\Apps\\EagleCulling-app\\'), 'git 拒绝读取这个克隆：目录所有者不是当前用户（常见于在管理员终端里克隆）。'
+    + '请运行 git config --global --add safe.directory D:/Apps/EagleCulling-app，或把目录所有者改为当前用户');
+  const refused = new Updater({ cwd, restart: async () => {}, run: async () => { throw new Error(ownershipMessage(cwd)); } });
+  await assert.rejects(refused.apply(), /safe\.directory/);
+  const status = await refused.status();
+  assert.match(status.reason, /目录所有者不是当前用户/);
+  assert.equal(status.root, path.resolve(cwd));
+  const missing = new Updater({ cwd, restart: async () => {}, run: async () => { throw new Error('git 失败（128）'); } });
+  assert.match((await missing.status()).reason, /不是可读取的 git 克隆/);
+});
+
+test('the about panel warns when the plugin and the service run different clones', () => {
+  assert.equal(rootMismatch('D:/Apps/EagleCulling-app', 'd:\\apps\\EagleCulling-app\\'), '');
+  assert.equal(rootMismatch('', 'D:\\x'), '');
+  assert.match(rootMismatch('D:/Apps/EagleCulling-app', 'D:\\Dev\\EagleCullingPipeline'),
+    /插件来自 D:\/Apps\/EagleCulling-app，服务却运行在 D:\\Dev\\EagleCullingPipeline/);
 });
 
 test('tag outside master is refused', async t => {

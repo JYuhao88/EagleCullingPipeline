@@ -1,15 +1,26 @@
+import { defaultRepository } from './service-start.js';
+
 export const CHECK_INTERVAL = 6 * 60 * 60 * 1000;
+const samePath = (a, b) => [a, b].map(value => value.replaceAll('\\', '/').replace(/\/+$/, '').toLowerCase())
+  .reduce((left, right) => left === right);
+// The plugin pages and the service each run their own copy of the code; say so when those are different clones.
+export function rootMismatch(pluginRoot, serviceRoot) {
+  if (!pluginRoot || !serviceRoot || samePath(pluginRoot, serviceRoot)) return '';
+  return `插件来自 ${pluginRoot}，服务却运行在 ${serviceRoot}，两边代码可能不一致。请从插件所在目录启动服务。`;
+}
 export function shouldAutoUpdate({ status, enabled, reviewing, postponed }) {
   return Boolean(enabled && !reviewing && !postponed && status.hasUpdate && status.canUpdate && !status.checkError);
 }
 
-export function mountUpdates({ root = document, storage = localStorage, fetchImpl = fetch, reload = () => location.reload() } = {}) {
+export function mountUpdates({ root = document, storage = localStorage, fetchImpl = fetch, reload = () => location.reload(),
+  pluginRoot = defaultRepository() } = {}) {
   const panel = root.createElement('aside');
   panel.className = 'update-panel';
   panel.innerHTML = `<div class="update-banner" hidden role="status"><span></span>
     <button data-action="notes">查看更新内容</button><button data-action="apply">立即更新</button>
     <button data-action="later">稍后</button></div>
     <details class="update-about"><summary>关于 / 更新</summary><p data-version>正在读取版本…</p>
+    <p data-root></p><p data-root-warning role="alert" hidden></p>
     <label><input type="checkbox" data-auto> 自动更新（空闲时）</label>
     <button data-action="check">检查更新</button><button data-action="rollback">回退到上一版</button>
     <p data-status role="status"></p><pre data-notes hidden></pre></details>`;
@@ -36,6 +47,11 @@ export function mountUpdates({ root = document, storage = localStorage, fetchImp
   }
   function render() {
     el('[data-version]').textContent = `当前版本 ${status.currentVersion || status.packageVersion || '未知'}`;
+    el('[data-root]').textContent = status.root ? `服务目录 ${status.root}` : '';
+    const mismatch = rootMismatch(pluginRoot, status.root);
+    el('[data-root-warning]').textContent = mismatch;
+    el('[data-root-warning]').hidden = !mismatch;
+    if (mismatch) el('.update-about').open = true;
     el('[data-action="rollback"]').disabled = !status.canRollback || operation;
     el('[data-action="apply"]').disabled = !status.canUpdate || operation;
     el('[data-notes]').textContent = status.releaseNotes || '暂无更新说明';

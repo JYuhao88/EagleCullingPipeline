@@ -20,6 +20,12 @@ export function compareTags(a, b) {
   for (let i = 0; i < 3; i++) if (left[i] !== right[i]) return left[i] - right[i];
   return 0;
 }
+// Git refuses a clone owned by another account, e.g. one cloned from an administrator terminal.
+export function ownershipMessage(cwd) {
+  const dir = path.resolve(cwd).replaceAll('\\', '/');
+  return `git 拒绝读取这个克隆：目录所有者不是当前用户（常见于在管理员终端里克隆）。`
+    + `请运行 git config --global --add safe.directory ${dir}，或把目录所有者改为当前用户`;
+}
 async function readJson(file, fallback) {
   try { return JSON.parse(await readFile(file, 'utf8')); }
   catch (error) { if (error.code === 'ENOENT') return fallback; throw error; }
@@ -46,7 +52,7 @@ export class Updater {
     return new Promise((resolve, reject) => {
       const child = lowPriority(command, args, { cwd, detached: process.platform !== 'win32',
         env: { ...process.env, GIT_TERMINAL_PROMPT: '0' } });
-      let output = '', timedOut = false;
+      let output = '', errors = '', timedOut = false;
       const timer = setTimeout(() => {
         timedOut = true;
         if (process.platform === 'win32') {
@@ -57,12 +63,15 @@ export class Updater {
       for (const stream of [child.stdout, child.stderr]) stream.on('data', data => {
         log.write(data);
         if (stream === child.stdout) output = (output + data.toString()).slice(-1024 * 1024);
+        else errors = (errors + data.toString()).slice(-4096);
       });
       child.on('error', error => { clearTimeout(timer); log.end(); reject(error); });
       child.on('close', code => {
         clearTimeout(timer); log.end();
         if (code === 0 && !timedOut) resolve(output.trim());
-        else reject(new Error(timedOut ? '操作超时，请检查网络后重试' : `${command} 失败（${code}），请查看更新日志`));
+        else reject(new Error(timedOut ? '操作超时，请检查网络后重试'
+          : command === 'git' && /dubious ownership/i.test(errors) ? ownershipMessage(cwd)
+            : `${command} 失败（${code}），请查看更新日志`));
       });
     });
   }
@@ -73,7 +82,10 @@ export class Updater {
     if (!this.restart) throw new Error('当前服务不支持自动重启，请用 CLI 启动服务');
     let top;
     try { top = await this.git('rev-parse', '--show-toplevel'); }
-    catch { throw new Error('当前目录不是可读取的 git 克隆，请使用 git clone 安装'); }
+    catch (error) {
+      if (error.message.startsWith('git 拒绝读取')) throw error;
+      throw new Error('当前目录不是可读取的 git 克隆，请使用 git clone 安装');
+    }
     if (await realpath(top) !== await realpath(this.cwd)) throw new Error('请从 git 克隆根目录启动');
     if (!this.acceptOrigin(await this.git('remote', 'get-url', 'origin'))) throw new Error('origin 不是指定的公开仓库');
     if (await this.git('status', '--porcelain', '--untracked-files=all')) throw new Error('工作区有未提交改动，请先保存或提交');
@@ -109,7 +121,8 @@ export class Updater {
     const reference = currentVersion || `v${packageVersion}`;
     const hasUpdate = Boolean(cache.latestVersion && tagPattern.test(reference) && compareTags(cache.latestVersion, reference) > 0);
     const history = await readJson(path.join(this.data, 'update-history.json'), {});
-    return { ...cache, currentVersion, packageVersion, hasUpdate, canUpdate: !reason && !this.isUpdating(),
+    return { ...cache, currentVersion, packageVersion, root: path.resolve(this.cwd), hasUpdate,
+      canUpdate: !reason && !this.isUpdating(),
       reason: reason || (this.isUpdating() ? '正在更新' : null), canRollback: Boolean(history.previous),
       phase: this.phase === 'idle' ? history.phase || 'idle' : this.phase,
       error: this.error || history.error || null, pythonChanged: this.pythonChanged || history.pythonChanged || false };
