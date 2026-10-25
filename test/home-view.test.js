@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createStartView } from '../src/plugin/start-view.js';
-import { taskState, taskView, sortTasks, homeCard, measuredRate, libraryConfirmText, friendlyFailure,
+import { taskState, taskView, sortTasks, homeCard, measuredRate, friendlyFailure,
   cullStartNotice, startCullingInEagle } from '../src/plugin/task-model.js';
 
 const NOW = Date.parse('2026-10-13T12:00:00Z');
@@ -81,15 +81,28 @@ test('home card is decided by service, activity, Eagle selection and unfinished 
   assert.equal(homeCard({ connected: false, launching: true }).action, null);
   const active = homeCard({ connected: true, active: { status: 'running', scope: { label: 'A' }, progress: {} } });
   assert.equal(active.kind, 'progress'); assert.equal(active.secondary[0].action, 'cancel');
-  const fresh = homeCard({ connected: true, context: { selectionCount: 40 }, secondsPerPhoto: 1.5 });
-  assert.equal(fresh.kind, 'new'); assert.equal(fresh.action.label, '分析这 40 张'); assert.match(fresh.detail, /预计约 1 分 0 秒/);
+  const looking = homeCard({ connected: true, context: { selectionCount: 40 } });
+  assert.equal(looking.kind, 'locate'); assert.equal(looking.action, null, 'selecting never starts or queues anything');
+  const folder = { type: 'folder', folderId: 'f', label: '汕头', count: 40, analyzed: 0, queued: null, running: null };
+  const fresh = homeCard({ connected: true, context: { selectionCount: 40 }, secondsPerPhoto: 1.5,
+    location: { scopes: [folder], selected: { total: 40, analyzed: 0 } } });
+  assert.equal(fresh.kind, 'locate'); assert.equal(fresh.action.label, '排队「汕头」'); assert.match(fresh.detail, /预计约 1 分 0 秒/);
+  assert.deepEqual(fresh.more.map(item => item.action), ['queueSelection']);
+  const queued = homeCard({ connected: true, context: { selectionCount: 40 },
+    location: { scopes: [{ ...folder, queued: 2 }], selected: { total: 40, analyzed: 0 } } });
+  assert.equal(queued.title, '「汕头」排队第 2'); assert.equal(queued.action, null);
+  const spread = homeCard({ connected: true, context: { selectionCount: 40 }, location: { scopes: [folder,
+    { type: 'unfiled', label: '未归入文件夹', count: 3, analyzed: 3 }], selected: { total: 43, analyzed: 3 } } });
+  assert.equal(spread.title, '分布在 2 个文件夹'); assert.equal(spread.action.label, '排队这 1 个文件夹');
+  const folderOnly = homeCard({ connected: true, context: { folders: [{ id: 'f', name: '汕头' }], folderCount: 40 },
+    location: { scopes: [folder], selected: { total: 40, analyzed: 0 } } });
+  assert.deepEqual(folderOnly.more, [], 'analysing only the selection needs selected photos');
   const task = { id: 't', status: 'completed', groupCount: 3, reviewedGroupCount: 1, scope: { label: '旅行' } };
   const covered = homeCard({ connected: true, context: { selectionCount: 10 }, match: { run: task, missing: 0, matched: 10 } });
   assert.equal(covered.kind, 'task'); assert.equal(covered.action.action, 'review'); assert.match(covered.title, /旅行/);
-  const append = homeCard({ connected: true, context: { selectionCount: 12 },
+  const partly = homeCard({ connected: true, context: { selectionCount: 12 },
     match: { run: task, missing: 2, matched: 10, sameScope: true } });
-  assert.equal(append.kind, 'append'); assert.equal(append.action.label, '补充分析（新增 2 张）');
-  assert.equal(append.secondary[0].action, 'openMatch');
+  assert.equal(partly.kind, 'locate'); assert.equal(partly.secondary[0].action, 'openMatch');
   const resume = homeCard({ connected: true, tasks: [task] });
   assert.equal(resume.kind, 'task'); assert.equal(resume.eyebrow, '接着上次');
   assert.equal(homeCard({ connected: true, tasks: [{ ...task, reviewedGroupCount: 3 }] }).kind, 'empty',
@@ -98,7 +111,7 @@ test('home card is decided by service, activity, Eagle selection and unfinished 
   assert.equal(homeCard({ connected: true, tasks: [] }).action, null, 'whole-library analysis is never the default');
 });
 
-test('measured rate ignores small and mostly cached runs; library confirmation states count and estimate', () => {
+test('measured rate ignores small and mostly cached runs', () => {
   const runs = [
     { status: 'completed', itemCount: 100, progress: { elapsedSeconds: 200 } },
     { status: 'completed', itemCount: 100, progress: { elapsedSeconds: 400 } },
@@ -107,8 +120,6 @@ test('measured rate ignores small and mostly cached runs; library confirmation s
   ];
   assert.equal(measuredRate(runs), 4);
   assert.equal(measuredRate([]), null);
-  assert.match(libraryConfirmText(3000, 2), /3000 张.*约 1 小时 40 分/);
-  assert.doesNotMatch(libraryConfirmText(null, null), /约/);
 });
 
 test('progress is shown in the primary card while analysing and completion waits for an explicit review', async () => {
@@ -142,40 +153,36 @@ test('progress is shown in the primary card while analysing and completion waits
   });
 });
 
-test('selection analysis sends the selection or folder scope; whole library needs confirmation', async () => {
-  let selected = [], folders = [{ id: 'f', name: '示例文件夹' }];
-  const eagle = { library: { path: '/example.library', name: '示例' }, folder: { getSelected: async () => folders },
-    item: { getSelected: async () => selected, countSelected: async () => selected.length, count: async () => 2,
-      countAll: async () => 3, get: async () => [{ id: 'a' }, { id: 'b' }] } };
+test('selecting only shows where the photos are; analysis is queued by folder or, from 更多, for the selection', async () => {
+  let selected = [{ id: 'a' }, { id: 'b' }];
+  const eagle = { library: { path: '/example.library', name: '示例' }, folder: { getSelected: async () => [] },
+    item: { getSelected: async () => selected, countSelected: async () => selected.length, countAll: async () => 3 } };
   await withGlobals({ eagle }, async () => {
-    const root = fakeRoot(), calls = [], confirms = [];
-    let allow = false;
+    const root = fakeRoot(), queued = [], located = [];
+    const location = { scopes: [{ type: 'folder', folderId: 'f', label: '汕头', count: 3, analyzed: 1, queued: null, running: null }],
+      selected: { total: 2, analyzed: 0 }, queueLength: 0 };
     const api = stubApi({ route: (url, options) => {
       if (url === '/runs/match') return { match: null };
-      if (url === '/runs') { calls.push(JSON.parse(options.body)); return { id: `run-${calls.length}` }; }
-      return { id: url.split('/').pop(), status: 'completed', groupCount: 1, progress: { stage: 'done' } };
+      if (url === '/runs') throw new Error('selecting must not start a run');
+      if (url === '/library/selection') { located.push(JSON.parse(options.body)); return location; }
+      if (url === '/queue') { queued.push(JSON.parse(options.body)); return { added: 1, started: null, queue: [{ id: 'q1' }] }; }
+      if (url.startsWith('/library/overview')) return { total: 3, analyzed: 1, folders: [], unfiled: { count: 0 }, queue: [] };
+      return undefined;
     } });
-    const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false,
-      confirmImpl: text => { confirms.push(text); return allow; } });
+    const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false });
     try {
-      await view.checkHealth(); await view.refreshContext();
-      assert.equal($(root, 'primaryAction').textContent, '分析这 2 张');
-      assert.equal($(root, 'analyzeAll').hidden, true, 'library analysis is hidden while photos are selected');
+      await view.checkHealth(); await view.refreshContext(); await tick(5);
+      assert.deepEqual(located[0].itemIds, ['a', 'b']); assert.equal(queued.length, 0, 'selecting queues nothing');
+      assert.equal($(root, 'primaryAction').textContent, '排队「汕头」');
+      assert.match($(root, 'primaryTitle').textContent, /已分析 1 \/ 3/);
       await $(root, 'primaryAction').onclick();
-      assert.deepEqual(calls[0].itemIds, ['a', 'b']); assert.equal(calls[0].scope.type, 'folder');
-      assert.equal(calls[0].scope.folderId, 'f'); assert.equal(calls[0].performanceMode, 'normal');
-      selected = [{ id: 'c' }];
-      await view.refreshContext();
-      await $(root, 'primaryAction').onclick();
-      assert.deepEqual(calls[1].itemIds, ['c']); assert.equal(calls[1].scope.type, 'selection');
-      selected = []; folders = [];
-      await view.refreshContext();
-      assert.equal($(root, 'analyzeAll').hidden, false); assert.equal($(root, 'analyzeAll').textContent, '分析整个资源库（3 张）…');
-      await $(root, 'analyzeAll').events.click(); await tick();
-      assert.equal(calls.length, 2, 'declined confirmation starts nothing'); assert.match(confirms[0], /整个资源库 3 张/);
-      allow = true;
-      await $(root, 'analyzeAll').events.click(); await tick();
-      assert.equal(calls[2].scope.type, 'library'); assert.equal(calls[2].itemIds, undefined);
+      assert.deepEqual(queued[0].scopes, [{ type: 'folder', folderId: 'f' }]); assert.equal(queued[0].performanceMode, 'normal');
+      assert.equal($(root, 'moreActions').hidden, false);
+      const only = $(root, 'moreList').children[0];
+      assert.equal(only.textContent, '只分析选中的 2 张');
+      only.events.click({}); await tick(5);
+      assert.deepEqual(queued[1].scopes, [{ type: 'selection', itemIds: ['a', 'b'] }]);
+      assert.equal($(root, 'openLibrary').hidden, false);
     } finally { view.dispose(); }
   });
 });
@@ -252,7 +259,7 @@ test('offline home shows a service card and no review entry; retry connects', as
       await view.checkHealth();
       assert.equal($(root, 'primaryCard').dataset.kind, 'service');
       assert.equal($(root, 'primaryAction').textContent, '启动服务');
-      assert.equal($(root, 'serviceGuide').hidden, false); assert.equal($(root, 'analyzeAll').hidden, true);
+      assert.equal($(root, 'serviceGuide').hidden, false); assert.equal($(root, 'openLibrary').hidden, true);
       assert.match($(root, 'serviceCommand').textContent, /--port 43210/);
       connected = true;
       await $(root, 'retryService').events.click();
@@ -291,14 +298,17 @@ test('turbo preference persists and travels with analysis requests', async () =>
     const calls = [];
     const api = stubApi({ route: (url, options) => {
       if (url === '/runs/match') return { match: null };
-      if (url === '/runs') { calls.push(JSON.parse(options.body)); return { id: 'x' }; }
+      if (url === '/queue') { calls.push(JSON.parse(options.body)); return { added: 1, queue: [{ id: 'q' }] }; }
+      if (url === '/library/selection') {
+        return { scopes: [{ type: 'unfiled', label: '未归入文件夹', count: 1, analyzed: 0 }], selected: { total: 1, analyzed: 0 } };
+      }
       return { id: 'x', status: 'completed', groupCount: 1 };
     } });
     const root = fakeRoot();
     const view = createStartView({ root, api, onRun() {}, autoCheck: false, autoRefresh: false });
     try {
       assert.equal($(root, 'performanceTurbo').checked, false);
-      await view.checkHealth(); await view.refreshContext();
+      await view.checkHealth(); await view.refreshContext(); await tick(5);
       await $(root, 'primaryAction').onclick(); assert.equal(calls[0].performanceMode, 'normal');
       const box = $(root, 'performanceTurbo'); box.checked = true; box.events.change();
       assert.equal(storage.get('eagle-culling-turbo'), '1');

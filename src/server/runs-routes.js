@@ -211,10 +211,188 @@ export function createRunsRouter({
   isUpdating = () => false,
   beforeRun = async () => {},
   onFinished = () => {},
+  canPrefetch = () => true,
 } = {}) {
   const prefetchControllers = new Set();
   const finishing = new WeakMap();
-  return async function handleRunsRoute(req, res, url) {
+  async function startRun(body) {
+    const reply = (status, payload) => [status, payload];
+    if (isUpdating()) return reply(409, { error: "正在更新，请稍后开始分析" });
+    if (body.rerunOf !== undefined) {
+      if (typeof body.rerunOf !== 'string' || !/^[a-zA-Z0-9_-]+$/.test(body.rerunOf)) return reply(400, { error: 'Invalid rerunOf' });
+      const original = store.dir ? await new Checkpoints(store.dir(body.rerunOf)).get('request').catch(() => null) : null;
+      if (!original) return reply(409, { error: '找不到原分析范围，请在 Eagle 重新选择照片后分析；已做的决定会自动带上' });
+      body = { ...original, ...(body.performanceMode ? { performanceMode: body.performanceMode } : {}) };
+    }
+    const current = activeRun(active);
+    // Background prefetch only warms caches; a user's analysis always takes over.
+    if (current?.purpose === 'prefetch' && body.purpose !== 'prefetch') {
+      current.controller?.abort(new Error('用户开始分析，空闲预处理已暂停'));
+      await finishing.get(current)?.catch(() => {});
+    }
+    if (activeRun(active)) {
+      return reply(409, { error: "已有分析任务运行中", run: runSummary(activeRun(active)) });
+    }
+    if (body.purpose === 'prefetch' && !canPrefetch()) return reply(409, { error: '有排队的分析，空闲预处理稍后再做' });
+    try {
+      if (body.purpose !== undefined && !['analysis', 'prefetch'].includes(body.purpose))
+        throw new Error('Invalid purpose');
+      if (body.purpose === 'prefetch' && (!Array.isArray(body.itemIds) || body.itemIds.length > 300))
+        throw new Error('Prefetch requires at most 300 itemIds');
+      if (Object.hasOwn(body, 'performanceMode') && !['normal', 'turbo'].includes(body.performanceMode))
+        throw new Error('performanceMode must be normal or turbo');
+    }
+    catch (error) { return reply(400, { error: error.message }); }
+    const resumeId = body.resumeRunId;
+    if (resumeId && !/^[a-zA-Z0-9_-]+$/.test(resumeId)) return reply(400, { error: 'Invalid resumeRunId' });
+    const previousRun = resumeId ? await store.getRun(resumeId) : null;
+    if (resumeId && (!previousRun || previousRun.status === 'completed')) {
+      return reply(409, { error: 'Run missing or already completed' });
+    }
+    const id = resumeId || `run-${randomUUID()}`;
+    const checkpoint = store.dir ? new Checkpoints(store.dir(id)) : null;
+    const request = resumeId ? await checkpoint?.get('request') : body;
+    if (!request) return reply(409, { error: 'No resumable scan checkpoint' });
+    let mode;
+    try { mode = request.purpose === 'prefetch' ? 'normal'
+      : parsePerformanceMode(request.performanceMode ?? configuredPerformanceMode()); }
+    catch (error) { return reply(400, { error: error.message }); }
+    if (!resumeId && checkpoint) await checkpoint.put('request', body);
+    const history = store.list ? (await store.list({ limit: 20, cursor: 0 })).runs || [] : [];
+    const tracker = new RunProgress({ now, weights: measuredWeights(history) || undefined });
+    const run = {
+      contractVersion: 1,
+      id,
+      status: "running",
+      performanceMode: mode,
+      purpose: request.purpose || 'analysis',
+      startedAt: new Date().toISOString(),
+      progress: tracker.update({ completed: 0, total: 0, cached: 0, stage: 'scanning' }),
+      libraryPath: request.libraryPath || null,
+      ...(request.scope && ['selection', 'folder', 'unfiled', 'library'].includes(request.scope.type) ? { scope: {
+        type: request.scope.type, label: String(request.scope.label || '').slice(0, 200),
+        ...(typeof request.scope.folderId === 'string' ? { folderId: request.scope.folderId.slice(0, 200) } : {}),
+        key: scopeKey({ ...request.scope, folderId: request.scope.folderId?.slice?.(0, 200) }, request.itemIds),
+      } } : {}),
+      itemCount: 0,
+      unitCount: 0,
+      groupCount: 0,
+    };
+    const data = { units: [], items: [], results: [], groups: [] };
+    const controller = new AbortController();
+    run.controller = controller;
+    if (isUpdating()) return reply(409, { error: "正在更新，请稍后开始分析" });
+    for (const controller of prefetchControllers) controller.abort(new Error("analysis started"));
+    // Reserve before awaiting cancellation of maintenance or initial persistence.
+    if (activeRun(active)) return reply(409, { error: '已有分析任务运行中' });
+    active.run = run;
+    await beforeRun();
+    if (store.saveProgress) await store.saveProgress(run);
+    else await store.save(run, { run });
+    let lastProgressAt = 0;
+    let lastProgressStage;
+    const progressWrites = new Set();
+    const onProgress = progress => {
+      run.progress = tracker.update(progress);
+      const time = now();
+      if (progress.stage !== lastProgressStage || time - lastProgressAt >= progressIntervalMs) {
+        lastProgressAt = time;
+        lastProgressStage = progress.stage;
+        const pending = (store.saveProgress ? store.saveProgress(run) : store.save(run, { run })).catch(error => {
+          run.progressWarning = error.message;
+        }).finally(() => progressWrites.delete(pending));
+        progressWrites.add(pending);
+      }
+    };
+    const heartbeat = setInterval(() => onProgress(tracker.last), heartbeatMs);
+    heartbeat.unref?.();
+    const execute = async () => {
+      controller.signal.throwIfAborted();
+      let scan = checkpoint ? await checkpoint.get('scanning') : null;
+      if (!scan) {
+        let items = Array.isArray(request.items) ? request.items : request.libraryPath
+          ? await scanItems(request.libraryPath, { signal: controller.signal, checkpoint, onProgress, itemIds: request.itemIds }) : [];
+        if (Array.isArray(request.itemIds)) {
+          const selected = new Set(request.itemIds);
+          items = items.filter(item => selected.has(item.id));
+        }
+        controller.signal.throwIfAborted();
+        const units = buildCaptureUnits(items);
+        scan = { items, units };
+        if (checkpoint) await checkpoint.put('scanning', scan);
+      }
+      const { items, units } = scan;
+      Object.assign(data, { items, units });
+      Object.assign(run, { itemCount: items.length, unitCount: units.length });
+      const byId = new Map(items.map(item => [item.id, item]));
+      const records = units.map(unit => ({ ...byId.get(unit.primaryItemId), unitId: unit.id,
+        itemIds: unit.itemIds, pairedItems: unit.itemIds.map(itemId => byId.get(itemId)).filter(Boolean) }));
+      return pipeline.run(records, {
+        id,
+        signal: controller.signal,
+        checkpoint,
+        performanceMode: mode,
+        onProgress,
+      });
+    };
+    const finished = execute()
+      .then(async (result) => {
+        clearInterval(heartbeat);
+        controller.signal.throwIfAborted();
+        const { results: _results, groups: _groups, duplicateCandidates: _duplicates, ...summary } = result;
+        Object.assign(run, summary, {
+          status: "completed",
+          groupCount: result.groups.length,
+          selectedCount: result.groups.reduce((n, g) => n + Object.values(g.suggested || {}).filter(v => v === "selected").length, 0),
+          rejectedCount: result.groups.reduce((n, g) => n + Object.values(g.suggested || {}).filter(v => v === "rejected").length, 0),
+          warnings: result.warnings || [],
+        });
+        run.progress = tracker.update(result.progress || { stage: 'done',
+          completed: result.results?.length || 0, total: result.results?.length || 0 });
+        data.results = result.results || [];
+        data.groups = result.groups || [];
+        data.duplicateCandidates = result.duplicateCandidates;
+        delete run.controller;
+        run.finishedAt = new Date().toISOString();
+        await Promise.all(progressWrites);
+        const continuity = run.purpose !== 'prefetch' && store.allRuns && store.dir;
+        const unitIds = data.units.map(unit => unit.id);
+        // Carry decisions and retire old versions before the completed status becomes visible.
+        if (continuity) {
+          try {
+            const inherited = await inheritDecisions(store, run, unitIds);
+            if (inherited.count) run.inherited = inherited;
+            const adopted = await store.pendingDecisions?.adopt(run.libraryPath, data.units,
+              new DecisionsStore(store.dir(run.id)));
+            if (adopted) run.adoptedBeforeAnalysis = adopted;
+            if (store.unitIds) await supersedeOlderRuns(store, run, unitIds);
+          } catch (error) { run.continuityWarning = error.message; }
+        }
+        await persist(store, run, data);
+        if (active.run?.id === id) active.run = null;
+        if (run.purpose === 'prefetch') await store.prunePrefetchRuns?.(5).catch(() => {});
+        void onFinished();
+      })
+      .catch(async (error) => {
+        clearInterval(heartbeat);
+        run.progress = tracker.snapshot();
+        run.status = controller.signal.aborted ? "cancelled" : "failed";
+        run.error = error.message;
+        delete run.controller;
+        run.finishedAt = new Date().toISOString();
+        await Promise.all(progressWrites);
+        await persist(store, run, data);
+        if (active.run?.id === id) active.run = null;
+        if (run.purpose === 'prefetch') await store.prunePrefetchRuns?.(5).catch(() => {});
+        void onFinished();
+      });
+    finishing.set(run, finished);
+    const response = runSummary(run);
+    return reply(202, response);
+  }
+  // The analysis queue starts its entries through the same path as POST /runs.
+  handleRunsRoute.startRun = startRun;
+  async function handleRunsRoute(req, res, url) {
     if (req.method === 'POST' && url.pathname === '/runs/analyzed') {
       const body = await parseBody(req);
       if (!Array.isArray(body.itemIds) || body.itemIds.length > 1000 ||
@@ -254,177 +432,8 @@ export function createRunsRouter({
     }
     if (req.method === "POST" && url.pathname === "/runs") {
       if (isUpdating()) return json(res, 409, { error: "正在更新，请稍后开始分析" });
-      let body = await parseBody(req);
-      if (body.rerunOf !== undefined) {
-        if (typeof body.rerunOf !== 'string' || !/^[a-zA-Z0-9_-]+$/.test(body.rerunOf)) return json(res, 400, { error: 'Invalid rerunOf' });
-        const original = store.dir ? await new Checkpoints(store.dir(body.rerunOf)).get('request').catch(() => null) : null;
-        if (!original) return json(res, 409, { error: '找不到原分析范围，请在 Eagle 重新选择照片后分析；已做的决定会自动带上' });
-        body = { ...original, ...(body.performanceMode ? { performanceMode: body.performanceMode } : {}) };
-      }
-      const current = activeRun(active);
-      // Background prefetch only warms caches; a user's analysis always takes over.
-      if (current?.purpose === 'prefetch' && body.purpose !== 'prefetch') {
-        current.controller?.abort(new Error('用户开始分析，空闲预处理已暂停'));
-        await finishing.get(current)?.catch(() => {});
-      }
-      if (activeRun(active)) {
-        return json(res, 409, { error: "已有分析任务运行中", run: runSummary(activeRun(active)) });
-      }
-      try {
-        if (body.purpose !== undefined && !['analysis', 'prefetch'].includes(body.purpose))
-          throw new Error('Invalid purpose');
-        if (body.purpose === 'prefetch' && (!Array.isArray(body.itemIds) || body.itemIds.length > 300))
-          throw new Error('Prefetch requires at most 300 itemIds');
-        if (Object.hasOwn(body, 'performanceMode') && !['normal', 'turbo'].includes(body.performanceMode))
-          throw new Error('performanceMode must be normal or turbo');
-      }
-      catch (error) { return json(res, 400, { error: error.message }); }
-      const resumeId = body.resumeRunId;
-      if (resumeId && !/^[a-zA-Z0-9_-]+$/.test(resumeId)) return json(res, 400, { error: 'Invalid resumeRunId' });
-      const previousRun = resumeId ? await store.getRun(resumeId) : null;
-      if (resumeId && (!previousRun || previousRun.status === 'completed')) {
-        return json(res, 409, { error: 'Run missing or already completed' });
-      }
-      const id = resumeId || `run-${randomUUID()}`;
-      const checkpoint = store.dir ? new Checkpoints(store.dir(id)) : null;
-      const request = resumeId ? await checkpoint?.get('request') : body;
-      if (!request) return json(res, 409, { error: 'No resumable scan checkpoint' });
-      let mode;
-      try { mode = request.purpose === 'prefetch' ? 'normal'
-        : parsePerformanceMode(request.performanceMode ?? configuredPerformanceMode()); }
-      catch (error) { return json(res, 400, { error: error.message }); }
-      if (!resumeId && checkpoint) await checkpoint.put('request', body);
-      const history = store.list ? (await store.list({ limit: 20, cursor: 0 })).runs || [] : [];
-      const tracker = new RunProgress({ now, weights: measuredWeights(history) || undefined });
-      const run = {
-        contractVersion: 1,
-        id,
-        status: "running",
-        performanceMode: mode,
-        purpose: request.purpose || 'analysis',
-        startedAt: new Date().toISOString(),
-        progress: tracker.update({ completed: 0, total: 0, cached: 0, stage: 'scanning' }),
-        libraryPath: request.libraryPath || null,
-        ...(request.scope && ['selection', 'folder', 'library'].includes(request.scope.type) ? { scope: {
-          type: request.scope.type, label: String(request.scope.label || '').slice(0, 200),
-          ...(typeof request.scope.folderId === 'string' ? { folderId: request.scope.folderId.slice(0, 200) } : {}),
-          key: scopeKey({ ...request.scope, folderId: request.scope.folderId?.slice?.(0, 200) }, request.itemIds),
-        } } : {}),
-        itemCount: 0,
-        unitCount: 0,
-        groupCount: 0,
-      };
-      const data = { units: [], items: [], results: [], groups: [] };
-      const controller = new AbortController();
-      run.controller = controller;
-      if (isUpdating()) return json(res, 409, { error: "正在更新，请稍后开始分析" });
-      for (const controller of prefetchControllers) controller.abort(new Error("analysis started"));
-      // Reserve before awaiting cancellation of maintenance or initial persistence.
-      if (activeRun(active)) return json(res, 409, { error: '已有分析任务运行中' });
-      active.run = run;
-      await beforeRun();
-      if (store.saveProgress) await store.saveProgress(run);
-      else await store.save(run, { run });
-      let lastProgressAt = 0;
-      let lastProgressStage;
-      const progressWrites = new Set();
-      const onProgress = progress => {
-        run.progress = tracker.update(progress);
-        const time = now();
-        if (progress.stage !== lastProgressStage || time - lastProgressAt >= progressIntervalMs) {
-          lastProgressAt = time;
-          lastProgressStage = progress.stage;
-          const pending = (store.saveProgress ? store.saveProgress(run) : store.save(run, { run })).catch(error => {
-            run.progressWarning = error.message;
-          }).finally(() => progressWrites.delete(pending));
-          progressWrites.add(pending);
-        }
-      };
-      const heartbeat = setInterval(() => onProgress(tracker.last), heartbeatMs);
-      heartbeat.unref?.();
-      const execute = async () => {
-        controller.signal.throwIfAborted();
-        let scan = checkpoint ? await checkpoint.get('scanning') : null;
-        if (!scan) {
-          let items = Array.isArray(request.items) ? request.items : request.libraryPath
-            ? await scanItems(request.libraryPath, { signal: controller.signal, checkpoint, onProgress, itemIds: request.itemIds }) : [];
-          if (Array.isArray(request.itemIds)) {
-            const selected = new Set(request.itemIds);
-            items = items.filter(item => selected.has(item.id));
-          }
-          controller.signal.throwIfAborted();
-          const units = buildCaptureUnits(items);
-          scan = { items, units };
-          if (checkpoint) await checkpoint.put('scanning', scan);
-        }
-        const { items, units } = scan;
-        Object.assign(data, { items, units });
-        Object.assign(run, { itemCount: items.length, unitCount: units.length });
-        const byId = new Map(items.map(item => [item.id, item]));
-        const records = units.map(unit => ({ ...byId.get(unit.primaryItemId), unitId: unit.id,
-          itemIds: unit.itemIds, pairedItems: unit.itemIds.map(itemId => byId.get(itemId)).filter(Boolean) }));
-        return pipeline.run(records, {
-          id,
-          signal: controller.signal,
-          checkpoint,
-          performanceMode: mode,
-          onProgress,
-        });
-      };
-      const finished = execute()
-        .then(async (result) => {
-          clearInterval(heartbeat);
-          controller.signal.throwIfAborted();
-          const { results: _results, groups: _groups, duplicateCandidates: _duplicates, ...summary } = result;
-          Object.assign(run, summary, {
-            status: "completed",
-            groupCount: result.groups.length,
-            selectedCount: result.groups.reduce((n, g) => n + Object.values(g.suggested || {}).filter(v => v === "selected").length, 0),
-            rejectedCount: result.groups.reduce((n, g) => n + Object.values(g.suggested || {}).filter(v => v === "rejected").length, 0),
-            warnings: result.warnings || [],
-          });
-          run.progress = tracker.update(result.progress || { stage: 'done',
-            completed: result.results?.length || 0, total: result.results?.length || 0 });
-          data.results = result.results || [];
-          data.groups = result.groups || [];
-          data.duplicateCandidates = result.duplicateCandidates;
-          delete run.controller;
-          run.finishedAt = new Date().toISOString();
-          await Promise.all(progressWrites);
-          const continuity = run.purpose !== 'prefetch' && store.allRuns && store.dir;
-          const unitIds = data.units.map(unit => unit.id);
-          // Carry decisions and retire old versions before the completed status becomes visible.
-          if (continuity) {
-            try {
-              const inherited = await inheritDecisions(store, run, unitIds);
-              if (inherited.count) run.inherited = inherited;
-              const adopted = await store.pendingDecisions?.adopt(run.libraryPath, data.units,
-                new DecisionsStore(store.dir(run.id)));
-              if (adopted) run.adoptedBeforeAnalysis = adopted;
-              if (store.unitIds) await supersedeOlderRuns(store, run, unitIds);
-            } catch (error) { run.continuityWarning = error.message; }
-          }
-          await persist(store, run, data);
-          if (active.run?.id === id) active.run = null;
-          if (run.purpose === 'prefetch') await store.prunePrefetchRuns?.(5).catch(() => {});
-          void onFinished();
-        })
-        .catch(async (error) => {
-          clearInterval(heartbeat);
-          run.progress = tracker.snapshot();
-          run.status = controller.signal.aborted ? "cancelled" : "failed";
-          run.error = error.message;
-          delete run.controller;
-          run.finishedAt = new Date().toISOString();
-          await Promise.all(progressWrites);
-          await persist(store, run, data);
-          if (active.run?.id === id) active.run = null;
-          if (run.purpose === 'prefetch') await store.prunePrefetchRuns?.(5).catch(() => {});
-          void onFinished();
-        });
-      finishing.set(run, finished);
-      const response = runSummary(run);
-      return json(res, 202, response);
+      const [status, payload] = await startRun(await parseBody(req));
+      return json(res, status, payload);
     }
 
     const match = url.pathname.match(/^\/runs\/([^/]+)(?:\/(.*))?$/);
@@ -648,5 +657,6 @@ export function createRunsRouter({
       return json(res, 200, run);
     }
     return false;
-  };
+  }
+  return handleRunsRoute;
 }

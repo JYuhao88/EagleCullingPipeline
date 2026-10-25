@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const port = 43441;
-const states = ['offline', 'starting', 'none', 'selected', 'folder', 'running', 'completed', 'settings', 'history',
+const states = ['offline', 'starting', 'none', 'selected', 'folder', 'running', 'completed', 'settings', 'history', 'library',
   'inspector-result', 'inspector-empty', 'inspector-offline'];
 const template = JSON.parse(await readFile(path.join(root, 'test/fixtures/review/results.json'), 'utf8'));
 const FLAGS = [[], [], ['eyes-closed'], [], ['blurry'], [], ['overexposed'], [], ['possibly-blurry'], ['underexposed']];
@@ -26,6 +26,19 @@ for (let g = 0, n = 0; g < 20; g++) {
 }
 for (const row of queueRows) row.action = row.suggested;
 const adjustments = {};
+function fixtureFolder(id, name, count, analyzed, children = [], extra = {}) {
+  const sum = key => children.reduce((total, child) => total + child.subtree[key], 0);
+  return { id, name, count, analyzed, queued: null, running: null, children, ...extra,
+    subtree: { count: count + sum('count'), analyzed: analyzed + sum('analyzed') } };
+}
+function fixtureLibrary() {
+  const shantou = fixtureFolder('F1', '20260718 汕头', 120, 120, [fixtureFolder('F2', '人像', 86, 30, [], { running: 54 }),
+    fixtureFolder('F3', 'good', 240, 0), fixtureFolder('F4', '夜景', 64, 0, [], { queued: 1 })]);
+  return { total: 1024, analyzed: 512, folders: [shantou, fixtureFolder('F5', '2026 秋 · 京都旅行（全部原片与手机照片）', 450, 362),
+    fixtureFolder('F6', '空文件夹', 0, 0)], unfiled: { count: 64, analyzed: 0, queued: null, running: null },
+  queue: [{ id: 'q1', label: '20260718 汕头 › 夜景', type: 'folder', folderId: 'F4', position: 1 }],
+  active: { runId: 'run-fixture', label: '20260718 汕头 › 人像', percent: 54 } };
+}
 let writebackAvailable = false;
 function photo(id) {
   const n = Number(id.split('-').pop()) || 0, hue = (n * 47) % 360;
@@ -118,7 +131,8 @@ const url=new URL(typeof input==='string'?input:input.url,location.href);
 if(url.origin===location.origin){url.searchParams.set('fixture',fixtureState);return nativeFetch(url,options);} throw new
   Error('fixture only');};
 // Module init and the first health check race the load event; retry until the target view is shown.
-const targets={settings:['#openSettings','#panelSettings'],history:['#allRuns','#historyView']};
+const targets={settings:['#openSettings','#panelSettings'],history:['#allRuns','#historyView'],
+  library:['#openLibrary','#libraryView']};
 window.addEventListener('load',()=>{if(!sessionStorage.getItem('fixture-hidden'))fire('PluginShow');let tries=0;const open=()=>{
 const target=targets[fixtureState];
 if(target){const view=document.querySelector(target[1]);if(view&&!view.hidden&&document.querySelector('#health')?.dataset.state===
@@ -168,6 +182,14 @@ if(initial.has('h'))frame.style.height=initial.get('h')+'px';</script>`); return
         { name: 'results-v2', label: '分析结果', bytes: 0.2 * 1024 ** 3, files: 9800 }] });
     if (url.pathname === '/cache/limit' || url.pathname === '/cache/clear')
       return json(res, 200, { totalBytes: 0.4 * 1024 ** 3, maxBytes: 5 * 1024 ** 3, categories: [] });
+    if (url.pathname === '/library/overview') return json(res, 200, fixtureLibrary());
+    if (url.pathname === '/library/selection') {
+      const place = fixtureLibrary().folders[0].children[1];
+      return json(res, 200, { scopes: [{ type: 'folder', folderId: place.id, label: '20260718 汕头 › good', count: place.count,
+        analyzed: place.analyzed, queued: null, running: null }], selected: { total: 8, analyzed: 0 }, queueLength: 1, active: null });
+    }
+    if (url.pathname === '/library/unanalyzed') return json(res, 200, { total: 3, itemIds: ['photo-1', 'photo-2', 'photo-3'] });
+    if (url.pathname.startsWith('/queue')) return json(res, 200, { added: 1, started: null, queue: fixtureLibrary().queue });
     if (url.pathname === '/runs') {
       if (req.method === 'POST') return json(res, 202, run('completed'));
       const cursor = Number(url.searchParams.get('cursor') || 0);

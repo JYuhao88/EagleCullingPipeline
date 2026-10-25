@@ -31,15 +31,25 @@
             <p id="primaryDetail"></p>
             <p id="progressText" class="sr-only" role="status"></p>
             <div class="primary-actions"><button id="primaryAction" class="primary" hidden></button>
-              <span id="secondaryActions"></span><button id="cancel" hidden>取消</button></div>
+              <span id="secondaryActions"></span><button id="cancel" hidden>取消</button>
+              <details id="moreActions" class="more-actions" hidden><summary>更多</summary><div id="moreList"></div></details></div>
             <p id="primaryNote" class="note"></p>
             <div id="serviceGuide" hidden><span id="serviceHint"></span><button id="startService" hidden>启动服务</button><button
               id="retryService" class="quiet">重试连接</button></div>
           </section>
           <p id="homeNotice" class="notice" role="status"></p>
-          <button id="analyzeAll" class="text-button" hidden>分析整个资源库…</button>
+          <button id="openLibrary" class="text-button" hidden>资源库进度 ›</button>
         </div>
       </div>
+      <section id="libraryView" hidden><div class="section-heading"><button id="closeLibrary" class="quiet">‹ 返回</button>
+        <h2>资源库进度</h2><button id="refreshLibrary" class="quiet">刷新</button></div>
+        <p id="librarySummary" class="note" role="status"></p>
+        <p id="libraryNotice" class="notice" role="status"></p>
+        <div id="libraryQueue" class="queue-list"></div>
+        <div class="library-actions"><button id="queueAllUnanalyzed" hidden>未分析的全部排队</button>
+          <button id="clearQueue" class="quiet" hidden>清空队列</button></div>
+        <p class="setting-hint">按 Eagle 的文件夹分析，每个文件夹一批，一次只跑一个。没分析完也能先打分、打标签。</p>
+        <div id="libraryTree" class="folder-tree"></div></section>
       <section id="historyView" hidden><div class="section-heading"><button id="closeHistory" class="quiet">‹ 返回</button><h2>分析记录</h2>
         <label class="inline"><input id="showSuperseded" type="checkbox">显示旧版本</label></div>
         <p id="historyStatus" class="note" role="status"></p>

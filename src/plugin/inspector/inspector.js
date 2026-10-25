@@ -39,14 +39,20 @@ export function groupSummary(result) {
 }
 // Unanalyzed photos ('empty' with a selection) can be decided too; the service keeps those until analysis.
 export const decidable = (state, selected = []) => state === 'result' || (state === 'empty' && selected.length > 0);
+export function queueLine(queued) {
+  if (!queued) return '';
+  return queued.analyzing ? `正在分析「${queued.label}」${queued.percent == null ? '' : ` ${Math.floor(queued.percent)}%`}`
+    : `排队第 ${queued.position}：「${queued.label}」`;
+}
 export function inspectorModel({ state, result } = {}) {
   // Decisions made before analysis wait on the service and join the first analysis that covers the photo.
   const pending = state === 'empty' && ACTION_NAMES[result?.pending?.action] ? result.pending.action : null;
-  if (pending) return { tone: pending, currentAction: pending, lines: ['分析完成后自动并入，可随时改'], reasons: [],
-    badge: `尚未分析 · 已记下：${ACTION_NAMES[pending]}` };
+  const queue = state === 'empty' ? queueLine(result?.queued) : '';
+  if (pending) return { tone: pending, currentAction: pending, lines: [queue, '分析完成后自动并入，可随时改'].filter(Boolean),
+    reasons: [], badge: `尚未分析 · 已记下：${ACTION_NAMES[pending]}` };
   if (state !== 'result') return { badge: { loading: '加载中…', offline: '分析服务未运行',
-    empty: '尚未分析，在插件中分析后显示' }[state] || '尚未分析，在插件中分析后显示',
-    lines: state === 'empty' && result ? ['也可以先决定，分析完成后自动并入'] : [], reasons: [] };
+    empty: queue ? '尚未分析' : '尚未分析，在插件里按文件夹排队' }[state] || '尚未分析，在插件里按文件夹排队',
+    lines: state === 'empty' && result ? [queue, '也可以先决定，分析完成后自动并入'].filter(Boolean) : [], reasons: [] };
   const action = ACTION_NAMES;
   return { tone: action[result.action] ? result.action : 'candidate', currentAction: result.humanDecided ? result.action : null,
     tagsOn: result.eagleTagsEnabled === true, groupId: result.groupId, groupItemIds: result.groupItemIds || [],
@@ -340,8 +346,8 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     const multi = units.count > 1 || state === 'many';
     const status = el('status');
     // The wide page is where the plugin opens, before anything is selected or analyzed.
-    const badge = wide && state === 'empty' && !model.currentAction
-      ? (selected.length ? '这张照片尚未分析：点「返回主界面」去分析' : '在 Eagle 里选中照片后显示') : model.badge;
+    const badge = wide && state === 'empty' && !model.currentAction && !result?.queued
+      ? (selected.length ? '这张照片尚未分析：点「返回主界面」按文件夹排队' : '在 Eagle 里选中照片后显示') : model.badge;
     status.textContent = multi ? `已选 ${state === 'many' ? selected.length : units.count} 张` : badge;
     if (status.dataset) status.dataset.tone = multi ? '' : model.tone || '';
     const lines = el('lines'); lines.replaceChildren();

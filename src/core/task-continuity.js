@@ -4,6 +4,7 @@ import { DecisionsStore } from './decisions-store.js';
 // A task is "the culling work for one scope"; re-analysing the same scope is a new version of that task.
 export function scopeKey(scope = {}, itemIds = []) {
   if (scope.type === 'library') return 'library';
+  if (scope.type === 'unfiled') return 'unfiled';
   if (scope.type === 'folder' && typeof scope.folderId === 'string' && scope.folderId) return `folder:${scope.folderId}`;
   const ids = [...new Set((itemIds || []).filter(id => typeof id === 'string'))].sort();
   if (!ids.length) return null;

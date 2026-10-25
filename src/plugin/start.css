@@ -73,7 +73,40 @@
 .task-row progress { width: 100%; height: .33rem; accent-color: var(--ec-accent); }
 .task-row button { margin: 0; white-space: nowrap; }
 
-#panelSettings, #historyView, #finishPanel { max-width: 53rem; margin: 0 auto; max-height: calc(100vh - 60px); overflow-y: auto; }
+.more-actions { position: relative; }
+.more-actions > summary { list-style: none; padding: .4rem .6rem; border: 1px solid var(--ec-border); border-radius: var(--ec-radius);
+  color: var(--ec-text-dim); }
+.more-actions > summary::-webkit-details-marker { display: none; }
+.more-actions[open] > div { position: absolute; right: 0; z-index: 2; margin-top: 4px; padding: 4px; min-width: 12rem;
+  background: var(--ec-bg); border: 1px solid var(--ec-border); border-radius: var(--ec-radius); }
+.more-actions button { display: block; width: 100%; margin: 0; text-align: left; }
+
+.queue-list:empty { display: none; }
+.queue-list { margin: 6px 0; padding: 6px 8px; border: 1px solid var(--ec-border); border-radius: var(--ec-radius); }
+#start .queue-active { margin: 2px 0; color: var(--ec-accent); }
+.queue-row { display: flex; align-items: center; gap: 6px; padding: 2px 0; }
+.queue-row span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.queue-row button, .library-actions button { margin: 0; white-space: nowrap; }
+.library-actions { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.folder-tree { display: flex; flex-direction: column; }
+.folder-row { display: grid; grid-template-columns: 1.2rem minmax(0, 1fr) auto; gap: 4px 6px; align-items: center;
+  padding: .45rem .2rem .45rem calc(var(--depth, 0) * 14px + .2rem); border-bottom: 1px solid var(--ec-border); }
+.folder-row .fold { align-self: start; margin: 0; padding: 0; min-height: 0; border: 0; background: transparent;
+  color: var(--ec-text-dim); font-size: 1rem; line-height: 1.5; cursor: pointer; }
+.folder-head { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.folder-head strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.folder-head .chip { margin: 0; flex: none; }
+#start .folder-meta { margin: 1px 0 0; font-size: var(--ec-font-size-small); }
+.folder-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
+.folder-actions button { margin: 0; white-space: nowrap; }
+.folder-row[data-state="done"] .chip { color: var(--ec-ok); }
+.folder-row[data-state="partial"] .chip, .folder-row[data-state="queued"] .chip { color: var(--ec-pick); }
+.folder-row[data-state="running"] .chip { color: var(--ec-accent); }
+@media (max-width: 30rem) { .folder-row { grid-template-columns: 1.2rem minmax(0, 1fr); }
+  .folder-actions { grid-column: 2; justify-content: flex-start; } }
+
+#panelSettings, #historyView, #finishPanel,
+#libraryView { max-width: 53rem; margin: 0 auto; max-height: calc(100vh - 60px); overflow-y: auto; }
 .settings-group { border: 1px solid var(--ec-border); border-radius: var(--ec-radius); margin: 10px 0; padding: 8px 12px; }
 .settings-group legend, .settings-group > summary { font-weight: 600; padding: 0 4px; }
 .settings-group label { display: block; margin: 6px 0; }

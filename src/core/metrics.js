@@ -127,6 +127,8 @@ const PROXY_EXTENSIONS = new Set([
   "erf", "iiq", "x3f", "kdc", "dcr", "mef", "mos", "mrw", "rwl", "raw", "heic", "heif", "hif",
 ]);
 if (![...RAW_EXTENSIONS, ...HEIF_EXTENSIONS].every(ext => PROXY_EXTENSIONS.has(ext))) throw new Error('image format list drift');
+export const analyzableExtension = ext => IMAGE_EXTENSIONS.has(String(ext || '').toLowerCase()) ||
+  PROXY_EXTENSIONS.has(String(ext || '').toLowerCase());
 // Keep libvips from competing with the Eagle UI or exhausting RAM during a
 // large-library scan. Override per machine when a dedicated worker is used.
 const sharpConcurrency = Math.max(

@@ -1,7 +1,9 @@
 import { createCacheMaintenance } from './core/cache-budget.js';
 import { createCacheRouter } from './server/cache-routes.js';
-import { createItemAnalysisRouter } from "./server/item-analysis.js";
+import { createItemAnalysisRouter, ItemAnalysisIndex } from "./server/item-analysis.js";
+import { AnalysisQueue, createLibraryRouter } from "./server/library-routes.js";
 import http from "node:http";
+import path from "node:path";
 import { Updater } from "./core/updater.js";
 import { createUpdateRouter } from "./server/update-routes.js";
 import { AnalysisPipeline } from "./core/pipeline.js";
@@ -41,14 +43,21 @@ export function createAnalysisServer({
     getProtect: () => runStore.cacheProtection?.() || {} })
     : { trigger: async () => {}, start() {}, cancel: async () => {}, dispose: async () => {} };
   const cache = cacheRoot ? createCacheRouter({ cacheRoot, isBusy, maintenance, lock: cacheLock }) : async () => false;
+  const isUpdating = () => updater.isUpdating() || cacheLock.busy;
+  const queue = new AnalysisQueue(runStore.root ? path.join(runStore.root, 'analysis-queue.json') : null);
+  let library = null;
   const runs = createRunsRouter({ pipeline, store: runStore, active, scanItems,
-    beforeRun: () => maintenance.cancel(), onFinished: () => maintenance.trigger(),
-    isUpdating: () => updater.isUpdating() || cacheLock.busy });
+    beforeRun: () => maintenance.cancel(), onFinished: () => { void maintenance.trigger(); void library?.drain().catch(() => {}); },
+    isUpdating, canPrefetch: () => !queue.size() });
+  const itemIndex = new ItemAnalysisIndex(runStore);
+  library = createLibraryRouter({ store: runStore, index: itemIndex, active, startRun: runs.startRun, isUpdating, queue });
+  let drainTimer = null;
   const ctx = { runStore, api, json, readBody: parseBody, clock };
   const rules = createRulesRouter();
   const pluginStamp = createPluginStamp();
   const wide = createWideRouter();
-  const itemAnalysis = createItemAnalysisRouter(runStore, { readBody: parseBody, onDecision: async (req, res, entry) => {
+  const itemAnalysis = createItemAnalysisRouter(runStore, { index: itemIndex, waiting: library.waiting, readBody: parseBody,
+    onDecision: async (req, res, entry) => {
     const body = entry.body || {};
     if (![...DECISION_ACTIONS, 'clear'].includes(body.action)) return json(res, 400, { error: 'action 无效' });
     const decision = body.action === 'clear' ? { unitId: entry.unitId, clear: true }
@@ -109,6 +118,7 @@ export function createAnalysisServer({
         return json(res, 200, { dryRun: body.dryRun, scanned, changed, failed, removed: changed - failed });
       }
       if (await itemAnalysis(req, res, url)) return;
+      if (await library.route(req, res, url)) return;
       if (await runs(req, res, url)) return;
       if (await rules(req, res)) return;
       if (await handleReviewRoute(req, res, ctx)) return;
@@ -122,12 +132,18 @@ export function createAnalysisServer({
     updater,
     listen: () => new Promise((resolve, reject) => {
       const failed = error => { server.off('listening', ready); reject(error); };
-      const ready = () => { server.off('error', failed); maintenance.start(); resolve(); };
+      const ready = () => {
+        server.off('error', failed); maintenance.start();
+        // A queue saved before a restart or update continues once the service is up.
+        drainTimer = setTimeout(() => void library.drain().catch(() => {}), 3000); drainTimer.unref?.();
+        resolve();
+      };
       server.once('error', failed);
       server.once('listening', ready);
       server.listen(port, host);
     }),
     close: async () => {
+      clearTimeout(drainTimer);
       await maintenance.dispose();
       return new Promise((resolve) => {
         server.close(resolve);

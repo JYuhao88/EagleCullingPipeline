@@ -9,10 +9,11 @@ export function readSetting(storage, id) {
   return defaultValue ? value !== '0' : value === '1';
 }
 export function writeSetting(storage, id, enabled) { storage.setItem(SETTINGS[id][0], enabled ? '1' : '0'); }
-export function mountPanelSettings({ root, storage = globalThis.localStorage }) {
+export function mountPanelSettings({ root, storage = globalThis.localStorage, onShow = () => {} }) {
   const q = id => root.querySelector(`#${id}`);
   const show = name => {
-    for (const id of ['panelHome', 'panelSettings', 'historyView', 'finishPanel']) if (q(id)) q(id).hidden = id !== name;
+    for (const id of ['panelHome', 'panelSettings', 'historyView', 'finishPanel', 'libraryView']) if (q(id)) q(id).hidden = id !== name;
+    onShow(name);
   };
   const dependencies = () => {
     if (q('aiTagOptions')) q('aiTagOptions').hidden = !q('useAiTags')?.checked;

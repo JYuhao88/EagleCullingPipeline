@@ -143,7 +143,8 @@ export class ItemAnalysisIndex {
     }
     return index;
   }
-  async get(itemId, libraryPath) {
+  // itemId -> { runId, unitId } for every photo in a finished analysis of the library.
+  async items(libraryPath) {
     const generation = this.store.analysisGeneration || 0;
     let entry = this.libraries.get(libraryPath);
     if (!entry || entry.generation !== generation) {
@@ -154,8 +155,10 @@ export class ItemAnalysisIndex {
     let index;
     try { index = await entry.promise; } catch (error) { this.libraries.delete(libraryPath); throw error; }
     // Do not publish stale results if completion raced the first build.
-    if (generation !== (this.store.analysisGeneration || 0)) return this.get(itemId, libraryPath);
-    const match = index.get(itemId); if (!match) return null;
+    return generation !== (this.store.analysisGeneration || 0) ? this.items(libraryPath) : index;
+  }
+  async get(itemId, libraryPath) {
+    const match = (await this.items(libraryPath)).get(itemId); if (!match) return null;
     let data = await this.store.unitData(match.runId, match.unitId);
     if (!data?.results.length) return null;
     const group = data.groups?.find(row => row.unitIds.includes(match.unitId));
@@ -167,8 +170,9 @@ export class ItemAnalysisIndex {
     return { itemId, ...itemAnalysisModel(data, match.unitId, decisions.find(row => row.unitId === match.unitId), decisions) };
   }
 }
-export function createItemAnalysisRouter(store, { onDecision, readBody } = {}) {
-  const index = new ItemAnalysisIndex(store);
+// waiting(libraryPath, itemId): where an unanalyzed photo stands in the analysis queue, or null.
+export function createItemAnalysisRouter(store, { onDecision, readBody, index = new ItemAnalysisIndex(store),
+  waiting = () => null } = {}) {
   return async (req, res, url) => {
     const match = url.pathname.match(/^\/items\/([^/]+)\/(analysis|decision)$/);
     if (!match) return false;
@@ -190,6 +194,7 @@ export function createItemAnalysisRouter(store, { onDecision, readBody } = {}) {
     const value = await index.get(itemId, libraryPath);
     if (value) return json(res, 200, value);
     const pending = await store.pendingDecisions?.get(libraryPath, itemId);
-    return json(res, 404, { error: '尚未分析，在插件中分析后显示', ...(pending ? { pending } : {}) });
+    const queued = waiting(libraryPath, itemId);
+    return json(res, 404, { error: '尚未分析，在插件中分析后显示', ...(pending ? { pending } : {}), ...(queued ? { queued } : {}) });
   };
 }

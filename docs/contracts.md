@@ -122,8 +122,28 @@ page 为 `{total,cursor,limit,nextCursor}`，末页 nextCursor=null；同时间�
 只读取 run 元数据、分组摘要及人工决定，不读取完整 results、JSONL 结果分片或原片。
 所有组内单元都有 source=human 决定才算已审；无轻量组摘要的旧 run 返回 reviewedGroupCount=null。
 新 run 终态及修组后保存 review-summary.json；兼容未修组的旧 results-index.json 组摘要。
-POST /runs 可带 `scope:{type:"selection"|"folder"|"library",label,folderId?}`，仅用于显示范围。
+POST /runs 可带 `scope:{type:"selection"|"folder"|"unfiled"|"library",label,folderId?}`，仅用于显示范围；
+`unfiled` 是不在任何文件夹里的照片。有排队时 `purpose:"prefetch"` 返回 409（空闲预处理永远排在最后）。
 旧 run 的 scope 为 `{type:"unknown",label:"以前的分析"}`；失败/取消原因在 error 中，续跑使用 resumeRunId。
+
+### 资源库进度与分析队列（v1.12）
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| GET | /library/overview?libraryPath | `{total, analyzed, folders, unfiled, queue, active}`；folders 是 Eagle 的文件夹树，每个节点 `{id,name,count,analyzed,queued,running,subtree:{count,analyzed},children}`，count 只算直接放在这个文件夹里的照片 |
+| POST | /library/selection | `{libraryPath, itemIds? \| folderIds?}` → `{scopes:[{type,folderId?,label,count,analyzed,queued,running}], selected:{total,analyzed}, queueLength, active}`，只读，不排队 |
+| GET | /library/unanalyzed?libraryPath&folderId= \| unfiled=1 | `{total, itemIds}`，itemIds 最多 2000 |
+| GET | /queue | 全部排队 |
+| POST | /queue | `{libraryPath, scopes:[{type:"folder",folderId} \| {type:"unfiled"} \| {type:"selection",itemIds}] \| allUnanalyzed:true, performanceMode?}` → `{added, started, queue, active}` |
+| DELETE | /queue | 清空这个资源库的排队，正在分析的不受影响 |
+| DELETE | /queue/:id · POST /queue/:id/top | 取消一项 · 移到最前 |
+
+资源库从 `<lib>/metadata.json` 的 folders 和 `images/*.info/metadata.json` 读取（只读，跳过已删除和不能分析的格式），
+缓存 30 秒并在后台刷新。「已分析」指出现在任一完成的正式分析里。libraryPath 必须以 `.library` 结尾。
+队列存 `data/runs/analysis-queue.json`，按资源库和范围去重；文件夹的照片在开始时才取，子文件夹各自排队。
+同一时间只跑一个：没有正式分析在跑、也没有在更新时，服务自动开始下一项（启动后 3 秒、每次分析结束、新排队时）；
+开始失败（409）的放回队首。`GET /items/:id/analysis` 的 404 另附 `queued:{position,label}` 或
+`queued:{analyzing:true,label,percent}`。
 
 新分析结果持久化到 `data/runs/<id>/results-index.json` 与 JSONL 分片；旧 `results.json` 可读。结果缓存放在 `data/cache/`，按 fingerprint 命中。服务重启后仍能读取已有 run。成功写回后，最终标签按 `{id, fileName, tags, previousTags}` 持久化到 `data/runs/<id>/applied.json`，报告优先使用这些标签；没有该文件时使用 planned 标签。
 

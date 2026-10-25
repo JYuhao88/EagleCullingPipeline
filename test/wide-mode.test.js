@@ -154,7 +154,7 @@ test('the wide inspector says what to do when nothing is selected or the photo i
     await view.refresh(true);
     assert.equal(node('status').textContent, '在 Eagle 里选中照片后显示');
     selected = [{ id: 'p9', star: 0 }]; await view.refresh(true);
-    assert.equal(node('status').textContent, '这张照片尚未分析：点「返回主界面」去分析');
+    assert.equal(node('status').textContent, '这张照片尚未分析：点「返回主界面」按文件夹排队');
   } finally { view.dispose(); }
 });
 

@@ -5,12 +5,13 @@ import { createIdlePrefetcher } from "./idle-prefetch.js";
 import { shouldAutoStart, launchLocalService, createRunNotifier, mountBackgroundLifecycle } from "./background.js";
 import { defaultRepository, serviceCommand } from "./service-start.js";
 import { analysisStages, stageIndex, readRecentRuns, analysisProgress } from "./start-model.js";
-import { homeCard, taskView, sortTasks, friendlyFailure, libraryAnalysisText, libraryConfirmText, measuredRate,
-  selectionCount } from "./task-model.js";
+import { homeCard, taskView, sortTasks, friendlyFailure, measuredRate, selectionCount } from "./task-model.js";
 import { eagleContext, isEagleEnvironment } from "./api.js";
+import { placeStatus, librarySummary } from "./library-model.js";
+import { mountLibraryView } from "./library-view.js";
 
 export function createStartView({ root, api, getApi = () => api, onRun, autoCheck = true, autoRefresh = true,
-  confirmImpl = text => globalThis.confirm(text), onOpen, loadedHidden = false }) {
+  onOpen, loadedHidden = false }) {
   void initEagleTheme();
   const q = id => root.querySelector(`#${id}`);
   const storage = globalThis.localStorage;
@@ -18,9 +19,9 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   const health = q("health");
   q("repositoryPath").value = storage.getItem("eagle-culling-repository") || defaultRepository();
   const view = { connected: false, launching: false, active: null, submitting: false, context: {}, match: null,
-    tasks: [], nextCursor: null, notice: "" };
+    location: null, queueLength: 0, tasks: [], nextCursor: null, notice: "" };
   let visible = !globalThis.eagle && !root.hidden;
-  let disposed = false, pollTimer = null, pollToken = 0, serviceTimer = null, contextTimer = null, healthTimer = null;
+  let disposed = false, pollTimer = null, pollToken = 0, serviceTimer = null, contextTimer = null, healthTimer = null, nextTimer = null;
   let contextVersion = 0, contextKey = "", matchVersion = 0, tasksVersion = 0, serviceBase = getApi().base;
 
   const setText = (id, value) => { const node = q(id); if (node) node.textContent = value ?? ""; };
@@ -60,13 +61,21 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     const secondary = q("secondaryActions");
     secondary?.replaceChildren(...(card.secondary || []).filter(item => item.action !== "cancel")
       .map(item => button(item.label, () => perform(item.action, card.task))));
+    const more = q("moreActions");
+    if (more) {
+      more.hidden = !card.more?.length;
+      q("moreList")?.replaceChildren(...(card.more || []).map(item => button(item.label, () => {
+        more.open = false; return perform(item.action, card.task);
+      })));
+    }
     q("cancel").hidden = card.kind !== "progress";
     q("progress").hidden = card.kind !== "progress";
     q("serviceGuide").hidden = view.connected;
     q("startService").hidden = true;
-    const analyzeAll = q("analyzeAll");
-    analyzeAll.hidden = !view.connected || Boolean(view.active) || selectionCount(view.context) > 0 || !view.context.libraryPath;
-    analyzeAll.textContent = libraryAnalysisText(view.context.libraryCount);
+    const openLibrary = q("openLibrary");
+    openLibrary.hidden = !view.connected || !view.context.libraryPath;
+    const summary = librarySummary(library.state.overview);
+    openLibrary.textContent = summary ? `${summary} ›` : "资源库进度 ›";
     setText("libraryName", view.context.libraryName || "浏览器预览");
   }
 
@@ -168,17 +177,26 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
       : { ...view.context, itemIds: [], folders: [] };
   }
 
-  // Which task does the current Eagle selection belong to? Only re-asked when the selection changes.
+  // Which task the current Eagle selection belongs to, and which folders it sits in. Only re-asked when the selection
+  // changes; looking never starts an analysis.
   async function refreshMatch() {
     const version = ++matchVersion;
-    if (!view.connected || !selectionCount(view.context) || !view.context.libraryPath) { view.match = null; renderCard(); return; }
+    if (!view.connected || !selectionCount(view.context) || !view.context.libraryPath) {
+      view.match = null; view.location = null; renderCard(); return;
+    }
     try {
       const context = await fullContext();
       const request = scopeRequest(context);
       if (version !== matchVersion || !request?.itemIds.length) return;
-      const response = await getApi()("/runs/match", { method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({ libraryPath: context.libraryPath, itemIds: request.itemIds, scope: request.scope }) });
+      const post = (path, body) => getApi()(path, { method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ libraryPath: context.libraryPath, ...body }) });
+      const [response, location] = await Promise.all([
+        post("/runs/match", { itemIds: request.itemIds, scope: request.scope }),
+        post("/library/selection", context.itemIds.length ? { itemIds: context.itemIds }
+          : { folderIds: (context.folders || []).map(folder => folder.id) }).catch(() => null)]);
       if (version !== matchVersion) return;
+      view.location = location;
+      if (location) view.queueLength = location.queueLength || 0;
       const match = response.match;
       view.match = match ? { ...match, run: view.tasks.find(run => run.id === match.runId) ||
         await getApi()(`/runs/${match.runId}`).catch(() => null) } : null;
@@ -202,14 +220,17 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     renderCard();
   }
 
+  const performanceMode = () => storage.getItem("eagle-culling-turbo") === "1" ? "turbo" : "normal";
+  const rememberRun = run => storage.setItem("eagle-culling-recent-runs",
+    JSON.stringify([run.id, ...readRecentRuns(storage).filter(id => id !== run.id)].slice(0, 10)));
+
   async function submit(body) {
     if (view.submitting) return;
     view.submitting = true; setNotice(""); renderCard();
     try {
       const run = await getApi()("/runs", { method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...body, performanceMode: storage.getItem("eagle-culling-turbo") === "1" ? "turbo" : "normal" }) });
-      storage.setItem("eagle-culling-recent-runs", JSON.stringify([run.id, ...readRecentRuns(storage).filter(id => id !== run.id)]
-        .slice(0, 10)));
+        body: JSON.stringify({ ...body, performanceMode: performanceMode() }) });
+      rememberRun(run);
       await watchRun(run);
     } catch (error) {
       if (error.status === 409 && error.body?.run) { setNotice("已有分析在进行。"); await watchRun(error.body.run); }
@@ -217,32 +238,43 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     } finally { view.submitting = false; render(); void refreshTasks(); }
   }
 
-  async function analyzeSelection() {
-    const context = await fullContext();
-    if (!context.libraryPath) throw new Error("请在 Eagle 打开一个资源库");
-    const request = scopeRequest(context);
-    if (!request?.itemIds.length) throw new Error("没有找到可分析的照片，请重新选择");
-    await submit({ libraryPath: context.libraryPath, ...request });
+  // Every analysis started from the home page goes through the queue: it starts now if nothing else runs.
+  async function enqueue(scopes) {
+    if (view.submitting || !scopes.length) return;
+    view.submitting = true; setNotice(""); renderCard();
+    try {
+      const response = await getApi()("/queue", { method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ libraryPath: view.context.libraryPath, scopes, performanceMode: performanceMode() }) });
+      view.queueLength = response.queue?.length || 0;
+      if (response.started) { rememberRun(response.started); await watchRun(response.started); }
+      else setNotice(response.added ? `已排队，队列里现在有 ${view.queueLength} 个，轮到时自动开始。` : "已经在排队了。");
+    } catch (error) { setNotice(`排队失败：${error.message}`); }
+    finally { view.submitting = false; render(); void refreshMatch(); }
   }
 
-  async function analyzeLibrary() {
-    const context = isEagleEnvironment() ? await eagleContext({ selected: true })
-      : { libraryPath: q("libraryPath").value.trim(), libraryCount: null };
-    if (!context.libraryPath) throw new Error("请在 Eagle 打开一个资源库；浏览器预览请在设置 › 高级中填写资源库路径");
-    if (!confirmImpl(libraryConfirmText(context.libraryCount, measuredRate(view.tasks)))) return;
-    await submit({ libraryPath: context.libraryPath, scope: { type: "library", label: "整个资源库" } });
+  async function queueSelection() {
+    const context = await fullContext();
+    if (!context.itemIds?.length) throw new Error("没有选中照片");
+    await enqueue([{ type: "selection", itemIds: context.itemIds }]);
   }
+
+  function showLibrary() { settings.show("libraryView"); }
 
   async function perform(action, run) {
     try {
-      if (action === "analyze") return await analyzeSelection();
+      if (action === "queueScopes") {
+        return await enqueue((view.location?.scopes || []).filter(scope => ["none", "partial"].includes(placeStatus(scope).state))
+          .map(scope => scope.type === "folder" ? { type: "folder", folderId: scope.folderId } : { type: "unfiled" }));
+      }
+      if (action === "queueSelection") return await queueSelection();
+      if (action === "openLibrary") return showLibrary();
       if (action === "startService") return await startService();
       if (action === "cancel") return await cancel();
       if (action === "watch") return await watchRun(run);
       if (action === "resume") return await submit({ resumeRunId: run.id });
       if (action === "rerun") return await submit({ rerunOf: run.id });
       if (action === "reselect") {
-        return setNotice(`在 Eagle 里重新选中「${run.scope?.label || "这批照片"}」，再点「分析」。已做的决定会自动带上。`);
+        return setNotice(`在 Eagle 里重新选中「${run.scope?.label || "这批照片"}」所在的文件夹，再点「排队」。已做的决定会自动带上。`);
       }
       if (action === "review") return await onRun(run.id);
       if (action === "finish") return await onRun(run.id, { finish: true });
@@ -271,6 +303,8 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     else setNotice("分析已暂停，已完成的部分会保留，之后可以继续。");
     await refreshTasks();
     void refreshMatch();
+    // The service starts the next queued folder by itself; follow it.
+    if (view.queueLength) { clearTimeout(nextTimer); nextTimer = setTimeout(() => { if (!view.active) void recover(); }, 1500); }
   }
 
   async function poll(id, token) {
@@ -323,6 +357,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
       if (!view.active) await recover(); else await watchRun(view.active);
       await refreshTasks();
       void refreshMatch();
+      void library.refresh().then(renderCard).catch(() => {});
       return true;
     } catch {
       view.connected = false;
@@ -364,7 +399,8 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   q("cancel").addEventListener("click", () => perform("cancel"));
   q("retryService").addEventListener("click", checkHealth);
   q("startService").addEventListener("click", () => startService());
-  q("analyzeAll").addEventListener("click", () => analyzeLibrary().catch(error => setNotice(error.message)));
+  q("openLibrary").addEventListener("click", showLibrary);
+  q("closeLibrary")?.addEventListener("click", () => settings.show("panelHome"));
   q("moreRuns").addEventListener("click", () => refreshTasks(true));
   q("showSuperseded")?.addEventListener("change", () => refreshTasks());
   q("repositoryPath").addEventListener("change", () => {
@@ -382,7 +418,16 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   q("openRun").addEventListener("click", openById);
   q("runId").addEventListener("keydown", event => { if (event.key === "Enter") { event.preventDefault(); openById(); } });
 
-  const settings = mountPanelSettings({ root, storage });
+  const library = mountLibraryView({ root, getApi, getLibraryPath: () => view.context.libraryPath || "", performanceMode,
+    onChange: response => {
+      if (response?.queue) view.queueLength = response.queue.length;
+      if (response?.started) { rememberRun(response.started); void watchRun(response.started); }
+      void refreshMatch();
+    } });
+  const settings = mountPanelSettings({ root, storage, onShow: name => {
+    library.setVisible(name === "libraryView");
+    if (name === "panelHome") renderCard();
+  } });
   const cacheSettings = mountCacheSettings({ root, getApi, storage });
   const prefetcher = createIdlePrefetcher({ storage, getApi, isVisible: () => visible, isConnected: () => view.connected,
     isBusy: () => Boolean(view.active) || view.submitting });
@@ -402,7 +447,8 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   globalThis.eagle?.onLibraryChanged?.(libraryPath => {
     contextVersion++; contextKey = ""; matchVersion++;
     view.context = { libraryPath, libraryName: libraryPath?.split(/[\\/]/).pop(), itemIds: [], folders: [] };
-    view.match = null; view.tasks = []; tasksVersion++;
+    view.match = null; view.location = null; view.queueLength = 0; view.tasks = []; tasksVersion++;
+    library.reset();
     render();
     void refreshTasks();
     if (visible) void refreshContext().then(() => refreshTasks()).catch(() => {});
@@ -424,6 +470,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
   return { setNotice, reloadPage: () => lifecycle.reload(), checkHealth, refreshContext, refreshRecent: refreshTasks,
     refreshTasks, setVisible, startService, settings, cacheSettings, prefetcher, view, dispose() {
       disposed = true; stopPolling(); prefetcher.stop(); clearTimeout(serviceTimer); clearTimeout(contextTimer);
+      clearTimeout(nextTimer); library.dispose();
       clearInterval(healthTimer); tasksVersion++; contextVersion++; matchVersion++;
     } };
 }

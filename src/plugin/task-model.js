@@ -1,6 +1,7 @@
 // Pure presentation rules for analysis records ("the culling work for one scope"); see docs/ux-design.md.
-import { analysisProgress, durationText } from "./start-model.js";
+import { analysisProgress } from "./start-model.js";
 import { showInEagle } from "./eagle-select.js";
+import { locateCard } from "./library-model.js";
 
 const BROKEN = ["failed", "cancelled", "interrupted"];
 
@@ -93,8 +94,8 @@ export function scopeName(context = {}) {
 }
 
 // The main home card: one decision, derived from service state, Eagle's current selection and earlier analyses.
-export function homeCard({ connected = false, launching = false, active = null, context = {}, match = null,
-  tasks = [], submitting = false, secondsPerPhoto = null, now = Date.now() } = {}) {
+export function homeCard({ connected = false, launching = false, active = null, context = {}, match = null, location = null,
+  queueLength = 0, tasks = [], submitting = false, secondsPerPhoto = null, now = Date.now() } = {}) {
   if (!connected) {
     return launching ? { kind: "service", eyebrow: "分析服务", title: "正在启动分析服务…", detail: "首次启动可能需要十几秒。", action: null }
       : { kind: "service", eyebrow: "分析服务", title: "分析服务没有运行", detail: "挑片需要本机分析服务。启动后会自动连接。",
@@ -103,7 +104,8 @@ export function homeCard({ connected = false, launching = false, active = null, 
   if (active) {
     return { kind: "progress", eyebrow: "正在分析", title: active.scope?.label || "分析中", detail: analysisProgress(active, now).text,
       progress: percent(active), action: null, secondary: [{ label: "取消", action: "cancel" }],
-      note: "可以关闭窗口，完成后会通知你。" };
+      note: ["可以关闭窗口，完成后会通知你。", queueLength ? `之后还有 ${queueLength} 个排队，会依次开始；取消只停当前这一个。` : ""]
+        .filter(Boolean).join("") };
   }
   const count = selectionCount(context), name = scopeName(context);
   if (count) {
@@ -113,17 +115,8 @@ export function homeCard({ connected = false, launching = false, active = null, 
       return { kind: "task", eyebrow: name, title: `已分析过：${view.title}`, detail: view.detail, task,
         action: { label: view.primary.label, action: view.primary.action }, progress: view.progress, chip: view.chip };
     }
-    if (task && match.matched > 0) {
-      const extra = match.missing;
-      return { kind: "append", eyebrow: name, title: match.sameScope ? `「${taskView(task).title}」新增 ${extra} 张`
-        : `${extra} 张是新照片，${match.matched} 张已在「${taskView(task).title}」中`,
-      detail: "已分析过的照片直接复用，已做的决定会带到新结果里。", task,
-      action: { label: `补充分析（新增 ${extra} 张）`, action: "analyze", disabled: submitting },
-      secondary: [{ label: "先挑已分析的", action: "openMatch" }] };
-    }
-    const estimate = secondsPerPhoto ? `预计约 ${durationText(count * secondsPerPhoto)}。` : "";
-    return { kind: "new", eyebrow: name, title: `分析${name}`, detail: `${estimate}分析只读取照片，不会修改 Eagle 中的任何内容。`,
-      action: { label: `分析这 ${count} 张`, action: "analyze", disabled: submitting } };
+    const photos = context.selectionCount ?? context.itemIds?.length ?? 0;
+    return locateCard({ name, location, match, submitting, secondsPerPhoto, photos });
   }
   const unfinished = sortTasks(tasks).find(needsAttention);
   if (unfinished) {
@@ -132,12 +125,8 @@ export function homeCard({ connected = false, launching = false, active = null, 
       progress: view.progress, action: { label: view.primary.label, action: view.primary.action },
       note: "要挑新的一批，在 Eagle 里选中文件夹或照片。" };
   }
-  return { kind: "empty", eyebrow: "开始", title: "在 Eagle 里选中要挑的照片", detail: "选中一个文件夹或一批照片，这里会出现「分析这 N 张」。",
-    action: null };
-}
-
-export function libraryAnalysisText(count) {
-  return count == null ? "分析整个资源库…" : `分析整个资源库（${count} 张）…`;
+  return { kind: "empty", eyebrow: "开始", title: "在 Eagle 里选中要挑的照片",
+    detail: "选中照片或文件夹，这里会显示它们分析到哪了；要分析，按文件夹排队。", action: null };
 }
 
 // Seconds per photo measured on this machine; cached reruns are excluded because they would understate cold cost.
@@ -146,12 +135,6 @@ export function measuredRate(runs = []) {
     Number(run.progress?.elapsedSeconds) > 0 && !(run.progress?.cached > run.itemCount / 2))
     .map(run => run.progress.elapsedSeconds / run.itemCount).sort((a, b) => a - b);
   return rates.length ? rates[Math.floor(rates.length / 2)] : null;
-}
-
-export function libraryConfirmText(count, secondsPerPhoto = null) {
-  const estimate = Number.isFinite(count) && secondsPerPhoto
-    ? `，按本机以往速度估算约 ${durationText(count * secondsPerPhoto)}` : "";
-  return `将分析整个资源库${Number.isFinite(count) ? ` ${count} 张` : ""}${estimate}。已分析过的照片会复用。期间可以继续使用电脑，确定开始吗？`;
 }
 
 export function cullStartNotice(row, shown = "selected") {
