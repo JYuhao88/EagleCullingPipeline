@@ -70,7 +70,7 @@ const pendingDisplays = new Map();
 // A thumbnail fallback is retried once per service start (decoders may have been installed since), not per request.
 // RAW images cached before the current preview probe are rebuilt once, so a camera JPEG found since replaces a generic decode.
 const reprobedFallbacks = new Set();
-const PREVIEW_PROBE = 2;
+const PREVIEW_PROBE = 3;
 const retryFallback = (file, metadata, ext) => (isRaw(ext) && (metadata?.probe || 1) < PREVIEW_PROBE)
   || (metadata?.previewSource === 'eagle-thumbnail' && (isRaw(ext) || isHeif(ext)) && !reprobedFallbacks.has(file)
     && Boolean(reprobedFallbacks.add(file)));
@@ -156,8 +156,9 @@ export async function displayImage(store, id, unitId, state, requestedEdge) {
     const pending = (async () => {
       await mkdir(path.dirname(file), { recursive: true });
       let displaySource = 'sharp', warning;
+      // Native pipelines arrive upright already; sharp keeps only the last rotate(), so a second one would undo theirs.
       const write = async (pipeline, kind) => {
-        const info = await pipeline.rotate().resize({ width: edge, height: edge, fit: 'inside', withoutEnlargement: true })
+        const info = await pipeline.resize({ width: edge, height: edge, fit: 'inside', withoutEnlargement: true })
           .jpeg({ quality: 92, chromaSubsampling: '4:4:4' }).toFile(file);
         displaySource = kind; return { width: info.width, height: info.height };
       };
@@ -177,12 +178,12 @@ export async function displayImage(store, id, unitId, state, requestedEdge) {
               async ({ image, source: nativeSource }) => { dimensions = await write(image(), nativeSource.kind); return dimensions; });
             if (native?.available === false) throw new Error(native.warnings?.join('；') || 'native unavailable');
           } else {
-            dimensions = await write(sharp(source, { failOn: 'none' }), 'sharp');
+            dimensions = await write(sharp(source, { failOn: 'none' }).rotate(), 'sharp');
           }
         } catch (error) {
           warning = error.message;
           if (!state.results?.find(item => item.unitId === unitId)?.previewPath) throw error;
-          dimensions = await write(sharp(result.previewPath, { failOn: 'none' }), 'eagle-thumbnail');
+          dimensions = await write(sharp(result.previewPath, { failOn: 'none' }).rotate(), 'eagle-thumbnail');
           warning = warning || '已降级到 Eagle 缩略图';
         }
       }

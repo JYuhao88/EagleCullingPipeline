@@ -221,3 +221,29 @@ test('each photo loads and saves its own adjustments, and they reach the compare
   assert.deepEqual(calls.at(-1).body, {}, '复位 clears the saved values');
   assert.equal(dom.html.classList.names.has('ec-adjusted'), false);
 });
+
+test('a photo not analyzed yet is viewed and adjusted through its Eagle item', async () => {
+  const dom = detailDom(), calls = [], timers = [];
+  Object.assign(dom.ids.detailFrame, { clientWidth: 400, clientHeight: 300, classList: dom.html.classList });
+  const fetchImpl = async (url, options = {}) => {
+    calls.push({ url, method: options.method || 'GET', body: options.body && JSON.parse(options.body) });
+    return { ok: true, json: async () => (url.includes('/adjustments') ? { exposure: 0.5 } : { areas: [] }) };
+  };
+  const view = createDetailView({ root: dom.root, baseUrl: () => 'http://svc', fetchImpl, win: null, storage: null,
+    setTimer: fn => timers.push(fn), clearTimer: () => {} });
+  const settle = () => new Promise(resolve => setTimeout(resolve, 0));
+  dom.ids.detailView.open = true;
+  view.render({ itemId: 'ITEM1', libraryPath: '/x/示例.library' }); await settle();
+  const query = `?libraryPath=${encodeURIComponent('/x/示例.library')}`;
+  assert.equal(dom.ids.detailView.hidden, false, 'the detail fold is offered without an analysis');
+  assert.ok(calls.some(call => call.url === `http://svc/items/ITEM1/adjustments${query}`));
+  assert.ok(calls.some(call => call.url === `http://svc/items/ITEM1/focus-points${query}`));
+  assert.equal(dom.ids.detailImage.src, `http://svc/items/ITEM1/display${query}&edge=1024`);
+  assert.equal(dom.sliders[0].value, '0.5');
+  dom.sliders[1].value = '20'; dom.sliders[1].listeners.input();
+  while (timers.length) timers.shift()(); await settle();
+  assert.deepEqual(calls.at(-1), { url: `http://svc/items/ITEM1/adjustments${query}`, method: 'PUT',
+    body: { exposure: 0.5, contrast: 0.2 } });
+  view.render(null);
+  assert.equal(dom.ids.detailView.hidden, true);
+});

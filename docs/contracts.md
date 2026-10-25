@@ -104,7 +104,10 @@ Group 可新增 `candidateSet`，不改变旧 `ranking`、`suggested` 字段：
 | GET | /runs/:id/focus-points/:unitId | `{source, areas: [{box, kind, inFocus}], width, height}`：相机记录的对焦位置（索尼对焦框、理光/宾得对焦区域），box 为摆正后图像的 0–1 坐标；没有记录时 `areas` 为空。只供显示，不进入分析 | 分析 |
 | GET | /runs/:id/face/:unitId/:faceIndex | 按需裁剪指定人脸，长边不超过 320 的 JPEG（image/jpeg） | 分析 |
 | GET/POST | /runs/:id/decisions | 读取或批量写入 Decision（持久化到 `data/runs/<id>/decisions.json`） | 审阅 |
-| GET/PUT | /runs/:id/adjustments[/:unitId] | 检查器的查看调节，按照片存到 `data/runs/<id>/adjustments.json`；PUT `{}` 清除，全部清除时删除文件；只影响显示 | 审阅 |
+| GET/PUT | /runs/:id/adjustments[/:unitId] | 检查器的查看调节，按照片存到 `data/runs/<id>/adjustments.json`；PUT `{}` 清除，全部清除时删除文件；只影响显示。没有自己的值时返回分析前按 Eagle 条目记下的值，保存或复位后那条作废 | 审阅 |
+| GET | /items/:itemId/display?libraryPath&edge | 没分析的照片的显示图，直接从资源库读原图（RAW 用机内 JPEG），缓存在 `cache/display/items/` | 审阅 |
+| GET | /items/:itemId/focus-points?libraryPath | 同 `/runs/:id/focus-points/:unitId` | 审阅 |
+| GET/PUT | /items/:itemId/adjustments?libraryPath | 分析前的查看调节，存到 `data/runs/item-adjustments.json`（按资源库和条目） | 审阅 |
 | GET | /runs/:id/personalize | 返回偏好学习报告（结构见下） | 审阅 |
 | POST | /runs/:id/personalize/apply | 无需 body；应用当前决定拟合的权重，只重排本 run 未审阅多张组 | 审阅 |
 | POST | /runs/:id/apply | body `{apply: false|true, moveRejectedToTrash?: bool, confirm?: "MOVE_TO_TRASH"}`，默认 dry-run | 审阅 |
@@ -133,7 +136,7 @@ POST /runs 可带 `scope:{type:"selection"|"folder"|"unfiled"|"library",label,fo
 | GET | /library/overview?libraryPath | `{total, analyzed, folders, unfiled, queue, active}`；folders 是 Eagle 的文件夹树，每个节点 `{id,name,count,analyzed,queued,running,subtree:{count,analyzed},children}`，count 只算直接放在这个文件夹里的照片 |
 | POST | /library/selection | `{libraryPath, itemIds? \| folderIds?}` → `{scopes:[{type,folderId?,label,count,analyzed,queued,running}], selected:{total,analyzed}, queueLength, active}`，只读，不排队 |
 | GET | /library/unanalyzed?libraryPath&folderId= \| unfiled=1 | `{total, itemIds}`，itemIds 最多 2000 |
-| GET | /queue | 全部排队 |
+| GET | /queue?libraryPath | 这个资源库的排队与正在分析的 `{queue, active}` |
 | POST | /queue | `{libraryPath, scopes:[{type:"folder",folderId} \| {type:"unfiled"} \| {type:"selection",itemIds}] \| allUnanalyzed:true, performanceMode?}` → `{added, started, queue, active}` |
 | DELETE | /queue | 清空这个资源库的排队，正在分析的不受影响 |
 | DELETE | /queue/:id · POST /queue/:id/top | 取消一项 · 移到最前 |

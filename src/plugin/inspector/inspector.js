@@ -416,7 +416,10 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     renderRun();
     syncPersonalization();
     renderMarksToggle(compared ? result : null);
-    detail.render(state === 'result' && !multi ? result : null);
+    // Viewing and adjusting need no analysis: an unanalyzed photo is shown straight from the library.
+    const unanalyzed = state === 'empty' && selected.length === 1 && eagle?.library?.path
+      ? { itemId: selected[0].id || selected[0], libraryPath: eagle.library.path } : null;
+    detail.render(state === 'result' && !multi ? result : unanalyzed);
     if (state !== 'loading') { releaseHeight(); saveSnapshot(); }
   }
   function renderMarksToggle(result) {

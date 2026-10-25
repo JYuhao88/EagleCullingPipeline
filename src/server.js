@@ -1,6 +1,7 @@
 import { createCacheMaintenance } from './core/cache-budget.js';
 import { createCacheRouter } from './server/cache-routes.js';
 import { createItemAnalysisRouter, ItemAnalysisIndex } from "./server/item-analysis.js";
+import { createItemMediaRouter } from "./server/item-media-routes.js";
 import { AnalysisQueue, createLibraryRouter } from "./server/library-routes.js";
 import http from "node:http";
 import path from "node:path";
@@ -50,6 +51,7 @@ export function createAnalysisServer({
     beforeRun: () => maintenance.cancel(), onFinished: () => { void maintenance.trigger(); void library?.drain().catch(() => {}); },
     isUpdating, canPrefetch: () => !queue.size() });
   const itemIndex = new ItemAnalysisIndex(runStore);
+  const itemMedia = createItemMediaRouter({ runStore, cacheRoot, readBody: parseBody });
   library = createLibraryRouter({ store: runStore, index: itemIndex, active, startRun: runs.startRun, isUpdating, queue });
   let drainTimer = null;
   const ctx = { runStore, api, json, readBody: parseBody, clock };
@@ -117,6 +119,7 @@ export function createAnalysisServer({
         }
         return json(res, 200, { dryRun: body.dryRun, scanned, changed, failed, removed: changed - failed });
       }
+      if (await itemMedia(req, res, url)) return;
       if (await itemAnalysis(req, res, url)) return;
       if (await library.route(req, res, url)) return;
       if (await runs(req, res, url)) return;

@@ -1,4 +1,4 @@
-import { readFile, readdir } from 'node:fs/promises';
+import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { analyzableExtension } from './metrics.js';
 
@@ -66,6 +66,24 @@ async function read(libraryPath, concurrency) {
     }
   }
   return { roots, folders, items, members };
+}
+
+// One photo straight from the library folder, for views that need no analysis. Null for unknown, deleted or unusable items.
+export async function readLibraryItem(libraryPath, id) {
+  if (typeof id !== 'string' || !/^[A-Za-z0-9]{1,64}$/.test(id)) return null;
+  const dir = path.join(libraryPath, 'images', `${id}.info`);
+  let metadata;
+  try { metadata = JSON.parse(await readFile(path.join(dir, 'metadata.json'), 'utf8')); } catch { return null; }
+  if (metadata.isDeleted || !analyzableExtension(metadata.ext)) return null;
+  const files = (await readdir(dir, { withFileTypes: true }).catch(() => [])).filter(entry => entry.isFile());
+  const original = files.find(entry => entry.name !== 'metadata.json' && !/thumbnail/i.test(entry.name));
+  const thumbnail = files.find(entry => /thumbnail/i.test(entry.name));
+  if (!original && !thumbnail) return null;
+  const filePath = original ? path.join(dir, original.name) : null;
+  const info = filePath ? await stat(filePath).catch(() => null) : null;
+  return { id, name: metadata.name || original?.name || id, ext: String(metadata.ext || '').toLowerCase(), filePath,
+    thumbnailPath: thumbnail ? path.join(dir, thumbnail.name) : null, width: metadata.width, height: metadata.height,
+    mtimeMs: info?.mtimeMs || 0 };
 }
 
 // Photos a folder scope covers: only the folder's own photos, like Eagle's folder count; subfolders are their own scopes.

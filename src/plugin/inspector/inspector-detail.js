@@ -1,4 +1,4 @@
-import { displayUrl } from '../display-url.js';
+import { displayUrl, displayEdgeForViewport } from '../display-url.js';
 import { DEFAULT_ADJUSTMENTS, adjustmentTables, clampAdjustment, isNeutral, normalizeAdjustments, toLinear }
   from '../adjust.js';
 
@@ -146,7 +146,10 @@ export function createDetailView({ root = globalThis.document, storage = globalT
   const readLast = () => { try { return normalizeAdjustments(JSON.parse(storage?.getItem(LAST_KEY) || '{}')); } catch { return {}; } };
   let previous = readLast();
   const save = () => storage?.setItem(STORE_KEY, JSON.stringify(state));
-  const runUrl = (kind, { runId, unitId }) => `${baseUrl()}/runs/${encodeURIComponent(runId)}/${kind}/${encodeURIComponent(unitId)}`;
+  // An analyzed photo is addressed by its run and unit; one not analyzed yet by its Eagle item in the library.
+  const runUrl = (kind, { runId, unitId, itemId, libraryPath }) => itemId
+    ? `${baseUrl()}/items/${encodeURIComponent(itemId)}/${kind}?libraryPath=${encodeURIComponent(libraryPath)}`
+    : `${baseUrl()}/runs/${encodeURIComponent(runId)}/${kind}/${encodeURIComponent(unitId)}`;
   const view = () => ({ frameWidth: frame.clientWidth, frameHeight: frame.clientHeight, imageWidth: image.naturalWidth,
     imageHeight: image.naturalHeight, zoom: state.zoom, focus });
   const fullZoom = () => image.naturalWidth && fullSizeZoom({ ...view(), dpr: win?.devicePixelRatio || 1,
@@ -206,14 +209,14 @@ export function createDetailView({ root = globalThis.document, storage = globalT
     if (token === loadToken) { adjustments = normalizeAdjustments(value); loaded = true; applyAdjustments(); }
   }
   async function loadFocusPoints() {
-    if (!current || !fold.open || pointsFor === current.unitId) return;
-    const unit = current; pointsFor = unit.unitId;
+    if (!current || !fold.open || pointsFor === current.key) return;
+    const unit = current; pointsFor = unit.key;
     let value = null;
     try {
       const response = await fetchImpl(runUrl('focus-points', unit));
       if (response.ok) value = await response.json();
     } catch { /* an older service has no focus points; the view works without them */ }
-    if (current?.unitId !== unit.unitId) return;
+    if (current?.key !== unit.key) return;
     focusPoints = value;
     const af = focusAreaCentre(value?.areas);
     if (af && !moved) focus = af;
@@ -245,7 +248,9 @@ export function createDetailView({ root = globalThis.document, storage = globalT
     if (!current || !fold.open) return;
     void loadFocusPoints();
     const width = frame.clientWidth || 300, height = frame.clientHeight || 300;
-    const src = displayUrl(baseUrl(), current.runId, current.unitId, width * resolution, height * resolution, win?.devicePixelRatio || 1);
+    const src = current.itemId
+      ? `${runUrl('display', current)}&edge=${displayEdgeForViewport(width * resolution, height * resolution, win?.devicePixelRatio || 1)}`
+      : displayUrl(baseUrl(), current.runId, current.unitId, width * resolution, height * resolution, win?.devicePixelRatio || 1);
     if (image.dataset.src !== src) { image.crossOrigin = 'anonymous'; image.dataset.src = src; image.src = src; }
     else layout();
   }
@@ -351,16 +356,18 @@ export function createDetailView({ root = globalThis.document, storage = globalT
 
   return {
     render(result) {
-      const next = result?.runId && result?.unitId ? { runId: result.runId, unitId: result.unitId } : null;
+      const next = result?.runId && result?.unitId ? { runId: result.runId, unitId: result.unitId, key: `${result.runId}/${result.unitId}` }
+        : result?.itemId && result?.libraryPath ? { itemId: result.itemId, libraryPath: result.libraryPath,
+          key: `${result.libraryPath}/${result.itemId}` } : null;
       fold.hidden = !next;
-      if (current && (current.runId !== next?.runId || current.unitId !== next?.unitId)) {
+      if (current && current.key !== next?.key) {
         void flush();
         previous = readLast();
         adjustments = {}; loadToken++;
         if (next) void loadAdjustments(next);
       } else if (!current && next) void loadAdjustments(next);
       if (!next) { current = null; applyAdjustments(); return; }
-      if (current?.unitId !== result.unitId) {
+      if (current?.key !== next.key) {
         const member = (result.groupMembers || []).find(row => row.unitId === result.unitId);
         focus = focusPoint(member?.marks || result.marks); moved = false;
         focusPoints = null; pointsFor = null; resolution = Math.max(1, RESOLUTION_STEPS.find(value => value >= state.zoom) || 1);
