@@ -9,7 +9,7 @@ import { EagleApi } from "./core/eagle-api.js";
 import { ResultsStore } from "./core/results-store.js";
 import { RunStore } from "./server/run-store.js";
 import { createRunsRouter } from "./server/runs-routes.js";
-import { handleReviewRoute, decideUnits, wantsStars } from "./server/review-routes.js";
+import { handleReviewRoute, decideUnits, decidePending, wantsStars } from "./server/review-routes.js";
 import { json, parseBody } from "./server/http.js";
 import { createRulesRouter } from "./server/rules-routes.js";
 import { CLEARABLE_TAGS } from './core/writeback.js';
@@ -56,6 +56,8 @@ export function createAnalysisServer({
     const fromStarItem = body.via === 'eagle-star' ? entry.itemId : null;
     const fromTagItem = body.via === 'eagle-tag' ? entry.itemId : null;
     try {
+      if (!entry.runId) return json(res, 200, await decidePending(ctx, entry, decision,
+        { stars: wantsStars(req), via: fromStarItem || fromTagItem ? body.via : null }));
       const result = await decideUnits(ctx, entry.runId, [decision], {}, { stars: wantsStars(req), fromStarItem, fromTagItem });
       if (result.unchanged) return json(res, 200, { runId: entry.runId, unitId: entry.unitId, unchanged: true });
       return json(res, 200, { runId: entry.runId, unitId: entry.unitId, decisions: result.decisions.filter(row =>

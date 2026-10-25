@@ -2,6 +2,7 @@ import { resultAiTags } from './item-analysis.js';
 import { parsePerformanceMode, configuredPerformanceMode } from '../core/performance-mode.js';
 import { RunProgress, measuredWeights } from '../core/run-progress.js';
 import { Checkpoints } from "../core/checkpoints.js";
+import { DecisionsStore } from "../core/decisions-store.js";
 import { scopeKey, inheritDecisions, supersedeOlderRuns } from "../core/task-continuity.js";
 import { pageOptions } from "./pagination.js";
 import { randomUUID } from "node:crypto";
@@ -397,6 +398,9 @@ export function createRunsRouter({
             try {
               const inherited = await inheritDecisions(store, run, unitIds);
               if (inherited.count) run.inherited = inherited;
+              const adopted = await store.pendingDecisions?.adopt(run.libraryPath, data.units,
+                new DecisionsStore(store.dir(run.id)));
+              if (adopted) run.adoptedBeforeAnalysis = adopted;
               if (store.unitIds) await supersedeOlderRuns(store, run, unitIds);
             } catch (error) { run.continuityWarning = error.message; }
           }

@@ -77,6 +77,8 @@ gate 理由沿用 `ranking[].reasons`，未新增主结构字段。score 仍表�
 - `record`（留存）是人工决定：保留这张但不评画质。批量淘汰、「其余淘汰」、跨批继承都不改动它；它不进入偏好学习的组、
   spot-eval 标签与配对样本。Eagle 中表示为 0★ 加资源库标签「留存」（不改照片文件）；在 Eagle 里加上这个标签记为留存，
   去掉它只清除留存，不影响其它决定。选精选/候选/淘汰会替换它，「恢复 AI」清除它及标签。
+- 分析前做的决定先存在 `data/runs/pending-decisions.json`，第一个覆盖该照片的正式分析完成时并入，带 `beforeAnalysis: true`
+  （细节见 eagle-integration.md「分析前的决定」）；run 记录 `adoptedBeforeAnalysis` 为并入条数。
 - `category`、`tie`、`reason` 是可选新增字段；旧决定缺失时按普通单张决定读取。`tie:true` 表示用户明确接受并列候选，`category:"group"` 可表示整组拒绝。
 
 Group 可新增 `candidateSet`，不改变旧 `ranking`、`suggested` 字段：

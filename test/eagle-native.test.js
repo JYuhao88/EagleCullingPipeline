@@ -69,7 +69,8 @@ test('Eagle-native culling: decide by item, opt-in task tags, exact revert and l
   assert.deepEqual(await human(), { 'unit:b': 'selected' });
   assert.equal(api.updates, 0, 'tags stay untouched until the task opts in');
   assert.equal((await call('/items/b/decision', { libraryPath: LIB, action: 'bogus' })).status, 400);
-  assert.equal((await call('/items/missing/decision', { libraryPath: LIB, action: 'selected' })).status, 404);
+  assert.equal((await call('/items/missing/decision', { libraryPath: LIB, action: 'selected' })).body.pending, true);
+  await call('/items/missing/decision', { libraryPath: LIB, action: 'clear' });
   assert.equal((await call('/items/b/decision', { action: 'selected' })).status, 400);
 
   const enabled = await call(`/runs/${runId}/eagle-tags`, { enabled: true });

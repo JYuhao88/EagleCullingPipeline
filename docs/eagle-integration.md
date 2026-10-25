@@ -67,7 +67,17 @@ AI 标签是设置里的可选项，默认关闭。开启后只写入 Eagle 资�
 ## 检查器读取与同步
 
 `GET /items/:itemId/analysis?libraryPath=...` 返回最近一次完成并包含该条目的分析结果，
-配对 RAW/JPEG 的所有 itemId 都映射到同一 unitId。无结果返回 404 和「尚未分析，在插件中分析后显示」。
+配对 RAW/JPEG 的所有 itemId 都映射到同一 unitId。无结果返回 404 和「尚未分析，在插件中分析后显示」，
+有分析前记下的决定时附 `pending: {action, reason?, updatedAt}`。
+
+### 分析前的决定
+
+`POST /items/:itemId/decision` 遇到还没有完成分析的照片时不再返回 404，而是把决定记到
+`data/runs/pending-decisions.json`（按资源库和 itemId），返回 `{pending: true, itemId, decision, eagleStars?}`；
+`clear` 删除这条记录。检查器按钮、快捷键和在 Eagle 里打的星或「留存」标签都走这条路，回声判定与已分析照片相同。
+第一个覆盖这张照片的正式分析（不含预取）完成时，每个拍摄单元取其各 item 中最新的一条并入，记为
+`source: "human"`、`beforeAnalysis: true`；若这次分析已有更新的人工决定（例如跨批继承）则以它为准。
+并入后的条目从待并入列表中删除，未覆盖的照片继续等待。
 按 libraryPath 在内存构建索引，新增运行或发布结果后失效；进度更新不反复重建。
 首次按时间从新到旧扫描一次运行/单位索引，之后选择只读取对应单位、分组及当前人工决定。
 索引保留最多三个资源库；人工决定和分组修正每次读取，避免显示过期决定。

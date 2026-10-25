@@ -418,6 +418,36 @@ test('inspector selection refresh ignores stale responses and never writes Eagle
     view.setVisible(false); selected = 'c'; await view.refresh(true); assert.equal(writes, 0);
   } finally { view.dispose(); }
 });
+test('an unanalyzed photo can be decided from the inspector and shows the mark waiting for analysis', async () => {
+  const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
+  const keys = {};
+  const { root } = fakeDom({ addEventListener: (type, handler) => { keys[type] = handler; } });
+  const eagle = { library: { path: '/fixture.library' }, item: { getSelected: async () => [{ id: 'n1', star: 0 }] } };
+  let pending = null; const posts = [];
+  const fetchImpl = async (url, options = {}) => {
+    if (options.method === 'POST') {
+      const body = JSON.parse(options.body); posts.push({ url, body });
+      pending = body.action === 'clear' ? null : { action: body.action };
+      return { ok: true, status: 200, json: async () => ({ pending: true, itemId: 'n1', eagleStars: [] }) };
+    }
+    return { ok: false, status: 404, json: async () => ({ error: '尚未分析，在插件中分析后显示', ...(pending ? { pending } : {}) }) };
+  };
+  const view = mountInspector({ root, eagle, storage: memorySession(), fetchImpl });
+  try {
+    await view.refresh(true); await settle();
+    assert.match(root.querySelector('#status').textContent, /尚未分析/);
+    keys.keydown({ key: '5', target: {}, preventDefault() {} });
+    assert.match(root.querySelector('#status').textContent, /已记下：精选/, 'shown before the service answers');
+    await settle();
+    assert.match(posts[0].url, /\/items\/n1\/decision\?/); assert.equal(posts[0].body.action, 'selected');
+    assert.match(root.querySelector('#status').textContent, /已记下：精选/);
+    keys.keydown({ key: 'r', target: {}, preventDefault() {} }); await settle();
+    assert.match(root.querySelector('#status').textContent, /已记下：留存/);
+    keys.keydown({ key: '0', target: {}, preventDefault() {} }); await settle();
+    assert.doesNotMatch(root.querySelector('#status').textContent, /已记下/);
+  } finally { view.dispose(); }
+  assert.equal(inspectorModel({ state: 'empty', result: { pending: { action: 'rejected' } } }).currentAction, 'rejected');
+});
 test('selecting from the panel asks Eagle to scroll the grid to the photo, without the internal channel it just selects', async () => {
   const { showInEagle, revealSelection } = await import('../src/plugin/eagle-select.js');
   const sent = [], selected = [];

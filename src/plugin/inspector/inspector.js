@@ -37,9 +37,16 @@ export function groupSummary(result) {
     decided === members.length ? '已全部决定' : `已定 ${decided}/${members.length}`,
     result.groupConfidence === 'low' ? '分组没把握，建议确认' : ''].filter(Boolean).join(' · ');
 }
+// Unanalyzed photos ('empty' with a selection) can be decided too; the service keeps those until analysis.
+export const decidable = (state, selected = []) => state === 'result' || (state === 'empty' && selected.length > 0);
 export function inspectorModel({ state, result } = {}) {
+  // Decisions made before analysis wait on the service and join the first analysis that covers the photo.
+  const pending = state === 'empty' && ACTION_NAMES[result?.pending?.action] ? result.pending.action : null;
+  if (pending) return { tone: pending, currentAction: pending, lines: ['分析完成后自动并入，可随时改'], reasons: [],
+    badge: `尚未分析 · 已记下：${ACTION_NAMES[pending]}` };
   if (state !== 'result') return { badge: { loading: '加载中…', offline: '分析服务未运行',
-    empty: '尚未分析，在插件中分析后显示' }[state] || '尚未分析，在插件中分析后显示', lines: [], reasons: [] };
+    empty: '尚未分析，在插件中分析后显示' }[state] || '尚未分析，在插件中分析后显示',
+    lines: state === 'empty' && result ? ['也可以先决定，分析完成后自动并入'] : [], reasons: [] };
   const action = ACTION_NAMES;
   return { tone: action[result.action] ? result.action : 'candidate', currentAction: result.humanDecided ? result.action : null,
     tagsOn: result.eagleTagsEnabled === true, groupId: result.groupId, groupItemIds: result.groupItemIds || [],
@@ -333,7 +340,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     const multi = units.count > 1 || state === 'many';
     const status = el('status');
     // The wide page is where the plugin opens, before anything is selected or analyzed.
-    const badge = wide && state === 'empty'
+    const badge = wide && state === 'empty' && !model.currentAction
       ? (selected.length ? '这张照片尚未分析：点「返回主界面」去分析' : '在 Eagle 里选中照片后显示') : model.badge;
     status.textContent = multi ? `已选 ${state === 'many' ? selected.length : units.count} 张` : badge;
     if (status.dataset) status.dataset.tone = multi ? '' : model.tone || '';
@@ -358,7 +365,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
           result.groupConfidence === 'low' ? '分组没把握' : ''].filter(Boolean).join(' · ') : '';
     for (const button of root.querySelectorAll?.('[data-decision]') || []) {
       button.classList.toggle('active', !multi && model.currentAction === button.dataset.decision);
-      button.disabled = state !== 'result';
+      button.disabled = !decidable(state, selected);
     }
     const group = el('groupContext');
     if (group) group.textContent = state === 'result' ? groupSummary({ ...result, groupIndex }) : '';
@@ -902,14 +909,17 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     }
   }
   async function decide(action) {
-    if (current.state !== 'result' || !current.selected.length) return;
-    const before = current.result, units = selectedUnits();
+    if (!decidable(current.state, current.selected)) return;
+    const analyzed = current.state === 'result', before = current.result;
+    const units = analyzed ? selectedUnits() : { count: current.selected.length, units: [] };
     const single = units.count <= 1;
+    const restore = () => render(analyzed ? 'result' : 'empty', before, current.selected);
     // One request per photo unit; items outside the run are sent as they are and may 404.
     const ids = units.units.length ? [...units.units.map(unit => unit.primaryItemId || unitItems(unit)[0]),
       ...selectedIds().filter(id => !units.units.some(unit => unitItems(unit).includes(id)))] : selectedIds();
-    if (single) render('result', { ...before, action: action === 'clear' ? before.suggested : action,
+    if (single && analyzed) render('result', { ...before, action: action === 'clear' ? before.suggested : action,
       humanDecided: action !== 'clear' }, current.selected);
+    else if (single) render('empty', { ...before, pending: action === 'clear' ? null : { action } }, current.selected);
     const libraryPath = eagle?.library?.path || '';
     saving++;
     try {
@@ -924,11 +934,11 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
         return applyEagleStars(eagle, body.eagleStars);
       })));
       lastKey = ''; lastFetch = 0;
-      if (!single) note(`已把 ${ids.length} 张标为${ACTION_NAMES[action] || '恢复 AI 建议'}`);
-      if (storage.getItem(ADVANCE_KEY) === '1' && single) await nextUndecidedPhoto();
+      if (!single) note(`已把 ${ids.length} 张标为${ACTION_NAMES[action] || (analyzed ? '恢复 AI 建议' : '未决定')}`);
+      if (storage.getItem(ADVANCE_KEY) === '1' && single && analyzed) await nextUndecidedPhoto();
       else await refresh(true);
     } catch (error) {
-      render('result', before, current.selected);
+      restore();
       note(`保存失败：${error.message}`);
     } finally { saving--; }
   }

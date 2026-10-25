@@ -188,19 +188,21 @@ export async function saveDecisionBatch(ctx, data, store, decisions, context = {
 // stars: the plugin records decisions as Eagle ratings (and 留存 as a tag), so each decision also sets them.
 // fromStarItem / fromTagItem: a rating or 留存 tag read from that Eagle item; it is checked against the decision current at
 // its turn in the queue, because the main window and the inspector both watch Eagle and may report the same change.
+// Whether a change seen in Eagle only echoes the saved decision `now`. Removing the tag only undoes 留存, and 留存
+// sets no star, so 0 stars on it is not a change either.
+export function echoUnchanged(now, row, fromTag) {
+  if (row.clear && (fromTag ? now !== 'record' : now === 'record')) return true;
+  return row.clear ? now === undefined : now === row.action;
+}
+
 export function decideUnits(ctx, runId, decisions, context = {}, { stars = false, fromStarItem = null, fromTagItem = null } = {}) {
   const store = new DecisionsStore(ctx.runStore.dir(runId));
   const unitIds = decisions.map(row => row.unitId);
   return serializeWriteback(ctx, runId, async data => {
     if (fromStarItem || fromTagItem) {
       const current = new Map((await store.read()).filter(row => row.source === 'human').map(row => [row.unitId, row.action]));
-      const unchanged = row => {
-        const now = current.get(row.unitId);
-        // Removing the tag only undoes 留存, and 留存 sets no star, so 0 stars on it is not a change either.
-        if (row.clear && (fromTagItem ? now !== 'record' : now === 'record')) return true;
-        return row.clear ? now === undefined : now === row.action;
-      };
-      if (decisions.every(unchanged)) return { decisions: [], unchanged: true };
+      if (decisions.every(row => echoUnchanged(current.get(row.unitId), row, Boolean(fromTagItem))))
+        return { decisions: [], unchanged: true };
     }
     const result = await saveDecisionBatch(ctx, data, store, decisions, context);
     if (data.run?.eagleTagsEnabled) {
@@ -214,6 +216,21 @@ export function decideUnits(ctx, runId, decisions, context = {}, { stars = false
     }
     return result;
   }, unitIds);
+}
+
+// A decision on a photo no finished analysis covers yet: it waits in the pending list until one does.
+export async function decidePending(ctx, { libraryPath, itemId }, decision, { stars = false, via = null } = {}) {
+  const fromTag = via === 'eagle-tag';
+  const result = await ctx.runStore.pendingDecisions.decide(libraryPath, itemId, decision,
+    { unchanged: now => Boolean(via) && echoUnchanged(now, decision, fromTag) });
+  if (result.unchanged) return { pending: true, itemId, unchanged: true };
+  const response = { pending: true, itemId, decision: result.row };
+  if (stars) {
+    const star = decision.clear ? 0 : ACTION_STARS[decision.action], record = decision.action === 'record';
+    response.eagleStars = [via === 'eagle-star' ? { id: itemId, record } : fromTag ? { id: itemId, star }
+      : { id: itemId, star, record }];
+  }
+  return response;
 }
 
 // The plugin applies these through Eagle's item API to keep the native grid in sync: a star, and whether it has 留存.

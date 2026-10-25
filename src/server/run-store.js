@@ -1,6 +1,7 @@
 import { replaceFile } from '../core/atomic-file.js';
 import { groupConfidence } from "../core/ranking.js";
 import { DecisionsStore } from "../core/decisions-store.js";
+import { PendingDecisions } from "../core/pending-decisions.js";
 import { writeSegmented, readManifest, readRow, readRows } from "../core/segmented-results.js";
 import { LearningData } from "../core/learning-data.js";
 import path from "node:path";
@@ -14,6 +15,7 @@ const newestFirst = (a, b) => (Date.parse(b.startedAt || b.createdAt) || 0) -
 export class RunStore {
   constructor(root = "data/runs") {
     this.root = path.resolve(root);
+    this.pendingDecisions = new PendingDecisions(path.join(this.root, 'pending-decisions.json'));
     this.pending = new Map();
     this.analysisGeneration = 0;
     this.knownAnalysisRuns = new Set();

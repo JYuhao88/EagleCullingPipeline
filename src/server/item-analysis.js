@@ -179,8 +179,8 @@ export function createItemAnalysisRouter(store, { onDecision, readBody } = {}) {
       const libraryPath = url.searchParams.get('libraryPath') || body?.libraryPath;
       if (!libraryPath) return json(res, 400, { error: '需要 libraryPath' });
       const itemId = decodeURIComponent(match[1]);
+      // Without a finished analysis the decision waits in store.pendingDecisions (entry has no runId).
       const entry = await index.get(itemId, libraryPath);
-      if (!entry) return json(res, 404, { error: '尚未分析，在插件中分析后显示' });
       return onDecision(req, res, { ...entry, itemId, libraryPath, body });
     }
     if (match[2] !== 'analysis' || req.method !== 'GET') return json(res, 405, { error: '检查器只支持 GET/POST 决定' });
@@ -188,6 +188,8 @@ export function createItemAnalysisRouter(store, { onDecision, readBody } = {}) {
     if (!libraryPath) return json(res, 400, { error: '需要 libraryPath' });
     const itemId = decodeURIComponent(match[1]);
     const value = await index.get(itemId, libraryPath);
-    return value ? json(res, 200, value) : json(res, 404, { error: '尚未分析，在插件中分析后显示' });
+    if (value) return json(res, 200, value);
+    const pending = await store.pendingDecisions?.get(libraryPath, itemId);
+    return json(res, 404, { error: '尚未分析，在插件中分析后显示', ...(pending ? { pending } : {}) });
   };
 }
