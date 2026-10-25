@@ -448,6 +448,34 @@ test('an unanalyzed photo can be decided from the inspector and shows the mark w
   } finally { view.dispose(); }
   assert.equal(inspectorModel({ state: 'empty', result: { pending: { action: 'rejected' } } }).currentAction, 'rejected');
 });
+test('select-all past the comparison limit can still be decided in batches, and 2 means 留存', async () => {
+  const { mountInspector } = await import('../src/plugin/inspector/inspector.js');
+  const keys = {};
+  const { root } = fakeDom({ addEventListener: (type, handler) => { keys[type] = handler; } });
+  const selected = Array.from({ length: 305 }, (_, i) => ({ id: `s${i}`, star: 0 }));
+  const eagle = { library: { path: '/fixture.library' }, item: { getSelected: async () => selected } };
+  const posts = []; let inFlight = 0, peak = 0;
+  const fetchImpl = async (url, options = {}) => {
+    if (options.method !== 'POST') return assert.fail('a huge selection is not analyzed photo by photo');
+    inFlight++; peak = Math.max(peak, inFlight); await flush(); inFlight--;
+    posts.push([url.match(/items\/([^/]+)\//)[1], JSON.parse(options.body).action]);
+    return { ok: true, status: 200, json: async () => ({ pending: true, eagleStars: [] }) };
+  };
+  const view = mountInspector({ root, eagle, storage: memorySession(), fetchImpl });
+  try {
+    await view.refresh(true); await settle();
+    assert.equal(root.querySelector('#status').textContent, '已选 305 张');
+    assert.match(root.querySelector('#selectedCount').textContent, /仍可整批决定/);
+    keys.keydown({ key: '1', target: {}, preventDefault() {} });
+    for (let i = 0; i < 50 && posts.length < 305; i++) await settle();
+    assert.equal(posts.length, 305); assert.ok(posts.every(([, action]) => action === 'rejected'));
+    assert.ok(peak <= 20, `at most one batch in flight (peak ${peak})`);
+    posts.length = 0;
+    keys.keydown({ key: '2', target: {}, preventDefault() {} });
+    for (let i = 0; i < 50 && posts.length < 305; i++) await settle();
+    assert.equal(posts.length, 305); assert.ok(posts.every(([, action]) => action === 'record'));
+  } finally { view.dispose(); }
+});
 test('selecting from the panel asks Eagle to scroll the grid to the photo, without the internal channel it just selects', async () => {
   const { showInEagle, revealSelection } = await import('../src/plugin/eagle-select.js');
   const sent = [], selected = [];

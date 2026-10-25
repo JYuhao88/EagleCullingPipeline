@@ -188,10 +188,9 @@ export async function saveDecisionBatch(ctx, data, store, decisions, context = {
 // stars: the plugin records decisions as Eagle ratings (and 留存 as a tag), so each decision also sets them.
 // fromStarItem / fromTagItem: a rating or 留存 tag read from that Eagle item; it is checked against the decision current at
 // its turn in the queue, because the main window and the inspector both watch Eagle and may report the same change.
-// Whether a change seen in Eagle only echoes the saved decision `now`. Removing the tag only undoes 留存, and 留存
-// sets no star, so 0 stars on it is not a change either.
+// Whether a change seen in Eagle only echoes the saved decision `now`. Removing the tag only undoes 留存.
 export function echoUnchanged(now, row, fromTag) {
-  if (row.clear && (fromTag ? now !== 'record' : now === 'record')) return true;
+  if (row.clear && fromTag && now !== 'record') return true;
   return row.clear ? now === undefined : now === row.action;
 }
 

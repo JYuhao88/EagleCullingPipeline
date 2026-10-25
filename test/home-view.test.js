@@ -365,9 +365,9 @@ test('Eagle culling entry selects the first undecided primary photo and explains
   const api = async url => { calls.push(url); return { queue: [row, { primaryItemId: 'other', groupIndex: 7 }] }; };
   const eagle = { item: { select: async ids => calls.push(ids) } };
   assert.equal(await startCullingInEagle(api, 'run', eagle),
-    '已在 Eagle 中选中第 7 组的照片，在 Eagle 右栏查看分组和 AI 建议，按 5/3/1 打星。');
+    '已在 Eagle 中选中第 7 组的照片，在 Eagle 右栏查看分组和 AI 建议，按 5/3/2/1 打星。');
   assert.deepEqual(calls, ['/runs/run/queue?mode=all', ['photo']]);
-  assert.match(await startCullingInEagle(api, 'run', {}, null), /手动点击.*5\/3\/1/);
+  assert.match(await startCullingInEagle(api, 'run', {}, null), /手动点击.*5\/3\/2\/1/);
   const opened = [];
   const older = { shell: { openExternal: async url => opened.push(url) } };
   assert.match(await startCullingInEagle(api, 'run', older), /^已在 Eagle 中打开第 7 组/);

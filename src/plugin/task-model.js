@@ -139,9 +139,9 @@ export function measuredRate(runs = []) {
 
 export function cullStartNotice(row, shown = "selected") {
   if (!row) return "这次分析没有可挑选的照片。";
-  if (shown === "none") return "请在 Eagle 中手动点击一张照片，在 Eagle 右栏查看分组和 AI 建议，按 5/3/1 打星。";
+  if (shown === "none") return "请在 Eagle 中手动点击一张照片，在 Eagle 右栏查看分组和 AI 建议，按 5/3/2/1 打星。";
   return `已在 Eagle 中${shown === "opened" ? "打开" : "选中"}第 ${row.groupIndex + 1} 组的照片，`
-    + "在 Eagle 右栏查看分组和 AI 建议，按 5/3/1 打星。";
+    + "在 Eagle 右栏查看分组和 AI 建议，按 5/3/2/1 打星。";
 }
 
 export async function startCullingInEagle(api, runId, eagle, open) {

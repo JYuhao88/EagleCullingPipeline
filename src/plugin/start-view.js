@@ -50,7 +50,7 @@ export function createStartView({ root, api, getApi = () => api, onRun, autoChec
     setText("primaryEyebrow", card.eyebrow);
     setText("primaryTitle", card.title);
     setText("primaryDetail", card.detail);
-    setText("primaryNote", [card.note, startsCulling ? "在 Eagle 里选中照片，右栏会显示它所在的分组和 AI 建议；直接按 5/3/1 打星。" : ""]
+    setText("primaryNote", [card.note, startsCulling ? "在 Eagle 里选中照片，右栏会显示它所在的分组和 AI 建议；直接按 5/3/2/1 打星。" : ""]
       .filter(Boolean).join(" "));
     const chip = q("primaryChip");
     if (chip) { chip.hidden = !card.chip; chip.textContent = card.chip || ""; }

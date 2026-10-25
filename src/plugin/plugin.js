@@ -37,7 +37,7 @@ const starWatcher = createStarWatcher({ eagle: globalThis.eagle, post: async ({ 
       body: JSON.stringify({ libraryPath: globalThis.eagle?.library?.path || '', action, via }) });
   } catch (error) { if (!(error.status >= 400 && error.status < 500)) throw error; }
 }, onLargeSelection: (count, limit) => startView.setNotice(
-  `已选 ${count} 张，超过 ${limit} 张时不读取星级；请分批打星，否则不会记为决定。`) });
+  `已选 ${count} 张，超过 ${limit} 张时每 2 秒读取一次星级；打星后稍等几秒再换选择。`) });
 const working = () => startView.view.submitting || finishPanel.isBusy() || Boolean(root.querySelector('dialog[open]'));
 const idle = () => !working() && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName);
 if (globalThis.eagle) {

@@ -27,7 +27,7 @@ function fakeLibrary(stars) {
 
 test('star keys match Eagle ratings everywhere', () => {
   assert.deepEqual([5, 4, 3, 2, 1, 0].map(star => STAR_ACTIONS[star]),
-    ['selected', 'selected', 'candidate', 'rejected', 'rejected', 'clear']);
+    ['selected', 'selected', 'candidate', 'record', 'rejected', 'clear']);
 });
 
 test('star watcher: first sight is a baseline, later ratings become decisions, Shift+number advance is caught', async () => {
@@ -48,7 +48,7 @@ test('star watcher: first sight is a baseline, later ratings become decisions, S
   assert.deepEqual(posts.at(-1), { id: 'a', star: 0, before: 5, action: 'clear', via: 'eagle-star' });
 });
 
-test('star watcher retries a failed save, stays off when disabled and skips huge selections', async () => {
+test('star watcher retries a failed save, stays off when disabled and reads huge selections slowly', async () => {
   const eagle = fakeLibrary({ a: 0 });
   let fail = true; const posts = [];
   const watcher = createStarWatcher({ eagle, storage: memory(), post: async change => {
@@ -66,8 +66,18 @@ test('star watcher retries a failed save, stays off when disabled and skips huge
   let reads = 0; const getSelected = many.item.getSelected;
   many.item.getSelected = async () => { reads++; return getSelected(); };
   many.select(['m0', 'm1', 'm2', 'm3', 'm4']);
-  await createStarWatcher({ eagle: many, storage: memory(), maxSelected: 3, post: async () => {} }).tick();
-  assert.equal(reads, 0);
+  let clock = 0; const large = []; const bulk = [];
+  const slow = createStarWatcher({ eagle: many, storage: memory(), maxSelected: 3, largeInterval: 2000, now: () => clock,
+    onLargeSelection: count => large.push(count), post: async change => { bulk.push([change.id, change.action]); } });
+  await slow.tick();
+  assert.deepEqual([reads, large], [1, [5]], 'a new large selection is read at once');
+  for (const id of ['m0', 'm1', 'm2', 'm3', 'm4']) many.items.get(id).star = 5;
+  clock = 1000; await slow.tick();
+  assert.deepEqual([reads, bulk.length], [1, 0], 'the same large selection waits for its interval');
+  clock = 2000; await slow.tick();
+  assert.equal(reads, 2);
+  assert.deepEqual(bulk, ['m0', 'm1', 'm2', 'm3', 'm4'].map(id => [id, 'selected']), 'select-all then 5★ picks every photo');
+  assert.deepEqual(large, [5], 'the notice shows once per selection size');
 });
 
 test('applyEagleStars saves only changed ratings and reports failures as a warning', async () => {
@@ -171,14 +181,21 @@ test('decisions write Eagle stars on request; ratings read from Eagle are saved 
   assert.deepEqual(await human(), { 'unit:a': 'selected' });
 
   const kept = await decide('b', 'record', {}, { 'x-eagle-stars': '1' });
-  assert.deepEqual(kept.body.eagleStars, [{ id: 'b', star: 0, record: true }, { id: 'b-raw', star: 0, record: true }],
-    '留存 clears the star and tags both files');
+  assert.deepEqual(kept.body.eagleStars, [{ id: 'b', star: 2, record: true }, { id: 'b-raw', star: 2, record: true }],
+    '留存 sets 2★ and tags both files');
   assert.equal((await decide('b', 'record', { via: 'eagle-tag' })).body.unchanged, true, 'our own tag coming back');
-  assert.equal((await decide('b', 'clear', { via: 'eagle-star' })).body.unchanged, true, '0★ on a 留存 photo is not a clear');
+  assert.equal((await decide('b', 'record', { via: 'eagle-star' })).body.unchanged, true, 'our own 2★ coming back');
   assert.equal((await decide('a', 'clear', { via: 'eagle-tag' })).body.unchanged, true, 'removing 留存 never clears 精选');
   assert.deepEqual(await human(), { 'unit:a': 'selected', 'unit:b': 'record' });
   const untagged = await decide('b', 'clear', { via: 'eagle-tag' }, { 'x-eagle-stars': '1' });
   assert.deepEqual(untagged.body.eagleStars, [{ id: 'b', star: 0 }, { id: 'b-raw', star: 0, record: false }]);
+  assert.deepEqual(await human(), { 'unit:a': 'selected' });
+  const starred = await decide('b', 'record', { via: 'eagle-star' }, { 'x-eagle-stars': '1' });
+  assert.deepEqual(starred.body.eagleStars, [{ id: 'b', record: true }, { id: 'b-raw', star: 2, record: true }],
+    '2★ in Eagle is 留存: the tag follows');
+  const unstarred = await decide('b', 'clear', { via: 'eagle-star' }, { 'x-eagle-stars': '1' });
+  assert.deepEqual(unstarred.body.eagleStars, [{ id: 'b', record: false }, { id: 'b-raw', star: 0, record: false }],
+    '0★ on a 留存 photo clears it and its tag');
   assert.deepEqual(await human(), { 'unit:a': 'selected' });
   const invalid = await call(`/runs/${runId}/decisions`, { decisions: [{ unitId: 'unit:a', action: 'keep' }] });
   assert.equal(invalid.status, 400);

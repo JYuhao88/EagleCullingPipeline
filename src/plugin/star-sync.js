@@ -1,9 +1,10 @@
 export const STAR_SYNC_KEY = 'eagle-culling-star-sync';
 export const STAR_HEADER = 'x-eagle-stars';
-// 5/3/1 are the documented stars; 4 and 2 fold into the nearer decision so no rating is ignored.
-export const STAR_ACTIONS = Object.freeze({ 0: 'clear', 1: 'rejected', 2: 'rejected', 3: 'candidate', 4: 'selected', 5: 'selected' });
-export const ACTION_STARS = Object.freeze({ selected: 5, candidate: 3, rejected: 1, record: 0, clear: 0 });
-// 留存 keeps a photo as a record of the day without judging it; in Eagle it is this tag, which you can also add yourself.
+// 5/3/2/1 are the documented stars; 4 folds into 精选 so no rating is ignored.
+export const STAR_ACTIONS = Object.freeze({ 0: 'clear', 1: 'rejected', 2: 'record', 3: 'candidate', 4: 'selected', 5: 'selected' });
+export const ACTION_STARS = Object.freeze({ selected: 5, candidate: 3, rejected: 1, record: 2, clear: 0 });
+// 留存 keeps a photo as a record of the day without judging it; in Eagle it is 2 stars plus this tag, and either one
+// set by hand marks it.
 export const RECORD_TAG = '留存';
 const hasRecordTag = item => Array.isArray(item?.tags) && item.tags.includes(RECORD_TAG);
 export const starSyncEnabled = storage => storage?.getItem(STAR_SYNC_KEY) !== '0';
@@ -49,10 +50,12 @@ export async function applyEagleStars(eagle, rows) {
 
 // The first star and 留存 tag seen for an item are its baseline; only later changes in Eagle become decisions,
 // so ratings and tags made before culling never turn into decisions on their own.
+// Selections above maxSelected are read at most every largeInterval, and at once when their size changes.
 export function createStarWatcher({ eagle, storage = globalThis.localStorage, post, interval = 800, recentLimit = 40,
-  maxSelected = 300, seenLimit = 5000, onLargeSelection = () => {}, setTimer = setTimeout, clearTimer = clearTimeout }) {
+  maxSelected = 300, largeInterval = 2000, seenLimit = 20000, onLargeSelection = () => {}, setTimer = setTimeout,
+  clearTimer = clearTimeout, now = Date.now }) {
   const seen = new Map(), seenTags = new Map();
-  let recent = [], timer = null, running = false, busy = false, largeCount = 0;
+  let recent = [], timer = null, running = false, busy = false, largeCount = 0, largeReadAt = 0;
   async function read(ids) {
     if (!ids.length) return [];
     if (eagle?.item?.getByIds) return await eagle.item.getByIds(ids) || [];
@@ -69,9 +72,12 @@ export function createStarWatcher({ eagle, storage = globalThis.localStorage, po
     try {
       const count = eagle.item.countSelected ? await eagle.item.countSelected() : null;
       const large = count !== null && count > maxSelected;
-      if (large && count !== largeCount) onLargeSelection(count, maxSelected);
+      const changedSize = count !== largeCount;
+      if (large && changedSize) onLargeSelection(count, maxSelected);
       largeCount = large ? count : 0;
-      const selected = large ? [] : await eagle.item.getSelected() || [];
+      if (large && !changedSize && now() - largeReadAt < largeInterval) return [];
+      const selected = await eagle.item.getSelected() || [];
+      if (large) largeReadAt = now();
       const selectedIds = selected.map(item => item?.id).filter(Boolean);
       recent = [...new Set([...selectedIds, ...recent])].slice(0, recentLimit);
       const items = [...selected, ...await read(recent.filter(id => !selectedIds.includes(id)))];

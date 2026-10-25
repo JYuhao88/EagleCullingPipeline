@@ -43,7 +43,7 @@ test('decisions on unanalyzed photos wait and join the first analysis that cover
   const echo = await call('/items/c/decision', { libraryPath: LIB, action: 'selected', via: 'eagle-star' });
   assert.equal(echo.body.unchanged, true, 'the other window reporting the same star is not a new decision');
   const tagged = await call('/items/d/decision', { libraryPath: LIB, action: 'record', via: 'eagle-tag' }, { [STAR_HEADER]: '1' });
-  assert.deepEqual(tagged.body.eagleStars, [{ id: 'd', star: 0 }], 'the tag is already in Eagle; only the star follows');
+  assert.deepEqual(tagged.body.eagleStars, [{ id: 'd', star: 2 }], 'the tag is already in Eagle; only the star follows');
   await call('/items/e/decision', { libraryPath: LIB, action: 'rejected' });
   await call('/items/e/decision', { libraryPath: LIB, action: 'clear' });
   assert.equal((await analysis('e')).body.pending, undefined);

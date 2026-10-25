@@ -38,7 +38,8 @@ export function groupSummary(result) {
     result.groupConfidence === 'low' ? '分组没把握，建议确认' : ''].filter(Boolean).join(' · ');
 }
 // Unanalyzed photos ('empty' with a selection) can be decided too; the service keeps those until analysis.
-export const decidable = (state, selected = []) => state === 'result' || (state === 'empty' && selected.length > 0);
+export const decidable = (state, selected = []) => state === 'result'
+  || (['empty', 'many'].includes(state) && selected.length > 0);
 export function queueLine(queued) {
   if (!queued) return '';
   return queued.analyzing ? `正在分析「${queued.label}」${queued.percent == null ? '' : ` ${Math.floor(queued.percent)}%`}`
@@ -97,6 +98,7 @@ export function nextInQueue(rows, unitId, order = null) {
   return candidates.reduce((best, row) => rank(row.unitId) < rank(best.unitId) ? row : best);
 }
 const MULTI_LIMIT = 300;
+const DECIDE_BATCH = 20;
 // Eagle reloads this page whenever the first selected photo changes, so anything that should survive a photo switch
 // (run queue, last group analysis, page height, a pending note) lives in localStorage: Eagle builds a fresh page each
 // time, so sessionStorage does not carry over.
@@ -362,7 +364,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     const groupIndex = runRows().find(row => row.groupId === result?.groupId)?.groupIndex ?? result?.groupIndex;
     const members = state === 'result' ? result.groupMembers || [] : [];
     const count = el('selectedCount');
-    if (count) count.textContent = state === 'many' ? `超过 ${MULTI_LIMIT} 张时只统计数量`
+    if (count) count.textContent = state === 'many' ? `超过 ${MULTI_LIMIT} 张时只统计数量，仍可整批决定`
       : multi ? [units.groupCount === 1 ? `都在第 ${(units.groupIndex ?? result?.groupIndex ?? 0) + 1} 组`
         : units.groupCount ? `跨 ${units.groupCount} 组` : '',
         units.unknown ? `${units.unknown} 张未分析` : ''].filter(Boolean).join(' · ')
@@ -922,7 +924,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     const analyzed = current.state === 'result', before = current.result;
     const units = analyzed ? selectedUnits() : { count: current.selected.length, units: [] };
     const single = units.count <= 1;
-    const restore = () => render(analyzed ? 'result' : 'empty', before, current.selected);
+    const restore = () => render(analyzed ? 'result' : current.state === 'many' ? 'many' : 'empty', before, current.selected);
     // One request per photo unit; items outside the run are sent as they are and may 404.
     const ids = units.units.length ? [...units.units.map(unit => unit.primaryItemId || unitItems(unit)[0]),
       ...selectedIds().filter(id => !units.units.some(unit => unitItems(unit).includes(id)))] : selectedIds();
@@ -931,17 +933,21 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     else if (single) render('empty', { ...before, pending: action === 'clear' ? null : { action } }, current.selected);
     const libraryPath = eagle?.library?.path || '';
     saving++;
+    const send = id => fetchImpl(`${baseUrl()}/items/${encodeURIComponent(id)}/decision`
+      + `?libraryPath=${encodeURIComponent(libraryPath)}`, { method: 'POST', headers: starHeaders(),
+      body: JSON.stringify({ libraryPath, action }) }).then(async response => {
+      if (!response.ok && !(ids.length > 1 && response.status === 404)) throw new Error('决定保存失败');
+      const body = await response.json().catch(() => ({}));
+      if (body.runId && body.unitId) {
+        live.schedule(body.runId, [body.unitId]); patchQueue(body.unitId, action === 'clear' ? null : action);
+      }
+      return applyEagleStars(eagle, body.eagleStars);
+    });
     try {
-      await Promise.all(ids.map(id => fetchImpl(`${baseUrl()}/items/${encodeURIComponent(id)}/decision`
-        + `?libraryPath=${encodeURIComponent(libraryPath)}`, { method: 'POST', headers: starHeaders(),
-        body: JSON.stringify({ libraryPath, action }) }).then(async response => {
-        if (!response.ok && !(ids.length > 1 && response.status === 404)) throw new Error('决定保存失败');
-        const body = await response.json().catch(() => ({}));
-        if (body.runId && body.unitId) {
-          live.schedule(body.runId, [body.unitId]); patchQueue(body.unitId, action === 'clear' ? null : action);
-        }
-        return applyEagleStars(eagle, body.eagleStars);
-      })));
+      for (let start = 0; start < ids.length; start += DECIDE_BATCH) {
+        await Promise.all(ids.slice(start, start + DECIDE_BATCH).map(send));
+        if (ids.length > DECIDE_BATCH) note(`正在标记 ${Math.min(start + DECIDE_BATCH, ids.length)} / ${ids.length} 张…`);
+      }
       lastKey = ''; lastFetch = 0;
       if (!single) note(`已把 ${ids.length} 张标为${ACTION_NAMES[action] || (analyzed ? '恢复 AI 建议' : '未决定')}`);
       if (storage.getItem(ADVANCE_KEY) === '1' && single && analyzed) await nextUndecidedPhoto();
@@ -1101,7 +1107,7 @@ export function mountInspector({ root = document, eagle = globalThis.eagle, stor
     const result = current.result; if (!result) return;
     const target = groupTarget(runGroups(runRows()), result.groupId, mode);
     if (!target?.unit) return;
-    note(`已在 Eagle 中选中第 ${target.group.groupIndex + 1} 组第 ${target.unit.rank} 名；在中间按 5/3/1 可直接打星。`,
+    note(`已在 Eagle 中选中第 ${target.group.groupIndex + 1} 组第 ${target.unit.rank} 名；在中间按 5/3/2/1 可直接打星。`,
       { carry: true });
     select(unitItems(target.unit));
   }
